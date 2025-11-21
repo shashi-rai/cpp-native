@@ -18,27 +18,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef DSA_MATRIX_H
-#define DSA_MATRIX_H
-
 #include <iostream>
 #include <vector>
+#include "dsa/matrix.h"
 
-class Matrix {
-    std::vector<std::vector<double> > data;
-public:
-    // Constructors
-    Matrix(int rows, int cols);
-
-    // Access operator
-    double& operator()(int row, int col) { return data[row][col]; }
-    const double& operator()(int row, int col) const { return data[row][col]; }
-
-    // Additional methods
-    void set(int row, int col, double value);
-    double get(int row, int col) const;
-    int getRows() const;
-    int getCols() const;
-};
-
-#endif //DSA_MATRIX_H
+int main() {
+    Matrix mat(3, 3);
+    mat.set(1, 1, 5.0);
+    std::cout << "Matrix: " << mat.getRows() << " rows, " << mat.getCols() << " columns" << std::endl;
+    std::cout << "Value at (1,1): " << mat.get(1, 1) << std::endl;
+    return 0;
+}
