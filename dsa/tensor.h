@@ -18,24 +18,32 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+#ifndef DSA_TENSOR_H
+#define DSA_TENSOR_H
+
 #include <iostream>
 #include <vector>
-#include "dsa/matrix.h"
-#include "dsa/tensor.h"
+#include "matrix.h"
 
-int main() {
-    Matrix mat(3, 3);
-    mat.set(1, 1, 5.0);
-    std::cout << "Matrix: " << mat.getRows() << " rows, " << mat.getCols() << " columns" << std::endl;
-    std::cout << "Value at (1,1): " << mat.get(1, 1) << std::endl;
+class Tensor {
+    std::vector<std::vector<Matrix> > data;
+public:
+    // Constructors
+    Tensor();
+    Tensor(int rows);
+    Tensor(int rows, int cols);
 
-    Tensor tensor(2, 2);
-    tensor.set(1, 1, mat);
-    std::cout << "Tensor: ";
-    std::cout << tensor.getRows() << " rows, " << tensor.getCols() << " columns" << std::endl;
-    Matrix retrievedMat = tensor.get(1, 1);
-    std::cout << "Retrieved Matrix from Tensor at (1,1): " << retrievedMat.getRows() << " rows, " << retrievedMat.getCols() << " columns" << std::endl;
-    std::cout << "Value at (1,1) in retrieved Matrix: " << retrievedMat.get(1, 1) << std::endl;
-    
-    return 0;
-}
+    // Access operator
+    Matrix& operator()(int row, int col) { return data[row][col]; }
+    const Matrix& operator()(int row, int col) const { return data[row][col]; }
+
+    // Additional methods
+    void set(int row, int col, Matrix value);
+    Matrix get(int row, int col) const;
+    int getRows() const;
+    int getCols() const;
+};
+
+typedef std::vector<Tensor > TensorArray;
+
+#endif //DSA_TENSOR_H

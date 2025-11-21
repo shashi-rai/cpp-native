@@ -36,8 +36,15 @@ LIBFILES = $(LIBFOLDR)/*.a
 
 all: all-before $(APPPROG) all-after
 
-clean: clean-custom
+clean: clean-custom clean-objs clean-libs clean-apps
+
+clean-objs: clean-custom
 	${RMCLEAN} $(OBJFILES)
+
+clean-libs: clean-custom
+	${RMCLEAN} $(LIBFILES)
+
+clean-apps: clean-custom
 	${RMCLEAN} $(APPPROG)
 
 $(APPPROG): $(LINKOBJ) $(LIBFILES)

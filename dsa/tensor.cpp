@@ -18,24 +18,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include <iostream>
-#include <vector>
-#include "dsa/matrix.h"
-#include "dsa/tensor.h"
+#include "tensor.h"
+#include "matrix.h"
 
-int main() {
-    Matrix mat(3, 3);
-    mat.set(1, 1, 5.0);
-    std::cout << "Matrix: " << mat.getRows() << " rows, " << mat.getCols() << " columns" << std::endl;
-    std::cout << "Value at (1,1): " << mat.get(1, 1) << std::endl;
+Tensor::Tensor() : data(0, std::vector<Matrix>(0, 0)) {
 
-    Tensor tensor(2, 2);
-    tensor.set(1, 1, mat);
-    std::cout << "Tensor: ";
-    std::cout << tensor.getRows() << " rows, " << tensor.getCols() << " columns" << std::endl;
-    Matrix retrievedMat = tensor.get(1, 1);
-    std::cout << "Retrieved Matrix from Tensor at (1,1): " << retrievedMat.getRows() << " rows, " << retrievedMat.getCols() << " columns" << std::endl;
-    std::cout << "Value at (1,1) in retrieved Matrix: " << retrievedMat.get(1, 1) << std::endl;
-    
-    return 0;
+}
+
+Tensor::Tensor(int rows) : data(rows, std::vector<Matrix>(0, 0)) {
+
+}
+
+Tensor::Tensor(int rows, int cols) : data(rows, std::vector<Matrix>(cols, 0)) {
+
+}
+
+void Tensor::set(int row, int col, Matrix value) {
+    data[row][col] = value;
+}
+
+Matrix Tensor::get(int row, int col) const {
+    return data[row][col];
+}
+
+int Tensor::getRows() const {
+    return data.size();
+}
+
+int Tensor::getCols() const {
+    return data[0].size();
 }

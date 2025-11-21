@@ -28,6 +28,8 @@ class Matrix {
     std::vector<std::vector<double> > data;
 public:
     // Constructors
+    Matrix();
+    Matrix(int rows);
     Matrix(int rows, int cols);
 
     // Access operator
@@ -40,5 +42,7 @@ public:
     int getRows() const;
     int getCols() const;
 };
+
+typedef std::vector<Matrix > MatrixArray;
 
 #endif //DSA_MATRIX_H

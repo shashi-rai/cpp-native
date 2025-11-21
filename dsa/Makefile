@@ -36,12 +36,23 @@ all: all-before \
 	$(LIBFOLDR)/$(LIBNAME) \
 	all-after
 
-clean: clean-custom
+clean: clean-custom clean-objs clean-libs
+
+clean-objs: clean-custom
 	${RMCLEAN} $(OBJFILES)
+
+clean-libs: clean-custom
 	${RMCLEAN} $(LIBFILES)
 
-$(LIBFOLDR)/$(LIBNAME): $(OBJFOLDR)/matrix.o
-	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) $(OBJFOLDR)/matrix.o
+$(LIBFOLDR)/$(LIBNAME): \
+		$(OBJFOLDR)/matrix.o \
+		$(OBJFOLDR)/tensor.o
+	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
+		$(OBJFOLDR)/matrix.o \
+		$(OBJFOLDR)/tensor.o
 
 $(OBJFOLDR)/matrix.o: matrix.cpp
 	$(CPPTOOL) -c matrix.cpp -o $(OBJFOLDR)/matrix.o $(CXXFLAGS)
+
+$(OBJFOLDR)/tensor.o: tensor.cpp
+	$(CPPTOOL) -c tensor.cpp -o $(OBJFOLDR)/tensor.o $(CXXFLAGS)

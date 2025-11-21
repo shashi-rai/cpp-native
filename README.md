@@ -22,6 +22,26 @@ $ make all
 
 ## Folder Cleanup
 
+To clean all temporary folders
+
 ```bash
 $ make clean
+```
+
+To clean only pre-compiled object files folder
+
+```bash
+$ make clean-objs
+```
+
+To clean only pre-compiled library folder
+
+```bash
+$ make clean-libs
+```
+
+To clean only pre-compiled application files
+
+```bash
+$ make clean-apps
 ```

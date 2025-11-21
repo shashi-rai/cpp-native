@@ -20,6 +20,14 @@
 
 #include "matrix.h"
 
+Matrix::Matrix() : data(0, std::vector<double>(0, 0)) {
+
+}
+
+Matrix::Matrix(int rows) : data(rows, std::vector<double>(0, 0)) {
+
+}
+
 Matrix::Matrix(int rows, int cols) : data(rows, std::vector<double>(cols, 0)) {
 
 }
