@@ -18,38 +18,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef DSA_MATRIX_H
-#define DSA_MATRIX_H
+#include "particle.h"
 
-#include <iostream>
-#include <vector>
+namespace qft {
 
-namespace dsa {
+Particle::Particle() : name(""), spin(0), mass(0.0), charge(0.0) {
 
-class Matrix {
-    std::vector<std::vector<double> > data;
-public:
-    // Constructors
-    Matrix();
-    Matrix(int rows);
-    Matrix(int rows, int cols);
+}
 
-    // Destructors
-    ~Matrix();
+Particle::Particle(std::string name) : name(name), spin(0), mass(0.0), charge(0.0) {
 
-    // Access operator
-    double& operator()(int row, int col) { return data[row][col]; }
-    const double& operator()(int row, int col) const { return data[row][col]; }
+}
 
-    // Additional methods
-    void set(int row, int col, double value);
-    double get(int row, int col) const;
-    int getRows() const;
-    int getCols() const;
-};
+Particle::Particle(std::string name, short spin, double mass, double charge)
+    : name(name), spin(spin), mass(mass), charge(charge) {
 
-typedef std::vector<Matrix > MatrixArray;
+}
 
-} // namespace dsa
+Particle::~Particle() {
 
-#endif //DSA_MATRIX_H
+}
+
+} // namespace qft

@@ -18,38 +18,38 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef DSA_MATRIX_H
-#define DSA_MATRIX_H
+#ifndef GIS_TERRITORY_H
+#define GIS_TERRITORY_H
 
-#include <iostream>
+#include <string>
 #include <vector>
+#include "location.h"
 
-namespace dsa {
+namespace gis {
 
-class Matrix {
-    std::vector<std::vector<double> > data;
+class Territory {
+    std::string name;
+    Location location;
 public:
     // Constructors
-    Matrix();
-    Matrix(int rows);
-    Matrix(int rows, int cols);
+    Territory();
+    Territory(std::string name);
+    Territory(std::string name, Location location);
 
     // Destructors
-    ~Matrix();
+    ~Territory();
 
-    // Access operator
-    double& operator()(int row, int col) { return data[row][col]; }
-    const double& operator()(int row, int col) const { return data[row][col]; }
+    // Getters
+    std::string getName() const { return name; }
+    Location getLocation() const { return location; }
 
-    // Additional methods
-    void set(int row, int col, double value);
-    double get(int row, int col) const;
-    int getRows() const;
-    int getCols() const;
+    // Setters
+    void setName(const std::string& name) { this->name = name; }
+    void setLocation(Location value) { location = value; }
 };
 
-typedef std::vector<Matrix > MatrixArray;
+typedef std::vector<Territory > TerritoryArray;
 
-} // namespace dsa
+} // namespace gis
 
-#endif //DSA_MATRIX_H
+#endif //GIS_TERRITORY_H

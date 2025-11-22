@@ -18,38 +18,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef DSA_MATRIX_H
-#define DSA_MATRIX_H
+#include "server.h"
 
-#include <iostream>
-#include <vector>
+namespace web {
 
-namespace dsa {
+Server::Server() : host("localhost"), port(8080) {
 
-class Matrix {
-    std::vector<std::vector<double> > data;
-public:
-    // Constructors
-    Matrix();
-    Matrix(int rows);
-    Matrix(int rows, int cols);
+}
 
-    // Destructors
-    ~Matrix();
+Server::Server(int port) : host("localhost"), port(port) {
 
-    // Access operator
-    double& operator()(int row, int col) { return data[row][col]; }
-    const double& operator()(int row, int col) const { return data[row][col]; }
+}
 
-    // Additional methods
-    void set(int row, int col, double value);
-    double get(int row, int col) const;
-    int getRows() const;
-    int getCols() const;
-};
+Server::Server(std::string host, int port) : host(host), port(port) {
 
-typedef std::vector<Matrix > MatrixArray;
+}
 
-} // namespace dsa
+Server::~Server() {
 
-#endif //DSA_MATRIX_H
+}
+
+} // namespace web

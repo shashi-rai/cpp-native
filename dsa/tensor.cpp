@@ -21,6 +21,8 @@
 #include "tensor.h"
 #include "matrix.h"
 
+namespace dsa {
+
 Tensor::Tensor() : data(0, std::vector<Matrix>(0, 0)) {
 
 }
@@ -30,6 +32,10 @@ Tensor::Tensor(int rows) : data(rows, std::vector<Matrix>(0, 0)) {
 }
 
 Tensor::Tensor(int rows, int cols) : data(rows, std::vector<Matrix>(cols, 0)) {
+
+}
+
+Tensor::~Tensor() {
 
 }
 
@@ -48,3 +54,5 @@ int Tensor::getRows() const {
 int Tensor::getCols() const {
     return data[0].size();
 }
+
+} // namespace dsa

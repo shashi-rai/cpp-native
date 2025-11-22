@@ -18,38 +18,43 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef DSA_MATRIX_H
-#define DSA_MATRIX_H
+#ifndef QFT_FIELD_H
+#define QFT_FIELD_H
 
-#include <iostream>
+#include <string>
 #include <vector>
 
-namespace dsa {
+namespace qft {
 
-class Matrix {
-    std::vector<std::vector<double> > data;
+class Field {
+    std::string name;
+    short spin;
+    double mass;
+    double charge;
 public:
     // Constructors
-    Matrix();
-    Matrix(int rows);
-    Matrix(int rows, int cols);
+    Field();
+    Field(std::string name);
+    Field(std::string name, short spin, double mass, double charge);
 
     // Destructors
-    ~Matrix();
+    ~Field();
 
-    // Access operator
-    double& operator()(int row, int col) { return data[row][col]; }
-    const double& operator()(int row, int col) const { return data[row][col]; }
+    // Getters
+    std::string getName() const { return name; }
+    short getSpin() const { return spin; }
+    double getMass() const { return mass; }
+    double getCharge() const { return charge; }
 
-    // Additional methods
-    void set(int row, int col, double value);
-    double get(int row, int col) const;
-    int getRows() const;
-    int getCols() const;
+    // Setters
+    void setName(const std::string& name) { this->name = name; }
+    void setSpin(short value) { spin = value; }
+    void setMass(double value) { mass = value; }
+    void setCharge(double value) { charge = value; }
 };
 
-typedef std::vector<Matrix > MatrixArray;
+typedef std::vector<Field > FieldArray;
 
-} // namespace dsa
+} // namespace qft
 
-#endif //DSA_MATRIX_H
+#endif //QFT_FIELD_H

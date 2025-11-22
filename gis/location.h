@@ -18,38 +18,43 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef DSA_MATRIX_H
-#define DSA_MATRIX_H
+#ifndef GIS_LOCATION_H
+#define GIS_LOCATION_H
 
-#include <iostream>
 #include <vector>
 
-namespace dsa {
+namespace gis {
 
-class Matrix {
-    std::vector<std::vector<double> > data;
+class Location {
+    double latitude;
+    double longitude;
+    double altitude;
+    long timestamp;
 public:
     // Constructors
-    Matrix();
-    Matrix(int rows);
-    Matrix(int rows, int cols);
+    Location();
+    Location(double latitude, double longitude);
+    Location(double latitude, double longitude, long timestamp);
+    Location(double latitude, double longitude, double altitude, long timestamp);
 
     // Destructors
-    ~Matrix();
+    ~Location();
 
-    // Access operator
-    double& operator()(int row, int col) { return data[row][col]; }
-    const double& operator()(int row, int col) const { return data[row][col]; }
+    // Getters
+    double getLatitude() const { return latitude; }
+    double getLongitude() const { return longitude; }
+    double getAltitude() const { return altitude; }
+    long getTimestamp() const { return timestamp; }
 
-    // Additional methods
-    void set(int row, int col, double value);
-    double get(int row, int col) const;
-    int getRows() const;
-    int getCols() const;
+    // Setters
+    void setLatitude(double value) { latitude = value; }
+    void setLongitude(double value) { longitude = value; }
+    void setAltitude(double value) { altitude = value; }
+    void setTimestamp(long value) { timestamp = value; }
 };
 
-typedef std::vector<Matrix > MatrixArray;
+typedef std::vector<Location > LocationArray;
 
-} // namespace dsa
+} // namespace gis
 
-#endif //DSA_MATRIX_H
+#endif //GIS_LOCATION_H

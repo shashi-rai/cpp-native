@@ -24,16 +24,16 @@
 #include "dsa/tensor.h"
 
 int main() {
-    Matrix mat(3, 3);
+    dsa::Matrix mat(3, 3);
     mat.set(1, 1, 5.0);
     std::cout << "Matrix: " << mat.getRows() << " rows, " << mat.getCols() << " columns" << std::endl;
     std::cout << "Value at (1,1): " << mat.get(1, 1) << std::endl;
 
-    Tensor tensor(2, 2);
+    dsa::Tensor tensor(2, 2);
     tensor.set(1, 1, mat);
     std::cout << "Tensor: ";
     std::cout << tensor.getRows() << " rows, " << tensor.getCols() << " columns" << std::endl;
-    Matrix retrievedMat = tensor.get(1, 1);
+    dsa::Matrix retrievedMat = tensor.get(1, 1);
     std::cout << "Retrieved Matrix from Tensor at (1,1): " << retrievedMat.getRows() << " rows, " << retrievedMat.getCols() << " columns" << std::endl;
     std::cout << "Value at (1,1) in retrieved Matrix: " << retrievedMat.get(1, 1) << std::endl;
     

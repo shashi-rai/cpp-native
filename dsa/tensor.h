@@ -25,6 +25,8 @@
 #include <vector>
 #include "matrix.h"
 
+namespace dsa {
+
 class Tensor {
     std::vector<std::vector<Matrix> > data;
 public:
@@ -32,6 +34,9 @@ public:
     Tensor();
     Tensor(int rows);
     Tensor(int rows, int cols);
+
+    // Destructors
+    ~Tensor();
 
     // Access operator
     Matrix& operator()(int row, int col) { return data[row][col]; }
@@ -45,5 +50,7 @@ public:
 };
 
 typedef std::vector<Tensor > TensorArray;
+
+} // namespace dsa
 
 #endif //DSA_TENSOR_H

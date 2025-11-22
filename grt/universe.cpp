@@ -18,38 +18,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef DSA_MATRIX_H
-#define DSA_MATRIX_H
+#include "universe.h"
 
-#include <iostream>
-#include <vector>
+namespace grt {
 
-namespace dsa {
+Universe::Universe() : name(""), mass(0.0), gravity(0.0) {
 
-class Matrix {
-    std::vector<std::vector<double> > data;
-public:
-    // Constructors
-    Matrix();
-    Matrix(int rows);
-    Matrix(int rows, int cols);
+}
 
-    // Destructors
-    ~Matrix();
+Universe::Universe(std::string name) : name(name), mass(0.0), gravity(0.0) {
 
-    // Access operator
-    double& operator()(int row, int col) { return data[row][col]; }
-    const double& operator()(int row, int col) const { return data[row][col]; }
+}
 
-    // Additional methods
-    void set(int row, int col, double value);
-    double get(int row, int col) const;
-    int getRows() const;
-    int getCols() const;
-};
+Universe::Universe(std::string name, double mass, double gravity)
+    : name(name), mass(mass), gravity(gravity) {
 
-typedef std::vector<Matrix > MatrixArray;
+}
 
-} // namespace dsa
+Universe::~Universe() {
 
-#endif //DSA_MATRIX_H
+}
+
+} // namespace grt

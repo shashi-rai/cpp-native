@@ -18,38 +18,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef DSA_MATRIX_H
-#define DSA_MATRIX_H
+#include "celestial.h"
 
-#include <iostream>
-#include <vector>
+namespace grt {
 
-namespace dsa {
+Celestial::Celestial() : name(""), rotation(0.0), revolution(0.0), mass(0.0), gravity(0.0) {
 
-class Matrix {
-    std::vector<std::vector<double> > data;
-public:
-    // Constructors
-    Matrix();
-    Matrix(int rows);
-    Matrix(int rows, int cols);
+}
 
-    // Destructors
-    ~Matrix();
+Celestial::Celestial(std::string name) : name(name), rotation(0.0), revolution(0.0), mass(0.0), gravity(0.0) {
 
-    // Access operator
-    double& operator()(int row, int col) { return data[row][col]; }
-    const double& operator()(int row, int col) const { return data[row][col]; }
+}
 
-    // Additional methods
-    void set(int row, int col, double value);
-    double get(int row, int col) const;
-    int getRows() const;
-    int getCols() const;
-};
+Celestial::Celestial(std::string name, float rotation, float revolution, double mass, double gravity)
+    : name(name), rotation(rotation), revolution(revolution), mass(mass), gravity(gravity) {
 
-typedef std::vector<Matrix > MatrixArray;
+}
 
-} // namespace dsa
+Celestial::~Celestial() {
 
-#endif //DSA_MATRIX_H
+}
+
+} // namespace grt

@@ -20,6 +20,8 @@
 
 #include "matrix.h"
 
+namespace dsa {
+
 Matrix::Matrix() : data(0, std::vector<double>(0, 0)) {
 
 }
@@ -29,6 +31,10 @@ Matrix::Matrix(int rows) : data(rows, std::vector<double>(0, 0)) {
 }
 
 Matrix::Matrix(int rows, int cols) : data(rows, std::vector<double>(cols, 0)) {
+
+}
+
+Matrix::~Matrix() {
 
 }
 
@@ -47,3 +53,5 @@ int Matrix::getRows() const {
 int Matrix::getCols() const {
     return data[0].size();
 }
+
+} // namespace dsa

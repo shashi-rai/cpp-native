@@ -18,38 +18,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef DSA_MATRIX_H
-#define DSA_MATRIX_H
+#include "tissue.h"
 
-#include <iostream>
-#include <vector>
+namespace bio {
 
-namespace dsa {
+Tissue::Tissue() : name("") {
 
-class Matrix {
-    std::vector<std::vector<double> > data;
-public:
-    // Constructors
-    Matrix();
-    Matrix(int rows);
-    Matrix(int rows, int cols);
+}
 
-    // Destructors
-    ~Matrix();
+Tissue::Tissue(std::string name) : name(name) {
 
-    // Access operator
-    double& operator()(int row, int col) { return data[row][col]; }
-    const double& operator()(int row, int col) const { return data[row][col]; }
+}
 
-    // Additional methods
-    void set(int row, int col, double value);
-    double get(int row, int col) const;
-    int getRows() const;
-    int getCols() const;
-};
+Tissue::~Tissue() {
 
-typedef std::vector<Matrix > MatrixArray;
+}
 
-} // namespace dsa
-
-#endif //DSA_MATRIX_H
+} // namespace bio

@@ -18,38 +18,46 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef DSA_MATRIX_H
-#define DSA_MATRIX_H
+#ifndef GRT_CELESTIAL_H
+#define GRT_CELESTIAL_H
 
-#include <iostream>
+#include <string>
 #include <vector>
 
-namespace dsa {
+namespace grt {
 
-class Matrix {
-    std::vector<std::vector<double> > data;
+class Celestial {
+    std::string name;
+    float rotation;
+    float revolution;
+    double mass;
+    double gravity;
 public:
     // Constructors
-    Matrix();
-    Matrix(int rows);
-    Matrix(int rows, int cols);
+    Celestial();
+    Celestial(std::string name);
+    Celestial(std::string name, float rotation, float revolution, double mass, double gravity);
 
     // Destructors
-    ~Matrix();
+    ~Celestial();
 
-    // Access operator
-    double& operator()(int row, int col) { return data[row][col]; }
-    const double& operator()(int row, int col) const { return data[row][col]; }
+    // Getters
+    std::string getName() const { return name; }
+    float getRotation() const { return rotation; }
+    float getRevolution() const { return revolution; }
+    double getMass() const { return mass; }
+    double getGravity() const { return gravity; }
 
-    // Additional methods
-    void set(int row, int col, double value);
-    double get(int row, int col) const;
-    int getRows() const;
-    int getCols() const;
+    // Setters
+    void setName(const std::string& name) { this->name = name; }
+    void setRotation(float value) { rotation = value; }
+    void setRevolution(float value) { revolution = value; }
+    void setMass(double value) { mass = value; }
+    void setGravity(double value) { gravity = value; }
 };
 
-typedef std::vector<Matrix > MatrixArray;
+typedef std::vector<Celestial > CelestialArray;
 
-} // namespace dsa
+} // namespace grt
 
-#endif //DSA_MATRIX_H
+#endif //GRT_CELESTIAL_H

@@ -18,38 +18,31 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef DSA_MATRIX_H
-#define DSA_MATRIX_H
+#include "location.h"
 
-#include <iostream>
-#include <vector>
+namespace gis {
 
-namespace dsa {
+Location::Location() : latitude(0.0), longitude(0.0), altitude(0.0), timestamp(0L) {
 
-class Matrix {
-    std::vector<std::vector<double> > data;
-public:
-    // Constructors
-    Matrix();
-    Matrix(int rows);
-    Matrix(int rows, int cols);
+}
 
-    // Destructors
-    ~Matrix();
+Location::Location(double latitude, double longitude)
+    : latitude(latitude), longitude(longitude), altitude(0.0), timestamp(0L) {
 
-    // Access operator
-    double& operator()(int row, int col) { return data[row][col]; }
-    const double& operator()(int row, int col) const { return data[row][col]; }
+}
 
-    // Additional methods
-    void set(int row, int col, double value);
-    double get(int row, int col) const;
-    int getRows() const;
-    int getCols() const;
-};
+Location::Location(double latitude, double longitude, long timestamp)
+    : latitude(latitude), longitude(longitude), altitude(0.0), timestamp(timestamp) {
 
-typedef std::vector<Matrix > MatrixArray;
+}
 
-} // namespace dsa
+Location::Location(double latitude, double longitude, double altitude, long timestamp)
+    : latitude(latitude), longitude(longitude), altitude(altitude), timestamp(timestamp) {
 
-#endif //DSA_MATRIX_H
+}
+
+Location::~Location() {
+
+}
+
+} // namespace gis
