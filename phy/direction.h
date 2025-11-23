@@ -1,0 +1,55 @@
+// Copyright (c) 2018 Bhojpur Consulting Private Limited, India. All rights reserved.
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+#ifndef PHY_DIRECTION_H
+#define PHY_DIRECTION_H
+
+#include <vector>
+
+namespace phy {
+
+class Direction {
+    double x;
+    double y;
+    double z;
+public:
+    // Constructors
+    Direction();
+    Direction(double x, double y, double z);
+
+    // Destructors
+    ~Direction();
+
+    // Getters
+    double getX() const { return x; }
+    double getY() const { return y; }
+    double getZ() const { return z; }
+
+    // Setters
+    void setX(const double value) { this->x = value; }
+    void setY(const double value) { this->y = value; }
+    void setZ(const double value) { this->z = value; }
+};
+
+typedef std::vector<Direction > DirectionArray;
+
+} // namespace phy
+
+#endif //PHY_DIRECTION_H

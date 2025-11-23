@@ -25,7 +25,7 @@ RMCLEAN	 = rm -f
 
 LIBMAKR	 = ar
 LIBFOLDR = ../lib
-LIBNAME	 = libbio.a
+LIBNAME	 = libphy.a
 LIBFILES = $(LIBFOLDR)/$(LIBNAME)
 OBJFOLDR = ../obj
 OBJFILES = $(OBJFOLDR)/*.o
@@ -45,44 +45,59 @@ clean-libs: clean-custom
 	${RMCLEAN} $(LIBFILES)
 
 $(LIBFOLDR)/$(LIBNAME): \
-		$(OBJFOLDR)/base.o \
-		$(OBJFOLDR)/cell.o \
-		$(OBJFOLDR)/chromosome.o \
-		$(OBJFOLDR)/gene.o \
-		$(OBJFOLDR)/nucleotide.o \
-		$(OBJFOLDR)/phosphate.o \
-		$(OBJFOLDR)/sugar.o \
-		$(OBJFOLDR)/tissue.o
+		$(OBJFOLDR)/body.o \
+		$(OBJFOLDR)/charge.o \
+		$(OBJFOLDR)/direction.o \
+		$(OBJFOLDR)/energy.o \
+		$(OBJFOLDR)/event.o \
+		$(OBJFOLDR)/force.o \
+		$(OBJFOLDR)/mass.o \
+		$(OBJFOLDR)/momentum.o \
+		$(OBJFOLDR)/space.o \
+		$(OBJFOLDR)/time.o \
+		$(OBJFOLDR)/unit.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
-		$(OBJFOLDR)/base.o \
-		$(OBJFOLDR)/cell.o \
-		$(OBJFOLDR)/chromosome.o \
-		$(OBJFOLDR)/gene.o \
-		$(OBJFOLDR)/nucleotide.o \
-		$(OBJFOLDR)/phosphate.o \
-		$(OBJFOLDR)/sugar.o \
-		$(OBJFOLDR)/tissue.o
+		$(OBJFOLDR)/body.o \
+		$(OBJFOLDR)/charge.o \
+		$(OBJFOLDR)/direction.o \
+		$(OBJFOLDR)/energy.o \
+		$(OBJFOLDR)/event.o \
+		$(OBJFOLDR)/force.o \
+		$(OBJFOLDR)/mass.o \
+		$(OBJFOLDR)/momentum.o \
+		$(OBJFOLDR)/space.o \
+		$(OBJFOLDR)/time.o \
+		$(OBJFOLDR)/unit.o
 
-$(OBJFOLDR)/base.o: base.cpp
-	$(CPPTOOL) -c base.cpp -o $(OBJFOLDR)/base.o $(CXXFLAGS)
+$(OBJFOLDR)/body.o: body.cpp
+	$(CPPTOOL) -c body.cpp -o $(OBJFOLDR)/body.o $(CXXFLAGS)
 
-$(OBJFOLDR)/cell.o: cell.cpp
-	$(CPPTOOL) -c cell.cpp -o $(OBJFOLDR)/cell.o $(CXXFLAGS)
+$(OBJFOLDR)/charge.o: charge.cpp
+	$(CPPTOOL) -c charge.cpp -o $(OBJFOLDR)/charge.o $(CXXFLAGS)
 
-$(OBJFOLDR)/chromosome.o: chromosome.cpp
-	$(CPPTOOL) -c chromosome.cpp -o $(OBJFOLDR)/chromosome.o $(CXXFLAGS)
+$(OBJFOLDR)/direction.o: direction.cpp
+	$(CPPTOOL) -c direction.cpp -o $(OBJFOLDR)/direction.o $(CXXFLAGS)
 
-$(OBJFOLDR)/gene.o: gene.cpp
-	$(CPPTOOL) -c gene.cpp -o $(OBJFOLDR)/gene.o $(CXXFLAGS)
+$(OBJFOLDR)/energy.o: energy.cpp
+	$(CPPTOOL) -c energy.cpp -o $(OBJFOLDR)/energy.o $(CXXFLAGS)
 
-$(OBJFOLDR)/nucleotide.o: nucleotide.cpp
-	$(CPPTOOL) -c nucleotide.cpp -o $(OBJFOLDR)/nucleotide.o $(CXXFLAGS)
+$(OBJFOLDR)/event.o: event.cpp
+	$(CPPTOOL) -c event.cpp -o $(OBJFOLDR)/event.o $(CXXFLAGS)
 
-$(OBJFOLDR)/phosphate.o: phosphate.cpp
-	$(CPPTOOL) -c phosphate.cpp -o $(OBJFOLDR)/phosphate.o $(CXXFLAGS)
+$(OBJFOLDR)/force.o: force.cpp
+	$(CPPTOOL) -c force.cpp -o $(OBJFOLDR)/force.o $(CXXFLAGS)
 
-$(OBJFOLDR)/sugar.o: sugar.cpp
-	$(CPPTOOL) -c sugar.cpp -o $(OBJFOLDR)/sugar.o $(CXXFLAGS)
+$(OBJFOLDR)/mass.o: mass.cpp
+	$(CPPTOOL) -c mass.cpp -o $(OBJFOLDR)/mass.o $(CXXFLAGS)
 
-$(OBJFOLDR)/tissue.o: tissue.cpp
-	$(CPPTOOL) -c tissue.cpp -o $(OBJFOLDR)/tissue.o $(CXXFLAGS)
+$(OBJFOLDR)/momentum.o: momentum.cpp
+	$(CPPTOOL) -c momentum.cpp -o $(OBJFOLDR)/momentum.o $(CXXFLAGS)
+
+$(OBJFOLDR)/space.o: space.cpp
+	$(CPPTOOL) -c space.cpp -o $(OBJFOLDR)/space.o $(CXXFLAGS)
+
+$(OBJFOLDR)/time.o: time.cpp
+	$(CPPTOOL) -c time.cpp -o $(OBJFOLDR)/time.o $(CXXFLAGS)
+
+$(OBJFOLDR)/unit.o: unit.cpp
+	$(CPPTOOL) -c unit.cpp -o $(OBJFOLDR)/unit.o $(CXXFLAGS)

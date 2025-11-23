@@ -6,8 +6,10 @@ files needed for compilation of the final program.
 ## Core Libraries
 
 1. [libbio.a](/lib/libbio.a) - biological algorithms
-2. [libdsa.a](/lib/libdsa.a) - data structure algorithms
-3. [libgis.a](/lib/libgis.a) - geospatial system algorithms
-4. [libgrt.a](/lib/libgrt.a) - general relativity algorithms
-5. [libqft.a](/lib/libqft.a) - quantum field algorithms
-6. [libweb.a](/lib/libweb.a) - web development system
+2. [libche.a](/lib/libche.a) - chemical algorithms
+3. [libdsa.a](/lib/libdsa.a) - data structure algorithms
+4. [libgis.a](/lib/libgis.a) - geospatial system algorithms
+5. [libgrt.a](/lib/libgrt.a) - general relativity algorithms
+6. [libphy.a](/lib/libphy.a) - physical algorithms
+7. [libqft.a](/lib/libqft.a) - quantum field algorithms
+8. [libweb.a](/lib/libweb.a) - web development system

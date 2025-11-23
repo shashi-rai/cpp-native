@@ -24,11 +24,13 @@ The following folders serve specific purpose with regard to software development
 2. [lib](/lib/) - pre-compiled library files
 3. [obj](/obj/) - pre-compiled object files
 4. [bio](/bio/) - biological algorithms
-5. [dsa](/dsa/) - data structure algorithms
-6. [gis](/gis/) - geospatial system algorithms
-7. [grt](/grt/) - general relativity algorithms
-8. [qft](/qft/) - quantum field algorithms
-9. [web](/web/) - web development system
+5. [che](/che/) - chemical algorithms
+6. [dsa](/dsa/) - data structure algorithms
+7. [gis](/gis/) - geospatial system algorithms
+8. [grt](/grt/) - general relativity algorithms
+9. [phy](/phy/) - physical algorithms
+10. [qft](/qft/) - quantum field algorithms
+11. [web](/web/) - web development system
 
 ## Source Code Compilation
 
