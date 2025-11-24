@@ -30,7 +30,8 @@ The following folders serve specific purpose with regard to software development
 8. [grt](/grt/) - general relativity algorithms
 9. [phy](/phy/) - physical algorithms
 10. [qft](/qft/) - quantum field algorithms
-11. [web](/web/) - web development system
+11. [shp](/shp/) - geometrical shape algorithms
+12. [web](/web/) - web development system
 
 ## Source Code Compilation
 

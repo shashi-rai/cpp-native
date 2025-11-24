@@ -12,4 +12,5 @@ files needed for compilation of the final program.
 5. [libgrt.a](/lib/libgrt.a) - general relativity algorithms
 6. [libphy.a](/lib/libphy.a) - physical algorithms
 7. [libqft.a](/lib/libqft.a) - quantum field algorithms
-8. [libweb.a](/lib/libweb.a) - web development system
+8. [libshp.a](/lib/libshp.a) - geometrical shape algorithms
+9. [libweb.a](/lib/libweb.a) - web development system
