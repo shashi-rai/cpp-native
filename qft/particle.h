@@ -21,34 +21,34 @@
 #ifndef QFT_PARTICLE_H
 #define QFT_PARTICLE_H
 
-#include <string>
 #include <vector>
+#include "../shp/shape.h"
 
 namespace qft {
 
 class Particle {
-    std::string name;
-    short spin;
+    shp::Shape* physical;
+    float spin;
     double mass;
     double charge;
 public:
     // Constructors
     Particle();
-    Particle(std::string name);
-    Particle(std::string name, short spin, double mass, double charge);
+    Particle(shp::Shape* physical);
+    Particle(shp::Shape* physical, float spin, double mass, double charge);
 
     // Destructors
     ~Particle();
 
     // Getters
-    std::string getName() const { return name; }
-    short getSpin() const { return spin; }
+    shp::Shape* getPhysical() const { return physical; }
+    float getSpin() const { return spin; }
     double getMass() const { return mass; }
     double getCharge() const { return charge; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
-    void setSpin(short value) { spin = value; }
+    void setPhysical(shp::Shape* structure) { this->physical = structure; }
+    void setSpin(float value) { spin = value; }
     void setMass(double value) { mass = value; }
     void setCharge(double value) { charge = value; }
 };

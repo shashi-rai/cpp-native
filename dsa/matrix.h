@@ -21,7 +21,10 @@
 #ifndef DSA_MATRIX_H
 #define DSA_MATRIX_H
 
+#include <ctime>
 #include <iostream>
+#include <random>
+#include <sstream>
 #include <vector>
 
 namespace dsa {
@@ -31,7 +34,7 @@ class Matrix {
 public:
     // Constructors
     Matrix();
-    Matrix(int rows);
+    Matrix(int dim);
     Matrix(int rows, int cols);
 
     // Destructors
@@ -42,10 +45,17 @@ public:
     const double& operator()(int row, int col) const { return data[row][col]; }
 
     // Additional methods
+    void set(double value);
     void set(int row, int col, double value);
     double get(int row, int col) const;
     int getRows() const;
     int getCols() const;
+    void resize(int rows, int cols);
+    Matrix copy();
+    void clear();
+    void rand(float min, float max);
+    void randnorm(float mean, float stddev);
+    void print();
 };
 
 typedef std::vector<Matrix > MatrixArray;

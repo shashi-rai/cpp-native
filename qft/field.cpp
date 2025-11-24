@@ -22,21 +22,21 @@
 
 namespace qft {
 
-Field::Field() : name(""), spin(0), mass(0.0), charge(0.0) {
-
+Field::Field() : spin(0.0f), mass(0.0), charge(0.0) {
+    setPhysical(nullptr);
 }
 
-Field::Field(std::string name) : name(name), spin(0), mass(0.0), charge(0.0) {
-
+Field::Field(shp::Shape* physical) : spin(0.0f), mass(0.0), charge(0.0) {
+    setPhysical(physical);
 }
 
-Field::Field(std::string name, short spin, double mass, double charge)
-    : name(name), spin(spin), mass(mass), charge(charge) {
-
+Field::Field(shp::Shape* physical, float spin, double mass, double charge)
+        : spin(spin), mass(mass), charge(charge) {
+    setPhysical(physical);
 }
 
 Field::~Field() {
-
+    setPhysical(nullptr);
 }
 
 } // namespace qft

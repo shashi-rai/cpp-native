@@ -22,21 +22,21 @@
 
 namespace qft {
 
-Particle::Particle() : name(""), spin(0), mass(0.0), charge(0.0) {
-
+Particle::Particle() : spin(0.0f), mass(0.0), charge(0.0) {
+    setPhysical(nullptr);
 }
 
-Particle::Particle(std::string name) : name(name), spin(0), mass(0.0), charge(0.0) {
-
+Particle::Particle(shp::Shape* physical) : spin(0.0f), mass(0.0), charge(0.0) {
+    setPhysical(physical);
 }
 
-Particle::Particle(std::string name, short spin, double mass, double charge)
-    : name(name), spin(spin), mass(mass), charge(charge) {
-
+Particle::Particle(shp::Shape* physical, float spin, double mass, double charge)
+        : spin(spin), mass(mass), charge(charge) {
+    setPhysical(physical);
 }
 
 Particle::~Particle() {
-
+    setPhysical(nullptr);
 }
 
 } // namespace qft

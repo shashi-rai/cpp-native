@@ -21,32 +21,49 @@
 #ifndef DSA_TENSOR_H
 #define DSA_TENSOR_H
 
+#include <ctime>
 #include <iostream>
+#include <random>
+#include <sstream>
 #include <vector>
 #include "matrix.h"
 
 namespace dsa {
 
 class Tensor {
-    std::vector<std::vector<Matrix> > data;
+    MatrixArray matrices;
 public:
     // Constructors
     Tensor();
-    Tensor(int rows);
-    Tensor(int rows, int cols);
+    Tensor(int dims);
+    Tensor(int dims, int rows, int cols);
 
     // Destructors
     ~Tensor();
 
     // Access operator
-    Matrix& operator()(int row, int col) { return data[row][col]; }
-    const Matrix& operator()(int row, int col) const { return data[row][col]; }
+    Matrix& operator()(int index) { return matrices[index]; }
+    const Matrix& operator()(int index) const { return matrices[index]; }
+
+    double& operator()(int dim, int row, int col) { return matrices[dim](row, col); }
+	const double& operator()(int dim, int row, int col) const { return matrices[dim](row, col); }
 
     // Additional methods
-    void set(int row, int col, Matrix value);
-    Matrix get(int row, int col) const;
+    void set(double value);
+    void set(int index, double value);
+    void set(int index, Matrix value);
+    Matrix get(int index) const;
+    int getDims() const;
     int getRows() const;
     int getCols() const;
+    Tensor copy();
+    void clear();
+    void rand(float min, float max);
+    void randnorm(float mean, float stddev);
+    void print();
+    void print(int index);
+private:
+    void resize(int dims, int rows, int cols);
 };
 
 typedef std::vector<Tensor > TensorArray;
