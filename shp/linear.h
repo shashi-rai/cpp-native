@@ -38,6 +38,10 @@ public:
     // Destructors
     ~Linear();
 
+    // Access operator
+    Point& operator()(int x) { return points[x]; }
+    const Point& operator()(int x) const { return points[x]; }
+
     // Getters
     PointArray getPoints() const { return points; }
 

@@ -22,21 +22,21 @@
 
 namespace shp {
 
-Curvature::Curvature() : Point(), timestamp(0L), upwards(), downwards() {
+Curvature::Curvature() : Point(), timestamp(0L), change() {
 
 }
 
-Curvature::Curvature(std::string name) : Point(name), timestamp(0L), upwards(), downwards() {
+Curvature::Curvature(std::string name) : Point(name), timestamp(0L), change() {
 
 }
 
 Curvature::Curvature(std::string name, long timestamp)
-        : Point(name), timestamp(timestamp), upwards(), downwards() {
+        : Point(name), timestamp(timestamp), change() {
 
 }
 
-Curvature::Curvature(std::string name, long timestamp, PointArray& upwards, PointArray& downwards)
-        : Point(name), timestamp(timestamp), upwards(upwards), downwards(downwards) {
+Curvature::Curvature(std::string name, long timestamp, PointArray& change)
+        : Point(name), timestamp(timestamp), change(change) {
 
 }
 

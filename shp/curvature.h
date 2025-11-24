@@ -29,27 +29,28 @@ namespace shp {
 
 class Curvature : public Point {
     long timestamp;
-    PointArray upwards;
-    PointArray downwards;
+    PointArray change;
 public:
     // Constructors
     Curvature();
     Curvature(std::string name);
     Curvature(std::string name, long timestamp);
-    Curvature(std::string name, long timestamp, PointArray& upwards, PointArray& downwards);
+    Curvature(std::string name, long timestamp, PointArray& change);
 
     // Destructors
     ~Curvature();
 
+    // Access operator
+    Point& operator()(int index) { return change[index]; }
+    const Point& operator()(int index) const { return change[index]; }
+
     // Getters
     long getTimestamp() const { return timestamp; }
-    PointArray getUpwards() const { return upwards; }
-    PointArray getDownwards() const { return downwards; }
+    PointArray getChange() const { return change; }
 
     // Setters
     void setTimestamp(long value) { this->timestamp = value; }
-    void setUpwards(const PointArray& points) { this->upwards = points; }
-    void setDownwards(const PointArray& points) { this->downwards = points; }
+    void setChange(const PointArray& points) { this->change = points; }
 };
 
 typedef std::vector<Curvature > CurvatureArray;

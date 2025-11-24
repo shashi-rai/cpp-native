@@ -39,6 +39,14 @@ public:
     // Destructors
     ~Cellular();
 
+    // Access operator
+    Planar& operator()(int y) { return planes[y]; }
+    const Planar& operator()(int y) const { return planes[y]; }
+    Linear& operator()(int x, int y) { return planes[y](x); }
+	const Linear& operator()(int x, int y) const { return planes[y](x); }
+    Point& operator()(int x, int y, int z) { return planes[z](y)(x); }
+	const Point& operator()(int x, int y, int z) const { return planes[z](y)(x); }
+
     // Getters
     PlanarArray getPlanes() const { return planes; }
 
