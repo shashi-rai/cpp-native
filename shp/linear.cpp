@@ -38,4 +38,17 @@ Linear::~Linear() {
 
 }
 
+int Linear::getPointCount() const {
+    return points.size();
+}
+
+Point Linear::get(int index) const {
+    return points[index];
+}
+
+void Linear::set(int index, const Point& object) {
+    this->points[index] = object;
+    return;
+}
+
 } // namespace shp

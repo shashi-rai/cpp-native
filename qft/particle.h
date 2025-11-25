@@ -23,10 +23,11 @@
 
 #include <vector>
 #include "../shp/shape.h"
+#include "../shp/point.h"
 
 namespace qft {
 
-class Particle {
+class Particle : public shp::Point {
     shp::Shape* physical;
     float spin;
     double mass;
@@ -34,6 +35,7 @@ class Particle {
 public:
     // Constructors
     Particle();
+    Particle(float spin, double mass, double charge);
     Particle(shp::Shape* physical);
     Particle(shp::Shape* physical, float spin, double mass, double charge);
 
@@ -51,6 +53,9 @@ public:
     void setSpin(float value) { spin = value; }
     void setMass(double value) { mass = value; }
     void setCharge(double value) { charge = value; }
+
+    // Additional methods
+    bool isStructured() const;
 };
 
 typedef std::vector<Particle > ParticleArray;

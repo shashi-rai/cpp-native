@@ -38,4 +38,8 @@ Shape::~Shape() {
     setOwner(nullptr);
 }
 
+bool Shape::isOwned() const {
+    return owner != nullptr;
+}
+
 } // namespace shp

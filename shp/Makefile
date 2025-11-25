@@ -47,19 +47,25 @@ clean-libs: clean-custom
 $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/axis.o \
 		$(OBJFOLDR)/cellular.o \
+		$(OBJFOLDR)/coordinate.o \
 		$(OBJFOLDR)/curvature.o \
 		$(OBJFOLDR)/linear.o \
+		$(OBJFOLDR)/phase.o \
 		$(OBJFOLDR)/planar.o \
 		$(OBJFOLDR)/point.o \
-		$(OBJFOLDR)/shape.o
+		$(OBJFOLDR)/shape.o \
+		$(OBJFOLDR)/wave.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
 		$(OBJFOLDR)/axis.o \
 		$(OBJFOLDR)/cellular.o \
+		$(OBJFOLDR)/coordinate.o \
 		$(OBJFOLDR)/curvature.o \
 		$(OBJFOLDR)/linear.o \
+		$(OBJFOLDR)/phase.o \
 		$(OBJFOLDR)/planar.o \
 		$(OBJFOLDR)/point.o \
-		$(OBJFOLDR)/shape.o
+		$(OBJFOLDR)/shape.o \
+		$(OBJFOLDR)/wave.o
 
 $(OBJFOLDR)/axis.o: axis.cpp
 	$(CPPTOOL) -c axis.cpp -o $(OBJFOLDR)/axis.o $(CXXFLAGS)
@@ -67,11 +73,17 @@ $(OBJFOLDR)/axis.o: axis.cpp
 $(OBJFOLDR)/cellular.o: cellular.cpp
 	$(CPPTOOL) -c cellular.cpp -o $(OBJFOLDR)/cellular.o $(CXXFLAGS)
 
+$(OBJFOLDR)/coordinate.o: coordinate.cpp
+	$(CPPTOOL) -c coordinate.cpp -o $(OBJFOLDR)/coordinate.o $(CXXFLAGS)
+
 $(OBJFOLDR)/curvature.o: curvature.cpp
 	$(CPPTOOL) -c curvature.cpp -o $(OBJFOLDR)/curvature.o $(CXXFLAGS)
 
 $(OBJFOLDR)/linear.o: linear.cpp
 	$(CPPTOOL) -c linear.cpp -o $(OBJFOLDR)/linear.o $(CXXFLAGS)
+
+$(OBJFOLDR)/phase.o: phase.cpp
+	$(CPPTOOL) -c phase.cpp -o $(OBJFOLDR)/phase.o $(CXXFLAGS)
 
 $(OBJFOLDR)/planar.o: planar.cpp
 	$(CPPTOOL) -c planar.cpp -o $(OBJFOLDR)/planar.o $(CXXFLAGS)
@@ -81,3 +93,6 @@ $(OBJFOLDR)/point.o: point.cpp
 
 $(OBJFOLDR)/shape.o: shape.cpp
 	$(CPPTOOL) -c shape.cpp -o $(OBJFOLDR)/shape.o $(CXXFLAGS)
+
+$(OBJFOLDR)/wave.o: wave.cpp
+	$(CPPTOOL) -c wave.cpp -o $(OBJFOLDR)/wave.o $(CXXFLAGS)

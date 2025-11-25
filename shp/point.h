@@ -28,24 +28,25 @@
 namespace shp {
 
 class Point : public Shape {
-    double intensity;
-    double gradient;
+    double amplitude;
+    float gradient;
 public:
     // Constructors
     Point();
     Point(std::string name);
-    Point(std::string name, double intensity, double gradient);
+    Point(std::string name, float gradient);
+    Point(std::string name, double amplitude, float gradient);
 
     // Destructors
     ~Point();
 
     // Getters
-    double getIntensity() const { return intensity; }
-    double getGradient() const { return gradient; }
+    double getAmplitude() const { return amplitude; }
+    float getGradient() const { return gradient; }
 
     // Setters
-    void setIntensity(double value) { this->intensity = value; }
-    void setGradient(double value) { this->gradient = value; }
+    void setAmplitude(double value) { this->amplitude = value; }
+    void setGradient(float value) { this->gradient = value; }
 };
 
 typedef std::vector<Point > PointArray;

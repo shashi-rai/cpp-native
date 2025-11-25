@@ -45,6 +45,9 @@ public:
     // Setters
     void setOwner(Shape* parent) { this->owner = parent; }
     void setName(const std::string& name) { this->name = name; }
+
+    // Additional methods
+    bool isOwned() const;
 };
 
 typedef std::vector<Shape > ShapeArray;

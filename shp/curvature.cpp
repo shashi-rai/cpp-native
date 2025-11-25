@@ -22,26 +22,34 @@
 
 namespace shp {
 
-Curvature::Curvature() : Point(), timestamp(0L), change() {
+Curvature::Curvature() : Point(), deforms() {
 
 }
 
-Curvature::Curvature(std::string name) : Point(name), timestamp(0L), change() {
+Curvature::Curvature(std::string name) : Point(name), deforms() {
 
 }
 
-Curvature::Curvature(std::string name, long timestamp)
-        : Point(name), timestamp(timestamp), change() {
-
-}
-
-Curvature::Curvature(std::string name, long timestamp, PointArray& change)
-        : Point(name), timestamp(timestamp), change(change) {
+Curvature::Curvature(std::string name, PhaseArray& deforms)
+        : Point(name), deforms(deforms) {
 
 }
 
 Curvature::~Curvature() {
 
+}
+
+int Curvature::getChangeCount() const {
+    return deforms.size();
+}
+
+Phase Curvature::get(int index) const {
+    return deforms[index];
+}
+
+void Curvature::set(int index, const Phase& object) {
+    this->deforms[index] = object;
+    return;
 }
 
 } // namespace shp

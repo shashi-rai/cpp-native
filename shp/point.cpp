@@ -22,16 +22,21 @@
 
 namespace shp {
 
-Point::Point() : Shape(), intensity(0.0), gradient(0.0) {
+Point::Point() : Shape(), amplitude(0.0), gradient(0.0f) {
 
 }
 
-Point::Point(std::string name) : Shape(name), intensity(0.0), gradient(0.0) {
+Point::Point(std::string name) : Shape(name), amplitude(0.0), gradient(0.0f) {
 
 }
 
-Point::Point(std::string name, double intensity, double gradient)
-        : Shape(name), intensity(intensity), gradient(gradient) {
+Point::Point(std::string name, float gradient)
+        : Shape(name), amplitude(0.0), gradient(gradient) {
+
+}
+
+Point::Point(std::string name, double amplitude, float gradient)
+        : Shape(name), amplitude(amplitude), gradient(gradient) {
 
 }
 

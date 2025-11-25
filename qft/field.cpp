@@ -22,21 +22,52 @@
 
 namespace qft {
 
-Field::Field() : spin(0.0f), mass(0.0), charge(0.0) {
+Field::Field()
+        : defaultSpin(0.0f), defaultMass(0.0), defaultCharge(0.0) {
     setPhysical(nullptr);
 }
 
-Field::Field(shp::Shape* physical) : spin(0.0f), mass(0.0), charge(0.0) {
+Field::Field(shp::Shape* physical)
+        : defaultSpin(0.0f), defaultMass(0.0), defaultCharge(0.0) {
     setPhysical(physical);
 }
 
 Field::Field(shp::Shape* physical, float spin, double mass, double charge)
-        : spin(spin), mass(mass), charge(charge) {
+        : defaultSpin(spin), defaultMass(mass), defaultCharge(charge) {
     setPhysical(physical);
 }
 
 Field::~Field() {
     setPhysical(nullptr);
+}
+
+bool Field::isStructured() const {
+    return physical != nullptr;
+}
+
+void Field::changePoint(Action& action) {
+    int x = action.getCoordinate().getX();
+    int y = action.getCoordinate().getY();
+    int z = action.getCoordinate().getZ();
+    shp::Point received = action.getPoint();
+
+    // simply replace the existing Point found at specific coordinates
+    // with a new Point received from the Action item
+    this->get(x).get(y).set(z, received);
+    return;
+}
+
+Particle* Field::getDivergence(Action& action) const {
+    // TODO: how is particle destroyed
+    Particle* result = new Particle(defaultSpin, defaultMass, defaultCharge);
+    result->setAmplitude(0);
+    return result;
+}
+
+Particle* Field::getConvergence(Action& action) const {
+    // TODO: how is particle generated
+    Particle* result = new Particle(defaultSpin, defaultMass, defaultCharge);
+    return result;
 }
 
 } // namespace qft

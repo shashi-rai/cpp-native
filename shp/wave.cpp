@@ -18,44 +18,44 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef SHP_LINEAR_H
-#define SHP_LINEAR_H
-
-#include <string>
-#include <vector>
-#include "point.h"
+#include "wave.h"
 
 namespace shp {
 
-class Linear : public Point {
-    PointArray points;
-public:
-    // Constructors
-    Linear();
-    Linear(std::string name);
-    Linear(std::string name, PointArray& objects);
+Wave::Wave() : Curvature(), frequency(0L), length(0.0f), wavelets() {
 
-    // Destructors
-    ~Linear();
+}
 
-    // Access operator
-    Point& operator()(int x) { return points[x]; }
-    const Point& operator()(int x) const { return points[x]; }
+Wave::Wave(std::string name)
+        : Curvature(name), frequency(0L), length(0.0f), wavelets() {
 
-    // Getters
-    PointArray getPoints() const { return points; }
+}
 
-    // Setters
-    void setPoints(const PointArray& objects) { this->points = objects; }
+Wave::Wave(std::string name, long frequency, float length)
+        : Curvature(name), frequency(frequency), length(length), wavelets() {
 
-    // Additional methods
-    int getPointCount() const;
-    Point get(int index) const;
-    void set(int index, const Point& object);
-};
+}
 
-typedef std::vector<Linear > LinearArray;
+Wave::Wave(std::string name, long frequency, float length, CurvatureArray& wavelets)
+        : Curvature(name), frequency(frequency), length(length), wavelets(wavelets) {
+
+}
+
+Wave::~Wave() {
+
+}
+
+int Wave::getWaveletCount() const {
+    return wavelets.size();
+}
+
+Curvature Wave::get(int index) const {
+    return wavelets[index];
+}
+
+void Wave::set(int index, const Curvature& object) {
+    this->wavelets[index] = object;
+    return;
+}
 
 } // namespace shp
-
-#endif //SHP_LINEAR_H

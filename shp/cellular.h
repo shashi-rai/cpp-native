@@ -23,6 +23,7 @@
 
 #include <string>
 #include <vector>
+#include "coordinate.h"
 #include "planar.h"
 #include "point.h"
 
@@ -40,18 +41,23 @@ public:
     ~Cellular();
 
     // Access operator
-    Planar& operator()(int y) { return planes[y]; }
-    const Planar& operator()(int y) const { return planes[y]; }
-    Linear& operator()(int x, int y) { return planes[y](x); }
-	const Linear& operator()(int x, int y) const { return planes[y](x); }
-    Point& operator()(int x, int y, int z) { return planes[z](y)(x); }
-	const Point& operator()(int x, int y, int z) const { return planes[z](y)(x); }
+    Planar& operator()(int x) { return planes[x]; }
+    const Planar& operator()(int x) const { return planes[x]; }
+    Linear& operator()(int x, int y) { return planes[x](y); }
+	const Linear& operator()(int x, int y) const { return planes[x](y); }
+    Point& operator()(int x, int y, int z) { return planes[x](y)(z); }
+	const Point& operator()(int x, int y, int z) const { return planes[x](y)(z); }
 
     // Getters
     PlanarArray getPlanes() const { return planes; }
 
     // Setters
     void setPlanes(const PlanarArray& objects) { this->planes = objects; }
+
+    // Additional methods
+    int getPlaneCount() const;
+    Planar get(int index) const;
+    void set(int index, const Planar& object);
 };
 
 typedef std::vector<Cellular > CellularArray;

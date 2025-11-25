@@ -18,44 +18,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef SHP_LINEAR_H
-#define SHP_LINEAR_H
-
-#include <string>
-#include <vector>
-#include "point.h"
+#include "coordinate.h"
 
 namespace shp {
 
-class Linear : public Point {
-    PointArray points;
-public:
-    // Constructors
-    Linear();
-    Linear(std::string name);
-    Linear(std::string name, PointArray& objects);
+Coordinate::Coordinate() : x(0), y(0), z(0) {
 
-    // Destructors
-    ~Linear();
+}
 
-    // Access operator
-    Point& operator()(int x) { return points[x]; }
-    const Point& operator()(int x) const { return points[x]; }
+Coordinate::Coordinate(int x) : x(x), y(0), z(0) {
 
-    // Getters
-    PointArray getPoints() const { return points; }
+}
 
-    // Setters
-    void setPoints(const PointArray& objects) { this->points = objects; }
+Coordinate::Coordinate(int x, int y) : x(x), y(y), z(0) {
 
-    // Additional methods
-    int getPointCount() const;
-    Point get(int index) const;
-    void set(int index, const Point& object);
-};
+}
 
-typedef std::vector<Linear > LinearArray;
+Coordinate::Coordinate(int x, int y, int z) : x(x), y(y), z(z) {
+
+}
+
+Coordinate::~Coordinate() {
+
+}
 
 } // namespace shp
-
-#endif //SHP_LINEAR_H

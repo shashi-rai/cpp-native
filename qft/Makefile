@@ -45,11 +45,16 @@ clean-libs: clean-custom
 	${RMCLEAN} $(LIBFILES)
 
 $(LIBFOLDR)/$(LIBNAME): \
+		$(OBJFOLDR)/action.o \
 		$(OBJFOLDR)/field.o \
 		$(OBJFOLDR)/particle.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
+		$(OBJFOLDR)/action.o \
 		$(OBJFOLDR)/field.o \
 		$(OBJFOLDR)/particle.o
+
+$(OBJFOLDR)/action.o: action.cpp
+	$(CPPTOOL) -c action.cpp -o $(OBJFOLDR)/action.o $(CXXFLAGS)
 
 $(OBJFOLDR)/field.o: field.cpp
 	$(CPPTOOL) -c field.cpp -o $(OBJFOLDR)/field.o $(CXXFLAGS)

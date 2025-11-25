@@ -28,22 +28,22 @@ namespace shp {
 
 class Axis {
     std::string name;
-    double scaling;
+    float scaling;
 public:
     // Constructors
     Axis();
-    Axis(std::string name, double scaling);
+    Axis(std::string name, float scaling);
 
     // Destructors
     ~Axis();
 
     // Getters
     std::string getName() const { return name; }
-    double getScaling() const { return scaling; }
+    float getScaling() const { return scaling; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
-    void setScaling(double value) { this->scaling = value; }
+    void setScaling(float value) { this->scaling = value; }
 };
 
 typedef std::vector<Axis > AxisArray;

@@ -23,34 +23,36 @@
 
 #include <string>
 #include <vector>
+#include "phase.h"
 #include "point.h"
 
 namespace shp {
 
 class Curvature : public Point {
-    long timestamp;
-    PointArray change;
+    PhaseArray deforms;
 public:
     // Constructors
     Curvature();
     Curvature(std::string name);
-    Curvature(std::string name, long timestamp);
-    Curvature(std::string name, long timestamp, PointArray& change);
+    Curvature(std::string name, PhaseArray& deforms);
 
     // Destructors
     ~Curvature();
 
     // Access operator
-    Point& operator()(int index) { return change[index]; }
-    const Point& operator()(int index) const { return change[index]; }
+    Phase& operator()(int position) { return deforms[position]; }
+    const Phase& operator()(int position) const { return deforms[position]; }
 
     // Getters
-    long getTimestamp() const { return timestamp; }
-    PointArray getChange() const { return change; }
+    PhaseArray getDeforms() const { return deforms; }
 
     // Setters
-    void setTimestamp(long value) { this->timestamp = value; }
-    void setChange(const PointArray& points) { this->change = points; }
+    void setDeforms(const PhaseArray& states) { this->deforms = states; }
+
+    // Additional methods
+    int getChangeCount() const;
+    Phase get(int index) const;
+    void set(int index, const Phase& object);
 };
 
 typedef std::vector<Curvature > CurvatureArray;

@@ -18,44 +18,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef SHP_LINEAR_H
-#define SHP_LINEAR_H
+#include "action.h"
 
-#include <string>
-#include <vector>
-#include "point.h"
+namespace qft {
 
-namespace shp {
+Action::Action() : name(""), coordinate(), point() {
 
-class Linear : public Point {
-    PointArray points;
-public:
-    // Constructors
-    Linear();
-    Linear(std::string name);
-    Linear(std::string name, PointArray& objects);
+}
 
-    // Destructors
-    ~Linear();
+Action::Action(std::string name, shp::Coordinate& location, shp::Point& point)
+        : name(name), coordinate(location), point(point) {
 
-    // Access operator
-    Point& operator()(int x) { return points[x]; }
-    const Point& operator()(int x) const { return points[x]; }
+}
 
-    // Getters
-    PointArray getPoints() const { return points; }
+Action::~Action() {
 
-    // Setters
-    void setPoints(const PointArray& objects) { this->points = objects; }
+}
 
-    // Additional methods
-    int getPointCount() const;
-    Point get(int index) const;
-    void set(int index, const Point& object);
-};
-
-typedef std::vector<Linear > LinearArray;
-
-} // namespace shp
-
-#endif //SHP_LINEAR_H
+} // namespace qft

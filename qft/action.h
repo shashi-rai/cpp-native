@@ -18,44 +18,43 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef SHP_LINEAR_H
-#define SHP_LINEAR_H
+#ifndef QFT_ACTION_H
+#define QFT_ACTION_H
 
 #include <string>
 #include <vector>
-#include "point.h"
+#include "../shp/coordinate.h"
+#include "../shp/point.h"
 
-namespace shp {
+namespace qft {
 
-class Linear : public Point {
-    PointArray points;
+class Action {
+    std::string name;
+    shp::Coordinate coordinate;
+    shp::Point point;
 public:
     // Constructors
-    Linear();
-    Linear(std::string name);
-    Linear(std::string name, PointArray& objects);
+    Action();
+    Action(std::string name, shp::Coordinate& location, shp::Point& point);
 
     // Destructors
-    ~Linear();
-
-    // Access operator
-    Point& operator()(int x) { return points[x]; }
-    const Point& operator()(int x) const { return points[x]; }
+    ~Action();
 
     // Getters
-    PointArray getPoints() const { return points; }
+    std::string getName() const { return name; }
+    shp::Coordinate getCoordinate() const { return coordinate; }
+    shp::Point getPoint() const { return point; }
 
     // Setters
-    void setPoints(const PointArray& objects) { this->points = objects; }
+    void setName(const std::string& name) { this->name = name; }
+    void setCoordinate(const shp::Coordinate& location) { this->coordinate = location; }
+    void setPoint(const shp::Point& object) { this->point = object; }
 
     // Additional methods
-    int getPointCount() const;
-    Point get(int index) const;
-    void set(int index, const Point& object);
 };
 
-typedef std::vector<Linear > LinearArray;
+typedef std::vector<Action > ActionArray;
 
-} // namespace shp
+} // namespace qft
 
-#endif //SHP_LINEAR_H
+#endif //QFT_ACTION_H

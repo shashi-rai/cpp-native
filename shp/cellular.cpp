@@ -39,4 +39,17 @@ Cellular::~Cellular() {
 
 }
 
+int Cellular::getPlaneCount() const {
+    return planes.size();
+}
+
+Planar Cellular::get(int index) const {
+    return planes[index];
+}
+
+void Cellular::set(int index, const Planar& object) {
+    this->planes[index] = object;
+    return;
+}
+
 } // namespace shp

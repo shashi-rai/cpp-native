@@ -18,44 +18,50 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef SHP_LINEAR_H
-#define SHP_LINEAR_H
+#ifndef SHP_WAVE_H
+#define SHP_WAVE_H
 
-#include <string>
 #include <vector>
-#include "point.h"
+#include "curvature.h"
 
 namespace shp {
 
-class Linear : public Point {
-    PointArray points;
+class Wave : public Curvature {
+    long frequency;
+    float length;
+    CurvatureArray wavelets;
 public:
     // Constructors
-    Linear();
-    Linear(std::string name);
-    Linear(std::string name, PointArray& objects);
+    Wave();
+    Wave(std::string name);
+    Wave(std::string name, long frequency, float length);
+    Wave(std::string name, long frequency, float length, CurvatureArray& wavelets);
 
     // Destructors
-    ~Linear();
+    ~Wave();
 
     // Access operator
-    Point& operator()(int x) { return points[x]; }
-    const Point& operator()(int x) const { return points[x]; }
+    Curvature& operator()(int index) { return wavelets[index]; }
+    const Curvature& operator()(int index) const { return wavelets[index]; }
 
     // Getters
-    PointArray getPoints() const { return points; }
+    long getFrequency() const { return frequency; }
+    float getLength() const { return length; }
+    CurvatureArray getWavelets() const { return wavelets; }
 
     // Setters
-    void setPoints(const PointArray& objects) { this->points = objects; }
+    void setFrequency(long value) { this->frequency = value; }
+    void setLength(float value) { this->length = value; }
+    void setWavelets(const CurvatureArray& curves) { this->wavelets = curves; }
 
     // Additional methods
-    int getPointCount() const;
-    Point get(int index) const;
-    void set(int index, const Point& object);
+    int getWaveletCount() const;
+    Curvature get(int index) const;
+    void set(int index, const Curvature& object);
 };
 
-typedef std::vector<Linear > LinearArray;
+typedef std::vector<Wave > WaveArray;
 
 } // namespace shp
 
-#endif //SHP_LINEAR_H
+#endif //SHP_WAVE_H

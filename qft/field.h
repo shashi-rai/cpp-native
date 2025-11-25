@@ -22,15 +22,18 @@
 #define QFT_FIELD_H
 
 #include <vector>
+#include "action.h"
+#include "particle.h"
+#include "../shp/cellular.h"
 #include "../shp/shape.h"
 
 namespace qft {
 
-class Field {
+class Field : public shp::Cellular {
     shp::Shape* physical;
-    float spin;
-    double mass;
-    double charge;
+    float defaultSpin;
+    double defaultMass;
+    double defaultCharge;
 public:
     // Constructors
     Field();
@@ -40,17 +43,27 @@ public:
     // Destructors
     ~Field();
 
+    // Access operator
+    Point operator()(int x, int y, int z) { return this->get(x).get(y).get(z); }
+	const Point operator()(int x, int y, int z) const { return this->get(x).get(y).get(z); }
+
     // Getters
     shp::Shape* getPhysical() const { return physical; }
-    float getSpin() const { return spin; }
-    double getMass() const { return mass; }
-    double getCharge() const { return charge; }
+    float getDefaultSpin() const { return defaultSpin; }
+    double getDefaultMass() const { return defaultMass; }
+    double getDefaultCharge() const { return defaultCharge; }
 
     // Setters
     void setPhysical(shp::Shape* structure) { this->physical = structure; }
-    void setSpin(float value) { spin = value; }
-    void setMass(double value) { mass = value; }
-    void setCharge(double value) { charge = value; }
+    void setDefaultSpin(float value) { defaultSpin = value; }
+    void setDefaultMass(double value) { defaultMass = value; }
+    void setDefaultCharge(double value) { defaultCharge = value; }
+
+    // Additional methods
+    bool isStructured() const;
+    void changePoint(Action& action);
+    Particle* getDivergence(Action& action) const;
+    Particle* getConvergence(Action& action) const;
 };
 
 typedef std::vector<Field > FieldArray;

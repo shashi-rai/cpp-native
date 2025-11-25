@@ -40,16 +40,21 @@ public:
     ~Planar();
 
     // Access operator
-    Linear& operator()(int y) { return lines[y]; }
-    const Linear& operator()(int y) const { return lines[y]; }
-    Point& operator()(int x, int y) { return lines[y](x); }
-	const Point& operator()(int x, int y) const { return lines[y](x); }
+    Linear& operator()(int x) { return lines[x]; }
+    const Linear& operator()(int x) const { return lines[x]; }
+    Point& operator()(int x, int y) { return lines[x](y); }
+	const Point& operator()(int x, int y) const { return lines[x](y); }
 
     // Getters
     LinearArray getLines() const { return lines; }
 
     // Setters
     void setLines(const LinearArray& objects) { this->lines = objects; }
+
+    // Additional methods
+    int getLineCount() const;
+    Linear get(int index) const;
+    void set(int index, const Linear& object);
 };
 
 typedef std::vector<Planar > PlanarArray;

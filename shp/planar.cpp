@@ -39,4 +39,17 @@ Planar::~Planar() {
 
 }
 
+int Planar::getLineCount() const {
+    return lines.size();
+}
+
+Linear Planar::get(int index) const {
+    return lines[index];
+}
+
+void Planar::set(int index, const Linear& object) {
+    this->lines[index] = object;
+    return;
+}
+
 } // namespace shp

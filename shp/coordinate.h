@@ -18,44 +18,45 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef SHP_LINEAR_H
-#define SHP_LINEAR_H
+#ifndef SHP_COORDINATE_H
+#define SHP_COORDINATE_H
 
-#include <string>
 #include <vector>
-#include "point.h"
 
 namespace shp {
 
-class Linear : public Point {
-    PointArray points;
+class Coordinate {
+    int x;
+    int y;
+    int z;
 public:
     // Constructors
-    Linear();
-    Linear(std::string name);
-    Linear(std::string name, PointArray& objects);
+    Coordinate();
+    Coordinate(int x);
+    Coordinate(int x, int y);
+    Coordinate(int x, int y, int z);
 
     // Destructors
-    ~Linear();
+    ~Coordinate();
 
-    // Access operator
-    Point& operator()(int x) { return points[x]; }
-    const Point& operator()(int x) const { return points[x]; }
+    // Operator overloading
+    Coordinate operator==(const Coordinate& peer) const {
+        return (x == peer.x) && (y == peer.y) && (z == peer.z);
+    }
 
     // Getters
-    PointArray getPoints() const { return points; }
+    int getX() const { return x; }
+    int getY() const { return y; }
+    int getZ() const { return z; }
 
     // Setters
-    void setPoints(const PointArray& objects) { this->points = objects; }
-
-    // Additional methods
-    int getPointCount() const;
-    Point get(int index) const;
-    void set(int index, const Point& object);
+    void setX(int value) { this->x = value; }
+    void setY(int value) { this->y = value; }
+    void setZ(int value) { this->z = value; }
 };
 
-typedef std::vector<Linear > LinearArray;
+typedef std::vector<Coordinate > CoordinateArray;
 
 } // namespace shp
 
-#endif //SHP_LINEAR_H
+#endif //SHP_COORDINATE_H
