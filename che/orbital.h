@@ -28,34 +28,21 @@
 namespace che {
 
 class Orbital {
-    short int n;
-    short int l;
-    short int m;
-    short int s;
     Electron left;
     Electron right;
 public:
     // Constructors
     Orbital();
-    Orbital(short int n, short int l, short int m, short int s);
     Orbital(Electron& left, Electron& right);
 
     // Destructors
     ~Orbital();
 
     // Getters
-    short int getN() const { return n; }
-    short int getL() const { return l; }
-    short int getM() const { return m; }
-    short int getS() const { return s; }
     Electron getLeftSpinor() const { return left; }
     Electron getRightSpinor() const { return right; }
 
     // Setters
-    void setN(const short int value) { this->n = value; }
-    void setL(const short int value) { this->l = value; }
-    void setM(const short int value) { this->m = value; }
-    void setS(const short int value) { this->s = value; }
     void setLeftSpinor(const Electron& spinor) { this->left = spinor; }
     void setRightSpinor(const Electron& spinor) { this->right = spinor; }
 };

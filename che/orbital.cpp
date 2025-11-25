@@ -22,17 +22,11 @@
 
 namespace che {
 
-Orbital::Orbital() : n(0), l(0), m(0), s(0), left(), right() {
+Orbital::Orbital() : left(), right() {
 
 }
 
-Orbital::Orbital(short int n, short int l, short int m, short int s)
-        : n(n), l(l), m(m), s(s), left(), right() {
-
-}
-
-Orbital::Orbital(Electron& left, Electron& right)
-        : n(0), l(0), m(0), s(0), left(left), right(right) {
+Orbital::Orbital(Electron& left, Electron& right) : left(left), right(right) {
 
 }
 

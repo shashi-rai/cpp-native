@@ -29,23 +29,34 @@ namespace che {
 
 class Electron {
     std::string name;
+    short int principal;
+    short int azimuthal;
+    short int magnetic;
     float spin;
     Charge charge;
 public:
     // Constructors
     Electron();
-    Electron(std::string name, float spin, Charge& charge);
+    Electron(short int principal, short int azimuthal, short int magnetic, float spin);
+    Electron(std::string name, short int principal, short int azimuthal,
+        short int magnetic, float spin, Charge& charge);
 
     // Destructors
     ~Electron();
 
     // Getters
     std::string getName() const { return name; }
+    short int getPrincipal() const { return principal; }
+    short int getAzimuthal() const { return azimuthal; }
+    short int getMagnetic() const { return magnetic; }
     float getSpin() const { return spin; }
     Charge getCharge() const { return charge; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
+    void setPrincipal(const short int value) { this->principal = value; }
+    void setAzimuthal(const short int value) { this->azimuthal = value; }
+    void setMagnetic(const short int value) { this->magnetic = value; }
     void setSpin(float value) { this->spin = value; }
     void setCharge(const Charge& value) { this->charge = value; }
 };

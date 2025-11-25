@@ -22,12 +22,19 @@
 
 namespace che {
 
-Electron::Electron() : name(""), spin(0.0), charge() {
+Electron::Electron()
+        : name(""), principal(0), azimuthal(0), magnetic(0), spin(0.0), charge() {
+
+}
+Electron::Electron(short int principal, short int azimuthal, short int magnetic, float spin)
+        : name(""), principal(0), azimuthal(0), magnetic(0), spin(spin), charge() {
 
 }
 
-Electron::Electron(std::string name, float spin, Charge& charge)
-        : name(name), spin(spin), charge(charge) {
+Electron::Electron(std::string name,
+        short int principal, short int azimuthal, short int magnetic, float spin,
+        Charge& charge)
+        : name(name), principal(0), azimuthal(0), magnetic(0), spin(spin), charge(charge) {
 
 }
 
