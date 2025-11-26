@@ -32,11 +32,19 @@ class Linear : public Point {
 public:
     // Constructors
     Linear();
+    Linear(float gradient);
     Linear(std::string name);
+    Linear(std::string name, float gradient);
     Linear(std::string name, PointArray& objects);
+    Linear(std::string name, PointArray& objects, float gradient);
 
     // Destructors
     ~Linear();
+
+    // Operator overloading
+    bool operator==(const Linear& peer) const;
+    Linear operator+(const Linear& peer) const;
+    Linear operator-(const Linear& peer) const;
 
     // Access operator
     Point& operator()(int x) { return points[x]; }
@@ -52,6 +60,9 @@ public:
     int getPointCount() const;
     Point get(int index) const;
     void set(int index, const Point& object);
+    virtual Point copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Linear > LinearArray;

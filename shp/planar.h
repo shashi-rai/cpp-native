@@ -33,11 +33,19 @@ class Planar : public Point {
 public:
     // Constructors
     Planar();
+    Planar(float gradient);
     Planar(std::string name);
+    Planar(std::string name, float gradient);
     Planar(std::string name, LinearArray& lines);
+    Planar(std::string name, LinearArray& lines, float gradient);
 
     // Destructors
     ~Planar();
+
+    // Operator overloading
+    bool operator==(const Planar& peer) const;
+    Planar operator+(const Planar& peer) const;
+    Planar operator-(const Planar& peer) const;
 
     // Access operator
     Linear& operator()(int x) { return lines[x]; }
@@ -55,6 +63,9 @@ public:
     int getLineCount() const;
     Linear get(int index) const;
     void set(int index, const Linear& object);
+    virtual Point copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Planar > PlanarArray;

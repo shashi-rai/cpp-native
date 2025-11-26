@@ -53,10 +53,23 @@ bool Point::operator==(const Point& peer) const {
         && (amplitude == peer.amplitude) && (gradient == peer.gradient);
 }
 
+Point Point::operator+(const Point& peer) const {
+    return Point("+", (amplitude + peer.amplitude), (gradient + peer.gradient));
+}
+
+Point Point::operator-(const Point& peer) const {
+    return Point("-", (amplitude - peer.amplitude), (gradient - peer.gradient));
+}
+
 Angular Point::getOrientation() const {
     Direction azimuth(gradient);
     Angular result(0, azimuth);
     return result;
+}
+
+Point Point::copy() {
+    Point fresh(this->getName(), amplitude, gradient);
+    return fresh;
 }
 
 void Point::clear() {
@@ -67,7 +80,7 @@ void Point::clear() {
 
 std::string Point::print() {
     std::stringstream result;
-    result << "{";
+    result << "{pt";
 	result << Shape::print() << ",a:";
     result << amplitude << ",g:";
 	result << gradient << "}";

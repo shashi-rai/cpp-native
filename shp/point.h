@@ -44,6 +44,8 @@ public:
 
     // Operator overloading
     bool operator==(const Point& peer) const;
+    Point operator+(const Point& peer) const;
+    Point operator-(const Point& peer) const;
 
     // Getters
     double getAmplitude() const { return amplitude; }
@@ -55,6 +57,7 @@ public:
 
     // Additional methods
     virtual Angular getOrientation() const;
+    virtual Point copy();
     virtual void clear();
     virtual std::string print();
 };

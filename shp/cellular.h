@@ -34,11 +34,19 @@ class Cellular : public Point {
 public:
     // Constructors
     Cellular();
+    Cellular(float gradient);
     Cellular(std::string name);
+    Cellular(std::string name, float gradient);
     Cellular(std::string name, PlanarArray& planes);
+    Cellular(std::string name, PlanarArray& planes, float gradient);
 
     // Destructors
     ~Cellular();
+
+    // Operator overloading
+    bool operator==(const Cellular& peer) const;
+    Cellular operator+(const Cellular& peer) const;
+    Cellular operator-(const Cellular& peer) const;
 
     // Access operator
     Planar& operator()(int x) { return planes[x]; }
@@ -58,6 +66,9 @@ public:
     int getPlaneCount() const;
     Planar get(int index) const;
     void set(int index, const Planar& object);
+    virtual Point copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Cellular > CellularArray;

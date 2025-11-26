@@ -26,7 +26,15 @@ Linear::Linear() : Point(), points() {
 
 }
 
+Linear::Linear(float gradient) : Point(gradient), points() {
+
+}
+
 Linear::Linear(std::string name) : Point(name), points() {
+
+}
+
+Linear::Linear(std::string name, float gradient) : Point(name, gradient), points() {
 
 }
 
@@ -34,8 +42,35 @@ Linear::Linear(std::string name, PointArray& objects) : Point(name), points(obje
 
 }
 
+Linear::Linear(std::string name, PointArray& objects, float gradient)
+        : Point(name, gradient), points(objects) {
+
+}
+
 Linear::~Linear() {
 
+}
+
+bool Linear::operator==(const Linear& peer) const {
+    return (static_cast<const Point&>(*this) == static_cast<const Point&>(peer))
+        && (points == peer.points);
+}
+
+Linear Linear::operator+(const Linear& peer) const {
+    PointArray result(points);
+    result.insert(result.end(), peer.points.begin(), peer.points.end());
+    return Linear("+", result);
+}
+
+Linear Linear::operator-(const Linear& peer) const {
+    PointArray result(points);
+    for (PointArray::const_iterator it = peer.points.begin(); it != peer.points.end(); ++it) {
+        PointArray::iterator found = std::find(result.begin(), result.end(), *it);
+        if (found != result.end()) {
+            result.erase(found);
+        }
+    }
+    return Linear("-", result);
 }
 
 int Linear::getPointCount() const {
@@ -43,12 +78,50 @@ int Linear::getPointCount() const {
 }
 
 Point Linear::get(int index) const {
+    Point result;
+    if (index < 0) {
+        return result;
+    }
+    if (index >= static_cast<int>(points.size())) {
+        return result;
+    }
     return points[index];
 }
 
 void Linear::set(int index, const Point& object) {
-    this->points[index] = object;
+    if (index < 0) {
+        return;
+    }
+    if (index < static_cast<int>(points.size())) {
+        // replace existing element
+        points[index] = object;
+    } else if (index == static_cast<int>(points.size())) {
+        // append at end
+        points.push_back(object);
+    } else {
+        // index beyond current size: append at end
+        points.push_back(object);
+    }
     return;
+}
+
+Point Linear::copy() {
+    Linear fresh(this->getName(), this->points);
+    return fresh;
+}
+
+void Linear::clear() {
+    Point::clear();
+    points.clear();
+    return;
+}
+
+std::string Linear::print() {
+    std::stringstream result;
+    result << "{li";
+	result << Point::print() << ",sz:";
+	result << points.size() << "}";
+	return result.str();
 }
 
 } // namespace shp
