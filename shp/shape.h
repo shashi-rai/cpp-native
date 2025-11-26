@@ -21,6 +21,7 @@
 #ifndef SHP_SHAPE_H
 #define SHP_SHAPE_H
 
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -38,6 +39,9 @@ public:
     // Destructors
     ~Shape();
 
+    // Operator overloading
+    bool operator==(const Shape& peer) const;
+
     // Getters
     Shape* getOwner() const { return owner; }
     std::string getName() const { return name; }
@@ -48,6 +52,8 @@ public:
 
     // Additional methods
     bool isOwned() const;
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Shape > ShapeArray;

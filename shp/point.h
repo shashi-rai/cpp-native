@@ -23,6 +23,7 @@
 
 #include <string>
 #include <vector>
+#include "angular.h"
 #include "shape.h"
 
 namespace shp {
@@ -40,6 +41,9 @@ public:
     // Destructors
     ~Point();
 
+    // Operator overloading
+    bool operator==(const Point& peer) const;
+
     // Getters
     double getAmplitude() const { return amplitude; }
     float getGradient() const { return gradient; }
@@ -47,6 +51,11 @@ public:
     // Setters
     void setAmplitude(double value) { this->amplitude = value; }
     void setGradient(float value) { this->gradient = value; }
+
+    // Additional methods
+    virtual Angular getOrientation() const;
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Point > PointArray;

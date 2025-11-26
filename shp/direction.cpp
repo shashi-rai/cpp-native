@@ -98,15 +98,13 @@ void Direction::clear() {
     return;
 }
 
-void Direction::print() {
+std::string Direction::print() {
     std::stringstream result;
     result << "[";
     result << degrees << ",";
     result << minutes << ",";
     result << seconds << "]";
-    result << std::endl;		
-	std::cout << result.str();		
-	return;
+	return result.str();
 }
 
 /*

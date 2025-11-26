@@ -59,11 +59,10 @@ public:
     void setSeconds(const int value) { this->seconds = getIndexSeconds(value); }
 
     // Additional methods
-    Direction fromRadians(float radians) const;
     float toRadians() const;
     Direction copy();
     void clear();
-    void print();
+    std::string print();
 private:
     int getIndexDegrees(const int value) const;
     int getIndexMinutes(const int value) const;

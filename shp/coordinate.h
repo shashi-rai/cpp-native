@@ -59,7 +59,7 @@ public:
     // Additional methods
     Coordinate copy();
     void clear();
-    void print();
+    std::string print();
 };
 
 typedef std::vector<Coordinate > CoordinateArray;

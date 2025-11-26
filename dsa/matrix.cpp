@@ -118,22 +118,21 @@ void Matrix::randnorm(float mean, float stddev) {
 	return;
 }
 
-void Matrix::print() {
+std::string Matrix::print() {
     std::stringstream result;
     int rows = getRows();
     int cols = getCols();
 
     if (rows == 0 && cols == 0)
-		return;			
+		return "";			
 	for (int i = 0; i < rows; i ++) {			
 		result << "[ ";
 		for (int j = 0; j < cols; j++) {			
 			result << data[i][j] << " ";		
 		}
 		result << "]" << std::endl;		
-	}		
-	std::cout << result.str();		
-	return;
+	}
+	return result.str();
 }
 
 } // namespace dsa

@@ -135,19 +135,19 @@ void Tensor::randnorm(float mean, float stddev) {
 	return;
 }
 
-void Tensor::print() {
+std::string Tensor::print() {
+	std::stringstream result;
     int dims = getDims();
 
 	for (int d = 0; d < dims; d++) {
-		std::cout << d << ":\n"; 
-		matrices[d].print();
+		result << d << ":" << std::endl; 
+		result << matrices[d].print();
 	}		
-	return;
+	return result.str();
 }
 
-void Tensor::print(int index) {
-    matrices[index].print();
-	return;
+std::string Tensor::print(int index) {
+    return matrices[index].print();
 }
 
 } // namespace dsa

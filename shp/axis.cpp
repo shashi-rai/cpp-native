@@ -35,4 +35,22 @@ Axis::~Axis() {
 
 }
 
+Axis Axis::copy() {
+    Axis fresh(name, scaling);
+    return fresh;
+}
+
+void Axis::clear() {
+    name = ""; scaling = 0.0f;
+    return;
+}
+
+std::string Axis::print() {
+    std::stringstream result;
+    result << "{n:";
+    result << name << ",s:";
+    result << scaling << "}";
+	return result.str();
+}
+
 } // namespace shp

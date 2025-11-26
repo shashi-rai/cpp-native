@@ -64,15 +64,13 @@ void Coordinate::clear() {
     return;
 }
 
-void Coordinate::print() {
+std::string Coordinate::print() {
     std::stringstream result;
-    result << "[";
+    result << "(";
     result << x << ",";
     result << y << ",";
-    result << z << "]";
-    result << std::endl;		
-	std::cout << result.str();		
-	return;
+    result << z << ")";
+	return result.str();
 }
 
 } // namespace shp

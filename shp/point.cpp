@@ -44,4 +44,30 @@ Point::~Point() {
 
 }
 
+bool Point::operator==(const Point& peer) const {
+    return (static_cast<const Shape&>(*this) == static_cast<const Shape&>(peer))
+        && (amplitude == peer.amplitude) && (gradient == peer.gradient);
+}
+
+Angular Point::getOrientation() const {
+    Direction azimuth(gradient);
+    Angular result(0, azimuth);
+    return result;
+}
+
+void Point::clear() {
+    Shape::clear();
+	amplitude = 0.0; gradient = 0.0f;
+    return;
+}
+
+std::string Point::print() {
+    std::stringstream result;
+    result << "{";
+	result << Shape::print() << ",a:";
+    result << amplitude << ",g:";
+	result << gradient << "}";
+	return result.str();
+}
+
 } // namespace shp

@@ -60,8 +60,8 @@ public:
     void clear();
     void rand(float min, float max);
     void randnorm(float mean, float stddev);
-    void print();
-    void print(int index);
+    std::string print();
+    std::string print(int index);
 private:
     void resize(int dims, int rows, int cols);
 };

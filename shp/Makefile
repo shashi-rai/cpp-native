@@ -45,6 +45,7 @@ clean-libs: clean-custom
 	${RMCLEAN} $(LIBFILES)
 
 $(LIBFOLDR)/$(LIBNAME): \
+		$(OBJFOLDR)/angular.o \
 		$(OBJFOLDR)/axis.o \
 		$(OBJFOLDR)/cellular.o \
 		$(OBJFOLDR)/coordinate.o \
@@ -57,6 +58,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/shape.o \
 		$(OBJFOLDR)/wave.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
+		$(OBJFOLDR)/angular.o \
 		$(OBJFOLDR)/axis.o \
 		$(OBJFOLDR)/cellular.o \
 		$(OBJFOLDR)/coordinate.o \
@@ -68,6 +70,9 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/point.o \
 		$(OBJFOLDR)/shape.o \
 		$(OBJFOLDR)/wave.o
+
+$(OBJFOLDR)/angular.o: angular.cpp
+	$(CPPTOOL) -c angular.cpp -o $(OBJFOLDR)/angular.o $(CXXFLAGS)
 
 $(OBJFOLDR)/axis.o: axis.cpp
 	$(CPPTOOL) -c axis.cpp -o $(OBJFOLDR)/axis.o $(CXXFLAGS)

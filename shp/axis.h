@@ -21,6 +21,7 @@
 #ifndef SHP_AXIS_H
 #define SHP_AXIS_H
 
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -44,6 +45,11 @@ public:
     // Setters
     void setName(const std::string& name) { this->name = name; }
     void setScaling(float value) { this->scaling = value; }
+
+    // Additional methods
+    Axis copy();
+    void clear();
+    std::string print();
 };
 
 typedef std::vector<Axis > AxisArray;

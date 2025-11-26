@@ -38,11 +38,18 @@ public:
     // Destructors
     ~Phase();
 
+    // Operator overloading
+    bool operator==(const Phase& peer) const;
+
     // Getters
     long getTimestamp() const { return timestamp; }
 
     // Setters
     void setTimestamp(long value) { this->timestamp = value; }
+
+    // Additional methods
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Phase > PhaseArray;

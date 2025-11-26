@@ -39,4 +39,23 @@ Phase::~Phase() {
 
 }
 
+bool Phase::operator==(const Phase& peer) const {
+    return (static_cast<const Point&>(*this) == static_cast<const Point&>(peer))
+        && (timestamp == peer.timestamp);
+}
+
+void Phase::clear() {
+    Shape::clear();
+	timestamp = 0L;
+    return;
+}
+
+std::string Phase::print() {
+    std::stringstream result;
+    result << "[";
+	result << Point::print() << ",t:";
+    result << timestamp << "]:";
+	return result.str();
+}
+
 } // namespace shp

@@ -38,8 +38,26 @@ Shape::~Shape() {
     setOwner(nullptr);
 }
 
+bool Shape::operator==(const Shape& peer) const {
+    return (owner == peer.owner) && (name == peer.name);
+}
+
 bool Shape::isOwned() const {
     return owner != nullptr;
+}
+
+void Shape::clear() {
+    setOwner(nullptr); setName("");
+    return;
+}
+
+std::string Shape::print() {
+    std::stringstream result;
+    result << "(";
+    result << name << ",o:";
+    result << (owner != nullptr ? owner->print() : "");
+    result << ")";
+	return result.str();
 }
 
 } // namespace shp

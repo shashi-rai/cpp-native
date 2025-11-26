@@ -18,48 +18,52 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef DSA_MATRIX_H
-#define DSA_MATRIX_H
+#ifndef SHP_ANGULAR_H
+#define SHP_ANGULAR_H
 
-#include <ctime>
-#include <iostream>
-#include <random>
-#include <sstream>
+#include <string>
 #include <vector>
+#include "direction.h"
 
-namespace dsa {
+namespace shp {
 
-class Matrix {
-    std::vector<std::vector<double> > data;
+class Angular {
+    int radius;             // r - radial distance from the origin
+    Direction polar;        // 𝜃 - polar zenith angle from Y axis
+    Direction azimuthal;    // 𝜙 - angle within the XY plane only
 public:
     // Constructors
-    Matrix();
-    Matrix(int dim);
-    Matrix(int rows, int cols);
+    Angular();
+    Angular(int radius);
+    Angular(int radius, Direction& azimuthal);
+    Angular(int radius, Direction& polar, Direction& azimuthal);
 
     // Destructors
-    ~Matrix();
+    ~Angular();
 
-    // Access operator
-    double& operator()(int row, int col) { return data[row][col]; }
-    const double& operator()(int row, int col) const { return data[row][col]; }
+    // Operator overloading
+    bool operator==(const Angular& peer) const;
+    Angular operator+(const Angular& peer) const;
+    Angular operator-(const Angular& peer) const;
+
+    // Getters
+    int getRadius() const { return radius; }
+    Direction getPolar() const { return polar; }
+    Direction getAzimuthal() const { return azimuthal; }
+
+    // Setters
+    void setRadius(int value) { this->radius = value; }
+    void setPolar(const Direction& angle) { this->polar = angle; }
+    void setAzimuthal(const Direction& angle) { this->azimuthal = angle; }
 
     // Additional methods
-    void set(double value);
-    void set(int row, int col, double value);
-    double get(int row, int col) const;
-    int getRows() const;
-    int getCols() const;
-    void resize(int rows, int cols);
-    Matrix copy();
+    Angular copy();
     void clear();
-    void rand(float min, float max);
-    void randnorm(float mean, float stddev);
     std::string print();
 };
 
-typedef std::vector<Matrix > MatrixArray;
+typedef std::vector<Angular > AngularArray;
 
-} // namespace dsa
+} // namespace shp
 
-#endif //DSA_MATRIX_H
+#endif //SHP_ANGULAR_H
