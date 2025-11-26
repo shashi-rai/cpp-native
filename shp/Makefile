@@ -49,6 +49,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/cellular.o \
 		$(OBJFOLDR)/coordinate.o \
 		$(OBJFOLDR)/curvature.o \
+		$(OBJFOLDR)/direction.o \
 		$(OBJFOLDR)/linear.o \
 		$(OBJFOLDR)/phase.o \
 		$(OBJFOLDR)/planar.o \
@@ -60,6 +61,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/cellular.o \
 		$(OBJFOLDR)/coordinate.o \
 		$(OBJFOLDR)/curvature.o \
+		$(OBJFOLDR)/direction.o \
 		$(OBJFOLDR)/linear.o \
 		$(OBJFOLDR)/phase.o \
 		$(OBJFOLDR)/planar.o \
@@ -78,6 +80,9 @@ $(OBJFOLDR)/coordinate.o: coordinate.cpp
 
 $(OBJFOLDR)/curvature.o: curvature.cpp
 	$(CPPTOOL) -c curvature.cpp -o $(OBJFOLDR)/curvature.o $(CXXFLAGS)
+
+$(OBJFOLDR)/direction.o: direction.cpp
+	$(CPPTOOL) -c direction.cpp -o $(OBJFOLDR)/direction.o $(CXXFLAGS)
 
 $(OBJFOLDR)/linear.o: linear.cpp
 	$(CPPTOOL) -c linear.cpp -o $(OBJFOLDR)/linear.o $(CXXFLAGS)

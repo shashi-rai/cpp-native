@@ -26,16 +26,15 @@
 int main() {
     dsa::Matrix mat(3, 3);
     mat.set(1, 1, 5.0);
-    std::cout << "Matrix: " << mat.getRows() << " rows, " << mat.getCols() << " columns" << std::endl;
-    std::cout << "Value at (1,1): " << mat.get(1, 1) << std::endl;
+    std::cout << "Matrix [" << mat.getRows() << "x" << mat.getCols() << "] ";
+    std::cout << "value at (1,1) = " << mat.get(1, 1) << std::endl;
 
-    dsa::Tensor tensor(2, 2);
-    tensor.set(1, 1, mat);
-    std::cout << "Tensor: ";
-    std::cout << tensor.getRows() << " rows, " << tensor.getCols() << " columns" << std::endl;
-    dsa::Matrix retrievedMat = tensor.get(1, 1);
-    std::cout << "Retrieved Matrix from Tensor at (1,1): " << retrievedMat.getRows() << " rows, " << retrievedMat.getCols() << " columns" << std::endl;
-    std::cout << "Value at (1,1) in retrieved Matrix: " << retrievedMat.get(1, 1) << std::endl;
+    dsa::Tensor tensor(2);
+    tensor.set(0, mat);
+    std::cout << "Tensor: {" << tensor.getDims() << " x [" << tensor.getRows() << "x" << tensor.getCols() << "]}" << std::endl;
+    dsa::Matrix m = tensor.get(0);
+    std::cout << "Retrieved Matrix [" << m.getRows() << "x" << m.getCols() << "] at {0}" << std::endl;
+    std::cout << "value at (1,1) = " << m.get(1, 1) << std::endl;
     
     return 0;
 }

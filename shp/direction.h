@@ -18,52 +18,60 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef SHP_COORDINATE_H
-#define SHP_COORDINATE_H
+#ifndef SHP_DIRECTION_H
+#define SHP_DIRECTION_H
 
+#include <cmath>
 #include <iostream>
 #include <sstream>
 #include <vector>
 
 namespace shp {
 
-class Coordinate {
-    int x;
-    int y;
-    int z;
+class Direction {
+    int degrees;
+    int minutes;
+    int seconds;
 public:
     // Constructors
-    Coordinate();
-    Coordinate(int x);
-    Coordinate(int x, int y);
-    Coordinate(int x, int y, int z);
+    Direction();
+    Direction(float radians);
+    Direction(int degrees);
+    Direction(int degrees, int minutes);
+    Direction(int degrees, int minutes, int seconds);
 
     // Destructors
-    ~Coordinate();
+    ~Direction();
 
     // Operator overloading
-    bool operator==(const Coordinate& peer) const;
-    Coordinate operator+(const Coordinate& peer) const;
-    Coordinate operator-(const Coordinate& peer) const;
+    bool operator==(const Direction& peer) const;
+    Direction operator+(const Direction& peer) const;
+    Direction operator-(const Direction& peer) const;
 
     // Getters
-    int getX() const { return x; }
-    int getY() const { return y; }
-    int getZ() const { return z; }
+    int getDegrees() const { return degrees; }
+    int getMinutes() const { return minutes; }
+    int getSeconds()const { return seconds; }
 
     // Setters
-    void setX(int value) { this->x = value; }
-    void setY(int value) { this->y = value; }
-    void setZ(int value) { this->z = value; }
+    void setDegrees(const int value) { this->degrees = getIndexDegrees(value); }
+    void setMinutes(const int value) { this->minutes = getIndexMinutes(value); }
+    void setSeconds(const int value) { this->seconds = getIndexSeconds(value); }
 
     // Additional methods
-    Coordinate copy();
+    Direction fromRadians(float radians) const;
+    float toRadians() const;
+    Direction copy();
     void clear();
     void print();
+private:
+    int getIndexDegrees(const int value) const;
+    int getIndexMinutes(const int value) const;
+    int getIndexSeconds(const int value) const;
 };
 
-typedef std::vector<Coordinate > CoordinateArray;
+typedef std::vector<Direction > DirectionArray;
 
 } // namespace shp
 
-#endif //SHP_COORDINATE_H
+#endif //SHP_DIRECTION_H

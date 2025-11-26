@@ -42,4 +42,37 @@ Coordinate::~Coordinate() {
 
 }
 
+bool Coordinate::operator==(const Coordinate& peer) const {
+    return (x == peer.x) && (y == peer.y) && (z == peer.z);
+}
+
+Coordinate Coordinate::operator+(const Coordinate& peer) const {
+    return Coordinate((x + peer.x), (y + peer.y), (z + peer.z));
+}
+
+Coordinate Coordinate::operator-(const Coordinate& peer) const {
+    return Coordinate((x - peer.x), (y - peer.y), (z - peer.z));
+}
+
+Coordinate Coordinate::copy() {
+    Coordinate fresh(x, y, z);
+    return fresh;
+}
+
+void Coordinate::clear() {
+    x = 0; y = 0; z = 0;
+    return;
+}
+
+void Coordinate::print() {
+    std::stringstream result;
+    result << "[";
+    result << x << ",";
+    result << y << ",";
+    result << z << "]";
+    result << std::endl;		
+	std::cout << result.str();		
+	return;
+}
+
 } // namespace shp
