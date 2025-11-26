@@ -34,6 +34,7 @@ class Point : public Shape {
 public:
     // Constructors
     Point();
+    Point(float gradient);
     Point(std::string name);
     Point(std::string name, float gradient);
     Point(std::string name, double amplitude, float gradient);

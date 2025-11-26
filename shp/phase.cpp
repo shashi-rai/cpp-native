@@ -26,12 +26,26 @@ Phase::Phase() : Point(), timestamp(0L) {
 
 }
 
+Phase::Phase(float gradient) : Point(gradient), timestamp(0L) {
+
+}
+
 Phase::Phase(std::string name) : Point(name), timestamp(0L) {
+
+}
+
+Phase::Phase(std::string name, float gradient)
+        : Point(name, gradient), timestamp(0L) {
 
 }
 
 Phase::Phase(std::string name, long timestamp)
         : Point(name), timestamp(timestamp) {
+
+}
+
+Phase::Phase(std::string name, float gradient, long timestamp)
+        : Point(name, gradient), timestamp(timestamp) {
 
 }
 
@@ -42,6 +56,18 @@ Phase::~Phase() {
 bool Phase::operator==(const Phase& peer) const {
     return (static_cast<const Point&>(*this) == static_cast<const Point&>(peer))
         && (timestamp == peer.timestamp);
+}
+
+// NOTE: Only Angular orientation considered, amplitude difference is ignored
+Phase Phase::operator+(const Phase& peer) const {
+    return Phase("+", this->getGradient() + peer.getGradient(),
+        (timestamp + peer.timestamp));
+}
+
+// NOTE: Only Angular orientation considered, amplitude difference is ignored
+Phase Phase::operator-(const Phase& peer) const {
+    return Phase("-", this->getGradient() - peer.getGradient(),
+        (timestamp - peer.timestamp));
 }
 
 void Phase::clear() {

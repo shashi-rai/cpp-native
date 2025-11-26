@@ -32,14 +32,19 @@ class Phase : public Point {
 public:
     // Constructors
     Phase();
+    Phase(float gradient);
     Phase(std::string name);
+    Phase(std::string name, float gradient);
     Phase(std::string name, long timestamp);
+    Phase(std::string name, float gradient, long timestamp);
 
     // Destructors
     ~Phase();
 
     // Operator overloading
     bool operator==(const Phase& peer) const;
+    Phase operator+(const Phase& peer) const;
+    Phase operator-(const Phase& peer) const;
 
     // Getters
     long getTimestamp() const { return timestamp; }

@@ -26,6 +26,10 @@ Point::Point() : Shape(), amplitude(0.0), gradient(0.0f) {
 
 }
 
+Point::Point(float gradient) : Shape(), amplitude(0.0), gradient(gradient) {
+
+}
+
 Point::Point(std::string name) : Shape(name), amplitude(0.0), gradient(0.0f) {
 
 }
