@@ -30,6 +30,11 @@ Point::Point(float gradient) : Shape(), amplitude(0.0), gradient(gradient) {
 
 }
 
+Point::Point(float amplitude, float gradient)
+        : Shape(), amplitude(amplitude), gradient(gradient) {
+
+}
+
 Point::Point(std::string name) : Shape(name), amplitude(0.0), gradient(0.0f) {
 
 }
@@ -39,7 +44,7 @@ Point::Point(std::string name, float gradient)
 
 }
 
-Point::Point(std::string name, double amplitude, float gradient)
+Point::Point(std::string name, float amplitude, float gradient)
         : Shape(name), amplitude(amplitude), gradient(gradient) {
 
 }
@@ -54,11 +59,11 @@ bool Point::operator==(const Point& peer) const {
 }
 
 Point Point::operator+(const Point& peer) const {
-    return Point("+", (amplitude + peer.amplitude), (gradient + peer.gradient));
+    return Point("+", getAzimuthalAmplitudeAscent(peer), (gradient + peer.gradient));
 }
 
 Point Point::operator-(const Point& peer) const {
-    return Point("-", (amplitude - peer.amplitude), (gradient - peer.gradient));
+    return Point("-", getAzimuthalAmplitudeDescent(peer), (gradient - peer.gradient));
 }
 
 Angular Point::getOrientation() const {
@@ -74,17 +79,33 @@ Point Point::copy() {
 
 void Point::clear() {
     Shape::clear();
-	amplitude = 0.0; gradient = 0.0f;
+	amplitude = 0.0f; gradient = 0.0f;
     return;
 }
 
 std::string Point::print() {
     std::stringstream result;
-    result << "{pt";
+    result << "{p:";
 	result << Shape::print() << ",a:";
-    result << amplitude << ",g:";
+    result << amplitude << ",𝜙:";
 	result << gradient << "}";
 	return result.str();
+}
+
+float Point::getAzimuthalAmplitudeAscent(const Point& peer) const {
+    return getGradientAmplitude(peer, (gradient - peer.gradient));
+}
+
+float Point::getAzimuthalAmplitudeDescent(const Point& peer) const {
+    return getGradientAmplitude(peer, (gradient + peer.gradient));
+}
+
+float Point::getGradientAmplitude(const Point& peer, float phase) const {
+    float R_squared =
+            (amplitude * amplitude) + (peer.amplitude * peer.amplitude)
+            + (2 * amplitude * peer.amplitude) * cos(phase);
+
+    return std::sqrt(std::max(0.0f, R_squared));
 }
 
 } // namespace shp

@@ -33,12 +33,25 @@ class Wave : public Curvature {
 public:
     // Constructors
     Wave();
+    Wave(float polarization);
+    Wave(float polarization, float azimuthal);
     Wave(std::string name);
+    Wave(std::string name, float polarization);
+    Wave(std::string name, float polarization, float azimuthal);
     Wave(std::string name, long frequency, float length);
+    Wave(std::string name, long frequency, float length, float polarization);
+    Wave(std::string name, long frequency, float length, float polarization, float azimuthal);
     Wave(std::string name, long frequency, float length, CurvatureArray& wavelets);
+    Wave(std::string name, long frequency, float length, CurvatureArray& wavelets, float polarization);
+    Wave(std::string name, long frequency, float length, CurvatureArray& wavelets, float polarization, float azimuthal);
 
     // Destructors
     ~Wave();
+
+    // Operator overloading
+    bool operator==(const Wave& peer) const;
+    Wave operator+(const Wave& peer) const;
+    Wave operator-(const Wave& peer) const;
 
     // Access operator
     Curvature& operator()(int index) { return wavelets[index]; }
@@ -58,6 +71,9 @@ public:
     int getWaveletCount() const;
     Curvature get(int index) const;
     void set(int index, const Curvature& object);
+    virtual Point copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Wave > WaveArray;

@@ -28,15 +28,19 @@
 namespace shp {
 
 class Phase : public Point {
+    float polarization;
     long timestamp;
 public:
     // Constructors
     Phase();
     Phase(float gradient);
+    Phase(float polarization, float azimuthal);
     Phase(std::string name);
     Phase(std::string name, float gradient);
+    Phase(std::string name, float polarization, float azimuthal);
     Phase(std::string name, long timestamp);
     Phase(std::string name, float gradient, long timestamp);
+    Phase(std::string name, float polarization, float azimuthal, long timestamp);
 
     // Destructors
     ~Phase();
@@ -47,14 +51,23 @@ public:
     Phase operator-(const Phase& peer) const;
 
     // Getters
+    float getPolarization() const { return polarization; }
     long getTimestamp() const { return timestamp; }
 
     // Setters
+    void setPolarization(float value) { this->polarization = value; }
     void setTimestamp(long value) { this->timestamp = value; }
 
     // Additional methods
+    virtual Angular getOrientation() const;
+    virtual Point copy();
     virtual void clear();
     virtual std::string print();
+protected:
+    float getPolarAmplitudeAscent(const Phase& peer) const;
+    float getPolarAmplitudeDescent(const Phase& peer) const;
+private:
+    float getAmplitudePolarization(const Point& peer, float phase) const;
 };
 
 typedef std::vector<Phase > PhaseArray;

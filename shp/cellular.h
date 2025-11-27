@@ -23,7 +23,6 @@
 
 #include <string>
 #include <vector>
-#include "coordinate.h"
 #include "planar.h"
 #include "point.h"
 

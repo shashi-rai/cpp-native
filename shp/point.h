@@ -21,6 +21,7 @@
 #ifndef SHP_POINT_H
 #define SHP_POINT_H
 
+#include <cmath>
 #include <string>
 #include <vector>
 #include "angular.h"
@@ -29,15 +30,16 @@
 namespace shp {
 
 class Point : public Shape {
-    double amplitude;
+    float amplitude;
     float gradient;
 public:
     // Constructors
     Point();
     Point(float gradient);
+    Point(float amplitude, float gradient);
     Point(std::string name);
     Point(std::string name, float gradient);
-    Point(std::string name, double amplitude, float gradient);
+    Point(std::string name, float amplitude, float gradient);
 
     // Destructors
     ~Point();
@@ -48,11 +50,11 @@ public:
     Point operator-(const Point& peer) const;
 
     // Getters
-    double getAmplitude() const { return amplitude; }
+    float getAmplitude() const { return amplitude; }
     float getGradient() const { return gradient; }
 
     // Setters
-    void setAmplitude(double value) { this->amplitude = value; }
+    void setAmplitude(float value) { this->amplitude = value; }
     void setGradient(float value) { this->gradient = value; }
 
     // Additional methods
@@ -60,6 +62,11 @@ public:
     virtual Point copy();
     virtual void clear();
     virtual std::string print();
+protected:
+    float getAzimuthalAmplitudeAscent(const Point& peer) const;
+    float getAzimuthalAmplitudeDescent(const Point& peer) const;
+private:
+    float getGradientAmplitude(const Point& peer, float phase) const;
 };
 
 typedef std::vector<Point > PointArray;

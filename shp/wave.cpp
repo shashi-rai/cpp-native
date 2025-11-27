@@ -26,8 +26,28 @@ Wave::Wave() : Curvature(), frequency(0L), length(0.0f), wavelets() {
 
 }
 
+Wave::Wave(float polarization)
+        : Curvature(polarization), frequency(0L), length(0.0f), wavelets() {
+
+}
+
+Wave::Wave(float polarization, float azimuthal)
+        : Curvature(polarization, azimuthal), frequency(0L), length(0.0f), wavelets() {
+
+}
+
 Wave::Wave(std::string name)
         : Curvature(name), frequency(0L), length(0.0f), wavelets() {
+
+}
+
+Wave::Wave(std::string name, float polarization)
+        : Curvature(name, polarization), frequency(0L), length(0.0f), wavelets() {
+
+}
+
+Wave::Wave(std::string name, float polarization, float azimuthal)
+        : Curvature(name, polarization, azimuthal), frequency(0L), length(0.0f), wavelets() {
 
 }
 
@@ -36,8 +56,28 @@ Wave::Wave(std::string name, long frequency, float length)
 
 }
 
+Wave::Wave(std::string name, long frequency, float length, float polarization)
+        : Curvature(name, polarization), frequency(frequency), length(length), wavelets() {
+
+}
+
+Wave::Wave(std::string name, long frequency, float length, float polarization, float azimuthal)
+        : Curvature(name, polarization, azimuthal), frequency(frequency), length(length), wavelets() {
+
+}
+
 Wave::Wave(std::string name, long frequency, float length, CurvatureArray& wavelets)
         : Curvature(name), frequency(frequency), length(length), wavelets(wavelets) {
+
+}
+
+Wave::Wave(std::string name, long frequency, float length, CurvatureArray& wavelets, float polarization)
+        : Curvature(name, polarization), frequency(frequency), length(length), wavelets(wavelets) {
+
+}
+
+Wave::Wave(std::string name, long frequency, float length, CurvatureArray& wavelets, float polarization, float azimuthal)
+        : Curvature(name, polarization, azimuthal), frequency(frequency), length(length), wavelets(wavelets) {
 
 }
 
@@ -45,17 +85,95 @@ Wave::~Wave() {
 
 }
 
+bool Wave::operator==(const Wave& peer) const {
+    return (static_cast<const Curvature&>(*this) == static_cast<const Curvature&>(peer))
+        && (wavelets == peer.wavelets) && (frequency == peer.frequency) && (length == peer.length);
+}
+
+Wave Wave::operator+(const Wave& peer) const {
+    CurvatureArray fluctuations(wavelets);
+    fluctuations.insert(fluctuations.end(), peer.wavelets.begin(), peer.wavelets.end());
+    Wave result = Wave("+", (frequency + peer.frequency), (length + peer.length), fluctuations,
+        (getPolarization() + peer.getPolarization()),
+        (getGradient() + peer.getGradient()));
+    // TODO: since amplitude would vary due to Polar & Azimuthal angle differences
+    result.setAmplitude(getPolarAmplitudeAscent(peer));
+    // result.setAmplitude(getAzimuthalAmplitudeAscent(peer));
+    return result;
+}
+
+Wave Wave::operator-(const Wave& peer) const {
+    CurvatureArray fluctuations(wavelets);
+    for (CurvatureArray::const_iterator it = peer.wavelets.begin(); it != peer.wavelets.end(); ++it) {
+        CurvatureArray::iterator found = std::find(fluctuations.begin(), fluctuations.end(), *it);
+        if (found != fluctuations.end()) {
+            fluctuations.erase(found);
+        }
+    }
+    Wave result = Wave("-", (frequency - peer.frequency), (length - peer.length), fluctuations,
+        (getPolarization() - peer.getPolarization()),
+        (getGradient() - peer.getGradient()));
+    // TODO: since amplitude would vary due to Polar & Azimuthal angle differences
+    result.setAmplitude(getPolarAmplitudeDescent(peer));
+    // result.setAmplitude(getAzimuthalAmplitudeDescent(peer));
+    return result;
+}
+
+
 int Wave::getWaveletCount() const {
     return wavelets.size();
 }
 
 Curvature Wave::get(int index) const {
+    Curvature result;
+    if (index < 0) {
+        return result;
+    }
+    if (index >= static_cast<int>(wavelets.size())) {
+        return result;
+    }
     return wavelets[index];
 }
 
 void Wave::set(int index, const Curvature& object) {
-    this->wavelets[index] = object;
+    if (index < 0) {
+        return;
+    }
+    if (index < static_cast<int>(wavelets.size())) {
+        // replace existing element
+        wavelets[index] = object;
+    } else if (index == static_cast<int>(wavelets.size())) {
+        // append at end
+        wavelets.push_back(object);
+    } else {
+        // index beyond current size: append at end
+        wavelets.push_back(object);
+    }
     return;
+}
+
+Point Wave::copy() {
+    Wave fresh(this->getName(), this->getFrequency(), this->getLength(),
+        this->wavelets, this->getPolarization(), this->getGradient());
+    return fresh;
+}
+
+void Wave::clear() {
+    Point::clear();
+    frequency = 0L;
+    length = 0.0f;
+    wavelets.clear();
+    return;
+}
+
+std::string Wave::print() {
+    std::stringstream result;
+    result << "λ:";
+	result << Curvature::print() << ",v:";
+    result << frequency << ",l:";
+    result << length << ",sz:";
+	result << wavelets.size() << "!";
+	return result.str();
 }
 
 } // namespace shp

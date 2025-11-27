@@ -29,30 +29,53 @@
 namespace shp {
 
 class Curvature : public Point {
+    float polarization;
     PhaseArray deforms;
 public:
     // Constructors
     Curvature();
+    Curvature(float polarization);
+    Curvature(float polarization, float azimuthal);
     Curvature(std::string name);
+    Curvature(std::string name, float polarization);
+    Curvature(std::string name, float polarization, float azimuthal);
     Curvature(std::string name, PhaseArray& deforms);
+    Curvature(std::string name, PhaseArray& deforms, float polarization);
+    Curvature(std::string name, PhaseArray& deforms, float polarization, float azimuthal);
 
     // Destructors
     ~Curvature();
+
+    // Operator overloading
+    bool operator==(const Curvature& peer) const;
+    Curvature operator+(const Curvature& peer) const;
+    Curvature operator-(const Curvature& peer) const;
 
     // Access operator
     Phase& operator()(int position) { return deforms[position]; }
     const Phase& operator()(int position) const { return deforms[position]; }
 
     // Getters
+    float getPolarization() const { return polarization; }
     PhaseArray getDeforms() const { return deforms; }
 
     // Setters
+    void setPolarization(float value) { this->polarization = value; }
     void setDeforms(const PhaseArray& states) { this->deforms = states; }
 
     // Additional methods
     int getChangeCount() const;
     Phase get(int index) const;
     void set(int index, const Phase& object);
+    virtual Angular getOrientation() const;
+    virtual Point copy();
+    virtual void clear();
+    virtual std::string print();
+protected:
+    float getPolarAmplitudeAscent(const Curvature& peer) const;
+    float getPolarAmplitudeDescent(const Curvature& peer) const;
+private:
+    float getAmplitudePolarization(const Curvature& peer, float phase) const;
 };
 
 typedef std::vector<Curvature > CurvatureArray;

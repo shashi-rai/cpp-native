@@ -31,15 +31,15 @@ Direction::Direction() : degrees(0), minutes(0), seconds(0) {
  */
 Direction::Direction(float radians) {
     float deciDegrees = radians * (180.0 / M_PI);
-    degrees = static_cast<int>(deciDegrees);
+    degrees = getIndexDegrees(static_cast<int>(deciDegrees));
     float fraDegrees = deciDegrees - degrees;
 
     float deciMinutes = fraDegrees * 60.0;
-    minutes = static_cast<int>(deciMinutes);
+    minutes = getIndexMinutes(static_cast<int>(deciMinutes));
     float fraMinutes = deciMinutes - minutes;
 
     float deciSeconds = fraMinutes * 60.0;
-    seconds = static_cast<int>(round(deciSeconds));
+    seconds = getIndexSeconds(static_cast<int>(round(deciSeconds)));
 }
 
 Direction::Direction(int degrees)
