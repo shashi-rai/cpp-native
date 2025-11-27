@@ -59,11 +59,18 @@ bool Point::operator==(const Point& peer) const {
 }
 
 Point Point::operator+(const Point& peer) const {
-    return Point("+", getAzimuthalAmplitudeAscent(peer), (gradient + peer.gradient));
+    Point self = *this, other = peer;
+    std::complex<float> ap1 = self.toAzimuthalComplex(), ap2 = other.toAzimuthalComplex();
+    std::complex<float> a_phasor = ap1 + ap2;
+
+    return Point("+", std::abs(a_phasor), std::arg(a_phasor));
 }
 
 Point Point::operator-(const Point& peer) const {
-    return Point("-", getAzimuthalAmplitudeDescent(peer), (gradient - peer.gradient));
+    Point self = *this, other = peer;
+    std::complex<float> ap1 = self.toAzimuthalComplex(), ap2 = other.toAzimuthalComplex();
+    std::complex<float> a_phasor = ap1 - ap2;
+    return Point("-", std::abs(a_phasor), std::arg(a_phasor));
 }
 
 Angular Point::getOrientation() const {
@@ -90,6 +97,10 @@ std::string Point::print() {
     result << amplitude << ",𝜙:";
 	result << gradient << "}";
 	return result.str();
+}
+
+std::complex<float> Point::toAzimuthalComplex() {
+    return std::complex<float>(amplitude * std::cos(gradient), amplitude * std::sin(gradient));
 }
 
 float Point::getAzimuthalAmplitudeAscent(const Point& peer) const {

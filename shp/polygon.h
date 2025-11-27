@@ -18,61 +18,58 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef SHP_POINT_H
-#define SHP_POINT_H
+#ifndef SHP_POLYGON_H
+#define SHP_POLYGON_H
 
-#include <complex>
-#include <cmath>
 #include <string>
 #include <vector>
-#include "angular.h"
-#include "shape.h"
+#include "point.h"
+#include "wave.h"
 
 namespace shp {
 
-class Point : public Shape {
-    float amplitude;
-    float gradient;
+class Polygon : public Point {
+    int limit;
+    WaveArray waves;
 public:
     // Constructors
-    Point();
-    Point(float gradient);
-    Point(float amplitude, float gradient);
-    Point(std::string name);
-    Point(std::string name, float gradient);
-    Point(std::string name, float amplitude, float gradient);
+    Polygon();
+    Polygon(float gradient);
+    Polygon(std::string name);
+    Polygon(std::string name, int limit);
+    Polygon(std::string name, float gradient);
+    Polygon(std::string name, WaveArray& waves);
+    Polygon(std::string name, WaveArray& waves, float gradient);
 
     // Destructors
-    ~Point();
+    ~Polygon();
 
     // Operator overloading
-    bool operator==(const Point& peer) const;
-    Point operator+(const Point& peer) const;
-    Point operator-(const Point& peer) const;
+    bool operator==(const Polygon& peer) const;
+    Polygon operator+(const Polygon& peer) const;
+    Polygon operator-(const Polygon& peer) const;
+
+    // Access operator
+    Wave& operator()(int x) { return waves[x]; }
+    const Wave& operator()(int x) const { return waves[x]; }
 
     // Getters
-    float getAmplitude() const { return amplitude; }
-    float getGradient() const { return gradient; }
+    WaveArray getWaves() const { return waves; }
 
     // Setters
-    void setAmplitude(float value) { this->amplitude = value; }
-    void setGradient(float value) { this->gradient = value; }
+    void setWaves(const WaveArray& objects) { this->waves = objects; }
 
     // Additional methods
-    virtual Angular getOrientation() const;
+    int getWaveCount() const;
+    Wave get(int index) const;
+    void set(int index, const Wave& object);
     virtual Point copy();
     virtual void clear();
     virtual std::string print();
-protected:
-    std::complex<float> toAzimuthalComplex();
-    float getAzimuthalAmplitudeAscent(const Point& peer) const;
-    float getAzimuthalAmplitudeDescent(const Point& peer) const;
-private:
-    float getGradientAmplitude(const Point& peer, float phase) const;
 };
 
-typedef std::vector<Point > PointArray;
+typedef std::vector<Polygon > PolygonArray;
 
 } // namespace shp
 
-#endif //SHP_POINT_H
+#endif //SHP_POLYGON_H

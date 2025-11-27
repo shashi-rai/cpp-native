@@ -55,6 +55,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/phase.o \
 		$(OBJFOLDR)/planar.o \
 		$(OBJFOLDR)/point.o \
+		$(OBJFOLDR)/polygon.o \
 		$(OBJFOLDR)/shape.o \
 		$(OBJFOLDR)/wave.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
@@ -68,6 +69,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/phase.o \
 		$(OBJFOLDR)/planar.o \
 		$(OBJFOLDR)/point.o \
+		$(OBJFOLDR)/polygon.o \
 		$(OBJFOLDR)/shape.o \
 		$(OBJFOLDR)/wave.o
 
@@ -100,6 +102,9 @@ $(OBJFOLDR)/planar.o: planar.cpp
 
 $(OBJFOLDR)/point.o: point.cpp
 	$(CPPTOOL) -c point.cpp -o $(OBJFOLDR)/point.o $(CXXFLAGS)
+
+$(OBJFOLDR)/polygon.o: polygon.cpp
+	$(CPPTOOL) -c polygon.cpp -o $(OBJFOLDR)/polygon.o $(CXXFLAGS)
 
 $(OBJFOLDR)/shape.o: shape.cpp
 	$(CPPTOOL) -c shape.cpp -o $(OBJFOLDR)/shape.o $(CXXFLAGS)

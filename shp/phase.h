@@ -64,6 +64,7 @@ public:
     virtual void clear();
     virtual std::string print();
 protected:
+    std::complex<float> toPolarizationComplex();
     float getPolarAmplitudeAscent(const Phase& peer) const;
     float getPolarAmplitudeDescent(const Phase& peer) const;
 private:

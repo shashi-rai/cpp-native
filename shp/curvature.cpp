@@ -76,16 +76,20 @@ bool Curvature::operator==(const Curvature& peer) const {
 }
 
 Curvature Curvature::operator+(const Curvature& peer) const {
+    Curvature self = *this, other = peer;
     PhaseArray phases(deforms);
     phases.insert(phases.end(), peer.deforms.begin(), peer.deforms.end());
-    Curvature result = Curvature("+", phases,
-        (polarization + peer.polarization),
-        (getGradient() + peer.getGradient()));
-    result.setAmplitude(getPolarAmplitudeAscent(peer));
+    std::complex<float> ap1 = self.toAzimuthalComplex(), ap2 = other.toAzimuthalComplex();
+    std::complex<float> a_phasor = ap1 + ap2;
+    std::complex<float> pp1 = self.toPolarizationComplex(), pp2 = other.toPolarizationComplex();
+    std::complex<float> p_phasor = pp1 + pp2;
+    Curvature result = Curvature("+", phases, std::arg(p_phasor), std::arg(a_phasor));
+    result.setAmplitude(std::abs(p_phasor));
     return result;
 }
 
 Curvature Curvature::operator-(const Curvature& peer) const {
+    Curvature self = *this, other = peer;
     PhaseArray phases(deforms);
     for (PhaseArray::const_iterator it = peer.deforms.begin(); it != peer.deforms.end(); ++it) {
         PhaseArray::iterator found = std::find(phases.begin(), phases.end(), *it);
@@ -93,10 +97,12 @@ Curvature Curvature::operator-(const Curvature& peer) const {
             phases.erase(found);
         }
     }
-    Curvature result = Curvature("-", phases,
-        (polarization - peer.polarization),
-        (getGradient() - peer.getGradient()));
-    result.setAmplitude(getPolarAmplitudeDescent(peer));
+    std::complex<float> ap1 = self.toAzimuthalComplex(), ap2 = other.toAzimuthalComplex();
+    std::complex<float> a_phasor = ap1 - ap2;
+    std::complex<float> pp1 = self.toPolarizationComplex(), pp2 = other.toPolarizationComplex();
+    std::complex<float> p_phasor = pp1 - pp2;
+    Curvature result = Curvature("-", phases, std::arg(p_phasor), std::arg(a_phasor));
+    result.setAmplitude(std::abs(p_phasor));
     return result;
     }
 
@@ -158,6 +164,10 @@ std::string Curvature::print() {
     result << polarization << ",sz:";
 	result << deforms.size() << "]";
 	return result.str();
+}
+
+std::complex<float> Curvature::toPolarizationComplex() {
+    return std::complex<float>(getAmplitude() * std::cos(polarization), getAmplitude() * std::sin(polarization));
 }
 
 float Curvature::getPolarAmplitudeAscent(const Curvature& peer) const {

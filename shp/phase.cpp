@@ -74,20 +74,24 @@ bool Phase::operator==(const Phase& peer) const {
 }
 
 Phase Phase::operator+(const Phase& peer) const {
-    Phase result = Phase("+",
-        (polarization + peer.polarization),
-        (this->getGradient() + peer.getGradient()),
-        (timestamp + peer.timestamp));
-    result.setAmplitude(getPolarAmplitudeAscent(peer));
+    Phase self = *this, other = peer;
+    std::complex<float> ap1 = self.toAzimuthalComplex(), ap2 = other.toAzimuthalComplex();
+    std::complex<float> a_phasor = ap1 + ap2;
+    std::complex<float> pp1 = self.toPolarizationComplex(), pp2 = other.toPolarizationComplex();
+    std::complex<float> p_phasor = pp1 + pp2;
+    Phase result = Phase("+", std::arg(p_phasor), std::arg(a_phasor), (timestamp + peer.timestamp));
+    result.setAmplitude(std::abs(p_phasor));
     return result;
 }
 
 Phase Phase::operator-(const Phase& peer) const {
-    Phase result = Phase("-",
-        (polarization - peer.polarization),
-        (this->getGradient() - peer.getGradient()),
-        (timestamp - peer.timestamp));
-    result.setAmplitude(getPolarAmplitudeDescent(peer));
+    Phase self = *this, other = peer;
+    std::complex<float> ap1 = self.toAzimuthalComplex(), ap2 = other.toAzimuthalComplex();
+    std::complex<float> a_phasor = ap1 - ap2;
+    std::complex<float> pp1 = self.toPolarizationComplex(), pp2 = other.toPolarizationComplex();
+    std::complex<float> p_phasor = pp1 - pp2;
+    Phase result = Phase("-", std::arg(p_phasor), std::arg(a_phasor), (timestamp - peer.timestamp));
+    result.setAmplitude(std::abs(p_phasor));
     return result;
 }
 
@@ -117,6 +121,10 @@ std::string Phase::print() {
     result << polarization << ",t:";
     result << timestamp << "]:";
 	return result.str();
+}
+
+std::complex<float> Phase::toPolarizationComplex() {
+    return std::complex<float>(getAmplitude() * std::cos(polarization), getAmplitude() * std::sin(polarization));
 }
 
 float Phase::getPolarAmplitudeAscent(const Phase& peer) const {
