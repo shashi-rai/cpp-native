@@ -23,23 +23,62 @@
 namespace che {
 
 Electron::Electron()
-        : name(""), principal(0), azimuthal(0), magnetic(0), spin(0.0), charge() {
+        : Wave(""), principal(0), azimuthal(0), magnetic(0), spin(0.0f), charge() {
 
 }
+
+Electron::Electron(float polarization)
+        : Wave(polarization), principal(0), azimuthal(0), magnetic(0), spin(0.0f), charge()  {
+
+}
+
+Electron::Electron(float polarization, float azimuthal)
+        : Wave(polarization, azimuthal), principal(0), azimuthal(0), magnetic(0), spin(0.0f), charge()  {
+
+}
+
+Electron::Electron(std::string name)
+        : Wave(name), principal(0), azimuthal(0), magnetic(0), spin(0.0f), charge()  {
+
+}
+
+Electron::Electron(std::string name, float polarization)
+        : Wave(name, polarization), principal(0), azimuthal(0), magnetic(0), spin(0.0f), charge()  {
+
+}
+
+Electron::Electron(std::string name, float polarization, float azimuthal)
+        : Wave(name, polarization, azimuthal), principal(0), azimuthal(0), magnetic(0), spin(0.0f), charge() {
+
+}
+
 Electron::Electron(short int principal, short int azimuthal, short int magnetic, float spin)
-        : name(""), principal(0), azimuthal(0), magnetic(0), spin(spin), charge() {
+        : Wave(""), principal(0), azimuthal(0), magnetic(0), spin(spin), charge() {
 
 }
 
 Electron::Electron(std::string name,
         short int principal, short int azimuthal, short int magnetic, float spin,
         Charge& charge)
-        : name(name), principal(0), azimuthal(0), magnetic(0), spin(spin), charge(charge) {
+        : Wave(name), principal(0), azimuthal(0), magnetic(0), spin(spin), charge(charge) {
 
 }
 
 Electron::~Electron() {
 
+}
+
+void Electron::clear() {
+    Wave::clear();
+    return;
+}
+
+std::string Electron::print() {
+    std::stringstream result;
+    result << "{E:";
+	result << Wave::print() << ",sz:";
+    result << "}";
+	return result.str();
 }
 
 } // namespace che

@@ -18,62 +18,62 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef SHP_POLYGON_H
-#define SHP_POLYGON_H
+#ifndef SHP_SHELL_H
+#define SHP_SHELL_H
 
 #include <string>
 #include <vector>
 #include "point.h"
-#include "wave.h"
+#include "polygon.h"
 
 namespace shp {
 
-class Polygon : public Point {
+class Shell : public Point {
     int limit;
-    WaveArray waves;
+    OrbitalArray orbitals;
 public:
     // Constructors
-    Polygon();
-    Polygon(float gradient);
-    Polygon(std::string name);
-    Polygon(std::string name, int limit);
-    Polygon(std::string name, float gradient);
-    Polygon(std::string name, float gradient, int limit);
-    Polygon(std::string name, WaveArray& waves);
-    Polygon(std::string name, WaveArray& waves, float gradient);
-    Polygon(std::string name, WaveArray& waves, float gradient, int limit);
+    Shell();
+    Shell(float gradient);
+    Shell(std::string name);
+    Shell(std::string name, int limit);
+    Shell(std::string name, float gradient);
+    Shell(std::string name, float gradient, int limit);
+    Shell(std::string name, OrbitalArray& orbitals);
+    Shell(std::string name, OrbitalArray& orbitals, float gradient);
+    Shell(std::string name, OrbitalArray& orbitals, float gradient, int limit);
 
     // Destructors
-    ~Polygon();
+    ~Shell();
 
     // Operator overloading
-    bool operator==(const Polygon& peer) const;
-    Polygon operator+(const Polygon& peer) const;
-    Polygon operator-(const Polygon& peer) const;
+    bool operator==(const Shell& peer) const;
+    Shell operator+(const Shell& peer) const;
+    Shell operator-(const Shell& peer) const;
 
     // Access operator
-    Wave& operator()(int x) { return waves[x]; }
-    const Wave& operator()(int x) const { return waves[x]; }
+    Polygon& operator()(int x) { return orbitals[x]; }
+    const Polygon& operator()(int x) const { return orbitals[x]; }
 
     // Getters
     int getLimit() const { return limit; }
-    WaveArray getWaves() const { return waves; }
+    OrbitalArray getOrbitals() const { return orbitals; }
 
     // Setters
     void setLimit(int value) { this->limit = value; }
-    void setWaves(const WaveArray& objects) { this->waves = objects; }
+    void setOrbitals(const OrbitalArray& objects) { this->orbitals = objects; }
 
     // Additional methods
-    int getWaveCount() const;
-    Wave get(int index) const;
-    void set(int index, const Wave& object);
+    int getOrbitalCount() const;
+    Polygon get(int index) const;
+    void set(int index, const Polygon& object);
     virtual Point copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Polygon > OrbitalArray;
+typedef std::vector<Shell > ShellArray;
 
 } // namespace shp
 
-#endif //SHP_POLYGON_H
+#endif //SHP_SHELL_H

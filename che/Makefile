@@ -54,6 +54,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/molecule.o \
 		$(OBJFOLDR)/nucleus.o \
 		$(OBJFOLDR)/orbital.o \
+		$(OBJFOLDR)/period.o \
 		$(OBJFOLDR)/photon.o \
 		$(OBJFOLDR)/polymer.o \
 		$(OBJFOLDR)/reaction.o \
@@ -68,6 +69,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/molecule.o \
 		$(OBJFOLDR)/nucleus.o \
 		$(OBJFOLDR)/orbital.o \
+		$(OBJFOLDR)/period.o \
 		$(OBJFOLDR)/photon.o \
 		$(OBJFOLDR)/polymer.o \
 		$(OBJFOLDR)/reaction.o \
@@ -99,6 +101,9 @@ $(OBJFOLDR)/nucleus.o: nucleus.cpp
 
 $(OBJFOLDR)/orbital.o: orbital.cpp
 	$(CPPTOOL) -c orbital.cpp -o $(OBJFOLDR)/orbital.o $(CXXFLAGS)
+
+$(OBJFOLDR)/period.o: period.cpp
+	$(CPPTOOL) -c period.cpp -o $(OBJFOLDR)/period.o $(CXXFLAGS)
 
 $(OBJFOLDR)/photon.o: photon.cpp
 	$(CPPTOOL) -c photon.cpp -o $(OBJFOLDR)/photon.o $(CXXFLAGS)

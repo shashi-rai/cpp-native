@@ -51,12 +51,14 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/coordinate.o \
 		$(OBJFOLDR)/curvature.o \
 		$(OBJFOLDR)/direction.o \
+		$(OBJFOLDR)/frame.o \
 		$(OBJFOLDR)/linear.o \
 		$(OBJFOLDR)/phase.o \
 		$(OBJFOLDR)/planar.o \
 		$(OBJFOLDR)/point.o \
 		$(OBJFOLDR)/polygon.o \
 		$(OBJFOLDR)/shape.o \
+		$(OBJFOLDR)/shell.o \
 		$(OBJFOLDR)/wave.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
 		$(OBJFOLDR)/angular.o \
@@ -65,12 +67,14 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/coordinate.o \
 		$(OBJFOLDR)/curvature.o \
 		$(OBJFOLDR)/direction.o \
+		$(OBJFOLDR)/frame.o \
 		$(OBJFOLDR)/linear.o \
 		$(OBJFOLDR)/phase.o \
 		$(OBJFOLDR)/planar.o \
 		$(OBJFOLDR)/point.o \
 		$(OBJFOLDR)/polygon.o \
 		$(OBJFOLDR)/shape.o \
+		$(OBJFOLDR)/shell.o \
 		$(OBJFOLDR)/wave.o
 
 $(OBJFOLDR)/angular.o: angular.cpp
@@ -91,6 +95,9 @@ $(OBJFOLDR)/curvature.o: curvature.cpp
 $(OBJFOLDR)/direction.o: direction.cpp
 	$(CPPTOOL) -c direction.cpp -o $(OBJFOLDR)/direction.o $(CXXFLAGS)
 
+$(OBJFOLDR)/frame.o: frame.cpp
+	$(CPPTOOL) -c frame.cpp -o $(OBJFOLDR)/frame.o $(CXXFLAGS)
+
 $(OBJFOLDR)/linear.o: linear.cpp
 	$(CPPTOOL) -c linear.cpp -o $(OBJFOLDR)/linear.o $(CXXFLAGS)
 
@@ -108,6 +115,9 @@ $(OBJFOLDR)/polygon.o: polygon.cpp
 
 $(OBJFOLDR)/shape.o: shape.cpp
 	$(CPPTOOL) -c shape.cpp -o $(OBJFOLDR)/shape.o $(CXXFLAGS)
+
+$(OBJFOLDR)/shell.o: shell.cpp
+	$(CPPTOOL) -c shell.cpp -o $(OBJFOLDR)/shell.o $(CXXFLAGS)
 
 $(OBJFOLDR)/wave.o: wave.cpp
 	$(CPPTOOL) -c wave.cpp -o $(OBJFOLDR)/wave.o $(CXXFLAGS)

@@ -18,62 +18,60 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef SHP_POLYGON_H
-#define SHP_POLYGON_H
+#ifndef SHP_FRAME_H
+#define SHP_FRAME_H
 
 #include <string>
 #include <vector>
+#include "planar.h"
 #include "point.h"
-#include "wave.h"
 
 namespace shp {
 
-class Polygon : public Point {
-    int limit;
-    WaveArray waves;
+class Frame : public Point {
+    PlanarArray planes;
 public:
     // Constructors
-    Polygon();
-    Polygon(float gradient);
-    Polygon(std::string name);
-    Polygon(std::string name, int limit);
-    Polygon(std::string name, float gradient);
-    Polygon(std::string name, float gradient, int limit);
-    Polygon(std::string name, WaveArray& waves);
-    Polygon(std::string name, WaveArray& waves, float gradient);
-    Polygon(std::string name, WaveArray& waves, float gradient, int limit);
+    Frame();
+    Frame(float gradient);
+    Frame(std::string name);
+    Frame(std::string name, float gradient);
+    Frame(std::string name, PlanarArray& planes);
+    Frame(std::string name, PlanarArray& planes, float gradient);
 
     // Destructors
-    ~Polygon();
+    ~Frame();
 
     // Operator overloading
-    bool operator==(const Polygon& peer) const;
-    Polygon operator+(const Polygon& peer) const;
-    Polygon operator-(const Polygon& peer) const;
+    bool operator==(const Frame& peer) const;
+    Frame operator+(const Frame& peer) const;
+    Frame operator-(const Frame& peer) const;
 
     // Access operator
-    Wave& operator()(int x) { return waves[x]; }
-    const Wave& operator()(int x) const { return waves[x]; }
+    Planar& operator()(int x) { return planes[x]; }
+    const Planar& operator()(int x) const { return planes[x]; }
+    Linear& operator()(int x, int y) { return planes[x](y); }
+	const Linear& operator()(int x, int y) const { return planes[x](y); }
+    Point& operator()(int x, int y, int z) { return planes[x](y)(z); }
+	const Point& operator()(int x, int y, int z) const { return planes[x](y)(z); }
 
     // Getters
-    int getLimit() const { return limit; }
-    WaveArray getWaves() const { return waves; }
+    PlanarArray getPlanes() const { return planes; }
 
     // Setters
-    void setLimit(int value) { this->limit = value; }
-    void setWaves(const WaveArray& objects) { this->waves = objects; }
+    void setPlanes(const PlanarArray& objects) { this->planes = objects; }
 
     // Additional methods
-    int getWaveCount() const;
-    Wave get(int index) const;
-    void set(int index, const Wave& object);
+    int getPlaneCount() const;
+    Planar get(int index) const;
+    void set(int index, const Planar& object);
     virtual Point copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Polygon > OrbitalArray;
+typedef std::vector<Frame > FrameArray;
 
 } // namespace shp
 
-#endif //SHP_POLYGON_H
+#endif //SHP_FRAME_H

@@ -18,59 +18,39 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "atom.h"
+#ifndef CHE_PERIOD_H
+#define CHE_PERIOD_H
+
+#include <string>
+#include <vector>
+#include "electron.h"
+#include "../shp/shell.h"
 
 namespace che {
 
-Atom::Atom() : Cellular(""), nucleus(), valency(0) {
+class Period : public shp::Shell {
 
-}
+public:
+    // Constructors
+    Period();
+    Period(std::string name);
+    Period(std::string name, int limit);
+    Period(std::string name, float gradient, int limit);
 
-Atom::Atom(std::string name) : Cellular(name), nucleus(), valency(0) {
+    // Destructors
+    ~Period();
 
-}
+    // Getters
 
-Atom::Atom(std::string name, float gradient)
-        : Cellular(name, gradient), nucleus(), valency(0) {
+    // Setters
 
-}
+    // Additional methods
+    virtual void clear();
+    virtual std::string print();
+};
 
-
-Atom::Atom(std::string name, Nucleus& nucleus)
-        : Cellular(name), nucleus(nucleus), valency(0) {
-
-}
-
-Atom::Atom(std::string name, float gradient, Nucleus& nucleus)
-        : Cellular(name, gradient), nucleus(nucleus), valency(0) {
-
-}
-
-Atom::Atom(std::string name, Nucleus& nucleus, short valency)
-        : Cellular(name), nucleus(nucleus), valency(valency) {
-
-}
-
-Atom::Atom(std::string name, float gradient, Nucleus& nucleus, short valency)
-        : Cellular(name, gradient), nucleus(nucleus), valency(valency) {
-
-}
-
-Atom::~Atom() {
-
-}
-
-void Atom::clear() {
-    Cellular::clear();
-    return;
-}
-
-std::string Atom::print() {
-    std::stringstream result;
-    result << "{A:";
-    result << Cellular::print() << ",sz:";
-    result << "}";
-	return result.str();
-}
+typedef std::vector<Period > PeriodArray;
 
 } // namespace che
+
+#endif //CHE_PERIOD_H

@@ -18,57 +18,41 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "atom.h"
+#include "period.h"
 
 namespace che {
 
-Atom::Atom() : Cellular(""), nucleus(), valency(0) {
+Period::Period() : Shell("", 7) {
 
 }
 
-Atom::Atom(std::string name) : Cellular(name), nucleus(), valency(0) {
+Period::Period(std::string name) : Shell(name, 7) {
 
 }
 
-Atom::Atom(std::string name, float gradient)
-        : Cellular(name, gradient), nucleus(), valency(0) {
+Period::Period(std::string name, int limit)
+    : Shell(name, limit) {
 
 }
 
-
-Atom::Atom(std::string name, Nucleus& nucleus)
-        : Cellular(name), nucleus(nucleus), valency(0) {
-
-}
-
-Atom::Atom(std::string name, float gradient, Nucleus& nucleus)
-        : Cellular(name, gradient), nucleus(nucleus), valency(0) {
+Period::Period(std::string name, float gradient, int limit)
+    : Shell(name, gradient, limit) {
 
 }
 
-Atom::Atom(std::string name, Nucleus& nucleus, short valency)
-        : Cellular(name), nucleus(nucleus), valency(valency) {
+Period::~Period() {
 
 }
 
-Atom::Atom(std::string name, float gradient, Nucleus& nucleus, short valency)
-        : Cellular(name, gradient), nucleus(nucleus), valency(valency) {
-
-}
-
-Atom::~Atom() {
-
-}
-
-void Atom::clear() {
-    Cellular::clear();
+void Period::clear() {
+    Shell::clear();
     return;
 }
 
-std::string Atom::print() {
+std::string Period::print() {
     std::stringstream result;
-    result << "{A:";
-    result << Cellular::print() << ",sz:";
+    result << "{P:";
+	result << Shell::print() << ",sz:";
     result << "}";
 	return result.str();
 }

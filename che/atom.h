@@ -25,35 +25,37 @@
 #include <vector>
 #include "nucleus.h"
 #include "orbital.h"
+#include "../shp/cellular.h"
 
 namespace che {
 
-class Atom {
-    std::string name;
+class Atom : public shp::Cellular {
     Nucleus nucleus;
-    OrbitalArray orbitals;
-    short valency;
+    short int valency;
 public:
     // Constructors
     Atom();
     Atom(std::string name);
+    Atom(std::string name, float gradient);
     Atom(std::string name, Nucleus& nucleus);
-    Atom(std::string name, Nucleus& nucleus, OrbitalArray& orbitals, short valency);
+    Atom(std::string name, float gradient, Nucleus& nucleus);
+    Atom(std::string name, Nucleus& nucleus, short valency);
+    Atom(std::string name, float gradient, Nucleus& nucleus, short valency);
 
     // Destructors
     ~Atom();
 
     // Getters
-    std::string getName() const { return name; }
     Nucleus getNucleus() const { return nucleus; }
-    OrbitalArray getOrbitals() const { return orbitals; }
-    short getValency() const { return valency; }
+    short int getValency() const { return valency; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
     void setNucleus(const Nucleus& nucleus) { this->nucleus = nucleus; }
-    void setOrbitals(const OrbitalArray& orbitals) { this->orbitals = orbitals; }
-    void setValency(const short electron) { this->valency = electron; }
+    void setValency(const short int electron) { this->valency = electron; }
+
+    // Additional methods
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Atom > AtomArray;

@@ -24,11 +24,11 @@
 #include <string>
 #include <vector>
 #include "charge.h"
+#include "../shp/polygon.h"
 
 namespace che {
 
-class Electron {
-    std::string name;
+class Electron : public shp::Wave {
     short int principal;
     short int azimuthal;
     short int magnetic;
@@ -37,6 +37,11 @@ class Electron {
 public:
     // Constructors
     Electron();
+    Electron(float polarization);
+    Electron(float polarization, float azimuthal);
+    Electron(std::string name);
+    Electron(std::string name, float polarization);
+    Electron(std::string name, float polarization, float azimuthal);
     Electron(short int principal, short int azimuthal, short int magnetic, float spin);
     Electron(std::string name, short int principal, short int azimuthal,
         short int magnetic, float spin, Charge& charge);
@@ -45,7 +50,6 @@ public:
     ~Electron();
 
     // Getters
-    std::string getName() const { return name; }
     short int getPrincipal() const { return principal; }
     short int getAzimuthal() const { return azimuthal; }
     short int getMagnetic() const { return magnetic; }
@@ -53,12 +57,15 @@ public:
     Charge getCharge() const { return charge; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
     void setPrincipal(const short int value) { this->principal = value; }
     void setAzimuthal(const short int value) { this->azimuthal = value; }
     void setMagnetic(const short int value) { this->magnetic = value; }
     void setSpin(float value) { this->spin = value; }
     void setCharge(const Charge& value) { this->charge = value; }
+
+    // Additional methods
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Electron > ElectronArray;

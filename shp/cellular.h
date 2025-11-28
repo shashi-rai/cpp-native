@@ -23,21 +23,21 @@
 
 #include <string>
 #include <vector>
-#include "planar.h"
+#include "shell.h"
 #include "point.h"
 
 namespace shp {
 
 class Cellular : public Point {
-    PlanarArray planes;
+    ShellArray shells;
 public:
     // Constructors
     Cellular();
     Cellular(float gradient);
     Cellular(std::string name);
     Cellular(std::string name, float gradient);
-    Cellular(std::string name, PlanarArray& planes);
-    Cellular(std::string name, PlanarArray& planes, float gradient);
+    Cellular(std::string name, ShellArray& shells);
+    Cellular(std::string name, ShellArray& shells, float gradient);
 
     // Destructors
     ~Cellular();
@@ -48,23 +48,23 @@ public:
     Cellular operator-(const Cellular& peer) const;
 
     // Access operator
-    Planar& operator()(int x) { return planes[x]; }
-    const Planar& operator()(int x) const { return planes[x]; }
-    Linear& operator()(int x, int y) { return planes[x](y); }
-	const Linear& operator()(int x, int y) const { return planes[x](y); }
-    Point& operator()(int x, int y, int z) { return planes[x](y)(z); }
-	const Point& operator()(int x, int y, int z) const { return planes[x](y)(z); }
+    Shell& operator()(int x) { return shells[x]; }
+    const Shell& operator()(int x) const { return shells[x]; }
+    Polygon& operator()(int x, int y) { return shells[x](y); }
+	const Polygon& operator()(int x, int y) const { return shells[x](y); }
+    Wave& operator()(int x, int y, int z) { return shells[x](y)(z); }
+	const Wave& operator()(int x, int y, int z) const { return shells[x](y)(z); }
 
     // Getters
-    PlanarArray getPlanes() const { return planes; }
+    ShellArray getShells() const { return shells; }
 
     // Setters
-    void setPlanes(const PlanarArray& objects) { this->planes = objects; }
+    void setShells(const ShellArray& objects) { this->shells = objects; }
 
     // Additional methods
-    int getPlaneCount() const;
-    Planar get(int index) const;
-    void set(int index, const Planar& object);
+    int getShellCount() const;
+    Shell get(int index) const;
+    void set(int index, const Shell& object);
     virtual Point copy();
     virtual void clear();
     virtual std::string print();

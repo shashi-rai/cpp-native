@@ -24,16 +24,20 @@
 #include <string>
 #include <vector>
 #include "electron.h"
+#include "../shp/polygon.h"
 
 namespace che {
 
-class Orbital {
+class Orbital : public shp::Polygon {
     Electron left;
     Electron right;
 public:
     // Constructors
     Orbital();
     Orbital(Electron& left, Electron& right);
+    Orbital(std::string name, int limit);
+    Orbital(std::string name, float gradient, int limit);
+    Orbital(std::string name, int limit, Electron& left, Electron& right);
 
     // Destructors
     ~Orbital();
@@ -45,9 +49,12 @@ public:
     // Setters
     void setLeftSpinor(const Electron& spinor) { this->left = spinor; }
     void setRightSpinor(const Electron& spinor) { this->right = spinor; }
-};
 
-typedef std::vector<Orbital > OrbitalArray;
+    // Additional methods
+    int getParticleCount() const;
+    virtual void clear();
+    virtual std::string print();
+};
 
 } // namespace che
 

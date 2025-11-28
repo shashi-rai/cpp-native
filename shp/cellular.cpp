@@ -22,29 +22,29 @@
 
 namespace shp {
 
-Cellular::Cellular() : Point(), planes() {
+Cellular::Cellular() : Point(), shells() {
 
 }
 
-Cellular::Cellular(float gradient) : Point(gradient), planes() {
+Cellular::Cellular(float gradient) : Point(gradient), shells() {
 
 }
 
-Cellular::Cellular(std::string name) : Point(name), planes() {
+Cellular::Cellular(std::string name) : Point(name), shells() {
 
 }
 
-Cellular::Cellular(std::string name, float gradient) : Point(name, gradient), planes() {
+Cellular::Cellular(std::string name, float gradient) : Point(name, gradient), shells() {
 
 }
 
-Cellular::Cellular(std::string name, PlanarArray& planes)
-        : Point(name), planes(planes) {
+Cellular::Cellular(std::string name, ShellArray& shells)
+        : Point(name), shells(shells) {
 
 }
 
-Cellular::Cellular(std::string name, PlanarArray& planes, float gradient)
-        : Point(name, gradient), planes(planes) {
+Cellular::Cellular(std::string name, ShellArray& shells, float gradient)
+        : Point(name, gradient), shells(shells) {
 
 }
 
@@ -54,19 +54,19 @@ Cellular::~Cellular() {
 
 bool Cellular::operator==(const Cellular& peer) const {
     return (static_cast<const Point&>(*this) == static_cast<const Point&>(peer))
-        && (planes == peer.planes);
+        && (shells == peer.shells);
 }
 
 Cellular Cellular::operator+(const Cellular& peer) const {
-    PlanarArray result(planes);
-    result.insert(result.end(), peer.planes.begin(), peer.planes.end());
+    ShellArray result(shells);
+    result.insert(result.end(), peer.shells.begin(), peer.shells.end());
     return Cellular("+", result);
 }
 
 Cellular Cellular::operator-(const Cellular& peer) const {
-    PlanarArray result(planes);
-    for (PlanarArray::const_iterator it = peer.planes.begin(); it != peer.planes.end(); ++it) {
-        PlanarArray::iterator found = std::find(result.begin(), result.end(), *it);
+    ShellArray result(shells);
+    for (ShellArray::const_iterator it = peer.shells.begin(); it != peer.shells.end(); ++it) {
+        ShellArray::iterator found = std::find(result.begin(), result.end(), *it);
         if (found != result.end()) {
             result.erase(found);
         }
@@ -74,46 +74,46 @@ Cellular Cellular::operator-(const Cellular& peer) const {
     return Cellular("-", result);
 }
 
-int Cellular::getPlaneCount() const {
-    return planes.size();
+int Cellular::getShellCount() const {
+    return shells.size();
 }
 
-Planar Cellular::get(int index) const {
-    Planar result;
+Shell Cellular::get(int index) const {
+    Shell result;
     if (index < 0) {
         return result;
     }
-    if (index >= static_cast<int>(planes.size())) {
+    if (index >= static_cast<int>(shells.size())) {
         return result;
     }
-    return planes[index];
+    return shells[index];
 }
 
-void Cellular::set(int index, const Planar& object) {
+void Cellular::set(int index, const Shell& object) {
     if (index < 0) {
         return;
     }
-    if (index < static_cast<int>(planes.size())) {
+    if (index < static_cast<int>(shells.size())) {
         // replace existing element
-        planes[index] = object;
-    } else if (index == static_cast<int>(planes.size())) {
+        shells[index] = object;
+    } else if (index == static_cast<int>(shells.size())) {
         // append at end
-        planes.push_back(object);
+        shells.push_back(object);
     } else {
         // index beyond current size: append at end
-        planes.push_back(object);
+        shells.push_back(object);
     }
     return;
 }
 
 Point Cellular::copy() {
-    Cellular fresh(this->getName(), this->planes);
+    Cellular fresh(this->getName(), this->shells);
     return fresh;
 }
 
 void Cellular::clear() {
     Point::clear();
-    planes.clear();
+    shells.clear();
     return;
 }
 
@@ -121,8 +121,12 @@ std::string Cellular::print() {
     std::stringstream result;
     result << "{ce";
 	result << Point::print() << ",sz:";
-	result << planes.size() << "}";
-	return result.str();
+	result << shells.size() << "}\n{";
+    for (int i = 0; i < shells.size(); i++) {
+        result << "\t" << shells[i].print() << std::endl;
+    }
+    result << "}";
+    return result.str();
 }
 
 } // namespace shp

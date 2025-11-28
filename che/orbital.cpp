@@ -22,16 +22,49 @@
 
 namespace che {
 
-Orbital::Orbital() : left(), right() {
+Orbital::Orbital() : Polygon("", 2), left(), right() {
 
 }
 
-Orbital::Orbital(Electron& left, Electron& right) : left(left), right(right) {
+Orbital::Orbital(Electron& left, Electron& right)
+    : Polygon("", 2), left(left), right(right) {
+
+}
+
+Orbital::Orbital(std::string name, int limit)
+    : Polygon(name, limit), left(), right() {
+
+}
+
+Orbital::Orbital(std::string name, float gradient, int limit)
+    : Polygon(name, gradient, limit), left(), right() {
+
+}
+
+Orbital::Orbital(std::string name, int limit, Electron& left, Electron& right)
+    : Polygon(name, limit), left(left), right(right) {
 
 }
 
 Orbital::~Orbital() {
 
+}
+
+int Orbital::getParticleCount() const {
+    return this->getWaveCount();
+}
+
+void Orbital::clear() {
+    Polygon::clear();
+    return;
+}
+
+std::string Orbital::print() {
+    std::stringstream result;
+    result << "{O:";
+	result << Polygon::print() << ",sz:";
+    result << "}";
+	return result.str();
 }
 
 } // namespace che

@@ -42,6 +42,11 @@ Polygon::Polygon(std::string name, float gradient) : Point(name, gradient), wave
 
 }
 
+Polygon::Polygon(std::string name, float gradient, int limit)
+    : Point(name, gradient), waves(), limit(limit) {
+
+}
+
 Polygon::Polygon(std::string name, WaveArray& waves)
         : Point(name), waves(waves), limit(0) {
 
@@ -49,6 +54,11 @@ Polygon::Polygon(std::string name, WaveArray& waves)
 
 Polygon::Polygon(std::string name, WaveArray& waves, float gradient)
         : Point(name, gradient), waves(waves), limit(0) {
+
+}
+
+Polygon::Polygon(std::string name, WaveArray& waves, float gradient, int limit)
+        : Point(name, gradient), waves(waves), limit(limit) {
 
 }
 
@@ -111,20 +121,22 @@ void Polygon::set(int index, const Wave& object) {
 }
 
 Point Polygon::copy() {
-    Polygon fresh(this->getName(), this->waves);
+    Polygon fresh(this->getName(), this->waves, this->getGradient(), limit);
     return fresh;
 }
 
 void Polygon::clear() {
     Point::clear();
+    limit = 0;
     waves.clear();
     return;
 }
 
 std::string Polygon::print() {
     std::stringstream result;
-    result << "{po";
-	result << Point::print() << ",sz:";
+    result << "{ψ:";
+	result << Point::print() << ",l:";
+    result << limit << ",sz:";
 	result << waves.size() << "}\n{";
     for (int i = 0; i < waves.size(); i++) {
         result << "\t" << waves[i].print() << std::endl;
