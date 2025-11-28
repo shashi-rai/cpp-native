@@ -63,12 +63,9 @@ public:
     virtual Point copy();
     virtual void clear();
     virtual std::string print();
+    float getAmplitudeAzimuthal(float change) const;
 protected:
-    std::complex<float> toAzimuthalComplex();
-    float getAzimuthalAmplitudeAscent(const Point& peer) const;
-    float getAzimuthalAmplitudeDescent(const Point& peer) const;
-private:
-    float getGradientAmplitude(const Point& peer, float phase) const;
+    std::complex<float> toAzimuthalComplex(float change);
 };
 
 typedef std::vector<Point > PointArray;

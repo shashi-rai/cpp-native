@@ -79,9 +79,9 @@ Curvature Curvature::operator+(const Curvature& peer) const {
     Curvature self = *this, other = peer;
     PhaseArray phases(deforms);
     phases.insert(phases.end(), peer.deforms.begin(), peer.deforms.end());
-    std::complex<float> ap1 = self.toAzimuthalComplex(), ap2 = other.toAzimuthalComplex();
+    std::complex<float> ap1 = self.toAzimuthalComplex(self.getGradient()), ap2 = other.toAzimuthalComplex(peer.getGradient());
     std::complex<float> a_phasor = ap1 + ap2;
-    std::complex<float> pp1 = self.toPolarizationComplex(), pp2 = other.toPolarizationComplex();
+    std::complex<float> pp1 = self.toPolarizationComplex(polarization), pp2 = other.toPolarizationComplex(peer.polarization);
     std::complex<float> p_phasor = pp1 + pp2;
     Curvature result = Curvature("+", phases, std::arg(p_phasor), std::arg(a_phasor));
     result.setAmplitude(std::abs(p_phasor));
@@ -97,14 +97,14 @@ Curvature Curvature::operator-(const Curvature& peer) const {
             phases.erase(found);
         }
     }
-    std::complex<float> ap1 = self.toAzimuthalComplex(), ap2 = other.toAzimuthalComplex();
+    std::complex<float> ap1 = self.toAzimuthalComplex(self.getGradient()), ap2 = other.toAzimuthalComplex(peer.getGradient());
     std::complex<float> a_phasor = ap1 - ap2;
-    std::complex<float> pp1 = self.toPolarizationComplex(), pp2 = other.toPolarizationComplex();
+    std::complex<float> pp1 = self.toPolarizationComplex(polarization), pp2 = other.toPolarizationComplex(peer.polarization);
     std::complex<float> p_phasor = pp1 - pp2;
     Curvature result = Curvature("-", phases, std::arg(p_phasor), std::arg(a_phasor));
     result.setAmplitude(std::abs(p_phasor));
     return result;
-    }
+}
 
 int Curvature::getChangeCount() const {
     return deforms.size();
@@ -166,24 +166,12 @@ std::string Curvature::print() {
 	return result.str();
 }
 
-std::complex<float> Curvature::toPolarizationComplex() {
-    return std::complex<float>(getAmplitude() * std::cos(polarization), getAmplitude() * std::sin(polarization));
+float Curvature::getAmplitudePolarization(float change) const {
+    return getAmplitude() * cos(polarization + change);
 }
 
-float Curvature::getPolarAmplitudeAscent(const Curvature& peer) const {
-    return getAmplitudePolarization(peer, (polarization - peer.polarization));
-}
-
-float Curvature::getPolarAmplitudeDescent(const Curvature& peer) const {
-    return getAmplitudePolarization(peer, (polarization + peer.polarization));
-}
-
-float Curvature::getAmplitudePolarization(const Curvature& peer, float phase) const {
-    float R_squared =
-            (getAmplitude() * getAmplitude()) + (peer.getAmplitude() * peer.getAmplitude())
-            + (2 * getAmplitude() * peer.getAmplitude()) * cos(phase);
-
-    return std::sqrt(std::max(0.0f, R_squared));
+std::complex<float> Curvature::toPolarizationComplex(float change) {
+    return std::complex<float>(getAmplitude() * std::cos(change), getAmplitude() * std::sin(change));
 }
 
 } // namespace shp

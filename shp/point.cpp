@@ -60,7 +60,7 @@ bool Point::operator==(const Point& peer) const {
 
 Point Point::operator+(const Point& peer) const {
     Point self = *this, other = peer;
-    std::complex<float> ap1 = self.toAzimuthalComplex(), ap2 = other.toAzimuthalComplex();
+    std::complex<float> ap1 = self.toAzimuthalComplex(gradient), ap2 = other.toAzimuthalComplex(peer.gradient);
     std::complex<float> a_phasor = ap1 + ap2;
 
     return Point("+", std::abs(a_phasor), std::arg(a_phasor));
@@ -68,7 +68,7 @@ Point Point::operator+(const Point& peer) const {
 
 Point Point::operator-(const Point& peer) const {
     Point self = *this, other = peer;
-    std::complex<float> ap1 = self.toAzimuthalComplex(), ap2 = other.toAzimuthalComplex();
+    std::complex<float> ap1 = self.toAzimuthalComplex(gradient), ap2 = other.toAzimuthalComplex(peer.gradient);
     std::complex<float> a_phasor = ap1 - ap2;
     return Point("-", std::abs(a_phasor), std::arg(a_phasor));
 }
@@ -99,24 +99,12 @@ std::string Point::print() {
 	return result.str();
 }
 
-std::complex<float> Point::toAzimuthalComplex() {
-    return std::complex<float>(amplitude * std::cos(gradient), amplitude * std::sin(gradient));
+float Point::getAmplitudeAzimuthal(float change) const {
+    return getAmplitude() * cos(gradient + change);
 }
 
-float Point::getAzimuthalAmplitudeAscent(const Point& peer) const {
-    return getGradientAmplitude(peer, (gradient - peer.gradient));
-}
-
-float Point::getAzimuthalAmplitudeDescent(const Point& peer) const {
-    return getGradientAmplitude(peer, (gradient + peer.gradient));
-}
-
-float Point::getGradientAmplitude(const Point& peer, float phase) const {
-    float R_squared =
-            (amplitude * amplitude) + (peer.amplitude * peer.amplitude)
-            + (2 * amplitude * peer.amplitude) * cos(phase);
-
-    return std::sqrt(std::max(0.0f, R_squared));
+std::complex<float> Point::toAzimuthalComplex(float change) {
+    return std::complex<float>(amplitude * std::cos(change), amplitude * std::sin(change));
 }
 
 } // namespace shp

@@ -91,18 +91,22 @@ bool Wave::operator==(const Wave& peer) const {
 }
 
 Wave Wave::operator+(const Wave& peer) const {
+    Wave self = *this, other = peer;
     CurvatureArray fluctuations(wavelets);
     fluctuations.insert(fluctuations.end(), peer.wavelets.begin(), peer.wavelets.end());
-    Wave result = Wave("+", (frequency + peer.frequency), (length + peer.length), fluctuations,
-        (getPolarization() + peer.getPolarization()),
-        (getGradient() + peer.getGradient()));
+    std::complex<float> ap1 = self.toAzimuthalComplex(self.getGradient()), ap2 = other.toAzimuthalComplex(peer.getGradient());
+    std::complex<float> a_phasor = ap1 + ap2;
+    std::complex<float> pp1 = self.toPolarizationComplex(self.getPolarization()), pp2 = other.toPolarizationComplex(peer.getPolarization());
+    std::complex<float> p_phasor = pp1 + pp2;
+    Wave result = Wave("+", (frequency + peer.frequency), (length + peer.length),
+        fluctuations, std::arg(p_phasor), std::arg(a_phasor));
     // TODO: since amplitude would vary due to Polar & Azimuthal angle differences
-    result.setAmplitude(getPolarAmplitudeAscent(peer));
-    // result.setAmplitude(getAzimuthalAmplitudeAscent(peer));
+    result.setAmplitude(std::abs(p_phasor));
     return result;
 }
 
 Wave Wave::operator-(const Wave& peer) const {
+    Wave self = *this, other = peer;
     CurvatureArray fluctuations(wavelets);
     for (CurvatureArray::const_iterator it = peer.wavelets.begin(); it != peer.wavelets.end(); ++it) {
         CurvatureArray::iterator found = std::find(fluctuations.begin(), fluctuations.end(), *it);
@@ -110,12 +114,14 @@ Wave Wave::operator-(const Wave& peer) const {
             fluctuations.erase(found);
         }
     }
-    Wave result = Wave("-", (frequency - peer.frequency), (length - peer.length), fluctuations,
-        (getPolarization() - peer.getPolarization()),
-        (getGradient() - peer.getGradient()));
+    std::complex<float> ap1 = self.toAzimuthalComplex(self.getGradient()), ap2 = other.toAzimuthalComplex(peer.getGradient());
+    std::complex<float> a_phasor = ap1 - ap2;
+    std::complex<float> pp1 = self.toPolarizationComplex(self.getPolarization()), pp2 = other.toPolarizationComplex(peer.getPolarization());
+    std::complex<float> p_phasor = pp1 - pp2;
+    Wave result = Wave("-", (frequency - peer.frequency), (length - peer.length),
+        fluctuations, std::arg(p_phasor), std::arg(a_phasor));
     // TODO: since amplitude would vary due to Polar & Azimuthal angle differences
-    result.setAmplitude(getPolarAmplitudeDescent(peer));
-    // result.setAmplitude(getAzimuthalAmplitudeDescent(peer));
+    result.setAmplitude(std::abs(p_phasor));
     return result;
 }
 

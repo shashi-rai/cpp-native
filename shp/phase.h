@@ -63,12 +63,9 @@ public:
     virtual Point copy();
     virtual void clear();
     virtual std::string print();
+    float getAmplitudePolarization(float change) const;
 protected:
-    std::complex<float> toPolarizationComplex();
-    float getPolarAmplitudeAscent(const Phase& peer) const;
-    float getPolarAmplitudeDescent(const Phase& peer) const;
-private:
-    float getAmplitudePolarization(const Point& peer, float phase) const;
+    std::complex<float> toPolarizationComplex(float change);
 };
 
 typedef std::vector<Phase > PhaseArray;
