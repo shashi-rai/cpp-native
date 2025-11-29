@@ -18,36 +18,48 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef CHE_CHARGE_H
-#define CHE_CHARGE_H
+#ifndef QFT_MASS_H
+#define QFT_MASS_H
 
+#include <sstream>
 #include <vector>
-#include "unit.h"
+#include "../shp/unit.h"
 
-namespace che {
+namespace qft {
 
-class Charge {
-    Unit unit;
-    short int charge;
+class Mass {
+    shp::Unit unit;
+    float mass;
 public:
     // Constructors
-    Charge();
-    Charge(const Unit& unit, short int charge);
+    Mass();
+    Mass(float mass);
+    Mass(const shp::Unit& unit, float mass);
 
     // Destructors
-    ~Charge();
+    ~Mass();
+
+    // Operator overloading
+    bool operator==(const Mass& peer) const;
+    Mass operator+(const Mass& peer) const;
+    Mass operator-(const Mass& peer) const;
 
     // Getters
-    Unit getUnit() const { return unit; }
-    short int getCharge() const { return charge; }
+    shp::Unit getUnit() const { return unit; }
+    float getMass() const { return mass; }
 
     // Setters
-    void setUnit(const Unit& value) { this->unit = value; }
-    void setCharge(const short int value) { this->charge = value; }
+    void setUnit(const shp::Unit& value) { this->unit = value; }
+    void setMass(const float amount) { this->mass = amount; }
+
+    // Additional methods
+    virtual Mass copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
-typedef std::vector<Charge > ChargeArray;
+typedef std::vector<Mass > MassArray;
 
-} // namespace che
+} // namespace qft
 
-#endif //CHE_CHARGE_H
+#endif //QFT_MASS_H

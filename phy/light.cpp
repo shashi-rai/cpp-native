@@ -18,44 +18,54 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef PHY_ENERGY_H
-#define PHY_ENERGY_H
-
-#include <string>
-#include <vector>
-#include "unit.h"
+#include "light.h"
 
 namespace phy {
 
-class Energy {
-    std::string name;
-    Unit unit;
-    double kinetic;
-    double potential;
-public:
-    // Constructors
-    Energy();
-    Energy(std::string name, const Unit& unit);
-    Energy(std::string name, const Unit& unit, double kinetic, double potential);
+Light::Light() : Wave("") {
 
-    // Destructors
-    ~Energy();
+}
 
-    // Getters
-    std::string getName() const { return name; }
-    Unit getUnit() const { return unit; }
-    double getKinetic() const { return kinetic; }
-    double getPotential() const { return potential; }
+Light::Light(std::string name) : Wave(name) {
 
-    // Setters
-    void setName(const std::string& name) { this->name = name; }
-    void setUnit(const Unit& value) { this->unit = value; }
-    void setKinetic(double value) { this->kinetic = value; }
-    void setPotential(double value) { this->potential = value; }
-};
+}
 
-typedef std::vector<Energy > EnergyArray;
+Light::Light(std::string name, long frequency, float wavelength)
+        : Wave(name, frequency, wavelength) {
+
+}
+
+Light::~Light() {
+
+}
+
+bool Light::operator==(const Light& peer) const {
+    return (getAmplitude() == peer.getAmplitude())
+        && (getFrequency() == peer.getFrequency())
+        && (getWavelength() == peer.getWavelength());
+}
+
+shp::Point Light::copy() {
+    Light fresh(this->getName());
+    fresh.setAmplitude(this->getAmplitude());
+	fresh.setGradient(this->getGradient());
+	fresh.setPolarization(this->getPolarization());
+	fresh.setFrequency(this->getFrequency());
+	fresh.setWavelength(this->getWavelength());
+    return fresh;
+}
+
+void Light::clear() {
+    Wave::clear();
+    return;
+}
+
+std::string Light::print() {
+    std::stringstream result;
+    result << "{L:";
+	result << Wave::print() << ",sz:";
+    result << "}";
+	return result.str();
+}
 
 } // namespace phy
-
-#endif //PHY_ENERGY_H

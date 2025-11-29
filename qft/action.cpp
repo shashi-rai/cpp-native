@@ -22,17 +22,38 @@
 
 namespace qft {
 
-Action::Action() : name(""), coordinate(), point() {
+Action::Action() : name(""), coordinate(), wave() {
 
 }
 
-Action::Action(std::string name, shp::Coordinate& location, shp::Point& point)
-        : name(name), coordinate(location), point(point) {
+Action::Action(std::string name, shp::Coordinate& location, shp::Wave& wave)
+        : name(name), coordinate(location), wave(wave) {
 
 }
 
 Action::~Action() {
 
+}
+
+Action Action::copy() {
+    Action fresh(name, coordinate, wave);
+    return fresh;
+}
+
+void Action::clear() {
+    coordinate.clear();
+    wave.clear();
+    name = "";
+    return;
+}
+
+std::string Action::print() {
+    std::stringstream result;
+    result << "(";
+    result << name << ",";
+    result << coordinate.print() << ",";
+    result << wave.print() << ")";
+	return result.str();
 }
 
 } // namespace qft

@@ -18,21 +18,51 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "time.h"
-#include "unit.h"
+#ifndef QFT_ENERGY_H
+#define QFT_ENERGY_H
 
-namespace phy {
+#include <sstream>
+#include <vector>
+#include "../shp/unit.h"
 
-Time::Time() : unit(), time(0L) {
+namespace qft {
 
-}
+class Energy {
+    shp::Unit unit;
+    float kinetic;
+    float potential;
+public:
+    // Constructors
+    Energy();
+    Energy(float kinetic, float potential);
+    Energy(const shp::Unit& unit, float kinetic, float potential);
 
-Time::Time(const Unit& unit, long time) : unit(unit), time(time) {
+    // Destructors
+    ~Energy();
 
-}
+    // Operator overloading
+    bool operator==(const Energy& peer) const;
+    Energy operator+(const Energy& peer) const;
+    Energy operator-(const Energy& peer) const;
 
-Time::~Time() {
+    // Getters
+    shp::Unit getUnit() const { return unit; }
+    float getKinetic() const { return kinetic; }
+    float getPotential() const { return potential; }
 
-}
+    // Setters
+    void setUnit(const shp::Unit& value) { this->unit = value; }
+    void setKinetic(const float value) { this->kinetic = value; }
+    void setPotential(const float value) { this->potential = value; }
 
-} // namespace phy
+    // Additional methods
+    virtual Energy copy();
+    virtual void clear();
+    virtual std::string print();
+};
+
+typedef std::vector<Energy > EnergyArray;
+
+} // namespace qft
+
+#endif //QFT_ENERGY_H

@@ -22,17 +22,44 @@
 
 namespace che {
 
-Photon::Photon() : name(""), energy(), wavelength(0.0) {
+Photon::Photon() : Wave(""), energy() {
 
 }
 
-Photon::Photon(std::string name, Energy& energy, double wavelength)
-        : name(name), energy(energy), wavelength(wavelength) {
+Photon::Photon(std::string name, qft::Energy& energy) : Wave(name), energy(energy) {
+
+}
+
+Photon::Photon(std::string name, qft::Energy& energy, long frequency, float wavelength)
+        : Wave(name, frequency, wavelength), energy(energy) {
 
 }
 
 Photon::~Photon() {
 
+}
+
+shp::Point Photon::copy() {
+    Photon fresh(this->getName(), energy);
+	fresh.setAmplitude(this->getAmplitude());
+	fresh.setGradient(this->getGradient());
+	fresh.setPolarization(this->getPolarization());
+	fresh.setFrequency(this->getFrequency());
+	fresh.setWavelength(this->getWavelength());
+    return fresh;
+}
+
+void Photon::clear() {
+    Wave::clear();
+    return;
+}
+
+std::string Photon::print() {
+    std::stringstream result;
+    result << "γ:";
+	result << Wave::print() << ",sz:";
+    result << "}";
+	return result.str();
 }
 
 } // namespace che

@@ -18,36 +18,42 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef PHY_CHARGE_H
-#define PHY_CHARGE_H
+#ifndef PHY_SOUND_H
+#define PHY_SOUND_H
 
+#include <sstream>
+#include <string>
 #include <vector>
-#include "unit.h"
+#include "../shp/wave.h"
 
 namespace phy {
 
-class Charge {
-    Unit unit;
-    double charge;
+class Sound : public shp::Wave {
+
 public:
     // Constructors
-    Charge();
-    Charge(const Unit& unit, double charge);
+    Sound();
+    Sound(std::string name);
+    Sound(std::string name, long frequency, float wavelength);
 
     // Destructors
-    ~Charge();
+    ~Sound();
+
+    // Operator overloading
+    bool operator==(const Sound& peer) const;
 
     // Getters
-    Unit getUnit() const { return unit; }
-    double getCharge() const { return charge; }
 
     // Setters
-    void setUnit(const Unit& value) { this->unit = value; }
-    void setCharge(const double value) { this->charge = value; }
+
+    // Additional methods
+    virtual shp::Point copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
-typedef std::vector<Charge > ChargeArray;
+typedef std::vector<Sound > SoundArray;
 
 } // namespace phy
 
-#endif //PHY_CHARGE_H
+#endif //PHY_SOUND_H

@@ -18,33 +18,54 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef CHE_UNIT_H
-#define CHE_UNIT_H
+#include "sound.h"
 
-#include <string>
-#include <vector>
+namespace phy {
 
-namespace che {
+Sound::Sound() : Wave("") {
 
-class Unit {
-    std::string name;
-public:
-    // Constructors
-    Unit();
-    Unit(std::string name);
+}
 
-    // Destructors
-    ~Unit();
+Sound::Sound(std::string name) : Wave(name) {
 
-    // Getters
-    std::string getName() const { return name; }
+}
 
-    // Setters
-    void setName(const std::string& name) { this->name = name; }
-};
+Sound::Sound(std::string name, long frequency, float wavelength)
+        : Wave(name, frequency, wavelength) {
 
-typedef std::vector<Unit > UnitArray;
+}
 
-} // namespace che
+Sound::~Sound() {
 
-#endif //CHE_UNIT_H
+}
+
+bool Sound::operator==(const Sound& peer) const {
+    return (getAmplitude() == peer.getAmplitude())
+        && (getFrequency() == peer.getFrequency())
+        && (getWavelength() == peer.getWavelength());
+}
+
+shp::Point Sound::copy() {
+    Sound fresh(this->getName());
+    fresh.setAmplitude(this->getAmplitude());
+	fresh.setGradient(this->getGradient());
+	fresh.setPolarization(this->getPolarization());
+	fresh.setFrequency(this->getFrequency());
+	fresh.setWavelength(this->getWavelength());
+    return fresh;
+}
+
+void Sound::clear() {
+    Wave::clear();
+    return;
+}
+
+std::string Sound::print() {
+    std::stringstream result;
+    result << "{S:";
+	result << Wave::print() << ",sz:";
+    result << "}";
+	return result.str();
+}
+
+} // namespace phy

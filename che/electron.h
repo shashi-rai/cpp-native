@@ -23,8 +23,8 @@
 
 #include <string>
 #include <vector>
-#include "charge.h"
-#include "../shp/polygon.h"
+#include "../qft/charge.h"
+#include "../shp/wave.h"
 
 namespace che {
 
@@ -33,7 +33,7 @@ class Electron : public shp::Wave {
     short int azimuthal;
     short int magnetic;
     float spin;
-    Charge charge;
+    qft::Charge charge;
 public:
     // Constructors
     Electron();
@@ -44,7 +44,7 @@ public:
     Electron(std::string name, float polarization, float azimuthal);
     Electron(short int principal, short int azimuthal, short int magnetic, float spin);
     Electron(std::string name, short int principal, short int azimuthal,
-        short int magnetic, float spin, Charge& charge);
+        short int magnetic, float spin, qft::Charge& charge);
 
     // Destructors
     ~Electron();
@@ -54,16 +54,17 @@ public:
     short int getAzimuthal() const { return azimuthal; }
     short int getMagnetic() const { return magnetic; }
     float getSpin() const { return spin; }
-    Charge getCharge() const { return charge; }
+    qft::Charge getCharge() const { return charge; }
 
     // Setters
     void setPrincipal(const short int value) { this->principal = value; }
     void setAzimuthal(const short int value) { this->azimuthal = value; }
     void setMagnetic(const short int value) { this->magnetic = value; }
     void setSpin(float value) { this->spin = value; }
-    void setCharge(const Charge& value) { this->charge = value; }
+    void setCharge(const qft::Charge& value) { this->charge = value; }
 
     // Additional methods
+    virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();
 };

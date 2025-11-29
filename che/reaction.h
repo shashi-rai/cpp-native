@@ -23,8 +23,8 @@
 
 #include <string>
 #include <vector>
-#include "energy.h"
 #include "molecule.h"
+#include "../qft/energy.h"
 
 namespace che {
 
@@ -32,12 +32,12 @@ class Reaction {
     std::string name;
     MoleculeArray reactants;
     MoleculeArray products;
-    Energy change;
+    qft::Energy change;
 public:
     // Constructors
     Reaction();
     Reaction(std::string name);
-    Reaction(std::string name, MoleculeArray& reactants, MoleculeArray& products, Energy& change);
+    Reaction(std::string name, MoleculeArray& reactants, MoleculeArray& products, qft::Energy& change);
 
     // Destructors
     ~Reaction();
@@ -46,13 +46,13 @@ public:
     std::string getName() const { return name; }
     MoleculeArray getReactants() const { return reactants; }
     MoleculeArray getProducts() const { return products; }
-    Energy getChange() const { return change; }
+    qft::Energy getChange() const { return change; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
     void setReactants(const MoleculeArray& reactants) { this->reactants = reactants; }
     void setProducts(const MoleculeArray& products) { this->products = products; }
-    void setChange(const Energy& difference) { this->change = difference; }
+    void setChange(const qft::Energy& difference) { this->change = difference; }
 };
 
 typedef std::vector<Reaction > ReactionArray;

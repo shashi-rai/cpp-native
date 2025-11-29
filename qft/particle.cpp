@@ -22,21 +22,31 @@
 
 namespace qft {
 
-Particle::Particle() : Point(), spin(0.0f), mass(0.0), charge(0.0) {
+Particle::Particle() : Point(), spin(0.0f), mass(), charge() {
     setPhysical(nullptr);
 }
 
-Particle::Particle(float spin, double mass, double charge)
+Particle::Particle(float spin)
+        : Point(), spin(spin), mass(), charge() {
+    setPhysical(nullptr);
+}
+
+Particle::Particle(Mass& mass, Charge& charge)
+        : Point(), spin(), mass(mass), charge(charge) {
+    setPhysical(nullptr);
+}
+
+Particle::Particle(float spin, Mass& mass, Charge& charge)
         : Point(), spin(spin), mass(mass), charge(charge) {
     setPhysical(nullptr);
 }
 
 Particle::Particle(shp::Shape* physical)
-        : Point(), spin(0.0f), mass(0.0), charge(0.0) {
+        : Point(), spin(0.0f), mass(), charge() {
     setPhysical(physical);
 }
 
-Particle::Particle(shp::Shape* physical, float spin, double mass, double charge)
+Particle::Particle(shp::Shape* physical, float spin, Mass& mass, Charge& charge)
         : Point(), spin(spin), mass(mass), charge(charge) {
     setPhysical(physical);
 }
@@ -47,6 +57,29 @@ Particle::~Particle() {
 
 bool Particle::isStructured() const {
     return physical != nullptr;
+}
+
+shp::Point Particle::copy() {
+    Particle fresh(physical, spin, mass, charge);
+    return fresh;
+}
+
+void Particle::clear() {
+    Point::clear();
+    spin = 0.0f;
+    mass.clear();
+    charge.clear();
+    return;
+}
+
+std::string Particle::print() {
+    std::stringstream result;
+    result << "[";
+    result << Point::print() << ",";
+    result << spin << ",";
+    result << mass.print() << ",";
+    result << charge.print() << "]";
+	return result.str();
 }
 
 } // namespace qft

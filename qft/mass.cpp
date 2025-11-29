@@ -18,38 +18,55 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef PHY_DIRECTION_H
-#define PHY_DIRECTION_H
+#include "mass.h"
 
-#include <vector>
+namespace qft {
 
-namespace phy {
+Mass::Mass() : unit(), mass(0.0f) {
 
-class Direction {
-    double x;
-    double y;
-    double z;
-public:
-    // Constructors
-    Direction();
-    Direction(double x, double y, double z);
+}
 
-    // Destructors
-    ~Direction();
+Mass::Mass(float mass) : unit(), mass(mass) {
 
-    // Getters
-    double getX() const { return x; }
-    double getY() const { return y; }
-    double getZ() const { return z; }
+}
 
-    // Setters
-    void setX(const double value) { this->x = value; }
-    void setY(const double value) { this->y = value; }
-    void setZ(const double value) { this->z = value; }
-};
+Mass::Mass(const shp::Unit& unit, float mass) : unit(unit), mass(mass) {
 
-typedef std::vector<Direction > DirectionArray;
+}
 
-} // namespace phy
+Mass::~Mass() {
 
-#endif //PHY_DIRECTION_H
+}
+
+bool Mass::operator==(const Mass& peer) const {
+    return (unit == peer.unit) && (mass == peer.mass);
+}
+
+Mass Mass::operator+(const Mass& peer) const {
+    return Mass(mass + peer.mass);
+}
+
+Mass Mass::operator-(const Mass& peer) const {
+    return Mass(mass - peer.mass);
+}
+
+Mass Mass::copy() {
+    Mass fresh(unit, mass);
+    return fresh;
+}
+
+void Mass::clear() {
+    unit.clear();
+    mass = 0.0f;
+    return;
+}
+
+std::string Mass::print() {
+    std::stringstream result;
+    result << "(";
+    result << mass << " ";
+    result << unit.print() << ")";
+	return result.str();
+}
+
+} // namespace qft

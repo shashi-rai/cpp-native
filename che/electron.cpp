@@ -59,7 +59,7 @@ Electron::Electron(short int principal, short int azimuthal, short int magnetic,
 
 Electron::Electron(std::string name,
         short int principal, short int azimuthal, short int magnetic, float spin,
-        Charge& charge)
+        qft::Charge& charge)
         : Wave(name), principal(0), azimuthal(0), magnetic(0), spin(spin), charge(charge) {
 
 }
@@ -68,8 +68,21 @@ Electron::~Electron() {
 
 }
 
+shp::Point Electron::copy() {
+    Electron fresh(getName(), principal, azimuthal, magnetic, spin, charge);
+	fresh.setAmplitude(this->getAmplitude());
+	fresh.setGradient(this->getGradient());
+	fresh.setPolarization(this->getPolarization());
+	fresh.setFrequency(this->getFrequency());
+	fresh.setWavelength(this->getWavelength());
+	return fresh;
+}
+
 void Electron::clear() {
     Wave::clear();
+	principal = azimuthal = magnetic = 0;
+	spin = 0.0f;
+	charge.clear();
     return;
 }
 

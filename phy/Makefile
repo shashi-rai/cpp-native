@@ -46,40 +46,25 @@ clean-libs: clean-custom
 
 $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/body.o \
-		$(OBJFOLDR)/charge.o \
-		$(OBJFOLDR)/direction.o \
-		$(OBJFOLDR)/energy.o \
 		$(OBJFOLDR)/event.o \
 		$(OBJFOLDR)/force.o \
-		$(OBJFOLDR)/mass.o \
+		$(OBJFOLDR)/light.o \
 		$(OBJFOLDR)/momentum.o \
-		$(OBJFOLDR)/space.o \
-		$(OBJFOLDR)/time.o \
-		$(OBJFOLDR)/unit.o
+		$(OBJFOLDR)/position.o \
+		$(OBJFOLDR)/sound.o \
+		$(OBJFOLDR)/space.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
 		$(OBJFOLDR)/body.o \
-		$(OBJFOLDR)/charge.o \
-		$(OBJFOLDR)/direction.o \
-		$(OBJFOLDR)/energy.o \
 		$(OBJFOLDR)/event.o \
 		$(OBJFOLDR)/force.o \
-		$(OBJFOLDR)/mass.o \
+		$(OBJFOLDR)/light.o \
 		$(OBJFOLDR)/momentum.o \
-		$(OBJFOLDR)/space.o \
-		$(OBJFOLDR)/time.o \
-		$(OBJFOLDR)/unit.o
+		$(OBJFOLDR)/position.o \
+		$(OBJFOLDR)/sound.o \
+		$(OBJFOLDR)/space.o
 
 $(OBJFOLDR)/body.o: body.cpp
 	$(CPPTOOL) -c body.cpp -o $(OBJFOLDR)/body.o $(CXXFLAGS)
-
-$(OBJFOLDR)/charge.o: charge.cpp
-	$(CPPTOOL) -c charge.cpp -o $(OBJFOLDR)/charge.o $(CXXFLAGS)
-
-$(OBJFOLDR)/direction.o: direction.cpp
-	$(CPPTOOL) -c direction.cpp -o $(OBJFOLDR)/direction.o $(CXXFLAGS)
-
-$(OBJFOLDR)/energy.o: energy.cpp
-	$(CPPTOOL) -c energy.cpp -o $(OBJFOLDR)/energy.o $(CXXFLAGS)
 
 $(OBJFOLDR)/event.o: event.cpp
 	$(CPPTOOL) -c event.cpp -o $(OBJFOLDR)/event.o $(CXXFLAGS)
@@ -87,17 +72,20 @@ $(OBJFOLDR)/event.o: event.cpp
 $(OBJFOLDR)/force.o: force.cpp
 	$(CPPTOOL) -c force.cpp -o $(OBJFOLDR)/force.o $(CXXFLAGS)
 
+$(OBJFOLDR)/light.o: light.cpp
+	$(CPPTOOL) -c light.cpp -o $(OBJFOLDR)/light.o $(CXXFLAGS)
+
 $(OBJFOLDR)/mass.o: mass.cpp
 	$(CPPTOOL) -c mass.cpp -o $(OBJFOLDR)/mass.o $(CXXFLAGS)
 
 $(OBJFOLDR)/momentum.o: momentum.cpp
 	$(CPPTOOL) -c momentum.cpp -o $(OBJFOLDR)/momentum.o $(CXXFLAGS)
 
+$(OBJFOLDR)/position.o: position.cpp
+	$(CPPTOOL) -c position.cpp -o $(OBJFOLDR)/position.o $(CXXFLAGS)
+
+$(OBJFOLDR)/sound.o: sound.cpp
+	$(CPPTOOL) -c sound.cpp -o $(OBJFOLDR)/sound.o $(CXXFLAGS)
+
 $(OBJFOLDR)/space.o: space.cpp
 	$(CPPTOOL) -c space.cpp -o $(OBJFOLDR)/space.o $(CXXFLAGS)
-
-$(OBJFOLDR)/time.o: time.cpp
-	$(CPPTOOL) -c time.cpp -o $(OBJFOLDR)/time.o $(CXXFLAGS)
-
-$(OBJFOLDR)/unit.o: unit.cpp
-	$(CPPTOOL) -c unit.cpp -o $(OBJFOLDR)/unit.o $(CXXFLAGS)

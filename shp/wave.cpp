@@ -22,62 +22,62 @@
 
 namespace shp {
 
-Wave::Wave() : Curvature(), frequency(0L), length(0.0f), wavelets() {
+Wave::Wave() : Curvature(), frequency(0L), wavelength(0.0f), wavelets() {
 
 }
 
 Wave::Wave(float polarization)
-        : Curvature(polarization), frequency(0L), length(0.0f), wavelets() {
+        : Curvature(polarization), frequency(0L), wavelength(0.0f), wavelets() {
 
 }
 
 Wave::Wave(float polarization, float azimuthal)
-        : Curvature(polarization, azimuthal), frequency(0L), length(0.0f), wavelets() {
+        : Curvature(polarization, azimuthal), frequency(0L), wavelength(0.0f), wavelets() {
 
 }
 
 Wave::Wave(std::string name)
-        : Curvature(name), frequency(0L), length(0.0f), wavelets() {
+        : Curvature(name), frequency(0L), wavelength(0.0f), wavelets() {
 
 }
 
 Wave::Wave(std::string name, float polarization)
-        : Curvature(name, polarization), frequency(0L), length(0.0f), wavelets() {
+        : Curvature(name, polarization), frequency(0L), wavelength(0.0f), wavelets() {
 
 }
 
 Wave::Wave(std::string name, float polarization, float azimuthal)
-        : Curvature(name, polarization, azimuthal), frequency(0L), length(0.0f), wavelets() {
+        : Curvature(name, polarization, azimuthal), frequency(0L), wavelength(0.0f), wavelets() {
 
 }
 
-Wave::Wave(std::string name, long frequency, float length)
-        : Curvature(name), frequency(frequency), length(length), wavelets() {
+Wave::Wave(std::string name, long frequency, float wavelength)
+        : Curvature(name), frequency(frequency), wavelength(wavelength), wavelets() {
 
 }
 
-Wave::Wave(std::string name, long frequency, float length, float polarization)
-        : Curvature(name, polarization), frequency(frequency), length(length), wavelets() {
+Wave::Wave(std::string name, long frequency, float wavelength, float polarization)
+        : Curvature(name, polarization), frequency(frequency), wavelength(wavelength), wavelets() {
 
 }
 
-Wave::Wave(std::string name, long frequency, float length, float polarization, float azimuthal)
-        : Curvature(name, polarization, azimuthal), frequency(frequency), length(length), wavelets() {
+Wave::Wave(std::string name, long frequency, float wavelength, float polarization, float azimuthal)
+        : Curvature(name, polarization, azimuthal), frequency(frequency), wavelength(wavelength), wavelets() {
 
 }
 
-Wave::Wave(std::string name, long frequency, float length, CurvatureArray& wavelets)
-        : Curvature(name), frequency(frequency), length(length), wavelets(wavelets) {
+Wave::Wave(std::string name, long frequency, float wavelength, CurvatureArray& wavelets)
+        : Curvature(name), frequency(frequency), wavelength(wavelength), wavelets(wavelets) {
 
 }
 
-Wave::Wave(std::string name, long frequency, float length, CurvatureArray& wavelets, float polarization)
-        : Curvature(name, polarization), frequency(frequency), length(length), wavelets(wavelets) {
+Wave::Wave(std::string name, long frequency, float wavelength, CurvatureArray& wavelets, float polarization)
+        : Curvature(name, polarization), frequency(frequency), wavelength(wavelength), wavelets(wavelets) {
 
 }
 
-Wave::Wave(std::string name, long frequency, float length, CurvatureArray& wavelets, float polarization, float azimuthal)
-        : Curvature(name, polarization, azimuthal), frequency(frequency), length(length), wavelets(wavelets) {
+Wave::Wave(std::string name, long frequency, float wavelength, CurvatureArray& wavelets, float polarization, float azimuthal)
+        : Curvature(name, polarization, azimuthal), frequency(frequency), wavelength(wavelength), wavelets(wavelets) {
 
 }
 
@@ -87,7 +87,7 @@ Wave::~Wave() {
 
 bool Wave::operator==(const Wave& peer) const {
     return (static_cast<const Curvature&>(*this) == static_cast<const Curvature&>(peer))
-        && (wavelets == peer.wavelets) && (frequency == peer.frequency) && (length == peer.length);
+        && (wavelets == peer.wavelets) && (frequency == peer.frequency) && (wavelength == peer.wavelength);
 }
 
 Wave Wave::operator+(const Wave& peer) const {
@@ -98,7 +98,7 @@ Wave Wave::operator+(const Wave& peer) const {
     std::complex<float> a_phasor = ap1 + ap2;
     std::complex<float> pp1 = self.toPolarizationComplex(self.getPolarization()), pp2 = other.toPolarizationComplex(peer.getPolarization());
     std::complex<float> p_phasor = pp1 + pp2;
-    Wave result = Wave("+", (frequency + peer.frequency), (length + peer.length),
+    Wave result = Wave("+", (frequency + peer.frequency), (wavelength + peer.wavelength),
         fluctuations, std::arg(p_phasor), std::arg(a_phasor));
     // TODO: since amplitude would vary due to Polar & Azimuthal angle differences
     result.setAmplitude(std::abs(p_phasor));
@@ -118,7 +118,7 @@ Wave Wave::operator-(const Wave& peer) const {
     std::complex<float> a_phasor = ap1 - ap2;
     std::complex<float> pp1 = self.toPolarizationComplex(self.getPolarization()), pp2 = other.toPolarizationComplex(peer.getPolarization());
     std::complex<float> p_phasor = pp1 - pp2;
-    Wave result = Wave("-", (frequency - peer.frequency), (length - peer.length),
+    Wave result = Wave("-", (frequency - peer.frequency), (wavelength - peer.wavelength),
         fluctuations, std::arg(p_phasor), std::arg(a_phasor));
     // TODO: since amplitude would vary due to Polar & Azimuthal angle differences
     result.setAmplitude(std::abs(p_phasor));
@@ -159,7 +159,7 @@ void Wave::set(int index, const Curvature& object) {
 }
 
 Point Wave::copy() {
-    Wave fresh(this->getName(), this->getFrequency(), this->getLength(),
+    Wave fresh(this->getName(), this->getFrequency(), this->getWavelength(),
         this->wavelets, this->getPolarization(), this->getGradient());
     return fresh;
 }
@@ -167,7 +167,7 @@ Point Wave::copy() {
 void Wave::clear() {
     Point::clear();
     frequency = 0L;
-    length = 0.0f;
+    wavelength = 0.0f;
     wavelets.clear();
     return;
 }
@@ -177,7 +177,7 @@ std::string Wave::print() {
     result << "λ:";
 	result << Curvature::print() << ",v:";
     result << frequency << ",l:";
-    result << length << ",sz:";
+    result << wavelength << ",sz:";
 	result << wavelets.size() << "!";
 	return result.str();
 }

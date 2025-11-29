@@ -23,31 +23,32 @@
 
 #include <string>
 #include <vector>
-#include "energy.h"
+#include "../qft/energy.h"
+#include "../shp/wave.h"
 
 namespace che {
 
-class Photon {
-    std::string name;
-    Energy energy;
-    double wavelength;
+class Photon : public shp::Wave {
+    qft::Energy energy;
 public:
     // Constructors
     Photon();
-    Photon(std::string name, Energy& energy, double wavelength);
+    Photon(std::string name, qft::Energy& energy);
+    Photon(std::string name, qft::Energy& energy, long frequency, float wavelength);
 
     // Destructors
     ~Photon();
 
     // Getters
-    std::string getName() const { return name; }
-    Energy getEnergy() const { return energy; }
-    double getWavelength() const { return wavelength; }
+    qft::Energy getEnergy() const { return energy; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
-    void setEnergy(const Energy& value) { this->energy = value; }
-    void setWavelength(const double value) { this->wavelength = value; }
+    void setEnergy(const qft::Energy& value) { this->energy = value; }
+
+    // Additional methods
+    virtual shp::Point copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Photon > PhotonArray;

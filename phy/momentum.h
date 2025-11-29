@@ -22,29 +22,34 @@
 #define PHY_MOMENTUM_H
 
 #include <vector>
-#include "direction.h"
-#include "mass.h"
+#include "../shp/direction.h"
+#include "../qft/mass.h"
 
 namespace phy {
 
 class Momentum {
-    Mass mass;
-    Direction velocity;
+    qft::Mass mass;
+    shp::Direction velocity;
 public:
     // Constructors
     Momentum();
-    Momentum(const Mass& mass, const Direction& velocity);
+    Momentum(const qft::Mass& mass, const shp::Direction& velocity);
 
     // Destructors
     ~Momentum();
 
     // Getters
-    Mass getMass() const { return mass; }
-    Direction getVelocity() const { return velocity; }
+    qft::Mass getMass() const { return mass; }
+    shp::Direction getVelocity() const { return velocity; }
 
     // Setters
-    void setMass(const Mass& value) { this->mass = value; }
-    void setVelocity(const Direction& value) { this->velocity = value; }
+    void setMass(const qft::Mass& value) { this->mass = value; }
+    void setVelocity(const shp::Direction& value) { this->velocity = value; }
+
+    // Additional methods
+    virtual Momentum copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Momentum > MomentumArray;

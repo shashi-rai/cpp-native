@@ -22,6 +22,8 @@
 #define QFT_PARTICLE_H
 
 #include <vector>
+#include "charge.h"
+#include "mass.h"
 #include "../shp/shape.h"
 #include "../shp/point.h"
 
@@ -30,14 +32,16 @@ namespace qft {
 class Particle : public shp::Point {
     shp::Shape* physical;
     float spin;
-    double mass;
-    double charge;
+    Mass mass;
+    Charge charge;
 public:
     // Constructors
     Particle();
-    Particle(float spin, double mass, double charge);
+    Particle(float spin);
+    Particle(Mass& mass, Charge& charge);
+    Particle(float spin, Mass& mass, Charge& charge);
     Particle(shp::Shape* physical);
-    Particle(shp::Shape* physical, float spin, double mass, double charge);
+    Particle(shp::Shape* physical, float spin, Mass& mass, Charge& charge);
 
     // Destructors
     ~Particle();
@@ -45,17 +49,20 @@ public:
     // Getters
     shp::Shape* getPhysical() const { return physical; }
     float getSpin() const { return spin; }
-    double getMass() const { return mass; }
-    double getCharge() const { return charge; }
+    Mass getMass() const { return mass; }
+    Charge getCharge() const { return charge; }
 
     // Setters
     void setPhysical(shp::Shape* structure) { this->physical = structure; }
     void setSpin(float value) { spin = value; }
-    void setMass(double value) { mass = value; }
-    void setCharge(double value) { charge = value; }
+    void setMass(const Mass& value) { mass = value; }
+    void setCharge(const Charge& value) { charge = value; }
 
     // Additional methods
     bool isStructured() const;
+    virtual shp::Point copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Particle > ParticleArray;

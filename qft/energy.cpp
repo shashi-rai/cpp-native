@@ -20,14 +20,19 @@
 
 #include "energy.h"
 
-namespace che {
+namespace qft {
 
-Energy::Energy() : unit(), ionisation(0.0), kinetic(0.0), potential(0.0), heat(0.0) {
+Energy::Energy() : unit(), kinetic(0.0f), potential(0.0f) {
 
 }
 
-Energy::Energy(const Unit& unit, double ionisation, double kinetic, double potential, double heat)
-        : unit(unit), ionisation(ionisation), kinetic(kinetic), potential(potential), heat(heat) {
+Energy::Energy(float kinetic, float potential)
+        : unit(), kinetic(kinetic), potential(potential) {
+
+}
+
+Energy::Energy(const shp::Unit& unit, float kinetic, float potential)
+        : unit(unit), kinetic(kinetic), potential(potential) {
 
 }
 
@@ -35,4 +40,37 @@ Energy::~Energy() {
 
 }
 
-} // namespace che
+bool Energy::operator==(const Energy& peer) const {
+    return (unit == peer.unit) && (kinetic == peer.kinetic) && (potential == peer.potential);
+}
+
+Energy Energy::operator+(const Energy& peer) const {
+    return Energy((kinetic + peer.kinetic), (potential + peer.potential));
+}
+
+Energy Energy::operator-(const Energy& peer) const {
+    return Energy((kinetic - peer.kinetic), (potential - peer.potential));
+}
+
+Energy Energy::copy() {
+    Energy fresh(unit, kinetic, potential);
+    return fresh;
+}
+
+void Energy::clear() {
+    unit.clear();
+    kinetic = 0.0f;
+    potential = 0.0f;
+    return;
+}
+
+std::string Energy::print() {
+    std::stringstream result;
+    result << "(";
+    result << kinetic << "+";
+    result << potential << " ";
+    result << unit.print() << ")";
+	return result.str();
+}
+
+} // namespace qft

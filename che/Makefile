@@ -47,33 +47,25 @@ clean-libs: clean-custom
 $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/atom.o \
 		$(OBJFOLDR)/bond.o \
-		$(OBJFOLDR)/charge.o \
 		$(OBJFOLDR)/electron.o \
-		$(OBJFOLDR)/energy.o \
-		$(OBJFOLDR)/mass.o \
 		$(OBJFOLDR)/molecule.o \
 		$(OBJFOLDR)/nucleus.o \
 		$(OBJFOLDR)/orbital.o \
 		$(OBJFOLDR)/period.o \
 		$(OBJFOLDR)/photon.o \
 		$(OBJFOLDR)/polymer.o \
-		$(OBJFOLDR)/reaction.o \
-		$(OBJFOLDR)/unit.o
+		$(OBJFOLDR)/reaction.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
 		$(OBJFOLDR)/atom.o \
 		$(OBJFOLDR)/bond.o \
-		$(OBJFOLDR)/charge.o \
 		$(OBJFOLDR)/electron.o \
-		$(OBJFOLDR)/energy.o \
-		$(OBJFOLDR)/mass.o \
 		$(OBJFOLDR)/molecule.o \
 		$(OBJFOLDR)/nucleus.o \
 		$(OBJFOLDR)/orbital.o \
 		$(OBJFOLDR)/period.o \
 		$(OBJFOLDR)/photon.o \
 		$(OBJFOLDR)/polymer.o \
-		$(OBJFOLDR)/reaction.o \
-		$(OBJFOLDR)/unit.o
+		$(OBJFOLDR)/reaction.o
 
 $(OBJFOLDR)/atom.o: atom.cpp
 	$(CPPTOOL) -c atom.cpp -o $(OBJFOLDR)/atom.o $(CXXFLAGS)
@@ -81,17 +73,8 @@ $(OBJFOLDR)/atom.o: atom.cpp
 $(OBJFOLDR)/bond.o: bond.cpp
 	$(CPPTOOL) -c bond.cpp -o $(OBJFOLDR)/bond.o $(CXXFLAGS)
 
-$(OBJFOLDR)/charge.o: charge.cpp
-	$(CPPTOOL) -c charge.cpp -o $(OBJFOLDR)/charge.o $(CXXFLAGS)
-
 $(OBJFOLDR)/electron.o: electron.cpp
 	$(CPPTOOL) -c electron.cpp -o $(OBJFOLDR)/electron.o $(CXXFLAGS)
-
-$(OBJFOLDR)/energy.o: energy.cpp
-	$(CPPTOOL) -c energy.cpp -o $(OBJFOLDR)/energy.o $(CXXFLAGS)
-
-$(OBJFOLDR)/mass.o: mass.cpp
-	$(CPPTOOL) -c mass.cpp -o $(OBJFOLDR)/mass.o $(CXXFLAGS)
 
 $(OBJFOLDR)/molecule.o: molecule.cpp
 	$(CPPTOOL) -c molecule.cpp -o $(OBJFOLDR)/molecule.o $(CXXFLAGS)
@@ -113,6 +96,3 @@ $(OBJFOLDR)/polymer.o: polymer.cpp
 
 $(OBJFOLDR)/reaction.o: reaction.cpp
 	$(CPPTOOL) -c reaction.cpp -o $(OBJFOLDR)/reaction.o $(CXXFLAGS)
-
-$(OBJFOLDR)/unit.o: unit.cpp
-	$(CPPTOOL) -c unit.cpp -o $(OBJFOLDR)/unit.o $(CXXFLAGS)

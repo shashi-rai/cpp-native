@@ -23,37 +23,42 @@
 
 #include <string>
 #include <vector>
-#include "charge.h"
-#include "energy.h"
-#include "mass.h"
+#include "../qft/charge.h"
+#include "../qft/energy.h"
+#include "../qft/mass.h"
 
 namespace phy {
 
 class Body {
     std::string name;
-    Mass mass;
-    Charge charge;
-    Energy energy;
+    qft::Mass mass;
+    qft::Charge charge;
+    qft::Energy energy;
 public:
     // Constructors
     Body();
     Body(std::string name);
-    Body(std::string name, const Mass& mass, const Charge& charge, const Energy& energy);
+    Body(std::string name, const qft::Mass& mass, const qft::Charge& charge, const qft::Energy& energy);
 
     // Destructors
     ~Body();
 
     // Getters
     std::string getName() const { return name; }
-    Mass getMass() const { return mass; }
-    Charge getCharge() const { return charge; }
-    Energy getEnergy() const { return energy; }
+    qft::Mass getMass() const { return mass; }
+    qft::Charge getCharge() const { return charge; }
+    qft::Energy getEnergy() const { return energy; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
-    void setMass(const Mass& mass) { this->mass = mass; }
-    void setCharge(const Charge& charge) { this->charge = charge; }
-    void setEnergy(const Energy& energy) { this->energy = energy; }
+    void setMass(const qft::Mass& mass) { this->mass = mass; }
+    void setCharge(const qft::Charge& charge) { this->charge = charge; }
+    void setEnergy(const qft::Energy& energy) { this->energy = energy; }
+
+    // Additional methods
+    virtual Body copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Body > BodyArray;

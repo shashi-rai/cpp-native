@@ -26,13 +26,34 @@ Space::Space() : energy(), x(0.0), y(0.0), z(0.0) {
 
 }
 
-Space::Space(const Energy& energy, double x, double y, double z)
+Space::Space(const qft::Energy& energy, double x, double y, double z)
         : energy(energy), x(x), y(y), z(z) {
 
 }
 
 Space::~Space() {
 
+}
+
+Space Space::copy() {
+    Space fresh(energy, x, y, z);
+    return fresh;
+}
+
+void Space::clear() {
+    energy.clear();
+    x = y = z = 0.0;
+    return;
+}
+
+std::string Space::print() {
+    std::stringstream result;
+    result << "(s:";
+    result << energy.print() << "!";
+    result << x << ",";
+    result << y << ",";
+    result << z << ")";
+	return result.str();
 }
 
 } // namespace phy

@@ -59,6 +59,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/polygon.o \
 		$(OBJFOLDR)/shape.o \
 		$(OBJFOLDR)/shell.o \
+		$(OBJFOLDR)/unit.o \
 		$(OBJFOLDR)/wave.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
 		$(OBJFOLDR)/angular.o \
@@ -75,6 +76,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/polygon.o \
 		$(OBJFOLDR)/shape.o \
 		$(OBJFOLDR)/shell.o \
+		$(OBJFOLDR)/unit.o \
 		$(OBJFOLDR)/wave.o
 
 $(OBJFOLDR)/angular.o: angular.cpp
@@ -118,6 +120,9 @@ $(OBJFOLDR)/shape.o: shape.cpp
 
 $(OBJFOLDR)/shell.o: shell.cpp
 	$(CPPTOOL) -c shell.cpp -o $(OBJFOLDR)/shell.o $(CXXFLAGS)
+
+$(OBJFOLDR)/unit.o: unit.cpp
+	$(CPPTOOL) -c unit.cpp -o $(OBJFOLDR)/unit.o $(CXXFLAGS)
 
 $(OBJFOLDR)/wave.o: wave.cpp
 	$(CPPTOOL) -c wave.cpp -o $(OBJFOLDR)/wave.o $(CXXFLAGS)

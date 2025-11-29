@@ -46,18 +46,38 @@ clean-libs: clean-custom
 
 $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/action.o \
+		$(OBJFOLDR)/charge.o \
+		$(OBJFOLDR)/energy.o \
 		$(OBJFOLDR)/field.o \
-		$(OBJFOLDR)/particle.o
+		$(OBJFOLDR)/mass.o \
+		$(OBJFOLDR)/particle.o \
+		$(OBJFOLDR)/time.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
 		$(OBJFOLDR)/action.o \
+		$(OBJFOLDR)/charge.o \
+		$(OBJFOLDR)/energy.o \
 		$(OBJFOLDR)/field.o \
-		$(OBJFOLDR)/particle.o
+		$(OBJFOLDR)/mass.o \
+		$(OBJFOLDR)/particle.o \
+		$(OBJFOLDR)/time.o
 
 $(OBJFOLDR)/action.o: action.cpp
 	$(CPPTOOL) -c action.cpp -o $(OBJFOLDR)/action.o $(CXXFLAGS)
 
+$(OBJFOLDR)/charge.o: charge.cpp
+	$(CPPTOOL) -c charge.cpp -o $(OBJFOLDR)/charge.o $(CXXFLAGS)
+
+$(OBJFOLDR)/energy.o: energy.cpp
+	$(CPPTOOL) -c energy.cpp -o $(OBJFOLDR)/energy.o $(CXXFLAGS)
+
 $(OBJFOLDR)/field.o: field.cpp
 	$(CPPTOOL) -c field.cpp -o $(OBJFOLDR)/field.o $(CXXFLAGS)
 
+$(OBJFOLDR)/mass.o: mass.cpp
+	$(CPPTOOL) -c mass.cpp -o $(OBJFOLDR)/mass.o $(CXXFLAGS)
+
 $(OBJFOLDR)/particle.o: particle.cpp
 	$(CPPTOOL) -c particle.cpp -o $(OBJFOLDR)/particle.o $(CXXFLAGS)
+
+$(OBJFOLDR)/time.o: time.cpp
+	$(CPPTOOL) -c time.cpp -o $(OBJFOLDR)/time.o $(CXXFLAGS)

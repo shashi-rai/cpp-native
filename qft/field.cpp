@@ -23,17 +23,32 @@
 namespace qft {
 
 Field::Field()
-        : defaultSpin(0.0f), defaultMass(0.0), defaultCharge(0.0) {
+        : Cellular(), defaultSpin(0.0f), defaultMass(), defaultCharge() {
+    setPhysical(nullptr);
+}
+
+Field::Field(float spin)
+        : Cellular(), defaultSpin(spin), defaultMass(), defaultCharge() {
+    setPhysical(nullptr);
+}
+
+Field::Field(Mass& mass, Charge& charge)
+        : Cellular(), defaultSpin(0.0f), defaultMass(mass), defaultCharge(charge) {
+    setPhysical(nullptr);
+}
+
+Field::Field(float spin, Mass& mass, Charge& charge)
+        : Cellular(), defaultSpin(spin), defaultMass(mass), defaultCharge(charge) {
     setPhysical(nullptr);
 }
 
 Field::Field(shp::Shape* physical)
-        : defaultSpin(0.0f), defaultMass(0.0), defaultCharge(0.0) {
+        : Cellular(), defaultSpin(0.0f), defaultMass(), defaultCharge() {
     setPhysical(physical);
 }
 
-Field::Field(shp::Shape* physical, float spin, double mass, double charge)
-        : defaultSpin(spin), defaultMass(mass), defaultCharge(charge) {
+Field::Field(shp::Shape* physical, float spin, Mass& mass, Charge& charge)
+        : Cellular(), defaultSpin(spin), defaultMass(mass), defaultCharge(charge) {
     setPhysical(physical);
 }
 
@@ -49,7 +64,7 @@ void Field::changePoint(Action& action) {
     int x = action.getCoordinate().getX();
     int y = action.getCoordinate().getY();
     int z = action.getCoordinate().getZ();
-    shp::Point received = action.getPoint();
+    shp::Wave received = action.getWave();
 
     // simply replace the existing Point found at specific coordinates
     // with a new Point received from the Action item
@@ -58,16 +73,43 @@ void Field::changePoint(Action& action) {
 }
 
 Particle* Field::getDivergence(Action& action) const {
+    Mass mass = defaultMass;
+    Charge charge = defaultCharge;
     // TODO: how is particle destroyed
-    Particle* result = new Particle(defaultSpin, defaultMass, defaultCharge);
+    Particle* result = new Particle(defaultSpin, mass, charge);
     result->setAmplitude(0);
     return result;
 }
 
 Particle* Field::getConvergence(Action& action) const {
+    Mass mass = defaultMass;
+    Charge charge = defaultCharge;
     // TODO: how is particle generated
-    Particle* result = new Particle(defaultSpin, defaultMass, defaultCharge);
+    Particle* result = new Particle(defaultSpin, mass, charge);
     return result;
+}
+
+shp::Point Field::copy() {
+    Field fresh(physical, defaultSpin, defaultMass, defaultCharge);
+    return fresh;
+}
+
+void Field::clear() {
+    Point::clear();
+    defaultSpin = 0.0f;
+    defaultMass.clear();
+    defaultCharge.clear();
+    return;
+}
+
+std::string Field::print() {
+    std::stringstream result;
+    result << "[";
+    result << Cellular::print() << ",";
+    result << defaultSpin << ",";
+    result << defaultMass.print() << ",";
+    result << defaultCharge.print() << "]";
+	return result.str();
 }
 
 } // namespace qft

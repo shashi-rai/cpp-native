@@ -23,9 +23,9 @@
 
 #include <string>
 #include <vector>
-#include "charge.h"
-#include "energy.h"
-#include "mass.h"
+#include "../qft/charge.h"
+#include "../qft/energy.h"
+#include "../qft/mass.h"
 
 namespace che {
 
@@ -33,15 +33,15 @@ class Nucleus {
     std::string symbol;
     short proton;
     short neutron;
-    Mass mass;
-    Charge charge;
-    Energy energy;
+    qft::Mass mass;
+    qft::Charge charge;
+    qft::Energy energy;
 public:
     // Constructors
     Nucleus();
     Nucleus(std::string symbol);
     Nucleus(std::string symbol, short proton, short neutron,
-        Mass& mass, Charge& charge, Energy& energy);
+        qft::Mass& mass, qft::Charge& charge, qft::Energy& energy);
 
     // Destructors
     ~Nucleus();
@@ -50,17 +50,17 @@ public:
     std::string getSymbol() const { return symbol; }
     short getProton() const { return proton; }
     short getNeutron() const { return neutron; }
-    Mass getMass() const { return mass; }
-    Charge getCharge() const { return charge; }
-    Energy getEnergy() const { return energy; }
+    qft::Mass getMass() const { return mass; }
+    qft::Charge getCharge() const { return charge; }
+    qft::Energy getEnergy() const { return energy; }
 
     // Setters
     void setSymbol(const std::string& name) { this->symbol = name; }
     void setProton(short number) { this->proton = number; }
     void setNeutron(short number) { this->neutron = number; }
-    void setMass(const Mass& amount) { this->mass = amount; }
-    void setCharge(const Charge& amount) { this->charge = amount; }
-    void setEnergy(const Energy& amount) { this->energy = amount; }
+    void setMass(const qft::Mass& amount) { this->mass = amount; }
+    void setCharge(const qft::Charge& amount) { this->charge = amount; }
+    void setEnergy(const qft::Energy& amount) { this->energy = amount; }
 };
 
 typedef std::vector<Nucleus > NucleusArray;

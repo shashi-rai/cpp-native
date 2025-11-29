@@ -32,8 +32,8 @@ Event::Event(std::string name) : name(name), location(), timestamp(),
 
 }
 
-Event::Event(std::string name, const Space& location, const Time& timestamp,
-        const Momentum& impulse, const Energy& action)
+Event::Event(std::string name, const Space& location, const qft::Time& timestamp,
+        const Momentum& impulse, const qft::Energy& action)
         : name(name), location(location), timestamp(timestamp),
         impulse(impulse), change(action) {
 
@@ -41,6 +41,31 @@ Event::Event(std::string name, const Space& location, const Time& timestamp,
 
 Event::~Event() {
 
+}
+
+Event Event::copy() {
+    Event fresh(name, location, timestamp, impulse, change);
+    return fresh;
+}
+
+void Event::clear() {
+	name = "";
+    location.clear();
+    timestamp.clear();
+	impulse.clear();
+	change.clear();
+    return;
+}
+
+std::string Event::print() {
+    std::stringstream result;
+    result << "{e:";
+    result << name << ",";
+    result << location.print() << ",";
+    result << timestamp.print() << ",";
+	result << impulse.print() << ",";
+    result << change.print() << "}";
+	return result.str();
 }
 
 } // namespace phy

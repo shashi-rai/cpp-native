@@ -18,21 +18,48 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "direction.h"
+#ifndef QFT_CHARGE_H
+#define QFT_CHARGE_H
 
-namespace phy {
+#include <sstream>
+#include <vector>
+#include "../shp/unit.h"
 
-Direction::Direction() : x(0.0), y(0.0), z(0.0) {
+namespace qft {
 
-}
+class Charge {
+    shp::Unit unit;
+    float charge;
+public:
+    // Constructors
+    Charge();
+    Charge(float charge);
+    Charge(const shp::Unit& unit, float charge);
 
-Direction::Direction(double x, double y, double z)
-        : x(x), y(y), z(z) {
+    // Destructors
+    ~Charge();
 
-}
+    // Operator overloading
+    bool operator==(const Charge& peer) const;
+    Charge operator+(const Charge& peer) const;
+    Charge operator-(const Charge& peer) const;
 
-Direction::~Direction() {
+    // Getters
+    shp::Unit getUnit() const { return unit; }
+    float getCharge() const { return charge; }
 
-}
+    // Setters
+    void setUnit(const shp::Unit& value) { this->unit = value; }
+    void setCharge(const float value) { this->charge = value; }
 
-} // namespace phy
+    // Additional methods
+    virtual Charge copy();
+    virtual void clear();
+    virtual std::string print();
+};
+
+typedef std::vector<Charge > ChargeArray;
+
+} // namespace qft
+
+#endif //QFT_CHARGE_H

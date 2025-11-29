@@ -28,7 +28,7 @@ namespace shp {
 
 class Wave : public Curvature {
     long frequency;
-    float length;
+    float wavelength;
     CurvatureArray wavelets;
 public:
     // Constructors
@@ -38,12 +38,12 @@ public:
     Wave(std::string name);
     Wave(std::string name, float polarization);
     Wave(std::string name, float polarization, float azimuthal);
-    Wave(std::string name, long frequency, float length);
-    Wave(std::string name, long frequency, float length, float polarization);
-    Wave(std::string name, long frequency, float length, float polarization, float azimuthal);
-    Wave(std::string name, long frequency, float length, CurvatureArray& wavelets);
-    Wave(std::string name, long frequency, float length, CurvatureArray& wavelets, float polarization);
-    Wave(std::string name, long frequency, float length, CurvatureArray& wavelets, float polarization, float azimuthal);
+    Wave(std::string name, long frequency, float wavelength);
+    Wave(std::string name, long frequency, float wavelength, float polarization);
+    Wave(std::string name, long frequency, float wavelength, float polarization, float azimuthal);
+    Wave(std::string name, long frequency, float wavelength, CurvatureArray& wavelets);
+    Wave(std::string name, long frequency, float wavelength, CurvatureArray& wavelets, float polarization);
+    Wave(std::string name, long frequency, float wavelength, CurvatureArray& wavelets, float polarization, float azimuthal);
 
     // Destructors
     ~Wave();
@@ -59,12 +59,12 @@ public:
 
     // Getters
     long getFrequency() const { return frequency; }
-    float getLength() const { return length; }
+    float getWavelength() const { return wavelength; }
     CurvatureArray getWavelets() const { return wavelets; }
 
     // Setters
     void setFrequency(long value) { this->frequency = value; }
-    void setLength(float value) { this->length = value; }
+    void setWavelength(float value) { this->wavelength = value; }
     void setWavelets(const CurvatureArray& curves) { this->wavelets = curves; }
 
     // Additional methods

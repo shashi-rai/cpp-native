@@ -18,36 +18,40 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef CHE_MASS_H
-#define CHE_MASS_H
-
-#include <vector>
 #include "unit.h"
 
-namespace che {
+namespace shp {
 
-class Mass {
-    Unit unit;
-    double mass;
-public:
-    // Constructors
-    Mass();
-    Mass(const Unit& unit, double mass);
+Unit::Unit() : name("") {
 
-    // Destructors
-    ~Mass();
+}
 
-    // Getters
-    Unit getUnit() const { return unit; }
-    double getMass() const { return mass; }
+Unit::Unit(std::string name) : name(name) {
 
-    // Setters
-    void setUnit(const Unit& value) { this->unit = value; }
-    void setMass(const double amount) { this->mass = amount; }
-};
+}
 
-typedef std::vector<Mass > MassArray;
+Unit::~Unit() {
 
-} // namespace che
+}
 
-#endif //CHE_MASS_H
+bool Unit::operator==(const Unit& peer) const {
+    return (name == peer.name);
+}
+
+Unit Unit::copy() {
+    Unit fresh(name);
+    return fresh;
+}
+
+void Unit::clear() {
+    name = "";
+    return;
+}
+
+std::string Unit::print() {
+    std::stringstream result;
+    result << name;
+	return result.str();
+}
+
+} // namespace shp

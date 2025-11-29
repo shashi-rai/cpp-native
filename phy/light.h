@@ -18,36 +18,42 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef PHY_MASS_H
-#define PHY_MASS_H
+#ifndef PHY_LIGHT_H
+#define PHY_LIGHT_H
 
+#include <sstream>
+#include <string>
 #include <vector>
-#include "unit.h"
+#include "../shp/wave.h"
 
 namespace phy {
 
-class Mass {
-    Unit unit;
-    double mass;
+class Light : public shp::Wave {
+
 public:
     // Constructors
-    Mass();
-    Mass(const Unit& unit, double mass);
+    Light();
+    Light(std::string name);
+    Light(std::string name, long frequency, float wavelength);
 
     // Destructors
-    ~Mass();
+    ~Light();
+
+    // Operator overloading
+    bool operator==(const Light& peer) const;
 
     // Getters
-    Unit getUnit() const { return unit; }
-    double getMass() const { return mass; }
 
     // Setters
-    void setUnit(const Unit& value) { this->unit = value; }
-    void setMass(const double value) { this->mass = value; }
+
+    // Additional methods
+    virtual shp::Point copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
-typedef std::vector<Mass > MassArray;
+typedef std::vector<Light > LightArray;
 
 } // namespace phy
 
-#endif //PHY_MASS_H
+#endif //PHY_LIGHT_H

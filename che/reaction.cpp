@@ -30,7 +30,7 @@ Reaction::Reaction(std::string name) : name(name), reactants(), products(), chan
 
 }
 
-Reaction::Reaction(std::string name, MoleculeArray& reactants, MoleculeArray& products, Energy& change)
+Reaction::Reaction(std::string name, MoleculeArray& reactants, MoleculeArray& products, qft::Energy& change)
         : name(name), reactants(reactants), products(products), change(change) {
 
 }

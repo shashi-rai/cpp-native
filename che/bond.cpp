@@ -39,7 +39,7 @@ Bond::Bond(std::string name, Atom& left, Atom& right)
 }
 
 Bond::Bond(std::string name, Atom& left, Atom& right,
-        Electron& electron, Energy& energy, double length, double angle)
+        Electron& electron, qft::Energy& energy, double length, double angle)
         : name(name), left(left), right(right),
         electron(electron), energy(energy), length(length), angle(angle) {
 

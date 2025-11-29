@@ -24,18 +24,18 @@
 #include <string>
 #include <vector>
 #include "../shp/coordinate.h"
-#include "../shp/point.h"
+#include "../shp/wave.h"
 
 namespace qft {
 
 class Action {
     std::string name;
     shp::Coordinate coordinate;
-    shp::Point point;
+    shp::Wave wave;
 public:
     // Constructors
     Action();
-    Action(std::string name, shp::Coordinate& location, shp::Point& point);
+    Action(std::string name, shp::Coordinate& location, shp::Wave& wave);
 
     // Destructors
     ~Action();
@@ -43,14 +43,17 @@ public:
     // Getters
     std::string getName() const { return name; }
     shp::Coordinate getCoordinate() const { return coordinate; }
-    shp::Point getPoint() const { return point; }
+    shp::Wave getWave() const { return wave; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
     void setCoordinate(const shp::Coordinate& location) { this->coordinate = location; }
-    void setPoint(const shp::Point& object) { this->point = object; }
+    void setWave(const shp::Wave& pulse) { this->wave = pulse; }
 
     // Additional methods
+    virtual Action copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Action > ActionArray;

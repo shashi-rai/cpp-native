@@ -18,45 +18,55 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef CHE_ENERGY_H
-#define CHE_ENERGY_H
+#include "charge.h"
 
-#include <vector>
-#include "unit.h"
+namespace qft {
 
-namespace che {
+Charge::Charge() : unit(), charge(0) {
 
-class Energy {
-    Unit unit;
-    double ionisation;
-    double kinetic;
-    double potential;
-    double heat;
-public:
-    // Constructors
-    Energy();
-    Energy(const Unit& unit, double ionisation, double kinetic, double potential, double heat);
+}
 
-    // Destructors
-    ~Energy();
+Charge::Charge(float charge) : unit(), charge(charge) {
 
-    // Getters
-    Unit getUnit() const { return unit; }
-    double getIonisation() const { return ionisation; }
-    double getKinetic() const { return kinetic; }
-    double getPotential() const { return potential; }
-    double getHeat() const { return heat; }
+}
 
-    // Setters
-    void setUnit(const Unit& value) { this->unit = value; }
-    void setIonisation(const double value) { this->ionisation = value; }
-    void setKinetic(const double value) { this->kinetic = value; }
-    void setPotential(const double value) { this->potential = value; }
-    void setHeat(const double value) { this->heat = value; }
-};
+Charge::Charge(const shp::Unit& unit, float charge) : unit(unit), charge(charge) {
 
-typedef std::vector<Energy > EnergyArray;
+}
 
-} // namespace che
+Charge::~Charge() {
 
-#endif //CHE_ENERGY_H
+}
+
+bool Charge::operator==(const Charge& peer) const {
+    return (unit == peer.unit) && (charge == peer.charge);
+}
+
+Charge Charge::operator+(const Charge& peer) const {
+    return Charge(charge + peer.charge);
+}
+
+Charge Charge::operator-(const Charge& peer) const {
+    return Charge(charge - peer.charge);
+}
+
+Charge Charge::copy() {
+    Charge fresh(unit, charge);
+    return fresh;
+}
+
+void Charge::clear() {
+    unit.clear();
+    charge = 0.0f;
+    return;
+}
+
+std::string Charge::print() {
+    std::stringstream result;
+    result << "(";
+    result << charge << " ";
+    result << unit.print() << ")";
+	return result.str();
+}
+
+} // namespace qft

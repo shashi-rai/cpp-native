@@ -18,21 +18,44 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "charge.h"
-#include "unit.h"
+#ifndef PHY_POSITION_H
+#define PHY_POSITION_H
+
+#include <sstream>
+#include <vector>
 
 namespace phy {
 
-Charge::Charge() : unit(), charge(0.0) {
+class Position {
+    double x;
+    double y;
+    double z;
+public:
+    // Constructors
+    Position();
+    Position(double x, double y, double z);
 
-}
+    // Destructors
+    ~Position();
 
-Charge::Charge(const Unit& unit, double charge) : unit(unit), charge(charge) {
+    // Getters
+    double getX() const { return x; }
+    double getY() const { return y; }
+    double getZ() const { return z; }
 
-}
+    // Setters
+    void setX(const double value) { this->x = value; }
+    void setY(const double value) { this->y = value; }
+    void setZ(const double value) { this->z = value; }
 
-Charge::~Charge() {
+    // Additional methods
+    virtual Position copy();
+    virtual void clear();
+    virtual std::string print();
+};
 
-}
+typedef std::vector<Position > PositionArray;
 
 } // namespace phy
+
+#endif //PHY_POSITION_H

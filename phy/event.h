@@ -23,25 +23,25 @@
 
 #include <string>
 #include <vector>
-#include "energy.h"
 #include "momentum.h"
 #include "space.h"
-#include "time.h"
+#include "../qft/energy.h"
+#include "../qft/time.h"
 
 namespace phy {
 
 class Event {
     std::string name;
     Space location;
-    Time timestamp;
+    qft::Time timestamp;
     Momentum impulse;
-    Energy change;
+    qft::Energy change;
 public:
     // Constructors
     Event();
     Event(std::string name);
-    Event(std::string name, const Space& location, const Time& timestamp,
-        const Momentum& impulse, const Energy& action);
+    Event(std::string name, const Space& location, const qft::Time& timestamp,
+        const Momentum& impulse, const qft::Energy& action);
 
     // Destructors
     ~Event();
@@ -49,16 +49,21 @@ public:
     // Getters
     std::string getName() const { return name; }
     Space getLocation() const { return location; }
-    Time getTimestamp() const { return timestamp; }
+    qft::Time getTimestamp() const { return timestamp; }
     Momentum getImpulse() const { return impulse; }
-    Energy getChange() const { return change; }
+    qft::Energy getChange() const { return change; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
     void setLocation(const Space& location) { this->location = location; }
-    void setTimestamp(const Time& timestamp) { this->timestamp = timestamp; }
+    void setTimestamp(const qft::Time& timestamp) { this->timestamp = timestamp; }
     void setImpulse(const Momentum& impulse) { this->impulse = impulse; }
-    void setChange(const Energy& action) { this->change = action; }
+    void setChange(const qft::Energy& action) { this->change = action; }
+
+    // Additional methods
+    virtual Event copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Event > EventArray;

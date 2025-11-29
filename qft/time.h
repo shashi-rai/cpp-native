@@ -18,33 +18,47 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef PHY_UNIT_H
-#define PHY_UNIT_H
+#ifndef QFT_TIME_H
+#define QFT_TIME_H
 
-#include <string>
 #include <vector>
+#include "../shp/unit.h"
 
-namespace phy {
+namespace qft {
 
-class Unit {
-    std::string name;
+class Time {
+    shp::Unit unit;
+    long time;
 public:
     // Constructors
-    Unit();
-    Unit(std::string name);
+    Time();
+    Time(long time);
+    Time(const shp::Unit& unit, long time);
 
     // Destructors
-    ~Unit();
+    ~Time();
+
+    // Operator overloading
+    bool operator==(const Time& peer) const;
+    Time operator+(const Time& peer) const;
+    Time operator-(const Time& peer) const;
 
     // Getters
-    std::string getName() const { return name; }
+    shp::Unit getUnit() const { return unit; }
+    long getTime() const { return time; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setUnit(const shp::Unit& value) { this->unit = value; }
+    void setTime(const long value) { this->time = value; }
+
+    // Additional methods
+    virtual Time copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
-typedef std::vector<Unit > UnitArray;
+typedef std::vector<Time > TimeArray;
 
-} // namespace phy
+} // namespace qft
 
-#endif //PHY_UNIT_H
+#endif //QFT_TIME_H

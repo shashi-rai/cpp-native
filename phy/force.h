@@ -23,36 +23,41 @@
 
 #include <string>
 #include <vector>
-#include "direction.h"
-#include "unit.h"
+#include "../shp/direction.h"
+#include "../shp/unit.h"
 
 namespace phy {
 
 class Force {
     std::string name;
-    Unit unit;
-    Direction magnitude;
-    Direction direction;
+    shp::Unit unit;
+    shp::Direction magnitude;
+    shp::Direction direction;
 public:
     // Constructors
     Force();
-    Force(std::string name, const Unit& unit);
-    Force(std::string name, const Unit& unit, const Direction& magnitude, const Direction& direction);
+    Force(std::string name, const shp::Unit& unit);
+    Force(std::string name, const shp::Unit& unit, const shp::Direction& magnitude, const shp::Direction& direction);
 
     // Destructors
     ~Force();
 
     // Getters
     std::string getName() const { return name; }
-    Unit getUnit() const { return unit; }
-    Direction getMagnitude() const { return magnitude; }
-    Direction getDirection() const { return direction; }
+    shp::Unit getUnit() const { return unit; }
+    shp::Direction getMagnitude() const { return magnitude; }
+    shp::Direction getDirection() const { return direction; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
-    void setUnit(const Unit& value) { this->unit = value; }
-    void setMagnitude(const Direction& magnitude) { this->magnitude = magnitude; }
-    void setDirection(const Direction& direction) { this->direction = direction; }
+    void setUnit(const shp::Unit& value) { this->unit = value; }
+    void setMagnitude(const shp::Direction& magnitude) { this->magnitude = magnitude; }
+    void setDirection(const shp::Direction& direction) { this->direction = direction; }
+
+    // Additional methods
+    virtual Force copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Force > ForceArray;

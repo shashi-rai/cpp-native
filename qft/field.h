@@ -23,6 +23,8 @@
 
 #include <vector>
 #include "action.h"
+#include "charge.h"
+#include "mass.h"
 #include "particle.h"
 #include "../shp/cellular.h"
 #include "../shp/shape.h"
@@ -32,13 +34,16 @@ namespace qft {
 class Field : public shp::Cellular {
     shp::Shape* physical;
     float defaultSpin;
-    double defaultMass;
-    double defaultCharge;
+    Mass defaultMass;
+    Charge defaultCharge;
 public:
     // Constructors
     Field();
+    Field(float spin);
+    Field(Mass& mass, Charge& charge);
+    Field(float spin, Mass& mass, Charge& charge);
     Field(shp::Shape* physical);
-    Field(shp::Shape* physical, float spin, double mass, double charge);
+    Field(shp::Shape* physical, float spin, Mass& mass, Charge& charge);
 
     // Destructors
     ~Field();
@@ -50,20 +55,23 @@ public:
     // Getters
     shp::Shape* getPhysical() const { return physical; }
     float getDefaultSpin() const { return defaultSpin; }
-    double getDefaultMass() const { return defaultMass; }
-    double getDefaultCharge() const { return defaultCharge; }
+    Mass getDefaultMass() const { return defaultMass; }
+    Charge getDefaultCharge() const { return defaultCharge; }
 
     // Setters
     void setPhysical(shp::Shape* structure) { this->physical = structure; }
     void setDefaultSpin(float value) { defaultSpin = value; }
-    void setDefaultMass(double value) { defaultMass = value; }
-    void setDefaultCharge(double value) { defaultCharge = value; }
+    void setDefaultMass(const Mass& value) { defaultMass = value; }
+    void setDefaultCharge(const Charge& value) { defaultCharge = value; }
 
     // Additional methods
     bool isStructured() const;
     void changePoint(Action& action);
     Particle* getDivergence(Action& action) const;
     Particle* getConvergence(Action& action) const;
+    virtual shp::Point copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Field > FieldArray;

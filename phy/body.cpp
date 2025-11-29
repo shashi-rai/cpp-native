@@ -30,13 +30,36 @@ Body::Body(std::string name) : name(name), mass(), charge(), energy() {
 
 }
 
-Body::Body(std::string name, const Mass& mass, const Charge& charge, const Energy& energy)
+Body::Body(std::string name, const qft::Mass& mass, const qft::Charge& charge, const qft::Energy& energy)
         : name(name), mass(mass), charge(charge), energy(energy) {
 
 }
 
 Body::~Body() {
 
+}
+
+Body Body::copy() {
+    Body fresh(name, mass, charge, energy);
+    return fresh;
+}
+
+void Body::clear() {
+	name = "";
+    mass.clear();
+    charge.clear();
+	energy.clear();
+    return;
+}
+
+std::string Body::print() {
+    std::stringstream result;
+    result << "{b:";
+	result << name << ",";
+	result << mass.print() << ",";
+    result << charge.print() << ",";
+    result << energy.print() << "}";
+	return result.str();
 }
 
 } // namespace phy

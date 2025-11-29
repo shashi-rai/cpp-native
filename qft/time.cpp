@@ -18,20 +18,55 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "unit.h"
+#include "time.h"
 
-namespace che {
+namespace qft {
 
-Unit::Unit() : name("") {
-
-}
-
-Unit::Unit(std::string name) : name(name) {
+Time::Time() : unit(), time(0L) {
 
 }
 
-Unit::~Unit() {
+Time::Time(long time) : unit(), time(time) {
 
 }
 
-} // namespace che
+Time::Time(const shp::Unit& unit, long time) : unit(unit), time(time) {
+
+}
+
+Time::~Time() {
+
+}
+
+bool Time::operator==(const Time& peer) const {
+    return (unit == peer.unit) && (time == peer.time);
+}
+
+Time Time::operator+(const Time& peer) const {
+    return Time(time + peer.time);
+}
+
+Time Time::operator-(const Time& peer) const {
+    return Time(time - peer.time);
+}
+
+Time Time::copy() {
+    Time fresh(unit, time);
+    return fresh;
+}
+
+void Time::clear() {
+    unit.clear();
+    time = 0L;
+    return;
+}
+
+std::string Time::print() {
+    std::stringstream result;
+    result << "(";
+    result << time << " ";
+    result << unit.print() << ")";
+	return result.str();
+}
+
+} // namespace qft

@@ -18,26 +18,42 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "energy.h"
+#ifndef SHP_UNIT_H
+#define SHP_UNIT_H
 
-namespace phy {
+#include <sstream>
+#include <string>
+#include <vector>
 
-Energy::Energy() : name(""), unit(), kinetic(0.0), potential(0.0) {
+namespace shp {
 
-}
+class Unit {
+    std::string name;
+public:
+    // Constructors
+    Unit();
+    Unit(std::string name);
 
-Energy::Energy(std::string name, const Unit& unit)
-        : name(name), unit(unit), kinetic(0.0), potential(0.0) {
+    // Destructors
+    ~Unit();
 
-}
+    // Getters
+    std::string getName() const { return name; }
 
-Energy::Energy(std::string name, const Unit& unit, double kinetic, double potential)
-        : name(name), unit(unit), kinetic(kinetic), potential(potential) {
+    // Operator overloading
+    bool operator==(const Unit& peer) const;
 
-}
+    // Setters
+    void setName(const std::string& name) { this->name = name; }
 
-Energy::~Energy() {
+    // Additional methods
+    virtual Unit copy();
+    virtual void clear();
+    virtual std::string print();
+};
 
-}
+typedef std::vector<Unit > UnitArray;
 
-} // namespace phy
+} // namespace shp
+
+#endif //SHP_UNIT_H

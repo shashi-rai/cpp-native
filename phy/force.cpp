@@ -26,19 +26,42 @@ Force::Force() : name(""), unit(), magnitude(), direction() {
 
 }
 
-Force::Force(std::string name, const Unit& unit) : name(name), unit(unit),
+Force::Force(std::string name, const shp::Unit& unit) : name(name), unit(unit),
         magnitude(), direction() {
 
 }
 
-Force::Force(std::string name, const Unit& unit,
-        const Direction& magnitude, const Direction& direction)
+Force::Force(std::string name, const shp::Unit& unit,
+        const shp::Direction& magnitude, const shp::Direction& direction)
         : name(name), unit(unit), magnitude(magnitude), direction(direction) {
 
 }
 
 Force::~Force() {
 
+}
+
+Force Force::copy() {
+    Force fresh(name, unit, magnitude, direction);
+    return fresh;
+}
+
+void Force::clear() {
+	name = "";
+    unit.clear();
+    magnitude.clear();
+    direction.clear();
+    return;
+}
+
+std::string Force::print() {
+    std::stringstream result;
+    result << "[f:";
+	result << name << ",";
+    result << magnitude.print() << ",";
+	result << direction.print() << " ";
+    result << unit.print() << "]";
+	return result.str();
 }
 
 } // namespace phy

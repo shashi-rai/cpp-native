@@ -25,7 +25,7 @@
 #include <vector>
 #include "atom.h"
 #include "electron.h"
-#include "energy.h"
+#include "../qft/energy.h"
 
 namespace che {
 
@@ -34,7 +34,7 @@ class Bond {
     Atom left;
     Atom right;
     Electron electron;
-    Energy energy;
+    qft::Energy energy;
     double length;
     double angle;
 public:
@@ -43,7 +43,7 @@ public:
     Bond(std::string name);
     Bond(std::string name, Atom& left, Atom& right);
     Bond(std::string name, Atom& left, Atom& right, Electron& electron,
-        Energy& energy, double length, double angle);
+        qft::Energy& energy, double length, double angle);
 
     // Destructors
     ~Bond();
@@ -53,7 +53,7 @@ public:
     Atom getLeft() const { return left; }
     Atom getRight() const { return right; }
     Electron getElectron() const { return electron; }
-    Energy getEnergy() const { return energy; }
+    qft::Energy getEnergy() const { return energy; }
     double getLength() const { return length; }
     double getAngle() const { return angle; }
 
@@ -62,7 +62,7 @@ public:
     void setLeft(const Atom& atom) { this->left = atom; }
     void setRight(const Atom& atom) { this->right = atom; }
     void setElectron(const Electron& value) { this->electron = value; }
-    void setEnergy(const Energy& value) { this->energy = value; }
+    void setEnergy(const qft::Energy& value) { this->energy = value; }
     void setLength(double value) { this->length = value; }
     void setAngle(double value) { this->angle = value; }
 };

@@ -26,13 +26,32 @@ Momentum::Momentum() : mass(), velocity() {
 
 }
 
-Momentum::Momentum(const Mass& mass, const Direction& velocity)
+Momentum::Momentum(const qft::Mass& mass, const shp::Direction& velocity)
         : mass(mass), velocity(velocity) {
 
 }
 
 Momentum::~Momentum() {
 
+}
+
+Momentum Momentum::copy() {
+    Momentum fresh(mass, velocity);
+    return fresh;
+}
+
+void Momentum::clear() {
+    mass.clear();
+    velocity.clear();
+    return;
+}
+
+std::string Momentum::print() {
+    std::stringstream result;
+    result << "[mo:";
+    result << mass.print() << ",";
+    result << velocity.print() << "]";
+	return result.str();
 }
 
 } // namespace phy

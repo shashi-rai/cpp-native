@@ -18,20 +18,40 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "mass.h"
+#include "position.h"
 
 namespace phy {
 
-Mass::Mass() : unit(), mass(0.0) {
+Position::Position() : x(0.0), y(0.0), z(0.0) {
 
 }
 
-Mass::Mass(const Unit& unit, double mass) : unit(unit), mass(mass) {
+Position::Position(double x, double y, double z)
+        : x(x), y(y), z(z) {
 
 }
 
-Mass::~Mass() {
+Position::~Position() {
 
+}
+
+Position Position::copy() {
+    Position fresh(x, y, z);
+    return fresh;
+}
+
+void Position::clear() {
+    x = y = z = 0.0;
+    return;
+}
+
+std::string Position::print() {
+    std::stringstream result;
+    result << "(";
+    result << x << ",";
+	result << y << ",";
+    result << z << ")";
+	return result.str();
 }
 
 } // namespace phy

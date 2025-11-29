@@ -33,7 +33,7 @@ Nucleus::Nucleus(std::string symbol)
 }
 
 Nucleus::Nucleus(std::string symbol, short proton, short neutron,
-        Mass& mass, Charge& charge, Energy& energy)
+        qft::Mass& mass, qft::Charge& charge, qft::Energy& energy)
         : symbol(symbol), proton(proton), neutron(neutron),
         mass(mass), charge(charge), energy(energy) {
 
