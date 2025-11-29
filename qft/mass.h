@@ -23,18 +23,19 @@
 
 #include <sstream>
 #include <vector>
+#include "../shp/quantity.h"
 #include "../shp/unit.h"
 
 namespace qft {
 
 class Mass {
-    shp::Unit unit;
-    float mass;
+    shp::Quantity quantity;
 public:
     // Constructors
     Mass();
-    Mass(float mass);
-    Mass(const shp::Unit& unit, float mass);
+    Mass(float quantity);
+    Mass(float quantity, const shp::Unit& unit);
+    Mass(const shp::Quantity& quantity, const shp::Unit& unit);
 
     // Destructors
     ~Mass();
@@ -45,12 +46,12 @@ public:
     Mass operator-(const Mass& peer) const;
 
     // Getters
-    shp::Unit getUnit() const { return unit; }
-    float getMass() const { return mass; }
+    shp::Unit getUnit() const { return quantity.getUnit(); }
+    shp::Quantity getQuantity() const { return quantity; }
 
     // Setters
-    void setUnit(const shp::Unit& value) { this->unit = value; }
-    void setMass(const float amount) { this->mass = amount; }
+    void setUnit(const shp::Unit& value) { this->quantity.setUnit(value); }
+    void setQuantity(const float amount) { this->quantity = amount; }
 
     // Additional methods
     virtual Mass copy();

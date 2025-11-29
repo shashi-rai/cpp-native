@@ -31,6 +31,11 @@ Particle::Particle(float spin)
     setPhysical(nullptr);
 }
 
+Particle::Particle(std::string name)
+        : Point(name), spin(0.0f), mass(), charge() {
+    setPhysical(nullptr);
+}
+
 Particle::Particle(Mass& mass, Charge& charge)
         : Point(), spin(), mass(mass), charge(charge) {
     setPhysical(nullptr);

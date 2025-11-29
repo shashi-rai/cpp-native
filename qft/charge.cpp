@@ -22,15 +22,19 @@
 
 namespace qft {
 
-Charge::Charge() : unit(), charge(0) {
+Charge::Charge() : quantity(0.0f) {
 
 }
 
-Charge::Charge(float charge) : unit(), charge(charge) {
+Charge::Charge(float quantity) : quantity(quantity) {
 
 }
 
-Charge::Charge(const shp::Unit& unit, float charge) : unit(unit), charge(charge) {
+Charge::Charge(float quantity, const shp::Unit& unit) : quantity(quantity, unit) {
+
+}
+
+Charge::Charge(const shp::Quantity& quantity, const shp::Unit& unit) : quantity(unit) {
 
 }
 
@@ -39,33 +43,31 @@ Charge::~Charge() {
 }
 
 bool Charge::operator==(const Charge& peer) const {
-    return (unit == peer.unit) && (charge == peer.charge);
+    return (quantity == peer.quantity);
 }
 
 Charge Charge::operator+(const Charge& peer) const {
-    return Charge(charge + peer.charge);
+    return Charge((quantity + peer.quantity), quantity.getUnit());
 }
 
 Charge Charge::operator-(const Charge& peer) const {
-    return Charge(charge - peer.charge);
+    return Charge((quantity - peer.quantity), quantity.getUnit());
 }
 
 Charge Charge::copy() {
-    Charge fresh(unit, charge);
+    Charge fresh(quantity, quantity.getUnit());
     return fresh;
 }
 
 void Charge::clear() {
-    unit.clear();
-    charge = 0.0f;
+    quantity.clear();
     return;
 }
 
 std::string Charge::print() {
     std::stringstream result;
-    result << "(";
-    result << charge << " ";
-    result << unit.print() << ")";
+    result << "(q:";
+    result << quantity.print() << ")";
 	return result.str();
 }
 

@@ -60,6 +60,39 @@ Atom::~Atom() {
 
 }
 
+Period Atom::getPeriod(int primary) const {
+	shp::Shell shell = Cellular::get(primary);
+	Period result = static_cast<Period&>(shell);
+	return result;
+}
+
+void Atom::setPeriod(int primary, const Period& object) {
+	Cellular::set(primary, object);
+	return;
+}
+
+Orbital Atom::getOrbital(int primary, int azimuthal) const {
+	shp::Polygon polygon = Cellular::get(primary).get(azimuthal);
+	Orbital result = static_cast<Orbital&>(polygon);
+	return result;
+}
+
+void Atom::setOrbital(int primary, int azimuthal, const Orbital& object) {
+	Cellular::get(primary).set(azimuthal, object);
+	return;
+}
+
+Electron Atom::getElectron(int primary, int azimuthal, int magnetic) const {
+	shp::Wave wave = Cellular::get(primary).get(azimuthal).get(magnetic);
+	Electron result = static_cast<Electron&>(wave);
+	return result;
+}
+
+void Atom::setElectron(int primary, int azimuthal, int magnetic, const Electron& object) {
+	Cellular::get(primary).get(azimuthal).set(magnetic, object);
+	return;
+}
+
 void Atom::clear() {
     Cellular::clear();
     return;

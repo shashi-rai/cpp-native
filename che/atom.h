@@ -25,6 +25,7 @@
 #include <vector>
 #include "nucleus.h"
 #include "orbital.h"
+#include "period.h"
 #include "../shp/cellular.h"
 
 namespace che {
@@ -54,6 +55,12 @@ public:
     void setValency(const short int electron) { this->valency = electron; }
 
     // Additional methods
+    Period getPeriod(int primary) const;
+    void setPeriod(int primary, const Period& object);
+    Orbital getOrbital(int primary, int azimuthal) const;
+    void setOrbital(int primary, int azimuthal, const Orbital& object);
+    Electron getElectron(int primary, int azimuthal, int magnetic) const;
+    void setElectron(int primary, int azimuthal, int magnetic, const Electron& object);
     virtual void clear();
     virtual std::string print();
 };

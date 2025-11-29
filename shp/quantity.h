@@ -18,49 +18,60 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef QFT_CHARGE_H
-#define QFT_CHARGE_H
+#ifndef SHP_QUANTITY_H
+#define SHP_QUANTITY_H
 
+#include <cmath>
 #include <sstream>
 #include <vector>
-#include "../shp/quantity.h"
-#include "../shp/unit.h"
+#include "unit.h"
 
-namespace qft {
+namespace shp {
 
-class Charge {
-    shp::Quantity quantity;
+class Quantity {
+    float value;
+    short int scaling;
+    Unit unit;
 public:
     // Constructors
-    Charge();
-    Charge(float quantity);
-    Charge(float quantity, const shp::Unit& unit);
-    Charge(const shp::Quantity& quantity, const shp::Unit& unit);
+    Quantity();
+    Quantity(float value);
+    Quantity(short int scaling);
+    Quantity(const Unit& unit);
+    Quantity(float value, const Unit& unit);
+    Quantity(float value, short int scaling);
+    Quantity(float value, short int scaling, const Unit& unit);
 
     // Destructors
-    ~Charge();
+    ~Quantity();
 
     // Operator overloading
-    bool operator==(const Charge& peer) const;
-    Charge operator+(const Charge& peer) const;
-    Charge operator-(const Charge& peer) const;
+    bool operator==(const Quantity& peer) const;
+    Quantity operator+(const Quantity& peer) const;
+    Quantity operator-(const Quantity& peer) const;
+    Quantity operator*(const Quantity& peer) const;
+    Quantity operator/(const Quantity& peer) const;
+    Quantity operator%(const Quantity& peer) const;
 
     // Getters
-    shp::Unit getUnit() const { return quantity.getUnit(); }
-    shp::Quantity getQuantity() const { return quantity; }
+    float getValue() const { return value; }
+    short int getScaling() const { return scaling; }
+    Unit getUnit()const { return unit; }
 
     // Setters
-    void setUnit(const shp::Unit& value) { this->quantity.setUnit(value); }
-    void setQuantity(const float amount) { this->quantity = amount; }
+    void setValue(const int amount) { this->value = amount; }
+    void setScaling(const short int factor) { this->scaling = factor; }
+    void setUnit(const Unit& object) { this->unit = object; }
 
     // Additional methods
-    virtual Charge copy();
-    virtual void clear();
-    virtual std::string print();
+    short int checkScaling(float amount);
+    Quantity copy();
+    void clear();
+    std::string print();
 };
 
-typedef std::vector<Charge > ChargeArray;
+typedef std::vector<Quantity > QuantityArray;
 
-} // namespace qft
+} // namespace shp
 
-#endif //QFT_CHARGE_H
+#endif //SHP_QUANTITY_H

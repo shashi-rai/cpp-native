@@ -32,6 +32,11 @@ Field::Field(float spin)
     setPhysical(nullptr);
 }
 
+Field::Field(std::string name)
+        : Cellular(name), defaultSpin(0.0f), defaultMass(), defaultCharge() {
+    setPhysical(nullptr);
+}
+
 Field::Field(Mass& mass, Charge& charge)
         : Cellular(), defaultSpin(0.0f), defaultMass(mass), defaultCharge(charge) {
     setPhysical(nullptr);

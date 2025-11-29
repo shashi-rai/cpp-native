@@ -40,6 +40,7 @@ public:
     // Constructors
     Field();
     Field(float spin);
+    Field(std::string name);
     Field(Mass& mass, Charge& charge);
     Field(float spin, Mass& mass, Charge& charge);
     Field(shp::Shape* physical);

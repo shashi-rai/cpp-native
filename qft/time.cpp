@@ -22,15 +22,15 @@
 
 namespace qft {
 
-Time::Time() : unit(), time(0L) {
+Time::Time() : unit(), quantity(0L) {
 
 }
 
-Time::Time(long time) : unit(), time(time) {
+Time::Time(long time) : unit(), quantity(time) {
 
 }
 
-Time::Time(const shp::Unit& unit, long time) : unit(unit), time(time) {
+Time::Time(long quantity, const shp::Unit& unit) : unit(unit), quantity(quantity) {
 
 }
 
@@ -39,32 +39,32 @@ Time::~Time() {
 }
 
 bool Time::operator==(const Time& peer) const {
-    return (unit == peer.unit) && (time == peer.time);
+    return (unit == peer.unit) && (quantity == peer.quantity);
 }
 
 Time Time::operator+(const Time& peer) const {
-    return Time(time + peer.time);
+    return Time(quantity + peer.quantity);
 }
 
 Time Time::operator-(const Time& peer) const {
-    return Time(time - peer.time);
+    return Time(quantity - peer.quantity);
 }
 
 Time Time::copy() {
-    Time fresh(unit, time);
+    Time fresh(quantity, unit);
     return fresh;
 }
 
 void Time::clear() {
     unit.clear();
-    time = 0L;
+    quantity = 0L;
     return;
 }
 
 std::string Time::print() {
     std::stringstream result;
-    result << "(";
-    result << time << " ";
+    result << "(t:";
+    result << quantity;
     result << unit.print() << ")";
 	return result.str();
 }

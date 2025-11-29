@@ -38,6 +38,7 @@ public:
     // Constructors
     Particle();
     Particle(float spin);
+    Particle(std::string name);
     Particle(Mass& mass, Charge& charge);
     Particle(float spin, Mass& mass, Charge& charge);
     Particle(shp::Shape* physical);

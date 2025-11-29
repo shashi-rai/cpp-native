@@ -22,15 +22,19 @@
 
 namespace qft {
 
-Mass::Mass() : unit(), mass(0.0f) {
+Mass::Mass() : quantity(0.0f) {
 
 }
 
-Mass::Mass(float mass) : unit(), mass(mass) {
+Mass::Mass(float quantity) : quantity(quantity) {
 
 }
 
-Mass::Mass(const shp::Unit& unit, float mass) : unit(unit), mass(mass) {
+Mass::Mass(float quantity, const shp::Unit& unit) : quantity(quantity, unit) {
+
+}
+
+Mass::Mass(const shp::Quantity& quantity, const shp::Unit& unit) : quantity(unit) {
 
 }
 
@@ -39,33 +43,31 @@ Mass::~Mass() {
 }
 
 bool Mass::operator==(const Mass& peer) const {
-    return (unit == peer.unit) && (mass == peer.mass);
+    return (quantity == peer.quantity);
 }
 
 Mass Mass::operator+(const Mass& peer) const {
-    return Mass(mass + peer.mass);
+    return Mass((quantity + peer.quantity), quantity.getUnit());
 }
 
 Mass Mass::operator-(const Mass& peer) const {
-    return Mass(mass - peer.mass);
+    return Mass((quantity - peer.quantity), quantity.getUnit());
 }
 
 Mass Mass::copy() {
-    Mass fresh(unit, mass);
+    Mass fresh(quantity, quantity.getUnit());
     return fresh;
 }
 
 void Mass::clear() {
-    unit.clear();
-    mass = 0.0f;
+    quantity.clear();
     return;
 }
 
 std::string Mass::print() {
     std::stringstream result;
-    result << "(";
-    result << mass << " ";
-    result << unit.print() << ")";
+    result << "(m:";
+    result << quantity.print() << ")";
 	return result.str();
 }
 

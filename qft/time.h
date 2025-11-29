@@ -28,12 +28,12 @@ namespace qft {
 
 class Time {
     shp::Unit unit;
-    long time;
+    long quantity;
 public:
     // Constructors
     Time();
     Time(long time);
-    Time(const shp::Unit& unit, long time);
+    Time(long time, const shp::Unit& unit);
 
     // Destructors
     ~Time();
@@ -45,11 +45,11 @@ public:
 
     // Getters
     shp::Unit getUnit() const { return unit; }
-    long getTime() const { return time; }
+    long getQuantity() const { return quantity; }
 
     // Setters
     void setUnit(const shp::Unit& value) { this->unit = value; }
-    void setTime(const long value) { this->time = value; }
+    void setQuantity(const long value) { this->quantity = value; }
 
     // Additional methods
     virtual Time copy();

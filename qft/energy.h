@@ -23,19 +23,20 @@
 
 #include <sstream>
 #include <vector>
+#include "../shp/quantity.h"
 #include "../shp/unit.h"
 
 namespace qft {
 
 class Energy {
-    shp::Unit unit;
-    float kinetic;
-    float potential;
+    shp::Quantity kinetic;
+    shp::Quantity potential;
 public:
     // Constructors
     Energy();
+    Energy(float kinetic);
     Energy(float kinetic, float potential);
-    Energy(const shp::Unit& unit, float kinetic, float potential);
+    Energy(float kinetic, float potential, const shp::Unit& unit);
 
     // Destructors
     ~Energy();
@@ -46,14 +47,12 @@ public:
     Energy operator-(const Energy& peer) const;
 
     // Getters
-    shp::Unit getUnit() const { return unit; }
-    float getKinetic() const { return kinetic; }
-    float getPotential() const { return potential; }
+    shp::Quantity getKinetic() const { return kinetic; }
+    shp::Quantity getPotential() const { return potential; }
 
     // Setters
-    void setUnit(const shp::Unit& value) { this->unit = value; }
-    void setKinetic(const float value) { this->kinetic = value; }
-    void setPotential(const float value) { this->potential = value; }
+    void setKinetic(const float amount) { this->kinetic = amount; }
+    void setPotential(const float amount) { this->potential = amount; }
 
     // Additional methods
     virtual Energy copy();

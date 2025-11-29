@@ -22,17 +22,21 @@
 
 namespace qft {
 
-Energy::Energy() : unit(), kinetic(0.0f), potential(0.0f) {
+Energy::Energy() : kinetic(0.0f), potential(0.0f) {
+
+}
+
+Energy::Energy(float kinetic) : kinetic(kinetic), potential(0.0f) {
 
 }
 
 Energy::Energy(float kinetic, float potential)
-        : unit(), kinetic(kinetic), potential(potential) {
+        : kinetic(kinetic), potential(potential) {
 
 }
 
-Energy::Energy(const shp::Unit& unit, float kinetic, float potential)
-        : unit(unit), kinetic(kinetic), potential(potential) {
+Energy::Energy(float kinetic, float potential, const shp::Unit& unit)
+        : kinetic(kinetic, unit), potential(potential, unit) {
 
 }
 
@@ -41,35 +45,37 @@ Energy::~Energy() {
 }
 
 bool Energy::operator==(const Energy& peer) const {
-    return (unit == peer.unit) && (kinetic == peer.kinetic) && (potential == peer.potential);
+    return (kinetic == peer.kinetic) && (potential == peer.potential);
 }
 
 Energy Energy::operator+(const Energy& peer) const {
-    return Energy((kinetic + peer.kinetic), (potential + peer.potential));
+    shp::Unit newunit = kinetic.getUnit();
+    return Energy((kinetic + peer.kinetic).getValue(),
+            (potential + peer.potential).getValue(), newunit);
 }
 
 Energy Energy::operator-(const Energy& peer) const {
-    return Energy((kinetic - peer.kinetic), (potential - peer.potential));
+    shp::Unit newunit = kinetic.getUnit();
+    return Energy((kinetic - peer.kinetic).getValue(),
+            (potential - peer.potential).getValue(), newunit);
 }
 
 Energy Energy::copy() {
-    Energy fresh(unit, kinetic, potential);
+    Energy fresh(kinetic.getValue(), potential.getValue(), kinetic.getUnit());
     return fresh;
 }
 
 void Energy::clear() {
-    unit.clear();
-    kinetic = 0.0f;
-    potential = 0.0f;
+    kinetic.clear();
+    potential.clear();
     return;
 }
 
 std::string Energy::print() {
     std::stringstream result;
-    result << "(";
-    result << kinetic << "+";
-    result << potential << " ";
-    result << unit.print() << ")";
+    result << "(k:";
+    result << kinetic.print() << ",p:";
+    result << potential.print() << ")";
 	return result.str();
 }
 
