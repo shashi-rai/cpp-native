@@ -53,7 +53,9 @@ public:
 
     // Access operator
     Polygon& operator()(int x) { return orbitals[x]; }
-    const Polygon& operator()(int x) const { return orbitals[x]; }
+	const Polygon& operator()(int x) const { return orbitals[x]; }
+    Wave& operator()(int x, int y) { return orbitals[x](y); }
+	const Wave& operator()(int x, int y) const { return orbitals[x](y); }
 
     // Getters
     int getLimit() const { return limit; }

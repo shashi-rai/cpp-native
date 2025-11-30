@@ -50,8 +50,12 @@ public:
     ~Atom();
 
     // Access operator
-    Period operator()(int x) { return this->getPeriod(x); }
-    const Period operator()(int x) const { return this->getPeriod(x); }
+    Period& operator()(int x) { return getPeriod(x); }
+    const Period& operator()(int x) const { return getPeriod(x); }
+    Orbital& operator()(int x, int y) { return getPeriod(x).getOrbital(y); }
+    const Orbital& operator()(int x, int y) const { return getPeriod(x).getOrbital(y); }
+    Electron& operator()(int x, int y, int z) { return getPeriod(x).getOrbital(y).getElectron(z); }
+    const Electron& operator()(int x, int y, int z) const { return getPeriod(x).getOrbital(y).getElectron(z); }
 
     // Getters
     Nucleus getNucleus() const { return nucleus; }
@@ -62,19 +66,40 @@ public:
     void setValency(const short int electron) { this->valency = electron; }
 
     // Additional methods
-    Period getPeriod(int primary) const;
+    Period& getPeriod(int primary) const;
     void setPeriod(int primary, const Period& object);
-    Orbital getOrbital(int primary, int azimuthal) const;
+    Orbital& getOrbital(int primary, int azimuthal) const;
     void setOrbital(int primary, int azimuthal, const Orbital& object);
-    Electron getElectron(int primary, int azimuthal, int magnetic) const;
+    Electron& getElectron(int primary, int azimuthal, int magnetic) const;
     void setElectron(int primary, int azimuthal, int magnetic, const Electron& object);
     virtual void clear();
     virtual std::string print();
 public:
+    static const std::string getSymbol(short int number);
     static Atom initialize(short number, std::string symbol, std::string name);
 private:
     static void createPeriods(Atom& peer, std::string prefix, short int period, short int capacity);
     static void createOrbitals(Atom& peer, std::string prefix, short int period, short int starting, short int capacity);
+public:
+    static const int MAX_ELECTRON_PER_ORBITAL;
+    static const int S_BLOCK[];
+    static const int P_BLOCK[];
+    static const int D_BLOCK[];
+    static const int F_BLOCK[];
+    static const std::string ELEMENT_SYMBOL[];
+    static const std::string ORBITAL_NAME[];
+    static const int ORBITAL_ELECTRON_LIMIT[];
+    static const int PERIOD_ELECTRON_LIMIT[];
+    static const int ALKALI_METAL[];
+    static const int ALKALINE_METAL[];
+    static const int HALOGEN_GAS[];
+    static const int NOBLE_GAS[];
+    static const int TRANSITION_METAL[];
+    static const int POST_TRANSITION_METAL[];
+    static const int NON_METAL[];
+    static const int METALLOID[];
+    static const int LANTHANIDE[];
+    static const int ACTINIDE[];
 };
 
 typedef std::vector<Atom > AtomArray;

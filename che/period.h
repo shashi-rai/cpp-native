@@ -42,8 +42,10 @@ public:
     ~Period();
 
     // Access operator
-    Orbital operator()(int x) { return this->getOrbital(x); }
-    const Orbital operator()(int x) const { return this->getOrbital(x); }
+    Orbital& operator()(int x) { return getOrbital(x); }
+    const Orbital& operator()(int x) const { return getOrbital(x); }
+    Electron& operator()(int x, int y) { return getOrbital(x).getElectron(y); }
+    const Electron& operator()(int x, int y) const { return getOrbital(x).getElectron(y); }
 
     // Getters
     Orbital getS() const;
@@ -58,12 +60,14 @@ public:
     void setF(const std::vector<Orbital>& object);
 
     // Additional methods
-    Orbital getOrbital(int azimuthal) const;
+    Orbital& getOrbital(int azimuthal) const;
     void setOrbital(int azimuthal, const Orbital& object);
-    Electron getElectron(int azimuthal, int magnetic) const;
+    Electron& getElectron(int azimuthal, int magnetic) const;
     void setElectron(int azimuthal, int magnetic, const Electron& object);
     virtual void clear();
     virtual std::string print();
+public:
+    static const int ORBITAL_MAX_LIMIT;
 };
 
 typedef std::vector<Period > PeriodArray;

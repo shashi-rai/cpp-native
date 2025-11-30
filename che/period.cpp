@@ -22,7 +22,7 @@
 
 namespace che {
 
-#define ORBITAL_MAX_LIMIT 16
+const int Period::ORBITAL_MAX_LIMIT = 16;
 
 Period::Period() : Shell("", ORBITAL_MAX_LIMIT) {
 
@@ -102,9 +102,9 @@ void Period::setF(const std::vector<Orbital>& objects) {
 	}
 }
 
-Orbital Period::getOrbital(int azimuthal) const {
-	shp::Polygon polygon = Shell::get(azimuthal);
-	Orbital result = static_cast<Orbital&>(polygon);
+Orbital& Period::getOrbital(int azimuthal) const {
+	shp::OrbitalArray orbitals = this->getOrbitals();
+	Orbital& result = static_cast<Orbital&>(orbitals[azimuthal]);
 	return result;
 }
 
@@ -113,9 +113,9 @@ void Period::setOrbital(int azimuthal, const Orbital& object) {
 	return;
 }
 
-Electron Period::getElectron(int azimuthal, int magnetic) const {
-	shp::Wave wave = Shell::get(azimuthal).get(magnetic);
-	Electron result = static_cast<Electron&>(wave);
+Electron& Period::getElectron(int azimuthal, int magnetic) const {
+	shp::OrbitalArray orbitals = this->getOrbitals();
+	Electron& result = static_cast<Electron&>(orbitals[azimuthal](magnetic));
 	return result;
 }
 

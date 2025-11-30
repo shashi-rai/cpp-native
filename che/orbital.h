@@ -43,9 +43,8 @@ public:
     ~Orbital();
 
     // Access operator
-    Electron operator()(int x) { return this->getElectron(x); }
-    const Electron operator()(int x) const { return this->getElectron(x); }
-
+    Electron& operator()(int x) { return getElectron(x); }
+    const Electron& operator()(int x) const { return getElectron(x); }
 
     // Getters
     Electron getLeftSpinor() const { return this->getElectron(0); }
@@ -57,10 +56,12 @@ public:
 
     // Additional methods
     int getParticleCount() const;
-    Electron getElectron(int magnetic) const;
+    Electron& getElectron(int magnetic) const;
     void setElectron(int magnetic, const Electron& object);
     virtual void clear();
     virtual std::string print();
+public:
+    static const int ELECTRON_MAX_LIMIT;
 };
 
 } // namespace che

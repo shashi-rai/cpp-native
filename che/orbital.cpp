@@ -22,7 +22,7 @@
 
 namespace che {
 
-#define ELECTRON_MAX_LIMIT 2
+const int Orbital::ELECTRON_MAX_LIMIT = 2;
 
 Orbital::Orbital() : Polygon("", ELECTRON_MAX_LIMIT) {
 
@@ -60,9 +60,9 @@ int Orbital::getParticleCount() const {
     return this->getWaveCount();
 }
 
-Electron Orbital::getElectron(int magnetic) const {
-	shp::Wave wave = Polygon::get(magnetic);
-	Electron result = static_cast<Electron&>(wave);
+Electron& Orbital::getElectron(int magnetic) const {
+	shp::WaveArray waves = this->getWaves();
+	Electron& result = static_cast<Electron&>(waves[magnetic]);
 	return result;
 }
 
