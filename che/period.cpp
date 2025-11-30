@@ -22,16 +22,17 @@
 
 namespace che {
 
-Period::Period() : Shell("", 7) {
+#define ORBITAL_MAX_LIMIT 16
+
+Period::Period() : Shell("", ORBITAL_MAX_LIMIT) {
 
 }
 
-Period::Period(std::string name) : Shell(name, 7) {
+Period::Period(std::string name) : Shell(name, ORBITAL_MAX_LIMIT) {
 
 }
 
-Period::Period(std::string name, int limit)
-    : Shell(name, limit) {
+Period::Period(std::string name, int limit) : Shell(name, limit) {
 
 }
 
@@ -44,6 +45,85 @@ Period::~Period() {
 
 }
 
+Orbital Period::getS() const {
+	int mapper[1] = { 0 };
+	return this->getOrbital(0);
+}
+
+std::vector<Orbital> Period::getP() const {
+	int mapper[3] = { 1, 2, 3 };
+	std::vector<Orbital> result;
+	for (int i = 0; i < 3; i++) {
+		result.push_back(this->getOrbital(mapper[i]));
+	}
+	return result;
+}
+
+std::vector<Orbital> Period::getD() const {
+	int mapper[5] = { 4, 5, 6, 7, 8 };
+	std::vector<Orbital> result;
+	for (int i = 0; i < 5; i++) {
+		result.push_back(this->getOrbital(mapper[i]));
+	}
+	return result;
+}
+
+std::vector<Orbital> Period::getF() const {
+	int mapper[7] = { 9, 10, 11, 12, 13, 14, 15 };
+	std::vector<Orbital> result;
+	for (int i = 0; i < 7; i++) {
+		result.push_back(this->getOrbital(mapper[i]));
+	}
+	return result;
+}
+
+void Period::setS(const Orbital& object) {
+	setOrbital(0, object);
+}
+
+void Period::setP(const std::vector<Orbital>& objects) {
+	int mapper[3] = { 1, 2, 3 };
+	for (int i = 0; i < 3; i++) {
+		setOrbital(mapper[i], objects[i]);
+	}
+}
+
+void Period::setD(const std::vector<Orbital>& objects) {
+	int mapper[5] = { 4, 5, 6, 7, 8 };
+	for (int i = 0; i < 5; i++) {
+		setOrbital(mapper[i], objects[i]);
+	}
+}
+
+void Period::setF(const std::vector<Orbital>& objects) {
+	int mapper[7] = { 9, 10, 11, 12, 13, 14, 15 };
+	for (int i = 0; i < 7; i++) {
+		setOrbital(mapper[i], objects[i]);
+	}
+}
+
+Orbital Period::getOrbital(int azimuthal) const {
+	shp::Polygon polygon = Shell::get(azimuthal);
+	Orbital result = static_cast<Orbital&>(polygon);
+	return result;
+}
+
+void Period::setOrbital(int azimuthal, const Orbital& object) {
+	Shell::set(azimuthal, object);
+	return;
+}
+
+Electron Period::getElectron(int azimuthal, int magnetic) const {
+	shp::Wave wave = Shell::get(azimuthal).get(magnetic);
+	Electron result = static_cast<Electron&>(wave);
+	return result;
+}
+
+void Period::setElectron(int azimuthal, int magnetic, const Electron& object) {
+	Shell::get(azimuthal).set(magnetic, object);
+	return;
+}
+
 void Period::clear() {
     Shell::clear();
     return;
@@ -51,9 +131,8 @@ void Period::clear() {
 
 std::string Period::print() {
     std::stringstream result;
-    result << "{P:";
-	result << Shell::print() << ",sz:";
-    result << "}";
+    result << "ρ";
+	result << Shell::print();
 	return result.str();
 }
 

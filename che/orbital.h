@@ -29,11 +29,11 @@
 namespace che {
 
 class Orbital : public shp::Polygon {
-    Electron left;
-    Electron right;
+
 public:
     // Constructors
     Orbital();
+    Orbital(std::string name);
     Orbital(Electron& left, Electron& right);
     Orbital(std::string name, int limit);
     Orbital(std::string name, float gradient, int limit);
@@ -42,16 +42,23 @@ public:
     // Destructors
     ~Orbital();
 
+    // Access operator
+    Electron operator()(int x) { return this->getElectron(x); }
+    const Electron operator()(int x) const { return this->getElectron(x); }
+
+
     // Getters
-    Electron getLeftSpinor() const { return left; }
-    Electron getRightSpinor() const { return right; }
+    Electron getLeftSpinor() const { return this->getElectron(0); }
+    Electron getRightSpinor() const { return this->getElectron(1); }
 
     // Setters
-    void setLeftSpinor(const Electron& spinor) { this->left = spinor; }
-    void setRightSpinor(const Electron& spinor) { this->right = spinor; }
+    void setLeftSpinor(const Electron& spinor) { this->setElectron(0, spinor); }
+    void setRightSpinor(const Electron& spinor) { this->setElectron(1, spinor); }
 
     // Additional methods
     int getParticleCount() const;
+    Electron getElectron(int magnetic) const;
+    void setElectron(int magnetic, const Electron& object);
     virtual void clear();
     virtual std::string print();
 };

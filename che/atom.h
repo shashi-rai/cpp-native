@@ -36,7 +36,10 @@ class Atom : public shp::Cellular {
 public:
     // Constructors
     Atom();
+    Atom(short number, std::string symbol);
+    Atom(short number, std::string symbol, std::string name);
     Atom(std::string name);
+    Atom(std::string symbol, std::string name);
     Atom(std::string name, float gradient);
     Atom(std::string name, Nucleus& nucleus);
     Atom(std::string name, float gradient, Nucleus& nucleus);
@@ -45,6 +48,10 @@ public:
 
     // Destructors
     ~Atom();
+
+    // Access operator
+    Period operator()(int x) { return this->getPeriod(x); }
+    const Period operator()(int x) const { return this->getPeriod(x); }
 
     // Getters
     Nucleus getNucleus() const { return nucleus; }
@@ -63,6 +70,11 @@ public:
     void setElectron(int primary, int azimuthal, int magnetic, const Electron& object);
     virtual void clear();
     virtual std::string print();
+public:
+    static Atom initialize(short number, std::string symbol, std::string name);
+private:
+    static void createPeriods(Atom& peer, std::string prefix, short int period, short int capacity);
+    static void createOrbitals(Atom& peer, std::string prefix, short int period, short int starting, short int capacity);
 };
 
 typedef std::vector<Atom > AtomArray;

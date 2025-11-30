@@ -26,15 +26,28 @@ Atom::Atom() : Cellular(""), nucleus(), valency(0) {
 
 }
 
-Atom::Atom(std::string name) : Cellular(name), nucleus(), valency(0) {
+Atom::Atom(std::string name) : Cellular(name), nucleus(name), valency(0) {
+
+}
+
+Atom::Atom(short number, std::string symbol)
+	: Cellular(""), nucleus(symbol, number), valency(0) {
+
+}
+
+Atom::Atom(short number, std::string symbol, std::string name)
+	: Cellular(name), nucleus(symbol, number), valency(0) {
+}
+
+Atom::Atom(std::string symbol, std::string name)
+	: Cellular(name), nucleus(symbol), valency(0) {
 
 }
 
 Atom::Atom(std::string name, float gradient)
-        : Cellular(name, gradient), nucleus(), valency(0) {
+        : Cellular(name, gradient), nucleus(name), valency(0) {
 
 }
-
 
 Atom::Atom(std::string name, Nucleus& nucleus)
         : Cellular(name), nucleus(nucleus), valency(0) {
@@ -72,7 +85,9 @@ void Atom::setPeriod(int primary, const Period& object) {
 }
 
 Orbital Atom::getOrbital(int primary, int azimuthal) const {
-	shp::Polygon polygon = Cellular::get(primary).get(azimuthal);
+	shp::Shell shell = Cellular::get(primary);
+	Period period = static_cast<Period&>(shell);
+	shp::Polygon polygon = period.getOrbital(azimuthal);
 	Orbital result = static_cast<Orbital&>(polygon);
 	return result;
 }
@@ -100,10 +115,62 @@ void Atom::clear() {
 
 std::string Atom::print() {
     std::stringstream result;
-    result << "{A:";
-    result << Cellular::print() << ",sz:";
-    result << "}";
+    result << "[";
+	result << nucleus.print() << ",";
+    result << Cellular::print();
+    result << "]";
 	return result.str();
+}
+
+/*
+ * Allocate (periods + orbitals) using Atomic Number
+ */
+Atom Atom::initialize(short number, std::string symbol, std::string name) {
+	Atom peer(number, symbol, name);
+	//Atom peer = *this;
+	const int mapper[] = { 2, 8, 8, 18, 18, 32, 32 };	// seven periods capacity
+	short int remaining = number;
+	for (short int period = 0; (remaining > 0) && (period < 7); period++) {
+		std::stringstream pid; pid << "P" << (period + 1);
+		remaining -= mapper[period];
+		if (remaining > 0) { // next cycle required
+			createPeriods(peer, pid.str(), period, mapper[period]);
+		} else {	// final period allocation
+			createPeriods(peer, pid.str(), period, mapper[period]);
+			remaining = (mapper[period] - remaining);
+			break;
+		}
+	}
+	return peer;
+}
+
+void Atom::createPeriods(Atom& peer, std::string prefix,
+		short int period, short int capacity) {
+	Period shell(prefix, (capacity/2));
+	peer.setPeriod(period, shell);
+
+	const std::string names[] = { "s", "p", "d", "f" };
+	const int mapper[] = { 2, 6, 10, 14 };	// s, p, d, f orbital capacity
+	short int remaining = capacity;
+	for (short int orbital = 0; (remaining > 0) && (orbital < 4); orbital++) {
+		std::stringstream orbid; orbid << (period + 1) << names[orbital];
+		remaining -= mapper[orbital];
+		if (remaining > 0) { // next cycle required
+			createOrbitals(peer, orbid.str(), period, orbital, (mapper[orbital]/2));
+		} else { // final orbital allocation
+			createOrbitals(peer, orbid.str(), period, orbital, (mapper[orbital]/2));
+			break;
+		}
+	}
+}
+
+void Atom::createOrbitals(Atom& peer, std::string prefix,
+		short int period, short int starting, short int capacity) {
+	for (short int index = 0; index < capacity; index++) {
+		std::stringstream orbid; orbid << prefix << index;
+		Orbital orbital(orbid.str(), 2);
+		peer.setOrbital(period, (starting + index), orbital);;
+	}
 }
 
 } // namespace che

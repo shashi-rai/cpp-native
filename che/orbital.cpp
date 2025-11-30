@@ -22,28 +22,34 @@
 
 namespace che {
 
-Orbital::Orbital() : Polygon("", 2), left(), right() {
+#define ELECTRON_MAX_LIMIT 2
+
+Orbital::Orbital() : Polygon("", ELECTRON_MAX_LIMIT) {
 
 }
 
-Orbital::Orbital(Electron& left, Electron& right)
-    : Polygon("", 2), left(left), right(right) {
+Orbital::Orbital(std::string name) : Polygon(name, ELECTRON_MAX_LIMIT) {
 
 }
 
-Orbital::Orbital(std::string name, int limit)
-    : Polygon(name, limit), left(), right() {
+Orbital::Orbital(Electron& left, Electron& right) : Polygon("", ELECTRON_MAX_LIMIT) {
+    setLeftSpinor(left);
+    setRightSpinor(right);
+}
+
+Orbital::Orbital(std::string name, int limit) : Polygon(name, limit) {
 
 }
 
 Orbital::Orbital(std::string name, float gradient, int limit)
-    : Polygon(name, gradient, limit), left(), right() {
+    : Polygon(name, gradient, limit) {
 
 }
 
 Orbital::Orbital(std::string name, int limit, Electron& left, Electron& right)
-    : Polygon(name, limit), left(left), right(right) {
-
+    : Polygon(name, limit) {
+    setLeftSpinor(left);
+    setRightSpinor(right);
 }
 
 Orbital::~Orbital() {
@@ -54,6 +60,17 @@ int Orbital::getParticleCount() const {
     return this->getWaveCount();
 }
 
+Electron Orbital::getElectron(int magnetic) const {
+	shp::Wave wave = Polygon::get(magnetic);
+	Electron result = static_cast<Electron&>(wave);
+	return result;
+}
+
+void Orbital::setElectron(int magnetic, const Electron& object) {
+	Polygon::set(magnetic, object);
+	return;
+}
+
 void Orbital::clear() {
     Polygon::clear();
     return;
@@ -61,9 +78,8 @@ void Orbital::clear() {
 
 std::string Orbital::print() {
     std::stringstream result;
-    result << "{O:";
-	result << Polygon::print() << ",sz:";
-    result << "}";
+    result << "(O";
+	result << Polygon::print() << ")";
 	return result.str();
 }
 

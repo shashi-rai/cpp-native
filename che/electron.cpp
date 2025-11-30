@@ -88,9 +88,8 @@ void Electron::clear() {
 
 std::string Electron::print() {
     std::stringstream result;
-    result << "{E:";
-	result << Wave::print() << ",sz:";
-    result << "}";
+    result << "e";
+	result << Wave::print();
 	return result.str();
 }
 

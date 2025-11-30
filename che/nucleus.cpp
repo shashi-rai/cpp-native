@@ -32,6 +32,21 @@ Nucleus::Nucleus(std::string symbol)
 
 }
 
+Nucleus::Nucleus(short proton)
+        : symbol(""), proton(0), neutron(0), mass(), charge(), energy() {
+
+}
+
+Nucleus::Nucleus(std::string symbol, short proton)
+        : symbol(symbol), proton(proton), neutron(proton), mass(), charge(), energy() {
+
+}
+
+Nucleus::Nucleus(std::string symbol, short proton, short neutron)
+        : symbol(symbol), proton(proton), neutron(neutron), mass(), charge(), energy() {
+
+}
+
 Nucleus::Nucleus(std::string symbol, short proton, short neutron,
         qft::Mass& mass, qft::Charge& charge, qft::Energy& energy)
         : symbol(symbol), proton(proton), neutron(neutron),
@@ -41,6 +56,24 @@ Nucleus::Nucleus(std::string symbol, short proton, short neutron,
 
 Nucleus::~Nucleus() {
 
+}
+
+void Nucleus::clear() {
+    mass.clear();
+	charge.clear();
+	energy.clear();
+    return;
+}
+
+std::string Nucleus::print() {
+    std::stringstream result;
+	result << symbol << ",p:";
+	result << proton << ",n:";
+	result << neutron << ",";
+	result << mass.print() << ",";
+	result << charge.print() << ",";
+	result << energy.print();
+	return result.str();
 }
 
 } // namespace che

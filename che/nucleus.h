@@ -39,7 +39,10 @@ class Nucleus {
 public:
     // Constructors
     Nucleus();
+    Nucleus(short proton);
     Nucleus(std::string symbol);
+    Nucleus(std::string symbol, short proton);
+    Nucleus(std::string symbol, short proton, short neutron);
     Nucleus(std::string symbol, short proton, short neutron,
         qft::Mass& mass, qft::Charge& charge, qft::Energy& energy);
 
@@ -61,6 +64,10 @@ public:
     void setMass(const qft::Mass& amount) { this->mass = amount; }
     void setCharge(const qft::Charge& amount) { this->charge = amount; }
     void setEnergy(const qft::Energy& amount) { this->energy = amount; }
+
+    // Additional methods
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Nucleus > NucleusArray;
