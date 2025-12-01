@@ -54,16 +54,16 @@ public:
     std::vector<Orbital> getF() const;
 
     // Setters
-    void setS(const Orbital& object);
-    void setP(const std::vector<Orbital>& object);
-    void setD(const std::vector<Orbital>& object);
-    void setF(const std::vector<Orbital>& object);
+    void setS(const std::shared_ptr<che::Orbital> object);
+    void setP(const std::vector<std::shared_ptr<che::Orbital> >& object);
+    void setD(const std::vector<std::shared_ptr<che::Orbital> >& object);
+    void setF(const std::vector<std::shared_ptr<che::Orbital> >& object);
 
     // Additional methods
     Orbital& getOrbital(int azimuthal) const;
-    void setOrbital(int azimuthal, const Orbital& object);
+    void setOrbital(int azimuthal, const std::shared_ptr<che::Orbital> object);
     Electron& getElectron(int azimuthal, int magnetic) const;
-    void setElectron(int azimuthal, int magnetic, const Electron& object);
+    void setElectron(int azimuthal, int magnetic, const std::shared_ptr<che::Electron> object);
     virtual void clear();
     virtual std::string print();
 public:

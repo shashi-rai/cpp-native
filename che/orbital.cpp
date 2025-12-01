@@ -32,7 +32,10 @@ Orbital::Orbital(std::string name) : Polygon(name, ELECTRON_MAX_LIMIT) {
 
 }
 
-Orbital::Orbital(Electron& left, Electron& right) : Polygon("", ELECTRON_MAX_LIMIT) {
+Orbital::Orbital(
+        const std::shared_ptr<che::Electron> left,
+        const std::shared_ptr<che::Electron> right)
+        : Polygon("", ELECTRON_MAX_LIMIT) {
     setLeftSpinor(left);
     setRightSpinor(right);
 }
@@ -46,8 +49,10 @@ Orbital::Orbital(std::string name, float gradient, int limit)
 
 }
 
-Orbital::Orbital(std::string name, int limit, Electron& left, Electron& right)
-    : Polygon(name, limit) {
+Orbital::Orbital(std::string name, int limit,
+        const std::shared_ptr<che::Electron> left,
+        const std::shared_ptr<che::Electron> right)
+        : Polygon(name, limit) {
     setLeftSpinor(left);
     setRightSpinor(right);
 }
@@ -66,8 +71,9 @@ Electron& Orbital::getElectron(int magnetic) const {
 	return result;
 }
 
-void Orbital::setElectron(int magnetic, const Electron& object) {
-	Polygon::set(magnetic, object);
+void Orbital::setElectron(int magnetic, const std::shared_ptr<che::Electron> object) {
+	shp::Polygon* orbital = this;
+	orbital->set(magnetic, *object);
 	return;
 }
 

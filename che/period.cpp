@@ -77,25 +77,25 @@ std::vector<Orbital> Period::getF() const {
 	return result;
 }
 
-void Period::setS(const Orbital& object) {
+void Period::setS(const std::shared_ptr<che::Orbital> object) {
 	setOrbital(0, object);
 }
 
-void Period::setP(const std::vector<Orbital>& objects) {
+void Period::setP(const std::vector<std::shared_ptr<che::Orbital> >& objects) {
 	int mapper[3] = { 1, 2, 3 };
 	for (int i = 0; i < 3; i++) {
 		setOrbital(mapper[i], objects[i]);
 	}
 }
 
-void Period::setD(const std::vector<Orbital>& objects) {
+void Period::setD(const std::vector<std::shared_ptr<che::Orbital> >& objects) {
 	int mapper[5] = { 4, 5, 6, 7, 8 };
 	for (int i = 0; i < 5; i++) {
 		setOrbital(mapper[i], objects[i]);
 	}
 }
 
-void Period::setF(const std::vector<Orbital>& objects) {
+void Period::setF(const std::vector<std::shared_ptr<che::Orbital> >& objects) {
 	int mapper[7] = { 9, 10, 11, 12, 13, 14, 15 };
 	for (int i = 0; i < 7; i++) {
 		setOrbital(mapper[i], objects[i]);
@@ -108,8 +108,9 @@ Orbital& Period::getOrbital(int azimuthal) const {
 	return result;
 }
 
-void Period::setOrbital(int azimuthal, const Orbital& object) {
-	Shell::set(azimuthal, object);
+void Period::setOrbital(int azimuthal, const std::shared_ptr<che::Orbital> object) {
+	shp::Shell* period = this;
+	period->set(azimuthal, *object);
 	return;
 }
 
@@ -119,8 +120,9 @@ Electron& Period::getElectron(int azimuthal, int magnetic) const {
 	return result;
 }
 
-void Period::setElectron(int azimuthal, int magnetic, const Electron& object) {
-	Shell::get(azimuthal).set(magnetic, object);
+void Period::setElectron(int azimuthal, int magnetic, const std::shared_ptr<che::Electron> object) {
+	std::shared_ptr<shp::Polygon> orbital = std::make_shared<shp::Polygon>(Shell::get(azimuthal));
+	orbital->set(magnetic, *object);
 	return;
 }
 

@@ -42,6 +42,22 @@ domain-specific folder independently
 $ make all
 ```
 
+### Understanding Dependencies
+
+The micro-world phenomenon is modeled using the following libraries
+
+- firstly, the [dsa](/dsa/) library must be compiled to use available data containers
+- then, compile [shp](/shp/) library which forms the base for several other libraries
+- then, compile [qft](/qft/) library that models core concepts of the physical reality
+- then, compile [phy](/phy/) library that builds on [qft](/qft/) to model the Physics
+- then, compile [che](/che/) library that builds on [phy](/phy/) to model the Chemistry
+- then, compile [bio](/bio/) library that builds on [che](/che/) to model the Biology
+
+The macro-world phenomenon is modeled using the following libraries
+
+- the [gis](/gis/) library could be compiled after [shp](/shp/) library is ready
+- the [grt](/grt/) library could be compiled after [gis](/gis/) library is ready
+
 ## Folder Cleanup
 
 To clean all temporary file folders (e.g., obj, lib)
@@ -67,3 +83,7 @@ To clean only pre-compiled application files
 ```bash
 $ make clean-apps
 ```
+
+## Software Developer
+
+- Shashi Bhushan Rai

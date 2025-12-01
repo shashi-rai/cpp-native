@@ -112,8 +112,9 @@ Period& Atom::getPeriod(int primary) const {
 	return result;
 }
 
-void Atom::setPeriod(int primary, const Period& object) {
-	Cellular::set(primary, object);
+void Atom::setPeriod(int primary, const std::shared_ptr<che::Period> object) {
+	shp::Cellular* shell = this;
+	shell->set(primary, *object);
 	return;
 }
 
@@ -123,8 +124,9 @@ Orbital& Atom::getOrbital(int primary, int azimuthal) const {
 	return result;
 }
 
-void Atom::setOrbital(int primary, int azimuthal, const Orbital& object) {
-	Cellular::get(primary).set(azimuthal, object);
+void Atom::setOrbital(int primary, int azimuthal, const std::shared_ptr<che::Orbital> object) {
+	std::shared_ptr<shp::Shell> period = std::make_shared<shp::Shell>(Cellular::get(primary));
+	period->set(azimuthal, *object);
 	return;
 }
 
@@ -134,8 +136,10 @@ Electron& Atom::getElectron(int primary, int azimuthal, int magnetic) const {
 	return result;
 }
 
-void Atom::setElectron(int primary, int azimuthal, int magnetic, const Electron& object) {
-	Cellular::get(primary).get(azimuthal).set(magnetic, object);
+void Atom::setElectron(int primary, int azimuthal, int magnetic, const std::shared_ptr<che::Electron> object) {
+	std::shared_ptr<shp::Shell> period = std::make_shared<shp::Shell>(Cellular::get(primary));
+	std::shared_ptr<shp::Polygon> orbital = std::make_shared<shp::Polygon>(period->get(azimuthal));
+	orbital->set(magnetic, *object);
 	return;
 }
 
@@ -160,8 +164,8 @@ const std::string Atom::getSymbol(short int number) {
 /*
  * Allocate (periods + orbitals) using Atomic Number
  */
-Atom Atom::initialize(short number, std::string symbol, std::string name) {
-	Atom peer(number, symbol, name);
+std::shared_ptr<che::Atom> Atom::initialize(short number, std::string symbol, std::string name) {
+	std::shared_ptr<che::Atom> peer = std::make_shared<che::Atom>(number, symbol, name);
 	short int remaining = number;
 	for (short int period = 0; (remaining > 0) && (period < 7); period++) {
 		std::stringstream pid; pid << "P" << (period + 1);
@@ -177,10 +181,11 @@ Atom Atom::initialize(short number, std::string symbol, std::string name) {
 	return peer;
 }
 
-void Atom::createPeriods(Atom& peer, std::string prefix,
+void Atom::createPeriods(std::shared_ptr<che::Atom> peer, std::string prefix,
 		short int period, short int capacity) {
-	Period shell(prefix, (capacity / MAX_ELECTRON_PER_ORBITAL));
-	peer.setPeriod(period, shell);
+	std::shared_ptr<che::Period> shell =
+		std::make_shared<che::Period>(prefix, (capacity / MAX_ELECTRON_PER_ORBITAL));
+	peer->setPeriod(period, shell);
 
 	short int remaining = capacity;
 	for (short int orbital = 0; (remaining > 0) && (orbital < 4); orbital++) {
@@ -197,12 +202,13 @@ void Atom::createPeriods(Atom& peer, std::string prefix,
 	}
 }
 
-void Atom::createOrbitals(Atom& peer, std::string prefix,
+void Atom::createOrbitals(std::shared_ptr<che::Atom> peer, std::string prefix,
 		short int period, short int starting, short int capacity) {
 	for (short int index = 0; index < capacity; index++) {
 		std::stringstream orbid; orbid << prefix << index;
-		Orbital orbital(orbid.str(), MAX_ELECTRON_PER_ORBITAL);
-		peer.setOrbital(period, (starting + index), orbital);;
+		std::shared_ptr<che::Orbital> orbital =
+			std::make_shared<che::Orbital>(orbid.str(), MAX_ELECTRON_PER_ORBITAL);
+		peer->setOrbital(period, (starting + index), orbital);;
 	}
 }
 

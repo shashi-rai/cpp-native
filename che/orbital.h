@@ -34,10 +34,13 @@ public:
     // Constructors
     Orbital();
     Orbital(std::string name);
-    Orbital(Electron& left, Electron& right);
+    Orbital(const std::shared_ptr<che::Electron> left,
+        const std::shared_ptr<che::Electron> right);
     Orbital(std::string name, int limit);
     Orbital(std::string name, float gradient, int limit);
-    Orbital(std::string name, int limit, Electron& left, Electron& right);
+    Orbital(std::string name, int limit,
+        const std::shared_ptr<che::Electron> left,
+        const std::shared_ptr<che::Electron> right);
 
     // Destructors
     ~Orbital();
@@ -51,13 +54,13 @@ public:
     Electron getRightSpinor() const { return this->getElectron(1); }
 
     // Setters
-    void setLeftSpinor(const Electron& spinor) { this->setElectron(0, spinor); }
-    void setRightSpinor(const Electron& spinor) { this->setElectron(1, spinor); }
+    void setLeftSpinor(const std::shared_ptr<che::Electron> spinor) { this->setElectron(0, spinor); }
+    void setRightSpinor(const std::shared_ptr<che::Electron> spinor) { this->setElectron(1, spinor); }
 
     // Additional methods
     int getParticleCount() const;
     Electron& getElectron(int magnetic) const;
-    void setElectron(int magnetic, const Electron& object);
+    void setElectron(int magnetic, const std::shared_ptr<che::Electron> object);
     virtual void clear();
     virtual std::string print();
 public:

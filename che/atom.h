@@ -67,19 +67,21 @@ public:
 
     // Additional methods
     Period& getPeriod(int primary) const;
-    void setPeriod(int primary, const Period& object);
+    void setPeriod(int primary, const std::shared_ptr<che::Period> object);
     Orbital& getOrbital(int primary, int azimuthal) const;
-    void setOrbital(int primary, int azimuthal, const Orbital& object);
+    void setOrbital(int primary, int azimuthal, const std::shared_ptr<che::Orbital> object);
     Electron& getElectron(int primary, int azimuthal, int magnetic) const;
-    void setElectron(int primary, int azimuthal, int magnetic, const Electron& object);
+    void setElectron(int primary, int azimuthal, int magnetic, const std::shared_ptr<che::Electron> object);
     virtual void clear();
     virtual std::string print();
 public:
     static const std::string getSymbol(short int number);
-    static Atom initialize(short number, std::string symbol, std::string name);
+    static std::shared_ptr<che::Atom> initialize(short number, std::string symbol, std::string name);
 private:
-    static void createPeriods(Atom& peer, std::string prefix, short int period, short int capacity);
-    static void createOrbitals(Atom& peer, std::string prefix, short int period, short int starting, short int capacity);
+    static void createPeriods(std::shared_ptr<che::Atom> peer,
+        std::string prefix, short int period, short int capacity);
+    static void createOrbitals(std::shared_ptr<che::Atom> peer,
+        std::string prefix, short int period, short int starting, short int capacity);
 public:
     static const int MAX_ELECTRON_PER_ORBITAL;
     static const int S_BLOCK[];
