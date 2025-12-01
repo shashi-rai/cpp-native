@@ -19,6 +19,7 @@
 // THE SOFTWARE.
 
 #include "atom.h"
+#include "period.h"
 
 namespace che {
 
@@ -170,10 +171,13 @@ std::shared_ptr<che::Atom> Atom::initialize(short number, std::string symbol, st
 	for (short int period = 0; (remaining > 0) && (period < 7); period++) {
 		std::stringstream pid; pid << "P" << (period + 1);
 		remaining -= PERIOD_ELECTRON_LIMIT[period];
+		std::shared_ptr<che::Period> shell = std::make_shared<che::Period>(pid.str(),
+			(PERIOD_ELECTRON_LIMIT[period] / MAX_ELECTRON_PER_ORBITAL));
+		createPeriods(shell, pid.str(), period, PERIOD_ELECTRON_LIMIT[period]);
+		peer->setPeriod(period, shell);
 		if (remaining > 0) { // next cycle required
-			createPeriods(peer, pid.str(), period, PERIOD_ELECTRON_LIMIT[period]);
+
 		} else {	// final period allocation
-			createPeriods(peer, pid.str(), period, PERIOD_ELECTRON_LIMIT[period]);
 			remaining = (PERIOD_ELECTRON_LIMIT[period] - remaining);
 			break;
 		}
@@ -181,34 +185,29 @@ std::shared_ptr<che::Atom> Atom::initialize(short number, std::string symbol, st
 	return peer;
 }
 
-void Atom::createPeriods(std::shared_ptr<che::Atom> peer, std::string prefix,
+void Atom::createPeriods(std::shared_ptr<che::Period> peer, std::string prefix,
 		short int period, short int capacity) {
-	std::shared_ptr<che::Period> shell =
-		std::make_shared<che::Period>(prefix, (capacity / MAX_ELECTRON_PER_ORBITAL));
-	peer->setPeriod(period, shell);
-
 	short int remaining = capacity;
 	for (short int orbital = 0; (remaining > 0) && (orbital < 4); orbital++) {
 		std::stringstream orbid; orbid << (period + 1) << ORBITAL_NAME[orbital];
 		remaining -= ORBITAL_ELECTRON_LIMIT[orbital];
+		createOrbitals(peer, orbid.str(), period, orbital,
+			(ORBITAL_ELECTRON_LIMIT[orbital] / MAX_ELECTRON_PER_ORBITAL));
 		if (remaining > 0) { // next cycle required
-			createOrbitals(peer, orbid.str(), period, orbital,
-				(ORBITAL_ELECTRON_LIMIT[orbital] / MAX_ELECTRON_PER_ORBITAL));
+
 		} else { // final orbital allocation
-			createOrbitals(peer, orbid.str(), period, orbital,
-				(ORBITAL_ELECTRON_LIMIT[orbital] / MAX_ELECTRON_PER_ORBITAL));
 			break;
 		}
 	}
 }
 
-void Atom::createOrbitals(std::shared_ptr<che::Atom> peer, std::string prefix,
+void Atom::createOrbitals(std::shared_ptr<che::Period> peer, std::string prefix,
 		short int period, short int starting, short int capacity) {
 	for (short int index = 0; index < capacity; index++) {
 		std::stringstream orbid; orbid << prefix << index;
 		std::shared_ptr<che::Orbital> orbital =
 			std::make_shared<che::Orbital>(orbid.str(), MAX_ELECTRON_PER_ORBITAL);
-		peer->setOrbital(period, (starting + index), orbital);;
+		peer->setOrbital((starting + index), orbital);;
 	}
 }
 

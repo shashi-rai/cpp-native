@@ -78,9 +78,9 @@ public:
     static const std::string getSymbol(short int number);
     static std::shared_ptr<che::Atom> initialize(short number, std::string symbol, std::string name);
 private:
-    static void createPeriods(std::shared_ptr<che::Atom> peer,
+    static void createPeriods(std::shared_ptr<che::Period> peer,
         std::string prefix, short int period, short int capacity);
-    static void createOrbitals(std::shared_ptr<che::Atom> peer,
+    static void createOrbitals(std::shared_ptr<che::Period> peer,
         std::string prefix, short int period, short int starting, short int capacity);
 public:
     static const int MAX_ELECTRON_PER_ORBITAL;
