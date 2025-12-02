@@ -95,7 +95,12 @@ Quantity Quantity::operator%(const Quantity& peer) const {
     return Quantity(result, scaling, newunit);
 }
 
-short int Quantity::checkScaling(float amount) {
+Quantity Quantity::getInverse() const {
+    Quantity fresh(value != 0 ? (1 / value) : 0, scaling, unit);
+    return fresh;
+}
+
+short int Quantity::checkScaling(float amount) const {
     return log10(amount);
 }
 

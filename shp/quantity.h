@@ -64,7 +64,8 @@ public:
     void setUnit(const Unit& object) { this->unit = object; }
 
     // Additional methods
-    short int checkScaling(float amount);
+    Quantity getInverse() const;
+    short int checkScaling(float amount) const;
     Quantity copy();
     void clear();
     std::string print();

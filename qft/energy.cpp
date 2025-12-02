@@ -25,21 +25,44 @@ namespace qft {
 const float Energy::PLANCK_CONSTANT = 6.62607015f;  // 6.62607015 x 10^-34 m^2 kg/s
 const short int Energy::PLANCK_SCALE = -34;         // 10^-34 m^2 kg/s
 
-Energy::Energy() : kinetic(0.0f), potential(0.0f) {
+Energy::Energy() : Point(), wavelength(0.0f), kinetic(0.0f), potential(0.0f) {
 
 }
 
-Energy::Energy(float kinetic) : kinetic(kinetic), potential(0.0f) {
+Energy::Energy(float gradient)
+        : Point(gradient), wavelength(0.0f), kinetic(0.0f), potential(0.0f) {
 
 }
 
-Energy::Energy(float kinetic, float potential)
-        : kinetic(kinetic), potential(potential) {
+Energy::Energy(float amplitude, float gradient)
+        : Point(amplitude, gradient), wavelength(0.0f), kinetic(0.0f), potential(0.0f) {
 
 }
 
-Energy::Energy(float kinetic, float potential, const shp::Unit& unit)
-        : kinetic(kinetic, unit), potential(potential, unit) {
+Energy::Energy(float amplitude, float gradient, float wavelength)
+        : Point(amplitude, gradient), wavelength(wavelength), kinetic(0.0f), potential(0.0f) {
+
+}
+
+Energy::Energy(float wavelength, const shp::Unit& unit)
+        : Point(), wavelength(wavelength), kinetic(0.0f, unit), potential(0.0f, unit) {
+
+}
+
+Energy::Energy(float wavelength, float kinetic, const shp::Unit& unit)
+        : Point(), wavelength(wavelength), kinetic(kinetic, unit), potential(0.0f, unit) {
+
+}
+
+Energy::Energy(float wavelength, float kinetic, float potential, const shp::Unit& unit)
+        : Point(), wavelength(wavelength), kinetic(kinetic, unit), potential(potential, unit) {
+
+}
+
+Energy::Energy(float amplitude, float gradient, float wavelength,
+        float kinetic, float potential, const shp::Unit& unit)
+        : Point(amplitude, gradient), wavelength(wavelength),
+        kinetic(kinetic, unit), potential(potential, unit) {
 
 }
 
@@ -48,27 +71,41 @@ Energy::~Energy() {
 }
 
 bool Energy::operator==(const Energy& peer) const {
-    return (kinetic == peer.kinetic) && (potential == peer.potential);
+    return (wavelength == peer.wavelength) &&
+            (kinetic == peer.kinetic) &&
+            (potential == peer.potential);
 }
 
 Energy Energy::operator+(const Energy& peer) const {
     shp::Unit newunit = kinetic.getUnit();
-    return Energy((kinetic + peer.kinetic).getValue(),
+    return Energy((wavelength + peer.wavelength).getValue(),
+            (kinetic + peer.kinetic).getValue(),
             (potential + peer.potential).getValue(), newunit);
 }
 
 Energy Energy::operator-(const Energy& peer) const {
     shp::Unit newunit = kinetic.getUnit();
-    return Energy((kinetic - peer.kinetic).getValue(),
+    return Energy((wavelength - peer.wavelength).getValue(),
+            (kinetic - peer.kinetic).getValue(),
             (potential - peer.potential).getValue(), newunit);
 }
 
-Energy Energy::copy() {
-    Energy fresh(kinetic.getValue(), potential.getValue(), kinetic.getUnit());
+shp::Quantity Energy::getFrequency() const {
+    return wavelength.getInverse();
+}
+
+float Energy::getSpaceFlux(float state) const {
+    return PLANCK_CONSTANT * getAmplitudeAzimuthal(state);
+}
+
+shp::Point Energy::copy() {
+    Energy fresh(wavelength.getValue(),
+        kinetic.getValue(), potential.getValue(), kinetic.getUnit());
     return fresh;
 }
 
 void Energy::clear() {
+    wavelength.clear();
     kinetic.clear();
     potential.clear();
     return;
@@ -76,7 +113,8 @@ void Energy::clear() {
 
 std::string Energy::print() {
     std::stringstream result;
-    result << "(k:";
+    result << "(l:";
+    result << wavelength.print() << ",k:";
     result << kinetic.print() << ",p:";
     result << potential.print() << ")";
 	return result.str();

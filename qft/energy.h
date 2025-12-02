@@ -23,20 +23,26 @@
 
 #include <sstream>
 #include <vector>
+#include "../shp/point.h"
 #include "../shp/quantity.h"
 #include "../shp/unit.h"
 
 namespace qft {
 
-class Energy {
+class Energy : public shp::Point {
+    shp::Quantity wavelength;
     shp::Quantity kinetic;
     shp::Quantity potential;
 public:
     // Constructors
     Energy();
-    Energy(float kinetic);
-    Energy(float kinetic, float potential);
-    Energy(float kinetic, float potential, const shp::Unit& unit);
+    Energy(float gradient);
+    Energy(float amplitude, float gradient);
+    Energy(float amplitude, float gradient, float wavelength);
+    Energy(float wavelength, const shp::Unit& unit);
+    Energy(float wavelength, float kinetic, const shp::Unit& unit);
+    Energy(float wavelength, float kinetic, float potential, const shp::Unit& unit);
+    Energy(float amplitude, float gradient, float wavelength, float kinetic, float potential, const shp::Unit& unit);
 
     // Destructors
     ~Energy();
@@ -47,15 +53,19 @@ public:
     Energy operator-(const Energy& peer) const;
 
     // Getters
+    shp::Quantity getWavelength() const { return wavelength; }
     shp::Quantity getKinetic() const { return kinetic; }
     shp::Quantity getPotential() const { return potential; }
 
     // Setters
+    void setWavelength(const float amount) { this->wavelength = amount; }
     void setKinetic(const float amount) { this->kinetic = amount; }
     void setPotential(const float amount) { this->potential = amount; }
 
     // Additional methods
-    virtual Energy copy();
+    shp::Quantity getFrequency() const;
+    float getSpaceFlux(float state) const;
+    virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();
 
