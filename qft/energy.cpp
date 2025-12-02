@@ -22,6 +22,9 @@
 
 namespace qft {
 
+const float Energy::PLANCK_CONSTANT = 6.62607015f;  // 6.62607015 x 10^-34 m^2 kg/s
+const short int Energy::PLANCK_SCALE = -34;         // 10^-34 m^2 kg/s
+
 Energy::Energy() : kinetic(0.0f), potential(0.0f) {
 
 }

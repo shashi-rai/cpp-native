@@ -46,8 +46,8 @@ public:
     ~Orbital();
 
     // Access operator
-    Electron& operator()(int x) { return getElectron(x); }
-    const Electron& operator()(int x) const { return getElectron(x); }
+    Electron operator()(int x) { return getElectron(x); }
+    const Electron operator()(int x) const { return getElectron(x); }
 
     // Getters
     Electron getLeftSpinor() const { return this->getElectron(0); }
@@ -59,7 +59,7 @@ public:
 
     // Additional methods
     int getParticleCount() const;
-    Electron& getElectron(int magnetic) const;
+    Electron getElectron(int magnetic) const;
     void setElectron(int magnetic, const std::shared_ptr<che::Electron> object);
     virtual void clear();
     virtual std::string print();

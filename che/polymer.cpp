@@ -22,21 +22,54 @@
 
 namespace che {
 
-Polymer::Polymer() : name(""), monomers() {
+Polymer::Polymer() : Point(), monomers() {
 
 }
 
-Polymer::Polymer(std::string name) : name(name), monomers() {
+Polymer::Polymer(float gradient) : Point(), monomers() {
+
+}
+
+Polymer::Polymer(float amplitude, float gradient)
+		: Point(amplitude, gradient), monomers()  {
+
+}
+
+Polymer::Polymer(std::string name) : Point(name), monomers() {
+
+}
+
+Polymer::Polymer(std::string name, float gradient)
+		: Point(name, gradient), monomers() {
+
+}
+
+Polymer::Polymer(std::string name, float amplitude, float gradient)
+		: Point(name, amplitude, gradient), monomers() {
 
 }
 
 Polymer::Polymer(std::string name, const MoleculeArray& monomers)
-        : name(name), monomers(monomers) {
+        : Point(name), monomers(monomers) {
 
 }
 
 Polymer::~Polymer() {
 
+}
+
+void Polymer::clear() {
+	Point::clear();
+	monomers.clear();
+    return;
+}
+
+std::string Polymer::print() {
+    std::stringstream result;
+    result << "(P:";
+	result << Point::print() << ",sz:";
+	result << monomers.size() << ")";
+	return result.str();
 }
 
 } // namespace che

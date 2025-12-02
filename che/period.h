@@ -42,10 +42,10 @@ public:
     ~Period();
 
     // Access operator
-    Orbital& operator()(int x) { return getOrbital(x); }
-    const Orbital& operator()(int x) const { return getOrbital(x); }
-    Electron& operator()(int x, int y) { return getOrbital(x).getElectron(y); }
-    const Electron& operator()(int x, int y) const { return getOrbital(x).getElectron(y); }
+    Orbital operator()(int x) { return getOrbital(x); }
+    const Orbital operator()(int x) const { return getOrbital(x); }
+    Electron operator()(int x, int y) { return getOrbital(x).getElectron(y); }
+    const Electron operator()(int x, int y) const { return getOrbital(x).getElectron(y); }
 
     // Getters
     Orbital getS() const;
@@ -60,9 +60,9 @@ public:
     void setF(const std::vector<std::shared_ptr<che::Orbital> >& object);
 
     // Additional methods
-    Orbital& getOrbital(int azimuthal) const;
+    Orbital getOrbital(int azimuthal) const;
     void setOrbital(int azimuthal, const std::shared_ptr<che::Orbital> object);
-    Electron& getElectron(int azimuthal, int magnetic) const;
+    Electron getElectron(int azimuthal, int magnetic) const;
     void setElectron(int azimuthal, int magnetic, const std::shared_ptr<che::Electron> object);
     virtual void clear();
     virtual std::string print();

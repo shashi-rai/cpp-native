@@ -98,40 +98,55 @@ std::string Atom::getElementName() const {
 	return nucleus.getElementName();
 }
 
-Period& Atom::getPeriod(int primary) const {
+Period Atom::getPeriod(int primary) const {
+	Period result;
 	shp::ShellArray shells = this->getShells();
-	Period& result = static_cast<Period&>(shells[primary]);
+	if (this->getShellCount() > 0) {
+		result = static_cast<Period&>(shells[primary]);
+	}
 	return result;
 }
 
 void Atom::setPeriod(int primary, const std::shared_ptr<che::Period> object) {
-	shp::Cellular* shell = this;
-	shell->set(primary, *object);
+	Cellular::set(primary, *object);
 	return;
 }
 
-Orbital& Atom::getOrbital(int primary, int azimuthal) const {
+Orbital Atom::getOrbital(int primary, int azimuthal) const {
+	Orbital result;
 	shp::ShellArray shells = this->getShells();
-	Orbital& result = static_cast<Orbital&>(shells[primary](azimuthal));
+	if (this->getShellCount() > 0) {
+		shp::Shell period = shells[primary];
+		if (period.getOrbitalCount()) {
+			shp::Polygon orbital = period(azimuthal);
+			result = static_cast<Orbital&>(period(azimuthal));
+		}
+	}
 	return result;
 }
 
 void Atom::setOrbital(int primary, int azimuthal, const std::shared_ptr<che::Orbital> object) {
-	std::shared_ptr<shp::Shell> period = std::make_shared<shp::Shell>(Cellular::get(primary));
-	period->set(azimuthal, *object);
+	this->getPeriod(primary).setOrbital(azimuthal, object);
 	return;
 }
 
-Electron& Atom::getElectron(int primary, int azimuthal, int magnetic) const {
+Electron Atom::getElectron(int primary, int azimuthal, int magnetic) const {
+	Electron result;
 	shp::ShellArray shells = this->getShells();
-	Electron& result = static_cast<Electron&>(shells[primary](azimuthal)(magnetic));
+	if (this->getShellCount() > 0) {
+		shp::Shell period = shells[primary];
+		if (period.getOrbitalCount()) {
+			shp::Polygon orbital = period(azimuthal);
+			if (orbital.getWaveCount() > 0) {
+				result = static_cast<Electron&>(orbital(magnetic));
+			}
+		}
+	}
 	return result;
 }
 
 void Atom::setElectron(int primary, int azimuthal, int magnetic, const std::shared_ptr<che::Electron> object) {
-	std::shared_ptr<shp::Shell> period = std::make_shared<shp::Shell>(Cellular::get(primary));
-	std::shared_ptr<shp::Polygon> orbital = std::make_shared<shp::Polygon>(period->get(azimuthal));
-	orbital->set(magnetic, *object);
+	this->getPeriod(primary).getOrbital(azimuthal).setElectron(magnetic, object);
 	return;
 }
 

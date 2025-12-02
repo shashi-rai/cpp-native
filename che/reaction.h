@@ -28,31 +28,37 @@
 
 namespace che {
 
-class Reaction {
-    std::string name;
+class Reaction : public shp::Point {
     MoleculeArray reactants;
     MoleculeArray products;
     qft::Energy change;
 public:
     // Constructors
     Reaction();
+    Reaction(float gradient);
+    Reaction(float amplitude, float gradient);
     Reaction(std::string name);
-    Reaction(std::string name, MoleculeArray& reactants, MoleculeArray& products, qft::Energy& change);
+    Reaction(std::string name, float gradient);
+    Reaction(std::string name, float amplitude, float gradient);
+    Reaction(std::string name,
+        MoleculeArray& reactants, MoleculeArray& products, qft::Energy& change);
 
     // Destructors
     ~Reaction();
 
     // Getters
-    std::string getName() const { return name; }
     MoleculeArray getReactants() const { return reactants; }
     MoleculeArray getProducts() const { return products; }
     qft::Energy getChange() const { return change; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
     void setReactants(const MoleculeArray& reactants) { this->reactants = reactants; }
     void setProducts(const MoleculeArray& products) { this->products = products; }
     void setChange(const qft::Energy& difference) { this->change = difference; }
+
+    // Additional methods
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Reaction > ReactionArray;

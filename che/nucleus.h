@@ -40,6 +40,7 @@ public:
     // Constructors
     Nucleus();
     Nucleus(short int proton);
+    Nucleus(short int proton, short int neutron);
     Nucleus(std::string symbol);
     Nucleus(std::string symbol, short int proton);
     Nucleus(std::string symbol, short int proton, short int neutron);
@@ -76,6 +77,7 @@ public:
     static const int PROTON_MIN_LIMIT;
     static const int PROTON_MAX_LIMIT;
     static const int NEUTRON_MAX_LIMIT;
+    static const std::string UNKNOWN;
     static const std::string ELEMENT_SYMBOL[];
     static const std::string ELEMENT_NAME[];
 };

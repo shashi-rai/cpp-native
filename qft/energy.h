@@ -58,6 +58,10 @@ public:
     virtual Energy copy();
     virtual void clear();
     virtual std::string print();
+
+public:
+    static const float PLANCK_CONSTANT;
+    static const short int PLANCK_SCALE;
 };
 
 typedef std::vector<Energy > EnergyArray;

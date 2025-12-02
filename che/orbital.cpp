@@ -67,15 +67,17 @@ int Orbital::getParticleCount() const {
     return this->getWaveCount();
 }
 
-Electron& Orbital::getElectron(int magnetic) const {
-	shp::WaveArray waves = this->getWaves();
-	Electron& result = static_cast<Electron&>(waves[magnetic]);
+Electron Orbital::getElectron(int magnetic) const {
+	Electron result;
+	shp::WaveArray electrons = this->getWaves();
+	if (this->getParticleCount() > 0) {
+        result = static_cast<Electron&>(electrons[magnetic]);
+	}
 	return result;
 }
 
 void Orbital::setElectron(int magnetic, const std::shared_ptr<che::Electron> object) {
-	shp::Polygon* orbital = this;
-	orbital->set(magnetic, *object);
+	Polygon::set(magnetic, *object);
 	return;
 }
 

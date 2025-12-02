@@ -22,31 +22,71 @@
 
 namespace che {
 
-Bond::Bond() : name(""), left(), right(),
-        electron(), energy(), length(0.0), angle(0.0) {
+Bond::Bond() : Point(), left(), right(), energy(), length(), angle() {
 
 }
 
-Bond::Bond(std::string name) : name(name), left(), right(),
-        electron(), energy(), length(0.0), angle(0.0) {
+Bond::Bond(float gradient) : Point(), left(), right(),
+        energy(), length(), angle() {
 
 }
 
-Bond::Bond(std::string name, Atom& left, Atom& right)
-        : name(name), left(), right(),
-        electron(), energy(), length(0.0), angle(0.0) {
+Bond::Bond(float amplitude, float gradient) : Point(amplitude, gradient),
+		left(), right(), energy(), length(), angle() {
 
 }
 
-Bond::Bond(std::string name, Atom& left, Atom& right,
-        Electron& electron, qft::Energy& energy, double length, double angle)
-        : name(name), left(left), right(right),
-        electron(electron), energy(energy), length(length), angle(angle) {
+Bond::Bond(std::string name) : Point(name), left(), right(), energy(), length(), angle() {
+
+}
+
+Bond::Bond(std::string name, float gradient)
+		: Point(name, gradient), left(), right(), energy(), length(), angle() {
+
+}
+
+Bond::Bond(std::string name, float amplitude, float gradient)
+		: Point(name, amplitude, gradient), left(), right(), energy(), length(), angle() {
+
+}
+
+Bond::Bond(std::string name,
+		std::shared_ptr<che::Orbital> left, std::shared_ptr<che::Orbital> right)
+        : Point(name), left(), right(), energy(), length(), angle() {
+
+}
+
+Bond::Bond(std::string name,
+		std::shared_ptr<che::Orbital> left, std::shared_ptr<che::Orbital> right,
+        qft::Energy& energy, shp::Quantity length, shp::Angular angle)
+        : Point(name), left(left), right(right),
+        energy(energy), length(length), angle(angle) {
 
 }
 
 Bond::~Bond() {
 
+}
+
+void Bond::clear() {
+    left->clear();
+	right->clear();
+	energy.clear();
+	length.clear();
+	angle.clear();
+    return;
+}
+
+std::string Bond::print() {
+    std::stringstream result;
+    result << "(B:";
+	result << Point::print() << ",e:";
+	result << energy.print() << ",l:";
+	result << length.print() << ",a:";
+	result << angle.print() << ",L:";
+	result << left->print() << ",R:";
+	result << right->print() << ")";
+	return result.str();
 }
 
 } // namespace che

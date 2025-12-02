@@ -105,27 +105,34 @@ void Period::setF(const std::vector<std::shared_ptr<che::Orbital> >& objects) {
 	}
 }
 
-Orbital& Period::getOrbital(int azimuthal) const {
+Orbital Period::getOrbital(int azimuthal) const {
+	Orbital result;
 	shp::OrbitalArray orbitals = this->getOrbitals();
-	Orbital& result = static_cast<Orbital&>(orbitals[azimuthal]);
+	if (this->getOrbitalCount() > 0) {
+		result = static_cast<Orbital&>(orbitals[azimuthal]);
+	}
 	return result;
 }
 
 void Period::setOrbital(int azimuthal, const std::shared_ptr<che::Orbital> object) {
-	shp::Shell* period = this;
-	period->set(azimuthal, *object);
+	Shell::set(azimuthal, *object);
 	return;
 }
 
-Electron& Period::getElectron(int azimuthal, int magnetic) const {
+Electron Period::getElectron(int azimuthal, int magnetic) const {
+	Electron result;
 	shp::OrbitalArray orbitals = this->getOrbitals();
-	Electron& result = static_cast<Electron&>(orbitals[azimuthal](magnetic));
+	if (this->getOrbitalCount() > 0) {
+		shp::Polygon orbital = orbitals[azimuthal];
+		if (orbital.getWaveCount() > 0) {
+			result = static_cast<Electron&>(orbital(magnetic));
+		}
+	}
 	return result;
 }
 
 void Period::setElectron(int azimuthal, int magnetic, const std::shared_ptr<che::Electron> object) {
-	std::shared_ptr<shp::Polygon> orbital = std::make_shared<shp::Polygon>(Shell::get(azimuthal));
-	orbital->set(magnetic, *object);
+	this->getOrbital(azimuthal).setElectron(magnetic, object);
 	return;
 }
 

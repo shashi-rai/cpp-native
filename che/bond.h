@@ -26,45 +26,52 @@
 #include "atom.h"
 #include "electron.h"
 #include "../qft/energy.h"
+#include "../shp/angular.h"
+#include "../shp/point.h"
+#include "../shp/quantity.h"
 
 namespace che {
 
-class Bond {
-    std::string name;
-    Atom left;
-    Atom right;
-    Electron electron;
+class Bond : public shp::Point {
+    std::shared_ptr<che::Orbital> left;
+    std::shared_ptr<che::Orbital> right;
     qft::Energy energy;
-    double length;
-    double angle;
+    shp::Quantity length;
+    shp::Angular angle;
 public:
     // Constructors
     Bond();
+    Bond(float gradient);
+    Bond(float amplitude, float gradient);
     Bond(std::string name);
-    Bond(std::string name, Atom& left, Atom& right);
-    Bond(std::string name, Atom& left, Atom& right, Electron& electron,
-        qft::Energy& energy, double length, double angle);
+    Bond(std::string name, float gradient);
+    Bond(std::string name, float amplitude, float gradient);
+    Bond(std::string name, const std::shared_ptr<che::Orbital> left,
+        const std::shared_ptr<che::Orbital> right);
+    Bond(std::string name, const std::shared_ptr<che::Orbital> left,
+        const std::shared_ptr<che::Orbital> right, qft::Energy& energy,
+        shp::Quantity length, shp::Angular angle);
 
     // Destructors
     ~Bond();
 
     // Getters
-    std::string getName() const { return name; }
-    Atom getLeft() const { return left; }
-    Atom getRight() const { return right; }
-    Electron getElectron() const { return electron; }
+    std::shared_ptr<che::Orbital> getLeft() const { return left; }
+    std::shared_ptr<che::Orbital> getRight() const { return right; }
     qft::Energy getEnergy() const { return energy; }
-    double getLength() const { return length; }
-    double getAngle() const { return angle; }
+    shp::Quantity getLength() const { return length; }
+    shp::Angular getAngle() const { return angle; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
-    void setLeft(const Atom& atom) { this->left = atom; }
-    void setRight(const Atom& atom) { this->right = atom; }
-    void setElectron(const Electron& value) { this->electron = value; }
+    void setLeft(const std::shared_ptr<che::Orbital> orbital) { this->left = orbital; }
+    void setRight(const std::shared_ptr<che::Orbital>orbital) { this->right = orbital; }
     void setEnergy(const qft::Energy& value) { this->energy = value; }
-    void setLength(double value) { this->length = value; }
-    void setAngle(double value) { this->angle = value; }
+    void setLength(shp::Quantity value) { this->length = value; }
+    void setAngle(shp::Angular value) { this->angle = value; }
+
+    // Additional methods
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Bond > BondArray;

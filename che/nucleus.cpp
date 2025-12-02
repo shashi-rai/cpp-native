@@ -26,6 +26,7 @@ const int Nucleus::PROTON_MIN_LIMIT = 1;
 const int Nucleus::PROTON_MAX_LIMIT = 118;
 const int Nucleus::NEUTRON_MAX_LIMIT = 176;
 
+const std::string Nucleus::UNKNOWN = "Unknown Atom";
 const std::string Nucleus::ELEMENT_SYMBOL[] = {
 	"H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al",
 	"Si", "P", "S", "Cl", "Ar", "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe",
@@ -71,7 +72,12 @@ Nucleus::Nucleus(std::string symbol)
 }
 
 Nucleus::Nucleus(short int proton)
-        : symbol(getSymbol(proton)), proton(0), neutron(0), mass(), charge(), energy() {
+        : symbol(getSymbol(proton)), proton(proton), neutron(proton), mass(), charge(), energy() {
+
+}
+
+Nucleus::Nucleus(short int proton, short int neutron)
+        : symbol(getSymbol(proton)), proton(proton), neutron(neutron), mass(), charge(), energy() {
 
 }
 
@@ -97,15 +103,15 @@ Nucleus::~Nucleus() {
 }
 
 const std::string Nucleus::getSymbol(short int number) {
-	return (number > 0 && number <= PROTON_MAX_LIMIT) ? ELEMENT_SYMBOL[number-1] : "Unknown";
+	return (number > 0 && number <= PROTON_MAX_LIMIT) ? ELEMENT_SYMBOL[number-1] : UNKNOWN;
 }
 
 const std::string Nucleus::getName(short int number) {
-	return (number > 0 && number <= PROTON_MAX_LIMIT) ? ELEMENT_NAME[number-1] : "Unknown";
+	return (number > 0 && number <= PROTON_MAX_LIMIT) ? ELEMENT_NAME[number-1] : UNKNOWN;
 }
 
 std::string Nucleus::getElementName() const {
-	return ELEMENT_NAME[proton-1];
+	return (proton > 0 && proton <= PROTON_MAX_LIMIT) ? ELEMENT_NAME[proton-1] : UNKNOWN;
 }
 
 void Nucleus::clear() {

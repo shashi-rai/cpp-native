@@ -27,25 +27,30 @@
 
 namespace che {
 
-class Polymer {
-    std::string name;
+class Polymer : public shp::Point {
     MoleculeArray monomers;
 public:
     // Constructors
     Polymer();
+    Polymer(float gradient);
+    Polymer(float amplitude, float gradient);
     Polymer(std::string name);
+    Polymer(std::string name, float gradient);
+    Polymer(std::string name, float amplitude, float gradient);
     Polymer(std::string name, const MoleculeArray& monomers);
 
     // Destructors
     ~Polymer();
 
     // Getters
-    std::string getName() const { return name; }
     MoleculeArray getMonomers() const { return monomers; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
     void setMonomers(const MoleculeArray& value) { this->monomers = value; }
+
+    // Additional methods
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Polymer > PolymerArray;
