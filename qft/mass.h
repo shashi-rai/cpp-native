@@ -57,6 +57,13 @@ public:
     virtual Mass copy();
     virtual void clear();
     virtual std::string print();
+public:
+    static const std::string UNIT;
+    static const short int ATOMIC_SCALE;
+    static const float ATOMIC_UNIT;
+    static const float PROTON;
+    static const float NEUTRON;
+    static const float ELECTRON;
 };
 
 typedef std::vector<Mass > MassArray;

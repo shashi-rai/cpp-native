@@ -22,6 +22,12 @@
 
 namespace qft {
 
+const std::string Charge::UNIT = "C";               // System International
+const short int Charge::ATOMIC_SCALE = -19;         // 10^-19 C
+const float Charge::PROTON = 1.602f;                // 1.602 x 10^-19 C
+const float Charge::NEUTRON = 0.0f;                 // 0.0 x 10^-19 C
+const float Charge::ELECTRON = -1.6021766341019f;   // 1.602 x 10^-19 C
+
 Charge::Charge() : quantity(0.0f) {
 
 }

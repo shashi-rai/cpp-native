@@ -55,6 +55,10 @@ public:
     virtual Time copy();
     virtual void clear();
     virtual std::string print();
+public:
+    static const std::string UNIT;
+    static const short int ATOMIC_SCALE;
+    static const float ATOMIC_UNIT;
 };
 
 typedef std::vector<Time > TimeArray;

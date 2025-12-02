@@ -23,6 +23,8 @@
 namespace che {
 
 const int Orbital::ELECTRON_MAX_LIMIT = 2;
+const int Orbital::ELECTRON_LIMIT[] = { 2, 6, 10, 14 };
+const std::string Orbital::NAME[] = { "s", "p", "d", "f" };
 
 Orbital::Orbital() : Polygon("", ELECTRON_MAX_LIMIT) {
 

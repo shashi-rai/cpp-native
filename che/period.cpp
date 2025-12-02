@@ -22,7 +22,10 @@
 
 namespace che {
 
+const int Period::MAX_LIMIT = 7;
 const int Period::ORBITAL_MAX_LIMIT = 16;
+const int Period::ELECTRON_LIMIT[] = { 2, 8, 8, 18, 18, 32, 32 };
+const std::string Period::NAME[] = { "1", "2", "3", "4", "5", "6", "7" };
 
 Period::Period() : Shell("", ORBITAL_MAX_LIMIT) {
 

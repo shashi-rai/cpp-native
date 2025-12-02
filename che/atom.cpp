@@ -19,31 +19,18 @@
 // THE SOFTWARE.
 
 #include "atom.h"
-#include "period.h"
 
 namespace che {
 
-const int Atom::MAX_ELECTRON_PER_ORBITAL = 2;
+const int Atom::ELEMENT_MIN_LIMIT = Nucleus::PROTON_MIN_LIMIT;
+const int Atom::ELEMENT_MAX_LIMIT = Nucleus::PROTON_MAX_LIMIT;
 const int Atom::S_BLOCK[] = { 1, 2 };
 const int Atom::P_BLOCK[] = { 13, 14, 15, 16, 17, 18 };
 const int Atom::D_BLOCK[] = { 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
 const int Atom::F_BLOCK[] = { 6, 7 };
-const std::string Atom::ELEMENT_SYMBOL[] = {
-	"H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al",
-	"Si", "P", "S", "Cl", "Ar", "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe",
-	"Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr", "Rb", "Sr", "Y",
-	"Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn", "Sb", "Te",
-	"I", "Xe", "Cs", "Ba", "La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb",
-	"Dy", "Ho", "Er", "Tm", "Yb", "Lu", "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt",
-	"Au", "Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", "Th", "Pa",
-	"U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr", "Rf",
-	"Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn", "Nh", "Fl", "Mc", "Lv", "Ts", "Og"
-};
-const std::string Atom::ORBITAL_NAME[] = { "s", "p", "d", "f" };
-const int Atom::ORBITAL_ELECTRON_LIMIT[] = { 2, 6, 10, 14 };
-const int Atom::PERIOD_ELECTRON_LIMIT[] = { 2, 8, 8, 18, 18, 32, 32 };
 const int Atom::ALKALI_METAL[] = { 1, 3, 11, 19, 37, 55, 87 };
 const int Atom::ALKALINE_METAL[] = { 4, 12, 20, 38, 56, 88 };
+const int Atom::SEMICONDUCTOR[] = { 6, 14, 32, 50, 82, 114 };
 const int Atom::HALOGEN_GAS[] = { 9, 17, 35, 53, 85, 117 };
 const int Atom::NOBLE_GAS[] = { 2, 10, 18, 36, 54, 86, 118 };
 const int Atom::TRANSITION_METAL[] = {
@@ -60,17 +47,17 @@ Atom::Atom() : Cellular(""), nucleus(), valency(0) {
 
 }
 
+Atom::Atom(short number)
+	: Cellular(getName(number)), nucleus(getSymbol(number), number), valency(0) {
+
+}
+
+Atom::Atom(short number, std::string name)
+	: Cellular(name), nucleus(getSymbol(number), number), valency(0) {
+}
+
 Atom::Atom(std::string name) : Cellular(name), nucleus(name), valency(0) {
 
-}
-
-Atom::Atom(short number, std::string symbol)
-	: Cellular(""), nucleus(symbol, number), valency(0) {
-
-}
-
-Atom::Atom(short number, std::string symbol, std::string name)
-	: Cellular(name), nucleus(symbol, number), valency(0) {
 }
 
 Atom::Atom(std::string symbol, std::string name)
@@ -105,6 +92,10 @@ Atom::Atom(std::string name, float gradient, Nucleus& nucleus, short valency)
 
 Atom::~Atom() {
 
+}
+
+std::string Atom::getElementName() const {
+	return nucleus.getElementName();
 }
 
 Period& Atom::getPeriod(int primary) const {
@@ -159,26 +150,30 @@ std::string Atom::print() {
 }
 
 const std::string Atom::getSymbol(short int number) {
-	return (number > 0 && number <= 118) ? ELEMENT_SYMBOL[number-1] : "Unknown";
+	return Nucleus::getSymbol(number);
+}
+
+const std::string Atom::getName(short int number) {
+	return Nucleus::getName(number);
 }
 
 /*
  * Allocate (periods + orbitals) using Atomic Number
  */
-std::shared_ptr<che::Atom> Atom::initialize(short number, std::string symbol, std::string name) {
-	std::shared_ptr<che::Atom> peer = std::make_shared<che::Atom>(number, symbol, name);
+std::shared_ptr<che::Atom> Atom::initialize(short number, std::string name) {
+	std::shared_ptr<che::Atom> peer = std::make_shared<che::Atom>(number, name);
 	short int remaining = number;
-	for (short int period = 0; (remaining > 0) && (period < 7); period++) {
+	for (short int period = 0; (remaining > 0) && (period < Period::MAX_LIMIT); period++) {
 		std::stringstream pid; pid << "P" << (period + 1);
-		remaining -= PERIOD_ELECTRON_LIMIT[period];
+		remaining -= Period::ELECTRON_LIMIT[period];
 		std::shared_ptr<che::Period> shell = std::make_shared<che::Period>(pid.str(),
-			(PERIOD_ELECTRON_LIMIT[period] / MAX_ELECTRON_PER_ORBITAL));
-		createPeriods(shell, pid.str(), period, PERIOD_ELECTRON_LIMIT[period]);
+			(Period::ELECTRON_LIMIT[period] / Orbital::ELECTRON_MAX_LIMIT));
+		createPeriods(shell, pid.str(), period, Period::ELECTRON_LIMIT[period]);
 		peer->setPeriod(period, shell);
 		if (remaining > 0) { // next cycle required
 
 		} else {	// final period allocation
-			remaining = (PERIOD_ELECTRON_LIMIT[period] - remaining);
+			remaining = (Period::ELECTRON_LIMIT[period] - remaining);
 			break;
 		}
 	}
@@ -189,10 +184,10 @@ void Atom::createPeriods(std::shared_ptr<che::Period> peer, std::string prefix,
 		short int period, short int capacity) {
 	short int remaining = capacity;
 	for (short int orbital = 0; (remaining > 0) && (orbital < 4); orbital++) {
-		std::stringstream orbid; orbid << (period + 1) << ORBITAL_NAME[orbital];
-		remaining -= ORBITAL_ELECTRON_LIMIT[orbital];
+		std::stringstream orbid; orbid << (period + 1) << Orbital::NAME[orbital];
+		remaining -= Orbital::ELECTRON_LIMIT[orbital];
 		createOrbitals(peer, orbid.str(), period, orbital,
-			(ORBITAL_ELECTRON_LIMIT[orbital] / MAX_ELECTRON_PER_ORBITAL));
+			(Orbital::ELECTRON_LIMIT[orbital] / Orbital::ELECTRON_MAX_LIMIT));
 		if (remaining > 0) { // next cycle required
 
 		} else { // final orbital allocation
@@ -206,7 +201,7 @@ void Atom::createOrbitals(std::shared_ptr<che::Period> peer, std::string prefix,
 	for (short int index = 0; index < capacity; index++) {
 		std::stringstream orbid; orbid << prefix << index;
 		std::shared_ptr<che::Orbital> orbital =
-			std::make_shared<che::Orbital>(orbid.str(), MAX_ELECTRON_PER_ORBITAL);
+			std::make_shared<che::Orbital>(orbid.str(), Orbital::ELECTRON_MAX_LIMIT);
 		peer->setOrbital((starting + index), orbital);;
 	}
 }

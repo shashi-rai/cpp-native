@@ -65,6 +65,8 @@ public:
     virtual std::string print();
 public:
     static const int ELECTRON_MAX_LIMIT;
+    static const int ELECTRON_LIMIT[];
+    static const std::string NAME[];
 };
 
 } // namespace che

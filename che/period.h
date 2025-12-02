@@ -67,7 +67,10 @@ public:
     virtual void clear();
     virtual std::string print();
 public:
+    static const int MAX_LIMIT;
     static const int ORBITAL_MAX_LIMIT;
+    static const int ELECTRON_LIMIT[];
+    static const std::string NAME[];
 };
 
 typedef std::vector<Period > PeriodArray;

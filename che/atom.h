@@ -36,8 +36,8 @@ class Atom : public shp::Cellular {
 public:
     // Constructors
     Atom();
-    Atom(short number, std::string symbol);
-    Atom(short number, std::string symbol, std::string name);
+    Atom(short number);
+    Atom(short number, std::string name);
     Atom(std::string name);
     Atom(std::string symbol, std::string name);
     Atom(std::string name, float gradient);
@@ -66,6 +66,7 @@ public:
     void setValency(const short int electron) { this->valency = electron; }
 
     // Additional methods
+    std::string getElementName() const;
     Period& getPeriod(int primary) const;
     void setPeriod(int primary, const std::shared_ptr<che::Period> object);
     Orbital& getOrbital(int primary, int azimuthal) const;
@@ -76,24 +77,23 @@ public:
     virtual std::string print();
 public:
     static const std::string getSymbol(short int number);
-    static std::shared_ptr<che::Atom> initialize(short number, std::string symbol, std::string name);
+    static const std::string getName(short int number);
+    static std::shared_ptr<che::Atom> initialize(short number, std::string name);
 private:
     static void createPeriods(std::shared_ptr<che::Period> peer,
         std::string prefix, short int period, short int capacity);
     static void createOrbitals(std::shared_ptr<che::Period> peer,
         std::string prefix, short int period, short int starting, short int capacity);
 public:
-    static const int MAX_ELECTRON_PER_ORBITAL;
+    static const int ELEMENT_MIN_LIMIT;
+    static const int ELEMENT_MAX_LIMIT;
     static const int S_BLOCK[];
     static const int P_BLOCK[];
     static const int D_BLOCK[];
     static const int F_BLOCK[];
-    static const std::string ELEMENT_SYMBOL[];
-    static const std::string ORBITAL_NAME[];
-    static const int ORBITAL_ELECTRON_LIMIT[];
-    static const int PERIOD_ELECTRON_LIMIT[];
     static const int ALKALI_METAL[];
     static const int ALKALINE_METAL[];
+    static const int SEMICONDUCTOR[];
     static const int HALOGEN_GAS[];
     static const int NOBLE_GAS[];
     static const int TRANSITION_METAL[];

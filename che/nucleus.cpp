@@ -22,6 +22,44 @@
 
 namespace che {
 
+const int Nucleus::PROTON_MIN_LIMIT = 1;
+const int Nucleus::PROTON_MAX_LIMIT = 118;
+const int Nucleus::NEUTRON_MAX_LIMIT = 176;
+
+const std::string Nucleus::ELEMENT_SYMBOL[] = {
+	"H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al",
+	"Si", "P", "S", "Cl", "Ar", "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe",
+	"Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr", "Rb", "Sr", "Y",
+	"Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn", "Sb", "Te",
+	"I", "Xe", "Cs", "Ba", "La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb",
+	"Dy", "Ho", "Er", "Tm", "Yb", "Lu", "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt",
+	"Au", "Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", "Th", "Pa",
+	"U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr", "Rf",
+	"Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn", "Nh", "Fl", "Mc", "Lv", "Ts", "Og"
+};
+
+const std::string Nucleus::ELEMENT_NAME[] = {
+	"Hydrogen", "Helium", "Lithium", "Beryllium", "Boron", "Carbon", "Nitrogen",
+	"Oxygen", "Fluorine", "Neon", "Sodium", "Magnesium", "Aluminum", "Silicon",
+	"Phosphorus", "Sulfur", "Chlorine", "Argon", "Potassium", "Calcium", "Scandium",
+	"Titanium", "Vanadium", "Chromium", "Manganese", "Iron", "Cobalt", "Nickel",
+	"Copper", "Zinc", "Gallium", "Germanium", "Arsenic", "Selenium", "Bromine",
+	"Krypton", "Rubidium", "Strontium", "Yttrium", "Zirconium", "Niobium",
+	"Molybdenum", "Technetium", "Ruthenium", "Rhodium", "Palladium", "Silver",
+	"Cadmium", "Indium", "Tin", "Antimony", "Tellurium", "Iodine", "Xenon", "Cesium",
+	"Barium", "Lanthanum", "Cerium", "Praseodymium", "Neodymium", "Promethium",
+	"Samarium", "Europium", "Gadolinium", "Terbium", "Dysprosium", "Holmium",
+	"Erbium", "Thulium", "Ytterbium", "Lutetium", "Hafnium", "Tantalum",
+	"Tungsten", "Rhenium", "Osmium", "Iridium", "Platinum", "Gold", "Mercury",
+	"Thallium", "Lead", "Bismuth", "Polonium", "Astatine", "Radon", "Francium",
+	"Radium", "Actinium", "Thorium", "Protactinium", "Uranium", "Neptunium",
+	"Plutonium", "Americium", "Curium", "Berkelium", "Californium", "Einsteinium",
+	"Fermium", "Mendelevium", "Nobelium", "Lawrencium", "Rutherfordium", "Dubnium",
+	"Seaborgium", "Bohrium", "Hassium", "Meitnerium", "Darmstadtium", "Roentgenium",
+	"Copernicium", "Nihonium", "Flerovium", "Moscovium", "Livermorium", "Tennessine",
+	"Oganesson",
+};
+
 Nucleus::Nucleus()
         : symbol(""), proton(0), neutron(0), mass(), charge(), energy() {
 
@@ -32,22 +70,22 @@ Nucleus::Nucleus(std::string symbol)
 
 }
 
-Nucleus::Nucleus(short proton)
-        : symbol(""), proton(0), neutron(0), mass(), charge(), energy() {
+Nucleus::Nucleus(short int proton)
+        : symbol(getSymbol(proton)), proton(0), neutron(0), mass(), charge(), energy() {
 
 }
 
-Nucleus::Nucleus(std::string symbol, short proton)
+Nucleus::Nucleus(std::string symbol, short int proton)
         : symbol(symbol), proton(proton), neutron(proton), mass(), charge(), energy() {
 
 }
 
-Nucleus::Nucleus(std::string symbol, short proton, short neutron)
+Nucleus::Nucleus(std::string symbol, short int proton, short int neutron)
         : symbol(symbol), proton(proton), neutron(neutron), mass(), charge(), energy() {
 
 }
 
-Nucleus::Nucleus(std::string symbol, short proton, short neutron,
+Nucleus::Nucleus(std::string symbol, short int proton, short int neutron,
         qft::Mass& mass, qft::Charge& charge, qft::Energy& energy)
         : symbol(symbol), proton(proton), neutron(neutron),
         mass(mass), charge(charge), energy(energy) {
@@ -56,6 +94,18 @@ Nucleus::Nucleus(std::string symbol, short proton, short neutron,
 
 Nucleus::~Nucleus() {
 
+}
+
+const std::string Nucleus::getSymbol(short int number) {
+	return (number > 0 && number <= PROTON_MAX_LIMIT) ? ELEMENT_SYMBOL[number-1] : "Unknown";
+}
+
+const std::string Nucleus::getName(short int number) {
+	return (number > 0 && number <= PROTON_MAX_LIMIT) ? ELEMENT_NAME[number-1] : "Unknown";
+}
+
+std::string Nucleus::getElementName() const {
+	return ELEMENT_NAME[proton-1];
 }
 
 void Nucleus::clear() {

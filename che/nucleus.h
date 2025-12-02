@@ -31,19 +31,19 @@ namespace che {
 
 class Nucleus {
     std::string symbol;
-    short proton;
-    short neutron;
+    short int proton;
+    short int neutron;
     qft::Mass mass;
     qft::Charge charge;
     qft::Energy energy;
 public:
     // Constructors
     Nucleus();
-    Nucleus(short proton);
+    Nucleus(short int proton);
     Nucleus(std::string symbol);
-    Nucleus(std::string symbol, short proton);
-    Nucleus(std::string symbol, short proton, short neutron);
-    Nucleus(std::string symbol, short proton, short neutron,
+    Nucleus(std::string symbol, short int proton);
+    Nucleus(std::string symbol, short int proton, short int neutron);
+    Nucleus(std::string symbol, short int proton, short int neutron,
         qft::Mass& mass, qft::Charge& charge, qft::Energy& energy);
 
     // Destructors
@@ -51,23 +51,33 @@ public:
 
     // Getters
     std::string getSymbol() const { return symbol; }
-    short getProton() const { return proton; }
-    short getNeutron() const { return neutron; }
+    short int getProton() const { return proton; }
+    short int getNeutron() const { return neutron; }
     qft::Mass getMass() const { return mass; }
     qft::Charge getCharge() const { return charge; }
     qft::Energy getEnergy() const { return energy; }
 
     // Setters
     void setSymbol(const std::string& name) { this->symbol = name; }
-    void setProton(short number) { this->proton = number; }
-    void setNeutron(short number) { this->neutron = number; }
+    void setProton(short int number) { this->proton = number; }
+    void setNeutron(short int number) { this->neutron = number; }
     void setMass(const qft::Mass& amount) { this->mass = amount; }
     void setCharge(const qft::Charge& amount) { this->charge = amount; }
     void setEnergy(const qft::Energy& amount) { this->energy = amount; }
 
     // Additional methods
+    std::string getElementName() const;
     virtual void clear();
     virtual std::string print();
+public:
+    static const std::string getSymbol(short int number);
+    static const std::string getName(short int number);
+public:
+    static const int PROTON_MIN_LIMIT;
+    static const int PROTON_MAX_LIMIT;
+    static const int NEUTRON_MAX_LIMIT;
+    static const std::string ELEMENT_SYMBOL[];
+    static const std::string ELEMENT_NAME[];
 };
 
 typedef std::vector<Nucleus > NucleusArray;
