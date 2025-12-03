@@ -261,14 +261,18 @@ shp::Quantity Energy::getFrequency() const {
     return wavelength.getInverse();
 }
 
+/*
+ * Wavelength refers to the distance that Energy could traverse in one cycle
+ * At a given point in space, no Planckian Energy exists if wavelength is zero
+ */
 float Energy::getSpatial(float state) const {
-    float current = getAmplitudeAzimuthal(state);
-    return getPhysicalLimit() / (wavelength.getValue() * (current != 0 ? current : 1));
+    float planckian = wavelength.getValue();
+    return (getPhysicalLimit() / (planckian * Point::getAmplitudeAzimuthal(state)));
 }
 
 float Energy::getTemporal(float state) const {
-	float current = getAmplitudeAzimuthal(state);
-    return getPhysicalLimit() / (wavelength.getValue() / (current != 0 ? current : 1));
+    float planckian = wavelength.getInverse().getValue();
+    return getPhysicalLimit() / (planckian * Point::getAmplitudeAzimuthal(state));
 }
 
 const float Energy::getPhysicalLimit() {
