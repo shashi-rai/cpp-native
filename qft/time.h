@@ -29,11 +29,14 @@ namespace qft {
 class Time {
     shp::Unit unit;
     long quantity;
+    short int scaling;
 public:
     // Constructors
     Time();
     Time(long time);
+    Time(long time, short int scaling);
     Time(long time, const shp::Unit& unit);
+    Time(long time, short int scaling, const shp::Unit& unit);
 
     // Destructors
     ~Time();
@@ -42,19 +45,25 @@ public:
     bool operator==(const Time& peer) const;
     Time operator+(const Time& peer) const;
     Time operator-(const Time& peer) const;
+    Time operator*(const Time& peer) const;
+    Time operator/(const Time& peer) const;
+    Time operator%(const Time& peer) const;
 
     // Getters
     shp::Unit getUnit() const { return unit; }
     long getQuantity() const { return quantity; }
+    short int getScaling() const { return scaling; }
 
     // Setters
     void setUnit(const shp::Unit& value) { this->unit = value; }
     void setQuantity(const long value) { this->quantity = value; }
+    void setScaling(const short int value) { this->scaling = value; }
 
     // Additional methods
     virtual Time copy();
     virtual void clear();
     virtual std::string print();
+
 public:
     static const std::string UNIT;
     static const short int ATOMIC_SCALE;

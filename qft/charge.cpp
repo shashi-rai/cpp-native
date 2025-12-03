@@ -28,15 +28,25 @@ const float Charge::PROTON = 1.602f;                // 1.602 x 10^-19 C
 const float Charge::NEUTRON = 0.0f;                 // 0.0 x 10^-19 C
 const float Charge::ELECTRON = -1.6021766341019f;   // 1.602 x 10^-19 C
 
-Charge::Charge() : quantity(0.0f) {
+Charge::Charge() : quantity(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE) {
 
 }
 
-Charge::Charge(float quantity) : quantity(quantity) {
+Charge::Charge(float quantity) : quantity(quantity, ATOMIC_SCALE) {
 
 }
 
-Charge::Charge(float quantity, const shp::Unit& unit) : quantity(quantity, unit) {
+Charge::Charge(float quantity, short int scaling) : quantity(quantity, scaling) {
+
+}
+
+Charge::Charge(float quantity, const shp::Unit& unit)
+        : quantity(quantity, ATOMIC_SCALE, unit) {
+
+}
+
+Charge::Charge(float quantity, short int scaling, const shp::Unit& unit)
+        : quantity(quantity, scaling, unit) {
 
 }
 
@@ -58,6 +68,18 @@ Charge Charge::operator+(const Charge& peer) const {
 
 Charge Charge::operator-(const Charge& peer) const {
     return Charge((quantity - peer.quantity), quantity.getUnit());
+}
+
+Charge Charge::operator*(const Charge& peer) const {
+    return Charge((quantity - peer.quantity), quantity.getUnit());
+}
+
+Charge Charge::operator/(const Charge& peer) const {
+    return Charge((quantity - peer.quantity), quantity.getUnit());
+}
+
+Charge Charge::operator%(const Charge& peer) const {
+    return Charge((quantity % peer.quantity), quantity.getUnit());
 }
 
 Charge Charge::copy() {

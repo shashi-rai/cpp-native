@@ -22,17 +22,51 @@
 
 namespace phy {
 
-Momentum::Momentum() : mass(), velocity() {
+Momentum::Momentum() : name(""), mass(), velocity() {
 
 }
 
 Momentum::Momentum(const qft::Mass& mass, const shp::Direction& velocity)
-        : mass(mass), velocity(velocity) {
+        : name(""), mass(mass), velocity(velocity) {
+
+}
+
+Momentum::Momentum(std::string name, const qft::Mass& mass, const shp::Direction& velocity)
+        : name(name), mass(mass), velocity(velocity) {
 
 }
 
 Momentum::~Momentum() {
 
+}
+
+bool Momentum::operator==(const Momentum& peer) const {
+    return (mass == peer.mass) && (velocity == peer.velocity);
+}
+
+Momentum Momentum::operator+(const Momentum& peer) const {
+    return Momentum((mass + peer.mass), (velocity + peer.velocity));
+}
+
+Momentum Momentum::operator-(const Momentum& peer) const {
+    return Momentum((mass - peer.mass), (velocity - peer.velocity));
+}
+
+Momentum Momentum::operator*(const Momentum& peer) const {
+    return Momentum((mass * peer.mass), (velocity * peer.velocity));
+}
+
+Momentum Momentum::operator/(const Momentum& peer) const {
+    return Momentum((mass / peer.mass), (velocity / peer.velocity));
+}
+
+Momentum Momentum::operator%(const Momentum& peer) const {
+    return Momentum((mass % peer.mass), (velocity % peer.velocity));
+}
+
+float Momentum::getTotal() const {
+    float result = mass.getQuantity().getValue() * velocity.toRadians();
+    return result;
 }
 
 Momentum Momentum::copy() {

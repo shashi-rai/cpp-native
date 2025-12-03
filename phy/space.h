@@ -22,18 +22,22 @@
 #define PHY_SPACE_H
 
 #include <vector>
+#include "position.h"
 #include "../qft/energy.h"
 
 namespace phy {
 
 class Space {
     qft::Energy energy;
-    double x;
-    double y;
-    double z;
+    Position location;
 public:
     // Constructors
     Space();
+    Space(const qft::Energy& energy);
+    Space(const qft::Energy& energy, const Position& location);
+    Space(const Position& location);
+    Space(const qft::Energy& energy, double x);
+    Space(const qft::Energy& energy, double x, double y);
     Space(const qft::Energy& energy, double x, double y, double z);
 
     // Destructors
@@ -41,17 +45,19 @@ public:
 
     // Getters
     qft::Energy getEnergy() const { return energy; }
-    double getX() const { return x; }
-    double getY() const { return y; }
-    double getZ() const { return z; }
+    Position getLocation() const { return location; }
 
     // Setters
     void setEnergy(const qft::Energy& value) { this->energy = value; }
-    void setX(const double value) { this->x = value; }
-    void setY(const double value) { this->y = value; }
-    void setZ(const double value) { this->z = value; }
+    void setLocation(const Position& value) { this->location = value; }
 
     // Additional methods
+    double getX() const { return location.getX(); }
+    double getY() const { return location.getY(); }
+    double getZ() const { return location.getZ(); }
+    void setX(const double value) { this->location.setX(value); }
+    void setY(const double value) { this->location.setY(value); }
+    void setZ(const double value) { this->location.setZ(value); }
     virtual Space copy();
     virtual void clear();
     virtual std::string print();

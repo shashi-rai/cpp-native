@@ -21,6 +21,7 @@
 #ifndef PHY_POSITION_H
 #define PHY_POSITION_H
 
+#include <cmath>
 #include <sstream>
 #include <vector>
 
@@ -33,10 +34,20 @@ class Position {
 public:
     // Constructors
     Position();
+    Position(double x);
+    Position(double x, double y);
     Position(double x, double y, double z);
 
     // Destructors
     ~Position();
+
+    // Operator overloading
+    bool operator==(const Position& peer) const;
+    Position operator+(const Position& peer) const;
+    Position operator-(const Position& peer) const;
+    Position operator*(const Position& peer) const;
+    Position operator/(const Position& peer) const;
+    Position operator%(const Position& peer) const;
 
     // Getters
     double getX() const { return x; }
@@ -52,6 +63,9 @@ public:
     virtual Position copy();
     virtual void clear();
     virtual std::string print();
+
+public:
+    static const double ORIGIN;
 };
 
 typedef std::vector<Position > PositionArray;

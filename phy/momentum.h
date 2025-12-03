@@ -28,28 +28,43 @@
 namespace phy {
 
 class Momentum {
+    std::string name;
     qft::Mass mass;
     shp::Direction velocity;
 public:
     // Constructors
     Momentum();
     Momentum(const qft::Mass& mass, const shp::Direction& velocity);
+    Momentum(std::string name, const qft::Mass& mass, const shp::Direction& velocity);
 
     // Destructors
     ~Momentum();
 
+    // Operator overloading
+    bool operator==(const Momentum& peer) const;
+    Momentum operator+(const Momentum& peer) const;
+    Momentum operator-(const Momentum& peer) const;
+    Momentum operator*(const Momentum& peer) const;
+    Momentum operator/(const Momentum& peer) const;
+    Momentum operator%(const Momentum& peer) const;
+
     // Getters
+    std::string getName() const { return name; }
     qft::Mass getMass() const { return mass; }
     shp::Direction getVelocity() const { return velocity; }
 
     // Setters
+    void setName(const std::string& name) { this->name = name; }
     void setMass(const qft::Mass& value) { this->mass = value; }
     void setVelocity(const shp::Direction& value) { this->velocity = value; }
 
     // Additional methods
+    float getTotal() const;
     virtual Momentum copy();
     virtual void clear();
     virtual std::string print();
+
+
 };
 
 typedef std::vector<Momentum > MomentumArray;

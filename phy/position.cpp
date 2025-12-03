@@ -22,7 +22,19 @@
 
 namespace phy {
 
-Position::Position() : x(0.0), y(0.0), z(0.0) {
+const double Position::ORIGIN = 0.0;        // 0.0 - Point of Origin
+
+Position::Position() : x(ORIGIN), y(ORIGIN), z(ORIGIN) {
+
+}
+
+Position::Position(double x)
+        : x(x), y(ORIGIN), z(ORIGIN) {
+
+}
+
+Position::Position(double x, double y)
+        : x(x), y(y), z(ORIGIN) {
 
 }
 
@@ -35,13 +47,40 @@ Position::~Position() {
 
 }
 
+bool Position::operator==(const Position& peer) const {
+    return ((x == peer.x) && (y == peer.y) && (z == peer.z));
+}
+
+Position Position::operator+(const Position& peer) const {
+    return Position((x + peer.x), (y + peer.y), (z + peer.z));
+}
+
+Position Position::operator-(const Position& peer) const {
+    return Position((x - peer.x), (y - peer.y), (z - peer.z));
+}
+
+Position Position::operator*(const Position& peer) const {
+    return Position((x * peer.x), (y * peer.y), (z * peer.z));
+}
+
+Position Position::operator/(const Position& peer) const {
+    return Position((x / peer.x), (y / peer.y), (z / peer.z));
+}
+
+Position Position::operator%(const Position& peer) const {
+    double newx = fmod(x, peer.x);
+    double newy = fmod(y, peer.y);
+    double newz = fmod(z, peer.z);
+    return Position(newx, newy, newz);
+}
+
 Position Position::copy() {
     Position fresh(x, y, z);
     return fresh;
 }
 
 void Position::clear() {
-    x = y = z = 0.0;
+    x = y = z = ORIGIN;
     return;
 }
 

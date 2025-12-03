@@ -26,18 +26,28 @@ const std::string Mass::UNIT = "kg";        // System International
 const short int Mass::ATOMIC_SCALE = -27;   // 10^-27 kg
 const float Mass::ATOMIC_UNIT = 1.6605f;    // 1.6605 x 10^-27 kg
 const float Mass::PROTON = 1.672621027f;    // 1.67 x 10^-27 kg
-const float NEUTRON = 1.67492749804f;       // 1.67 x 10^-27 kg
+const float Mass::NEUTRON = 1.67492749804f; // 1.67 x 10^-27 kg
 const float Mass::ELECTRON = 0.0009109f;    // 0.0009109 x 10^-27 kg
 
-Mass::Mass() : quantity(0.0f) {
+Mass::Mass() : quantity(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE) {
 
 }
 
-Mass::Mass(float quantity) : quantity(quantity) {
+Mass::Mass(float quantity) : quantity(quantity, ATOMIC_SCALE) {
 
 }
 
-Mass::Mass(float quantity, const shp::Unit& unit) : quantity(quantity, unit) {
+Mass::Mass(float quantity, short int scaling) : quantity(quantity, scaling) {
+
+}
+
+Mass::Mass(float quantity, const shp::Unit& unit)
+        : quantity(quantity, ATOMIC_SCALE, unit) {
+
+}
+
+Mass::Mass(float quantity, short int scaling, const shp::Unit& unit)
+        : quantity(quantity, scaling, unit) {
 
 }
 
@@ -59,6 +69,18 @@ Mass Mass::operator+(const Mass& peer) const {
 
 Mass Mass::operator-(const Mass& peer) const {
     return Mass((quantity - peer.quantity), quantity.getUnit());
+}
+
+Mass Mass::operator*(const Mass& peer) const {
+    return Mass((quantity * peer.quantity), quantity.getUnit());
+}
+
+Mass Mass::operator/(const Mass& peer) const {
+    return Mass((quantity / peer.quantity), quantity.getUnit());
+}
+
+Mass Mass::operator%(const Mass& peer) const {
+    return Mass((quantity % peer.quantity), quantity.getUnit());
 }
 
 Mass Mass::copy() {

@@ -34,7 +34,9 @@ public:
     // Constructors
     Mass();
     Mass(float quantity);
+    Mass(float quantity, short int scaling);
     Mass(float quantity, const shp::Unit& unit);
+    Mass(float quantity, short int scaling, const shp::Unit& unit);
     Mass(const shp::Quantity& quantity, const shp::Unit& unit);
 
     // Destructors
@@ -44,6 +46,9 @@ public:
     bool operator==(const Mass& peer) const;
     Mass operator+(const Mass& peer) const;
     Mass operator-(const Mass& peer) const;
+    Mass operator*(const Mass& peer) const;
+    Mass operator/(const Mass& peer) const;
+    Mass operator%(const Mass& peer) const;
 
     // Getters
     shp::Unit getUnit() const { return quantity.getUnit(); }
@@ -57,6 +62,7 @@ public:
     virtual Mass copy();
     virtual void clear();
     virtual std::string print();
+
 public:
     static const std::string UNIT;
     static const short int ATOMIC_SCALE;

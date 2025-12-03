@@ -34,7 +34,9 @@ public:
     // Constructors
     Charge();
     Charge(float quantity);
+    Charge(float quantity, short int scaling);
     Charge(float quantity, const shp::Unit& unit);
+    Charge(float quantity, short int scaling, const shp::Unit& unit);
     Charge(const shp::Quantity& quantity, const shp::Unit& unit);
 
     // Destructors
@@ -44,6 +46,9 @@ public:
     bool operator==(const Charge& peer) const;
     Charge operator+(const Charge& peer) const;
     Charge operator-(const Charge& peer) const;
+    Charge operator*(const Charge& peer) const;
+    Charge operator/(const Charge& peer) const;
+    Charge operator%(const Charge& peer) const;
 
     // Getters
     shp::Unit getUnit() const { return quantity.getUnit(); }

@@ -26,19 +26,59 @@ Force::Force() : name(""), unit(), magnitude(), direction() {
 
 }
 
+Force::Force(const shp::Quantity& magnitude, const shp::Direction& direction)
+        : name(), unit(), magnitude(magnitude), direction(direction) {
+
+}
+
 Force::Force(std::string name, const shp::Unit& unit) : name(name), unit(unit),
         magnitude(), direction() {
 
 }
 
 Force::Force(std::string name, const shp::Unit& unit,
-        const shp::Direction& magnitude, const shp::Direction& direction)
+        const shp::Quantity& magnitude, const shp::Direction& direction)
         : name(name), unit(unit), magnitude(magnitude), direction(direction) {
+
+}
+
+Force::Force(std::string name,
+        const shp::Quantity& magnitude, const shp::Direction& direction)
+        : name(name), unit(), magnitude(magnitude), direction(direction) {
 
 }
 
 Force::~Force() {
 
+}
+
+bool Force::operator==(const Force& peer) const {
+    return (magnitude == peer.magnitude) && (direction == peer.direction);
+}
+
+Force Force::operator+(const Force& peer) const {
+    return Force("+", (magnitude + peer.magnitude), (direction + peer.direction));
+}
+
+Force Force::operator-(const Force& peer) const {
+    return Force("-", (magnitude - peer.magnitude), (direction - peer.direction));
+}
+
+Force Force::operator*(const Force& peer) const {
+    return Force("*", (magnitude * peer.magnitude), (direction * peer.direction));
+}
+
+Force Force::operator/(const Force& peer) const {
+    return Force("/", (magnitude / peer.magnitude), (direction / peer.direction));
+}
+
+Force Force::operator%(const Force& peer) const {
+    return Force("%", (magnitude % peer.magnitude), (direction % peer.direction));
+}
+
+float Force::getTotal() const {
+    float result = magnitude.getValue() * direction.toRadians();
+    return result;
 }
 
 Force Force::copy() {

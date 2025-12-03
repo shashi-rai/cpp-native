@@ -22,11 +22,14 @@
 
 namespace shp {
 
-Quantity::Quantity() : value(0.0f), scaling(0), unit() {
+const float Quantity::DEFAULT_VALUE = 0.0f;     // 0.0f
+const short int Quantity::DEFAULT_SCALE = 0;    // 10^0
+
+Quantity::Quantity() : value(DEFAULT_VALUE), scaling(DEFAULT_SCALE), unit() {
 
 }
 
-Quantity::Quantity(float value): value(value), scaling(0), unit() {
+Quantity::Quantity(float value): value(value), scaling(DEFAULT_SCALE), unit() {
 
 }
 
@@ -36,12 +39,12 @@ Quantity::Quantity(short int scaling)
 }
 
 Quantity::Quantity(const Unit& unit)
-        : value(), scaling(0), unit(unit) {
+        : value(), scaling(DEFAULT_SCALE), unit(unit) {
 
 }
 
 Quantity::Quantity(float value, const Unit& unit)
-        : value(value), scaling(0), unit(unit) {
+        : value(value), scaling(DEFAULT_SCALE), unit(unit) {
 
 }
 
@@ -96,7 +99,7 @@ Quantity Quantity::operator%(const Quantity& peer) const {
 }
 
 Quantity Quantity::getInverse() const {
-    Quantity fresh(value != 0 ? (1 / value) : 0, scaling, unit);
+    Quantity fresh(value != DEFAULT_VALUE ? (1 / value) : DEFAULT_VALUE, scaling, unit);
     return fresh;
 }
 
@@ -110,8 +113,8 @@ Quantity Quantity::copy() {
 }
 
 void Quantity::clear() {
-    value = 0.0f;
-    scaling = 0;
+    value = DEFAULT_VALUE;
+    scaling = DEFAULT_SCALE;
     unit.clear();
     return;
 }

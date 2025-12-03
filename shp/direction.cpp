@@ -22,7 +22,15 @@
 
 namespace shp {
 
-Direction::Direction() : degrees(0), minutes(0), seconds(0) {
+const int Direction::DEGREES_MIN = 0;
+const int Direction::DEGREES_MAX = 360;
+const int Direction::MINUTES_MIN = 0;
+const int Direction::MINUTES_MAX = 60;
+const int Direction::SECONDS_MIN = 0;
+const int Direction::SECONDS_MAX = 3600;
+
+Direction::Direction()
+        : degrees(DEGREES_MIN), minutes(MINUTES_MIN), seconds(SECONDS_MIN) {
 
 }
 
@@ -81,6 +89,24 @@ Direction Direction::operator-(const Direction& peer) const {
             getIndexSeconds(seconds - peer.seconds));
 }
 
+Direction Direction::operator*(const Direction& peer) const {
+    return Direction(getIndexDegrees(degrees * peer.degrees),
+            getIndexMinutes(minutes * peer.minutes),
+            getIndexSeconds(seconds * peer.seconds));
+}
+
+Direction Direction::operator/(const Direction& peer) const {
+    return Direction(getIndexDegrees(degrees / peer.degrees),
+            getIndexMinutes(minutes / peer.minutes),
+            getIndexSeconds(seconds / peer.seconds));
+}
+
+Direction Direction::operator%(const Direction& peer) const {
+    return Direction(getIndexDegrees(degrees % peer.degrees),
+            getIndexMinutes(minutes % peer.minutes),
+            getIndexSeconds(seconds % peer.seconds));
+}
+
 float Direction::toRadians() const {
     // compute total degrees as floating-point to avoid integer division,
     // then convert degrees to radians
@@ -94,7 +120,7 @@ Direction Direction::copy() {
 }
 
 void Direction::clear() {
-    degrees = 0; minutes = 0; seconds = 0;
+    degrees = DEGREES_MIN; minutes = MINUTES_MIN; seconds = SECONDS_MIN;
     return;
 }
 
@@ -111,33 +137,33 @@ std::string Direction::print() {
  * Used for converting degrees between 0 ~ 360
  */
 int Direction::getIndexDegrees(const int value) const {
-    int result = (value % 360);
-    if (value >= 0)
+    int result = (value % DEGREES_MAX);
+    if (value >= MINUTES_MIN)
         return result;
     else
-        return (360 + result);
+        return (DEGREES_MAX + result);
 }
 
 /*
  * Used for converting minutes between 0 ~ 60
  */
 int Direction::getIndexMinutes(const int value) const {
-    int result = (value % 60);
-    if (value >= 0)
+    int result = (value % MINUTES_MAX);
+    if (value >= MINUTES_MIN)
         return result;
     else
-        return (60 + result);
+        return (MINUTES_MAX + result);
 }
 
 /*
  * Used for converting seconds between 0 ~ 3600
  */
 int Direction::getIndexSeconds(const int value) const {
-    int result = (value % 3600);
-    if (value >= 0)
+    int result = (value % SECONDS_MAX);
+    if (value >= SECONDS_MIN)
         return result;
     else
-        return (3600 + result);
+        return (SECONDS_MAX + result);
 }
 
 } // namespace shp

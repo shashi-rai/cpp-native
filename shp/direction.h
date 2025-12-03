@@ -47,6 +47,9 @@ public:
     bool operator==(const Direction& peer) const;
     Direction operator+(const Direction& peer) const;
     Direction operator-(const Direction& peer) const;
+    Direction operator*(const Direction& peer) const;
+    Direction operator/(const Direction& peer) const;
+    Direction operator%(const Direction& peer) const;
 
     // Getters
     int getDegrees() const { return degrees; }
@@ -67,6 +70,13 @@ private:
     int getIndexDegrees(const int value) const;
     int getIndexMinutes(const int value) const;
     int getIndexSeconds(const int value) const;
+public:
+    static const int DEGREES_MIN;
+    static const int DEGREES_MAX;
+    static const int MINUTES_MIN;
+    static const int MINUTES_MAX;
+    static const int SECONDS_MIN;
+    static const int SECONDS_MAX;
 };
 
 typedef std::vector<Direction > DirectionArray;

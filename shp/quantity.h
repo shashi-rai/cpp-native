@@ -69,6 +69,10 @@ public:
     Quantity copy();
     void clear();
     std::string print();
+
+public:
+    static const float DEFAULT_VALUE;
+    static const short int DEFAULT_SCALE;
 };
 
 typedef std::vector<Quantity > QuantityArray;

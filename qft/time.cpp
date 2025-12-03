@@ -26,15 +26,25 @@ const std::string Time::UNIT = "s";                 // System International
 const short int Time::ATOMIC_SCALE = -17;           // 10^-17 s
 const float Time::ATOMIC_UNIT = 2.4188843265864f;   // 2.41 x 10^-17 s
 
-Time::Time() : unit(), quantity(0L) {
+Time::Time() : unit(), quantity(0L), scaling(ATOMIC_SCALE) {
 
 }
 
-Time::Time(long time) : unit(), quantity(time) {
+Time::Time(long time) : unit(), quantity(time), scaling(ATOMIC_SCALE) {
 
 }
 
-Time::Time(long quantity, const shp::Unit& unit) : unit(unit), quantity(quantity) {
+Time::Time(long time, short int scaling) : unit(), quantity(time), scaling(scaling) {
+
+}
+
+Time::Time(long quantity, const shp::Unit& unit)
+        : unit(unit), quantity(quantity), scaling(ATOMIC_SCALE) {
+
+}
+
+Time::Time(long quantity, short int scaling, const shp::Unit& unit)
+        : unit(unit), quantity(quantity), scaling(scaling) {
 
 }
 
@@ -43,32 +53,46 @@ Time::~Time() {
 }
 
 bool Time::operator==(const Time& peer) const {
-    return (unit == peer.unit) && (quantity == peer.quantity);
+    return (unit == peer.unit) && (quantity == peer.quantity) && (scaling == peer.scaling);
 }
 
 Time Time::operator+(const Time& peer) const {
-    return Time(quantity + peer.quantity);
+    return Time((quantity + peer.quantity), scaling, unit);
 }
 
 Time Time::operator-(const Time& peer) const {
-    return Time(quantity - peer.quantity);
+    return Time((quantity - peer.quantity), scaling, unit);
+}
+
+Time Time::operator*(const Time& peer) const {
+    return Time((quantity * peer.quantity), scaling, unit);
+}
+
+Time Time::operator/(const Time& peer) const {
+    return Time((quantity / peer.quantity), scaling, unit);
+}
+
+Time Time::operator%(const Time& peer) const {
+    return Time((quantity % peer.quantity), scaling, unit);
 }
 
 Time Time::copy() {
-    Time fresh(quantity, unit);
+    Time fresh(quantity, scaling, unit);
     return fresh;
 }
 
 void Time::clear() {
     unit.clear();
     quantity = 0L;
+    scaling = 0;
     return;
 }
 
 std::string Time::print() {
     std::stringstream result;
     result << "(t:";
-    result << quantity;
+    result << quantity << "x10^";
+    result << scaling << " ";
     result << unit.print() << ")";
 	return result.str();
 }

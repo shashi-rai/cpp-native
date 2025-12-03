@@ -24,6 +24,7 @@
 #include <string>
 #include <vector>
 #include "../shp/direction.h"
+#include "../shp/quantity.h"
 #include "../shp/unit.h"
 
 namespace phy {
@@ -31,30 +32,41 @@ namespace phy {
 class Force {
     std::string name;
     shp::Unit unit;
-    shp::Direction magnitude;
+    shp::Quantity magnitude;
     shp::Direction direction;
 public:
     // Constructors
     Force();
+    Force(const shp::Quantity& magnitude, const shp::Direction& direction);
     Force(std::string name, const shp::Unit& unit);
-    Force(std::string name, const shp::Unit& unit, const shp::Direction& magnitude, const shp::Direction& direction);
+    Force(std::string name, const shp::Quantity& magnitude, const shp::Direction& direction);
+    Force(std::string name, const shp::Unit& unit, const shp::Quantity& magnitude, const shp::Direction& direction);
 
     // Destructors
     ~Force();
 
+    // Operator overloading
+    bool operator==(const Force& peer) const;
+    Force operator+(const Force& peer) const;
+    Force operator-(const Force& peer) const;
+    Force operator*(const Force& peer) const;
+    Force operator/(const Force& peer) const;
+    Force operator%(const Force& peer) const;
+
     // Getters
     std::string getName() const { return name; }
     shp::Unit getUnit() const { return unit; }
-    shp::Direction getMagnitude() const { return magnitude; }
+    shp::Quantity getMagnitude() const { return magnitude; }
     shp::Direction getDirection() const { return direction; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
     void setUnit(const shp::Unit& value) { this->unit = value; }
-    void setMagnitude(const shp::Direction& magnitude) { this->magnitude = magnitude; }
+    void setMagnitude(const shp::Quantity& magnitude) { this->magnitude = magnitude; }
     void setDirection(const shp::Direction& direction) { this->direction = direction; }
 
     // Additional methods
+    float getTotal() const;
     virtual Force copy();
     virtual void clear();
     virtual std::string print();
