@@ -45,14 +45,19 @@ clean-libs: clean-custom
 	${RMCLEAN} $(LIBFILES)
 
 $(LIBFOLDR)/$(LIBNAME): \
-		$(OBJFOLDR)/server.o \
-		$(OBJFOLDR)/client.o
+		$(OBJFOLDR)/client.o \
+		$(OBJFOLDR)/filedescriptor.o \
+		$(OBJFOLDR)/server.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
-		$(OBJFOLDR)/server.o \
-		$(OBJFOLDR)/client.o
-
-$(OBJFOLDR)/server.o: server.cpp
-	$(CPPTOOL) -c server.cpp -o $(OBJFOLDR)/server.o $(CXXFLAGS)
+		$(OBJFOLDR)/client.o \
+		$(OBJFOLDR)/filedescriptor.o \
+		$(OBJFOLDR)/server.o
 
 $(OBJFOLDR)/client.o: client.cpp
 	$(CPPTOOL) -c client.cpp -o $(OBJFOLDR)/client.o $(CXXFLAGS)
+
+$(OBJFOLDR)/filedescriptor.o: filedescriptor.cpp
+	$(CPPTOOL) -c filedescriptor.cpp -o $(OBJFOLDR)/filedescriptor.o $(CXXFLAGS)
+
+$(OBJFOLDR)/server.o: server.cpp
+	$(CPPTOOL) -c server.cpp -o $(OBJFOLDR)/server.o $(CXXFLAGS)

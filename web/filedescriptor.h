@@ -18,63 +18,40 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef WEB_CLIENT_H
-#define WEB_CLIENT_H
+#ifndef WEB_DESCRIPTOR_H
+#define WEB_DESCRIPTOR_H
 
-#include <atomic>
-#include <cstring>
 #include <string>
-#include <iostream>
-#include <unistd.h>
 #include <vector>
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include "filedescriptor.h"
 
 namespace web {
 
-class Client {
-    std::string host;
-    int port;
-    FileDescriptor server;
-    std::atomic<bool> connected;
-    std::atomic<bool> closed;
+class FileDescriptor {
+    int socket;
 public:
     // Constructors
-    Client();
-    Client(int port);
-    Client(std::string host, int port);
+    FileDescriptor();
+    FileDescriptor(int handle);
 
     // Destructors
-    ~Client();
+    ~FileDescriptor();
 
     // Getters
-    std::string getHost() const { return host; }
-    int getPort() const { return port; }
-    FileDescriptor getServer() const { return server; }
-    bool isConnected() const { return connected; }
-    bool isClosed() const { return closed; }
+    int getSocket() const { return socket; }    
 
     // Setters
-    void setHost(const std::string& name) { host = name; }
-    void setPort(int number) { port = number; }
-    void setServer(FileDescriptor socket) { server = socket; }
+    void setSocket(int handle) { socket = handle; }
 
     // Additional methods
-    int connectTo(const std::string& serverHost, int serverPort);
+    bool isError(std::string message);
+    bool isError(int code, std::string message);
 
 public:
-    static const std::string DEFAULT_HOST;
-    static const int DEFAULT_PORT;
+    static const int DEFAULT_VALUE;
 };
 
-typedef std::vector<Client > ClientArray;
-
-enum ClientEvent {
-    DISCONNECTED,
-    MSG_INCOMING
-};
+typedef std::vector<FileDescriptor > FileDescriptorArray;
 
 } // namespace web
 
-#endif //WEB_CLIENT_H
+#endif //WEB_DESCRIPTOR_H

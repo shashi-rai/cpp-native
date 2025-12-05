@@ -19,22 +19,54 @@
 // THE SOFTWARE.
 
 #include <iostream>
+#include <memory>
+#include <utility>
 #include <vector>
-#include "dsa/matrix.h"
-#include "dsa/tensor.h"
+#include "web/client.h"
+#include "web/server.h"
 
-int main() {
-    dsa::Matrix mat(3, 3);
-    mat.set(1, 1, 5.0);
-    std::cout << "Matrix [" << mat.getRows() << "x" << mat.getCols() << "] ";
-    std::cout << "value at (1,1) = " << mat.get(1, 1) << std::endl;
+void print_copyright() {
+    std::cout << "Application Software" << std::endl;
+    std::cout << "Copyright (c) 2018 by Bhojpur Consulting Private Limited, India" << std::endl;
+    std::cout << "All rights reserved." << std::endl << std::endl;
+}
 
-    dsa::Tensor tensor(2);
-    tensor.set(0, mat);
-    std::cout << "Tensor: {" << tensor.getDims() << " x [" << tensor.getRows() << "x" << tensor.getCols() << "]}" << std::endl;
-    dsa::Matrix m = tensor.get(0);
-    std::cout << "Retrieved Matrix [" << m.getRows() << "x" << m.getCols() << "] at {0}" << std::endl;
-    std::cout << "value at (1,1) = " << m.get(1, 1) << std::endl;
-    
+void client_test() {
+    web::Client client;
+    client.connectTo("127.0.0.1", 8000);
+}
+
+void server_test() {
+    web::Server server;
+    server.run();
+}
+
+int main(int argc, char* argv[]) {
+    bool verbose_mode = false;
+    bool client_mode = false;
+    bool server_mode = false;
+    if (argc > 1) { // options exist, identify it
+        for (int i = 1; i < argc; ++i) {
+            std::string arg = argv[i];
+            if (arg == "-v" || arg == "--verbose") {
+                verbose_mode = true;
+            } else if (arg == "-c" || arg == "--client") {
+                client_mode = true;
+            } else if (arg == "-s" || arg == "--server") {
+                server_mode = true;
+            }
+        }
+    } else {
+        std::cout << "command-line arguments required" << std::endl;
+    }
+
+    if (verbose_mode) {
+        print_copyright();
+    } else if (client_mode) {
+        client_test();
+    } else if (server_mode) {
+        server_test();
+    }
+
     return 0;
 }

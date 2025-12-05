@@ -18,58 +18,38 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef WEB_SERVER_H
-#define WEB_SERVER_H
-
-#include <atomic>
-#include <cstring>
-#include <iostream>
-#include <string>
-#include <unistd.h>
-#include <vector>
-#include <netinet/in.h>
-#include <sys/socket.h>
 #include "filedescriptor.h"
 
 namespace web {
 
-class Server {
-    std::string host;
-    int port;
-    FileDescriptor provider;
-    std::atomic<bool> listening;
-    std::atomic<bool> closed;
-public:
-    // Constructors
-    Server();
-    Server(int port);
-    Server(std::string host, int port);
+const int FileDescriptor::DEFAULT_VALUE = 0;
 
-    // Destructors
-    ~Server();
+FileDescriptor::FileDescriptor() : socket(DEFAULT_VALUE) {
 
-    // Getters
-    std::string getHost() const { return host; }
-    int getPort() const { return port; }
-    FileDescriptor getProvider() const { return provider; }
-    bool isListening() const { return listening; }
-    bool isClosed() const { return closed; }
+}
 
-    // Setters
-    void setHost(const std::string& name) { host = name; }
-    void setPort(int number) { port = number; }
-    void setProvider(FileDescriptor socket) { provider = socket; }
+FileDescriptor::FileDescriptor(int handle) : socket(handle) {
 
-    // Additional methods
-    int run();
+}
 
-public:
-    static const std::string DEFAULT_HOST;
-    static const int DEFAULT_PORT;
-};
+FileDescriptor::~FileDescriptor() {
 
-typedef std::vector<Server > ServerArray;
+}
+
+bool FileDescriptor::isError(std::string message) {
+    if (socket < 0) {
+        perror(message.c_str());
+        return true;
+    }
+    return false;
+}
+
+bool FileDescriptor::isError(int code, std::string message) {
+    if (socket == code) {
+        perror(message.c_str());
+        return true;
+    }
+    return false;
+}
 
 } // namespace web
-
-#endif //WEB_SERVER_H

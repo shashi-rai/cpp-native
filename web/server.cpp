@@ -22,11 +22,14 @@
 
 namespace web {
 
-Server::Server() : host("localhost"), port(8080) {
+const std::string Server::DEFAULT_HOST = "localhost";
+const int Server::DEFAULT_PORT = 8000;
+
+Server::Server() : host(DEFAULT_HOST), port(DEFAULT_PORT) {
 
 }
 
-Server::Server(int port) : host("localhost"), port(port) {
+Server::Server(int port) : host(DEFAULT_HOST), port(port) {
 
 }
 
@@ -36,6 +39,60 @@ Server::Server(std::string host, int port) : host(host), port(port) {
 
 Server::~Server() {
 
+}
+
+int Server::run() {
+    struct sockaddr_in address;
+    FileDescriptor consumer;;
+    int opt = 1, addrlen = sizeof(address);
+
+    char buffer[1024] = {0};
+    const char *hello = "Hello from Bhojpur Server";
+
+    // Create a server socket file descriptor
+    provider.setSocket(socket(AF_INET, SOCK_STREAM, 0));
+    if (provider.isError(-1, "Server socket creation failure")) {
+        exit(EXIT_FAILURE);
+    }
+
+    // Attach socket to service port
+	setsockopt(provider.getSocket(), SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt));
+
+    address.sin_family = AF_INET;
+    address.sin_addr.s_addr = INADDR_ANY; // Listen on all available network interfaces
+    address.sin_port = htons(port);
+
+    // Bind server socket to the specified IP address and port
+    if (bind(provider.getSocket(), (struct sockaddr *) &address, sizeof(address)) < 0) {
+        perror("bind failed");
+        exit(EXIT_FAILURE);
+    }
+
+    // Listen for incoming connection requests from the Clients
+    if (listen(provider.getSocket(), 3) < 0) {
+        perror("listen");
+        exit(EXIT_FAILURE);
+    }
+
+    // Accept a new Client connection
+    consumer.setSocket(accept(provider.getSocket(), (struct sockaddr *)&address, (socklen_t*) &addrlen));
+    if (consumer.isError("accept")) {
+        exit(EXIT_FAILURE);
+    }
+
+    // Read data from client
+    read(consumer.getSocket(), buffer, 1024);
+    std::cout << "Client: " << buffer << std::endl;
+
+    // Send data to client
+    send(consumer.getSocket(), hello, strlen(hello), 0);
+    std::cout << "Hello message sent to Bhojpur Client" << std::endl;
+
+    // Close sockets
+    close(consumer.getSocket());
+    close(provider.getSocket());
+
+    return 0;
 }
 
 } // namespace web

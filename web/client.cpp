@@ -22,11 +22,14 @@
 
 namespace web {
 
-Client::Client() : host("localhost"), port(8080) {
+const std::string Client::DEFAULT_HOST = "localhost";
+const int Client::DEFAULT_PORT = 8000;
+
+Client::Client() : host(DEFAULT_HOST), port(DEFAULT_PORT) {
 
 }
 
-Client::Client(int port) : host("localhost"), port(port) {
+Client::Client(int port) : host(DEFAULT_HOST), port(port) {
 
 }
 
@@ -36,6 +39,50 @@ Client::Client(std::string host, int port) : host(host), port(port) {
 
 Client::~Client() {
 
+}
+
+int Client::connectTo(const std::string& serverHost, int serverPort) {
+    struct sockaddr_in serv_addr;
+    int valread;
+
+    const char *hello = "Hello from Bhojpur Client";
+    char buffer[1024] = {0};
+
+    // Create socket file descriptor
+    server.setSocket(socket(AF_INET, SOCK_STREAM, 0));
+    if (server.isError("Server socket creation failure")) {
+        exit(EXIT_FAILURE);
+    }
+
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_port = htons(serverPort);
+
+    // Convert IPv4 address from text to binary form
+    if (inet_pton(AF_INET, serverHost.c_str(), &serv_addr.sin_addr) <= 0) {
+        std::cout << std::endl<< "Invalid address/ Address not supported" << std::endl << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    // Connect to the server
+    if (connect(server.getSocket(), (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
+        std::cout << std::endl
+            << "Connection to " << serverHost.c_str() << ":" << serverPort
+            << " failed" << std::endl << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    // Send data to the Server
+    send(server.getSocket(), hello, strlen(hello), 0);
+    std::cout << "Hello message sent" << std::endl;
+
+    // Read data from the Server
+    valread = read(server.getSocket(), buffer, 1024);
+    std::cout << "Server: " << buffer << std::endl;
+
+    // Close socket
+    close(server.getSocket());
+
+    return 0;
 }
 
 } // namespace web
