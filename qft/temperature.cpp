@@ -26,15 +26,15 @@ const std::string Temperature::UNIT = "K";          // System International
 const short int Temperature::DEFAULT_SCALE = 0;     // 10^0 K
 const float Temperature::DEFAULT_VALUE = 0.0f;      // O.0 K
 
-Temperature::Temperature() : quantity(shp::Quantity::DEFAULT_VALUE, DEFAULT_SCALE) {
+Temperature::Temperature() : quantity(shp::Quantity::DEFAULT_VALUE, DEFAULT_SCALE, UNIT) {
 
 }
 
-Temperature::Temperature(float quantity) : quantity(quantity, DEFAULT_SCALE) {
+Temperature::Temperature(float quantity) : quantity(quantity, DEFAULT_SCALE, UNIT) {
 
 }
 
-Temperature::Temperature(float quantity, short int scaling) : quantity(quantity, scaling) {
+Temperature::Temperature(float quantity, short int scaling) : quantity(quantity, scaling, UNIT) {
 
 }
 

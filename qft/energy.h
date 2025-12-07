@@ -23,6 +23,7 @@
 
 #include <sstream>
 #include <vector>
+#include "mass.h"
 #include "../shp/point.h"
 #include "../shp/quantity.h"
 #include "../shp/unit.h"
@@ -30,9 +31,9 @@
 namespace qft {
 
 class Energy : public shp::Point {
+    shp::Unit unit;
     shp::Quantity wavelength;
-    shp::Quantity kinetic;
-    shp::Quantity potential;
+    qft::Mass mass;
 public:
     // Constructors
     Energy();
@@ -48,18 +49,27 @@ public:
     Energy(float wavelength, short int scaling, const shp::Unit& unit);
     Energy(std::string name, float wavelength, const shp::Unit& unit);
     Energy(std::string name, float wavelength, short int scaling, const shp::Unit& unit);
-    Energy(float wavelength, float kinetic, const shp::Unit& unit);
-    Energy(float wavelength, short int scaling, float kinetic, const shp::Unit& unit);
-    Energy(std::string name, float wavelength, float kinetic, const shp::Unit& unit);
-    Energy(std::string name, float wavelength, short int scaling, float kinetic, const shp::Unit& unit);
-    Energy(float wavelength, float kinetic, float potential, const shp::Unit& unit);
-    Energy(float wavelength, short int scaling, float kinetic, float potential, const shp::Unit& unit);
-    Energy(std::string name, float wavelength, float kinetic, float potential, const shp::Unit& unit);
-    Energy(std::string name, float wavelength, short int scaling, float kinetic, float potential, const shp::Unit& unit);
-    Energy(float amplitude, float gradient, float wavelength, float kinetic, float potential, const shp::Unit& unit);
-    Energy(float amplitude, float gradient, float wavelength, short int scaling, float kinetic, float potential, const shp::Unit& unit);
-    Energy(std::string name, float amplitude, float gradient, float wavelength, float kinetic, float potential, const shp::Unit& unit);
-    Energy(std::string name, float amplitude, float gradient, float wavelength, short int scaling, float kinetic, float potential, const shp::Unit& unit);
+    Energy(Mass& mass);
+    Energy(Mass& mass, const shp::Unit& unit);
+    Energy(std::string name, Mass& mass);
+    Energy(std::string name, Mass& mass, const shp::Unit& unit);
+    Energy(float wavelength, Mass& mass);
+    Energy(float wavelength, float mass, const shp::Unit& unit);
+    Energy(float wavelength, Mass& mass, const shp::Unit& unit);
+    Energy(float wavelength, short int scaling, float mass, const shp::Unit& unit);
+    Energy(float wavelength, short int scaling, Mass& mass, const shp::Unit& unit);
+    Energy(std::string name, float wavelength, float mass, const shp::Unit& unit);
+    Energy(std::string name, float wavelength, Mass& mass, const shp::Unit& unit);
+    Energy(std::string name, float wavelength, short int scaling, float mass, const shp::Unit& unit);
+    Energy(std::string name, float wavelength, short int scaling, Mass& mass, const shp::Unit& unit);
+    Energy(float amplitude, float gradient, float wavelength, float mass, const shp::Unit& unit);
+    Energy(float amplitude, float gradient, float wavelength, Mass& mass, const shp::Unit& unit);
+    Energy(float amplitude, float gradient, float wavelength, short int scaling, float mass, const shp::Unit& unit);
+    Energy(float amplitude, float gradient, float wavelength, short int scaling, Mass& mass, const shp::Unit& unit);
+    Energy(std::string name, float amplitude, float gradient, float wavelength, float mass, const shp::Unit& unit);
+    Energy(std::string name, float amplitude, float gradient, float wavelength, Mass& mass, const shp::Unit& unit);
+    Energy(std::string name, float amplitude, float gradient, float wavelength, short int scaling, float mass, const shp::Unit& unit);
+    Energy(std::string name, float amplitude, float gradient, float wavelength, short int scaling, Mass& mass, const shp::Unit& unit);
 
     // Destructors
     ~Energy();
@@ -73,17 +83,18 @@ public:
     Energy operator%(const Energy& peer) const;
 
     // Getters
+    shp::Unit getUnit() const { return unit; }
     shp::Quantity getWavelength() const { return wavelength; }
-    shp::Quantity getKinetic() const { return kinetic; }
-    shp::Quantity getPotential() const { return potential; }
+    qft::Mass getMass() const { return mass; }
 
     // Setters
+    void setUnit(const shp::Unit& value) { this->unit = value; }
     void setWavelength(const float amount) { this->wavelength = amount; }
-    void setKinetic(const float amount) { this->kinetic = amount; }
-    void setPotential(const float amount) { this->potential = amount; }
+    void setMass(const float amount) { this->mass = amount; }
 
     // Additional methods
-    shp::Quantity getQuantum() const;
+    shp::Quantity getPotential() const;
+    shp::Quantity getKinetic() const;
     shp::Quantity getFrequency() const;
     float getSpatial(float state) const;
     float getTemporal(float state) const;
@@ -98,6 +109,8 @@ public:
     static const std::string UNIT;
     static const float PLANCK_CONSTANT;
     static const short int PLANCK_SCALE;
+    static const float LIGHT_SPEED;
+    static const short int LIGHT_SCALE;
 };
 
 typedef std::vector<Energy > EnergyArray;

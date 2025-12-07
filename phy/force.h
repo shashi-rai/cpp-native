@@ -70,6 +70,9 @@ public:
     virtual Force copy();
     virtual void clear();
     virtual std::string print();
+
+public:
+    static const std::string UNIT;
 };
 
 typedef std::vector<Force > ForceArray;

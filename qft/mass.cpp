@@ -29,15 +29,15 @@ const float Mass::PROTON = 1.672621027f;    // 1.67 x 10^-27 kg
 const float Mass::NEUTRON = 1.67492749804f; // 1.67 x 10^-27 kg
 const float Mass::ELECTRON = 0.0009109f;    // 0.0009109 x 10^-27 kg
 
-Mass::Mass() : quantity(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE) {
+Mass::Mass() : quantity(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, UNIT) {
 
 }
 
-Mass::Mass(float quantity) : quantity(quantity, ATOMIC_SCALE) {
+Mass::Mass(float quantity) : quantity(quantity, ATOMIC_SCALE, UNIT) {
 
 }
 
-Mass::Mass(float quantity, short int scaling) : quantity(quantity, scaling) {
+Mass::Mass(float quantity, short int scaling) : quantity(quantity, scaling, UNIT) {
 
 }
 

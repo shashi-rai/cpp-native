@@ -22,6 +22,8 @@
 
 namespace phy {
 
+const std::string Momentum::UNIT = "kg m/s";    // System International
+
 Momentum::Momentum() : name(""), mass(), velocity() {
 
 }

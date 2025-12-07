@@ -38,8 +38,18 @@ Quantity::Quantity(short int scaling)
 
 }
 
+Quantity::Quantity(const std::string unit)
+        : value(), scaling(DEFAULT_SCALE), unit(unit) {
+
+}
+
 Quantity::Quantity(const Unit& unit)
         : value(), scaling(DEFAULT_SCALE), unit(unit) {
+
+}
+
+Quantity::Quantity(float value, const std::string unit)
+        : value(value), scaling(DEFAULT_SCALE), unit(unit) {
 
 }
 
@@ -50,6 +60,11 @@ Quantity::Quantity(float value, const Unit& unit)
 
 Quantity::Quantity(float value, short int scaling)
         : value(value), scaling(scaling), unit() {
+
+}
+
+Quantity::Quantity(float value, short int scaling, const std::string unit)
+        : value(value), scaling(scaling), unit(unit) {
 
 }
 

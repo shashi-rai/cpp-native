@@ -22,188 +22,222 @@
 
 namespace qft {
 
+const std::string UNIT_OF_LENGTH = "m";        		// System International
 const std::string Energy::UNIT = "J";        		// System International
 const float Energy::PLANCK_CONSTANT = 6.62607015f;  // 6.62607015 x 10^-34 m^2 kg/s
 const short int Energy::PLANCK_SCALE = -34;         // 10^-34 m^2 kg/s
+const float Energy::LIGHT_SPEED = 2.99792458;       // 2.99792458 x 10^8 m/s
+const short int Energy::LIGHT_SCALE = 8;            // 10^8 m/s
 
 Energy::Energy() : Point(),
-		wavelength(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE),
-		kinetic(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE),
-		potential(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE) {
+		wavelength(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE, UNIT_OF_LENGTH),
+		mass(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE), unit(UNIT) {
 
 }
 
 Energy::Energy(float gradient) : Point(gradient),
-		wavelength(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE),
-		kinetic(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE),
-		potential(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE) {
+		wavelength(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE, UNIT_OF_LENGTH),
+		mass(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE), unit(UNIT) {
 
 }
 
 Energy::Energy(std::string name, float gradient) : Point(name, gradient),
-		wavelength(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE),
-		kinetic(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE),
-		potential(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE) {
+		wavelength(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE, UNIT_OF_LENGTH),
+		mass(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE), unit(UNIT) {
 
 }
 
 Energy::Energy(float amplitude, float gradient)
         : Point(amplitude, gradient),
-		wavelength(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE),
-		kinetic(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE),
-		potential(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE) {
+		wavelength(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE, UNIT_OF_LENGTH),
+		mass(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE), unit(UNIT) {
 
 }
 
 Energy::Energy(std::string name, float amplitude, float gradient)
         : Point(name, amplitude, gradient),
-		wavelength(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE),
-		kinetic(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE),
-		potential(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE) {
+		wavelength(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE, UNIT_OF_LENGTH),
+		mass(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE), unit(UNIT) {
 
 }
 
 Energy::Energy(float amplitude, float gradient, float wavelength)
         : Point(amplitude, gradient),
-		wavelength(wavelength, PLANCK_SCALE),
-		kinetic(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE),
-		potential(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE) {
+		wavelength(wavelength, PLANCK_SCALE, UNIT_OF_LENGTH),
+		mass(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE), unit(UNIT) {
 
 }
 
 Energy::Energy(float amplitude, float gradient, float wavelength, short int scaling)
-        : Point(amplitude, gradient), wavelength(wavelength, scaling),
-		kinetic(shp::Quantity::DEFAULT_VALUE, scaling),
-		potential(shp::Quantity::DEFAULT_VALUE, scaling) {
+        : Point(amplitude, gradient), wavelength(wavelength, scaling, UNIT_OF_LENGTH),
+		mass(shp::Quantity::DEFAULT_VALUE, scaling), unit(UNIT) {
 
 }
 
 Energy::Energy(std::string name, float amplitude, float gradient, float wavelength)
-        : Point(name, amplitude, gradient), wavelength(wavelength, PLANCK_SCALE),
-		kinetic(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE),
-		potential(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE) {
+        : Point(name, amplitude, gradient), wavelength(wavelength, PLANCK_SCALE, UNIT_OF_LENGTH),
+		mass(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE), unit(UNIT) {
 
 }
 
 Energy::Energy(std::string name, float amplitude, float gradient,
 		float wavelength, short int scaling)
-        : Point(name, amplitude, gradient), wavelength(wavelength, scaling),
-		kinetic(shp::Quantity::DEFAULT_VALUE, scaling),
-		potential(shp::Quantity::DEFAULT_VALUE, scaling) {
+        : Point(name, amplitude, gradient), wavelength(wavelength, scaling, UNIT_OF_LENGTH),
+		mass(shp::Quantity::DEFAULT_VALUE, scaling), unit(UNIT) {
 
 }
 
 Energy::Energy(float wavelength, const shp::Unit& unit)
-        : Point(), wavelength(wavelength, PLANCK_SCALE),
-		kinetic(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE, unit),
-		potential(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE, unit) {
+        : Point(), wavelength(wavelength, PLANCK_SCALE, UNIT_OF_LENGTH),
+		mass(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE), unit(unit) {
 
 }
 
 Energy::Energy(float wavelength, short int scaling, const shp::Unit& unit)
-        : Point(), wavelength(wavelength, scaling),
-		kinetic(shp::Quantity::DEFAULT_VALUE, scaling, unit),
-		potential(shp::Quantity::DEFAULT_VALUE, scaling, unit) {
+        : Point(), wavelength(wavelength, scaling, UNIT_OF_LENGTH),
+		mass(shp::Quantity::DEFAULT_VALUE, scaling), unit(unit) {
 
 }
 
 Energy::Energy(std::string name, float wavelength, const shp::Unit& unit)
-        : Point(name), wavelength(wavelength, PLANCK_SCALE),
-		kinetic(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE, unit),
-		potential(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE, unit) {
+        : Point(name), wavelength(wavelength, PLANCK_SCALE, UNIT_OF_LENGTH),
+		mass(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE), unit(unit) {
 
 }
 
 Energy::Energy(std::string name, float wavelength, short int scaling,
 		const shp::Unit& unit)
-        : Point(name), wavelength(wavelength, scaling),
-		kinetic(shp::Quantity::DEFAULT_VALUE, scaling, unit),
-		potential(shp::Quantity::DEFAULT_VALUE, scaling, unit) {
+        : Point(name), wavelength(wavelength, scaling, UNIT_OF_LENGTH),
+		mass(shp::Quantity::DEFAULT_VALUE, scaling), unit(unit) {
 
 }
 
-Energy::Energy(float wavelength, float kinetic, const shp::Unit& unit)
-        : Point(), wavelength(wavelength, PLANCK_SCALE),
-		kinetic(kinetic, PLANCK_SCALE, unit),
-		potential(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE, unit) {
+Energy::Energy(Mass& mass) : Point(), wavelength(UNIT_OF_LENGTH), mass(mass), unit(UNIT) {
 
 }
 
-Energy::Energy(float wavelength, short int scaling, float kinetic, const shp::Unit& unit)
-        : Point(), wavelength(wavelength, scaling),
-		kinetic(kinetic, scaling, unit),
-		potential(shp::Quantity::DEFAULT_VALUE, scaling, unit) {
+Energy::Energy(Mass& mass, const shp::Unit& unit)
+        : Point(), wavelength(UNIT_OF_LENGTH), mass(mass), unit(unit) {
 
 }
 
-Energy::Energy(std::string name, float wavelength, float kinetic, const shp::Unit& unit)
-        : Point(name), wavelength(wavelength, PLANCK_SCALE),
-		kinetic(kinetic, PLANCK_SCALE, unit),
-		potential(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE, unit) {
+Energy::Energy(std::string name, Mass& mass)
+        : Point(name), wavelength(UNIT_OF_LENGTH), mass(mass), unit(UNIT) {
+
+}
+
+Energy::Energy(std::string name, Mass& mass, const shp::Unit& unit)
+        : Point(name), wavelength(UNIT_OF_LENGTH), mass(mass), unit(unit) {
+
+}
+
+Energy::Energy(float wavelength, Mass& mass)
+        : Point(), wavelength(wavelength, PLANCK_SCALE, UNIT_OF_LENGTH),
+        mass(mass), unit(UNIT) {
+
+}
+
+Energy::Energy(float wavelength, float mass, const shp::Unit& unit)
+        : Point(), wavelength(wavelength, PLANCK_SCALE, UNIT_OF_LENGTH),
+		mass(mass, PLANCK_SCALE), unit(unit) {
+
+}
+
+Energy::Energy(float wavelength, Mass& mass, const shp::Unit& unit)
+        : Point(), wavelength(wavelength, PLANCK_SCALE, UNIT_OF_LENGTH), mass(mass), unit(unit) {
+
+}
+
+
+Energy::Energy(float wavelength, short int scaling, float mass, const shp::Unit& unit)
+        : Point(), wavelength(wavelength, scaling, UNIT_OF_LENGTH), mass(mass, scaling), unit(unit) {
+
+}
+
+Energy::Energy(float wavelength, short int scaling, Mass& mass, const shp::Unit& unit)
+        : Point(), wavelength(wavelength, scaling, UNIT_OF_LENGTH), mass(mass), unit(unit) {
+
+}
+
+
+Energy::Energy(std::string name, float wavelength, float mass, const shp::Unit& unit)
+        : Point(name), wavelength(wavelength, PLANCK_SCALE, UNIT_OF_LENGTH),
+		mass(mass, PLANCK_SCALE), unit(unit) {
+
+}
+
+Energy::Energy(std::string name, float wavelength, Mass& mass, const shp::Unit& unit)
+        : Point(name), wavelength(wavelength, PLANCK_SCALE, UNIT_OF_LENGTH), mass(mass), unit(unit) {
 
 }
 
 Energy::Energy(std::string name, float wavelength, short int scaling,
-		float kinetic, const shp::Unit& unit)
-        : Point(name), wavelength(wavelength, scaling),
-		kinetic(kinetic, scaling, unit),
-		potential(shp::Quantity::DEFAULT_VALUE, scaling, unit) {
-
-}
-
-Energy::Energy(float wavelength, float kinetic, float potential, const shp::Unit& unit)
-        : Point(), wavelength(wavelength, PLANCK_SCALE),
-		kinetic(kinetic, PLANCK_SCALE, unit), potential(potential, PLANCK_SCALE, unit) {
-
-}
-
-Energy::Energy(float wavelength, short int scaling, float kinetic, float potential,
-		const shp::Unit& unit)
-        : Point(), wavelength(wavelength, scaling),
-		kinetic(kinetic, scaling, unit), potential(potential, scaling, unit) {
-
-}
-
-Energy::Energy(std::string name, float wavelength, float kinetic, float potential,
-		const shp::Unit& unit)
-        : Point(name), wavelength(wavelength, PLANCK_SCALE),
-		kinetic(kinetic, PLANCK_SCALE, unit), potential(potential, PLANCK_SCALE, unit) {
+		float mass, const shp::Unit& unit)
+        : Point(name), wavelength(wavelength, scaling, UNIT_OF_LENGTH),
+		mass(mass, scaling), unit(unit) {
 
 }
 
 Energy::Energy(std::string name, float wavelength, short int scaling,
-		float kinetic, float potential, const shp::Unit& unit)
-        : Point(name), wavelength(wavelength, scaling),
-		kinetic(kinetic, scaling, unit), potential(potential, scaling, unit) {
+		Mass& mass, const shp::Unit& unit)
+        : Point(name), wavelength(wavelength, scaling, UNIT_OF_LENGTH),
+		mass(mass), unit(unit) {
 
 }
 
 Energy::Energy(float amplitude, float gradient, float wavelength,
-        float kinetic, float potential, const shp::Unit& unit)
-        : Point(amplitude, gradient), wavelength(wavelength, PLANCK_SCALE),
-        kinetic(kinetic, PLANCK_SCALE, unit), potential(potential, PLANCK_SCALE, unit) {
+        float mass, const shp::Unit& unit)
+        : Point(amplitude, gradient), wavelength(wavelength, PLANCK_SCALE, UNIT_OF_LENGTH),
+        mass(mass, PLANCK_SCALE), unit(unit) {
+
+}
+
+Energy::Energy(float amplitude, float gradient, float wavelength,
+        Mass& mass, const shp::Unit& unit)
+        : Point(amplitude, gradient), wavelength(wavelength, PLANCK_SCALE, UNIT_OF_LENGTH),
+        mass(mass), unit(unit) {
 
 }
 
 Energy::Energy(float amplitude, float gradient, float wavelength, short int scaling,
-        float kinetic, float potential, const shp::Unit& unit)
-        : Point(amplitude, gradient), wavelength(wavelength, scaling),
-        kinetic(kinetic, scaling, unit), potential(potential, scaling, unit) {
+        float mass, const shp::Unit& unit)
+        : Point(amplitude, gradient), wavelength(wavelength, scaling, UNIT_OF_LENGTH),
+        mass(mass, scaling), unit(unit) {
+
+}
+
+Energy::Energy(float amplitude, float gradient, float wavelength, short int scaling,
+        Mass& mass, const shp::Unit& unit)
+        : Point(amplitude, gradient), wavelength(wavelength, scaling, UNIT_OF_LENGTH),
+        mass(mass), unit(unit) {
 
 }
 
 Energy::Energy(std::string name, float amplitude, float gradient, float wavelength,
-        float kinetic, float potential, const shp::Unit& unit)
-        : Point(name, amplitude, gradient), wavelength(wavelength, PLANCK_SCALE),
-        kinetic(kinetic, PLANCK_SCALE, unit), potential(potential, PLANCK_SCALE, unit) {
+        float mass, const shp::Unit& unit)
+        : Point(name, amplitude, gradient), wavelength(wavelength, PLANCK_SCALE, UNIT_OF_LENGTH),
+        mass(mass, PLANCK_SCALE), unit(unit) {
 
 }
 
 Energy::Energy(std::string name, float amplitude, float gradient, float wavelength,
-		short int scaling,
-        float kinetic, float potential, const shp::Unit& unit)
-        : Point(name, amplitude, gradient), wavelength(wavelength, scaling),
-        kinetic(kinetic, scaling, unit), potential(potential, scaling, unit) {
+        Mass& mass, const shp::Unit& unit)
+        : Point(name, amplitude, gradient), wavelength(wavelength, PLANCK_SCALE, UNIT_OF_LENGTH),
+        mass(mass), unit(unit) {
+
+}
+
+Energy::Energy(std::string name, float amplitude, float gradient, float wavelength,
+		short int scaling, float mass, const shp::Unit& unit)
+        : Point(name, amplitude, gradient), wavelength(wavelength, scaling, UNIT_OF_LENGTH),
+        mass(mass, scaling), unit(unit) {
+
+}
+
+Energy::Energy(std::string name, float amplitude, float gradient, float wavelength,
+		short int scaling, Mass& mass, const shp::Unit& unit)
+        : Point(name, amplitude, gradient), wavelength(wavelength, scaling, UNIT_OF_LENGTH),
+        mass(mass), unit(unit) {
 
 }
 
@@ -212,48 +246,43 @@ Energy::~Energy() {
 }
 
 bool Energy::operator==(const Energy& peer) const {
-    return (wavelength == peer.wavelength) &&
-            (kinetic == peer.kinetic) &&
-            (potential == peer.potential);
+    return (wavelength == peer.wavelength) && (mass == peer.mass);
 }
 
 Energy Energy::operator+(const Energy& peer) const {
-    shp::Unit newunit = kinetic.getUnit();
     return Energy((wavelength + peer.wavelength).getValue(),
-            (kinetic + peer.kinetic).getValue(),
-            (potential + peer.potential).getValue(), newunit);
+            (mass + peer.mass).getQuantity().getValue(), unit);
 }
 
 Energy Energy::operator-(const Energy& peer) const {
-    shp::Unit newunit = kinetic.getUnit();
     return Energy((wavelength - peer.wavelength).getValue(),
-            (kinetic - peer.kinetic).getValue(),
-            (potential - peer.potential).getValue(), newunit);
+            (mass - peer.mass).getQuantity().getValue(), unit);
 }
 
 Energy Energy::operator*(const Energy& peer) const {
-    shp::Unit newunit = kinetic.getUnit();
     return Energy((wavelength * peer.wavelength).getValue(),
-            (kinetic * peer.kinetic).getValue(),
-            (potential * peer.potential).getValue(), newunit);
+            (mass * peer.mass).getQuantity().getValue(), unit);
 }
 
 Energy Energy::operator/(const Energy& peer) const {
-    shp::Unit newunit = kinetic.getUnit();
     return Energy((wavelength / peer.wavelength).getValue(),
-            (kinetic / peer.kinetic).getValue(),
-            (potential / peer.potential).getValue(), newunit);
+            (mass / peer.mass).getQuantity().getValue(), unit);
 }
 
 Energy Energy::operator%(const Energy& peer) const {
-    shp::Unit newunit = kinetic.getUnit();
     return Energy((wavelength % peer.wavelength).getValue(),
-            (kinetic % peer.kinetic).getValue(),
-            (potential % peer.potential).getValue(), newunit);
+            (mass % peer.mass).getQuantity().getValue(), unit);
 }
 
-shp::Quantity Energy::getQuantum() const {
-	shp::Quantity result(PLANCK_CONSTANT * getFrequency().getValue(), PLANCK_SCALE);
+shp::Quantity Energy::getPotential() const {
+    shp::Quantity speed_of_light(LIGHT_SPEED, LIGHT_SCALE);
+    float energy = (mass.getQuantity() * (speed_of_light * speed_of_light)).getValue();
+	shp::Quantity result(energy, ((LIGHT_SCALE * 2) + mass.getQuantity().getScaling()), unit);
+    return result;
+}
+
+shp::Quantity Energy::getKinetic() const {
+	shp::Quantity result(PLANCK_CONSTANT * getFrequency().getValue(), PLANCK_SCALE, unit);
     return result;
 }
 
@@ -280,15 +309,14 @@ const float Energy::getPhysicalLimit() {
 }
 
 shp::Point Energy::copy() {
-    Energy fresh(wavelength.getValue(),
-        kinetic.getValue(), potential.getValue(), kinetic.getUnit());
+    Energy fresh(wavelength.getValue(), mass.getQuantity().getValue(), getUnit());
     return fresh;
 }
 
 void Energy::clear() {
     wavelength.clear();
-    kinetic.clear();
-    potential.clear();
+    mass.clear();
+    unit.clear();
     return;
 }
 
@@ -296,9 +324,9 @@ std::string Energy::print() {
     std::stringstream result;
     result << "[";
 	result << Point::print() << ",l:";
-    result << wavelength.print() << ",k:";
-    result << kinetic.print() << ",p:";
-    result << potential.print() << "]";
+    result << wavelength.print() << ",";
+    result << mass.print() << "";
+    result << unit.print() << "]";
 	return result.str();
 }
 

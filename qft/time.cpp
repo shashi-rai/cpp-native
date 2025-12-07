@@ -26,15 +26,15 @@ const std::string Time::UNIT = "s";                 // System International
 const short int Time::ATOMIC_SCALE = -17;           // 10^-17 s
 const float Time::ATOMIC_UNIT = 2.4188843265864f;   // 2.41 x 10^-17 s
 
-Time::Time() : unit(), quantity(0L), scaling(ATOMIC_SCALE) {
+Time::Time() : unit(UNIT), quantity(0L), scaling(ATOMIC_SCALE) {
 
 }
 
-Time::Time(long time) : unit(), quantity(time), scaling(ATOMIC_SCALE) {
+Time::Time(long time) : unit(UNIT), quantity(time), scaling(ATOMIC_SCALE) {
 
 }
 
-Time::Time(long time, short int scaling) : unit(), quantity(time), scaling(scaling) {
+Time::Time(long time, short int scaling) : unit(UNIT), quantity(time), scaling(scaling) {
 
 }
 

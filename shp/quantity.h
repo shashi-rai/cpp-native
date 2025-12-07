@@ -37,9 +37,12 @@ public:
     Quantity();
     Quantity(float value);
     Quantity(short int scaling);
+    Quantity(const std::string unit);
     Quantity(const Unit& unit);
+    Quantity(float value, const std::string unit);
     Quantity(float value, const Unit& unit);
     Quantity(float value, short int scaling);
+    Quantity(float value, short int scaling, const std::string unit);
     Quantity(float value, short int scaling, const Unit& unit);
 
     // Destructors

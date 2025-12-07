@@ -22,12 +22,14 @@
 
 namespace phy {
 
-Force::Force() : name(""), unit(), magnitude(), direction() {
+const std::string Force::UNIT = "N";    // System International
+
+Force::Force() : name(""), unit(UNIT), magnitude(), direction() {
 
 }
 
 Force::Force(const shp::Quantity& magnitude, const shp::Direction& direction)
-        : name(), unit(), magnitude(magnitude), direction(direction) {
+        : name(), unit(UNIT), magnitude(magnitude), direction(direction) {
 
 }
 
@@ -44,7 +46,7 @@ Force::Force(std::string name, const shp::Unit& unit,
 
 Force::Force(std::string name,
         const shp::Quantity& magnitude, const shp::Direction& direction)
-        : name(name), unit(), magnitude(magnitude), direction(direction) {
+        : name(name), unit(UNIT), magnitude(magnitude), direction(direction) {
 
 }
 

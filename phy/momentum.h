@@ -64,7 +64,8 @@ public:
     virtual void clear();
     virtual std::string print();
 
-
+public:
+    static const std::string UNIT;
 };
 
 typedef std::vector<Momentum > MomentumArray;
