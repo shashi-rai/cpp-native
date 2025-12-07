@@ -22,27 +22,72 @@
 
 namespace gis {
 
-Location::Location() : latitude(0.0), longitude(0.0), altitude(0.0), timestamp(0L) {
+const double Location::DEFAULT_VALUE = 0.0;
+const long Location::DEFAULT_TIME = 0L;
+
+Location::Location()
+        : latitude(DEFAULT_VALUE), longitude(DEFAULT_VALUE), altitude(DEFAULT_VALUE),
+        updated(DEFAULT_TIME) {
 
 }
 
 Location::Location(double latitude, double longitude)
-    : latitude(latitude), longitude(longitude), altitude(0.0), timestamp(0L) {
+    : latitude(latitude), longitude(longitude), altitude(DEFAULT_VALUE),
+    updated(DEFAULT_TIME) {
 
 }
 
-Location::Location(double latitude, double longitude, long timestamp)
-    : latitude(latitude), longitude(longitude), altitude(0.0), timestamp(timestamp) {
+Location::Location(double latitude, double longitude, long updated)
+    : latitude(latitude), longitude(longitude), altitude(DEFAULT_VALUE),
+    updated(updated) {
 
 }
 
-Location::Location(double latitude, double longitude, double altitude, long timestamp)
-    : latitude(latitude), longitude(longitude), altitude(altitude), timestamp(timestamp) {
+Location::Location(double latitude, double longitude, double altitude, long updated)
+    : latitude(latitude), longitude(longitude), altitude(altitude), updated(updated) {
 
 }
 
 Location::~Location() {
 
+}
+
+bool Location::operator==(const Location& peer) const {
+    return (latitude == peer.latitude)
+        && (longitude == peer.longitude)
+        && (altitude == peer.altitude)
+        && (updated == peer.updated);
+}
+
+Location Location::operator+(const Location& peer) const {
+    return Location((latitude + peer.latitude), (longitude + peer.longitude),
+        (altitude + peer.altitude), (updated + peer.updated));
+}
+
+Location Location::operator-(const Location& peer) const {
+    return Location((latitude - peer.latitude), (longitude - peer.longitude),
+        (altitude - peer.altitude), (updated - peer.updated));
+}
+
+Location Location::copy() {
+    Location fresh(latitude, longitude, altitude, updated);
+    return fresh;
+}
+
+void Location::clear() {
+    latitude = longitude = altitude = DEFAULT_VALUE;
+    updated = 0L;
+    return;
+}
+
+std::string Location::print() {
+    std::stringstream result;
+    result << "(lat:";
+    result << latitude << ",long:";
+    result << longitude << ",alt:";
+    result << altitude << ",upd:";
+    result << updated << ")";
+	return result.str();
 }
 
 } // namespace gis

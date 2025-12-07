@@ -19,6 +19,7 @@
 // THE SOFTWARE.
 
 #include "curvature.h"
+#include "angular.h"
 
 namespace shp {
 
@@ -141,7 +142,7 @@ void Curvature::set(int index, const Phase& object) {
 Angular Curvature::getOrientation() const {
     Direction polarity(polarization);
     Direction azimuth(getGradient());
-    Angular result(0, polarity, azimuth);
+    Angular result(Angular::DEFAULT_RADIUS, polarity, azimuth);
     return result;
 }
 

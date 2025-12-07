@@ -22,20 +22,54 @@
 
 namespace shp {
 
+const float Angular::DEFAULT_RADIUS = 0.0f;
+const float Angular::DEFAULT_POLARITY = 0.0f;
+const float Angular::DEFAULT_AZIMUTH = 0.0f;
+
 Angular::Angular() : radius(), polar(), azimuthal() {
 
 }
 
-Angular::Angular(int radius) : radius(radius), polar(), azimuthal() {
+Angular::Angular(float radius) : radius(radius), polar(), azimuthal() {
 
 }
 
-Angular::Angular(int radius, Direction& azimuthal)
+Angular::Angular(float radius, short int scaling)
+        : radius(radius, scaling), polar(), azimuthal() {
+
+}
+
+
+Angular::Angular(Quantity radius) : radius(radius), polar(), azimuthal() {
+
+}
+
+Angular::Angular(float radius, float azimuthal)
 		: radius(radius), polar(), azimuthal(azimuthal) {
 
 }
 
-Angular::Angular(int radius, Direction& polar, Direction& azimuthal)
+Angular::Angular(float radius, short int scaling, float azimuthal)
+		: radius(radius, scaling), polar(), azimuthal(azimuthal) {
+
+}
+
+Angular::Angular(Quantity radius, Direction& azimuthal)
+		: radius(radius), polar(), azimuthal(azimuthal) {
+
+}
+
+Angular::Angular(float radius, float polar, float azimuthal)
+		: radius(radius), polar(polar), azimuthal(azimuthal) {
+
+}
+
+Angular::Angular(float radius, short int scaling, float polar, float azimuthal)
+		: radius(radius, scaling), polar(polar), azimuthal(azimuthal) {
+
+}
+
+Angular::Angular(Quantity radius, Direction& polar, Direction& azimuthal)
 		: radius(radius), polar(polar), azimuthal(azimuthal) {
 
 }
@@ -62,20 +96,40 @@ Angular Angular::operator-(const Angular& peer) const {
     return Angular((radius - peer.radius), newPolar, newAzimuthal);
 }
 
+Angular Angular::operator*(const Angular& peer) const {
+    Direction newPolar = polar * peer.polar;
+    Direction newAzimuthal = azimuthal * peer.azimuthal;
+    return Angular((radius * peer.radius), newPolar, newAzimuthal);
+}
+
+Angular Angular::operator/(const Angular& peer) const {
+    Direction newPolar = polar / peer.polar;
+    Direction newAzimuthal = azimuthal / peer.azimuthal;
+    return Angular((radius / peer.radius), newPolar, newAzimuthal);
+}
+
+Angular Angular::operator%(const Angular& peer) const {
+    Direction newPolar = polar % peer.polar;
+    Direction newAzimuthal = azimuthal % peer.azimuthal;
+    return Angular((radius % peer.radius), newPolar, newAzimuthal);
+}
+
 Angular Angular::copy() {
     Angular fresh(radius, polar, azimuthal);
     return fresh;
 }
 
 void Angular::clear() {
-    radius = 0; polar = 0; azimuthal = 0;
+    radius.clear();
+    polar.clear();
+    azimuthal.clear();
     return;
 }
 
 std::string Angular::print() {
     std::stringstream result;
     result << "{r:";
-    result << radius << ",𝜃:";
+    result << radius.print() << ",𝜃:";
     result << polar.print() << ",𝜙:";
     result << azimuthal.print() << "}";
 	return result.str();

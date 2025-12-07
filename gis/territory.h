@@ -23,29 +23,36 @@
 
 #include <string>
 #include <vector>
+#include "address.h"
 #include "location.h"
+#include "../shp/point.h"
 
 namespace gis {
 
-class Territory {
-    std::string name;
-    Location location;
+class Territory : public shp::Point {
+    Address address;
 public:
     // Constructors
     Territory();
     Territory(std::string name);
-    Territory(std::string name, Location location);
+    Territory(std::string name, Address& address);
 
     // Destructors
     ~Territory();
 
+    // Operator overloading
+    bool operator==(const Territory& peer) const;
+
     // Getters
-    std::string getName() const { return name; }
-    Location getLocation() const { return location; }
+    Address getAddress() const { return address; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
-    void setLocation(Location value) { location = value; }
+    void setAddress(const Address& place) { address = place; }
+
+    // Additional methods
+    virtual Point copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Territory > TerritoryArray;

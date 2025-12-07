@@ -24,19 +24,26 @@
 #include <string>
 #include <vector>
 #include "direction.h"
+#include "quantity.h"
 
 namespace shp {
 
 class Angular {
-    int radius;             // r - radial distance from the origin
+    Quantity radius;        // r - radial distance from the origin
     Direction polar;        // 𝜃 - polar zenith angle from Y axis
     Direction azimuthal;    // 𝜙 - angle within the XY plane only
 public:
     // Constructors
     Angular();
-    Angular(int radius);
-    Angular(int radius, Direction& azimuthal);
-    Angular(int radius, Direction& polar, Direction& azimuthal);
+    Angular(float radius);
+    Angular(float radius, short int scaling);
+    Angular(Quantity radius);
+    Angular(float radius, float azimuthal);
+    Angular(float radius, short int scaling, float azimuthal);
+    Angular(Quantity radius, Direction& azimuthal);
+    Angular(float radius, float polar, float azimuthal);
+    Angular(float radius, short int scaling, float polar, float azimuthal);
+    Angular(Quantity radius, Direction& polar, Direction& azimuthal);
 
     // Destructors
     ~Angular();
@@ -45,14 +52,17 @@ public:
     bool operator==(const Angular& peer) const;
     Angular operator+(const Angular& peer) const;
     Angular operator-(const Angular& peer) const;
+    Angular operator*(const Angular& peer) const;
+    Angular operator/(const Angular& peer) const;
+    Angular operator%(const Angular& peer) const;
 
     // Getters
-    int getRadius() const { return radius; }
+    Quantity getRadius() const { return radius; }
     Direction getPolar() const { return polar; }
     Direction getAzimuthal() const { return azimuthal; }
 
     // Setters
-    void setRadius(int value) { this->radius = value; }
+    void setRadius(Quantity value) { this->radius = value; }
     void setPolar(const Direction& angle) { this->polar = angle; }
     void setAzimuthal(const Direction& angle) { this->azimuthal = angle; }
 
@@ -60,6 +70,11 @@ public:
     Angular copy();
     void clear();
     std::string print();
+
+public:
+    static const float DEFAULT_RADIUS;
+    static const float DEFAULT_POLARITY;
+    static const float DEFAULT_AZIMUTH;
 };
 
 typedef std::vector<Angular > AngularArray;

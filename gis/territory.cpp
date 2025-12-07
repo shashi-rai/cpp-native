@@ -19,25 +19,47 @@
 // THE SOFTWARE.
 
 #include "territory.h"
-#include "location.h"
 
 namespace gis {
 
-Territory::Territory() : name(""), location() {
+Territory::Territory() : Point(), address() {
 
 }
 
-Territory::Territory(std::string name) : name(name), location() {
+Territory::Territory(std::string name) : Point(name), address() {
 
 }
 
-Territory::Territory(std::string name, Location location)
-    : name(name), location(location) {
+Territory::Territory(std::string name, Address& address)
+    : Point(name), address(address) {
 
 }
 
 Territory::~Territory() {
 
+}
+
+bool Territory::operator==(const Territory& peer) const {
+    return (static_cast<const Point&>(*this) == static_cast<const Point&>(peer))
+        && (address == peer.address);
+}
+
+shp::Point Territory::copy() {
+    Territory fresh(getName(), address);
+    return fresh;
+}
+
+void Territory::clear() {
+    address.clear();
+    return;
+}
+
+std::string Territory::print() {
+    std::stringstream result;
+    result << "[t:";
+    result << Point::print() << ",a:";
+    result << address.print() << "]";
+	return result.str();
 }
 
 } // namespace gis

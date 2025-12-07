@@ -21,6 +21,7 @@
 #ifndef GIS_LOCATION_H
 #define GIS_LOCATION_H
 
+#include <sstream>
 #include <vector>
 
 namespace gis {
@@ -29,28 +30,42 @@ class Location {
     double latitude;
     double longitude;
     double altitude;
-    long timestamp;
+    long updated;       // timestamp
 public:
     // Constructors
     Location();
     Location(double latitude, double longitude);
     Location(double latitude, double longitude, long timestamp);
-    Location(double latitude, double longitude, double altitude, long timestamp);
+    Location(double latitude, double longitude, double altitude, long updated);
 
     // Destructors
     ~Location();
+
+    // Operator overloading
+    bool operator==(const Location& peer) const;
+    Location operator+(const Location& peer) const;
+    Location operator-(const Location& peer) const;
 
     // Getters
     double getLatitude() const { return latitude; }
     double getLongitude() const { return longitude; }
     double getAltitude() const { return altitude; }
-    long getTimestamp() const { return timestamp; }
+    long getUpdated() const { return updated; }
 
     // Setters
     void setLatitude(double value) { latitude = value; }
     void setLongitude(double value) { longitude = value; }
     void setAltitude(double value) { altitude = value; }
-    void setTimestamp(long value) { timestamp = value; }
+    void setUpdated(long timestamp) { updated = timestamp; }
+
+    // Additional methods
+    virtual Location copy();
+    virtual void clear();
+    virtual std::string print();
+
+public:
+    static const double DEFAULT_VALUE;
+    static const long DEFAULT_TIME;
 };
 
 typedef std::vector<Location > LocationArray;

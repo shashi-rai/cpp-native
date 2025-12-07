@@ -98,7 +98,7 @@ Phase Phase::operator-(const Phase& peer) const {
 Angular Phase::getOrientation() const {
     Direction polarity(polarization);
     Direction azimuth(getGradient());
-    Angular result(0, polarity, azimuth);
+    Angular result(Angular::DEFAULT_RADIUS, polarity, azimuth);
     return result;
 }
 

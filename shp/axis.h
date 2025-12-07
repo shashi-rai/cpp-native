@@ -33,6 +33,7 @@ class Axis {
 public:
     // Constructors
     Axis();
+    Axis(std::string name);
     Axis(std::string name, float scaling);
 
     // Destructors

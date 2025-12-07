@@ -51,6 +51,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/field.o \
 		$(OBJFOLDR)/mass.o \
 		$(OBJFOLDR)/particle.o \
+		$(OBJFOLDR)/temperature.o \
 		$(OBJFOLDR)/time.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
 		$(OBJFOLDR)/action.o \
@@ -59,6 +60,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/field.o \
 		$(OBJFOLDR)/mass.o \
 		$(OBJFOLDR)/particle.o \
+		$(OBJFOLDR)/temperature.o \
 		$(OBJFOLDR)/time.o
 
 $(OBJFOLDR)/action.o: action.cpp
@@ -78,6 +80,9 @@ $(OBJFOLDR)/mass.o: mass.cpp
 
 $(OBJFOLDR)/particle.o: particle.cpp
 	$(CPPTOOL) -c particle.cpp -o $(OBJFOLDR)/particle.o $(CXXFLAGS)
+
+$(OBJFOLDR)/temperature.o: temperature.cpp
+	$(CPPTOOL) -c temperature.cpp -o $(OBJFOLDR)/temperature.o $(CXXFLAGS)
 
 $(OBJFOLDR)/time.o: time.cpp
 	$(CPPTOOL) -c time.cpp -o $(OBJFOLDR)/time.o $(CXXFLAGS)

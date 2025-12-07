@@ -26,6 +26,11 @@ Axis::Axis() : name(""), scaling(0.0f) {
 
 }
 
+Axis::Axis(std::string name)
+        : name(name), scaling() {
+
+}
+
 Axis::Axis(std::string name, float scaling)
         : name(name), scaling(scaling) {
 

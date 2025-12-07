@@ -45,11 +45,16 @@ clean-libs: clean-custom
 	${RMCLEAN} $(LIBFILES)
 
 $(LIBFOLDR)/$(LIBNAME): \
+		$(OBJFOLDR)/address.o \
 		$(OBJFOLDR)/location.o \
 		$(OBJFOLDR)/territory.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
+		$(OBJFOLDR)/address.o \
 		$(OBJFOLDR)/location.o \
 		$(OBJFOLDR)/territory.o
+
+$(OBJFOLDR)/address.o: address.cpp
+	$(CPPTOOL) -c address.cpp -o $(OBJFOLDR)/address.o $(CXXFLAGS)
 
 $(OBJFOLDR)/location.o: location.cpp
 	$(CPPTOOL) -c location.cpp -o $(OBJFOLDR)/location.o $(CXXFLAGS)
