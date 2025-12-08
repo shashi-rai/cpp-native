@@ -26,6 +26,16 @@ Volume::Volume() : surface(), height() {
 
 }
 
+Volume::Volume(const Area& surface, const float height)
+        : surface(surface), height(height) {
+
+}
+
+Volume::Volume(const Area& surface, const Quantity& height)
+        : surface(surface), height(height) {
+
+}
+
 Volume::Volume(const float length, const float breadth, const float height)
         : surface(length, breadth), height(height) {
 
@@ -86,9 +96,9 @@ void Volume::clear() {
 
 std::string Volume::print() {
     std::stringstream result;
-    result << "(A:";
+    result << "{";
     result << surface.print() << ",h:";
-    result << height.print() << ")";
+    result << height.print() << "}";
 	return result.str();
 }
 

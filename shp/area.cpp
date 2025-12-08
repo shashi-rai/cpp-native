@@ -45,28 +45,38 @@ bool Area::operator==(const Area& peer) const {
 }
 
 Area Area::operator+(const Area& peer) const {
-    float part = std::sqrt(getTotal() + peer.getTotal());
-    return Area(part, part);
+    float realarea = (getTotal() + peer.getTotal());
+    std::complex<float> complexarea(realarea, 0.0);
+    std::complex<float> part = std::sqrt(complexarea);
+    return Area(std::abs(part), std::abs(part));
 }
 
 Area Area::operator-(const Area& peer) const {
-    float part = std::sqrt(getTotal() - peer.getTotal());
-    return Area(part, part);
+    float realarea = (getTotal() - peer.getTotal());
+    std::complex<float> complexarea(realarea, 0.0);
+    std::complex<float> part = std::sqrt(complexarea);
+    return Area(std::abs(part), std::abs(part));
 }
 
 Area Area::operator*(const Area& peer) const {
-    float part = std::sqrt(getTotal() * peer.getTotal());
-    return Area(part, part);
+    float realarea = (getTotal() * peer.getTotal());
+    std::complex<float> complexarea(realarea, 0.0);
+    std::complex<float> part = std::sqrt(complexarea);
+    return Area(std::abs(part), std::abs(part));
 }
 
 Area Area::operator/(const Area& peer) const {
-    float part = std::sqrt(getTotal() / peer.getTotal());
-    return Area(part, part);
+    float realarea = (getTotal() / peer.getTotal());
+    std::complex<float> complexarea(realarea, 0.0);
+    std::complex<float> part = std::sqrt(complexarea);
+    return Area(std::abs(part), std::abs(part));
 }
 
 Area Area::operator%(const Area& peer) const {
-    float part = std::sqrt(fmod(getTotal(), peer.getTotal()));
-    return Area(part, part);
+    float realarea = (fmod(getTotal(), peer.getTotal()));
+    std::complex<float> complexarea(realarea, 0.0);
+    std::complex<float> part = std::sqrt(complexarea);
+    return Area(std::abs(part), std::abs(part));
 }
 
 float Area::getTotal() const {

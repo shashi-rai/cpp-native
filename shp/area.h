@@ -22,6 +22,7 @@
 #define SHP_AREA_H
 
 #include <cmath>
+#include <complex>
 #include <sstream>
 #include <string>
 #include <vector>

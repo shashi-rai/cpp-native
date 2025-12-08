@@ -36,6 +36,8 @@ class Volume {
 public:
     // Constructors
     Volume();
+    Volume(const Area& surface, const float height);
+    Volume(const Area& surface, const Quantity& height);
     Volume(const float length, const float breadth, const float height);
     Volume(const Quantity& length, const Quantity& breadth, const Quantity& height);
 
