@@ -18,56 +18,52 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef PHY_FORCE_H
-#define PHY_FORCE_H
+#ifndef QFT_MOMENTUM_H
+#define QFT_MOMENTUM_H
 
-#include <string>
 #include <vector>
-#include "../shp/direction.h"
-#include "../shp/quantity.h"
-#include "../shp/unit.h"
+#include "../qft/mass.h"
+#include "../qft/velocity.h"
 
-namespace phy {
+namespace qft {
 
-class Force {
+class Momentum {
     std::string name;
-    shp::Unit unit;
-    shp::Quantity magnitude;
-    shp::Direction direction;
+    qft::Mass mass;
+    qft::Velocity velocity;
 public:
     // Constructors
-    Force();
-    Force(const shp::Quantity& magnitude, const shp::Direction& direction);
-    Force(std::string name, const shp::Unit& unit);
-    Force(std::string name, const shp::Quantity& magnitude, const shp::Direction& direction);
-    Force(std::string name, const shp::Unit& unit, const shp::Quantity& magnitude, const shp::Direction& direction);
+    Momentum();
+    Momentum(std::string name);
+    Momentum(const qft::Mass& mass);
+    Momentum(std::string name, const qft::Mass& mass);
+    Momentum(const qft::Mass& mass, const qft::Velocity& velocity);
+    Momentum(std::string name, const qft::Mass& mass, const qft::Velocity& velocity);
 
     // Destructors
-    ~Force();
+    ~Momentum();
 
     // Operator overloading
-    bool operator==(const Force& peer) const;
-    Force operator+(const Force& peer) const;
-    Force operator-(const Force& peer) const;
-    Force operator*(const Force& peer) const;
-    Force operator/(const Force& peer) const;
-    Force operator%(const Force& peer) const;
+    bool operator==(const Momentum& peer) const;
+    Momentum operator+(const Momentum& peer) const;
+    Momentum operator-(const Momentum& peer) const;
+    Momentum operator*(const Momentum& peer) const;
+    Momentum operator/(const Momentum& peer) const;
+    Momentum operator%(const Momentum& peer) const;
 
     // Getters
     std::string getName() const { return name; }
-    shp::Unit getUnit() const { return unit; }
-    shp::Quantity getMagnitude() const { return magnitude; }
-    shp::Direction getDirection() const { return direction; }
+    qft::Mass getMass() const { return mass; }
+    qft::Velocity getVelocity() const { return velocity; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
-    void setUnit(const shp::Unit& value) { this->unit = value; }
-    void setMagnitude(const shp::Quantity& magnitude) { this->magnitude = magnitude; }
-    void setDirection(const shp::Direction& direction) { this->direction = direction; }
+    void setMass(const qft::Mass& value) { this->mass = value; }
+    void setVelocity(const qft::Velocity& value) { this->velocity = value; }
 
     // Additional methods
     float getTotal() const;
-    virtual Force copy();
+    virtual Momentum copy();
     virtual void clear();
     virtual std::string print();
 
@@ -75,8 +71,8 @@ public:
     static const std::string UNIT;
 };
 
-typedef std::vector<Force > ForceArray;
+typedef std::vector<Momentum > MomentumArray;
 
-} // namespace phy
+} // namespace qft
 
-#endif //PHY_FORCE_H
+#endif //QFT_MOMENTUM_H

@@ -18,54 +18,68 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "event.h"
+#include "change.h"
 
-namespace phy {
+namespace shp {
 
-Event::Event() : name(""), location(), timestamp(),
-        impulse(), change() {
-
-}
-
-Event::Event(std::string name) : name(name), location(), timestamp(),
-        impulse(), change() {
+Change::Change() : gradient() {
 
 }
 
-Event::Event(std::string name, const Space& location, const qft::Time& timestamp,
-        const qft::Momentum& impulse, const qft::Energy& action)
-        : name(name), location(location), timestamp(timestamp),
-        impulse(impulse), change(action) {
+Change::Change(const float gradient) : gradient(gradient) {
 
 }
 
-Event::~Event() {
+Change::Change(const Direction& gradient) : gradient(gradient) {
 
 }
 
-Event Event::copy() {
-    Event fresh(name, location, timestamp, impulse, change);
+Change::~Change() {
+
+}
+
+bool Change::operator==(const Change& peer) const {
+    return (gradient == peer.gradient);
+}
+
+Change Change::operator+(const Change& peer) const {
+    return Change(gradient + peer.gradient);
+}
+
+Change Change::operator-(const Change& peer) const {
+    return Change(gradient - peer.gradient);
+}
+
+Change Change::operator*(const Change& peer) const {
+    return Change(gradient * peer.gradient);
+}
+
+Change Change::operator/(const Change& peer) const {
+    return Change(gradient / peer.gradient);
+}
+
+Change Change::operator%(const Change& peer) const {
+    return Change(gradient % peer.gradient);
+}
+
+float Change::toRadians() const {
+    return gradient.toRadians();
+}
+
+Change Change::copy() {
+    Change fresh(gradient);
     return fresh;
 }
 
-void Event::clear() {
-	name = "";
-    location.clear();
-    timestamp.clear();
-	impulse.clear();
-	change.clear();
+void Change::clear() {
+    gradient.clear();
     return;
 }
 
-std::string Event::print() {
+std::string Change::print() {
     std::stringstream result;
-    result << "{e:";
-    result << name << ",";
-    result << location.print() << ",";
-    result << timestamp.print() << ",";
-	result << impulse.print() << ",";
-    result << change.print() << "}";
+    result << gradient.print();
 	return result.str();
 }
 
-} // namespace phy
+} // namespace shp

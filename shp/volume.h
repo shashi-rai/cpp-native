@@ -18,56 +18,57 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef PHY_EVENT_H
-#define PHY_EVENT_H
+#ifndef SHP_VOLUME_H
+#define SHP_VOLUME_H
 
+#include <cmath>
+#include <sstream>
 #include <string>
 #include <vector>
-#include "space.h"
-#include "../qft/energy.h"
-#include "../qft/momentum.h"
-#include "../qft/time.h"
+#include "area.h"
+#include "quantity.h"
 
-namespace phy {
+namespace shp {
 
-class Event {
-    std::string name;
-    Space location;
-    qft::Time timestamp;
-    qft::Momentum impulse;
-    qft::Energy change;
+class Volume {
+    Area surface;
+    Quantity height;
 public:
     // Constructors
-    Event();
-    Event(std::string name);
-    Event(std::string name, const Space& location, const qft::Time& timestamp,
-        const qft::Momentum& impulse, const qft::Energy& action);
+    Volume();
+    Volume(const float length, const float breadth, const float height);
+    Volume(const Quantity& length, const Quantity& breadth, const Quantity& height);
 
     // Destructors
-    ~Event();
+    ~Volume();
+
+    // Operator overloading
+    bool operator==(const Volume& peer) const;
+    Volume operator+(const Volume& peer) const;
+    Volume operator-(const Volume& peer) const;
+    Volume operator*(const Volume& peer) const;
+    Volume operator/(const Volume& peer) const;
+    Volume operator%(const Volume& peer) const;
 
     // Getters
-    std::string getName() const { return name; }
-    Space getLocation() const { return location; }
-    qft::Time getTimestamp() const { return timestamp; }
-    qft::Momentum getImpulse() const { return impulse; }
-    qft::Energy getChange() const { return change; }
+    Quantity getLength() const { return surface.getLength(); }
+    Quantity getBreadth() const { return surface.getBreadth(); }
+    Quantity getHeight() const { return height; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
-    void setLocation(const Space& location) { this->location = location; }
-    void setTimestamp(const qft::Time& timestamp) { this->timestamp = timestamp; }
-    void setImpulse(const qft::Momentum& impulse) { this->impulse = impulse; }
-    void setChange(const qft::Energy& action) { this->change = action; }
+    void setLength(const Quantity& length) { this->surface.setLength(length); }
+    void setBreadth(const Quantity& breadth) { this->surface.setBreadth(breadth); }
+    void setHeight(const Quantity& height) { this->height = height; }
 
     // Additional methods
-    virtual Event copy();
+    float getTotal() const;
+    virtual Volume copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Event > EventArray;
+typedef std::vector<Volume > VolumeArray;
 
-} // namespace phy
+} // namespace shp
 
-#endif //PHY_EVENT_H
+#endif //SHP_VOLUME_H

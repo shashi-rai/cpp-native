@@ -20,20 +20,34 @@
 
 #include "momentum.h"
 
-namespace phy {
+namespace qft {
 
 const std::string Momentum::UNIT = "kg m/s";    // System International
 
-Momentum::Momentum() : name(""), mass(), velocity() {
+Momentum::Momentum() : name(), mass(), velocity() {
 
 }
 
-Momentum::Momentum(const qft::Mass& mass, const shp::Direction& velocity)
-        : name(""), mass(mass), velocity(velocity) {
+Momentum::Momentum(std::string name) : name(name), mass(), velocity() {
 
 }
 
-Momentum::Momentum(std::string name, const qft::Mass& mass, const shp::Direction& velocity)
+Momentum::Momentum(const qft::Mass& mass)
+        : name(), mass(mass), velocity() {
+
+}
+
+Momentum::Momentum(std::string name, const qft::Mass& mass)
+        : name(name), mass(mass), velocity() {
+
+}
+
+Momentum::Momentum(const qft::Mass& mass, const qft::Velocity& velocity)
+        : name(), mass(mass), velocity(velocity) {
+
+}
+
+Momentum::Momentum(std::string name, const qft::Mass& mass, const qft::Velocity& velocity)
         : name(name), mass(mass), velocity(velocity) {
 
 }
@@ -67,16 +81,17 @@ Momentum Momentum::operator%(const Momentum& peer) const {
 }
 
 float Momentum::getTotal() const {
-    float result = mass.getQuantity().getValue() * velocity.toRadians();
+    float result = mass.getTotal() * velocity.getTotal();
     return result;
 }
 
 Momentum Momentum::copy() {
-    Momentum fresh(mass, velocity);
+    Momentum fresh(name, mass, velocity);
     return fresh;
 }
 
 void Momentum::clear() {
+    name = "";
     mass.clear();
     velocity.clear();
     return;
@@ -85,9 +100,10 @@ void Momentum::clear() {
 std::string Momentum::print() {
     std::stringstream result;
     result << "[mo:";
+    result << name << ",";
     result << mass.print() << ",";
     result << velocity.print() << "]";
 	return result.str();
 }
 
-} // namespace phy
+} // namespace qft

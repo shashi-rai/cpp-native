@@ -50,6 +50,37 @@ public:
     virtual Unit copy();
     virtual void clear();
     virtual std::string print();
+
+public:
+    static std::string getBaseName(short int index);
+    static std::string getBaseDimension(short int index);
+    static std::string getBaseSymbol(short int index);
+    static std::string getDerivedName(short int index);
+    static std::string getDerivedDimension(short int index);
+    static std::string getDerivedSymbol(short int index);
+
+public:
+    static const std::string UNKNOWN;
+    enum BASE {
+        TIME, LENGTH, MASS, CURRENT, TEMPERATURE, SUBSTANCE, LUMINOUSITY
+    };
+    static const short int SI_BASE_MIN;
+    static const short int SI_BASE_MAX;
+    static const std::string BASE_NAME[];
+    static const std::string BASE_DIMENSION[];
+    static const std::string BASE_SYMBOL[];
+    enum DERIVED {
+        PLANE_ANGLE, SOLID_ANGLE, FREQUENCY, FORCE, PRESSURE, ENERGY, POWER,
+        ELECTRIC_CHARGE, ELECTRIC_POTENTIAL, CAPACITANCE, ELECTRIC_RESISTANCE,
+        ELECTRIC_CONDUCTANCE, MAGNETIC_FLUX, MAGNETIC_FLUX_DENSITY, INDUCTANCE,
+        CELSIUS_TEMPERATURE, LUMINOUS_FLUX, ILLUMINANCE, ACTIVITY_RADIONUCLIDE,
+        ABSORBED_DOSE, DOSE_EQUIVALENT, CATALYTIC_ACTIVITY,
+    };
+    static const short int SI_DERIVED_MIN;
+    static const short int SI_DERIVED_MAX;
+    static const std::string DERIVED_NAME[];
+    static const std::string DERIVED_DIMENSION[];
+    static const std::string DERIVED_SYMBOL[];
 };
 
 typedef std::vector<Unit > UnitArray;

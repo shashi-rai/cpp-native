@@ -22,7 +22,7 @@
 
 namespace qft {
 
-const std::string Charge::UNIT = "C";               // System International
+const std::string Charge::UNIT = shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_CHARGE);
 const short int Charge::ATOMIC_SCALE = -19;         // 10^-19 C
 const float Charge::PROTON = 1.602f;                // 1.602 x 10^-19 C
 const float Charge::NEUTRON = 0.0f;                 // 0.0 x 10^-19 C
@@ -80,6 +80,11 @@ Charge Charge::operator/(const Charge& peer) const {
 
 Charge Charge::operator%(const Charge& peer) const {
     return Charge((quantity % peer.quantity), quantity.getUnit());
+}
+
+float Charge::getTotal() const {
+    float result = quantity.getValue();
+    return result;
 }
 
 Charge Charge::copy() {

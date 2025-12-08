@@ -18,77 +18,82 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "force.h"
+#include "velocity.h"
 
-namespace phy {
+namespace qft {
 
-const std::string Force::UNIT = "N";    // System International
+const std::string Velocity::UNIT = "m/s";
 
-Force::Force() : name(""), unit(UNIT), magnitude(), direction() {
-
-}
-
-Force::Force(const shp::Quantity& magnitude, const shp::Direction& direction)
-        : name(), unit(UNIT), magnitude(magnitude), direction(direction) {
+Velocity::Velocity() : name(), unit(UNIT), magnitude(), direction() {
 
 }
 
-Force::Force(std::string name, const shp::Unit& unit) : name(name), unit(unit),
+Velocity::Velocity(std::string name) : name(name), unit(UNIT),
         magnitude(), direction() {
 
 }
 
-Force::Force(std::string name, const shp::Unit& unit,
+Velocity::Velocity(const shp::Quantity& magnitude, const shp::Direction& direction)
+        : name(), unit(UNIT), magnitude(magnitude), direction(direction) {
+
+}
+
+Velocity::Velocity(std::string name, const shp::Unit& unit) : name(name), unit(unit),
+        magnitude(), direction() {
+
+}
+
+Velocity::Velocity(std::string name, const shp::Unit& unit,
         const shp::Quantity& magnitude, const shp::Direction& direction)
         : name(name), unit(unit), magnitude(magnitude), direction(direction) {
 
 }
 
-Force::Force(std::string name,
+Velocity::Velocity(std::string name,
         const shp::Quantity& magnitude, const shp::Direction& direction)
         : name(name), unit(UNIT), magnitude(magnitude), direction(direction) {
 
 }
 
-Force::~Force() {
+Velocity::~Velocity() {
 
 }
 
-bool Force::operator==(const Force& peer) const {
+bool Velocity::operator==(const Velocity& peer) const {
     return (magnitude == peer.magnitude) && (direction == peer.direction);
 }
 
-Force Force::operator+(const Force& peer) const {
-    return Force("+", (magnitude + peer.magnitude), (direction + peer.direction));
+Velocity Velocity::operator+(const Velocity& peer) const {
+    return Velocity("+", (magnitude + peer.magnitude), (direction + peer.direction));
 }
 
-Force Force::operator-(const Force& peer) const {
-    return Force("-", (magnitude - peer.magnitude), (direction - peer.direction));
+Velocity Velocity::operator-(const Velocity& peer) const {
+    return Velocity("-", (magnitude - peer.magnitude), (direction - peer.direction));
 }
 
-Force Force::operator*(const Force& peer) const {
-    return Force("*", (magnitude * peer.magnitude), (direction * peer.direction));
+Velocity Velocity::operator*(const Velocity& peer) const {
+    return Velocity("*", (magnitude * peer.magnitude), (direction * peer.direction));
 }
 
-Force Force::operator/(const Force& peer) const {
-    return Force("/", (magnitude / peer.magnitude), (direction / peer.direction));
+Velocity Velocity::operator/(const Velocity& peer) const {
+    return Velocity("/", (magnitude / peer.magnitude), (direction / peer.direction));
 }
 
-Force Force::operator%(const Force& peer) const {
-    return Force("%", (magnitude % peer.magnitude), (direction % peer.direction));
+Velocity Velocity::operator%(const Velocity& peer) const {
+    return Velocity("%", (magnitude % peer.magnitude), (direction % peer.direction));
 }
 
-float Force::getTotal() const {
-    float result = magnitude.getValue() * direction.toRadians();
+float Velocity::getTotal() const {
+    float result = (magnitude.getValue() * direction.toRadians());
     return result;
 }
 
-Force Force::copy() {
-    Force fresh(name, unit, magnitude, direction);
+Velocity Velocity::copy() {
+    Velocity fresh(name, unit, magnitude, direction);
     return fresh;
 }
 
-void Force::clear() {
+void Velocity::clear() {
 	name = "";
     unit.clear();
     magnitude.clear();
@@ -96,9 +101,9 @@ void Force::clear() {
     return;
 }
 
-std::string Force::print() {
+std::string Velocity::print() {
     std::stringstream result;
-    result << "[f:";
+    result << "[v:";
 	result << name << ",";
     result << magnitude.print() << ",";
 	result << direction.print() << " ";
@@ -106,4 +111,4 @@ std::string Force::print() {
 	return result.str();
 }
 
-} // namespace phy
+} // namespace qft

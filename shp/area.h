@@ -18,58 +18,54 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef PHY_MOMENTUM_H
-#define PHY_MOMENTUM_H
+#ifndef SHP_AREA_H
+#define SHP_AREA_H
 
+#include <cmath>
+#include <sstream>
+#include <string>
 #include <vector>
-#include "../shp/direction.h"
-#include "../qft/mass.h"
+#include "quantity.h"
 
-namespace phy {
+namespace shp {
 
-class Momentum {
-    std::string name;
-    qft::Mass mass;
-    shp::Direction velocity;
+class Area {
+    Quantity length;
+    Quantity breadth;
 public:
     // Constructors
-    Momentum();
-    Momentum(const qft::Mass& mass, const shp::Direction& velocity);
-    Momentum(std::string name, const qft::Mass& mass, const shp::Direction& velocity);
+    Area();
+    Area(const float length, const float breadth);
+    Area(const Quantity& length, const Quantity& breadth);
 
     // Destructors
-    ~Momentum();
+    ~Area();
 
     // Operator overloading
-    bool operator==(const Momentum& peer) const;
-    Momentum operator+(const Momentum& peer) const;
-    Momentum operator-(const Momentum& peer) const;
-    Momentum operator*(const Momentum& peer) const;
-    Momentum operator/(const Momentum& peer) const;
-    Momentum operator%(const Momentum& peer) const;
+    bool operator==(const Area& peer) const;
+    Area operator+(const Area& peer) const;
+    Area operator-(const Area& peer) const;
+    Area operator*(const Area& peer) const;
+    Area operator/(const Area& peer) const;
+    Area operator%(const Area& peer) const;
 
     // Getters
-    std::string getName() const { return name; }
-    qft::Mass getMass() const { return mass; }
-    shp::Direction getVelocity() const { return velocity; }
+    Quantity getLength() const { return length; }
+    Quantity getBreadth() const { return breadth; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
-    void setMass(const qft::Mass& value) { this->mass = value; }
-    void setVelocity(const shp::Direction& value) { this->velocity = value; }
+    void setLength(const Quantity& length) { this->length = length; }
+    void setBreadth(const Quantity& breadth) { this->breadth = breadth; }
 
     // Additional methods
     float getTotal() const;
-    virtual Momentum copy();
+    virtual Area copy();
     virtual void clear();
     virtual std::string print();
-
-public:
-    static const std::string UNIT;
 };
 
-typedef std::vector<Momentum > MomentumArray;
+typedef std::vector<Area > AreaArray;
 
-} // namespace phy
+} // namespace shp
 
-#endif //PHY_MOMENTUM_H
+#endif //SHP_AREA_H

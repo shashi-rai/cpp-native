@@ -18,54 +18,50 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "event.h"
+#ifndef SHP_CHANGE_H
+#define SHP_CHANGE_H
 
-namespace phy {
+#include <sstream>
+#include <string>
+#include <vector>
+#include "direction.h"
 
-Event::Event() : name(""), location(), timestamp(),
-        impulse(), change() {
+namespace shp {
 
-}
+class Change {
+    Direction gradient;
+public:
+    // Constructors
+    Change();
+    Change(const float gradient);
+    Change(const Direction& gradient);
 
-Event::Event(std::string name) : name(name), location(), timestamp(),
-        impulse(), change() {
+    // Destructors
+    ~Change();
 
-}
+    // Operator overloading
+    bool operator==(const Change& peer) const;
+    Change operator+(const Change& peer) const;
+    Change operator-(const Change& peer) const;
+    Change operator*(const Change& peer) const;
+    Change operator/(const Change& peer) const;
+    Change operator%(const Change& peer) const;
 
-Event::Event(std::string name, const Space& location, const qft::Time& timestamp,
-        const qft::Momentum& impulse, const qft::Energy& action)
-        : name(name), location(location), timestamp(timestamp),
-        impulse(impulse), change(action) {
+    // Getters
+    Direction getGradient() const { return gradient; }
 
-}
+    // Setters
+    void setGradient(const Direction& phase) { this->gradient = phase; }
 
-Event::~Event() {
+    // Additional methods
+    float toRadians() const;
+    virtual Change copy();
+    virtual void clear();
+    virtual std::string print();
+};
 
-}
+typedef std::vector<Change > ChangeArray;
 
-Event Event::copy() {
-    Event fresh(name, location, timestamp, impulse, change);
-    return fresh;
-}
+} // namespace shp
 
-void Event::clear() {
-	name = "";
-    location.clear();
-    timestamp.clear();
-	impulse.clear();
-	change.clear();
-    return;
-}
-
-std::string Event::print() {
-    std::stringstream result;
-    result << "{e:";
-    result << name << ",";
-    result << location.print() << ",";
-    result << timestamp.print() << ",";
-	result << impulse.print() << ",";
-    result << change.print() << "}";
-	return result.str();
-}
-
-} // namespace phy
+#endif //SHP_CHANGE_H

@@ -22,9 +22,10 @@
 
 namespace qft {
 
-const std::string Time::UNIT = "s";                 // System International
+const std::string Time::UNIT = shp::Unit::getBaseSymbol(shp::Unit::TIME);
 const short int Time::ATOMIC_SCALE = -17;           // 10^-17 s
 const float Time::ATOMIC_UNIT = 2.4188843265864f;   // 2.41 x 10^-17 s
+const long Time::RADIATION_PERIODS = 9192631770;    // 9,192,631,770 fluctuations
 
 Time::Time() : unit(UNIT), quantity(0L), scaling(ATOMIC_SCALE) {
 

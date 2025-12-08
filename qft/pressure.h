@@ -18,56 +18,66 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef PHY_EVENT_H
-#define PHY_EVENT_H
+#ifndef QFT_PRESSURE_H
+#define QFT_PRESSURE_H
 
 #include <string>
 #include <vector>
-#include "space.h"
-#include "../qft/energy.h"
-#include "../qft/momentum.h"
-#include "../qft/time.h"
+#include "force.h"
+#include "../shp/area.h"
+#include "../shp/unit.h"
 
-namespace phy {
+namespace qft {
 
-class Event {
+class Pressure {
     std::string name;
-    Space location;
-    qft::Time timestamp;
-    qft::Momentum impulse;
-    qft::Energy change;
+    shp::Unit unit;
+    qft::Force force;
+    shp::Area area;
 public:
     // Constructors
-    Event();
-    Event(std::string name);
-    Event(std::string name, const Space& location, const qft::Time& timestamp,
-        const qft::Momentum& impulse, const qft::Energy& action);
+    Pressure();
+    Pressure(std::string name);
+    Pressure(const qft::Force& force, const shp::Area& area);
+    Pressure(std::string name, const shp::Unit& unit);
+    Pressure(std::string name, const qft::Force& force, const shp::Area& area);
+    Pressure(std::string name, const shp::Unit& unit, const qft::Force& force, const shp::Area& area);
 
     // Destructors
-    ~Event();
+    ~Pressure();
+
+    // Operator overloading
+    bool operator==(const Pressure& peer) const;
+    Pressure operator+(const Pressure& peer) const;
+    Pressure operator-(const Pressure& peer) const;
+    Pressure operator*(const Pressure& peer) const;
+    Pressure operator/(const Pressure& peer) const;
+    Pressure operator%(const Pressure& peer) const;
 
     // Getters
     std::string getName() const { return name; }
-    Space getLocation() const { return location; }
-    qft::Time getTimestamp() const { return timestamp; }
-    qft::Momentum getImpulse() const { return impulse; }
-    qft::Energy getChange() const { return change; }
+    shp::Unit getUnit() const { return unit; }
+    qft::Force getForce() const { return force; }
+    shp::Area getArea() const { return area; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
-    void setLocation(const Space& location) { this->location = location; }
-    void setTimestamp(const qft::Time& timestamp) { this->timestamp = timestamp; }
-    void setImpulse(const qft::Momentum& impulse) { this->impulse = impulse; }
-    void setChange(const qft::Energy& action) { this->change = action; }
+    void setUnit(const shp::Unit& value) { this->unit = value; }
+    void setForce(const qft::Force& magnitude) { this->force = magnitude; }
+    void setArea(const shp::Area& amount) { this->area = amount; }
 
     // Additional methods
-    virtual Event copy();
+    float getTotal() const;
+    virtual Pressure copy();
     virtual void clear();
     virtual std::string print();
+
+public:
+    static const std::string UNIT;
 };
 
-typedef std::vector<Event > EventArray;
+typedef std::vector<Pressure > PressureArray;
 
-} // namespace phy
+} // namespace qft
 
-#endif //PHY_EVENT_H
+#endif //QFT_PRESSURE_H

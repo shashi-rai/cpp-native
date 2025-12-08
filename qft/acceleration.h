@@ -18,61 +18,66 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef QFT_TIME_H
-#define QFT_TIME_H
+#ifndef QFT_ACCELERATION_H
+#define QFT_ACCELERATION_H
 
+#include <string>
 #include <vector>
+#include "velocity.h"
+#include "../shp/change.h"
 #include "../shp/unit.h"
 
 namespace qft {
 
-class Time {
+class Acceleration {
+    std::string name;
     shp::Unit unit;
-    long quantity;
-    short int scaling;
+    qft::Velocity velocity;
+    shp::Change change;
 public:
     // Constructors
-    Time();
-    Time(long time);
-    Time(long time, short int scaling);
-    Time(long time, const shp::Unit& unit);
-    Time(long time, short int scaling, const shp::Unit& unit);
+    Acceleration();
+    Acceleration(std::string name);
+    Acceleration(const qft::Velocity& velocity, const shp::Change& change);
+    Acceleration(std::string name, const shp::Unit& unit);
+    Acceleration(std::string name, const qft::Velocity& velocity, const shp::Change& change);
+    Acceleration(std::string name, const shp::Unit& unit, const qft::Velocity& velocity, const shp::Change& change);
 
     // Destructors
-    ~Time();
+    ~Acceleration();
 
     // Operator overloading
-    bool operator==(const Time& peer) const;
-    Time operator+(const Time& peer) const;
-    Time operator-(const Time& peer) const;
-    Time operator*(const Time& peer) const;
-    Time operator/(const Time& peer) const;
-    Time operator%(const Time& peer) const;
+    bool operator==(const Acceleration& peer) const;
+    Acceleration operator+(const Acceleration& peer) const;
+    Acceleration operator-(const Acceleration& peer) const;
+    Acceleration operator*(const Acceleration& peer) const;
+    Acceleration operator/(const Acceleration& peer) const;
+    Acceleration operator%(const Acceleration& peer) const;
 
     // Getters
+    std::string getName() const { return name; }
     shp::Unit getUnit() const { return unit; }
-    long getQuantity() const { return quantity; }
-    short int getScaling() const { return scaling; }
+    qft::Velocity getVelocity() const { return velocity; }
+    shp::Change getChange() const { return change; }
 
     // Setters
+    void setName(const std::string& name) { this->name = name; }
     void setUnit(const shp::Unit& value) { this->unit = value; }
-    void setQuantity(const long value) { this->quantity = value; }
-    void setScaling(const short int value) { this->scaling = value; }
+    void setVelocity(const qft::Velocity& quantity) { this->velocity = quantity; }
+    void setChange(const shp::Change& rate) { this->change = rate; }
 
     // Additional methods
-    virtual Time copy();
+    float getTotal() const;
+    virtual Acceleration copy();
     virtual void clear();
     virtual std::string print();
 
 public:
     static const std::string UNIT;
-    static const short int ATOMIC_SCALE;
-    static const float ATOMIC_UNIT;
-    static const long RADIATION_PERIODS;
 };
 
-typedef std::vector<Time > TimeArray;
+typedef std::vector<Acceleration > AccelerationArray;
 
 } // namespace qft
 
-#endif //QFT_TIME_H
+#endif //QFT_ACCELERATION_H

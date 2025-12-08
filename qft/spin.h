@@ -18,54 +18,53 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "event.h"
+#ifndef QFT_SPIN_H
+#define QFT_SPIN_H
 
-namespace phy {
+#include <cmath>
+#include <sstream>
+#include <vector>
 
-Event::Event() : name(""), location(), timestamp(),
-        impulse(), change() {
+namespace qft {
 
-}
+class Spin {
+    float value;
+public:
+    // Constructors
+    Spin();
+    Spin(float value);
 
-Event::Event(std::string name) : name(name), location(), timestamp(),
-        impulse(), change() {
+    // Destructors
+    ~Spin();
 
-}
+    // Operator overloading
+    bool operator==(const Spin& peer) const;
+    Spin operator+(const Spin& peer) const;
+    Spin operator-(const Spin& peer) const;
+    Spin operator*(const Spin& peer) const;
+    Spin operator/(const Spin& peer) const;
+    Spin operator%(const Spin& peer) const;
 
-Event::Event(std::string name, const Space& location, const qft::Time& timestamp,
-        const qft::Momentum& impulse, const qft::Energy& action)
-        : name(name), location(location), timestamp(timestamp),
-        impulse(impulse), change(action) {
+    // Getters
+    float getValue() const { return value; }
 
-}
+    // Setters
+    void setValue(const float amount) { this->value = amount; }
 
-Event::~Event() {
+    // Additional methods
+    bool hasNoSpin() const { return value == 0; }
+    bool isClockwise() const { return value < 0; }
+    bool isAntiClockwise() const { return value > 0; }
+    virtual Spin copy();
+    virtual void clear();
+    virtual std::string print();
 
-}
+public:
+    static const float DEFAULT_VALUE;
+};
 
-Event Event::copy() {
-    Event fresh(name, location, timestamp, impulse, change);
-    return fresh;
-}
+typedef std::vector<Spin > SpinArray;
 
-void Event::clear() {
-	name = "";
-    location.clear();
-    timestamp.clear();
-	impulse.clear();
-	change.clear();
-    return;
-}
+} // namespace qft
 
-std::string Event::print() {
-    std::stringstream result;
-    result << "{e:";
-    result << name << ",";
-    result << location.print() << ",";
-    result << timestamp.print() << ",";
-	result << impulse.print() << ",";
-    result << change.print() << "}";
-	return result.str();
-}
-
-} // namespace phy
+#endif //QFT_SPIN_H

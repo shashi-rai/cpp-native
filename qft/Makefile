@@ -45,23 +45,38 @@ clean-libs: clean-custom
 	${RMCLEAN} $(LIBFILES)
 
 $(LIBFOLDR)/$(LIBNAME): \
+		$(OBJFOLDR)/acceleration.o \
 		$(OBJFOLDR)/action.o \
 		$(OBJFOLDR)/charge.o \
 		$(OBJFOLDR)/energy.o \
 		$(OBJFOLDR)/field.o \
+		$(OBJFOLDR)/force.o \
 		$(OBJFOLDR)/mass.o \
+		$(OBJFOLDR)/momentum.o \
 		$(OBJFOLDR)/particle.o \
+		$(OBJFOLDR)/pressure.o \
+		$(OBJFOLDR)/spin.o \
 		$(OBJFOLDR)/temperature.o \
-		$(OBJFOLDR)/time.o
+		$(OBJFOLDR)/time.o \
+		$(OBJFOLDR)/velocity.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
+		$(OBJFOLDR)/acceleration.o \
 		$(OBJFOLDR)/action.o \
 		$(OBJFOLDR)/charge.o \
 		$(OBJFOLDR)/energy.o \
 		$(OBJFOLDR)/field.o \
+		$(OBJFOLDR)/force.o \
 		$(OBJFOLDR)/mass.o \
+		$(OBJFOLDR)/momentum.o \
 		$(OBJFOLDR)/particle.o \
+		$(OBJFOLDR)/pressure.o \
+		$(OBJFOLDR)/spin.o \
 		$(OBJFOLDR)/temperature.o \
-		$(OBJFOLDR)/time.o
+		$(OBJFOLDR)/time.o \
+		$(OBJFOLDR)/velocity.o
+
+$(OBJFOLDR)/acceleration.o: acceleration.cpp
+	$(CPPTOOL) -c acceleration.cpp -o $(OBJFOLDR)/acceleration.o $(CXXFLAGS)
 
 $(OBJFOLDR)/action.o: action.cpp
 	$(CPPTOOL) -c action.cpp -o $(OBJFOLDR)/action.o $(CXXFLAGS)
@@ -75,14 +90,29 @@ $(OBJFOLDR)/energy.o: energy.cpp
 $(OBJFOLDR)/field.o: field.cpp
 	$(CPPTOOL) -c field.cpp -o $(OBJFOLDR)/field.o $(CXXFLAGS)
 
+$(OBJFOLDR)/force.o: force.cpp
+	$(CPPTOOL) -c force.cpp -o $(OBJFOLDR)/force.o $(CXXFLAGS)
+
 $(OBJFOLDR)/mass.o: mass.cpp
 	$(CPPTOOL) -c mass.cpp -o $(OBJFOLDR)/mass.o $(CXXFLAGS)
 
+$(OBJFOLDR)/momentum.o: momentum.cpp
+	$(CPPTOOL) -c momentum.cpp -o $(OBJFOLDR)/momentum.o $(CXXFLAGS)
+
 $(OBJFOLDR)/particle.o: particle.cpp
 	$(CPPTOOL) -c particle.cpp -o $(OBJFOLDR)/particle.o $(CXXFLAGS)
+
+$(OBJFOLDR)/pressure.o: pressure.cpp
+	$(CPPTOOL) -c pressure.cpp -o $(OBJFOLDR)/pressure.o $(CXXFLAGS)
+
+$(OBJFOLDR)/spin.o: spin.cpp
+	$(CPPTOOL) -c spin.cpp -o $(OBJFOLDR)/spin.o $(CXXFLAGS)
 
 $(OBJFOLDR)/temperature.o: temperature.cpp
 	$(CPPTOOL) -c temperature.cpp -o $(OBJFOLDR)/temperature.o $(CXXFLAGS)
 
 $(OBJFOLDR)/time.o: time.cpp
 	$(CPPTOOL) -c time.cpp -o $(OBJFOLDR)/time.o $(CXXFLAGS)
+
+$(OBJFOLDR)/velocity.o: velocity.cpp
+	$(CPPTOOL) -c velocity.cpp -o $(OBJFOLDR)/velocity.o $(CXXFLAGS)

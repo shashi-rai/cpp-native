@@ -22,37 +22,98 @@
 
 namespace qft {
 
-Particle::Particle() : Point(), spin(0.0f), mass(), charge() {
+Particle::Particle()
+        : Point(), spin(), energy() {
     setPhysical(nullptr);
 }
 
-Particle::Particle(float spin)
-        : Point(), spin(spin), mass(), charge() {
+Particle::Particle(Spin& spin)
+        : Point(), spin(spin), energy() {
     setPhysical(nullptr);
 }
 
 Particle::Particle(std::string name)
-        : Point(name), spin(0.0f), mass(), charge() {
+        : Point(name), spin(), energy() {
+    setPhysical(nullptr);
+}
+
+Particle::Particle(std::string name, Spin& spin)
+        : Point(name), spin(spin), energy() {
+    setPhysical(nullptr);
+}
+
+Particle::Particle(Energy& energy)
+        : Point(), spin(), energy(energy) {
+    setPhysical(nullptr);
+}
+
+Particle::Particle(Spin& spin, Energy& energy)
+        : Point(), spin(spin), energy(energy) {
+    setPhysical(nullptr);
+}
+
+Particle::Particle(std::string name, Energy& energy)
+        : Point(name), spin(), energy(energy) {
+    setPhysical(nullptr);
+}
+
+Particle::Particle(std::string name, Spin& spin, Energy& energy)
+        : Point(name), spin(spin), energy(energy) {
     setPhysical(nullptr);
 }
 
 Particle::Particle(Mass& mass, Charge& charge)
-        : Point(), spin(), mass(mass), charge(charge) {
+        : Point(), spin(), energy(mass, charge) {
     setPhysical(nullptr);
 }
 
-Particle::Particle(float spin, Mass& mass, Charge& charge)
-        : Point(), spin(spin), mass(mass), charge(charge) {
+Particle::Particle(std::string name, Mass& mass, Charge& charge)
+        : Point(name), spin(), energy(mass, charge) {
+    setPhysical(nullptr);
+}
+
+Particle::Particle(Spin& spin, Mass& mass, Charge& charge)
+        : Point(), spin(spin), energy(mass, charge) {
+    setPhysical(nullptr);
+}
+
+Particle::Particle(std::string name, Spin& spin, Mass& mass, Charge& charge)
+        : Point(name), spin(spin), energy(mass, charge) {
     setPhysical(nullptr);
 }
 
 Particle::Particle(shp::Shape* physical)
-        : Point(), spin(0.0f), mass(), charge() {
+        : Point(), spin(), energy() {
     setPhysical(physical);
 }
 
-Particle::Particle(shp::Shape* physical, float spin, Mass& mass, Charge& charge)
-        : Point(), spin(spin), mass(mass), charge(charge) {
+Particle::Particle(std::string name, shp::Shape* physical)
+        : Point(name), spin(), energy() {
+    setPhysical(physical);
+}
+
+Particle::Particle(std::string name, shp::Shape* physical, Spin& spin)
+        : Point(name), spin(spin), energy() {
+    setPhysical(physical);
+}
+
+Particle::Particle(std::string name, shp::Shape* physical, Spin& spin, Energy& energy)
+        : Point(name), spin(spin), energy(energy) {
+    setPhysical(physical);
+}
+
+Particle::Particle(shp::Shape* physical, Spin& spin, Energy& energy)
+        : Point(), spin(spin), energy(energy) {
+    setPhysical(physical);
+}
+
+Particle::Particle(shp::Shape* physical, Spin& spin, Mass& mass, Charge& charge)
+        : Point(), spin(spin), energy(mass, charge) {
+    setPhysical(physical);
+}
+
+Particle::Particle(std::string name, shp::Shape* physical, Spin& spin, Mass& mass, Charge& charge)
+        : Point(name), spin(spin), energy(mass, charge) {
     setPhysical(physical);
 }
 
@@ -60,20 +121,37 @@ Particle::~Particle() {
     setPhysical(nullptr);
 }
 
+bool Particle::operator==(const Particle& peer) const {
+    return (physical == peer.physical)
+        && (spin == peer.spin)
+        && (energy == peer.energy);
+}
+
+Particle Particle::operator+(const Particle& peer) const {
+    Spin newspin = (spin + peer.spin);
+    Energy newenergy = (energy + peer.energy);
+    return Particle("+", newspin, newenergy);
+}
+
+Particle Particle::operator-(const Particle& peer) const {
+    Spin newspin = (spin - peer.spin);
+    Energy newenergy = (energy - peer.energy);
+    return Particle("-", newspin, newenergy);
+}
+
 bool Particle::isStructured() const {
     return physical != nullptr;
 }
 
 shp::Point Particle::copy() {
-    Particle fresh(physical, spin, mass, charge);
+    Particle fresh(physical, spin, energy);
     return fresh;
 }
 
 void Particle::clear() {
     Point::clear();
-    spin = 0.0f;
-    mass.clear();
-    charge.clear();
+    spin.clear();
+    energy.clear();
     return;
 }
 
@@ -81,9 +159,8 @@ std::string Particle::print() {
     std::stringstream result;
     result << "[";
     result << Point::print() << ",";
-    result << spin << ",";
-    result << mass.print() << ",";
-    result << charge.print() << "]";
+    result << spin.print() << ",";
+    result << energy.print() << "]";
 	return result.str();
 }
 

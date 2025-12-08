@@ -23,42 +23,98 @@
 namespace qft {
 
 Field::Field()
-        : Cellular(), defaultSpin(0.0f), defaultMass(), defaultCharge() {
+        : Cellular(), defaultSpin(), defaultMass(), defaultCharge() {
     setPhysical(nullptr);
 }
 
-Field::Field(float spin)
+Field::Field(Spin& spin)
         : Cellular(), defaultSpin(spin), defaultMass(), defaultCharge() {
     setPhysical(nullptr);
 }
 
 Field::Field(std::string name)
-        : Cellular(name), defaultSpin(0.0f), defaultMass(), defaultCharge() {
+        : Cellular(name), defaultSpin(), defaultMass(), defaultCharge() {
+    setPhysical(nullptr);
+}
+
+Field::Field(std::string name, Spin& spin)
+        : Cellular(name), defaultSpin(spin), defaultMass(), defaultCharge() {
+    setPhysical(nullptr);
+}
+
+Field::Field(std::string name, Mass& mass, Charge& charge)
+        : Cellular(name), defaultSpin(), defaultMass(mass), defaultCharge(charge) {
     setPhysical(nullptr);
 }
 
 Field::Field(Mass& mass, Charge& charge)
-        : Cellular(), defaultSpin(0.0f), defaultMass(mass), defaultCharge(charge) {
+        : Cellular(), defaultSpin(), defaultMass(mass), defaultCharge(charge) {
     setPhysical(nullptr);
 }
 
-Field::Field(float spin, Mass& mass, Charge& charge)
+Field::Field(Spin& spin, Mass& mass, Charge& charge)
         : Cellular(), defaultSpin(spin), defaultMass(mass), defaultCharge(charge) {
+    setPhysical(nullptr);
+}
+
+Field::Field(std::string name, Spin& spin, Mass& mass, Charge& charge)
+        : Cellular(name), defaultSpin(spin), defaultMass(mass), defaultCharge(charge) {
     setPhysical(nullptr);
 }
 
 Field::Field(shp::Shape* physical)
-        : Cellular(), defaultSpin(0.0f), defaultMass(), defaultCharge() {
+        : Cellular(), defaultSpin(), defaultMass(), defaultCharge() {
     setPhysical(physical);
 }
 
-Field::Field(shp::Shape* physical, float spin, Mass& mass, Charge& charge)
+Field::Field(std::string name, shp::Shape* physical)
+        : Cellular(name), defaultSpin(), defaultMass(), defaultCharge() {
+    setPhysical(physical);
+}
+
+Field::Field(std::string name, shp::Shape* physical, Spin& spin)
+        : Cellular(name), defaultSpin(spin), defaultMass(), defaultCharge() {
+    setPhysical(physical);
+}
+
+Field::Field(std::string name, shp::Shape* physical, Spin& spin, Mass& mass)
+        : Cellular(name), defaultSpin(spin), defaultMass(mass), defaultCharge() {
+    setPhysical(physical);
+}
+
+Field::Field(shp::Shape* physical, Spin& spin, Mass& mass, Charge& charge)
         : Cellular(), defaultSpin(spin), defaultMass(mass), defaultCharge(charge) {
+    setPhysical(physical);
+}
+
+Field::Field(std::string name, shp::Shape* physical, Spin& spin, Mass& mass, Charge& charge)
+        : Cellular(name), defaultSpin(spin), defaultMass(mass), defaultCharge(charge) {
     setPhysical(physical);
 }
 
 Field::~Field() {
     setPhysical(nullptr);
+}
+
+bool Field::operator==(const Field& peer) const {
+    return (physical == peer.physical)
+        && (defaultSpin == peer.defaultSpin)
+        && (defaultMass == peer.defaultMass)
+        && (defaultCharge == peer.defaultCharge);
+}
+
+Field Field::operator+(const Field& peer) const {
+    Spin newspin = (defaultSpin + peer.defaultSpin);
+    Mass newmass = (defaultMass + peer.defaultMass);
+    Charge newcharge = (defaultCharge + peer.defaultCharge);
+    return Field("+", newspin, newmass, newcharge);
+}
+
+Field Field::operator-(const Field& peer) const {
+    Spin newspin = (defaultSpin - peer.defaultSpin);
+    Mass newmass = (defaultMass - peer.defaultMass);
+    Charge newcharge = (defaultCharge - peer.defaultCharge);
+    return Field("-", newspin, newmass, newcharge);
 }
 
 bool Field::isStructured() const {
@@ -78,19 +134,21 @@ void Field::changePoint(Action& action) {
 }
 
 Particle* Field::getDivergence(Action& action) const {
+    Spin spin = defaultSpin;
     Mass mass = defaultMass;
     Charge charge = defaultCharge;
     // TODO: how is particle destroyed
-    Particle* result = new Particle(defaultSpin, mass, charge);
+    Particle* result = new Particle(spin, mass, charge);
     result->setAmplitude(0);
     return result;
 }
 
 Particle* Field::getConvergence(Action& action) const {
+    Spin spin = defaultSpin;
     Mass mass = defaultMass;
     Charge charge = defaultCharge;
     // TODO: how is particle generated
-    Particle* result = new Particle(defaultSpin, mass, charge);
+    Particle* result = new Particle(spin, mass, charge);
     return result;
 }
 
@@ -101,7 +159,7 @@ shp::Point Field::copy() {
 
 void Field::clear() {
     Point::clear();
-    defaultSpin = 0.0f;
+    defaultSpin.clear();
     defaultMass.clear();
     defaultCharge.clear();
     return;
@@ -111,7 +169,7 @@ std::string Field::print() {
     std::stringstream result;
     result << "[";
     result << Cellular::print() << ",";
-    result << defaultSpin << ",";
+    result << defaultSpin.print() << ",";
     result << defaultMass.print() << ",";
     result << defaultCharge.print() << "]";
 	return result.str();

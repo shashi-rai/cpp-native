@@ -22,7 +22,7 @@
 
 namespace qft {
 
-const std::string Temperature::UNIT = "K";          // System International
+const std::string Temperature::UNIT = shp::Unit::getBaseSymbol(shp::Unit::TEMPERATURE);
 const short int Temperature::DEFAULT_SCALE = 0;     // 10^0 K
 const float Temperature::DEFAULT_VALUE = 0.0f;      // O.0 K
 
@@ -48,7 +48,8 @@ Temperature::Temperature(float quantity, short int scaling, const shp::Unit& uni
 
 }
 
-Temperature::Temperature(const shp::Quantity& quantity, const shp::Unit& unit) : quantity(unit) {
+Temperature::Temperature(const shp::Quantity& quantity, const shp::Unit& unit)
+        : quantity(unit) {
 
 }
 

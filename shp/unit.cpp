@@ -22,7 +22,48 @@
 
 namespace shp {
 
-Unit::Unit() : name("") {
+const std::string Unit::UNKNOWN = "";
+
+const short int Unit::SI_BASE_MIN = 0;
+const short int Unit::SI_BASE_MAX = 7;
+
+const std::string Unit::BASE_NAME[] = {
+    "time", "length", "mass", "electric current", "temperature",
+    "amount of substance", "luminous intensity",
+};
+
+const std::string Unit::BASE_DIMENSION[] = {
+    "T", "L", "M", "I", "Θ", "N", "J",
+};
+
+const std::string Unit::BASE_SYMBOL[] = {
+    "s", "m", "kg", "A", "K", "mol", "cd"
+};
+
+const short int Unit::SI_DERIVED_MIN = 0;
+const short int Unit::SI_DERIVED_MAX = 22;
+
+const std::string Unit::DERIVED_NAME[] = {
+    "plane angle", "solid angle", "frequency", "force", "pressure", "energy",
+    "power", "electric charge", "electric potential difference", "capacitance",
+    "electrical resistance", "electrical conductance", "magnetic flux",
+    "magnetic flux density", "inductance", "Celsius temperature",
+    "luminous flux", "illuminance", "activity referred to a radionuclide",
+    "absorbed dose", "dose equivalent", "catalytic activity",
+};
+
+const std::string Unit::DERIVED_DIMENSION[] = {
+    "radian", "steradian", "hertz", "newton", "pascal", "joule", "watt", "coulomb",
+    "volt", "farad", "ohm", "siemens", "weber", "tesla", "henry", "celsius",
+    "lumen", "lux", "becquerel", "gray", "sievert", "katal",
+};
+
+const std::string Unit::DERIVED_SYMBOL[] = {
+    "rad", "sr", "Hz", "N", "Pa", "J", "W", "C", "V", "F", "Ω", "S", "Wb", "T",
+    "H", "°C", "lm", "lx", "Bq", "Gy", "Sv", "kat",
+};
+
+Unit::Unit() : name(UNKNOWN) {
 
 }
 
@@ -38,13 +79,61 @@ bool Unit::operator==(const Unit& peer) const {
     return (name == peer.name);
 }
 
+std::string Unit::getBaseName(short int index) {
+    if ((index >= SI_BASE_MIN) && (index < SI_BASE_MAX)) {
+        return BASE_NAME[index];
+    } else {
+        return UNKNOWN;
+    }
+}
+
+std::string Unit::getBaseDimension(short int index) {
+    if ((index >= SI_BASE_MIN) && (index < SI_BASE_MAX)) {
+        return BASE_DIMENSION[index];
+    } else {
+        return UNKNOWN;
+    }
+}
+
+std::string Unit::getBaseSymbol(short int index) {
+    if ((index >= SI_BASE_MIN) && (index < SI_BASE_MAX)) {
+        return BASE_SYMBOL[index];
+    } else {
+        return UNKNOWN;
+    }
+}
+
+std::string Unit::getDerivedName(short int index) {
+    if ((index >= SI_DERIVED_MIN) && (index < SI_DERIVED_MAX)) {
+        return DERIVED_NAME[index];
+    } else {
+        return UNKNOWN;
+    }
+}
+
+std::string Unit::getDerivedDimension(short int index) {
+    if ((index >= SI_DERIVED_MIN) && (index < SI_DERIVED_MAX)) {
+        return DERIVED_DIMENSION[index];
+    } else {
+        return UNKNOWN;
+    }
+}
+
+std::string Unit::getDerivedSymbol(short int index) {
+    if ((index >= SI_DERIVED_MIN) && (index < SI_DERIVED_MAX)) {
+        return DERIVED_SYMBOL[index];
+    } else {
+        return UNKNOWN;
+    }
+}
+
 Unit Unit::copy() {
     Unit fresh(name);
     return fresh;
 }
 
 void Unit::clear() {
-    name = "";
+    name = UNKNOWN;
     return;
 }
 

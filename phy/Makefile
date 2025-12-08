@@ -47,18 +47,14 @@ clean-libs: clean-custom
 $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/body.o \
 		$(OBJFOLDR)/event.o \
-		$(OBJFOLDR)/force.o \
 		$(OBJFOLDR)/light.o \
-		$(OBJFOLDR)/momentum.o \
 		$(OBJFOLDR)/position.o \
 		$(OBJFOLDR)/sound.o \
 		$(OBJFOLDR)/space.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
 		$(OBJFOLDR)/body.o \
 		$(OBJFOLDR)/event.o \
-		$(OBJFOLDR)/force.o \
 		$(OBJFOLDR)/light.o \
-		$(OBJFOLDR)/momentum.o \
 		$(OBJFOLDR)/position.o \
 		$(OBJFOLDR)/sound.o \
 		$(OBJFOLDR)/space.o
@@ -69,17 +65,8 @@ $(OBJFOLDR)/body.o: body.cpp
 $(OBJFOLDR)/event.o: event.cpp
 	$(CPPTOOL) -c event.cpp -o $(OBJFOLDR)/event.o $(CXXFLAGS)
 
-$(OBJFOLDR)/force.o: force.cpp
-	$(CPPTOOL) -c force.cpp -o $(OBJFOLDR)/force.o $(CXXFLAGS)
-
 $(OBJFOLDR)/light.o: light.cpp
 	$(CPPTOOL) -c light.cpp -o $(OBJFOLDR)/light.o $(CXXFLAGS)
-
-$(OBJFOLDR)/mass.o: mass.cpp
-	$(CPPTOOL) -c mass.cpp -o $(OBJFOLDR)/mass.o $(CXXFLAGS)
-
-$(OBJFOLDR)/momentum.o: momentum.cpp
-	$(CPPTOOL) -c momentum.cpp -o $(OBJFOLDR)/momentum.o $(CXXFLAGS)
 
 $(OBJFOLDR)/position.o: position.cpp
 	$(CPPTOOL) -c position.cpp -o $(OBJFOLDR)/position.o $(CXXFLAGS)

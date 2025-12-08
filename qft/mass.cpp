@@ -22,7 +22,7 @@
 
 namespace qft {
 
-const std::string Mass::UNIT = "kg";        // System International
+const std::string Mass::UNIT = shp::Unit::getBaseSymbol(shp::Unit::MASS);
 const short int Mass::ATOMIC_SCALE = -27;   // 10^-27 kg
 const float Mass::ATOMIC_UNIT = 1.6605f;    // 1.6605 x 10^-27 kg
 const float Mass::PROTON = 1.672621027f;    // 1.67 x 10^-27 kg
@@ -81,6 +81,11 @@ Mass Mass::operator/(const Mass& peer) const {
 
 Mass Mass::operator%(const Mass& peer) const {
     return Mass((quantity % peer.quantity), quantity.getUnit());
+}
+
+float Mass::getTotal() const {
+    float result = quantity.getValue();
+    return result;
 }
 
 Mass Mass::copy() {

@@ -23,7 +23,9 @@
 
 #include <vector>
 #include "charge.h"
+#include "energy.h"
 #include "mass.h"
+#include "spin.h"
 #include "../shp/shape.h"
 #include "../shp/point.h"
 
@@ -31,35 +33,53 @@ namespace qft {
 
 class Particle : public shp::Point {
     shp::Shape* physical;
-    float spin;
-    Mass mass;
-    Charge charge;
+    Spin spin;
+    Energy energy;
 public:
     // Constructors
     Particle();
-    Particle(float spin);
+    Particle(Spin& spin);
     Particle(std::string name);
+    Particle(std::string name, Spin& spin);
+    Particle(Energy& energy);
+    Particle(Spin& spin, Energy& energy);
+    Particle(std::string name, Energy& energy);
+    Particle(std::string name, Spin& spin, Energy& energy);
     Particle(Mass& mass, Charge& charge);
-    Particle(float spin, Mass& mass, Charge& charge);
+    Particle(std::string name, Mass& mass, Charge& charge);
+    Particle(Spin& spin, Mass& mass, Charge& charge);
+    Particle(std::string name, Spin& spin, Mass& mass, Charge& charge);
     Particle(shp::Shape* physical);
-    Particle(shp::Shape* physical, float spin, Mass& mass, Charge& charge);
+    Particle(std::string name, shp::Shape* physical);
+    Particle(std::string name, shp::Shape* physical, Spin& spin);
+    Particle(std::string name, shp::Shape* physical, Spin& spin, Energy& energy);
+    Particle(shp::Shape* physical, Spin& spin, Energy& energy);
+    Particle(shp::Shape* physical, Spin& spin, Mass& mass, Charge& charge);
+    Particle(std::string name, shp::Shape* physical, Spin& spin, Mass& mass, Charge& charge);
 
     // Destructors
     ~Particle();
 
+    // Operator overloading
+    bool operator==(const Particle& peer) const;
+    Particle operator+(const Particle& peer) const;
+    Particle operator-(const Particle& peer) const;
+
     // Getters
     shp::Shape* getPhysical() const { return physical; }
-    float getSpin() const { return spin; }
-    Mass getMass() const { return mass; }
-    Charge getCharge() const { return charge; }
+    Spin getSpin() const { return spin; }
+    Energy getEnergy() const { return energy; }
 
     // Setters
     void setPhysical(shp::Shape* structure) { this->physical = structure; }
-    void setSpin(float value) { spin = value; }
-    void setMass(const Mass& value) { mass = value; }
-    void setCharge(const Charge& value) { charge = value; }
+    void setSpin(const Spin& value) { spin = value; }
+    void setEnergy(const Energy& value) { energy = value; }
 
     // Additional methods
+    Mass getMass() const { return energy.getMass(); }
+    Charge getCharge() const { return energy.getCharge(); }
+    void setMass(const Mass& value) { energy.setMass(value); }
+    void setCharge(const Charge& value) { energy.setCharge(value); }
     bool isStructured() const;
     virtual shp::Point copy();
     virtual void clear();

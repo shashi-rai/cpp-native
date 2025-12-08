@@ -18,54 +18,68 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "event.h"
+#include "spin.h"
 
-namespace phy {
+namespace qft {
 
-Event::Event() : name(""), location(), timestamp(),
-        impulse(), change() {
+const float Spin::DEFAULT_VALUE = 0.0f;     // e.g., -1/2 or +1/2 
 
-}
-
-Event::Event(std::string name) : name(name), location(), timestamp(),
-        impulse(), change() {
+Spin::Spin() : value(DEFAULT_VALUE) {
 
 }
 
-Event::Event(std::string name, const Space& location, const qft::Time& timestamp,
-        const qft::Momentum& impulse, const qft::Energy& action)
-        : name(name), location(location), timestamp(timestamp),
-        impulse(impulse), change(action) {
+Spin::Spin(float value) : value(value) {
 
 }
 
-Event::~Event() {
+Spin::~Spin() {
 
 }
 
-Event Event::copy() {
-    Event fresh(name, location, timestamp, impulse, change);
+bool Spin::operator==(const Spin& peer) const {
+    return (value == peer.value);
+}
+
+Spin Spin::operator+(const Spin& peer) const {
+    return Spin((value + peer.value));
+}
+
+Spin Spin::operator-(const Spin& peer) const {
+    return Spin((value - peer.value));
+}
+
+Spin Spin::operator*(const Spin& peer) const {
+    return Spin((value * peer.value));
+}
+
+Spin Spin::operator/(const Spin& peer) const {
+    return Spin((value / peer.value));
+}
+
+Spin Spin::operator%(const Spin& peer) const {
+    float result = fmod(value, peer.value);
+    return Spin((result));
+}
+
+Spin Spin::copy() {
+    Spin fresh(value);
     return fresh;
 }
 
-void Event::clear() {
-	name = "";
-    location.clear();
-    timestamp.clear();
-	impulse.clear();
-	change.clear();
+void Spin::clear() {
+    value = DEFAULT_VALUE;
     return;
 }
 
-std::string Event::print() {
+std::string Spin::print() {
     std::stringstream result;
-    result << "{e:";
-    result << name << ",";
-    result << location.print() << ",";
-    result << timestamp.print() << ",";
-	result << impulse.print() << ",";
-    result << change.print() << "}";
+    result << "|";
+    if (hasNoSpin())
+        result << "Ψ";
+    else
+        result << (isClockwise() ? "-" : "+");
+    result << "⟩";
 	return result.str();
 }
 
-} // namespace phy
+} // namespace qft

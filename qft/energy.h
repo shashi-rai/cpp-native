@@ -23,6 +23,7 @@
 
 #include <sstream>
 #include <vector>
+#include "charge.h"
 #include "mass.h"
 #include "../shp/point.h"
 #include "../shp/quantity.h"
@@ -34,6 +35,7 @@ class Energy : public shp::Point {
     shp::Unit unit;
     shp::Quantity wavelength;
     qft::Mass mass;
+    qft::Charge charge;
 public:
     // Constructors
     Energy();
@@ -51,6 +53,10 @@ public:
     Energy(std::string name, float wavelength, short int scaling, const shp::Unit& unit);
     Energy(Mass& mass);
     Energy(Mass& mass, const shp::Unit& unit);
+    Energy(Charge& charge);
+    Energy(Charge& charge, const shp::Unit& unit);
+    Energy(Mass& mass, Charge& charge);
+    Energy(Mass& mass, Charge& charge, const shp::Unit& unit);
     Energy(std::string name, Mass& mass);
     Energy(std::string name, Mass& mass, const shp::Unit& unit);
     Energy(float wavelength, Mass& mass);
@@ -86,13 +92,16 @@ public:
     shp::Unit getUnit() const { return unit; }
     shp::Quantity getWavelength() const { return wavelength; }
     qft::Mass getMass() const { return mass; }
+    qft::Charge getCharge() const { return charge; }
 
     // Setters
     void setUnit(const shp::Unit& value) { this->unit = value; }
     void setWavelength(const float amount) { this->wavelength = amount; }
-    void setMass(const float amount) { this->mass = amount; }
+    void setMass(const qft::Mass& amount) { this->mass = amount; }
+    void setCharge(const qft::Charge& amount) { charge = amount; }
 
     // Additional methods
+    float getTotal() const;
     shp::Quantity getPotential() const;
     shp::Quantity getKinetic() const;
     shp::Quantity getFrequency() const;

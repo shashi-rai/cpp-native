@@ -26,6 +26,7 @@
 #include "charge.h"
 #include "mass.h"
 #include "particle.h"
+#include "spin.h"
 #include "../shp/cellular.h"
 #include "../shp/shape.h"
 
@@ -33,21 +34,33 @@ namespace qft {
 
 class Field : public shp::Cellular {
     shp::Shape* physical;
-    float defaultSpin;
+    Spin defaultSpin;
     Mass defaultMass;
     Charge defaultCharge;
 public:
     // Constructors
     Field();
-    Field(float spin);
+    Field(Spin& spin);
     Field(std::string name);
+    Field(std::string name, Spin& spin);
     Field(Mass& mass, Charge& charge);
-    Field(float spin, Mass& mass, Charge& charge);
+    Field(std::string name, Mass& mass, Charge& charge);
+    Field(Spin& spin, Mass& mass, Charge& charge);
+    Field(std::string name, Spin& spin, Mass& mass, Charge& charge);
     Field(shp::Shape* physical);
-    Field(shp::Shape* physical, float spin, Mass& mass, Charge& charge);
+    Field(std::string name, shp::Shape* physical);
+    Field(std::string name, shp::Shape* physical, Spin& spin);
+    Field(std::string name, shp::Shape* physical, Spin& spin, Mass& mass);
+    Field(shp::Shape* physical, Spin& spin, Mass& mass, Charge& charge);
+    Field(std::string name, shp::Shape* physical, Spin& spin, Mass& mass, Charge& charge);
 
     // Destructors
     ~Field();
+
+    // Operator overloading
+    bool operator==(const Field& peer) const;
+    Field operator+(const Field& peer) const;
+    Field operator-(const Field& peer) const;
 
     // Access operator
     Point operator()(int x, int y, int z) { return this->get(x).get(y).get(z); }
@@ -55,13 +68,13 @@ public:
 
     // Getters
     shp::Shape* getPhysical() const { return physical; }
-    float getDefaultSpin() const { return defaultSpin; }
+    Spin getDefaultSpin() const { return defaultSpin; }
     Mass getDefaultMass() const { return defaultMass; }
     Charge getDefaultCharge() const { return defaultCharge; }
 
     // Setters
     void setPhysical(shp::Shape* structure) { this->physical = structure; }
-    void setDefaultSpin(float value) { defaultSpin = value; }
+    void setDefaultSpin(const Spin& value) { defaultSpin = value; }
     void setDefaultMass(const Mass& value) { defaultMass = value; }
     void setDefaultCharge(const Charge& value) { defaultCharge = value; }
 

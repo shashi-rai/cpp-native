@@ -59,6 +59,7 @@ public:
     void setQuantity(const float amount) { this->quantity = amount; }
 
     // Additional methods
+    float getTotal() const;
     virtual Mass copy();
     virtual void clear();
     virtual std::string print();

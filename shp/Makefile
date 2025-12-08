@@ -46,8 +46,10 @@ clean-libs: clean-custom
 
 $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/angular.o \
+		$(OBJFOLDR)/area.o \
 		$(OBJFOLDR)/axis.o \
 		$(OBJFOLDR)/cellular.o \
+		$(OBJFOLDR)/change.o \
 		$(OBJFOLDR)/coordinate.o \
 		$(OBJFOLDR)/curvature.o \
 		$(OBJFOLDR)/direction.o \
@@ -61,11 +63,14 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/shape.o \
 		$(OBJFOLDR)/shell.o \
 		$(OBJFOLDR)/unit.o \
+		$(OBJFOLDR)/volume.o \
 		$(OBJFOLDR)/wave.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
 		$(OBJFOLDR)/angular.o \
+		$(OBJFOLDR)/area.o \
 		$(OBJFOLDR)/axis.o \
 		$(OBJFOLDR)/cellular.o \
+		$(OBJFOLDR)/change.o \
 		$(OBJFOLDR)/coordinate.o \
 		$(OBJFOLDR)/curvature.o \
 		$(OBJFOLDR)/direction.o \
@@ -79,16 +84,23 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/shape.o \
 		$(OBJFOLDR)/shell.o \
 		$(OBJFOLDR)/unit.o \
+		$(OBJFOLDR)/volume.o \
 		$(OBJFOLDR)/wave.o
 
 $(OBJFOLDR)/angular.o: angular.cpp
 	$(CPPTOOL) -c angular.cpp -o $(OBJFOLDR)/angular.o $(CXXFLAGS)
+
+$(OBJFOLDR)/area.o: area.cpp
+	$(CPPTOOL) -c area.cpp -o $(OBJFOLDR)/area.o $(CXXFLAGS)
 
 $(OBJFOLDR)/axis.o: axis.cpp
 	$(CPPTOOL) -c axis.cpp -o $(OBJFOLDR)/axis.o $(CXXFLAGS)
 
 $(OBJFOLDR)/cellular.o: cellular.cpp
 	$(CPPTOOL) -c cellular.cpp -o $(OBJFOLDR)/cellular.o $(CXXFLAGS)
+
+$(OBJFOLDR)/change.o: change.cpp
+	$(CPPTOOL) -c change.cpp -o $(OBJFOLDR)/change.o $(CXXFLAGS)
 
 $(OBJFOLDR)/coordinate.o: coordinate.cpp
 	$(CPPTOOL) -c coordinate.cpp -o $(OBJFOLDR)/coordinate.o $(CXXFLAGS)
@@ -128,6 +140,9 @@ $(OBJFOLDR)/shell.o: shell.cpp
 
 $(OBJFOLDR)/unit.o: unit.cpp
 	$(CPPTOOL) -c unit.cpp -o $(OBJFOLDR)/unit.o $(CXXFLAGS)
+
+$(OBJFOLDR)/volume.o: volume.cpp
+	$(CPPTOOL) -c volume.cpp -o $(OBJFOLDR)/volume.o $(CXXFLAGS)
 
 $(OBJFOLDR)/wave.o: wave.cpp
 	$(CPPTOOL) -c wave.cpp -o $(OBJFOLDR)/wave.o $(CXXFLAGS)
