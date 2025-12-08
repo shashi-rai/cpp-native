@@ -22,24 +22,46 @@
 
 namespace qft {
 
-const std::string Pressure::UNIT = shp::Unit::getDerivedSymbol(shp::Unit::PRESSURE);
+const std::string Pressure::UNIT = "Pa";    // System International
 
-Pressure::Pressure() : name(), unit(UNIT), force(), area() {
-
-}
-
-Pressure::Pressure(std::string name) : name(name), unit(UNIT),
+Pressure::Pressure()
+        : name(), unit(shp::Unit::getDerivedSymbol(shp::Unit::PRESSURE)),
         force(), area() {
 
 }
 
+Pressure::Pressure(std::string name)
+        : name(name), unit(shp::Unit::getDerivedSymbol(shp::Unit::PRESSURE)),
+        force(), area() {
+
+}
+
+Pressure::Pressure(const float force)
+        : name(), unit(shp::Unit::getDerivedSymbol(shp::Unit::PRESSURE)),
+        force(force), area() {
+
+}
+
+Pressure::Pressure(const float force, const float length, const float breadth)
+        : name(), unit(shp::Unit::getDerivedSymbol(shp::Unit::PRESSURE)),
+        force(force), area(length, breadth) {
+
+}
+
 Pressure::Pressure(const qft::Force& force, const shp::Area& area)
-        : name(), unit(UNIT), force(force), area(area) {
+        : name(), unit(shp::Unit::getDerivedSymbol(shp::Unit::PRESSURE)),
+        force(force), area(area) {
 
 }
 
 Pressure::Pressure(std::string name, const shp::Unit& unit) : name(name), unit(unit),
         force(), area() {
+
+}
+
+Pressure::Pressure(std::string name, const float force, const float length, const float breadth)
+        : name(name), unit(shp::Unit::getDerivedSymbol(shp::Unit::PRESSURE)),
+        force(force), area(length, breadth) {
 
 }
 
@@ -51,7 +73,8 @@ Pressure::Pressure(std::string name, const shp::Unit& unit,
 
 Pressure::Pressure(std::string name,
         const qft::Force& force, const shp::Area& area)
-        : name(name), unit(UNIT), force(force), area(area) {
+        : name(name), unit(shp::Unit::getDerivedSymbol(shp::Unit::PRESSURE)),
+        force(force), area(area) {
 
 }
 
@@ -79,10 +102,6 @@ Pressure Pressure::operator/(const Pressure& peer) const {
     return Pressure("/", (force / peer.force), (area / peer.area));
 }
 
-Pressure Pressure::operator%(const Pressure& peer) const {
-    return Pressure("%", (force % peer.force), (area % peer.area));
-}
-
 float Pressure::getTotal() const {
     float result = (force.getTotal() / area.getTotal());
     return result;
@@ -106,7 +125,7 @@ std::string Pressure::print() {
     result << "[p:";
 	result << name << ",";
     result << force.print() << ",";
-	result << area.print() << " ";
+	result << area.print();
     result << unit.print() << "]";
 	return result.str();
 }

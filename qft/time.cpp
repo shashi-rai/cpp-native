@@ -22,20 +22,26 @@
 
 namespace qft {
 
-const std::string Time::UNIT = shp::Unit::getBaseSymbol(shp::Unit::TIME);
+const std::string Time::UNIT = "s";                 // System International
 const short int Time::ATOMIC_SCALE = -17;           // 10^-17 s
 const float Time::ATOMIC_UNIT = 2.4188843265864f;   // 2.41 x 10^-17 s
 const long Time::RADIATION_PERIODS = 9192631770;    // 9,192,631,770 fluctuations
 
-Time::Time() : unit(UNIT), quantity(0L), scaling(ATOMIC_SCALE) {
+Time::Time()
+        : unit(shp::Unit::getBaseSymbol(shp::Unit::TIME)),
+        quantity(0L), scaling(ATOMIC_SCALE) {
 
 }
 
-Time::Time(long time) : unit(UNIT), quantity(time), scaling(ATOMIC_SCALE) {
+Time::Time(long time)
+        : unit(shp::Unit::getBaseSymbol(shp::Unit::TIME)),
+        quantity(time), scaling(ATOMIC_SCALE) {
 
 }
 
-Time::Time(long time, short int scaling) : unit(UNIT), quantity(time), scaling(scaling) {
+Time::Time(long time, short int scaling)
+        : unit(shp::Unit::getBaseSymbol(shp::Unit::TIME)),
+        quantity(time), scaling(scaling) {
 
 }
 
@@ -77,6 +83,10 @@ Time Time::operator%(const Time& peer) const {
     return Time((quantity % peer.quantity), scaling, unit);
 }
 
+long Time::getTotal() const {
+    return quantity;
+}
+
 Time Time::copy() {
     Time fresh(quantity, scaling, unit);
     return fresh;
@@ -91,9 +101,9 @@ void Time::clear() {
 
 std::string Time::print() {
     std::stringstream result;
-    result << "(t:";
+    result << "(" << shp::Unit::getBaseDimension(shp::Unit::TIME) << ":";
     result << quantity << "x10^";
-    result << scaling << " ";
+    result << scaling;
     result << unit.print() << ")";
 	return result.str();
 }

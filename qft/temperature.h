@@ -59,6 +59,7 @@ public:
     void setQuantity(const float amount) { this->quantity = amount; }
 
     // Additional methods
+    float getTotal() const;
     void fromCelsius(const float value);
     float toCelsius() const;
     void fromFahrenheit(const float value);

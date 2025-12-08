@@ -21,6 +21,7 @@
 #ifndef QFT_FORCE_H
 #define QFT_FORCE_H
 
+#include <complex>
 #include <string>
 #include <vector>
 #include "../shp/direction.h"
@@ -38,8 +39,11 @@ public:
     // Constructors
     Force();
     Force(std::string name);
+    Force(const float magnitude);
+    Force(const float magnitude, const float direction);
     Force(const shp::Quantity& magnitude, const shp::Direction& direction);
     Force(std::string name, const shp::Unit& unit);
+    Force(std::string name, const float magnitude, const float direction);
     Force(std::string name, const shp::Quantity& magnitude, const shp::Direction& direction);
     Force(std::string name, const shp::Unit& unit, const shp::Quantity& magnitude, const shp::Direction& direction);
 
@@ -52,7 +56,6 @@ public:
     Force operator-(const Force& peer) const;
     Force operator*(const Force& peer) const;
     Force operator/(const Force& peer) const;
-    Force operator%(const Force& peer) const;
 
     // Getters
     std::string getName() const { return name; }
@@ -71,6 +74,9 @@ public:
     virtual Force copy();
     virtual void clear();
     virtual std::string print();
+    float getComponent(float change) const;
+protected:
+    std::complex<float> toComplex(float change);
 
 public:
     static const std::string UNIT;

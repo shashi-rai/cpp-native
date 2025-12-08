@@ -37,7 +37,9 @@ public:
     Momentum(std::string name);
     Momentum(const qft::Mass& mass);
     Momentum(std::string name, const qft::Mass& mass);
+    Momentum(const float mass, const float velocity);
     Momentum(const qft::Mass& mass, const qft::Velocity& velocity);
+    Momentum(std::string name, const float mass, const float velocity);
     Momentum(std::string name, const qft::Mass& mass, const qft::Velocity& velocity);
 
     // Destructors
@@ -49,7 +51,6 @@ public:
     Momentum operator-(const Momentum& peer) const;
     Momentum operator*(const Momentum& peer) const;
     Momentum operator/(const Momentum& peer) const;
-    Momentum operator%(const Momentum& peer) const;
 
     // Getters
     std::string getName() const { return name; }

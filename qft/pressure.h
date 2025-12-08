@@ -38,8 +38,11 @@ public:
     // Constructors
     Pressure();
     Pressure(std::string name);
+    Pressure(const float force);
+    Pressure(const float force, const float length, const float breadth);
     Pressure(const qft::Force& force, const shp::Area& area);
     Pressure(std::string name, const shp::Unit& unit);
+    Pressure(std::string name, const float force, const float length, const float breadth);
     Pressure(std::string name, const qft::Force& force, const shp::Area& area);
     Pressure(std::string name, const shp::Unit& unit, const qft::Force& force, const shp::Area& area);
 
@@ -52,7 +55,6 @@ public:
     Pressure operator-(const Pressure& peer) const;
     Pressure operator*(const Pressure& peer) const;
     Pressure operator/(const Pressure& peer) const;
-    Pressure operator%(const Pressure& peer) const;
 
     // Getters
     std::string getName() const { return name; }

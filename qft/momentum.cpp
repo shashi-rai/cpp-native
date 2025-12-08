@@ -22,7 +22,7 @@
 
 namespace qft {
 
-const std::string Momentum::UNIT = "kg m/s";    // System International
+const std::string Momentum::UNIT = "kg.m/s";    // System International
 
 Momentum::Momentum() : name(), mass(), velocity() {
 
@@ -42,8 +42,18 @@ Momentum::Momentum(std::string name, const qft::Mass& mass)
 
 }
 
+Momentum::Momentum(const float mass, const float velocity)
+        : name(), mass(mass), velocity(velocity) {
+
+}
+
 Momentum::Momentum(const qft::Mass& mass, const qft::Velocity& velocity)
         : name(), mass(mass), velocity(velocity) {
+
+}
+
+Momentum::Momentum(std::string name, const float mass, const float velocity)
+        : name(name), mass(mass), velocity(velocity) {
 
 }
 
@@ -61,23 +71,19 @@ bool Momentum::operator==(const Momentum& peer) const {
 }
 
 Momentum Momentum::operator+(const Momentum& peer) const {
-    return Momentum((mass + peer.mass), (velocity + peer.velocity));
+    return Momentum("+", (mass + peer.mass), (velocity + peer.velocity));
 }
 
 Momentum Momentum::operator-(const Momentum& peer) const {
-    return Momentum((mass - peer.mass), (velocity - peer.velocity));
+    return Momentum("-", (mass - peer.mass), (velocity - peer.velocity));
 }
 
 Momentum Momentum::operator*(const Momentum& peer) const {
-    return Momentum((mass * peer.mass), (velocity * peer.velocity));
+    return Momentum("*", (mass * peer.mass), (velocity * peer.velocity));
 }
 
 Momentum Momentum::operator/(const Momentum& peer) const {
-    return Momentum((mass / peer.mass), (velocity / peer.velocity));
-}
-
-Momentum Momentum::operator%(const Momentum& peer) const {
-    return Momentum((mass % peer.mass), (velocity % peer.velocity));
+    return Momentum("/", (mass / peer.mass), (velocity / peer.velocity));
 }
 
 float Momentum::getTotal() const {
@@ -102,7 +108,8 @@ std::string Momentum::print() {
     result << "[mo:";
     result << name << ",";
     result << mass.print() << ",";
-    result << velocity.print() << "]";
+    result << velocity.print() << " ";
+    result << UNIT << "]";
 	return result.str();
 }
 

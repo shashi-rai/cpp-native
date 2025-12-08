@@ -60,6 +60,7 @@ public:
     void setScaling(const short int value) { this->scaling = value; }
 
     // Additional methods
+    long getTotal() const;
     virtual Time copy();
     virtual void clear();
     virtual std::string print();

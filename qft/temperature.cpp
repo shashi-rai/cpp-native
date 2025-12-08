@@ -22,19 +22,25 @@
 
 namespace qft {
 
-const std::string Temperature::UNIT = shp::Unit::getBaseSymbol(shp::Unit::TEMPERATURE);
+const std::string Temperature::UNIT = "K";          // System International
 const short int Temperature::DEFAULT_SCALE = 0;     // 10^0 K
 const float Temperature::DEFAULT_VALUE = 0.0f;      // O.0 K
 
-Temperature::Temperature() : quantity(shp::Quantity::DEFAULT_VALUE, DEFAULT_SCALE, UNIT) {
+Temperature::Temperature()
+        : quantity(shp::Quantity::DEFAULT_VALUE, DEFAULT_SCALE,
+            shp::Unit::getBaseSymbol(shp::Unit::TEMPERATURE)) {
 
 }
 
-Temperature::Temperature(float quantity) : quantity(quantity, DEFAULT_SCALE, UNIT) {
+Temperature::Temperature(float quantity)
+        : quantity(quantity, DEFAULT_SCALE,
+            shp::Unit::getBaseSymbol(shp::Unit::TEMPERATURE)) {
 
 }
 
-Temperature::Temperature(float quantity, short int scaling) : quantity(quantity, scaling, UNIT) {
+Temperature::Temperature(float quantity, short int scaling)
+        : quantity(quantity, scaling,
+            shp::Unit::getBaseSymbol(shp::Unit::TEMPERATURE)) {
 
 }
 
@@ -62,23 +68,28 @@ bool Temperature::operator==(const Temperature& peer) const {
 }
 
 Temperature Temperature::operator+(const Temperature& peer) const {
-    return Temperature((quantity + peer.quantity), quantity.getUnit());
+    return Temperature((quantity + peer.quantity).getValue(), quantity.getUnit());
 }
 
 Temperature Temperature::operator-(const Temperature& peer) const {
-    return Temperature((quantity - peer.quantity), quantity.getUnit());
+    return Temperature((quantity - peer.quantity).getValue(), quantity.getUnit());
 }
 
 Temperature Temperature::operator*(const Temperature& peer) const {
-    return Temperature((quantity * peer.quantity), quantity.getUnit());
+    return Temperature((quantity * peer.quantity).getValue(), quantity.getUnit());
 }
 
 Temperature Temperature::operator/(const Temperature& peer) const {
-    return Temperature((quantity / peer.quantity), quantity.getUnit());
+    return Temperature((quantity / peer.quantity).getValue(), quantity.getUnit());
 }
 
 Temperature Temperature::operator%(const Temperature& peer) const {
-    return Temperature((quantity % peer.quantity), quantity.getUnit());
+    return Temperature((quantity % peer.quantity).getValue(), quantity.getUnit());
+}
+
+float Temperature::getTotal() const {
+    float result = quantity.getValue();
+    return result;
 }
 
 void Temperature::fromCelsius(const float value) {
@@ -114,7 +125,7 @@ void Temperature::clear() {
 
 std::string Temperature::print() {
     std::stringstream result;
-    result << "(t:";
+    result << "(" << shp::Unit::getBaseDimension(shp::Unit::TEMPERATURE) << ":";
     result << quantity.print() << ")";
 	return result.str();
 }

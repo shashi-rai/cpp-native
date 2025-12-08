@@ -22,24 +22,46 @@
 
 namespace qft {
 
-const std::string Force::UNIT = shp::Unit::getDerivedSymbol(shp::Unit::FORCE);
+const std::string Force::UNIT = "N";    // System International
 
-Force::Force() : name(), unit(UNIT), magnitude(), direction() {
+Force::Force()
+        : name(), unit(shp::Unit::getDerivedSymbol(shp::Unit::FORCE)),
+        magnitude(), direction() {
 
 }
 
-Force::Force(std::string name) : name(name), unit(UNIT),
+Force::Force(std::string name)
+        : name(name), unit(shp::Unit::getDerivedSymbol(shp::Unit::FORCE)),
         magnitude(), direction() {
+
+}
+
+Force::Force(const float magnitude)
+        : name(), unit(shp::Unit::getDerivedSymbol(shp::Unit::FORCE)),
+        magnitude(magnitude), direction() {
+
+}
+
+Force::Force(const float magnitude, const float direction)
+        : name(), unit(shp::Unit::getDerivedSymbol(shp::Unit::FORCE)),
+        magnitude(magnitude), direction(direction) {
 
 }
 
 Force::Force(const shp::Quantity& magnitude, const shp::Direction& direction)
-        : name(), unit(UNIT), magnitude(magnitude), direction(direction) {
+        : name(), unit(shp::Unit::getDerivedSymbol(shp::Unit::FORCE)),
+        magnitude(magnitude), direction(direction) {
 
 }
 
-Force::Force(std::string name, const shp::Unit& unit) : name(name), unit(unit),
-        magnitude(), direction() {
+Force::Force(std::string name, const shp::Unit& unit)
+        : name(name), unit(unit), magnitude(), direction() {
+
+}
+
+Force::Force(std::string name, const float magnitude, const float direction)
+        : name(name), unit(shp::Unit::getDerivedSymbol(shp::Unit::FORCE)),
+        magnitude(magnitude), direction(direction) {
 
 }
 
@@ -51,7 +73,8 @@ Force::Force(std::string name, const shp::Unit& unit,
 
 Force::Force(std::string name,
         const shp::Quantity& magnitude, const shp::Direction& direction)
-        : name(name), unit(UNIT), magnitude(magnitude), direction(direction) {
+        : name(name), unit(shp::Unit::getDerivedSymbol(shp::Unit::FORCE)),
+        magnitude(magnitude), direction(direction) {
 
 }
 
@@ -64,27 +87,39 @@ bool Force::operator==(const Force& peer) const {
 }
 
 Force Force::operator+(const Force& peer) const {
-    return Force("+", (magnitude + peer.magnitude), (direction + peer.direction));
+    Force self = *this, other = peer;
+    std::complex<float> ap1 = self.toComplex(direction.toRadians()),
+        ap2 = other.toComplex(peer.direction.toRadians());
+    std::complex<float> a_phasor = ap1 + ap2;
+    return Force("+", std::abs(a_phasor), std::arg(a_phasor));
 }
 
 Force Force::operator-(const Force& peer) const {
-    return Force("-", (magnitude - peer.magnitude), (direction - peer.direction));
+    Force self = *this, other = peer;
+    std::complex<float> ap1 = self.toComplex(direction.toRadians()),
+        ap2 = other.toComplex(peer.direction.toRadians());
+    std::complex<float> a_phasor = ap1 - ap2;
+    return Force("-", std::abs(a_phasor), std::arg(a_phasor));
 }
 
 Force Force::operator*(const Force& peer) const {
-    return Force("*", (magnitude * peer.magnitude), (direction * peer.direction));
+    Force self = *this, other = peer;
+    std::complex<float> ap1 = self.toComplex(direction.toRadians()),
+        ap2 = other.toComplex(peer.direction.toRadians());
+    std::complex<float> a_phasor = ap1 * ap2;
+    return Force("*", std::abs(a_phasor), std::arg(a_phasor));
 }
 
 Force Force::operator/(const Force& peer) const {
-    return Force("/", (magnitude / peer.magnitude), (direction / peer.direction));
-}
-
-Force Force::operator%(const Force& peer) const {
-    return Force("%", (magnitude % peer.magnitude), (direction % peer.direction));
+    Force self = *this, other = peer;
+    std::complex<float> ap1 = self.toComplex(direction.toRadians()),
+        ap2 = other.toComplex(peer.direction.toRadians());
+    std::complex<float> a_phasor = ap1 / ap2;
+    return Force("/", std::abs(a_phasor), std::arg(a_phasor));
 }
 
 float Force::getTotal() const {
-    float result = (magnitude.getValue() * direction.toRadians());
+    float result = (magnitude.getValue() * cos(direction.toRadians()));
     return result;
 }
 
@@ -103,12 +138,22 @@ void Force::clear() {
 
 std::string Force::print() {
     std::stringstream result;
-    result << "[f:";
+    result << "{f:";
 	result << name << ",";
     result << magnitude.print() << ",";
-	result << direction.print() << " ";
-    result << unit.print() << "]";
+	result << direction.print();
+    result << unit.print() << "}";
 	return result.str();
+}
+
+float Force::getComponent(float change) const {
+    return magnitude.getValue() * cos(direction.toRadians() + change);
+}
+
+std::complex<float> Force::toComplex(float change) {
+    return std::complex<float>(
+        magnitude.getValue() * std::cos(change),
+        magnitude.getValue() * std::sin(change));
 }
 
 } // namespace qft

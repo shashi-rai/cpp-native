@@ -22,21 +22,27 @@
 
 namespace qft {
 
-const std::string Charge::UNIT = shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_CHARGE);
+const std::string Charge::UNIT = "C";               // System International
 const short int Charge::ATOMIC_SCALE = -19;         // 10^-19 C
 const float Charge::PROTON = 1.602f;                // 1.602 x 10^-19 C
 const float Charge::NEUTRON = 0.0f;                 // 0.0 x 10^-19 C
 const float Charge::ELECTRON = -1.6021766341019f;   // 1.602 x 10^-19 C
 
-Charge::Charge() : quantity(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, UNIT) {
+Charge::Charge()
+        : quantity(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE,
+            shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_CHARGE)) {
 
 }
 
-Charge::Charge(float quantity) : quantity(quantity, ATOMIC_SCALE, UNIT) {
+Charge::Charge(float quantity)
+        : quantity(quantity, ATOMIC_SCALE,
+            shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_CHARGE)) {
 
 }
 
-Charge::Charge(float quantity, short int scaling) : quantity(quantity, scaling, UNIT) {
+Charge::Charge(float quantity, short int scaling)
+        : quantity(quantity, scaling,
+            shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_CHARGE)) {
 
 }
 
@@ -63,23 +69,23 @@ bool Charge::operator==(const Charge& peer) const {
 }
 
 Charge Charge::operator+(const Charge& peer) const {
-    return Charge((quantity + peer.quantity), quantity.getUnit());
+    return Charge((quantity + peer.quantity).getValue(), quantity.getUnit());
 }
 
 Charge Charge::operator-(const Charge& peer) const {
-    return Charge((quantity - peer.quantity), quantity.getUnit());
+    return Charge((quantity - peer.quantity).getValue(), quantity.getUnit());
 }
 
 Charge Charge::operator*(const Charge& peer) const {
-    return Charge((quantity - peer.quantity), quantity.getUnit());
+    return Charge((quantity - peer.quantity).getValue(), quantity.getUnit());
 }
 
 Charge Charge::operator/(const Charge& peer) const {
-    return Charge((quantity - peer.quantity), quantity.getUnit());
+    return Charge((quantity - peer.quantity).getValue(), quantity.getUnit());
 }
 
 Charge Charge::operator%(const Charge& peer) const {
-    return Charge((quantity % peer.quantity), quantity.getUnit());
+    return Charge((quantity % peer.quantity).getValue(), quantity.getUnit());
 }
 
 float Charge::getTotal() const {

@@ -22,7 +22,7 @@
 
 namespace qft {
 
-const std::string Velocity::UNIT = "m/s";
+const std::string Velocity::UNIT = "m/s";   // System International
 
 Velocity::Velocity() : name(), unit(UNIT), magnitude(), direction() {
 
@@ -33,6 +33,16 @@ Velocity::Velocity(std::string name) : name(name), unit(UNIT),
 
 }
 
+Velocity::Velocity(const float magnitude)
+        : name(), unit(UNIT), magnitude(magnitude), direction() {
+
+}
+
+Velocity::Velocity(const float magnitude, const float direction)
+        : name(), unit(UNIT), magnitude(magnitude), direction(direction) {
+
+}
+
 Velocity::Velocity(const shp::Quantity& magnitude, const shp::Direction& direction)
         : name(), unit(UNIT), magnitude(magnitude), direction(direction) {
 
@@ -40,6 +50,11 @@ Velocity::Velocity(const shp::Quantity& magnitude, const shp::Direction& directi
 
 Velocity::Velocity(std::string name, const shp::Unit& unit) : name(name), unit(unit),
         magnitude(), direction() {
+
+}
+
+Velocity::Velocity(std::string name, const float magnitude, const float direction)
+        : name(name), unit(UNIT), magnitude(magnitude), direction(direction) {
 
 }
 
@@ -64,27 +79,39 @@ bool Velocity::operator==(const Velocity& peer) const {
 }
 
 Velocity Velocity::operator+(const Velocity& peer) const {
-    return Velocity("+", (magnitude + peer.magnitude), (direction + peer.direction));
+    Velocity self = *this, other = peer;
+    std::complex<float> ap1 = self.toComplex(direction.toRadians()),
+        ap2 = other.toComplex(peer.direction.toRadians());
+    std::complex<float> a_phasor = ap1 + ap2;
+    return Velocity("+", std::abs(a_phasor), std::arg(a_phasor));
 }
 
 Velocity Velocity::operator-(const Velocity& peer) const {
-    return Velocity("-", (magnitude - peer.magnitude), (direction - peer.direction));
+    Velocity self = *this, other = peer;
+    std::complex<float> ap1 = self.toComplex(direction.toRadians()),
+        ap2 = other.toComplex(peer.direction.toRadians());
+    std::complex<float> a_phasor = ap1 - ap2;
+    return Velocity("-", std::abs(a_phasor), std::arg(a_phasor));
 }
 
 Velocity Velocity::operator*(const Velocity& peer) const {
-    return Velocity("*", (magnitude * peer.magnitude), (direction * peer.direction));
+    Velocity self = *this, other = peer;
+    std::complex<float> ap1 = self.toComplex(direction.toRadians()),
+        ap2 = other.toComplex(peer.direction.toRadians());
+    std::complex<float> a_phasor = ap1 * ap2;
+    return Velocity("*", std::abs(a_phasor), std::arg(a_phasor));
 }
 
 Velocity Velocity::operator/(const Velocity& peer) const {
-    return Velocity("/", (magnitude / peer.magnitude), (direction / peer.direction));
-}
-
-Velocity Velocity::operator%(const Velocity& peer) const {
-    return Velocity("%", (magnitude % peer.magnitude), (direction % peer.direction));
+    Velocity self = *this, other = peer;
+    std::complex<float> ap1 = self.toComplex(direction.toRadians()),
+        ap2 = other.toComplex(peer.direction.toRadians());
+    std::complex<float> a_phasor = ap1 / ap2;
+    return Velocity("/", std::abs(a_phasor), std::arg(a_phasor));
 }
 
 float Velocity::getTotal() const {
-    float result = (magnitude.getValue() * direction.toRadians());
+    float result = (magnitude.getValue() * cos(direction.toRadians()));
     return result;
 }
 
@@ -106,9 +133,19 @@ std::string Velocity::print() {
     result << "[v:";
 	result << name << ",";
     result << magnitude.print() << ",";
-	result << direction.print() << " ";
+	result << direction.print();
     result << unit.print() << "]";
 	return result.str();
+}
+
+float Velocity::getComponent(float change) const {
+    return magnitude.getValue() * cos(direction.toRadians() + change);
+}
+
+std::complex<float> Velocity::toComplex(float change) {
+    return std::complex<float>(
+        magnitude.getValue() * std::cos(change),
+        magnitude.getValue() * std::sin(change));
 }
 
 } // namespace qft

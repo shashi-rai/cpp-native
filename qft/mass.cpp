@@ -22,22 +22,28 @@
 
 namespace qft {
 
-const std::string Mass::UNIT = shp::Unit::getBaseSymbol(shp::Unit::MASS);
+const std::string Mass::UNIT = "kg";        // System International
 const short int Mass::ATOMIC_SCALE = -27;   // 10^-27 kg
 const float Mass::ATOMIC_UNIT = 1.6605f;    // 1.6605 x 10^-27 kg
 const float Mass::PROTON = 1.672621027f;    // 1.67 x 10^-27 kg
 const float Mass::NEUTRON = 1.67492749804f; // 1.67 x 10^-27 kg
 const float Mass::ELECTRON = 0.0009109f;    // 0.0009109 x 10^-27 kg
 
-Mass::Mass() : quantity(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, UNIT) {
+Mass::Mass()
+        : quantity(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE,
+            shp::Unit::getBaseSymbol(shp::Unit::MASS)) {
 
 }
 
-Mass::Mass(float quantity) : quantity(quantity, ATOMIC_SCALE, UNIT) {
+Mass::Mass(float quantity)
+        : quantity(quantity, ATOMIC_SCALE,
+            shp::Unit::getBaseSymbol(shp::Unit::MASS)) {
 
 }
 
-Mass::Mass(float quantity, short int scaling) : quantity(quantity, scaling, UNIT) {
+Mass::Mass(float quantity, short int scaling)
+        : quantity(quantity, scaling,
+            shp::Unit::getBaseSymbol(shp::Unit::MASS)) {
 
 }
 
@@ -64,23 +70,23 @@ bool Mass::operator==(const Mass& peer) const {
 }
 
 Mass Mass::operator+(const Mass& peer) const {
-    return Mass((quantity + peer.quantity), quantity.getUnit());
+    return Mass((quantity + peer.quantity).getValue(), quantity.getUnit());
 }
 
 Mass Mass::operator-(const Mass& peer) const {
-    return Mass((quantity - peer.quantity), quantity.getUnit());
+    return Mass((quantity - peer.quantity).getValue(), quantity.getUnit());
 }
 
 Mass Mass::operator*(const Mass& peer) const {
-    return Mass((quantity * peer.quantity), quantity.getUnit());
+    return Mass((quantity * peer.quantity).getValue(), quantity.getUnit());
 }
 
 Mass Mass::operator/(const Mass& peer) const {
-    return Mass((quantity / peer.quantity), quantity.getUnit());
+    return Mass((quantity / peer.quantity).getValue(), quantity.getUnit());
 }
 
 Mass Mass::operator%(const Mass& peer) const {
-    return Mass((quantity % peer.quantity), quantity.getUnit());
+    return Mass((quantity % peer.quantity).getValue(), quantity.getUnit());
 }
 
 float Mass::getTotal() const {
@@ -100,7 +106,7 @@ void Mass::clear() {
 
 std::string Mass::print() {
     std::stringstream result;
-    result << "(m:";
+    result << "(" << shp::Unit::getBaseDimension(shp::Unit::MASS) << ":";
     result << quantity.print() << ")";
 	return result.str();
 }

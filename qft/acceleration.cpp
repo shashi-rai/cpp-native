@@ -22,14 +22,25 @@
 
 namespace qft {
 
-const std::string Acceleration::UNIT = "m/s^2";
+const std::string Acceleration::UNIT = "m/s^2";     // System International
 
-Acceleration::Acceleration() : name(), unit(UNIT), velocity(), change() {
+Acceleration::Acceleration()
+        : name(), unit(UNIT), velocity(), change() {
 
 }
 
-Acceleration::Acceleration(std::string name) : name(name), unit(UNIT),
-        velocity(), change() {
+Acceleration::Acceleration(std::string name)
+        : name(name), unit(UNIT), velocity(), change() {
+
+}
+
+Acceleration::Acceleration(const float change)
+        : name(), unit(UNIT), velocity(), change(change) {
+
+}
+
+Acceleration::Acceleration(const float velocity, const float change)
+        : name(), unit(UNIT), velocity(velocity), change(change) {
 
 }
 
@@ -40,6 +51,11 @@ Acceleration::Acceleration(const qft::Velocity& velocity, const shp::Change& cha
 
 Acceleration::Acceleration(std::string name, const shp::Unit& unit) : name(name), unit(unit),
         velocity(), change() {
+
+}
+
+Acceleration::Acceleration(std::string name, const float velocity, const float change)
+        : name(name), unit(UNIT), velocity(velocity), change(change) {
 
 }
 
@@ -79,12 +95,8 @@ Acceleration Acceleration::operator/(const Acceleration& peer) const {
     return Acceleration("/", (velocity / peer.velocity), (change / peer.change));
 }
 
-Acceleration Acceleration::operator%(const Acceleration& peer) const {
-    return Acceleration("%", (velocity % peer.velocity), (change % peer.change));
-}
-
 float Acceleration::getTotal() const {
-    float result = (velocity.getTotal() * change.toRadians());
+    float result = (velocity.getTotal() * cos(change.toRadians()));
     return result;
 }
 
@@ -106,7 +118,7 @@ std::string Acceleration::print() {
     result << "[a:";
 	result << name << ",";
     result << velocity.print() << ",";
-	result << change.print() << " ";
+	result << change.print();
     result << unit.print() << "]";
 	return result.str();
 }

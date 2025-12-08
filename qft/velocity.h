@@ -21,6 +21,7 @@
 #ifndef QFT_VELOCITY_H
 #define QFT_VELOCITY_H
 
+#include <complex>
 #include <string>
 #include <vector>
 #include "../shp/direction.h"
@@ -38,8 +39,11 @@ public:
     // Constructors
     Velocity();
     Velocity(std::string name);
+    Velocity(const float magnitude);
+    Velocity(const float magnitude, const float direction);
     Velocity(const shp::Quantity& magnitude, const shp::Direction& direction);
     Velocity(std::string name, const shp::Unit& unit);
+    Velocity(std::string name, const float magnitude, const float direction);
     Velocity(std::string name, const shp::Quantity& magnitude, const shp::Direction& direction);
     Velocity(std::string name, const shp::Unit& unit, const shp::Quantity& magnitude, const shp::Direction& direction);
 
@@ -52,7 +56,6 @@ public:
     Velocity operator-(const Velocity& peer) const;
     Velocity operator*(const Velocity& peer) const;
     Velocity operator/(const Velocity& peer) const;
-    Velocity operator%(const Velocity& peer) const;
 
     // Getters
     std::string getName() const { return name; }
@@ -71,6 +74,9 @@ public:
     virtual Velocity copy();
     virtual void clear();
     virtual std::string print();
+    float getComponent(float change) const;
+protected:
+    std::complex<float> toComplex(float change);
 
 public:
     static const std::string UNIT;

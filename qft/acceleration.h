@@ -38,8 +38,11 @@ public:
     // Constructors
     Acceleration();
     Acceleration(std::string name);
+    Acceleration(const float change);
+    Acceleration(const float velocity, const float change);
     Acceleration(const qft::Velocity& velocity, const shp::Change& change);
     Acceleration(std::string name, const shp::Unit& unit);
+    Acceleration(std::string name, const float velocity, const float change);
     Acceleration(std::string name, const qft::Velocity& velocity, const shp::Change& change);
     Acceleration(std::string name, const shp::Unit& unit, const qft::Velocity& velocity, const shp::Change& change);
 
@@ -52,7 +55,6 @@ public:
     Acceleration operator-(const Acceleration& peer) const;
     Acceleration operator*(const Acceleration& peer) const;
     Acceleration operator/(const Acceleration& peer) const;
-    Acceleration operator%(const Acceleration& peer) const;
 
     // Getters
     std::string getName() const { return name; }
