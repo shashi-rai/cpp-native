@@ -23,24 +23,46 @@
 
 #include <string>
 #include <vector>
+#include "cell.h"
 
 namespace bio {
 
 class Tissue {
     std::string name;
+    CellArray cells;
 public:
     // Constructors
     Tissue();
     Tissue(std::string name);
+    Tissue(std::string name, CellArray& objects);
 
     // Destructors
     ~Tissue();
 
+    // Operator overloading
+    bool operator==(const Tissue& peer) const;
+    Tissue operator+(const Tissue& peer) const;
+    Tissue operator-(const Tissue& peer) const;
+
+    // Access operator
+    Cell& operator()(int x) { return cells[x]; }
+    const Cell& operator()(int x) const { return cells[x]; }
+
     // Getters
     std::string getName() const { return name; }
+    CellArray getCells() const { return cells; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
+    void setCells(const CellArray& objects) { this->cells = objects; }
+
+    // Additional methods
+    int getCellCount() const;
+    Cell get(int index) const;
+    void set(int index, const Cell& object);
+    virtual Tissue copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Tissue > TissueArray;

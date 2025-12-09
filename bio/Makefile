@@ -48,18 +48,24 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/base.o \
 		$(OBJFOLDR)/cell.o \
 		$(OBJFOLDR)/chromosome.o \
+		$(OBJFOLDR)/gate.o \
 		$(OBJFOLDR)/gene.o \
+		$(OBJFOLDR)/membrane.o \
 		$(OBJFOLDR)/nucleotide.o \
 		$(OBJFOLDR)/phosphate.o \
+		$(OBJFOLDR)/protein.o \
 		$(OBJFOLDR)/sugar.o \
 		$(OBJFOLDR)/tissue.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
 		$(OBJFOLDR)/base.o \
 		$(OBJFOLDR)/cell.o \
 		$(OBJFOLDR)/chromosome.o \
+		$(OBJFOLDR)/gate.o \
 		$(OBJFOLDR)/gene.o \
+		$(OBJFOLDR)/membrane.o \
 		$(OBJFOLDR)/nucleotide.o \
 		$(OBJFOLDR)/phosphate.o \
+		$(OBJFOLDR)/protein.o \
 		$(OBJFOLDR)/sugar.o \
 		$(OBJFOLDR)/tissue.o
 
@@ -72,14 +78,23 @@ $(OBJFOLDR)/cell.o: cell.cpp
 $(OBJFOLDR)/chromosome.o: chromosome.cpp
 	$(CPPTOOL) -c chromosome.cpp -o $(OBJFOLDR)/chromosome.o $(CXXFLAGS)
 
+$(OBJFOLDR)/gate.o: gate.cpp
+	$(CPPTOOL) -c gate.cpp -o $(OBJFOLDR)/gate.o $(CXXFLAGS)
+
 $(OBJFOLDR)/gene.o: gene.cpp
 	$(CPPTOOL) -c gene.cpp -o $(OBJFOLDR)/gene.o $(CXXFLAGS)
+
+$(OBJFOLDR)/membrane.o: membrane.cpp
+	$(CPPTOOL) -c membrane.cpp -o $(OBJFOLDR)/membrane.o $(CXXFLAGS)
 
 $(OBJFOLDR)/nucleotide.o: nucleotide.cpp
 	$(CPPTOOL) -c nucleotide.cpp -o $(OBJFOLDR)/nucleotide.o $(CXXFLAGS)
 
 $(OBJFOLDR)/phosphate.o: phosphate.cpp
 	$(CPPTOOL) -c phosphate.cpp -o $(OBJFOLDR)/phosphate.o $(CXXFLAGS)
+
+$(OBJFOLDR)/protein.o: protein.cpp
+	$(CPPTOOL) -c protein.cpp -o $(OBJFOLDR)/protein.o $(CXXFLAGS)
 
 $(OBJFOLDR)/sugar.o: sugar.cpp
 	$(CPPTOOL) -c sugar.cpp -o $(OBJFOLDR)/sugar.o $(CXXFLAGS)

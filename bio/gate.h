@@ -18,24 +18,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "tissue.h"
+#ifndef BIO_GATE_H
+#define BIO_GATE_H
+
+#include <string>
+#include <vector>
 
 namespace bio {
 
-Tissue::Tissue() : name("") {
+class Gate {
+    std::string name;
+public:
+    // Constructors
+    Gate();
+    Gate(std::string name);
 
-}
+    // Destructors
+    ~Gate();
 
-Tissue::Tissue(std::string name) : name(name) {
+    // Getters
+    std::string getName() const { return name; }
 
-}
+    // Setters
+    void setName(const std::string& name) { this->name = name; }
+};
 
-Tissue::Tissue(std::string name, CellArray& objects) : cells(objects) {
-
-}
-
-Tissue::~Tissue() {
-
-}
+typedef std::vector<Gate > GateArray;
 
 } // namespace bio
+
+#endif //BIO_GATE_H

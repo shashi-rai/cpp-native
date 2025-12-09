@@ -23,24 +23,46 @@
 
 #include <string>
 #include <vector>
+#include "membrane.h"
 
 namespace bio {
 
 class Cell {
     std::string name;
+    MembraneArray membranes;
 public:
     // Constructors
     Cell();
     Cell(std::string name);
+    Cell(std::string name, MembraneArray& objects);
 
     // Destructors
     ~Cell();
+    
+    // Operator overloading
+    bool operator==(const Cell& peer) const;
+    Cell operator+(const Cell& peer) const;
+    Cell operator-(const Cell& peer) const;
+
+    // Access operator
+    Membrane& operator()(int x) { return membranes[x]; }
+    const Membrane& operator()(int x) const { return membranes[x]; }
 
     // Getters
     std::string getName() const { return name; }
+    MembraneArray getMembranes() const { return membranes; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
+    void setMembranes(const MembraneArray& objects) { this->membranes = objects; }
+
+    // Additional methods
+    int getMembraneCount() const;
+    Membrane get(int index) const;
+    void set(int index, const Membrane& object);
+    virtual Cell copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Cell > CellArray;

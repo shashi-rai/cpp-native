@@ -18,24 +18,52 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "tissue.h"
+#ifndef BIO_PROTEIN_H
+#define BIO_PROTEIN_H
+
+#include <string>
+#include <vector>
+#include "gate.h"
 
 namespace bio {
 
-Tissue::Tissue() : name("") {
+class Protein {
+    GateArray gates;
+public:
+    // Constructors
+    Protein();
+    Protein(std::string name);
+    Protein(std::string name, GateArray& objects);
 
-}
+    // Destructors
+    ~Protein();
 
-Tissue::Tissue(std::string name) : name(name) {
+    // Operator overloading
+    bool operator==(const Protein& peer) const;
+    Protein operator+(const Protein& peer) const;
+    Protein operator-(const Protein& peer) const;
 
-}
+    // Access operator
+    Gate& operator()(int x) { return gates[x]; }
+    const Gate& operator()(int x) const { return gates[x]; }
 
-Tissue::Tissue(std::string name, CellArray& objects) : cells(objects) {
+    // Getters
+    GateArray getGates() const { return gates; }
 
-}
+    // Setters
+    void setGates(const GateArray& objects) { this->gates = objects; }
 
-Tissue::~Tissue() {
+    // Additional methods
+    int getGateCount() const;
+    Gate get(int index) const;
+    void set(int index, const Gate& object);
+    virtual Protein copy();
+    virtual void clear();
+    virtual std::string print();
+};
 
-}
+typedef std::vector<Protein > ProteinArray;
 
 } // namespace bio
+
+#endif //BIO_PROTEIN_H

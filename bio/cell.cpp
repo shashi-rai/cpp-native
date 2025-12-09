@@ -22,11 +22,15 @@
 
 namespace bio {
 
-Cell::Cell() : name("") {
+Cell::Cell() : name(""), membranes() {
 
 }
 
-Cell::Cell(std::string name) : name(name) {
+Cell::Cell(std::string name) : name(name), membranes() {
+
+}
+
+Cell::Cell(std::string name, MembraneArray& objects) : membranes(objects) {
 
 }
 

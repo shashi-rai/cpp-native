@@ -18,24 +18,53 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "tissue.h"
+#ifndef BIO_MEMBRANE_H
+#define BIO_MEMBRANE_H
+
+#include <string>
+#include <vector>
+#include "protein.h"
 
 namespace bio {
 
-Tissue::Tissue() : name("") {
+class Membrane {
+    ProteinArray proteins;
+    float voltage;
+public:
+    // Constructors
+    Membrane();
+    Membrane(std::string name);
+    Membrane(std::string name, ProteinArray& objects);
 
-}
+    // Destructors
+    ~Membrane();
 
-Tissue::Tissue(std::string name) : name(name) {
+    // Operator overloading
+    bool operator==(const Membrane& peer) const;
+    Membrane operator+(const Membrane& peer) const;
+    Membrane operator-(const Membrane& peer) const;
 
-}
+    // Access operator
+    Protein& operator()(int x) { return proteins[x]; }
+    const Protein& operator()(int x) const { return proteins[x]; }
 
-Tissue::Tissue(std::string name, CellArray& objects) : cells(objects) {
+    // Getters
+    ProteinArray getProteins() const { return proteins; }
 
-}
+    // Setters
+    void setProteins(const ProteinArray& objects) { this->proteins = objects; }
 
-Tissue::~Tissue() {
+    // Additional methods
+    int getProteinCount() const;
+    Protein get(int index) const;
+    void set(int index, const Protein& object);
+    virtual Membrane copy();
+    virtual void clear();
+    virtual std::string print();
+};
 
-}
+typedef std::vector<Membrane > MembraneArray;
 
 } // namespace bio
+
+#endif //BIO_MEMBRANE_H

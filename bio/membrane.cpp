@@ -18,23 +18,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "tissue.h"
+#include "membrane.h"
 
 namespace bio {
 
-Tissue::Tissue() : name("") {
+Membrane::Membrane() : proteins() {
 
 }
 
-Tissue::Tissue(std::string name) : name(name) {
+Membrane::Membrane(std::string name) : proteins() {
 
 }
 
-Tissue::Tissue(std::string name, CellArray& objects) : cells(objects) {
+Membrane::Membrane(std::string name, ProteinArray& objects) : proteins(objects) {
 
 }
 
-Tissue::~Tissue() {
+Membrane::~Membrane() {
 
 }
 
