@@ -88,6 +88,14 @@ Charge Charge::operator%(const Charge& peer) const {
     return Charge((quantity % peer.quantity).getValue(), quantity.getUnit());
 }
 
+Force Charge::operator()(const Charge& peer, const float distance) const {
+    float charged = (quantity.getValue() * peer.quantity.getValue());
+    float quantum = (Force::COULOMB_CONSTANT * (charged / (distance * distance)));
+    Force result(quantum, Force::COULOMB_SCALE, shp::Unit::getDerivedSymbol(shp::Unit::FORCE));
+    result.adjustScaling();
+    return result;
+}
+
 float Charge::getTotal() const {
     float result = quantity.getValue();
     return result;
@@ -96,6 +104,17 @@ float Charge::getTotal() const {
 Density Charge::getDensity(const float volume) const {
     Density result(getTotal(), volume, quantity.getUnit().getName());
     return result;
+}
+
+Force Charge::getForce(const float acceleration) const {
+    float movable = (getTotal() * acceleration);
+    Force result(movable, quantity.getUnit().getName());
+    result.adjustScaling();
+    return result;
+}
+
+void Charge::adjustScaling() {
+    quantity.adjustScaling();
 }
 
 Charge Charge::copy() {

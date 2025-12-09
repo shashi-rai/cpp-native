@@ -19,7 +19,6 @@
 // THE SOFTWARE.
 
 #include "mass.h"
-#include "density.h"
 
 namespace qft {
 
@@ -90,6 +89,14 @@ Mass Mass::operator%(const Mass& peer) const {
     return Mass((quantity % peer.quantity).getValue(), quantity.getUnit());
 }
 
+Force Mass::operator()(const Mass& peer, const float distance) const {
+    float movable = (quantity.getValue() * peer.quantity.getValue());
+    float quantum = (Force::GRAVITATIONAL_CONSTANT * (movable / (distance * distance)));
+    Force result(quantum, Force::GRAVITATIONAL_SCALE, shp::Unit::getDerivedSymbol(shp::Unit::FORCE));
+    result.adjustScaling();
+    return result;
+}
+
 float Mass::getTotal() const {
     float result = quantity.getValue();
     return result;
@@ -98,6 +105,17 @@ float Mass::getTotal() const {
 Density Mass::getDensity(const float volume) const {
     Density result(getTotal(), volume, quantity.getUnit().getName());
     return result;
+}
+
+Force Mass::getForce(const float acceleration) const {
+    float movable = (getTotal() * acceleration);
+    Force result(movable, quantity.getUnit().getName());
+    result.adjustScaling();
+    return result;
+}
+
+void Mass::adjustScaling() {
+    quantity.adjustScaling();
 }
 
 Mass Mass::copy() {

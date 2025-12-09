@@ -32,7 +32,6 @@ namespace qft {
 
 class Force {
     std::string name;
-    shp::Unit unit;
     shp::Quantity magnitude;
     shp::Direction direction;
 public:
@@ -40,12 +39,17 @@ public:
     Force();
     Force(std::string name);
     Force(const float magnitude);
+    Force(const float magnitude, const std::string unit);
+    Force(const float magnitude, short int scaling, const std::string unit);
     Force(const float magnitude, const float direction);
+    Force(const float magnitude, const float direction, const std::string unit);
+    Force(const float magnitude, const float direction, short int scaling, const std::string unit);
     Force(const shp::Quantity& magnitude, const shp::Direction& direction);
     Force(std::string name, const shp::Unit& unit);
     Force(std::string name, const float magnitude, const float direction);
+    Force(std::string name, const float magnitude, const float direction, const std::string unit);
+    Force(std::string name, const float magnitude, const float direction, short int scaling, const std::string unit);
     Force(std::string name, const shp::Quantity& magnitude, const shp::Direction& direction);
-    Force(std::string name, const shp::Unit& unit, const shp::Quantity& magnitude, const shp::Direction& direction);
 
     // Destructors
     ~Force();
@@ -59,18 +63,19 @@ public:
 
     // Getters
     std::string getName() const { return name; }
-    shp::Unit getUnit() const { return unit; }
+    shp::Unit getUnit() const { return magnitude.getUnit(); }
     shp::Quantity getMagnitude() const { return magnitude; }
     shp::Direction getDirection() const { return direction; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
-    void setUnit(const shp::Unit& value) { this->unit = value; }
+    void setUnit(const shp::Unit& value) { this->magnitude.setUnit(value); }
     void setMagnitude(const shp::Quantity& magnitude) { this->magnitude = magnitude; }
     void setDirection(const shp::Direction& direction) { this->direction = direction; }
 
     // Additional methods
     float getTotal() const;
+    void adjustScaling();
     virtual Force copy();
     virtual void clear();
     virtual std::string print();
@@ -80,6 +85,13 @@ protected:
 
 public:
     static const std::string UNIT;
+    enum TYPE {
+        GRAVITATION, ELECTROMAGNETISM, WEAK_INTERACTION, STRONG_INTERACTION,
+    };
+    static const float COULOMB_CONSTANT;
+    static const short int COULOMB_SCALE;
+    static const float GRAVITATIONAL_CONSTANT;
+    static const short int GRAVITATIONAL_SCALE;
 };
 
 typedef std::vector<Force > ForceArray;

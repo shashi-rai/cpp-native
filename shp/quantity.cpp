@@ -48,7 +48,6 @@ Quantity::Quantity(short int scaling, const std::string unit)
 
 }
 
-
 Quantity::Quantity(const Unit& unit)
         : value(), scaling(DEFAULT_SCALE), unit(unit) {
 
@@ -131,6 +130,18 @@ Quantity Quantity::getInverse() const {
 
 short int Quantity::checkScaling(float amount) const {
     return log10(amount);
+}
+
+void Quantity::adjustScaling() {
+    float current = value;
+    if (current == DEFAULT_VALUE) {
+        return;
+    }
+    int exponent = static_cast<int>(std::floor(std::log10(std::fabs(current))));
+    float mantissa = current / std::pow(10.0f, exponent);
+    scaling += exponent;
+    value = mantissa;
+    return;
 }
 
 Quantity Quantity::copy() {

@@ -24,6 +24,7 @@
 #include <sstream>
 #include <vector>
 #include "density.h"
+#include "force.h"
 #include "../shp/quantity.h"
 #include "../shp/unit.h"
 
@@ -51,6 +52,9 @@ public:
     Mass operator/(const Mass& peer) const;
     Mass operator%(const Mass& peer) const;
 
+    // Access operator
+    Force operator()(const Mass& peer, const float distance) const;
+
     // Getters
     shp::Unit getUnit() const { return quantity.getUnit(); }
     shp::Quantity getQuantity() const { return quantity; }
@@ -62,6 +66,8 @@ public:
     // Additional methods
     float getTotal() const;
     Density getDensity(const float volume) const;
+    Force getForce(const float acceleration) const;
+    void adjustScaling();
     virtual Mass copy();
     virtual void clear();
     virtual std::string print();

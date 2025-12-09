@@ -71,6 +71,7 @@ public:
     // Additional methods
     Quantity getInverse() const;
     short int checkScaling(float amount) const;
+    void adjustScaling();
     Quantity copy();
     void clear();
     std::string print();
