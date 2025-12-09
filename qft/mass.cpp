@@ -19,6 +19,7 @@
 // THE SOFTWARE.
 
 #include "mass.h"
+#include "density.h"
 
 namespace qft {
 
@@ -94,6 +95,11 @@ float Mass::getTotal() const {
     return result;
 }
 
+Density Mass::getDensity(const float volume) const {
+    Density result(getTotal(), volume, quantity.getUnit().getName());
+    return result;
+}
+
 Mass Mass::copy() {
     Mass fresh(quantity, quantity.getUnit());
     return fresh;
@@ -109,6 +115,10 @@ std::string Mass::print() {
     result << "(" << shp::Unit::getBaseDimension(shp::Unit::MASS) << ":";
     result << quantity.print() << ")";
 	return result.str();
+}
+
+float Mass::getComponent(float phase) const {
+    return getTotal() * cos(phase);
 }
 
 } // namespace qft

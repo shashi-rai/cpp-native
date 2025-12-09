@@ -53,6 +53,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/coordinate.o \
 		$(OBJFOLDR)/curvature.o \
 		$(OBJFOLDR)/direction.o \
+		$(OBJFOLDR)/distance.o \
 		$(OBJFOLDR)/frame.o \
 		$(OBJFOLDR)/linear.o \
 		$(OBJFOLDR)/phase.o \
@@ -74,6 +75,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/coordinate.o \
 		$(OBJFOLDR)/curvature.o \
 		$(OBJFOLDR)/direction.o \
+		$(OBJFOLDR)/distance.o \
 		$(OBJFOLDR)/frame.o \
 		$(OBJFOLDR)/linear.o \
 		$(OBJFOLDR)/phase.o \
@@ -110,6 +112,9 @@ $(OBJFOLDR)/curvature.o: curvature.cpp
 
 $(OBJFOLDR)/direction.o: direction.cpp
 	$(CPPTOOL) -c direction.cpp -o $(OBJFOLDR)/direction.o $(CXXFLAGS)
+
+$(OBJFOLDR)/distance.o: distance.cpp
+	$(CPPTOOL) -c distance.cpp -o $(OBJFOLDR)/distance.o $(CXXFLAGS)
 
 $(OBJFOLDR)/frame.o: frame.cpp
 	$(CPPTOOL) -c frame.cpp -o $(OBJFOLDR)/frame.o $(CXXFLAGS)

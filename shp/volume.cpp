@@ -22,27 +22,105 @@
 
 namespace shp {
 
-Volume::Volume() : surface(), height() {
+const std::string Volume::UNIT = "m";       // System International
+
+Volume::Volume() : surface(UNIT), depth(UNIT) {
 
 }
 
-Volume::Volume(const Area& surface, const float height)
-        : surface(surface), height(height) {
+Volume::Volume(const Area& surface) : surface(surface), depth(UNIT) {
 
 }
 
-Volume::Volume(const Area& surface, const Quantity& height)
-        : surface(surface), height(height) {
+Volume::Volume(const Area& surface, const std::string unit)
+    : surface(surface), depth(unit) {
+
+}
+
+Volume::Volume(const Area& surface, short int scaling, const std::string unit)
+    : surface(surface), depth(scaling, unit) {
+
+}
+
+Volume::Volume(const Area& surface, const float depth)
+        : surface(surface), depth(depth, UNIT) {
+
+}
+
+Volume::Volume(const Area& surface, const float depth, const std::string unit)
+        : surface(surface), depth(depth, unit) {
+
+}
+
+Volume::Volume(const Area& surface, const float depth, short int scaling, const std::string unit)
+        : surface(surface), depth(depth, scaling, unit) {
+
+}
+
+Volume::Volume(const Area& surface, const Quantity& depth)
+        : surface(surface), depth(depth) {
+
+}
+
+Volume::Volume(const float length)
+        : surface(length, length, UNIT), depth(length, UNIT) {
+
+}
+
+Volume::Volume(const float length, const std::string unit)
+        : surface(length, length, unit), depth(length, unit) {
+
+}
+
+Volume::Volume(const float length, short int scaling, const std::string unit)
+        : surface(length, length, scaling, unit), depth(length, scaling, unit) {
+
+}
+
+Volume::Volume(const float length, const float breadth)
+        : surface(length, breadth, UNIT), depth(UNIT) {
+
+}
+
+Volume::Volume(const float length, const float breadth, const std::string unit)
+        : surface(length, breadth, unit), depth(unit) {
+
+}
+
+Volume::Volume(const float length, const float breadth, short int scaling, const std::string unit)
+        : surface(length, breadth, scaling, unit), depth(scaling, unit) {
 
 }
 
 Volume::Volume(const float length, const float breadth, const float height)
-        : surface(length, breadth), height(height) {
+        : surface(length, breadth, UNIT), depth(height, UNIT) {
+
+}
+
+Volume::Volume(const float length, const float breadth, const float height,
+        const std::string unit)
+        : surface(length, breadth, unit), depth(height, unit) {
+
+}
+
+Volume::Volume(const float length, const float breadth, const float height,
+        short int scaling, const std::string unit)
+        : surface(length, breadth, scaling, unit), depth(height, scaling, unit) {
+
+}
+
+Volume::Volume(const Quantity& length)
+        : surface(length, length), depth(length) {
+
+}
+
+Volume::Volume(const Quantity& length, const Quantity& breadth)
+        : surface(length, breadth), depth(UNIT) {
 
 }
 
 Volume::Volume(const Quantity& length, const Quantity& breadth, const Quantity& height)
-        : surface(length, breadth), height(height) {
+        : surface(length, breadth), depth(height) {
 
 }
 
@@ -51,7 +129,7 @@ Volume::~Volume() {
 }
 
 bool Volume::operator==(const Volume& peer) const {
-    return (surface == peer.surface) && (height == peer.height);
+    return (surface == peer.surface) && (depth == peer.depth);
 }
 
 Volume Volume::operator+(const Volume& peer) const {
@@ -80,17 +158,21 @@ Volume Volume::operator%(const Volume& peer) const {
 }
 
 float Volume::getTotal() const {
-    return (surface.getTotal() * height.getValue());
+    return (surface.getTotal() * depth.getValue());
+}
+
+std::string Volume::getUnit() const {
+    return depth.getUnit().getName() + "^3";
 }
 
 Volume Volume::copy() {
-    Volume fresh(surface.getLength(), surface.getBreadth(), height);
+    Volume fresh(surface.getLength(), surface.getBreadth(), depth);
     return fresh;
 }
 
 void Volume::clear() {
     surface.clear();
-    height.clear();
+    depth.clear();
     return;
 }
 
@@ -98,8 +180,12 @@ std::string Volume::print() {
     std::stringstream result;
     result << "{";
     result << surface.print() << ",h:";
-    result << height.print() << "}";
+    result << depth.print() << "}";
 	return result.str();
+}
+
+float Volume::getComponent(float phase) const {
+    return getTotal() * cos(phase);
 }
 
 } // namespace shp

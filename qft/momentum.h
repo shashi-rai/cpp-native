@@ -67,7 +67,7 @@ public:
     virtual Momentum copy();
     virtual void clear();
     virtual std::string print();
-
+    float getComponent(float phase) const;
 public:
     static const std::string UNIT;
 };

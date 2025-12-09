@@ -24,6 +24,7 @@
 #include <sstream>
 #include <vector>
 #include "charge.h"
+#include "density.h"
 #include "mass.h"
 #include "../shp/point.h"
 #include "../shp/quantity.h"
@@ -127,6 +128,7 @@ public:
 
     // Additional methods
     float getTotal() const;
+    Density getDensity(const float volume) const;
     shp::Quantity getPotential() const;
     shp::Quantity getKinetic() const;
     shp::Quantity getFrequency() const;
@@ -135,7 +137,7 @@ public:
     virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();
-
+    float getComponent(float phase) const;
 public:
     static const float getPhysicalLimit();
 

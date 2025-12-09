@@ -32,13 +32,28 @@ namespace shp {
 
 class Volume {
     Area surface;
-    Quantity height;
+    Quantity depth;
 public:
     // Constructors
     Volume();
-    Volume(const Area& surface, const float height);
-    Volume(const Area& surface, const Quantity& height);
+    Volume(const Area& surface);
+    Volume(const Area& surface, const std::string unit);
+    Volume(const Area& surface, short int scaling, const std::string unit);
+    Volume(const Area& surface, const float depth);
+    Volume(const Area& surface, const float depth, const std::string unit);
+    Volume(const Area& surface, const float depth, short int scaling, const std::string unit);
+    Volume(const Area& surface, const Quantity& depth);
+    Volume(const float length);
+    Volume(const float length, const std::string unit);
+    Volume(const float length, short int scaling, const std::string unit);
+    Volume(const float length, const float breadth);
+    Volume(const float length, const float breadth, const std::string unit);
+    Volume(const float length, const float breadth, short int scaling, const std::string unit);
     Volume(const float length, const float breadth, const float height);
+    Volume(const float length, const float breadth, const float height, const std::string unit);
+    Volume(const float length, const float breadth, const float height, short int scaling, const std::string unit);
+    Volume(const Quantity& length);
+    Volume(const Quantity& length, const Quantity& breadth);
     Volume(const Quantity& length, const Quantity& breadth, const Quantity& height);
 
     // Destructors
@@ -53,20 +68,28 @@ public:
     Volume operator%(const Volume& peer) const;
 
     // Getters
+    Area getSurface() const { return surface; }
+    Quantity getDepth() const { return depth; }
     Quantity getLength() const { return surface.getLength(); }
     Quantity getBreadth() const { return surface.getBreadth(); }
-    Quantity getHeight() const { return height; }
+    Quantity getHeight() const { return depth; }
 
     // Setters
+    void setSurface(const Area& area) { this->surface = area; }
+    void setDepth(const Quantity& depth) { this->depth = depth; }
     void setLength(const Quantity& length) { this->surface.setLength(length); }
     void setBreadth(const Quantity& breadth) { this->surface.setBreadth(breadth); }
-    void setHeight(const Quantity& height) { this->height = height; }
+    void setHeight(const Quantity& height) { this->depth = height; }
 
     // Additional methods
     float getTotal() const;
+    std::string getUnit() const;
     virtual Volume copy();
     virtual void clear();
     virtual std::string print();
+    float getComponent(float phase) const;
+public:
+    static const std::string UNIT;
 };
 
 typedef std::vector<Volume > VolumeArray;

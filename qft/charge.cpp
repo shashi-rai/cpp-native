@@ -93,6 +93,11 @@ float Charge::getTotal() const {
     return result;
 }
 
+Density Charge::getDensity(const float volume) const {
+    Density result(getTotal(), volume, quantity.getUnit().getName());
+    return result;
+}
+
 Charge Charge::copy() {
     Charge fresh(quantity, quantity.getUnit());
     return fresh;
@@ -108,6 +113,10 @@ std::string Charge::print() {
     result << "(q:";
     result << quantity.print() << ")";
 	return result.str();
+}
+
+float Charge::getComponent(float phase) const {
+    return getTotal() * cos(phase);
 }
 
 } // namespace qft

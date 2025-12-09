@@ -130,4 +130,8 @@ std::string Temperature::print() {
 	return result.str();
 }
 
+float Temperature::getComponent(float phase) const {
+    return getTotal() * cos(phase);
+}
+
 } // namespace qft

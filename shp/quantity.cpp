@@ -43,8 +43,19 @@ Quantity::Quantity(const std::string unit)
 
 }
 
+Quantity::Quantity(short int scaling, const std::string unit)
+        : value(), scaling(scaling), unit(unit) {
+
+}
+
+
 Quantity::Quantity(const Unit& unit)
         : value(), scaling(DEFAULT_SCALE), unit(unit) {
+
+}
+
+Quantity::Quantity(short int scaling, const Unit& unit)
+        : value(), scaling(scaling), unit(unit) {
 
 }
 
@@ -140,6 +151,10 @@ std::string Quantity::print() {
     result << scaling;
     result << unit.print();
 	return result.str();
+}
+
+float Quantity::getComponent(float phase) const {
+    return getValue() * cos(phase);
 }
 
 } // namespace shp

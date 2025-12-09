@@ -22,12 +22,53 @@
 
 namespace shp {
 
-Area::Area() : length(), breadth() {
+const std::string Area::UNIT = "m";     // System International
+
+Area::Area() : length(UNIT), breadth(UNIT) {
+
+}
+
+Area::Area(const std::string unit) : length(unit), breadth(unit) {
+
+}
+
+Area::Area(short int scaling, const std::string unit)
+        : length(scaling, unit), breadth(scaling, unit) {
+
+}
+
+Area::Area(const float length)
+        : length(length, UNIT), breadth(length, UNIT) {
+
+}
+
+Area::Area(const float length, const std::string unit)
+        : length(length, unit), breadth(length, unit) {
+
+}
+
+Area::Area(const float length, short int scaling, const std::string unit)
+        : length(length, scaling, unit), breadth(length, scaling, unit) {
 
 }
 
 Area::Area(const float length, const float breadth)
-        : length(length), breadth(breadth) {
+        : length(length, UNIT), breadth(breadth, UNIT) {
+
+}
+
+Area::Area(const float length, const float breadth, const std::string unit)
+        : length(length, unit), breadth(breadth, unit) {
+
+}
+
+Area::Area(const float length, const float breadth, short int scaling, const std::string unit)
+        : length(length, scaling, unit), breadth(breadth, scaling, unit) {
+
+}
+
+Area::Area(const Quantity& length)
+    : length(length), breadth(length) {
 
 }
 
@@ -83,6 +124,10 @@ float Area::getTotal() const {
     return (length.getValue() * breadth.getValue());
 }
 
+std::string Area::getUnit() const {
+    return length.getUnit().getName() + "^2";
+}
+
 Area Area::copy() {
     Area fresh(length, breadth);
     return fresh;
@@ -100,6 +145,10 @@ std::string Area::print() {
     result << length.print() << ",b:";
     result << breadth.print() << ")";
 	return result.str();
+}
+
+float Area::getComponent(float phase) const {
+    return getTotal() * cos(phase);
 }
 
 } // namespace shp

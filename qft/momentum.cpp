@@ -108,9 +108,13 @@ std::string Momentum::print() {
     result << "[mo:";
     result << name << ",";
     result << mass.print() << ",";
-    result << velocity.print() << " ";
+    result << velocity.print();
     result << UNIT << "]";
 	return result.str();
+}
+
+float Momentum::getComponent(float phase) const {
+    return getTotal() * cos(phase);
 }
 
 } // namespace qft

@@ -123,4 +123,8 @@ std::string Acceleration::print() {
 	return result.str();
 }
 
+float Acceleration::getComponent(float phase) const {
+    return getTotal() * cos(phase);
+}
+
 } // namespace qft

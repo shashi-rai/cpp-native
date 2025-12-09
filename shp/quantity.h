@@ -38,7 +38,9 @@ public:
     Quantity(float value);
     Quantity(short int scaling);
     Quantity(const std::string unit);
+    Quantity(short int scaling, const std::string unit);
     Quantity(const Unit& unit);
+    Quantity(short int scaling, const Unit& unit);
     Quantity(float value, const std::string unit);
     Quantity(float value, const Unit& unit);
     Quantity(float value, short int scaling);
@@ -72,7 +74,7 @@ public:
     Quantity copy();
     void clear();
     std::string print();
-
+    float getComponent(float phase) const;
 public:
     static const float DEFAULT_VALUE;
     static const short int DEFAULT_SCALE;

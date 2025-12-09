@@ -18,65 +18,57 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef QFT_MASS_H
-#define QFT_MASS_H
+#ifndef SHP_DISTANCE_H
+#define SHP_DISTANCE_H
 
 #include <sstream>
+#include <string>
 #include <vector>
-#include "density.h"
-#include "../shp/quantity.h"
-#include "../shp/unit.h"
+#include "quantity.h"
+#include "unit.h"
 
-namespace qft {
+namespace shp {
 
-class Mass {
-    shp::Quantity quantity;
+class Distance {
+    Quantity magnitude;
 public:
     // Constructors
-    Mass();
-    Mass(float quantity);
-    Mass(float quantity, short int scaling);
-    Mass(float quantity, const shp::Unit& unit);
-    Mass(float quantity, short int scaling, const shp::Unit& unit);
-    Mass(const shp::Quantity& quantity, const shp::Unit& unit);
+    Distance();
+    Distance(const float magnitude);
+    Distance(const float magnitude, const std::string unit);
+    Distance(const float magnitude, short int scaling, const std::string unit);
+    Distance(const Quantity& length);
 
     // Destructors
-    ~Mass();
+    ~Distance();
 
     // Operator overloading
-    bool operator==(const Mass& peer) const;
-    Mass operator+(const Mass& peer) const;
-    Mass operator-(const Mass& peer) const;
-    Mass operator*(const Mass& peer) const;
-    Mass operator/(const Mass& peer) const;
-    Mass operator%(const Mass& peer) const;
+    bool operator==(const Distance& peer) const;
+    Distance operator+(const Distance& peer) const;
+    Distance operator-(const Distance& peer) const;
+    Distance operator*(const Distance& peer) const;
+    Distance operator/(const Distance& peer) const;
+    Distance operator%(const Distance& peer) const;
 
     // Getters
-    shp::Unit getUnit() const { return quantity.getUnit(); }
-    shp::Quantity getQuantity() const { return quantity; }
+    Quantity getMagnitude() const { return magnitude; }
 
     // Setters
-    void setUnit(const shp::Unit& value) { this->quantity.setUnit(value); }
-    void setQuantity(const float amount) { this->quantity = amount; }
+    void setMagnitude(const Quantity& length) { this->magnitude = length; }
 
     // Additional methods
     float getTotal() const;
-    Density getDensity(const float volume) const;
-    virtual Mass copy();
+    std::string getUnit() const;
+    virtual Distance copy();
     virtual void clear();
     virtual std::string print();
     float getComponent(float phase) const;
 public:
     static const std::string UNIT;
-    static const short int ATOMIC_SCALE;
-    static const float ATOMIC_UNIT;
-    static const float PROTON;
-    static const float NEUTRON;
-    static const float ELECTRON;
 };
 
-typedef std::vector<Mass > MassArray;
+typedef std::vector<Distance > DistanceArray;
 
-} // namespace qft
+} // namespace shp
 
-#endif //QFT_MASS_H
+#endif //SHP_DISTANCE_H

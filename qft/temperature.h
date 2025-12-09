@@ -68,7 +68,7 @@ public:
     virtual Temperature copy();
     virtual void clear();
     virtual std::string print();
-
+    float getComponent(float phase) const;
 public:
     static const std::string UNIT;
     static const short int DEFAULT_SCALE;

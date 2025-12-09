@@ -107,6 +107,11 @@ float Pressure::getTotal() const {
     return result;
 }
 
+Density Pressure::getDensity(const float volume) const {
+    Density result(getTotal(), volume, getUnit().getName());
+    return result;
+}
+
 Pressure Pressure::copy() {
     Pressure fresh(name, unit, force, area);
     return fresh;
@@ -128,6 +133,10 @@ std::string Pressure::print() {
 	result << area.print();
     result << unit.print() << "]";
 	return result.str();
+}
+
+float Pressure::getComponent(float phase) const {
+    return getTotal() * cos(phase);
 }
 
 } // namespace qft

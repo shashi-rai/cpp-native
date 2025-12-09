@@ -48,6 +48,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/acceleration.o \
 		$(OBJFOLDR)/action.o \
 		$(OBJFOLDR)/charge.o \
+		$(OBJFOLDR)/density.o \
 		$(OBJFOLDR)/energy.o \
 		$(OBJFOLDR)/field.o \
 		$(OBJFOLDR)/force.o \
@@ -63,6 +64,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/acceleration.o \
 		$(OBJFOLDR)/action.o \
 		$(OBJFOLDR)/charge.o \
+		$(OBJFOLDR)/density.o \
 		$(OBJFOLDR)/energy.o \
 		$(OBJFOLDR)/field.o \
 		$(OBJFOLDR)/force.o \
@@ -83,6 +85,9 @@ $(OBJFOLDR)/action.o: action.cpp
 
 $(OBJFOLDR)/charge.o: charge.cpp
 	$(CPPTOOL) -c charge.cpp -o $(OBJFOLDR)/charge.o $(CXXFLAGS)
+
+$(OBJFOLDR)/density.o: density.cpp
+	$(CPPTOOL) -c density.cpp -o $(OBJFOLDR)/density.o $(CXXFLAGS)
 
 $(OBJFOLDR)/energy.o: energy.cpp
 	$(CPPTOOL) -c energy.cpp -o $(OBJFOLDR)/energy.o $(CXXFLAGS)

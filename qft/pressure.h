@@ -23,6 +23,7 @@
 
 #include <string>
 #include <vector>
+#include "density.h"
 #include "force.h"
 #include "../shp/area.h"
 #include "../shp/unit.h"
@@ -70,10 +71,11 @@ public:
 
     // Additional methods
     float getTotal() const;
+    Density getDensity(const float volume) const;
     virtual Pressure copy();
     virtual void clear();
     virtual std::string print();
-
+    float getComponent(float phase) const;
 public:
     static const std::string UNIT;
 };

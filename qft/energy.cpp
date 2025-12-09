@@ -598,6 +598,11 @@ float Energy::getTotal() const {
     return result;
 }
 
+Density Energy::getDensity(const float volume) const {
+    Density result(getTotal(), volume, getUnit().getName());
+    return result;
+}
+
 shp::Quantity Energy::getPotential() const {
     shp::Quantity speed_of_light(LIGHT_SPEED, LIGHT_SCALE);
     float energy = (mass.getQuantity() * (speed_of_light * speed_of_light)).getValue();
@@ -655,6 +660,10 @@ std::string Energy::print() {
     result << charge.print();
     result << unit.print() << "]";
 	return result.str();
+}
+
+float Energy::getComponent(float phase) const {
+    return getTotal() * cos(phase);
 }
 
 } // namespace qft

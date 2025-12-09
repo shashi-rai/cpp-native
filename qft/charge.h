@@ -23,6 +23,7 @@
 
 #include <sstream>
 #include <vector>
+#include "density.h"
 #include "../shp/quantity.h"
 #include "../shp/unit.h"
 
@@ -60,9 +61,11 @@ public:
 
     // Additional methods
     float getTotal() const;
+    Density getDensity(const float volume) const;
     virtual Charge copy();
     virtual void clear();
     virtual std::string print();
+    float getComponent(float phase) const;
 public:
     static const std::string UNIT;
     static const short int ATOMIC_SCALE;
