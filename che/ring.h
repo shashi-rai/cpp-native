@@ -18,34 +18,53 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef BIO_GATE_H
-#define BIO_GATE_H
+#ifndef CHE_RING_H
+#define CHE_RING_H
 
 #include <string>
 #include <vector>
-#include "../shp/shape.h"
+#include "atom.h"
+#include "molecule.h"
 
-namespace bio {
+namespace che {
 
-class Gate : public shp::Shape {
-    bool status;
+class Ring : public Molecule {
+    AtomArray atoms;
 public:
     // Constructors
-    Gate();
-    Gate(std::string name);
+    Ring();
+    Ring(std::string name);
+    Ring(std::string name, const AtomArray& atoms);
 
     // Destructors
-    ~Gate();
+    ~Ring();
+
+    // Operator overloading
+    bool operator==(const Ring& peer) const;
+    Ring operator+(const Ring& peer) const;
+    Ring operator-(const Ring& peer) const;
+
+    // Access operator
+    Atom& operator()(int x) { return atoms[x]; }
+    const Atom& operator()(int x) const { return atoms[x]; }
 
     // Getters
-    bool getStatus() const { return status; }
+    AtomArray getAtoms() const { return atoms; }
 
     // Setters
-    void setStatus(const bool closed) { this->status = closed; }
+    void setAtoms(const AtomArray& value) { this->atoms = value; }
+
+    // Additional methods
+    int getAtomCount() const;
+    Atom get(int index) const;
+    void set(int index, const Atom& object);
+    virtual Molecule copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
-typedef std::vector<Gate > GateArray;
+typedef std::vector<Ring > RingArray;
 
-} // namespace bio
+} // namespace che
 
-#endif //BIO_GATE_H
+#endif //CHE_RING_H

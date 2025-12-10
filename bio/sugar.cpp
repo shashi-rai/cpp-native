@@ -22,11 +22,11 @@
 
 namespace bio {
 
-Sugar::Sugar() : name("") {
+Sugar::Sugar() : Molecule() {
 
 }
 
-Sugar::Sugar(std::string name) : name(name) {
+Sugar::Sugar(std::string name) : Molecule(name) {
 
 }
 

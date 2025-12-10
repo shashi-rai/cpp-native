@@ -22,20 +22,96 @@
 
 namespace bio {
 
-Membrane::Membrane() : proteins() {
+Membrane::Membrane() : Shape(), potential(), proteins() {
 
 }
 
-Membrane::Membrane(std::string name) : proteins() {
+Membrane::Membrane(const float potential)
+        : Shape(), potential(potential), proteins() {
 
 }
 
-Membrane::Membrane(std::string name, ProteinArray& objects) : proteins(objects) {
+Membrane::Membrane(const float potential, ProteinArray& objects)
+        : Shape(), potential(potential), proteins(objects) {
 
 }
 
 Membrane::~Membrane() {
 
+}
+
+bool Membrane::operator==(const Membrane& peer) const {
+    return (proteins == peer.proteins);
+}
+
+Membrane Membrane::operator+(const Membrane& peer) const {
+    ProteinArray result(proteins);
+    result.insert(result.end(), peer.proteins.begin(), peer.proteins.end());
+    return Membrane(potential, result);
+}
+
+Membrane Membrane::operator-(const Membrane& peer) const {
+    ProteinArray result(proteins);
+    for (ProteinArray::const_iterator it = peer.proteins.begin(); it != peer.proteins.end(); ++it) {
+        ProteinArray::iterator found = std::find(result.begin(), result.end(), *it);
+        if (found != result.end()) {
+            result.erase(found);
+        }
+    }
+    return Membrane(potential, result);
+}
+
+int Membrane::getProteinCount() const {
+    return proteins.size();
+}
+
+Protein Membrane::get(int index) const {
+    Protein result;
+    if (index < 0) {
+        return result;
+    }
+    if (index >= static_cast<int>(proteins.size())) {
+        return result;
+    }
+    return proteins[index];
+}
+
+void Membrane::set(int index, const Protein& object) {
+    if (index < 0) {
+        return;
+    }
+    if (index < static_cast<int>(proteins.size())) {
+        // replace existing element
+        proteins[index] = object;
+    } else if (index == static_cast<int>(proteins.size())) {
+        // append at end
+        proteins.push_back(object);
+    } else {
+        // index beyond current size: append at end
+        proteins.push_back(object);
+    }
+    return;
+}
+
+Membrane Membrane::copy() {
+    Membrane fresh(potential, this->proteins);
+    return fresh;
+}
+
+void Membrane::clear() {
+    Shape::clear();
+    potential = 0.0f;
+    proteins.clear();
+    return;
+}
+
+std::string Membrane::print() {
+    std::stringstream result;
+    result << "{mem:";
+    result << Shape::print() << ",p:";
+    result << potential << ",sz:";
+	result << proteins.size() << "}";
+	return result.str();
 }
 
 } // namespace bio

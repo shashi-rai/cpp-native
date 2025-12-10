@@ -23,11 +23,12 @@
 
 #include <string>
 #include <vector>
+#include "../che/molecule.h"
 
 namespace bio {
 
-class Phosphate {
-    std::string name;
+class Phosphate : public che::Molecule {
+    std::string flavour;
 public:
     // Constructors
     Phosphate();
@@ -37,10 +38,10 @@ public:
     ~Phosphate();
 
     // Getters
-    std::string getName() const { return name; }
+    std::string getFlavour() const { return flavour; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setFlavour(const std::string& name) { this->flavour = name; }
 };
 
 typedef std::vector<Phosphate > PhosphateArray;

@@ -50,6 +50,32 @@ Bond::Bond(std::string name, float amplitude, float gradient)
 
 }
 
+Bond::Bond(std::shared_ptr<che::Orbital> left, std::shared_ptr<che::Orbital> right)
+        : Point(), left(), right(), energy(), length(), angle() {
+
+}
+
+Bond::Bond(std::shared_ptr<che::Orbital> left, std::shared_ptr<che::Orbital> right,
+        qft::Energy& energy)
+        : Point(), left(left), right(right),
+        energy(energy), length(), angle() {
+
+}
+
+Bond::Bond(std::shared_ptr<che::Orbital> left, std::shared_ptr<che::Orbital> right,
+        qft::Energy& energy, shp::Distance length)
+        : Point(), left(left), right(right),
+        energy(energy), length(length), angle() {
+
+}
+
+Bond::Bond(std::shared_ptr<che::Orbital> left, std::shared_ptr<che::Orbital> right,
+        qft::Energy& energy, shp::Distance length, shp::Angular angle)
+        : Point(), left(left), right(right),
+        energy(energy), length(length), angle(angle) {
+
+}
+
 Bond::Bond(std::string name,
 		std::shared_ptr<che::Orbital> left, std::shared_ptr<che::Orbital> right)
         : Point(name), left(), right(), energy(), length(), angle() {
@@ -58,7 +84,31 @@ Bond::Bond(std::string name,
 
 Bond::Bond(std::string name,
 		std::shared_ptr<che::Orbital> left, std::shared_ptr<che::Orbital> right,
-        qft::Energy& energy, shp::Quantity length, shp::Angular angle)
+        qft::Energy& energy)
+        : Point(name), left(left), right(right),
+        energy(energy), length(), angle() {
+
+}
+
+Bond::Bond(std::string name,
+		std::shared_ptr<che::Orbital> left, std::shared_ptr<che::Orbital> right,
+        qft::Energy& energy, shp::Distance length)
+        : Point(name), left(left), right(right),
+        energy(energy), length(length), angle() {
+
+}
+
+Bond::Bond(std::string name,
+		std::shared_ptr<che::Orbital> left, std::shared_ptr<che::Orbital> right,
+        qft::Energy& energy, shp::Angular angle)
+        : Point(name), left(left), right(right),
+        energy(energy), length(), angle(angle) {
+
+}
+
+Bond::Bond(std::string name,
+		std::shared_ptr<che::Orbital> left, std::shared_ptr<che::Orbital> right,
+        qft::Energy& energy, shp::Distance length, shp::Angular angle)
         : Point(name), left(left), right(right),
         energy(energy), length(length), angle(angle) {
 
@@ -66,6 +116,11 @@ Bond::Bond(std::string name,
 
 Bond::~Bond() {
 
+}
+
+shp::Point Bond::copy() {
+    Bond fresh(getName(), left, right, energy, length, angle);
+    return fresh;
 }
 
 void Bond::clear() {

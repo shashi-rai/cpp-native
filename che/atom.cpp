@@ -94,6 +94,10 @@ Atom::~Atom() {
 
 }
 
+bool Atom::operator==(const Atom& peer) const {
+    return (nucleus == peer.nucleus);
+}
+
 std::string Atom::getElementName() const {
 	return nucleus.getElementName();
 }

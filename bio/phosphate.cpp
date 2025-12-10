@@ -22,11 +22,11 @@
 
 namespace bio {
 
-Phosphate::Phosphate() : name("") {
+Phosphate::Phosphate() : Molecule() {
 
 }
 
-Phosphate::Phosphate(std::string name) : name(name) {
+Phosphate::Phosphate(std::string name) : Molecule(name) {
 
 }
 

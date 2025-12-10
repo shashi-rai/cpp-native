@@ -22,16 +22,42 @@
 
 namespace bio {
 
-Base::Base() : name("") {
+Base::Base() : Molecule(), pyrimidine(), imidazole() {
 
 }
 
-Base::Base(std::string name) : name(name) {
+Base::Base(std::string name) : Molecule(name), pyrimidine(), imidazole() {
+
+}
+
+Base::Base(const che::Ring& pyrimidine, const che::Ring& imidazole)
+    : Molecule(), pyrimidine(pyrimidine), imidazole(imidazole) {
+
+}
+
+Base::Base(std::string name, const che::Ring& pyrimidine, const che::Ring& imidazole)
+    : Molecule(name), pyrimidine(pyrimidine), imidazole(imidazole) {
 
 }
 
 Base::~Base() {
 
+}
+
+bool Base::operator==(const Base& peer) const {
+    return (pyrimidine == peer.pyrimidine) && (imidazole == peer.imidazole);
+}
+
+Base Base::operator+(const Base& peer) const {
+    che::Ring newpyrimidine = (pyrimidine + peer.pyrimidine);
+    che::Ring newimidazole = (imidazole + peer.imidazole);
+    return Base("+", newpyrimidine, newimidazole);
+}
+
+Base Base::operator-(const Base& peer) const {
+    che::Ring newpyrimidine = (pyrimidine - peer.pyrimidine);
+    che::Ring newimidazole = (imidazole - peer.imidazole);
+    return Base("-", pyrimidine, imidazole);
 }
 
 } // namespace bio

@@ -22,16 +22,88 @@
 
 namespace bio {
 
-Chromosome::Chromosome() : name("") {
+Chromosome::Chromosome() : Shape(), genes() {
 
 }
 
-Chromosome::Chromosome(std::string name) : name(name) {
+Chromosome::Chromosome(std::string name) : Shape(name), genes() {
 
 }
 
 Chromosome::~Chromosome() {
 
+}
+
+bool Chromosome::operator==(const Chromosome& peer) const {
+    return (genes == peer.genes);
+}
+
+Chromosome Chromosome::operator+(const Chromosome& peer) const {
+    GeneArray result(genes);
+    result.insert(result.end(), peer.genes.begin(), peer.genes.end());
+    return Chromosome("+", result);
+}
+
+Chromosome Chromosome::operator-(const Chromosome& peer) const {
+    GeneArray result(genes);
+    for (GeneArray::const_iterator it = peer.genes.begin(); it != peer.genes.end(); ++it) {
+        GeneArray::iterator found = std::find(result.begin(), result.end(), *it);
+        if (found != result.end()) {
+            result.erase(found);
+        }
+    }
+    return Chromosome("-", result);
+}
+
+int Chromosome::getGeneCount() const {
+    return genes.size();
+}
+
+Gene Chromosome::get(int index) const {
+    Gene result;
+    if (index < 0) {
+        return result;
+    }
+    if (index >= static_cast<int>(genes.size())) {
+        return result;
+    }
+    return genes[index];
+}
+
+void Chromosome::set(int index, const Gene& object) {
+    if (index < 0) {
+        return;
+    }
+    if (index < static_cast<int>(genes.size())) {
+        // replace existing element
+        genes[index] = object;
+    } else if (index == static_cast<int>(genes.size())) {
+        // append at end
+        genes.push_back(object);
+    } else {
+        // index beyond current size: append at end
+        genes.push_back(object);
+    }
+    return;
+}
+
+Chromosome Chromosome::copy() {
+    Chromosome fresh(this->getName(), this->genes);
+    return fresh;
+}
+
+void Chromosome::clear() {
+    Shape::clear();
+    genes.clear();
+    return;
+}
+
+std::string Chromosome::print() {
+    std::stringstream result;
+    result << "{ch";
+	result << Shape::print() << ",sz:";
+	result << genes.size() << "}";
+	return result.str();
 }
 
 } // namespace bio

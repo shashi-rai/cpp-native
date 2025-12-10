@@ -47,6 +47,7 @@ clean-libs: clean-custom
 $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/atom.o \
 		$(OBJFOLDR)/bond.o \
+		$(OBJFOLDR)/chain.o \
 		$(OBJFOLDR)/electron.o \
 		$(OBJFOLDR)/molecule.o \
 		$(OBJFOLDR)/nucleus.o \
@@ -54,10 +55,12 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/period.o \
 		$(OBJFOLDR)/photon.o \
 		$(OBJFOLDR)/polymer.o \
-		$(OBJFOLDR)/reaction.o
+		$(OBJFOLDR)/reaction.o \
+		$(OBJFOLDR)/ring.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
 		$(OBJFOLDR)/atom.o \
 		$(OBJFOLDR)/bond.o \
+		$(OBJFOLDR)/chain.o \
 		$(OBJFOLDR)/electron.o \
 		$(OBJFOLDR)/molecule.o \
 		$(OBJFOLDR)/nucleus.o \
@@ -65,13 +68,17 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/period.o \
 		$(OBJFOLDR)/photon.o \
 		$(OBJFOLDR)/polymer.o \
-		$(OBJFOLDR)/reaction.o
+		$(OBJFOLDR)/reaction.o \
+		$(OBJFOLDR)/ring.o
 
 $(OBJFOLDR)/atom.o: atom.cpp
 	$(CPPTOOL) -c atom.cpp -o $(OBJFOLDR)/atom.o $(CXXFLAGS)
 
 $(OBJFOLDR)/bond.o: bond.cpp
 	$(CPPTOOL) -c bond.cpp -o $(OBJFOLDR)/bond.o $(CXXFLAGS)
+
+$(OBJFOLDR)/chain.o: chain.cpp
+	$(CPPTOOL) -c chain.cpp -o $(OBJFOLDR)/chain.o $(CXXFLAGS)
 
 $(OBJFOLDR)/electron.o: electron.cpp
 	$(CPPTOOL) -c electron.cpp -o $(OBJFOLDR)/electron.o $(CXXFLAGS)
@@ -96,3 +103,6 @@ $(OBJFOLDR)/polymer.o: polymer.cpp
 
 $(OBJFOLDR)/reaction.o: reaction.cpp
 	$(CPPTOOL) -c reaction.cpp -o $(OBJFOLDR)/reaction.o $(CXXFLAGS)
+
+$(OBJFOLDR)/ring.o: ring.cpp
+	$(CPPTOOL) -c ring.cpp -o $(OBJFOLDR)/ring.o $(CXXFLAGS)

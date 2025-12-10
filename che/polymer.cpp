@@ -58,6 +58,64 @@ Polymer::~Polymer() {
 
 }
 
+bool Polymer::operator==(const Polymer& peer) const {
+    return (monomers == peer.monomers);
+}
+
+Polymer Polymer::operator+(const Polymer& peer) const {
+    MoleculeArray result(monomers);
+    result.insert(result.end(), peer.monomers.begin(), peer.monomers.end());
+    return Polymer("+", result);
+}
+
+Polymer Polymer::operator-(const Polymer& peer) const {
+    MoleculeArray result(monomers);
+    for (MoleculeArray::const_iterator it = peer.monomers.begin(); it != peer.monomers.end(); ++it) {
+        MoleculeArray::iterator found = std::find(result.begin(), result.end(), *it);
+        if (found != result.end()) {
+            result.erase(found);
+        }
+    }
+    return Polymer("-", result);
+}
+
+int Polymer::getMoleculeCount() const {
+    return monomers.size();
+}
+
+Molecule Polymer::get(int index) const {
+    Molecule result;
+    if (index < 0) {
+        return result;
+    }
+    if (index >= static_cast<int>(monomers.size())) {
+        return result;
+    }
+    return monomers[index];
+}
+
+void Polymer::set(int index, const Molecule& object) {
+    if (index < 0) {
+        return;
+    }
+    if (index < static_cast<int>(monomers.size())) {
+        // replace existing element
+        monomers[index] = object;
+    } else if (index == static_cast<int>(monomers.size())) {
+        // append at end
+        monomers.push_back(object);
+    } else {
+        // index beyond current size: append at end
+        monomers.push_back(object);
+    }
+    return;
+}
+
+shp::Point Polymer::copy() {
+    Polymer fresh(getName(), monomers);
+    return fresh;
+}
+
 void Polymer::clear() {
 	Point::clear();
 	monomers.clear();

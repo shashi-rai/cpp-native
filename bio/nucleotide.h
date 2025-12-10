@@ -26,11 +26,11 @@
 #include "base.h"
 #include "phosphate.h"
 #include "sugar.h"
+#include "../shp/shape.h"
 
 namespace bio {
 
-class Nucleotide {
-    std::string name;
+class Nucleotide : public shp::Shape {
     Base base;
     Sugar sugar;
     Phosphate phosphate;
@@ -43,13 +43,11 @@ public:
     ~Nucleotide();
 
     // Getters
-    std::string getName() const { return name; }
     Base getBase() const { return base; }
     Sugar getSugar() const { return sugar; }
     Phosphate getPhosphate() const { return phosphate; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
     void setBase(const Base& molecule) { this->base = molecule; }
     void setSugar(const Sugar& molecule) { this->sugar = molecule; }
     void setPhosphate(const Phosphate& molecule) { this->phosphate = molecule; }

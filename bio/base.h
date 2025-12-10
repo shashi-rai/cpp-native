@@ -23,29 +23,42 @@
 
 #include <string>
 #include <vector>
+#include "../che/molecule.h"
+#include "../che/ring.h"
 
 namespace bio {
 
-class Base {
-    std::string name;
+class Base : public che::Molecule {
+    che::Ring pyrimidine;
+    che::Ring imidazole;
 public:
     // Constructors
     Base();
     Base(std::string name);
+    Base(const che::Ring& pyrimidine, const che::Ring& imidazole);
+    Base(std::string name, const che::Ring& pyrimidine, const che::Ring& imidazole);
+
+    // Operator overloading
+    bool operator==(const Base& peer) const;
+    Base operator+(const Base& peer) const;
+    Base operator-(const Base& peer) const;
 
     // Destructors
     ~Base();
 
     // Getters
-    std::string getName() const { return name; }
+    che::Ring getPyrimidine() const { return pyrimidine; }
+    che::Ring getImidazole() const { return imidazole; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setPyrimidine(const che::Ring& molecule) { this->pyrimidine = molecule; }
+    void setImidazole(const che::Ring& molecule) { this->imidazole = molecule; }
 };
 
 typedef std::vector<Base > BaseArray;
 
-class Adenine : Base {
+class Adenine : public Base {
+
 public:
     // Constructors
     Adenine() : Base("A") {}
@@ -54,7 +67,8 @@ public:
     ~Adenine() {}
 };
 
-class Guanine : Base {
+class Guanine : public Base {
+
 public:
     // Constructors
     Guanine() : Base("G") {}
@@ -63,7 +77,8 @@ public:
     ~Guanine() {}
 };
 
-class Cytosine : Base {
+class Cytosine : public Base {
+
 public:
     // Constructors
     Cytosine() : Base("C") {}
@@ -72,7 +87,8 @@ public:
     ~Cytosine() {}
 };
 
-class Thymine : Base {
+class Thymine : public Base {
+
 public:
     // Constructors
     Thymine() : Base("T") {}
@@ -81,7 +97,8 @@ public:
     ~Thymine() {}
 };
 
-class Uracil : Base {
+class Uracil : public Base {
+
 public:
     // Constructors
     Uracil() : Base("U") {}

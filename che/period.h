@@ -41,6 +41,9 @@ public:
     // Destructors
     ~Period();
 
+    // Operator overloading
+    bool operator==(const Period& peer) const;
+
     // Access operator
     Orbital operator()(int x) { return getOrbital(x); }
     const Orbital operator()(int x) const { return getOrbital(x); }

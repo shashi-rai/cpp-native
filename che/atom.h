@@ -49,6 +49,9 @@ public:
     // Destructors
     ~Atom();
 
+    // Operator overloading
+    bool operator==(const Atom& peer) const;
+
     // Access operator
     Period operator()(int x) { return getPeriod(x); }
     const Period operator()(int x) const { return getPeriod(x); }

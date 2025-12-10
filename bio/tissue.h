@@ -24,11 +24,11 @@
 #include <string>
 #include <vector>
 #include "cell.h"
+#include "../shp/shape.h"
 
 namespace bio {
 
-class Tissue {
-    std::string name;
+class Tissue : public shp::Shape {
     CellArray cells;
 public:
     // Constructors
@@ -49,11 +49,9 @@ public:
     const Cell& operator()(int x) const { return cells[x]; }
 
     // Getters
-    std::string getName() const { return name; }
     CellArray getCells() const { return cells; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
     void setCells(const CellArray& objects) { this->cells = objects; }
 
     // Additional methods

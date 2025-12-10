@@ -22,11 +22,11 @@
 
 namespace bio {
 
-Tissue::Tissue() : name("") {
+Tissue::Tissue() : Shape() {
 
 }
 
-Tissue::Tissue(std::string name) : name(name) {
+Tissue::Tissue(std::string name) : Shape(name) {
 
 }
 
@@ -36,6 +36,78 @@ Tissue::Tissue(std::string name, CellArray& objects) : cells(objects) {
 
 Tissue::~Tissue() {
 
+}
+
+bool Tissue::operator==(const Tissue& peer) const {
+    return (cells == peer.cells);
+}
+
+Tissue Tissue::operator+(const Tissue& peer) const {
+    CellArray result(cells);
+    result.insert(result.end(), peer.cells.begin(), peer.cells.end());
+    return Tissue("+", result);
+}
+
+Tissue Tissue::operator-(const Tissue& peer) const {
+    CellArray result(cells);
+    for (CellArray::const_iterator it = peer.cells.begin(); it != peer.cells.end(); ++it) {
+        CellArray::iterator found = std::find(result.begin(), result.end(), *it);
+        if (found != result.end()) {
+            result.erase(found);
+        }
+    }
+    return Tissue("-", result);
+}
+
+int Tissue::getCellCount() const {
+    return cells.size();
+}
+
+Cell Tissue::get(int index) const {
+    Cell result;
+    if (index < 0) {
+        return result;
+    }
+    if (index >= static_cast<int>(cells.size())) {
+        return result;
+    }
+    return cells[index];
+}
+
+void Tissue::set(int index, const Cell& object) {
+    if (index < 0) {
+        return;
+    }
+    if (index < static_cast<int>(cells.size())) {
+        // replace existing element
+        cells[index] = object;
+    } else if (index == static_cast<int>(cells.size())) {
+        // append at end
+        cells.push_back(object);
+    } else {
+        // index beyond current size: append at end
+        cells.push_back(object);
+    }
+    return;
+}
+
+Tissue Tissue::copy() {
+    Tissue fresh(this->getName(), this->cells);
+    return fresh;
+}
+
+void Tissue::clear() {
+    Shape::clear();
+    cells.clear();
+    return;
+}
+
+std::string Tissue::print() {
+    std::stringstream result;
+    result << "{ts:";
+	result << Shape::print() << ",sz:";
+	result << cells.size() << "}";
+	return result.str();
 }
 
 } // namespace bio

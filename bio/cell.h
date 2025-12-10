@@ -21,19 +21,21 @@
 #ifndef BIO_CELL_H
 #define BIO_CELL_H
 
+#include <sstream>
 #include <string>
 #include <vector>
 #include "membrane.h"
+#include "../shp/shape.h"
 
 namespace bio {
 
-class Cell {
-    std::string name;
+class Cell : public shp::Shape {
     MembraneArray membranes;
 public:
     // Constructors
     Cell();
     Cell(std::string name);
+    Cell(MembraneArray& objects);
     Cell(std::string name, MembraneArray& objects);
 
     // Destructors
@@ -49,11 +51,9 @@ public:
     const Membrane& operator()(int x) const { return membranes[x]; }
 
     // Getters
-    std::string getName() const { return name; }
     MembraneArray getMembranes() const { return membranes; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
     void setMembranes(const MembraneArray& objects) { this->membranes = objects; }
 
     // Additional methods

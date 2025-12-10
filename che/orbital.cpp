@@ -63,6 +63,40 @@ Orbital::~Orbital() {
 
 }
 
+bool Orbital::operator==(const Orbital& peer) const {
+    Electron left = getLeftSpinor(),
+        peerleft = peer.getLeftSpinor();
+    Electron right = getRightSpinor(),
+        peerright = peer.getRightSpinor();
+    return (left == left) && (peerleft == peerright);
+}
+
+// TODO: Electron assignment to be corrected
+Orbital Orbital::operator+(const Orbital& peer) const {
+    std::shared_ptr<che::Electron> left =
+        std::make_shared<che::Electron>(getLeftSpinor());
+    std::shared_ptr<che::Electron> peerleft =
+        std::make_shared<che::Electron>(peer.getLeftSpinor());
+    std::shared_ptr<che::Electron> right =
+        std::make_shared<che::Electron>(getRightSpinor());
+    std::shared_ptr<che::Electron> peerright =
+        std::make_shared<che::Electron>(peer.getRightSpinor());
+    return Orbital("+", ELECTRON_MAX_LIMIT, left, peerright);
+}
+
+// TODO: Electron assignment to be corrected
+Orbital Orbital::operator-(const Orbital& peer) const {
+    std::shared_ptr<che::Electron> left =
+        std::make_shared<che::Electron>(getLeftSpinor());
+    std::shared_ptr<che::Electron> peerleft =
+        std::make_shared<che::Electron>(peer.getLeftSpinor());
+    std::shared_ptr<che::Electron> right =
+        std::make_shared<che::Electron>(getRightSpinor());
+    std::shared_ptr<che::Electron> peerright =
+        std::make_shared<che::Electron>(peer.getRightSpinor());
+    return Orbital("-", ELECTRON_MAX_LIMIT, left, peerright);
+}
+
 int Orbital::getParticleCount() const {
     return this->getWaveCount();
 }

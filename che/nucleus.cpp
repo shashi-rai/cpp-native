@@ -62,44 +62,80 @@ const std::string Nucleus::ELEMENT_NAME[] = {
 };
 
 Nucleus::Nucleus()
-        : symbol(""), proton(0), neutron(0), mass(), charge(), energy() {
+        : symbol(""), proton(0), neutron(0), energy() {
 
 }
 
 Nucleus::Nucleus(std::string symbol)
-        : symbol(symbol), proton(0), neutron(0), mass(), charge(), energy() {
+        : symbol(symbol), proton(0), neutron(0), energy() {
 
 }
 
 Nucleus::Nucleus(short int proton)
-        : symbol(getSymbol(proton)), proton(proton), neutron(proton), mass(), charge(), energy() {
+        : symbol(getSymbol(proton)), proton(proton), neutron(proton), energy() {
 
 }
 
 Nucleus::Nucleus(short int proton, short int neutron)
-        : symbol(getSymbol(proton)), proton(proton), neutron(neutron), mass(), charge(), energy() {
+        : symbol(getSymbol(proton)), proton(proton), neutron(neutron), energy() {
 
 }
 
 Nucleus::Nucleus(std::string symbol, short int proton)
-        : symbol(symbol), proton(proton), neutron(proton), mass(), charge(), energy() {
+        : symbol(symbol), proton(proton), neutron(proton), energy() {
 
 }
 
 Nucleus::Nucleus(std::string symbol, short int proton, short int neutron)
-        : symbol(symbol), proton(proton), neutron(neutron), mass(), charge(), energy() {
+        : symbol(symbol), proton(proton), neutron(neutron), energy() {
 
 }
 
 Nucleus::Nucleus(std::string symbol, short int proton, short int neutron,
-        qft::Mass& mass, qft::Charge& charge, qft::Energy& energy)
-        : symbol(symbol), proton(proton), neutron(neutron),
-        mass(mass), charge(charge), energy(energy) {
+        qft::Mass& mass)
+        : symbol(symbol), proton(proton), neutron(neutron), energy(mass) {
+
+}
+
+Nucleus::Nucleus(std::string symbol, short int proton, short int neutron,
+        qft::Charge& charge)
+        : symbol(symbol), proton(proton), neutron(neutron), energy(charge) {
+
+}
+
+Nucleus::Nucleus(std::string symbol, short int proton, short int neutron,
+        qft::Mass& mass, qft::Charge& charge)
+        : symbol(symbol), proton(proton), neutron(neutron), energy(mass, charge) {
+
+}
+
+Nucleus::Nucleus(std::string symbol, short int proton, short int neutron,
+        qft::Energy& energy)
+        : symbol(symbol), proton(proton), neutron(neutron), energy(energy) {
 
 }
 
 Nucleus::~Nucleus() {
 
+}
+
+bool Nucleus::operator==(const Nucleus& peer) const {
+    return (symbol == peer.symbol)
+		&& (proton == peer.proton)
+		&& (neutron == peer.neutron)
+		&& (energy == peer.energy);
+}
+
+Nucleus Nucleus::operator+(const Nucleus& peer) const {
+	qft::Energy total = (energy + peer.energy);
+    return Nucleus("+", (proton + peer.proton),
+		(neutron + peer.neutron), total);
+}
+
+Nucleus Nucleus::operator-(const Nucleus& peer) const {
+	qft::Energy total = (energy + peer.energy);
+    return Nucleus("-", (proton - peer.proton),
+		(neutron - peer.neutron), total);
 }
 
 const std::string Nucleus::getSymbol(short int number) {
@@ -114,9 +150,14 @@ std::string Nucleus::getElementName() const {
 	return (proton > 0 && proton <= PROTON_MAX_LIMIT) ? ELEMENT_NAME[proton-1] : UNKNOWN;
 }
 
+Nucleus Nucleus::copy() {
+    Nucleus fresh(getSymbol(), proton, neutron, energy);
+	return fresh;
+}
+
 void Nucleus::clear() {
-    mass.clear();
-	charge.clear();
+	symbol = "";
+	proton = neutron = 0;
 	energy.clear();
     return;
 }
@@ -126,8 +167,6 @@ std::string Nucleus::print() {
 	result << symbol << ",p:";
 	result << proton << ",n:";
 	result << neutron << ",";
-	result << mass.print() << ",";
-	result << charge.print() << ",";
 	result << energy.print();
 	return result.str();
 }

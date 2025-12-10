@@ -18,100 +18,97 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "protein.h"
+#include "ring.h"
 
-namespace bio {
+namespace che {
 
-Protein::Protein() : Molecule(), gates() {
-
-}
-
-Protein::Protein(std::string name) : Molecule(name), gates() {
+Ring::Ring() : Molecule(), atoms() {
 
 }
 
-Protein::Protein(GateArray& objects) : Molecule(), gates(objects) {
+Ring::Ring(std::string name) : Molecule(name), atoms() {
 
 }
 
-Protein::Protein(std::string name, GateArray& objects) : Molecule(name), gates(objects) {
+Ring::Ring(std::string name, const AtomArray& atoms)
+        : Molecule(name), atoms(atoms) {
 
 }
 
-Protein::~Protein() {
+Ring::~Ring() {
 
 }
 
-bool Protein::operator==(const Protein& peer) const {
-    return (gates == peer.gates);
+bool Ring::operator==(const Ring& peer) const {
+    return (atoms == peer.atoms);
 }
 
-Protein Protein::operator+(const Protein& peer) const {
-    GateArray result(gates);
-    result.insert(result.end(), peer.gates.begin(), peer.gates.end());
-    return Protein("+", result);
+Ring Ring::operator+(const Ring& peer) const {
+    AtomArray result(atoms);
+    result.insert(result.end(), peer.atoms.begin(), peer.atoms.end());
+    return Ring("+", result);
 }
 
-Protein Protein::operator-(const Protein& peer) const {
-    GateArray result(gates);
-    for (GateArray::const_iterator it = peer.gates.begin(); it != peer.gates.end(); ++it) {
-        GateArray::iterator found = std::find(result.begin(), result.end(), *it);
+Ring Ring::operator-(const Ring& peer) const {
+    AtomArray result(atoms);
+    for (AtomArray::const_iterator it = peer.atoms.begin(); it != peer.atoms.end(); ++it) {
+        AtomArray::iterator found = std::find(result.begin(), result.end(), *it);
         if (found != result.end()) {
             result.erase(found);
         }
     }
-    return Protein("-", result);
+    return Ring("-", result);
 }
 
-int Protein::getGateCount() const {
-    return gates.size();
+int Ring::getAtomCount() const {
+    return atoms.size();
 }
 
-Gate Protein::get(int index) const {
-    Gate result;
+Atom Ring::get(int index) const {
+    Atom result;
     if (index < 0) {
         return result;
     }
-    if (index >= static_cast<int>(gates.size())) {
+    if (index >= static_cast<int>(atoms.size())) {
         return result;
     }
-    return gates[index];
+    return atoms[index];
 }
 
-void Protein::set(int index, const Gate& object) {
+void Ring::set(int index, const Atom& object) {
     if (index < 0) {
         return;
     }
-    if (index < static_cast<int>(gates.size())) {
+    if (index < static_cast<int>(atoms.size())) {
         // replace existing element
-        gates[index] = object;
-    } else if (index == static_cast<int>(gates.size())) {
+        atoms[index] = object;
+    } else if (index == static_cast<int>(atoms.size())) {
         // append at end
-        gates.push_back(object);
+        atoms.push_back(object);
     } else {
         // index beyond current size: append at end
-        gates.push_back(object);
+        atoms.push_back(object);
     }
     return;
 }
 
-che::Molecule Protein::copy() {
-    Protein fresh(this->getName(), this->gates);
+Molecule Ring::copy() {
+    Ring fresh(getName(), atoms);
     return fresh;
 }
 
-void Protein::clear() {
-    Molecule::clear();
-    gates.clear();
+void Ring::clear() {
+	Molecule::clear();
+	atoms.clear();
     return;
 }
 
-std::string Protein::print() {
+std::string Ring::print() {
     std::stringstream result;
-    result << "[pr:";
+    result << "(R:";
 	result << Molecule::print() << ",sz:";
-	result << gates.size() << "]";
+	result << atoms.size() << ")";
 	return result.str();
 }
 
-} // namespace bio
+} // namespace che

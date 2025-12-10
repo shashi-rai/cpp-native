@@ -22,21 +22,49 @@
 
 namespace che {
 
-Photon::Photon() : Wave(""), energy() {
+Photon::Photon() : Wave(), energy() {
 
 }
 
-Photon::Photon(std::string name, qft::Energy& energy) : Wave(name), energy(energy) {
+Photon::Photon(std::string name) : Wave(name), energy() {
 
 }
 
-Photon::Photon(std::string name, qft::Energy& energy, long frequency, float wavelength)
-        : Wave(name, frequency, wavelength), energy(energy) {
+Photon::Photon(float wavelength)
+        : Wave(wavelength), energy(wavelength) {
+
+}
+
+Photon::Photon(std::string name, float wavelength)
+        : Wave(name, wavelength), energy(wavelength) {
+
+}
+
+Photon::Photon(std::string name, qft::Energy& energy)
+        : Wave(name), energy(energy) {
 
 }
 
 Photon::~Photon() {
 
+}
+
+bool Photon::operator==(const Photon& peer) const {
+    return (energy == peer.energy);
+}
+
+Photon Photon::operator+(const Photon& peer) const {
+	qft::Energy total = (energy + peer.getEnergy());
+    return Photon("+", total);
+}
+
+Photon Photon::operator-(const Photon& peer) const {
+	qft::Energy total = (energy - peer.getEnergy());
+    return Photon("-", total);
+}
+
+shp::Quantity Photon::getWavelength() const {
+    return energy.getWavelength();
 }
 
 shp::Point Photon::copy() {
@@ -45,19 +73,21 @@ shp::Point Photon::copy() {
 	fresh.setGradient(this->getGradient());
 	fresh.setPolarization(this->getPolarization());
 	fresh.setFrequency(this->getFrequency());
-	fresh.setWavelength(this->getWavelength());
+	fresh.setWavelength(this->getWavelength().getValue());
     return fresh;
 }
 
 void Photon::clear() {
     Wave::clear();
+    energy.clear();
     return;
 }
 
 std::string Photon::print() {
     std::stringstream result;
     result << "γ:";
-	result << Wave::print() << ",sz:";
+	result << Wave::print() << ",";
+    result << energy.print() << ",sz:";
     result << "}";
 	return result.str();
 }

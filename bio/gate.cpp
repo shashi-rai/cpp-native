@@ -22,11 +22,11 @@
 
 namespace bio {
 
-Gate::Gate() : name("") {
+Gate::Gate() : Shape() {
 
 }
 
-Gate::Gate(std::string name) : name(name) {
+Gate::Gate(std::string name) : Shape(name) {
 
 }
 

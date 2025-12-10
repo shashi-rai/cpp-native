@@ -48,6 +48,10 @@ Period::~Period() {
 
 }
 
+bool Period::operator==(const Period& peer) const {
+    return (getName() == peer.getName());
+}
+
 Orbital Period::getS() const {
 	int mapper[1] = { 0 };
 	return this->getOrbital(0);

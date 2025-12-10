@@ -22,45 +22,109 @@
 
 namespace che {
 
-Electron::Electron()
-        : Wave(""), principal(0), azimuthal(0), magnetic(0), spin(0.0f), charge() {
+const short int Electron::DEFAULT_VALUE = 0;
+
+Electron::Electron() : Wave(),
+		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE),
+		spin(), energy() {
 
 }
 
-Electron::Electron(float polarization)
-        : Wave(polarization), principal(0), azimuthal(0), magnetic(0), spin(0.0f), charge()  {
+Electron::Electron(float polarization) : Wave(polarization),
+		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE),
+		spin(), energy()  {
 
 }
 
 Electron::Electron(float polarization, float azimuthal)
-        : Wave(polarization, azimuthal), principal(0), azimuthal(0), magnetic(0), spin(0.0f), charge()  {
+        : Wave(polarization, azimuthal),
+		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE),
+		spin(), energy()  {
 
 }
 
-Electron::Electron(std::string name)
-        : Wave(name), principal(0), azimuthal(0), magnetic(0), spin(0.0f), charge()  {
+Electron::Electron(std::string name) : Wave(name),
+		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE),
+		spin(), energy()  {
 
 }
 
-Electron::Electron(std::string name, float polarization)
-        : Wave(name, polarization), principal(0), azimuthal(0), magnetic(0), spin(0.0f), charge()  {
+Electron::Electron(std::string name, float polarization) : Wave(name, polarization),
+		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE),
+		spin(), energy()  {
 
 }
 
 Electron::Electron(std::string name, float polarization, float azimuthal)
-        : Wave(name, polarization, azimuthal), principal(0), azimuthal(0), magnetic(0), spin(0.0f), charge() {
+        : Wave(name, polarization, azimuthal),
+		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE),
+		spin(), energy() {
+
+}
+
+Electron::Electron(const qft::Energy& energy)
+        : Wave(),
+		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE),
+		spin(), energy(energy) {
+
+}
+
+Electron::Electron(std::string name, const qft::Energy& energy)
+        : Wave(name),
+		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE),
+		spin(), energy(energy) {
+
+}
+
+Electron::Electron(const qft::Mass& mass, const qft::Charge& charge)
+        : Wave(),
+		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE),
+		spin(), energy(mass, charge) {
+
+}
+
+Electron::Electron(std::string name, const qft::Mass& mass, const qft::Charge& charge)
+        : Wave(name),
+		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE),
+		spin(), energy(mass, charge) {
 
 }
 
 Electron::Electron(short int principal, short int azimuthal, short int magnetic, float spin)
-        : Wave(""), principal(0), azimuthal(0), magnetic(0), spin(spin), charge() {
+        : Wave(), principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE),
+		spin(spin), energy() {
 
 }
 
 Electron::Electron(std::string name,
-        short int principal, short int azimuthal, short int magnetic, float spin,
-        qft::Charge& charge)
-        : Wave(name), principal(0), azimuthal(0), magnetic(0), spin(spin), charge(charge) {
+        short int principal, short int azimuthal, short int magnetic, const qft::Spin& spin,
+        const qft::Energy& energy)
+        : Wave(name), principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE),
+		spin(spin), energy(energy) {
+
+}
+
+Electron::Electron(std::string name,
+        short int principal, short int azimuthal, short int magnetic, const qft::Spin& spin,
+        const qft::Mass& mass)
+        : Wave(name), principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE),
+		spin(spin), energy(mass) {
+
+}
+
+Electron::Electron(std::string name,
+        short int principal, short int azimuthal, short int magnetic, const qft::Spin& spin,
+        const qft::Charge& charge)
+        : Wave(name), principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE),
+		spin(spin), energy(charge) {
+
+}
+
+Electron::Electron(std::string name,
+        short int principal, short int azimuthal, short int magnetic, const qft::Spin& spin,
+        const qft::Mass& mass, const qft::Charge& charge)
+        : Wave(name), principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE),
+		spin(spin), energy(mass, charge) {
 
 }
 
@@ -68,8 +132,26 @@ Electron::~Electron() {
 
 }
 
+bool Electron::operator==(const Electron& peer) const {
+    return (principal == peer.principal)
+		&& (azimuthal == peer.azimuthal)
+		&& (magnetic == peer.magnetic)
+		&& (spin == peer.spin)
+		&& (energy == peer.energy);
+}
+
+Electron Electron::operator+(const Photon& peer) const {
+	qft::Energy total = (energy + peer.getEnergy());
+    return Electron("+", principal, azimuthal, magnetic, spin, total);
+}
+
+Electron Electron::operator-(const Photon& peer) const {
+	qft::Energy total = (energy - peer.getEnergy());
+    return Electron("-", principal, azimuthal, magnetic, spin, total);
+}
+
 shp::Point Electron::copy() {
-    Electron fresh(getName(), principal, azimuthal, magnetic, spin, charge);
+    Electron fresh(getName(), principal, azimuthal, magnetic, spin, energy);
 	fresh.setAmplitude(this->getAmplitude());
 	fresh.setGradient(this->getGradient());
 	fresh.setPolarization(this->getPolarization());
@@ -80,9 +162,9 @@ shp::Point Electron::copy() {
 
 void Electron::clear() {
     Wave::clear();
-	principal = azimuthal = magnetic = 0;
-	spin = 0.0f;
-	charge.clear();
+	principal = azimuthal = magnetic = DEFAULT_VALUE;
+	spin.clear();
+	energy.clear();
     return;
 }
 
@@ -90,6 +172,7 @@ std::string Electron::print() {
     std::stringstream result;
     result << "e";
 	result << Wave::print();
+	result << energy.print();
 	return result.str();
 }
 

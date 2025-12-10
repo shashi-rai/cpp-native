@@ -42,6 +42,11 @@ public:
     // Destructors
     ~Polymer();
 
+    // Operator overloading
+    bool operator==(const Polymer& peer) const;
+    Polymer operator+(const Polymer& peer) const;
+    Polymer operator-(const Polymer& peer) const;
+
     // Getters
     MoleculeArray getMonomers() const { return monomers; }
 
@@ -49,6 +54,10 @@ public:
     void setMonomers(const MoleculeArray& value) { this->monomers = value; }
 
     // Additional methods
+    int getMoleculeCount() const;
+    Molecule get(int index) const;
+    void set(int index, const Molecule& object);
+    virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();
 };

@@ -21,18 +21,21 @@
 #ifndef BIO_PROTEIN_H
 #define BIO_PROTEIN_H
 
+#include <sstream>
 #include <string>
 #include <vector>
 #include "gate.h"
+#include "../che/molecule.h"
 
 namespace bio {
 
-class Protein {
+class Protein : public che::Molecule {
     GateArray gates;
 public:
     // Constructors
     Protein();
     Protein(std::string name);
+    Protein(GateArray& objects);
     Protein(std::string name, GateArray& objects);
 
     // Destructors
@@ -57,7 +60,7 @@ public:
     int getGateCount() const;
     Gate get(int index) const;
     void set(int index, const Gate& object);
-    virtual Protein copy();
+    virtual che::Molecule copy();
     virtual void clear();
     virtual std::string print();
 };

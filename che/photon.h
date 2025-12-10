@@ -33,11 +33,18 @@ class Photon : public shp::Wave {
 public:
     // Constructors
     Photon();
+    Photon(std::string name);
+    Photon(float wavelength);
+    Photon(std::string name, float wavelength);
     Photon(std::string name, qft::Energy& energy);
-    Photon(std::string name, qft::Energy& energy, long frequency, float wavelength);
 
     // Destructors
     ~Photon();
+
+    // Operator overloading
+    bool operator==(const Photon& peer) const;
+    Photon operator+(const Photon& peer) const;
+    Photon operator-(const Photon& peer) const;
 
     // Getters
     qft::Energy getEnergy() const { return energy; }
@@ -46,6 +53,7 @@ public:
     void setEnergy(const qft::Energy& value) { this->energy = value; }
 
     // Additional methods
+    shp::Quantity getWavelength() const;
     virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();

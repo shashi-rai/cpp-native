@@ -45,6 +45,11 @@ public:
     // Destructors
     ~Orbital();
 
+    // Operator overloading
+    bool operator==(const Orbital& peer) const;
+    Orbital operator+(const Orbital& peer) const;
+    Orbital operator-(const Orbital& peer) const;
+
     // Access operator
     Electron operator()(int x) { return getElectron(x); }
     const Electron operator()(int x) const { return getElectron(x); }

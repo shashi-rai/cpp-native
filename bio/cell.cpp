@@ -22,20 +22,96 @@
 
 namespace bio {
 
-Cell::Cell() : name(""), membranes() {
+Cell::Cell() : Shape(), membranes() {
 
 }
 
-Cell::Cell(std::string name) : name(name), membranes() {
+Cell::Cell(std::string name) : Shape(name), membranes() {
 
 }
 
-Cell::Cell(std::string name, MembraneArray& objects) : membranes(objects) {
+Cell::Cell(MembraneArray& objects) : Shape(), membranes(objects) {
+
+}
+
+Cell::Cell(std::string name, MembraneArray& objects) : Shape(name), membranes(objects) {
 
 }
 
 Cell::~Cell() {
 
+}
+
+bool Cell::operator==(const Cell& peer) const {
+    return (membranes == peer.membranes);
+}
+
+Cell Cell::operator+(const Cell& peer) const {
+    MembraneArray result(membranes);
+    result.insert(result.end(), peer.membranes.begin(), peer.membranes.end());
+    return Cell("+", result);
+}
+
+Cell Cell::operator-(const Cell& peer) const {
+    MembraneArray result(membranes);
+    for (MembraneArray::const_iterator it = peer.membranes.begin(); it != peer.membranes.end(); ++it) {
+        MembraneArray::iterator found = std::find(result.begin(), result.end(), *it);
+        if (found != result.end()) {
+            result.erase(found);
+        }
+    }
+    return Cell("-", result);
+}
+
+int Cell::getMembraneCount() const {
+    return membranes.size();
+}
+
+Membrane Cell::get(int index) const {
+    Membrane result;
+    if (index < 0) {
+        return result;
+    }
+    if (index >= static_cast<int>(membranes.size())) {
+        return result;
+    }
+    return membranes[index];
+}
+
+void Cell::set(int index, const Membrane& object) {
+    if (index < 0) {
+        return;
+    }
+    if (index < static_cast<int>(membranes.size())) {
+        // replace existing element
+        membranes[index] = object;
+    } else if (index == static_cast<int>(membranes.size())) {
+        // append at end
+        membranes.push_back(object);
+    } else {
+        // index beyond current size: append at end
+        membranes.push_back(object);
+    }
+    return;
+}
+
+Cell Cell::copy() {
+    Cell fresh(this->getName(), this->membranes);
+    return fresh;
+}
+
+void Cell::clear() {
+    Shape::clear();
+    membranes.clear();
+    return;
+}
+
+std::string Cell::print() {
+    std::stringstream result;
+    result << "{ce";
+	result << Shape::print() << ",sz:";
+	result << membranes.size() << "}";
+	return result.str();
 }
 
 } // namespace bio

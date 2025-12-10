@@ -21,14 +21,15 @@
 #ifndef BIO_GENE_H
 #define BIO_GENE_H
 
+#include <sstream>
 #include <string>
 #include <vector>
 #include "nucleotide.h"
+#include "../shp/shape.h"
 
 namespace bio {
 
-class Gene {
-    std::string name;
+class Gene : public shp::Shape {
     NucleotideArray sequence;
 public:
     // Constructors
@@ -38,13 +39,28 @@ public:
     // Destructors
     ~Gene();
 
+    // Operator overloading
+    bool operator==(const Gene& peer) const;
+    Gene operator+(const Gene& peer) const;
+    Gene operator-(const Gene& peer) const;
+
+    // Access operator
+    Nucleotide& operator()(int x) { return sequence[x]; }
+    const Nucleotide& operator()(int x) const { return sequence[x]; }
+
     // Getters
-    std::string getName() const { return name; }
     NucleotideArray getSequence() const { return sequence; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
     void setSequence(const NucleotideArray& codon) { this->sequence = codon; }
+
+    // Additional methods
+    int getNucleotideCount() const;
+    Nucleotide get(int index) const;
+    void set(int index, const Nucleotide& object);
+    virtual Gene copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Gene > GeneArray;

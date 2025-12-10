@@ -21,20 +21,22 @@
 #ifndef BIO_MEMBRANE_H
 #define BIO_MEMBRANE_H
 
+#include <sstream>
 #include <string>
 #include <vector>
 #include "protein.h"
+#include "../shp/shape.h"
 
 namespace bio {
 
-class Membrane {
+class Membrane : public shp::Shape {
+    float potential;
     ProteinArray proteins;
-    float voltage;
 public:
     // Constructors
     Membrane();
-    Membrane(std::string name);
-    Membrane(std::string name, ProteinArray& objects);
+    Membrane(const float potential);
+    Membrane(const float potential, ProteinArray& objects);
 
     // Destructors
     ~Membrane();
@@ -49,9 +51,11 @@ public:
     const Protein& operator()(int x) const { return proteins[x]; }
 
     // Getters
+    float getPotential() const { return potential; };
     ProteinArray getProteins() const { return proteins; }
 
     // Setters
+    void setPotential(const float difference) { this->potential = difference; }
     void setProteins(const ProteinArray& objects) { this->proteins = objects; }
 
     // Additional methods

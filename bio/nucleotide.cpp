@@ -22,12 +22,12 @@
 
 namespace bio {
 
-Nucleotide::Nucleotide() : name(""), base(), sugar(), phosphate() {
+Nucleotide::Nucleotide() : Shape(), base(), sugar(), phosphate() {
 
 }
 
 Nucleotide::Nucleotide(std::string name, Base& base, Sugar& sugar, Phosphate& phosphate)
-        : name(name), base(base), sugar(sugar), phosphate(phosphate) {
+        : Shape(name), base(base), sugar(sugar), phosphate(phosphate) {
 
 }
 

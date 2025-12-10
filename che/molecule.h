@@ -24,28 +24,55 @@
 #include <string>
 #include <vector>
 #include "bond.h"
+#include "../shp/shape.h"
 
 namespace che {
 
-class Molecule {
-    std::string name;
+class Molecule : public shp::Shape {
+    std::string formulae;
+    float potential;
     BondArray bonds;
 public:
     // Constructors
     Molecule();
     Molecule(std::string name);
+    Molecule(const float potential);
+    Molecule(std::string name, std::string formulae);
+    Molecule(std::string name, std::string formulae, const float potential);
+    Molecule(BondArray& bonds);
     Molecule(std::string name, BondArray& bonds);
+    Molecule(std::string name, const float potential, BondArray& bonds);
+    Molecule(std::string name, std::string formulae, const float potential, BondArray& bonds);
 
     // Destructors
     ~Molecule();
 
+    // Operator overloading
+    bool operator==(const Molecule& peer) const;
+    Molecule operator+(const Molecule& peer) const;
+    Molecule operator-(const Molecule& peer) const;
+
+    // Access operator
+    Bond& operator()(int x) { return bonds[x]; }
+    const Bond& operator()(int x) const { return bonds[x]; }
+
     // Getters
-    std::string getName() const { return name; }
+    std::string getFormulae() const { return formulae; }
+    float getPotential() const { return potential; }
     BondArray getBonds() const { return bonds; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
-    void setBonds(const BondArray& value) { this->bonds = value; }
+    void setFormulae(const std::string& expression) { this->formulae = expression; }
+    void setPotential(const float difference) { this->potential = difference; }
+    void setBonds(const BondArray& objects) { this->bonds = objects; }
+
+    // Additional methods
+    int getBondCount() const;
+    Bond get(int index) const;
+    void set(int index, const Bond& object);
+    virtual Molecule copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Molecule > MoleculeArray;

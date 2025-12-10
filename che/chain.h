@@ -18,34 +18,53 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef BIO_GATE_H
-#define BIO_GATE_H
+#ifndef CHE_CHAIN_H
+#define CHE_CHAIN_H
 
 #include <string>
 #include <vector>
-#include "../shp/shape.h"
+#include "atom.h"
+#include "molecule.h"
 
-namespace bio {
+namespace che {
 
-class Gate : public shp::Shape {
-    bool status;
+class Chain : public Molecule {
+    AtomArray atoms;
 public:
     // Constructors
-    Gate();
-    Gate(std::string name);
+    Chain();
+    Chain(std::string name);
+    Chain(std::string name, const AtomArray& atoms);
 
     // Destructors
-    ~Gate();
+    ~Chain();
+
+    // Operator overloading
+    bool operator==(const Chain& peer) const;
+    Chain operator+(const Chain& peer) const;
+    Chain operator-(const Chain& peer) const;
+
+    // Access operator
+    Atom& operator()(int x) { return atoms[x]; }
+    const Atom& operator()(int x) const { return atoms[x]; }
 
     // Getters
-    bool getStatus() const { return status; }
+    AtomArray getAtoms() const { return atoms; }
 
     // Setters
-    void setStatus(const bool closed) { this->status = closed; }
+    void setAtoms(const AtomArray& value) { this->atoms = value; }
+
+    // Additional methods
+    int getAtomCount() const;
+    Atom get(int index) const;
+    void set(int index, const Atom& object);
+    virtual Molecule copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
-typedef std::vector<Gate > GateArray;
+typedef std::vector<Chain > ChainArray;
 
-} // namespace bio
+} // namespace che
 
-#endif //BIO_GATE_H
+#endif //CHE_CHAIN_H

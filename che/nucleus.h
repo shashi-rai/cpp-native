@@ -33,8 +33,6 @@ class Nucleus {
     std::string symbol;
     short int proton;
     short int neutron;
-    qft::Mass mass;
-    qft::Charge charge;
     qft::Energy energy;
 public:
     // Constructors
@@ -45,29 +43,41 @@ public:
     Nucleus(std::string symbol, short int proton);
     Nucleus(std::string symbol, short int proton, short int neutron);
     Nucleus(std::string symbol, short int proton, short int neutron,
-        qft::Mass& mass, qft::Charge& charge, qft::Energy& energy);
+        qft::Mass& mass);
+    Nucleus(std::string symbol, short int proton, short int neutron,
+        qft::Charge& charge);
+    Nucleus(std::string symbol, short int proton, short int neutron,
+        qft::Mass& mass, qft::Charge& charge);
+    Nucleus(std::string symbol, short int proton, short int neutron,
+        qft::Energy& energy);
 
     // Destructors
     ~Nucleus();
+
+    // Operator overloading
+    bool operator==(const Nucleus& peer) const;
+    Nucleus operator+(const Nucleus& peer) const;
+    Nucleus operator-(const Nucleus& peer) const;
 
     // Getters
     std::string getSymbol() const { return symbol; }
     short int getProton() const { return proton; }
     short int getNeutron() const { return neutron; }
-    qft::Mass getMass() const { return mass; }
-    qft::Charge getCharge() const { return charge; }
+    qft::Mass getMass() const { return energy.getMass(); }
+    qft::Charge getCharge() const { return energy.getCharge(); }
     qft::Energy getEnergy() const { return energy; }
 
     // Setters
     void setSymbol(const std::string& name) { this->symbol = name; }
     void setProton(short int number) { this->proton = number; }
     void setNeutron(short int number) { this->neutron = number; }
-    void setMass(const qft::Mass& amount) { this->mass = amount; }
-    void setCharge(const qft::Charge& amount) { this->charge = amount; }
+    void setMass(const qft::Mass& amount) { this->energy.setMass(amount); }
+    void setCharge(const qft::Charge& amount) { this->energy.setCharge(amount); }
     void setEnergy(const qft::Energy& amount) { this->energy = amount; }
 
     // Additional methods
     std::string getElementName() const;
+    virtual Nucleus copy();
     virtual void clear();
     virtual std::string print();
 public:
