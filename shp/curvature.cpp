@@ -19,7 +19,6 @@
 // THE SOFTWARE.
 
 #include "curvature.h"
-#include "angular.h"
 
 namespace shp {
 

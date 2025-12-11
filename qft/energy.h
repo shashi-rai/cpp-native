@@ -40,6 +40,7 @@ class Energy : public shp::Point {
 public:
     // Constructors
     Energy();
+    Energy(std::string name);
     Energy(float gradient);
     Energy(std::string name, float gradient);
     Energy(float amplitude, float gradient);

@@ -45,8 +45,11 @@ public:
     Electron(std::string name, float polarization, float azimuthal);
     Electron(const Energy& energy);
     Electron(std::string name, const Energy& energy);
+    Electron(std::string name, const Spin& spin, const Energy& energy);
     Electron(const Mass& mass, const Charge& charge);
     Electron(std::string name, const Mass& mass, const Charge& charge);
+    Electron(std::string name, const float spin, const float mass, const float charge);
+    Electron(std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
     Electron(short int principal, short int azimuthal,
         short int magnetic, float spin);
     Electron(std::string name, short int principal, short int azimuthal,
@@ -67,8 +70,16 @@ public:
 
     // Operator overloading
     bool operator==(const Electron& peer) const;
+    Electron operator+(const Electron& peer) const;
+    Electron operator-(const Electron& peer) const;
+    Electron operator*(const Electron& peer) const;
+    Electron operator/(const Electron& peer) const;
+    Electron operator%(const Electron& peer) const;
     Electron operator+(const Photon& peer) const;
     Electron operator-(const Photon& peer) const;
+    Electron operator*(const Photon& peer) const;
+    Electron operator/(const Photon& peer) const;
+    Electron operator%(const Photon& peer) const;
 
     // Getters
     short int getPrincipal() const { return principal; }

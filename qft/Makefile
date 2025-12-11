@@ -64,6 +64,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/photon.o \
 		$(OBJFOLDR)/pressure.o \
 		$(OBJFOLDR)/proton.o \
+		$(OBJFOLDR)/quark.o \
 		$(OBJFOLDR)/spin.o \
 		$(OBJFOLDR)/strong.o \
 		$(OBJFOLDR)/temperature.o \
@@ -90,6 +91,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/photon.o \
 		$(OBJFOLDR)/pressure.o \
 		$(OBJFOLDR)/proton.o \
+		$(OBJFOLDR)/quark.o \
 		$(OBJFOLDR)/spin.o \
 		$(OBJFOLDR)/strong.o \
 		$(OBJFOLDR)/temperature.o \
@@ -153,6 +155,9 @@ $(OBJFOLDR)/pressure.o: pressure.cpp
 
 $(OBJFOLDR)/proton.o: proton.cpp
 	$(CPPTOOL) -c proton.cpp -o $(OBJFOLDR)/proton.o $(CXXFLAGS)
+
+$(OBJFOLDR)/quark.o: quark.cpp
+	$(CPPTOOL) -c quark.cpp -o $(OBJFOLDR)/quark.o $(CXXFLAGS)
 
 $(OBJFOLDR)/spin.o: spin.cpp
 	$(CPPTOOL) -c spin.cpp -o $(OBJFOLDR)/spin.o $(CXXFLAGS)

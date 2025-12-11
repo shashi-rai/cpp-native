@@ -24,34 +24,39 @@ namespace qft {
 
 const short int Electron::DEFAULT_VALUE = 0;
 
-Electron::Electron() : Particle(),
+Electron::Electron()
+		: Particle(Mass(Mass::ELECTRON), Charge(Charge::ELECTRON)),
 		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
 
 }
 
-Electron::Electron(float polarization) : Particle(),
+Electron::Electron(float polarization)
+		: Particle(Mass(Mass::ELECTRON), Charge(Charge::ELECTRON)),
 		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
 	setPolarization(polarization);
 }
 
-Electron::Electron(float polarization, float azimuthal) : Particle(),
+Electron::Electron(float polarization, float azimuthal)
+		: Particle(Mass(Mass::ELECTRON), Charge(Charge::ELECTRON)),
 		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
 	setPolarization(polarization);
 	setGradient(azimuthal);
 }
 
-Electron::Electron(std::string name) : Particle(name),
+Electron::Electron(std::string name)
+		: Particle(name, Mass(Mass::ELECTRON), Charge(Charge::ELECTRON)),
 		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
 
 }
 
-Electron::Electron(std::string name, float polarization) : Particle(name),
+Electron::Electron(std::string name, float polarization)
+	: Particle(name, Mass(Mass::ELECTRON), Charge(Charge::ELECTRON)),
 		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
 	setPolarization(polarization);
 }
 
 Electron::Electron(std::string name, float polarization, float azimuthal)
-        : Particle(name),
+        : Particle(name, Mass(Mass::ELECTRON), Charge(Charge::ELECTRON)),
 		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
 	setPolarization(polarization);
 	setGradient(azimuthal);
@@ -69,6 +74,12 @@ Electron::Electron(std::string name, const Energy& energy)
 
 }
 
+Electron::Electron(std::string name, const Spin& spin, const Energy& energy)
+        : Particle(name, spin, energy),
+		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
+
+}
+
 Electron::Electron(const Mass& mass, const Charge& charge)
         : Particle(mass, charge),
 		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
@@ -81,8 +92,20 @@ Electron::Electron(std::string name, const Mass& mass, const Charge& charge)
 
 }
 
+Electron::Electron(std::string name, const float spin, const float mass, const float charge)
+        : Particle(name, Spin(spin), Mass(mass), Charge(charge)),
+		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
+
+}
+
+Electron::Electron(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
+        : Particle(name, spin, mass, charge),
+		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
+
+}
+
 Electron::Electron(short int principal, short int azimuthal, short int magnetic, float spin)
-        : Particle(spin),
+        : Particle(Spin(spin), Mass(Mass::ELECTRON), Charge(Charge::ELECTRON)),
 		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
 
 }
@@ -96,14 +119,14 @@ Electron::Electron(std::string name, short int principal, short int azimuthal, s
 
 Electron::Electron(std::string name, short int principal, short int azimuthal, short int magnetic,
 		const Spin& spin, const Mass& mass)
-        : Particle(name, spin, mass),
+        : Particle(name, spin, mass, Charge(Charge::ELECTRON)),
 		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
 
 }
 
 Electron::Electron(std::string name, short int principal, short int azimuthal, short int magnetic,
 		const Spin& spin, const Charge& charge)
-        : Particle(name, spin, charge),
+        : Particle(name, spin, Mass(Mass::ELECTRON), charge),
 		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
 
 }
@@ -126,6 +149,36 @@ bool Electron::operator==(const Electron& peer) const {
 		&& (magnetic == peer.magnetic);
 }
 
+Electron Electron::operator+(const Electron& peer) const {
+    return Electron("+", principal, azimuthal, magnetic,
+		(this->getSpin() + peer.getSpin()),
+		(this->getEnergy() + peer.getEnergy()));
+}
+
+Electron Electron::operator-(const Electron& peer) const {
+    return Electron("-", principal, azimuthal, magnetic,
+		(this->getSpin() - peer.getSpin()),
+		(this->getEnergy() - peer.getEnergy()));
+}
+
+Electron Electron::operator*(const Electron& peer) const {
+    return Electron("*", principal, azimuthal, magnetic,
+		(this->getSpin() * peer.getSpin()),
+		(this->getEnergy() * peer.getEnergy()));
+}
+
+Electron Electron::operator/(const Electron& peer) const {
+    return Electron("/", principal, azimuthal, magnetic,
+		(this->getSpin() / peer.getSpin()),
+		(this->getEnergy() / peer.getEnergy()));
+}
+
+Electron Electron::operator%(const Electron& peer) const {
+    return Electron("%", principal, azimuthal, magnetic,
+		(this->getSpin() % peer.getSpin()),
+		(this->getEnergy() % peer.getEnergy()));
+}
+
 Electron Electron::operator+(const Photon& peer) const {
     return Electron("+", principal, azimuthal, magnetic,
 		(this->getSpin() + peer.getSpin()),
@@ -136,6 +189,24 @@ Electron Electron::operator-(const Photon& peer) const {
     return Electron("-", principal, azimuthal, magnetic,
 		(this->getSpin() - peer.getSpin()),
 		(this->getEnergy() - peer.getEnergy()));
+}
+
+Electron Electron::operator*(const Photon& peer) const {
+    return Electron("*", principal, azimuthal, magnetic,
+		(this->getSpin() * peer.getSpin()),
+		(this->getEnergy() * peer.getEnergy()));
+}
+
+Electron Electron::operator/(const Photon& peer) const {
+    return Electron("/", principal, azimuthal, magnetic,
+		(this->getSpin() / peer.getSpin()),
+		(this->getEnergy() / peer.getEnergy()));
+}
+
+Electron Electron::operator%(const Photon& peer) const {
+    return Electron("%", principal, azimuthal, magnetic,
+		(this->getSpin() % peer.getSpin()),
+		(this->getEnergy() % peer.getEnergy()));
 }
 
 shp::Point Electron::copy() {

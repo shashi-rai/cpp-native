@@ -42,6 +42,11 @@ Particle::Particle(std::string name)
     setPhysical(nullptr);
 }
 
+Particle::Particle(std::string name, const float spin)
+        : Wave(name), spin(spin), energy() {
+    setPhysical(nullptr);
+}
+
 Particle::Particle(std::string name, const Spin& spin)
         : Wave(name), spin(spin), energy() {
     setPhysical(nullptr);
@@ -62,28 +67,40 @@ Particle::Particle(const Spin& spin, const Energy& energy)
     setPhysical(nullptr);
 }
 
+Particle::Particle(std::string name, const float spin, const float energy)
+        : Wave(name), spin(spin), energy(energy) {
+    setPhysical(nullptr);
+}
+
 Particle::Particle(std::string name, const Spin& spin, const Energy& energy)
         : Wave(name), spin(spin), energy(energy) {
     setPhysical(nullptr);
 }
 
 Particle::Particle(const Mass& mass, const Charge& charge)
-        : Wave(), spin(), energy(mass, charge) {
+        : Wave(), spin(), energy(Mass(mass), Charge(charge)) {
     setPhysical(nullptr);
 }
 
 Particle::Particle(std::string name, const Mass& mass, const Charge& charge)
-        : Wave(name), spin(), energy(mass, charge) {
+        : Wave(name), spin(), energy(Mass(mass), Charge(charge)) {
     setPhysical(nullptr);
 }
 
 Particle::Particle(const Spin& spin, const Mass& mass, const Charge& charge)
-        : Wave(), spin(spin), energy(mass, charge) {
+        : Wave(), spin(spin), energy(Mass(mass), Charge(charge)) {
     setPhysical(nullptr);
 }
 
-Particle::Particle(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
-        : Wave(name), spin(spin), energy(mass, charge) {
+Particle::Particle(std::string name, const float spin,
+        const float mass, const float charge)
+        : Wave(name), spin(spin), energy(Mass(mass), Charge(charge)) {
+    setPhysical(nullptr);
+}
+
+Particle::Particle(std::string name, const Spin& spin,
+        const Mass& mass, const Charge& charge)
+        : Wave(name), spin(spin), energy(Mass(mass), Charge(charge)) {
     setPhysical(nullptr);
 }
 
@@ -97,27 +114,32 @@ Particle::Particle(std::string name, shp::Shape* description)
     setPhysical(description);
 }
 
-Particle::Particle(std::string name, shp::Shape* description, const Spin& spin)
+Particle::Particle(std::string name, shp::Shape* description,
+        const Spin& spin)
         : Wave(name), spin(spin), energy() {
     setPhysical(description);
 }
 
-Particle::Particle(std::string name, shp::Shape* description, const Spin& spin, const Energy& energy)
+Particle::Particle(std::string name, shp::Shape* description,
+        const Spin& spin, const Energy& energy)
         : Wave(name), spin(spin), energy(energy) {
     setPhysical(description);
 }
 
-Particle::Particle(shp::Shape* description, const Spin& spin, const Energy& energy)
+Particle::Particle(shp::Shape* description,
+        const Spin& spin, const Energy& energy)
         : Wave(), spin(spin), energy(energy) {
     setPhysical(description);
 }
 
-Particle::Particle(shp::Shape* description, const Spin& spin, const Mass& mass, const Charge& charge)
+Particle::Particle(shp::Shape* description,
+        const Spin& spin, const Mass& mass, const Charge& charge)
         : Wave(), spin(spin), energy(mass, charge) {
     setPhysical(description);
 }
 
-Particle::Particle(std::string name, shp::Shape* description, const Spin& spin, const Mass& mass, const Charge& charge)
+Particle::Particle(std::string name, shp::Shape* description,
+        const Spin& spin, const Mass& mass, const Charge& charge)
         : Wave(name), spin(spin), energy(mass, charge) {
     setPhysical(description);
 }
@@ -127,7 +149,8 @@ Particle::~Particle() {
 }
 
 bool Particle::operator==(const Particle& peer) const {
-    return (physical == peer.physical)
+    return (static_cast<const Wave&>(*this) == static_cast<const Wave&>(peer))
+        && (physical == peer.physical)
         && (spin == peer.spin)
         && (energy == peer.energy);
 }
@@ -142,6 +165,28 @@ Particle Particle::operator-(const Particle& peer) const {
     Spin newspin = (spin - peer.spin);
     Energy newenergy = (energy - peer.energy);
     return Particle("-", newspin, newenergy);
+}
+
+Particle Particle::operator*(const Particle& peer) const {
+    Spin newspin = (spin * peer.spin);
+    Energy newenergy = (energy * peer.energy);
+    return Particle("*", newspin, newenergy);
+}
+
+Particle Particle::operator/(const Particle& peer) const {
+    Spin newspin = (spin / peer.spin);
+    Energy newenergy = (energy / peer.energy);
+    return Particle("/", newspin, newenergy);
+}
+
+Particle Particle::operator%(const Particle& peer) const {
+    Spin newspin = (spin % peer.spin);
+    Energy newenergy = (energy % peer.energy);
+    return Particle("%", newspin, newenergy);
+}
+
+float Particle::getTotal() const {
+    return energy.getTotal();
 }
 
 bool Particle::isStructured() const {
@@ -164,8 +209,8 @@ std::string Particle::print() {
     std::stringstream result;
     result << "[";
     result << Wave::print() << ",";
-    result << spin.print() << ",";
     result << energy.print() << ",";
+    result << spin.print() << ",";
     result << (physical != nullptr ? physical->print() : "");
     result << "]";
 	return result.str();

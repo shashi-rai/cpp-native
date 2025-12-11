@@ -23,13 +23,16 @@
 
 #include <string>
 #include <vector>
+#include "electron.h"
 #include "energy.h"
 #include "particle.h"
+#include "quark.h"
 
 namespace qft {
 
 class Proton : public Particle {
-
+    Quark up[2];
+    Quark down;
 public:
     // Constructors
     Proton();
@@ -37,6 +40,9 @@ public:
     Proton(float wavelength);
     Proton(std::string name, float wavelength);
     Proton(std::string name, const Energy& energy);
+    Proton(std::string name, const Spin& spin, const Energy& energy);
+    Proton(std::string name, const float spin, const float mass, const float charge);
+    Proton(std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
 
     // Destructors
     ~Proton();
@@ -45,16 +51,27 @@ public:
     bool operator==(const Proton& peer) const;
     Proton operator+(const Proton& peer) const;
     Proton operator-(const Proton& peer) const;
+    Proton operator*(const Proton& peer) const;
+    Proton operator/(const Proton& peer) const;
+    Proton operator%(const Proton& peer) const;
+    Neutron operator+(const Electron& peer) const;
 
     // Getters
+    Quark getUp(short int index) const;
+    Quark getDown() const;
 
     // Setters
+    void setUp(const Quark& particle, short int index);
+    void setDown(const Quark& particle);
 
     // Additional methods
     shp::Quantity getWavelength() const;
     virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();
+public:
+    static const short int UP_MIN;
+    static const short int UP_MAX;
 };
 
 typedef std::vector<Proton > ProtonArray;

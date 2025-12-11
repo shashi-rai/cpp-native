@@ -32,7 +32,7 @@ class Spin {
 public:
     // Constructors
     Spin();
-    Spin(float value);
+    Spin(const float value);
 
     // Destructors
     ~Spin();

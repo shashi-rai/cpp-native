@@ -18,8 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef QFT_NEUTRINO_H
-#define QFT_NEUTRINO_H
+#ifndef QFT_QUARK_H
+#define QFT_QUARK_H
 
 #include <string>
 #include <vector>
@@ -28,29 +28,29 @@
 
 namespace qft {
 
-class Neutrino : public Particle {
+class Quark : public Particle {
 
 public:
     // Constructors
-    Neutrino();
-    Neutrino(std::string name);
-    Neutrino(float wavelength);
-    Neutrino(std::string name, float wavelength);
-    Neutrino(std::string name, const Energy& energy);
-    Neutrino(std::string name, const Spin& spin, const Energy& energy);
-    Neutrino(std::string name, const float spin, const float mass, const float charge);
-    Neutrino(std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
+    Quark();
+    Quark(std::string name);
+    Quark(float wavelength);
+    Quark(std::string name, float wavelength);
+    Quark(std::string name, const Energy& energy);
+    Quark(std::string name, const Spin& spin, const Energy& energy);
+    Quark(std::string name, const float spin, const float mass, const float charge);
+    Quark(std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
 
     // Destructors
-    ~Neutrino();
+    ~Quark();
 
     // Operator overloading
-    bool operator==(const Neutrino& peer) const;
-    Neutrino operator+(const Neutrino& peer) const;
-    Neutrino operator-(const Neutrino& peer) const;
-    Neutrino operator*(const Neutrino& peer) const;
-    Neutrino operator/(const Neutrino& peer) const;
-    Neutrino operator%(const Neutrino& peer) const;
+    bool operator==(const Quark& peer) const;
+    Quark operator+(const Quark& peer) const;
+    Quark operator-(const Quark& peer) const;
+    Quark operator*(const Quark& peer) const;
+    Quark operator/(const Quark& peer) const;
+    Quark operator%(const Quark& peer) const;
 
     // Getters
 
@@ -63,8 +63,8 @@ public:
     virtual std::string print();
 };
 
-typedef std::vector<Neutrino > NeutrinoArray;
+typedef std::vector<Quark > QuarkArray;
 
 } // namespace qft
 
-#endif //QFT_NEUTRINO_H
+#endif //QFT_QUARK_H

@@ -30,6 +30,13 @@
 
 namespace qft {
 
+// To enable compiler resolve forward declarations
+class Electric;
+class Gravity;
+class Magnetic;
+class Strong;
+class Weak;
+
 class Force {
     std::string name;
     shp::Quantity magnitude;

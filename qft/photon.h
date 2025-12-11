@@ -37,6 +37,9 @@ public:
     Photon(float wavelength);
     Photon(std::string name, float wavelength);
     Photon(std::string name, const Energy& energy);
+    Photon(std::string name, const Spin& spin, const Energy& energy);
+    Photon(std::string name, const float spin, const float mass, const float charge);
+    Photon(std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
 
     // Destructors
     ~Photon();
@@ -45,6 +48,9 @@ public:
     bool operator==(const Photon& peer) const;
     Photon operator+(const Photon& peer) const;
     Photon operator-(const Photon& peer) const;
+    Photon operator*(const Photon& peer) const;
+    Photon operator/(const Photon& peer) const;
+    Photon operator%(const Photon& peer) const;
 
     // Getters
 

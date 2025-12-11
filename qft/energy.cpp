@@ -37,6 +37,15 @@ Energy::Energy() : Point(),
 
 }
 
+Energy::Energy(std::string name) : Point(name),
+		wavelength(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE,
+            shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+		mass(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE),
+        charge(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE),
+        unit(shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)) {
+
+}
+
 Energy::Energy(float gradient) : Point(gradient),
 		wavelength(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -563,7 +572,8 @@ Energy::~Energy() {
 }
 
 bool Energy::operator==(const Energy& peer) const {
-    return (wavelength == peer.wavelength)
+    return (static_cast<const Point&>(*this) == static_cast<const Point&>(peer))
+        && (wavelength == peer.wavelength)
         && (mass == peer.mass)
         && (charge == peer.charge);
 }

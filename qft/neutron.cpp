@@ -19,26 +19,50 @@
 // THE SOFTWARE.
 
 #include "neutron.h"
+#include "proton.h"
 
 namespace qft {
 
-Neutron::Neutron() : Particle() {
+const short int Neutron::DOWN_MIN = 0;
+const short int Neutron::DOWN_MAX = 2;
+
+Neutron::Neutron()
+        : Particle(Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)), up(), down() {
 
 }
 
-Neutron::Neutron(std::string name) : Particle(name) {
+Neutron::Neutron(std::string name)
+        : Particle(name, Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)), up(), down() {
 
 }
 
-Neutron::Neutron(float wavelength) : Particle(wavelength) {
+Neutron::Neutron(float wavelength)
+        : Particle(wavelength, Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)), up(), down() {
     this->getEnergy().setWavelength(wavelength);
 }
 
-Neutron::Neutron(std::string name, float wavelength) : Particle(name) {
+Neutron::Neutron(std::string name, float wavelength)
+        : Particle(name, Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)), up(), down() {
     this->getEnergy().setWavelength(wavelength);
 }
 
-Neutron::Neutron(std::string name, const Energy& energy) : Particle(name, energy) {
+Neutron::Neutron(std::string name, const Energy& energy)
+        : Particle(name, energy), up(), down() {
+
+}
+
+Neutron::Neutron(std::string name, const Spin& spin, const Energy& energy)
+        : Particle(name, spin, energy), up(), down() {
+
+}
+
+Neutron::Neutron(std::string name, const float spin, const float mass, const float charge)
+        : Particle(name, Spin(spin), Energy(Mass(mass), Charge(charge))), up(), down() {
+
+}
+
+Neutron::Neutron(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
+        : Particle(name, spin, Energy(mass, charge)), up(), down() {
 
 }
 
@@ -46,16 +70,66 @@ Neutron::~Neutron() {
 
 }
 
+Quark Neutron::getUp() const {
+    return up;
+}
+
+Quark Neutron::getDown(short int index) const {
+    Quark result;
+    if (index >= DOWN_MIN && index < DOWN_MAX) {
+        result = down[index];
+    }
+    return result;
+}
+
+void Neutron::setUp(const Quark& particle) {
+    this->up = particle;
+}
+
+void Neutron::setDown(const Quark& particle, short int index) {
+    if (index >= DOWN_MIN && index < DOWN_MAX) {
+        this->down[index] = particle;
+    }
+}
+
 bool Neutron::operator==(const Neutron& peer) const {
     return (static_cast<const Particle&>(*this) == static_cast<const Particle&>(peer));
 }
 
 Neutron Neutron::operator+(const Neutron& peer) const {
-    return Neutron("+", (this->getEnergy() + peer.getEnergy()));
+    return Neutron("+",
+        (this->getSpin() + peer.getSpin()),
+        (this->getEnergy() + peer.getEnergy()));
 }
 
 Neutron Neutron::operator-(const Neutron& peer) const {
-    return Neutron("-", (this->getEnergy() - peer.getEnergy()));
+    return Neutron("-",
+        (this->getSpin() - peer.getSpin()),
+        (this->getEnergy() - peer.getEnergy()));
+}
+
+Neutron Neutron::operator*(const Neutron& peer) const {
+    return Neutron("*",
+        (this->getSpin() * peer.getSpin()),
+        (this->getEnergy() * peer.getEnergy()));
+}
+
+Neutron Neutron::operator/(const Neutron& peer) const {
+    return Neutron("/",
+        (this->getSpin() / peer.getSpin()),
+        (this->getEnergy() / peer.getEnergy()));
+}
+
+Neutron Neutron::operator%(const Neutron& peer) const {
+    return Neutron("%",
+        (this->getSpin() % peer.getSpin()),
+        (this->getEnergy() % peer.getEnergy()));
+}
+
+Proton Neutron::operator-(const Electron& peer) const {
+    return Proton("-",
+        (this->getSpin() - peer.getSpin()),
+        (this->getEnergy() - peer.getEnergy()));
 }
 
 shp::Quantity Neutron::getWavelength() const {
@@ -71,14 +145,19 @@ shp::Point Neutron::copy() {
 
 void Neutron::clear() {
     Particle::clear();
+    down[0].clear();
+    down[1].clear();
+    up.clear();
     return;
 }
 
 std::string Neutron::print() {
     std::stringstream result;
     result << "γ:";
-	result << Particle::print();
-    result << "}";
+	result << Particle::print() << std::endl << "\td:";
+    result << down[0].print() << std::endl << "\td:";
+    result << down[1].print() << std::endl << "\tu:";
+    result << up.print() << "}";
 	return result.str();
 }
 

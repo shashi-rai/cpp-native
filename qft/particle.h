@@ -31,6 +31,14 @@
 
 namespace qft {
 
+// To enable compiler resolve forward declarations
+class Photon;
+class Neutrino;
+class Quark;
+class Proton;
+class Neutron;
+class Electron;
+
 class Particle : public shp::Wave {
     shp::Shape* physical;
     Spin spin;
@@ -41,14 +49,17 @@ public:
     Particle(const float spin);
     Particle(const Spin& spin);
     Particle(std::string name);
+    Particle(std::string name, const float spin);
     Particle(std::string name, const Spin& spin);
     Particle(const Energy& energy);
     Particle(std::string name, const Energy& energy);
     Particle(const Spin& spin, const Energy& energy);
+    Particle(std::string name, const float spin, const float energy);
     Particle(std::string name, const Spin& spin, const Energy& energy);
     Particle(const Mass& mass, const Charge& charge);
     Particle(std::string name, const Mass& mass, const Charge& charge);
     Particle(const Spin& spin, const Mass& mass, const Charge& charge);
+    Particle(std::string name, const float spin, const float mass, const float energy);
     Particle(std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
     Particle(shp::Shape* wave);
     Particle(std::string name, shp::Shape* wave);
@@ -65,6 +76,9 @@ public:
     bool operator==(const Particle& peer) const;
     Particle operator+(const Particle& peer) const;
     Particle operator-(const Particle& peer) const;
+    Particle operator*(const Particle& peer) const;
+    Particle operator/(const Particle& peer) const;
+    Particle operator%(const Particle& peer) const;
 
     // Getters
     shp::Shape* getPhysical() const { return physical; }
@@ -82,6 +96,7 @@ public:
     void setMass(const Mass& value) { energy.setMass(value); }
     void setCharge(const Charge& value) { energy.setCharge(value); }
     bool isStructured() const;
+    float getTotal() const;
     virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();

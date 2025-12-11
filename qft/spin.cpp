@@ -28,7 +28,7 @@ Spin::Spin() : value(DEFAULT_VALUE) {
 
 }
 
-Spin::Spin(float value) : value(value) {
+Spin::Spin(const float value) : value(value) {
 
 }
 

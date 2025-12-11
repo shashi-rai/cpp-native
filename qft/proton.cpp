@@ -19,26 +19,50 @@
 // THE SOFTWARE.
 
 #include "proton.h"
+#include "neutron.h"
 
 namespace qft {
 
-Proton::Proton() : Particle() {
+const short int Proton::UP_MIN = 0;
+const short int Proton::UP_MAX = 2;
+
+Proton::Proton()
+        : Particle(Mass(Mass::PROTON), Charge(Charge::PROTON)), up(), down() {
 
 }
 
-Proton::Proton(std::string name) : Particle(name) {
+Proton::Proton(std::string name)
+        : Particle(name, Mass(Mass::PROTON), Charge(Charge::PROTON)), up(), down() {
 
 }
 
-Proton::Proton(float wavelength) : Particle(wavelength) {
+Proton::Proton(float wavelength)
+        : Particle(wavelength, Mass(Mass::PROTON), Charge(Charge::PROTON)), up(), down() {
     this->getEnergy().setWavelength(wavelength);
 }
 
-Proton::Proton(std::string name, float wavelength) : Particle(name) {
+Proton::Proton(std::string name, float wavelength)
+        : Particle(name, Mass(Mass::PROTON), Charge(Charge::PROTON)), up(), down() {
     this->getEnergy().setWavelength(wavelength);
 }
 
-Proton::Proton(std::string name, const Energy& energy) : Particle(name, energy) {
+Proton::Proton(std::string name, const Energy& energy)
+        : Particle(name, energy), up(), down() {
+
+}
+
+Proton::Proton(std::string name, const Spin& spin, const Energy& energy)
+        : Particle(name, spin, energy), up(), down() {
+
+}
+
+Proton::Proton(std::string name, const float spin, const float mass, const float charge)
+        : Particle(name, Spin(spin), Energy(Mass(mass), Charge(charge))), up(), down() {
+
+}
+
+Proton::Proton(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
+        : Particle(name, spin, Energy(mass, charge)), up(), down() {
 
 }
 
@@ -46,16 +70,66 @@ Proton::~Proton() {
 
 }
 
+Quark Proton::getUp(short int index) const {
+    Quark result;
+    if (index >= UP_MIN && index < UP_MAX) {
+        result = up[index];
+    }
+    return result;
+}
+
+Quark Proton::getDown() const {
+    return down;
+}
+
+void Proton::setUp(const Quark& particle, short int index) {
+    if (index >= UP_MIN && index < UP_MAX) {
+        this->up[index] = particle;
+    }
+}
+
+void Proton::setDown(const Quark& particle) {
+    this->down = particle;
+}
+
 bool Proton::operator==(const Proton& peer) const {
     return (static_cast<const Particle&>(*this) == static_cast<const Particle&>(peer));
 }
 
 Proton Proton::operator+(const Proton& peer) const {
-    return Proton("+", (this->getEnergy() + peer.getEnergy()));
+    return Proton("+",
+        (this->getSpin() + peer.getSpin()),
+        (this->getEnergy() + peer.getEnergy()));
 }
 
 Proton Proton::operator-(const Proton& peer) const {
-    return Proton("-", (this->getEnergy() - peer.getEnergy()));
+    return Proton("-",
+        (this->getSpin() - peer.getSpin()),
+        (this->getEnergy() - peer.getEnergy()));
+}
+
+Proton Proton::operator*(const Proton& peer) const {
+    return Proton("*",
+        (this->getSpin() * peer.getSpin()),
+        (this->getEnergy() * peer.getEnergy()));
+}
+
+Proton Proton::operator/(const Proton& peer) const {
+    return Proton("/",
+        (this->getSpin() * peer.getSpin()),
+        (this->getEnergy() / peer.getEnergy()));
+}
+
+Proton Proton::operator%(const Proton& peer) const {
+    return Proton("%",
+        (this->getSpin() % peer.getSpin()),
+        (this->getEnergy() % peer.getEnergy()));
+}
+
+Neutron Proton::operator+(const Electron& peer) const {
+    return Neutron("+",
+        (this->getSpin() + peer.getSpin()),
+        (this->getEnergy() + peer.getEnergy()));
 }
 
 shp::Quantity Proton::getWavelength() const {
@@ -71,14 +145,19 @@ shp::Point Proton::copy() {
 
 void Proton::clear() {
     Particle::clear();
+    up[0].clear();
+    up[1].clear();
+    down.clear();
     return;
 }
 
 std::string Proton::print() {
     std::stringstream result;
     result << "γ:";
-	result << Particle::print();
-    result << "}";
+	result << Particle::print() << std::endl << "\tu:";
+    result << up[0].print() << std::endl << "\tu:";
+    result << up[1].print() << std::endl << "\td:";
+    result << down.print() << "}";
 	return result.str();
 }
 

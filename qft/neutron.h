@@ -23,13 +23,16 @@
 
 #include <string>
 #include <vector>
+#include "electron.h"
 #include "energy.h"
 #include "particle.h"
+#include "quark.h"
 
 namespace qft {
 
 class Neutron : public Particle {
-
+    Quark up;
+    Quark down[2];
 public:
     // Constructors
     Neutron();
@@ -37,6 +40,9 @@ public:
     Neutron(float wavelength);
     Neutron(std::string name, float wavelength);
     Neutron(std::string name, const Energy& energy);
+    Neutron(std::string name, const Spin& spin, const Energy& energy);
+    Neutron(std::string name, const float spin, const float mass, const float charge);
+    Neutron(std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
 
     // Destructors
     ~Neutron();
@@ -45,16 +51,27 @@ public:
     bool operator==(const Neutron& peer) const;
     Neutron operator+(const Neutron& peer) const;
     Neutron operator-(const Neutron& peer) const;
+    Neutron operator*(const Neutron& peer) const;
+    Neutron operator/(const Neutron& peer) const;
+    Neutron operator%(const Neutron& peer) const;
+    Proton operator-(const Electron& peer) const;
 
     // Getters
+    Quark getUp() const;
+    Quark getDown(short int index) const;
 
     // Setters
+    void setUp(const Quark& particle);
+    void setDown(const Quark& particle, short int index);
 
     // Additional methods
     shp::Quantity getWavelength() const;
     virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();
+public:
+    static const short int DOWN_MIN;
+    static const short int DOWN_MAX;
 };
 
 typedef std::vector<Neutron > NeutronArray;

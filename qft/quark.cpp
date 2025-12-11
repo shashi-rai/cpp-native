@@ -18,103 +18,104 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "photon.h"
+#include "quark.h"
 
 namespace qft {
 
-Photon::Photon() : Particle() {
+Quark::Quark() : Particle() {
 
 }
 
-Photon::Photon(std::string name) : Particle(name) {
+Quark::Quark(std::string name) : Particle(name) {
 
 }
 
-Photon::Photon(float wavelength) : Particle(wavelength) {
+Quark::Quark(float wavelength) : Particle(wavelength) {
     this->getEnergy().setWavelength(wavelength);
 }
 
-Photon::Photon(std::string name, float wavelength) : Particle(name) {
+Quark::Quark(std::string name, float wavelength)
+        : Particle(name) {
     this->getEnergy().setWavelength(wavelength);
 }
 
-Photon::Photon(std::string name, const Energy& energy)
+Quark::Quark(std::string name, const Energy& energy)
         : Particle(name, energy) {
 
 }
 
-Photon::Photon(std::string name, const Spin& spin, const Energy& energy)
+Quark::Quark(std::string name, const Spin& spin, const Energy& energy)
         : Particle(name, spin, energy) {
 
 }
 
-Photon::Photon(std::string name, const float spin, const float mass, const float charge)
+Quark::Quark(std::string name, const float spin, const float mass, const float charge)
         : Particle(name, Spin(spin), Energy(Mass(mass), Charge(charge))) {
 
 }
 
-Photon::Photon(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
+Quark::Quark(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
         : Particle(name, spin, Energy(mass, charge)) {
 
 }
 
-Photon::~Photon() {
+Quark::~Quark() {
 
 }
 
-bool Photon::operator==(const Photon& peer) const {
+bool Quark::operator==(const Quark& peer) const {
     return (static_cast<const Particle&>(*this) == static_cast<const Particle&>(peer));
 }
 
-Photon Photon::operator+(const Photon& peer) const {
-    return Photon("+",
+Quark Quark::operator+(const Quark& peer) const {
+    return Quark("+",
         (this->getSpin() + peer.getSpin()),
         (this->getEnergy() + peer.getEnergy()));
 }
 
-Photon Photon::operator-(const Photon& peer) const {
-    return Photon("-",
+Quark Quark::operator-(const Quark& peer) const {
+    return Quark("-",
         (this->getSpin() - peer.getSpin()),
         (this->getEnergy() - peer.getEnergy()));
 }
 
-Photon Photon::operator*(const Photon& peer) const {
-    return Photon("*",
+Quark Quark::operator*(const Quark& peer) const {
+    return Quark("*",
         (this->getSpin() * peer.getSpin()),
         (this->getEnergy() * peer.getEnergy()));
 }
 
-Photon Photon::operator/(const Photon& peer) const {
-    return Photon("/",
-        (this->getSpin() / peer.getSpin()),
+Quark Quark::operator/(const Quark& peer) const {
+    return Quark("/",
+        (this->getSpin() * peer.getSpin()),
         (this->getEnergy() / peer.getEnergy()));
 }
 
-Photon Photon::operator%(const Photon& peer) const {
-    return Photon("%",
+Quark Quark::operator%(const Quark& peer) const {
+    return Quark("%",
         (this->getSpin() % peer.getSpin()),
         (this->getEnergy() % peer.getEnergy()));
 }
 
-shp::Quantity Photon::getWavelength() const {
+shp::Quantity Quark::getWavelength() const {
     return this->getEnergy().getWavelength();
 }
 
-shp::Point Photon::copy() {
-    Photon fresh(this->getName(), this->getEnergy());
+shp::Point Quark::copy() {
+    Quark fresh(this->getName(), this->getEnergy());
 	fresh.setAmplitude(this->getAmplitude());
 	fresh.setGradient(this->getGradient());
     return fresh;
 }
 
-void Photon::clear() {
+void Quark::clear() {
     Particle::clear();
     return;
 }
 
-std::string Photon::print() {
+std::string Quark::print() {
     std::stringstream result;
-    result << "γ:";
+    result << "q:";
 	result << Particle::print();
     result << "}";
 	return result.str();

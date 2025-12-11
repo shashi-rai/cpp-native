@@ -97,7 +97,8 @@ Field::~Field() {
 }
 
 bool Field::operator==(const Field& peer) const {
-    return (physical == peer.physical)
+    return (static_cast<const Cellular&>(*this) == static_cast<const Cellular&>(peer))
+        && (physical == peer.physical)
         && (defaultSpin == peer.defaultSpin)
         && (defaultMass == peer.defaultMass)
         && (defaultCharge == peer.defaultCharge);

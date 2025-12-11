@@ -38,7 +38,23 @@ Neutrino::Neutrino(std::string name, float wavelength) : Particle(name) {
     this->getEnergy().setWavelength(wavelength);
 }
 
-Neutrino::Neutrino(std::string name, const Energy& energy) : Particle(name, energy) {
+Neutrino::Neutrino(std::string name, const Energy& energy)
+        : Particle(name, energy) {
+
+}
+
+Neutrino::Neutrino(std::string name, const Spin& spin, const Energy& energy)
+        : Particle(name, spin, energy) {
+
+}
+
+Neutrino::Neutrino(std::string name, const float spin, const float mass, const float charge)
+        : Particle(name, Spin(spin), Energy(Mass(mass), Charge(charge))) {
+
+}
+
+Neutrino::Neutrino(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
+        : Particle(name, spin, Energy(mass, charge)) {
 
 }
 
@@ -51,11 +67,33 @@ bool Neutrino::operator==(const Neutrino& peer) const {
 }
 
 Neutrino Neutrino::operator+(const Neutrino& peer) const {
-    return Neutrino("+", (this->getEnergy() + peer.getEnergy()));
+    return Neutrino("+",
+        (this->getSpin() + peer.getSpin()),
+        (this->getEnergy() + peer.getEnergy()));
 }
 
 Neutrino Neutrino::operator-(const Neutrino& peer) const {
-    return Neutrino("-", (this->getEnergy() - peer.getEnergy()));
+    return Neutrino("-",
+        (this->getSpin() - peer.getSpin()),
+        (this->getEnergy() - peer.getEnergy()));
+}
+
+Neutrino Neutrino::operator*(const Neutrino& peer) const {
+    return Neutrino("*",
+        (this->getSpin() * peer.getSpin()),
+        (this->getEnergy() * peer.getEnergy()));
+}
+
+Neutrino Neutrino::operator/(const Neutrino& peer) const {
+    return Neutrino("/",
+        (this->getSpin() / peer.getSpin()),
+        (this->getEnergy() / peer.getEnergy()));
+}
+
+Neutrino Neutrino::operator%(const Neutrino& peer) const {
+    return Neutrino("%",
+        (this->getSpin() % peer.getSpin()),
+        (this->getEnergy() % peer.getEnergy()));
 }
 
 shp::Quantity Neutrino::getWavelength() const {
@@ -76,7 +114,7 @@ void Neutrino::clear() {
 
 std::string Neutrino::print() {
     std::stringstream result;
-    result << "γ:";
+    result << "ν:";
 	result << Particle::print();
     result << "}";
 	return result.str();
