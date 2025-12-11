@@ -24,7 +24,7 @@
 #include <string>
 #include <vector>
 #include "atom.h"
-#include "electron.h"
+#include "../qft/electron.h"
 #include "../qft/energy.h"
 #include "../shp/angular.h"
 #include "../shp/distance.h"

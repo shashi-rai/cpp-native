@@ -23,8 +23,8 @@
 
 #include <string>
 #include <vector>
-#include "electron.h"
 #include "orbital.h"
+#include "../qft/electron.h"
 #include "../shp/shell.h"
 
 namespace che {
@@ -47,8 +47,8 @@ public:
     // Access operator
     Orbital operator()(int x) { return getOrbital(x); }
     const Orbital operator()(int x) const { return getOrbital(x); }
-    Electron operator()(int x, int y) { return getOrbital(x).getElectron(y); }
-    const Electron operator()(int x, int y) const { return getOrbital(x).getElectron(y); }
+    qft::Electron operator()(int x, int y) { return getOrbital(x).getElectron(y); }
+    const qft::Electron operator()(int x, int y) const { return getOrbital(x).getElectron(y); }
 
     // Getters
     Orbital getS() const;
@@ -65,8 +65,8 @@ public:
     // Additional methods
     Orbital getOrbital(int azimuthal) const;
     void setOrbital(int azimuthal, const std::shared_ptr<che::Orbital> object);
-    Electron getElectron(int azimuthal, int magnetic) const;
-    void setElectron(int azimuthal, int magnetic, const std::shared_ptr<che::Electron> object);
+    qft::Electron getElectron(int azimuthal, int magnetic) const;
+    void setElectron(int azimuthal, int magnetic, const std::shared_ptr<qft::Electron> object);
     virtual void clear();
     virtual std::string print();
 public:

@@ -18,53 +18,47 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef GRT_UNIVERSE_H
-#define GRT_UNIVERSE_H
+#ifndef QFT_PHOTON_H
+#define QFT_PHOTON_H
 
 #include <string>
 #include <vector>
-#include "celestial.h"
-#include "galaxy.h"
+#include "energy.h"
+#include "particle.h"
 
-namespace grt {
+namespace qft {
 
-class Universe : public Celestial {
-     GalaxyArray galaxies;
+class Photon : public Particle {
+
 public:
     // Constructors
-    Universe();
-    Universe(std::string name);
-    Universe(std::string name, const GalaxyArray& objects);
+    Photon();
+    Photon(std::string name);
+    Photon(float wavelength);
+    Photon(std::string name, float wavelength);
+    Photon(std::string name, const Energy& energy);
 
     // Destructors
-    ~Universe();
+    ~Photon();
 
     // Operator overloading
-    bool operator==(const Universe& peer) const;
-    Universe operator+(const Universe& peer) const;
-    Universe operator-(const Universe& peer) const;
-
-    // Access operator
-    Galaxy& operator()(int x) { return galaxies[x]; }
-    const Galaxy& operator()(int x) const { return galaxies[x]; }
+    bool operator==(const Photon& peer) const;
+    Photon operator+(const Photon& peer) const;
+    Photon operator-(const Photon& peer) const;
 
     // Getters
-    GalaxyArray getGalaxies() const { return galaxies; }
 
     // Setters
-    void setGalaxies(const GalaxyArray& objects) { this->galaxies = objects; }
 
     // Additional methods
-    int getGalaxyCount() const;
-    Galaxy get(int index) const;
-    void set(int index, const Galaxy& object);
-    virtual Celestial copy();
+    shp::Quantity getWavelength() const;
+    virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Universe > UniverseArray;
+typedef std::vector<Photon > PhotonArray;
 
-} // namespace grt
+} // namespace qft
 
-#endif //GRT_UNIVERSE_H
+#endif //QFT_PHOTON_H

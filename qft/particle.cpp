@@ -23,98 +23,103 @@
 namespace qft {
 
 Particle::Particle()
-        : Point(), spin(), energy() {
+        : Wave(), spin(), energy() {
     setPhysical(nullptr);
 }
 
-Particle::Particle(Spin& spin)
-        : Point(), spin(spin), energy() {
+Particle::Particle(const float spin)
+        : Wave(), spin(spin), energy() {
+    setPhysical(nullptr);
+}
+
+Particle::Particle(const Spin& spin)
+        : Wave(), spin(spin), energy() {
     setPhysical(nullptr);
 }
 
 Particle::Particle(std::string name)
-        : Point(name), spin(), energy() {
+        : Wave(name), spin(), energy() {
     setPhysical(nullptr);
 }
 
-Particle::Particle(std::string name, Spin& spin)
-        : Point(name), spin(spin), energy() {
+Particle::Particle(std::string name, const Spin& spin)
+        : Wave(name), spin(spin), energy() {
     setPhysical(nullptr);
 }
 
-Particle::Particle(Energy& energy)
-        : Point(), spin(), energy(energy) {
+Particle::Particle(const Energy& energy)
+        : Wave(), spin(), energy(energy) {
     setPhysical(nullptr);
 }
 
-Particle::Particle(Spin& spin, Energy& energy)
-        : Point(), spin(spin), energy(energy) {
+Particle::Particle(std::string name, const Energy& energy)
+        : Wave(name), spin(), energy(energy) {
     setPhysical(nullptr);
 }
 
-Particle::Particle(std::string name, Energy& energy)
-        : Point(name), spin(), energy(energy) {
+Particle::Particle(const Spin& spin, const Energy& energy)
+        : Wave(), spin(spin), energy(energy) {
     setPhysical(nullptr);
 }
 
-Particle::Particle(std::string name, Spin& spin, Energy& energy)
-        : Point(name), spin(spin), energy(energy) {
+Particle::Particle(std::string name, const Spin& spin, const Energy& energy)
+        : Wave(name), spin(spin), energy(energy) {
     setPhysical(nullptr);
 }
 
-Particle::Particle(Mass& mass, Charge& charge)
-        : Point(), spin(), energy(mass, charge) {
+Particle::Particle(const Mass& mass, const Charge& charge)
+        : Wave(), spin(), energy(mass, charge) {
     setPhysical(nullptr);
 }
 
-Particle::Particle(std::string name, Mass& mass, Charge& charge)
-        : Point(name), spin(), energy(mass, charge) {
+Particle::Particle(std::string name, const Mass& mass, const Charge& charge)
+        : Wave(name), spin(), energy(mass, charge) {
     setPhysical(nullptr);
 }
 
-Particle::Particle(Spin& spin, Mass& mass, Charge& charge)
-        : Point(), spin(spin), energy(mass, charge) {
+Particle::Particle(const Spin& spin, const Mass& mass, const Charge& charge)
+        : Wave(), spin(spin), energy(mass, charge) {
     setPhysical(nullptr);
 }
 
-Particle::Particle(std::string name, Spin& spin, Mass& mass, Charge& charge)
-        : Point(name), spin(spin), energy(mass, charge) {
+Particle::Particle(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
+        : Wave(name), spin(spin), energy(mass, charge) {
     setPhysical(nullptr);
 }
 
-Particle::Particle(shp::Shape* physical)
-        : Point(), spin(), energy() {
-    setPhysical(physical);
+Particle::Particle(shp::Shape* description)
+        : Wave(), spin(), energy() {
+    setPhysical(description);
 }
 
-Particle::Particle(std::string name, shp::Shape* physical)
-        : Point(name), spin(), energy() {
-    setPhysical(physical);
+Particle::Particle(std::string name, shp::Shape* description)
+        : Wave(name), spin(), energy() {
+    setPhysical(description);
 }
 
-Particle::Particle(std::string name, shp::Shape* physical, Spin& spin)
-        : Point(name), spin(spin), energy() {
-    setPhysical(physical);
+Particle::Particle(std::string name, shp::Shape* description, const Spin& spin)
+        : Wave(name), spin(spin), energy() {
+    setPhysical(description);
 }
 
-Particle::Particle(std::string name, shp::Shape* physical, Spin& spin, Energy& energy)
-        : Point(name), spin(spin), energy(energy) {
-    setPhysical(physical);
+Particle::Particle(std::string name, shp::Shape* description, const Spin& spin, const Energy& energy)
+        : Wave(name), spin(spin), energy(energy) {
+    setPhysical(description);
 }
 
-Particle::Particle(shp::Shape* physical, Spin& spin, Energy& energy)
-        : Point(), spin(spin), energy(energy) {
-    setPhysical(physical);
+Particle::Particle(shp::Shape* description, const Spin& spin, const Energy& energy)
+        : Wave(), spin(spin), energy(energy) {
+    setPhysical(description);
 }
 
-Particle::Particle(shp::Shape* physical, Spin& spin, Mass& mass, Charge& charge)
-        : Point(), spin(spin), energy(mass, charge) {
-    setPhysical(physical);
+Particle::Particle(shp::Shape* description, const Spin& spin, const Mass& mass, const Charge& charge)
+        : Wave(), spin(spin), energy(mass, charge) {
+    setPhysical(description);
 }
 
-Particle::Particle(std::string name, shp::Shape* physical, Spin& spin, Mass& mass, Charge& charge)
-        : Point(name), spin(spin), energy(mass, charge) {
-    setPhysical(physical);
+Particle::Particle(std::string name, shp::Shape* description, const Spin& spin, const Mass& mass, const Charge& charge)
+        : Wave(name), spin(spin), energy(mass, charge) {
+    setPhysical(description);
 }
 
 Particle::~Particle() {
@@ -149,7 +154,7 @@ shp::Point Particle::copy() {
 }
 
 void Particle::clear() {
-    Point::clear();
+    Wave::clear();
     spin.clear();
     energy.clear();
     return;
@@ -158,9 +163,11 @@ void Particle::clear() {
 std::string Particle::print() {
     std::stringstream result;
     result << "[";
-    result << Point::print() << ",";
+    result << Wave::print() << ",";
     result << spin.print() << ",";
-    result << energy.print() << "]";
+    result << energy.print() << ",";
+    result << (physical != nullptr ? physical->print() : "");
+    result << "]";
 	return result.str();
 }
 

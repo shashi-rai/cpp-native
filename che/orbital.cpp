@@ -35,8 +35,8 @@ Orbital::Orbital(std::string name) : Polygon(name, ELECTRON_MAX_LIMIT) {
 }
 
 Orbital::Orbital(
-        const std::shared_ptr<che::Electron> left,
-        const std::shared_ptr<che::Electron> right)
+        const std::shared_ptr<qft::Electron> left,
+        const std::shared_ptr<qft::Electron> right)
         : Polygon("", ELECTRON_MAX_LIMIT) {
     setLeftSpinor(left);
     setRightSpinor(right);
@@ -52,8 +52,8 @@ Orbital::Orbital(std::string name, float gradient, int limit)
 }
 
 Orbital::Orbital(std::string name, int limit,
-        const std::shared_ptr<che::Electron> left,
-        const std::shared_ptr<che::Electron> right)
+        const std::shared_ptr<qft::Electron> left,
+        const std::shared_ptr<qft::Electron> right)
         : Polygon(name, limit) {
     setLeftSpinor(left);
     setRightSpinor(right);
@@ -64,36 +64,36 @@ Orbital::~Orbital() {
 }
 
 bool Orbital::operator==(const Orbital& peer) const {
-    Electron left = getLeftSpinor(),
+    qft::Electron left = getLeftSpinor(),
         peerleft = peer.getLeftSpinor();
-    Electron right = getRightSpinor(),
+    qft::Electron right = getRightSpinor(),
         peerright = peer.getRightSpinor();
     return (left == left) && (peerleft == peerright);
 }
 
 // TODO: Electron assignment to be corrected
 Orbital Orbital::operator+(const Orbital& peer) const {
-    std::shared_ptr<che::Electron> left =
-        std::make_shared<che::Electron>(getLeftSpinor());
-    std::shared_ptr<che::Electron> peerleft =
-        std::make_shared<che::Electron>(peer.getLeftSpinor());
-    std::shared_ptr<che::Electron> right =
-        std::make_shared<che::Electron>(getRightSpinor());
-    std::shared_ptr<che::Electron> peerright =
-        std::make_shared<che::Electron>(peer.getRightSpinor());
+    std::shared_ptr<qft::Electron> left =
+        std::make_shared<qft::Electron>(getLeftSpinor());
+    std::shared_ptr<qft::Electron> peerleft =
+        std::make_shared<qft::Electron>(peer.getLeftSpinor());
+    std::shared_ptr<qft::Electron> right =
+        std::make_shared<qft::Electron>(getRightSpinor());
+    std::shared_ptr<qft::Electron> peerright =
+        std::make_shared<qft::Electron>(peer.getRightSpinor());
     return Orbital("+", ELECTRON_MAX_LIMIT, left, peerright);
 }
 
 // TODO: Electron assignment to be corrected
 Orbital Orbital::operator-(const Orbital& peer) const {
-    std::shared_ptr<che::Electron> left =
-        std::make_shared<che::Electron>(getLeftSpinor());
-    std::shared_ptr<che::Electron> peerleft =
-        std::make_shared<che::Electron>(peer.getLeftSpinor());
-    std::shared_ptr<che::Electron> right =
-        std::make_shared<che::Electron>(getRightSpinor());
-    std::shared_ptr<che::Electron> peerright =
-        std::make_shared<che::Electron>(peer.getRightSpinor());
+    std::shared_ptr<qft::Electron> left =
+        std::make_shared<qft::Electron>(getLeftSpinor());
+    std::shared_ptr<qft::Electron> peerleft =
+        std::make_shared<qft::Electron>(peer.getLeftSpinor());
+    std::shared_ptr<qft::Electron> right =
+        std::make_shared<qft::Electron>(getRightSpinor());
+    std::shared_ptr<qft::Electron> peerright =
+        std::make_shared<qft::Electron>(peer.getRightSpinor());
     return Orbital("-", ELECTRON_MAX_LIMIT, left, peerright);
 }
 
@@ -101,16 +101,16 @@ int Orbital::getParticleCount() const {
     return this->getWaveCount();
 }
 
-Electron Orbital::getElectron(int magnetic) const {
-	Electron result;
+qft::Electron Orbital::getElectron(int magnetic) const {
+	qft::Electron result;
 	shp::WaveArray electrons = this->getWaves();
 	if (this->getParticleCount() > 0) {
-        result = static_cast<Electron&>(electrons[magnetic]);
+        result = static_cast<qft::Electron&>(electrons[magnetic]);
 	}
 	return result;
 }
 
-void Orbital::setElectron(int magnetic, const std::shared_ptr<che::Electron> object) {
+void Orbital::setElectron(int magnetic, const std::shared_ptr<qft::Electron> object) {
 	Polygon::set(magnetic, *object);
 	return;
 }

@@ -18,53 +18,47 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef GRT_UNIVERSE_H
-#define GRT_UNIVERSE_H
+#ifndef QFT_NEUTRINO_H
+#define QFT_NEUTRINO_H
 
 #include <string>
 #include <vector>
-#include "celestial.h"
-#include "galaxy.h"
+#include "energy.h"
+#include "particle.h"
 
-namespace grt {
+namespace qft {
 
-class Universe : public Celestial {
-     GalaxyArray galaxies;
+class Neutrino : public Particle {
+
 public:
     // Constructors
-    Universe();
-    Universe(std::string name);
-    Universe(std::string name, const GalaxyArray& objects);
+    Neutrino();
+    Neutrino(std::string name);
+    Neutrino(float wavelength);
+    Neutrino(std::string name, float wavelength);
+    Neutrino(std::string name, const Energy& energy);
 
     // Destructors
-    ~Universe();
+    ~Neutrino();
 
     // Operator overloading
-    bool operator==(const Universe& peer) const;
-    Universe operator+(const Universe& peer) const;
-    Universe operator-(const Universe& peer) const;
-
-    // Access operator
-    Galaxy& operator()(int x) { return galaxies[x]; }
-    const Galaxy& operator()(int x) const { return galaxies[x]; }
+    bool operator==(const Neutrino& peer) const;
+    Neutrino operator+(const Neutrino& peer) const;
+    Neutrino operator-(const Neutrino& peer) const;
 
     // Getters
-    GalaxyArray getGalaxies() const { return galaxies; }
 
     // Setters
-    void setGalaxies(const GalaxyArray& objects) { this->galaxies = objects; }
 
     // Additional methods
-    int getGalaxyCount() const;
-    Galaxy get(int index) const;
-    void set(int index, const Galaxy& object);
-    virtual Celestial copy();
+    shp::Quantity getWavelength() const;
+    virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Universe > UniverseArray;
+typedef std::vector<Neutrino > NeutrinoArray;
 
-} // namespace grt
+} // namespace qft
 
-#endif //GRT_UNIVERSE_H
+#endif //QFT_NEUTRINO_H

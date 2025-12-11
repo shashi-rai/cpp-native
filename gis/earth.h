@@ -18,53 +18,53 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef GRT_UNIVERSE_H
-#define GRT_UNIVERSE_H
+#ifndef GIS_EARTH_H
+#define GIS_EARTH_H
 
 #include <string>
 #include <vector>
-#include "celestial.h"
-#include "galaxy.h"
+#include "territory.h"
+#include "../grt/planet.h"
 
-namespace grt {
+namespace gis {
 
-class Universe : public Celestial {
-     GalaxyArray galaxies;
+class Earth : public grt::Planet {
+    TerritoryArray territories;
 public:
     // Constructors
-    Universe();
-    Universe(std::string name);
-    Universe(std::string name, const GalaxyArray& objects);
+    Earth();
+    Earth(std::string name);
+    Earth(std::string name, const TerritoryArray& objects);
 
     // Destructors
-    ~Universe();
+    ~Earth();
 
     // Operator overloading
-    bool operator==(const Universe& peer) const;
-    Universe operator+(const Universe& peer) const;
-    Universe operator-(const Universe& peer) const;
+    bool operator==(const Earth& peer) const;
+    Earth operator+(const Earth& peer) const;
+    Earth operator-(const Earth& peer) const;
 
     // Access operator
-    Galaxy& operator()(int x) { return galaxies[x]; }
-    const Galaxy& operator()(int x) const { return galaxies[x]; }
+    Territory& operator()(int x) { return territories[x]; }
+    const Territory& operator()(int x) const { return territories[x]; }
 
     // Getters
-    GalaxyArray getGalaxies() const { return galaxies; }
+    TerritoryArray getTerritories() const { return territories; }
 
     // Setters
-    void setGalaxies(const GalaxyArray& objects) { this->galaxies = objects; }
+    void setTerritories(const TerritoryArray& objects) { this->territories = objects; }
 
     // Additional methods
-    int getGalaxyCount() const;
-    Galaxy get(int index) const;
-    void set(int index, const Galaxy& object);
+    int getTerritoryCount() const;
+    Territory get(int index) const;
+    void set(int index, const Territory& object);
     virtual Celestial copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Universe > UniverseArray;
+typedef std::vector<Earth > EarthArray;
 
-} // namespace grt
+} // namespace gis
 
-#endif //GRT_UNIVERSE_H
+#endif //GIS_EARTH_H

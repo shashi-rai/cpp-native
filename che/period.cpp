@@ -123,19 +123,19 @@ void Period::setOrbital(int azimuthal, const std::shared_ptr<che::Orbital> objec
 	return;
 }
 
-Electron Period::getElectron(int azimuthal, int magnetic) const {
-	Electron result;
+qft::Electron Period::getElectron(int azimuthal, int magnetic) const {
+	qft::Electron result;
 	shp::OrbitalArray orbitals = this->getOrbitals();
 	if (this->getOrbitalCount() > 0) {
 		shp::Polygon orbital = orbitals[azimuthal];
 		if (orbital.getWaveCount() > 0) {
-			result = static_cast<Electron&>(orbital(magnetic));
+			result = static_cast<qft::Electron&>(orbital(magnetic));
 		}
 	}
 	return result;
 }
 
-void Period::setElectron(int azimuthal, int magnetic, const std::shared_ptr<che::Electron> object) {
+void Period::setElectron(int azimuthal, int magnetic, const std::shared_ptr<qft::Electron> object) {
 	this->getOrbital(azimuthal).setElectron(magnetic, object);
 	return;
 }

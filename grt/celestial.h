@@ -23,37 +23,48 @@
 
 #include <string>
 #include <vector>
+#include "orbit.h"
+#include "../qft/gravity.h"
+#include "../qft/mass.h"
+#include "../shp/shape.h"
 
 namespace grt {
 
-class Celestial {
-    std::string name;
-    float rotation;
-    float revolution;
-    double mass;
-    double gravity;
+class Celestial : public shp::Shape {
+    Orbit* orbit;
+    qft::Mass mass;
+    qft::Gravity gravity;
 public:
     // Constructors
     Celestial();
     Celestial(std::string name);
-    Celestial(std::string name, float rotation, float revolution, double mass, double gravity);
+    Celestial(const qft::Mass& mass);
+    Celestial(std::string name, const qft::Mass& mass);
+    Celestial(const qft::Gravity& gravity);
+    Celestial(std::string name, const qft::Gravity& gravity);
+    Celestial(std::string name, const qft::Mass& mass, const qft::Gravity& gravity);
 
     // Destructors
     ~Celestial();
 
     // Getters
-    std::string getName() const { return name; }
-    float getRotation() const { return rotation; }
-    float getRevolution() const { return revolution; }
-    double getMass() const { return mass; }
-    double getGravity() const { return gravity; }
+    Orbit* getOrbit() const { return orbit; }
+    qft::Mass getMass() const { return mass; }
+    qft::Gravity getGravity() const { return gravity; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
-    void setRotation(float value) { rotation = value; }
-    void setRevolution(float value) { revolution = value; }
-    void setMass(double value) { mass = value; }
-    void setGravity(double value) { gravity = value; }
+    void setOrbit(Orbit* value) { this->orbit = value; }
+    void setMass(const qft::Mass& value) { mass = value; }
+    void setGravity(const qft::Gravity& value) { gravity = value; }
+
+    // Additional methods
+    float getRotation() const;
+    void setRotation(const float value);
+    float getRevolution() const;
+    void setRevolution(const float value);
+    virtual Celestial copy();
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Celestial > CelestialArray;

@@ -26,36 +26,37 @@
 #include "energy.h"
 #include "mass.h"
 #include "spin.h"
-#include "../shp/shape.h"
 #include "../shp/point.h"
+#include "../shp/wave.h"
 
 namespace qft {
 
-class Particle : public shp::Point {
+class Particle : public shp::Wave {
     shp::Shape* physical;
     Spin spin;
     Energy energy;
 public:
     // Constructors
     Particle();
-    Particle(Spin& spin);
+    Particle(const float spin);
+    Particle(const Spin& spin);
     Particle(std::string name);
-    Particle(std::string name, Spin& spin);
-    Particle(Energy& energy);
-    Particle(Spin& spin, Energy& energy);
-    Particle(std::string name, Energy& energy);
-    Particle(std::string name, Spin& spin, Energy& energy);
-    Particle(Mass& mass, Charge& charge);
-    Particle(std::string name, Mass& mass, Charge& charge);
-    Particle(Spin& spin, Mass& mass, Charge& charge);
-    Particle(std::string name, Spin& spin, Mass& mass, Charge& charge);
-    Particle(shp::Shape* physical);
-    Particle(std::string name, shp::Shape* physical);
-    Particle(std::string name, shp::Shape* physical, Spin& spin);
-    Particle(std::string name, shp::Shape* physical, Spin& spin, Energy& energy);
-    Particle(shp::Shape* physical, Spin& spin, Energy& energy);
-    Particle(shp::Shape* physical, Spin& spin, Mass& mass, Charge& charge);
-    Particle(std::string name, shp::Shape* physical, Spin& spin, Mass& mass, Charge& charge);
+    Particle(std::string name, const Spin& spin);
+    Particle(const Energy& energy);
+    Particle(std::string name, const Energy& energy);
+    Particle(const Spin& spin, const Energy& energy);
+    Particle(std::string name, const Spin& spin, const Energy& energy);
+    Particle(const Mass& mass, const Charge& charge);
+    Particle(std::string name, const Mass& mass, const Charge& charge);
+    Particle(const Spin& spin, const Mass& mass, const Charge& charge);
+    Particle(std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
+    Particle(shp::Shape* wave);
+    Particle(std::string name, shp::Shape* wave);
+    Particle(std::string name, shp::Shape* wave, const Spin& spin);
+    Particle(std::string name, shp::Shape* wave, const Spin& spin, const Energy& energy);
+    Particle(shp::Shape* wave, const Spin& spin, const Energy& energy);
+    Particle(shp::Shape* wave, const Spin& spin, const Mass& mass, const Charge& charge);
+    Particle(std::string name, shp::Shape* wave, const Spin& spin, const Mass& mass, const Charge& charge);
 
     // Destructors
     ~Particle();
@@ -71,7 +72,7 @@ public:
     Energy getEnergy() const { return energy; }
 
     // Setters
-    void setPhysical(shp::Shape* structure) { this->physical = structure; }
+    void setPhysical(shp::Shape* description) { this->physical = description; }
     void setSpin(const Spin& value) { spin = value; }
     void setEnergy(const Energy& value) { energy = value; }
 

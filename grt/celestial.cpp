@@ -22,21 +22,78 @@
 
 namespace grt {
 
-Celestial::Celestial() : name(""), rotation(0.0), revolution(0.0), mass(0.0), gravity(0.0) {
+Celestial::Celestial() : Shape(), mass(), gravity() {
 
 }
 
-Celestial::Celestial(std::string name) : name(name), rotation(0.0), revolution(0.0), mass(0.0), gravity(0.0) {
+Celestial::Celestial(std::string name) : Shape(name), mass(), gravity() {
 
 }
 
-Celestial::Celestial(std::string name, float rotation, float revolution, double mass, double gravity)
-    : name(name), rotation(rotation), revolution(revolution), mass(mass), gravity(gravity) {
+Celestial::Celestial(const qft::Mass& mass)
+    : Shape(), mass(mass), gravity() {
+
+}
+
+Celestial::Celestial(std::string name, const qft::Mass& mass)
+    : Shape(name), mass(mass), gravity() {
+
+}
+
+Celestial::Celestial(const qft::Gravity& gravity)
+    : Shape(), mass(), gravity(gravity) {
+
+}
+
+Celestial::Celestial(std::string name, const qft::Gravity& gravity)
+    : Shape(name), mass(), gravity(gravity) {
+
+}
+
+Celestial::Celestial(std::string name, const qft::Mass& mass, const qft::Gravity& gravity)
+    : Shape(name), mass(mass), gravity(gravity) {
 
 }
 
 Celestial::~Celestial() {
 
+}
+
+float Celestial::getRotation() const {
+    return orbit->getRotation();
+}
+
+void Celestial::setRotation(const float value) {
+    orbit->setRotation(value);
+}
+
+float Celestial::getRevolution() const {
+    return orbit->getRevolution();
+}
+
+void Celestial::setRevolution(const float value) {
+    orbit->setRevolution(value);
+}
+
+Celestial Celestial::copy() {
+    Celestial fresh(getName(), mass, gravity);
+    return fresh;
+}
+
+void Celestial::clear() {
+	Celestial::clear();
+	mass.clear();
+    gravity.clear();
+    return;
+}
+
+std::string Celestial::print() {
+    std::stringstream result;
+    result << "(C:";
+	result << Shape::print() << ",m:";
+	result << mass.print() << ",g:";
+    result << gravity.print() << ")";
+	return result.str();
 }
 
 } // namespace grt

@@ -18,24 +18,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef CHE_ELECTRON_H
-#define CHE_ELECTRON_H
+#ifndef QFT_ELECTRON_H
+#define QFT_ELECTRON_H
 
 #include <string>
 #include <vector>
+#include "energy.h"
+#include "particle.h"
 #include "photon.h"
-#include "../qft/energy.h"
-#include "../qft/spin.h"
+#include "spin.h"
 #include "../shp/wave.h"
 
-namespace che {
+namespace qft {
 
-class Electron : public shp::Wave {
+class Electron : public Particle {
     short int principal;
     short int azimuthal;
     short int magnetic;
-    qft::Spin spin;
-    qft::Energy energy;
 public:
     // Constructors
     Electron();
@@ -44,24 +43,24 @@ public:
     Electron(std::string name);
     Electron(std::string name, float polarization);
     Electron(std::string name, float polarization, float azimuthal);
-    Electron(const qft::Energy& energy);
-    Electron(std::string name, const qft::Energy& energy);
-    Electron(const qft::Mass& mass, const qft::Charge& charge);
-    Electron(std::string name, const qft::Mass& mass, const qft::Charge& charge);
+    Electron(const Energy& energy);
+    Electron(std::string name, const Energy& energy);
+    Electron(const Mass& mass, const Charge& charge);
+    Electron(std::string name, const Mass& mass, const Charge& charge);
     Electron(short int principal, short int azimuthal,
         short int magnetic, float spin);
     Electron(std::string name, short int principal, short int azimuthal,
-        short int magnetic, const qft::Spin& spin,
-        const qft::Energy& energy);
+        short int magnetic, const Spin& spin,
+        const Energy& energy);
     Electron(std::string name, short int principal, short int azimuthal,
-        short int magnetic, const qft::Spin& spin,
-        const qft::Mass& mass);
+        short int magnetic, const Spin& spin,
+        const Mass& mass);
     Electron(std::string name, short int principal, short int azimuthal,
-        short int magnetic, const qft::Spin& spin,
-        const qft::Charge& charge);
+        short int magnetic, const Spin& spin,
+        const Charge& charge);
     Electron(std::string name, short int principal, short int azimuthal,
-        short int magnetic, const qft::Spin& spin,
-        const qft::Mass& mass, const qft::Charge& charge);
+        short int magnetic, const Spin& spin,
+        const Mass& mass, const Charge& charge);
 
     // Destructors
     ~Electron();
@@ -75,15 +74,11 @@ public:
     short int getPrincipal() const { return principal; }
     short int getAzimuthal() const { return azimuthal; }
     short int getMagnetic() const { return magnetic; }
-    qft::Spin getSpin() const { return spin; }
-    qft::Energy getEnergy() const { return energy; }
 
     // Setters
     void setPrincipal(const short int number) { this->principal = number; }
     void setAzimuthal(const short int number) { this->azimuthal = number; }
     void setMagnetic(const short int number) { this->magnetic = number; }
-    void setSpin(const qft::Spin orientation) { this->spin = orientation; }
-    void setEnergy(const qft::Energy& quantum) { this->energy = quantum; }
 
     // Additional methods
     virtual shp::Point copy();
@@ -96,6 +91,6 @@ public:
 
 typedef std::vector<Electron > ElectronArray;
 
-} // namespace che
+} // namespace qft
 
-#endif //CHE_ELECTRON_H
+#endif //QFT_ELECTRON_H

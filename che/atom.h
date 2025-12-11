@@ -57,8 +57,8 @@ public:
     const Period operator()(int x) const { return getPeriod(x); }
     Orbital operator()(int x, int y) { return getPeriod(x).getOrbital(y); }
     const Orbital operator()(int x, int y) const { return getPeriod(x).getOrbital(y); }
-    Electron operator()(int x, int y, int z) { return getPeriod(x).getOrbital(y).getElectron(z); }
-    const Electron operator()(int x, int y, int z) const { return getPeriod(x).getOrbital(y).getElectron(z); }
+    qft::Electron operator()(int x, int y, int z) { return getPeriod(x).getOrbital(y).getElectron(z); }
+    const qft::Electron operator()(int x, int y, int z) const { return getPeriod(x).getOrbital(y).getElectron(z); }
 
     // Getters
     Nucleus getNucleus() const { return nucleus; }
@@ -74,8 +74,8 @@ public:
     void setPeriod(int primary, const std::shared_ptr<che::Period> object);
     Orbital getOrbital(int primary, int azimuthal) const;
     void setOrbital(int primary, int azimuthal, const std::shared_ptr<che::Orbital> object);
-    Electron getElectron(int primary, int azimuthal, int magnetic) const;
-    void setElectron(int primary, int azimuthal, int magnetic, const std::shared_ptr<che::Electron> object);
+    qft::Electron getElectron(int primary, int azimuthal, int magnetic) const;
+    void setElectron(int primary, int azimuthal, int magnetic, const std::shared_ptr<qft::Electron> object);
     virtual void clear();
     virtual std::string print();
 public:

@@ -45,14 +45,49 @@ clean-libs: clean-custom
 	${RMCLEAN} $(LIBFILES)
 
 $(LIBFOLDR)/$(LIBNAME): \
-		$(OBJFOLDR)/universe.o \
-		$(OBJFOLDR)/celestial.o
+		$(OBJFOLDR)/asteroid.o \
+		$(OBJFOLDR)/celestial.o \
+		$(OBJFOLDR)/comet.o \
+		$(OBJFOLDR)/galaxy.o \
+		$(OBJFOLDR)/orbit.o \
+		$(OBJFOLDR)/planet.o \
+		$(OBJFOLDR)/satellite.o \
+		$(OBJFOLDR)/star.o \
+		$(OBJFOLDR)/universe.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
-		$(OBJFOLDR)/universe.o \
-		$(OBJFOLDR)/celestial.o
+		$(OBJFOLDR)/asteroid.o \
+		$(OBJFOLDR)/celestial.o \
+		$(OBJFOLDR)/comet.o \
+		$(OBJFOLDR)/galaxy.o \
+		$(OBJFOLDR)/orbit.o \
+		$(OBJFOLDR)/planet.o \
+		$(OBJFOLDR)/satellite.o \
+		$(OBJFOLDR)/star.o \
+		$(OBJFOLDR)/universe.o
 
-$(OBJFOLDR)/universe.o: universe.cpp
-	$(CPPTOOL) -c universe.cpp -o $(OBJFOLDR)/universe.o $(CXXFLAGS)
+$(OBJFOLDR)/asteroid.o: asteroid.cpp
+	$(CPPTOOL) -c asteroid.cpp -o $(OBJFOLDR)/asteroid.o $(CXXFLAGS)
 
 $(OBJFOLDR)/celestial.o: celestial.cpp
 	$(CPPTOOL) -c celestial.cpp -o $(OBJFOLDR)/celestial.o $(CXXFLAGS)
+
+$(OBJFOLDR)/comet.o: comet.cpp
+	$(CPPTOOL) -c comet.cpp -o $(OBJFOLDR)/comet.o $(CXXFLAGS)
+
+$(OBJFOLDR)/galaxy.o: galaxy.cpp
+	$(CPPTOOL) -c galaxy.cpp -o $(OBJFOLDR)/galaxy.o $(CXXFLAGS)
+
+$(OBJFOLDR)/orbit.o: orbit.cpp
+	$(CPPTOOL) -c orbit.cpp -o $(OBJFOLDR)/orbit.o $(CXXFLAGS)
+
+$(OBJFOLDR)/planet.o: planet.cpp
+	$(CPPTOOL) -c planet.cpp -o $(OBJFOLDR)/planet.o $(CXXFLAGS)
+
+$(OBJFOLDR)/satellite.o: satellite.cpp
+	$(CPPTOOL) -c satellite.cpp -o $(OBJFOLDR)/satellite.o $(CXXFLAGS)
+
+$(OBJFOLDR)/star.o: star.cpp
+	$(CPPTOOL) -c star.cpp -o $(OBJFOLDR)/star.o $(CXXFLAGS)
+
+$(OBJFOLDR)/universe.o: universe.cpp
+	$(CPPTOOL) -c universe.cpp -o $(OBJFOLDR)/universe.o $(CXXFLAGS)

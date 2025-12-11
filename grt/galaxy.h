@@ -18,53 +18,53 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef GRT_UNIVERSE_H
-#define GRT_UNIVERSE_H
+#ifndef GRT_GALAXY_H
+#define GRT_GALAXY_H
 
 #include <string>
 #include <vector>
 #include "celestial.h"
-#include "galaxy.h"
+#include "star.h"
 
 namespace grt {
 
-class Universe : public Celestial {
-     GalaxyArray galaxies;
+class Galaxy : public Celestial {
+    StarArray stars;
 public:
     // Constructors
-    Universe();
-    Universe(std::string name);
-    Universe(std::string name, const GalaxyArray& objects);
+    Galaxy();
+    Galaxy(std::string name);
+    Galaxy(std::string name, const StarArray& objects);
 
     // Destructors
-    ~Universe();
+    ~Galaxy();
 
     // Operator overloading
-    bool operator==(const Universe& peer) const;
-    Universe operator+(const Universe& peer) const;
-    Universe operator-(const Universe& peer) const;
+    bool operator==(const Galaxy& peer) const;
+    Galaxy operator+(const Galaxy& peer) const;
+    Galaxy operator-(const Galaxy& peer) const;
 
     // Access operator
-    Galaxy& operator()(int x) { return galaxies[x]; }
-    const Galaxy& operator()(int x) const { return galaxies[x]; }
+    Star& operator()(int x) { return stars[x]; }
+    const Star& operator()(int x) const { return stars[x]; }
 
     // Getters
-    GalaxyArray getGalaxies() const { return galaxies; }
+    StarArray getStars() const { return stars; }
 
     // Setters
-    void setGalaxies(const GalaxyArray& objects) { this->galaxies = objects; }
+    void setStars(const StarArray& objects) { this->stars = objects; }
 
     // Additional methods
-    int getGalaxyCount() const;
-    Galaxy get(int index) const;
-    void set(int index, const Galaxy& object);
+    int getStarCount() const;
+    Star get(int index) const;
+    void set(int index, const Star& object);
     virtual Celestial copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Universe > UniverseArray;
+typedef std::vector<Galaxy > GalaxyArray;
 
 } // namespace grt
 
-#endif //GRT_UNIVERSE_H
+#endif //GRT_GALAXY_H

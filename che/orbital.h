@@ -23,7 +23,7 @@
 
 #include <string>
 #include <vector>
-#include "electron.h"
+#include "../qft/electron.h"
 #include "../shp/polygon.h"
 
 namespace che {
@@ -34,13 +34,13 @@ public:
     // Constructors
     Orbital();
     Orbital(std::string name);
-    Orbital(const std::shared_ptr<che::Electron> left,
-        const std::shared_ptr<che::Electron> right);
+    Orbital(const std::shared_ptr<qft::Electron> left,
+        const std::shared_ptr<qft::Electron> right);
     Orbital(std::string name, int limit);
     Orbital(std::string name, float gradient, int limit);
     Orbital(std::string name, int limit,
-        const std::shared_ptr<che::Electron> left,
-        const std::shared_ptr<che::Electron> right);
+        const std::shared_ptr<qft::Electron> left,
+        const std::shared_ptr<qft::Electron> right);
 
     // Destructors
     ~Orbital();
@@ -51,21 +51,21 @@ public:
     Orbital operator-(const Orbital& peer) const;
 
     // Access operator
-    Electron operator()(int x) { return getElectron(x); }
-    const Electron operator()(int x) const { return getElectron(x); }
+    qft::Electron operator()(int x) { return getElectron(x); }
+    const qft::Electron operator()(int x) const { return getElectron(x); }
 
     // Getters
-    Electron getLeftSpinor() const { return this->getElectron(0); }
-    Electron getRightSpinor() const { return this->getElectron(1); }
+    qft::Electron getLeftSpinor() const { return this->getElectron(0); }
+    qft::Electron getRightSpinor() const { return this->getElectron(1); }
 
     // Setters
-    void setLeftSpinor(const std::shared_ptr<che::Electron> spinor) { this->setElectron(0, spinor); }
-    void setRightSpinor(const std::shared_ptr<che::Electron> spinor) { this->setElectron(1, spinor); }
+    void setLeftSpinor(const std::shared_ptr<qft::Electron> spinor) { this->setElectron(0, spinor); }
+    void setRightSpinor(const std::shared_ptr<qft::Electron> spinor) { this->setElectron(1, spinor); }
 
     // Additional methods
     int getParticleCount() const;
-    Electron getElectron(int magnetic) const;
-    void setElectron(int magnetic, const std::shared_ptr<che::Electron> object);
+    qft::Electron getElectron(int magnetic) const;
+    void setElectron(int magnetic, const std::shared_ptr<qft::Electron> object);
     virtual void clear();
     virtual std::string print();
 public:

@@ -134,22 +134,22 @@ void Atom::setOrbital(int primary, int azimuthal, const std::shared_ptr<che::Orb
 	return;
 }
 
-Electron Atom::getElectron(int primary, int azimuthal, int magnetic) const {
-	Electron result;
+qft::Electron Atom::getElectron(int primary, int azimuthal, int magnetic) const {
+	qft::Electron result;
 	shp::ShellArray shells = this->getShells();
 	if (this->getShellCount() > 0) {
 		shp::Shell period = shells[primary];
 		if (period.getOrbitalCount()) {
 			shp::Polygon orbital = period(azimuthal);
 			if (orbital.getWaveCount() > 0) {
-				result = static_cast<Electron&>(orbital(magnetic));
+				result = static_cast<qft::Electron&>(orbital(magnetic));
 			}
 		}
 	}
 	return result;
 }
 
-void Atom::setElectron(int primary, int azimuthal, int magnetic, const std::shared_ptr<che::Electron> object) {
+void Atom::setElectron(int primary, int azimuthal, int magnetic, const std::shared_ptr<qft::Electron> object) {
 	this->getPeriod(primary).getOrbital(azimuthal).setElectron(magnetic, object);
 	return;
 }

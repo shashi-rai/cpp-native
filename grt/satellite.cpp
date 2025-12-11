@@ -18,96 +18,96 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "universe.h"
+#include "satellite.h"
 
 namespace grt {
 
-Universe::Universe() : Celestial(), galaxies() {
+Satellite::Satellite() : Celestial(), celestials() {
 
 }
 
-Universe::Universe(std::string name) : Celestial(name), galaxies() {
+Satellite::Satellite(std::string name) : Celestial(name), celestials() {
 
 }
 
-Universe::Universe(std::string name, const GalaxyArray& galaxies)
-    : Celestial(name), galaxies(galaxies) {
+Satellite::Satellite(std::string name, const CelestialArray& celestials)
+        : Celestial(name), celestials(celestials) {
 
 }
 
-Universe::~Universe() {
+Satellite::~Satellite() {
 
 }
 
-bool Universe::operator==(const Universe& peer) const {
-    return (galaxies == peer.galaxies);
+bool Satellite::operator==(const Satellite& peer) const {
+    return (celestials == peer.celestials);
 }
 
-Universe Universe::operator+(const Universe& peer) const {
-    GalaxyArray result(galaxies);
-    result.insert(result.end(), peer.galaxies.begin(), peer.galaxies.end());
-    return Universe("+", result);
+Satellite Satellite::operator+(const Satellite& peer) const {
+    CelestialArray result(celestials);
+    result.insert(result.end(), peer.celestials.begin(), peer.celestials.end());
+    return Satellite("+", result);
 }
 
-Universe Universe::operator-(const Universe& peer) const {
-    GalaxyArray result(galaxies);
-    for (GalaxyArray::const_iterator it = peer.galaxies.begin(); it != peer.galaxies.end(); ++it) {
-        GalaxyArray::iterator found = std::find(result.begin(), result.end(), *it);
+Satellite Satellite::operator-(const Satellite& peer) const {
+    CelestialArray result(celestials);
+    for (CelestialArray::const_iterator it = peer.celestials.begin(); it != peer.celestials.end(); ++it) {
+        CelestialArray::iterator found = std::find(result.begin(), result.end(), *it);
         if (found != result.end()) {
             result.erase(found);
         }
     }
-    return Universe("-", result);
+    return Satellite("-", result);
 }
 
-int Universe::getGalaxyCount() const {
-    return galaxies.size();
+int Satellite::getCelestialCount() const {
+    return celestials.size();
 }
 
-Galaxy Universe::get(int index) const {
-    Galaxy result;
+Celestial Satellite::get(int index) const {
+    Satellite result;
     if (index < 0) {
         return result;
     }
-    if (index >= static_cast<int>(galaxies.size())) {
+    if (index >= static_cast<int>(celestials.size())) {
         return result;
     }
-    return galaxies[index];
+    return celestials[index];
 }
 
-void Universe::set(int index, const Galaxy& object) {
+void Satellite::set(int index, const Celestial& object) {
     if (index < 0) {
         return;
     }
-    if (index < static_cast<int>(galaxies.size())) {
+    if (index < static_cast<int>(celestials.size())) {
         // replace existing element
-        galaxies[index] = object;
-    } else if (index == static_cast<int>(galaxies.size())) {
+        celestials[index] = object;
+    } else if (index == static_cast<int>(celestials.size())) {
         // append at end
-        galaxies.push_back(object);
+        celestials.push_back(object);
     } else {
         // index beyond current size: append at end
-        galaxies.push_back(object);
+        celestials.push_back(object);
     }
     return;
 }
 
-Celestial Universe::copy() {
-    Universe fresh(getName(), galaxies);
+Celestial Satellite::copy() {
+    Satellite fresh(getName(), celestials);
     return fresh;
 }
 
-void Universe::clear() {
+void Satellite::clear() {
 	Celestial::clear();
-	galaxies.clear();
+	celestials.clear();
     return;
 }
 
-std::string Universe::print() {
+std::string Satellite::print() {
     std::stringstream result;
-    result << "(U:";
+    result << "(S:";
 	result << Celestial::print() << ",sz:";
-	result << galaxies.size() << ")";
+	result << celestials.size() << ")";
 	return result.str();
 }
 

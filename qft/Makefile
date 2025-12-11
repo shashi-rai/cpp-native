@@ -49,33 +49,53 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/action.o \
 		$(OBJFOLDR)/charge.o \
 		$(OBJFOLDR)/density.o \
+		$(OBJFOLDR)/electric.o \
+		$(OBJFOLDR)/electron.o \
 		$(OBJFOLDR)/energy.o \
 		$(OBJFOLDR)/field.o \
 		$(OBJFOLDR)/force.o \
+		$(OBJFOLDR)/gravity.o \
+		$(OBJFOLDR)/magnetic.o \
 		$(OBJFOLDR)/mass.o \
 		$(OBJFOLDR)/momentum.o \
+		$(OBJFOLDR)/neutrino.o \
+		$(OBJFOLDR)/neutron.o \
 		$(OBJFOLDR)/particle.o \
+		$(OBJFOLDR)/photon.o \
 		$(OBJFOLDR)/pressure.o \
+		$(OBJFOLDR)/proton.o \
 		$(OBJFOLDR)/spin.o \
+		$(OBJFOLDR)/strong.o \
 		$(OBJFOLDR)/temperature.o \
 		$(OBJFOLDR)/time.o \
-		$(OBJFOLDR)/velocity.o
+		$(OBJFOLDR)/velocity.o \
+		$(OBJFOLDR)/weak.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
 		$(OBJFOLDR)/acceleration.o \
 		$(OBJFOLDR)/action.o \
 		$(OBJFOLDR)/charge.o \
 		$(OBJFOLDR)/density.o \
+		$(OBJFOLDR)/electric.o \
+		$(OBJFOLDR)/electron.o \
 		$(OBJFOLDR)/energy.o \
 		$(OBJFOLDR)/field.o \
 		$(OBJFOLDR)/force.o \
+		$(OBJFOLDR)/gravity.o \
+		$(OBJFOLDR)/magnetic.o \
 		$(OBJFOLDR)/mass.o \
 		$(OBJFOLDR)/momentum.o \
+		$(OBJFOLDR)/neutrino.o \
+		$(OBJFOLDR)/neutron.o \
 		$(OBJFOLDR)/particle.o \
+		$(OBJFOLDR)/photon.o \
 		$(OBJFOLDR)/pressure.o \
+		$(OBJFOLDR)/proton.o \
 		$(OBJFOLDR)/spin.o \
+		$(OBJFOLDR)/strong.o \
 		$(OBJFOLDR)/temperature.o \
 		$(OBJFOLDR)/time.o \
-		$(OBJFOLDR)/velocity.o
+		$(OBJFOLDR)/velocity.o \
+		$(OBJFOLDR)/weak.o
 
 $(OBJFOLDR)/acceleration.o: acceleration.cpp
 	$(CPPTOOL) -c acceleration.cpp -o $(OBJFOLDR)/acceleration.o $(CXXFLAGS)
@@ -89,6 +109,12 @@ $(OBJFOLDR)/charge.o: charge.cpp
 $(OBJFOLDR)/density.o: density.cpp
 	$(CPPTOOL) -c density.cpp -o $(OBJFOLDR)/density.o $(CXXFLAGS)
 
+$(OBJFOLDR)/electric.o: electric.cpp
+	$(CPPTOOL) -c electric.cpp -o $(OBJFOLDR)/electric.o $(CXXFLAGS)
+
+$(OBJFOLDR)/electron.o: electron.cpp
+	$(CPPTOOL) -c electron.cpp -o $(OBJFOLDR)/electron.o $(CXXFLAGS)
+
 $(OBJFOLDR)/energy.o: energy.cpp
 	$(CPPTOOL) -c energy.cpp -o $(OBJFOLDR)/energy.o $(CXXFLAGS)
 
@@ -98,20 +124,41 @@ $(OBJFOLDR)/field.o: field.cpp
 $(OBJFOLDR)/force.o: force.cpp
 	$(CPPTOOL) -c force.cpp -o $(OBJFOLDR)/force.o $(CXXFLAGS)
 
+$(OBJFOLDR)/gravity.o: gravity.cpp
+	$(CPPTOOL) -c gravity.cpp -o $(OBJFOLDR)/gravity.o $(CXXFLAGS)
+
+$(OBJFOLDR)/magnetic.o: magnetic.cpp
+	$(CPPTOOL) -c magnetic.cpp -o $(OBJFOLDR)/magnetic.o $(CXXFLAGS)
+
 $(OBJFOLDR)/mass.o: mass.cpp
 	$(CPPTOOL) -c mass.cpp -o $(OBJFOLDR)/mass.o $(CXXFLAGS)
 
 $(OBJFOLDR)/momentum.o: momentum.cpp
 	$(CPPTOOL) -c momentum.cpp -o $(OBJFOLDR)/momentum.o $(CXXFLAGS)
 
+$(OBJFOLDR)/neutrino.o: neutrino.cpp
+	$(CPPTOOL) -c neutrino.cpp -o $(OBJFOLDR)/neutrino.o $(CXXFLAGS)
+
+$(OBJFOLDR)/neutron.o: neutron.cpp
+	$(CPPTOOL) -c neutron.cpp -o $(OBJFOLDR)/neutron.o $(CXXFLAGS)
+
 $(OBJFOLDR)/particle.o: particle.cpp
 	$(CPPTOOL) -c particle.cpp -o $(OBJFOLDR)/particle.o $(CXXFLAGS)
+
+$(OBJFOLDR)/photon.o: photon.cpp
+	$(CPPTOOL) -c photon.cpp -o $(OBJFOLDR)/photon.o $(CXXFLAGS)
 
 $(OBJFOLDR)/pressure.o: pressure.cpp
 	$(CPPTOOL) -c pressure.cpp -o $(OBJFOLDR)/pressure.o $(CXXFLAGS)
 
+$(OBJFOLDR)/proton.o: proton.cpp
+	$(CPPTOOL) -c proton.cpp -o $(OBJFOLDR)/proton.o $(CXXFLAGS)
+
 $(OBJFOLDR)/spin.o: spin.cpp
 	$(CPPTOOL) -c spin.cpp -o $(OBJFOLDR)/spin.o $(CXXFLAGS)
+
+$(OBJFOLDR)/strong.o: strong.cpp
+	$(CPPTOOL) -c strong.cpp -o $(OBJFOLDR)/strong.o $(CXXFLAGS)
 
 $(OBJFOLDR)/temperature.o: temperature.cpp
 	$(CPPTOOL) -c temperature.cpp -o $(OBJFOLDR)/temperature.o $(CXXFLAGS)
@@ -121,3 +168,6 @@ $(OBJFOLDR)/time.o: time.cpp
 
 $(OBJFOLDR)/velocity.o: velocity.cpp
 	$(CPPTOOL) -c velocity.cpp -o $(OBJFOLDR)/velocity.o $(CXXFLAGS)
+
+$(OBJFOLDR)/weak.o: weak.cpp
+	$(CPPTOOL) -c weak.cpp -o $(OBJFOLDR)/weak.o $(CXXFLAGS)

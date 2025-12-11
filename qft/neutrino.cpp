@@ -18,78 +18,68 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "photon.h"
+#include "neutrino.h"
 
-namespace che {
+namespace qft {
 
-Photon::Photon() : Wave(), energy() {
-
-}
-
-Photon::Photon(std::string name) : Wave(name), energy() {
+Neutrino::Neutrino() : Particle() {
 
 }
 
-Photon::Photon(float wavelength)
-        : Wave(wavelength), energy(wavelength) {
+Neutrino::Neutrino(std::string name) : Particle(name) {
 
 }
 
-Photon::Photon(std::string name, float wavelength)
-        : Wave(name, wavelength), energy(wavelength) {
+Neutrino::Neutrino(float wavelength) : Particle(wavelength) {
+    this->getEnergy().setWavelength(wavelength);
+}
+
+Neutrino::Neutrino(std::string name, float wavelength) : Particle(name) {
+    this->getEnergy().setWavelength(wavelength);
+}
+
+Neutrino::Neutrino(std::string name, const Energy& energy) : Particle(name, energy) {
 
 }
 
-Photon::Photon(std::string name, qft::Energy& energy)
-        : Wave(name), energy(energy) {
+Neutrino::~Neutrino() {
 
 }
 
-Photon::~Photon() {
-
+bool Neutrino::operator==(const Neutrino& peer) const {
+    return (static_cast<const Particle&>(*this) == static_cast<const Particle&>(peer));
 }
 
-bool Photon::operator==(const Photon& peer) const {
-    return (energy == peer.energy);
+Neutrino Neutrino::operator+(const Neutrino& peer) const {
+    return Neutrino("+", (this->getEnergy() + peer.getEnergy()));
 }
 
-Photon Photon::operator+(const Photon& peer) const {
-	qft::Energy total = (energy + peer.getEnergy());
-    return Photon("+", total);
+Neutrino Neutrino::operator-(const Neutrino& peer) const {
+    return Neutrino("-", (this->getEnergy() - peer.getEnergy()));
 }
 
-Photon Photon::operator-(const Photon& peer) const {
-	qft::Energy total = (energy - peer.getEnergy());
-    return Photon("-", total);
+shp::Quantity Neutrino::getWavelength() const {
+    return this->getEnergy().getWavelength();
 }
 
-shp::Quantity Photon::getWavelength() const {
-    return energy.getWavelength();
-}
-
-shp::Point Photon::copy() {
-    Photon fresh(this->getName(), energy);
+shp::Point Neutrino::copy() {
+    Neutrino fresh(this->getName(), this->getEnergy());
 	fresh.setAmplitude(this->getAmplitude());
 	fresh.setGradient(this->getGradient());
-	fresh.setPolarization(this->getPolarization());
-	fresh.setFrequency(this->getFrequency());
-	fresh.setWavelength(this->getWavelength().getValue());
     return fresh;
 }
 
-void Photon::clear() {
-    Wave::clear();
-    energy.clear();
+void Neutrino::clear() {
+    Particle::clear();
     return;
 }
 
-std::string Photon::print() {
+std::string Neutrino::print() {
     std::stringstream result;
     result << "γ:";
-	result << Wave::print() << ",";
-    result << energy.print() << ",sz:";
+	result << Particle::print();
     result << "}";
 	return result.str();
 }
 
-} // namespace che
+} // namespace qft

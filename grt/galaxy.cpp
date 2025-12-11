@@ -18,96 +18,96 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "universe.h"
+#include "galaxy.h"
 
 namespace grt {
 
-Universe::Universe() : Celestial(), galaxies() {
+Galaxy::Galaxy() : Celestial(), stars() {
 
 }
 
-Universe::Universe(std::string name) : Celestial(name), galaxies() {
+Galaxy::Galaxy(std::string name) : Celestial(name), stars() {
 
 }
 
-Universe::Universe(std::string name, const GalaxyArray& galaxies)
-    : Celestial(name), galaxies(galaxies) {
+Galaxy::Galaxy(std::string name, const StarArray& stars)
+        : Celestial(name), stars(stars) {
 
 }
 
-Universe::~Universe() {
+Galaxy::~Galaxy() {
 
 }
 
-bool Universe::operator==(const Universe& peer) const {
-    return (galaxies == peer.galaxies);
+bool Galaxy::operator==(const Galaxy& peer) const {
+    return (stars == peer.stars);
 }
 
-Universe Universe::operator+(const Universe& peer) const {
-    GalaxyArray result(galaxies);
-    result.insert(result.end(), peer.galaxies.begin(), peer.galaxies.end());
-    return Universe("+", result);
+Galaxy Galaxy::operator+(const Galaxy& peer) const {
+    StarArray result(stars);
+    result.insert(result.end(), peer.stars.begin(), peer.stars.end());
+    return Galaxy("+", result);
 }
 
-Universe Universe::operator-(const Universe& peer) const {
-    GalaxyArray result(galaxies);
-    for (GalaxyArray::const_iterator it = peer.galaxies.begin(); it != peer.galaxies.end(); ++it) {
-        GalaxyArray::iterator found = std::find(result.begin(), result.end(), *it);
+Galaxy Galaxy::operator-(const Galaxy& peer) const {
+    StarArray result(stars);
+    for (StarArray::const_iterator it = peer.stars.begin(); it != peer.stars.end(); ++it) {
+        StarArray::iterator found = std::find(result.begin(), result.end(), *it);
         if (found != result.end()) {
             result.erase(found);
         }
     }
-    return Universe("-", result);
+    return Galaxy("-", result);
 }
 
-int Universe::getGalaxyCount() const {
-    return galaxies.size();
+int Galaxy::getStarCount() const {
+    return stars.size();
 }
 
-Galaxy Universe::get(int index) const {
-    Galaxy result;
+Star Galaxy::get(int index) const {
+    Star result;
     if (index < 0) {
         return result;
     }
-    if (index >= static_cast<int>(galaxies.size())) {
+    if (index >= static_cast<int>(stars.size())) {
         return result;
     }
-    return galaxies[index];
+    return stars[index];
 }
 
-void Universe::set(int index, const Galaxy& object) {
+void Galaxy::set(int index, const Star& object) {
     if (index < 0) {
         return;
     }
-    if (index < static_cast<int>(galaxies.size())) {
+    if (index < static_cast<int>(stars.size())) {
         // replace existing element
-        galaxies[index] = object;
-    } else if (index == static_cast<int>(galaxies.size())) {
+        stars[index] = object;
+    } else if (index == static_cast<int>(stars.size())) {
         // append at end
-        galaxies.push_back(object);
+        stars.push_back(object);
     } else {
         // index beyond current size: append at end
-        galaxies.push_back(object);
+        stars.push_back(object);
     }
     return;
 }
 
-Celestial Universe::copy() {
-    Universe fresh(getName(), galaxies);
+Celestial Galaxy::copy() {
+    Galaxy fresh(getName(), stars);
     return fresh;
 }
 
-void Universe::clear() {
+void Galaxy::clear() {
 	Celestial::clear();
-	galaxies.clear();
+	stars.clear();
     return;
 }
 
-std::string Universe::print() {
+std::string Galaxy::print() {
     std::stringstream result;
-    result << "(U:";
+    result << "(G:";
 	result << Celestial::print() << ",sz:";
-	result << galaxies.size() << ")";
+	result << stars.size() << ")";
 	return result.str();
 }
 

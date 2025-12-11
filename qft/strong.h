@@ -18,49 +18,46 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef CHE_PHOTON_H
-#define CHE_PHOTON_H
+#ifndef QFT_STRONG_H
+#define QFT_STRONG_H
 
 #include <string>
 #include <vector>
-#include "../qft/energy.h"
-#include "../shp/wave.h"
+#include "field.h"
+#include "force.h"
 
-namespace che {
+namespace qft {
 
-class Photon : public shp::Wave {
-    qft::Energy energy;
+class Strong : public Force {
+    Field* field;
 public:
     // Constructors
-    Photon();
-    Photon(std::string name);
-    Photon(float wavelength);
-    Photon(std::string name, float wavelength);
-    Photon(std::string name, qft::Energy& energy);
-
-    // Destructors
-    ~Photon();
+    Strong();
+    Strong(std::string name);
+    Strong(Field* field);
+    Strong(std::string name, Field* field);
 
     // Operator overloading
-    bool operator==(const Photon& peer) const;
-    Photon operator+(const Photon& peer) const;
-    Photon operator-(const Photon& peer) const;
+    bool operator==(const Strong& peer) const;
+
+    // Destructors
+    ~Strong();
 
     // Getters
-    qft::Energy getEnergy() const { return energy; }
+    Field getField() const { return field; }
 
     // Setters
-    void setEnergy(const qft::Energy& value) { this->energy = value; }
+    void setField(Field* value) { this->field = value; }
 
     // Additional methods
-    shp::Quantity getWavelength() const;
-    virtual shp::Point copy();
+    bool isOwned() const;
+    virtual Force copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Photon > PhotonArray;
+typedef std::vector<Strong > StrongArray;
 
-} // namespace che
+} // namespace qft
 
-#endif //CHE_PHOTON_H
+#endif //QFT_GRAVITY_H

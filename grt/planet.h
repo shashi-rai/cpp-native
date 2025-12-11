@@ -18,53 +18,53 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef GRT_UNIVERSE_H
-#define GRT_UNIVERSE_H
+#ifndef GRT_PLANET_H
+#define GRT_PLANET_H
 
 #include <string>
 #include <vector>
 #include "celestial.h"
-#include "galaxy.h"
+#include "satellite.h"
 
 namespace grt {
 
-class Universe : public Celestial {
-     GalaxyArray galaxies;
+class Planet : public Celestial {
+    SatelliteArray satellites;
 public:
     // Constructors
-    Universe();
-    Universe(std::string name);
-    Universe(std::string name, const GalaxyArray& objects);
+    Planet();
+    Planet(std::string name);
+    Planet(std::string name, const SatelliteArray& objects);
 
     // Destructors
-    ~Universe();
+    ~Planet();
 
     // Operator overloading
-    bool operator==(const Universe& peer) const;
-    Universe operator+(const Universe& peer) const;
-    Universe operator-(const Universe& peer) const;
+    bool operator==(const Planet& peer) const;
+    Planet operator+(const Planet& peer) const;
+    Planet operator-(const Planet& peer) const;
 
     // Access operator
-    Galaxy& operator()(int x) { return galaxies[x]; }
-    const Galaxy& operator()(int x) const { return galaxies[x]; }
+    Satellite& operator()(int x) { return satellites[x]; }
+    const Satellite& operator()(int x) const { return satellites[x]; }
 
     // Getters
-    GalaxyArray getGalaxies() const { return galaxies; }
+    SatelliteArray getSatellites() const { return satellites; }
 
     // Setters
-    void setGalaxies(const GalaxyArray& objects) { this->galaxies = objects; }
+    void setSatellites(const SatelliteArray& objects) { this->satellites = objects; }
 
     // Additional methods
-    int getGalaxyCount() const;
-    Galaxy get(int index) const;
-    void set(int index, const Galaxy& object);
+    int getSatelliteCount() const;
+    Satellite get(int index) const;
+    void set(int index, const Satellite& object);
     virtual Celestial copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Universe > UniverseArray;
+typedef std::vector<Planet > PlanetArray;
 
 } // namespace grt
 
-#endif //GRT_UNIVERSE_H
+#endif //GRT_PLANET_H

@@ -18,53 +18,46 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef GRT_UNIVERSE_H
-#define GRT_UNIVERSE_H
+#ifndef QFT_ELECTRIC_H
+#define QFT_ELECTRIC_H
 
 #include <string>
 #include <vector>
-#include "celestial.h"
-#include "galaxy.h"
+#include "field.h"
+#include "force.h"
 
-namespace grt {
+namespace qft {
 
-class Universe : public Celestial {
-     GalaxyArray galaxies;
+class Electric : public Force {
+    Field* field;
 public:
     // Constructors
-    Universe();
-    Universe(std::string name);
-    Universe(std::string name, const GalaxyArray& objects);
+    Electric();
+    Electric(std::string name);
+    Electric(Field* field);
+    Electric(std::string name, Field* field);
 
     // Destructors
-    ~Universe();
+    ~Electric();
 
     // Operator overloading
-    bool operator==(const Universe& peer) const;
-    Universe operator+(const Universe& peer) const;
-    Universe operator-(const Universe& peer) const;
-
-    // Access operator
-    Galaxy& operator()(int x) { return galaxies[x]; }
-    const Galaxy& operator()(int x) const { return galaxies[x]; }
+    bool operator==(const Electric& peer) const;
 
     // Getters
-    GalaxyArray getGalaxies() const { return galaxies; }
+    Field getField() const { return field; }
 
     // Setters
-    void setGalaxies(const GalaxyArray& objects) { this->galaxies = objects; }
+    void setField(Field* value) { this->field = value; }
 
     // Additional methods
-    int getGalaxyCount() const;
-    Galaxy get(int index) const;
-    void set(int index, const Galaxy& object);
-    virtual Celestial copy();
+    bool isOwned() const;
+    virtual Force copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Universe > UniverseArray;
+typedef std::vector<Electric > ElectricArray;
 
-} // namespace grt
+} // namespace qft
 
-#endif //GRT_UNIVERSE_H
+#endif //QFT_ELECTRIC_H

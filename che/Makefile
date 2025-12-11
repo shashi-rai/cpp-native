@@ -48,12 +48,10 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/atom.o \
 		$(OBJFOLDR)/bond.o \
 		$(OBJFOLDR)/chain.o \
-		$(OBJFOLDR)/electron.o \
 		$(OBJFOLDR)/molecule.o \
 		$(OBJFOLDR)/nucleus.o \
 		$(OBJFOLDR)/orbital.o \
 		$(OBJFOLDR)/period.o \
-		$(OBJFOLDR)/photon.o \
 		$(OBJFOLDR)/polymer.o \
 		$(OBJFOLDR)/reaction.o \
 		$(OBJFOLDR)/ring.o
@@ -61,12 +59,10 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/atom.o \
 		$(OBJFOLDR)/bond.o \
 		$(OBJFOLDR)/chain.o \
-		$(OBJFOLDR)/electron.o \
 		$(OBJFOLDR)/molecule.o \
 		$(OBJFOLDR)/nucleus.o \
 		$(OBJFOLDR)/orbital.o \
 		$(OBJFOLDR)/period.o \
-		$(OBJFOLDR)/photon.o \
 		$(OBJFOLDR)/polymer.o \
 		$(OBJFOLDR)/reaction.o \
 		$(OBJFOLDR)/ring.o
@@ -80,9 +76,6 @@ $(OBJFOLDR)/bond.o: bond.cpp
 $(OBJFOLDR)/chain.o: chain.cpp
 	$(CPPTOOL) -c chain.cpp -o $(OBJFOLDR)/chain.o $(CXXFLAGS)
 
-$(OBJFOLDR)/electron.o: electron.cpp
-	$(CPPTOOL) -c electron.cpp -o $(OBJFOLDR)/electron.o $(CXXFLAGS)
-
 $(OBJFOLDR)/molecule.o: molecule.cpp
 	$(CPPTOOL) -c molecule.cpp -o $(OBJFOLDR)/molecule.o $(CXXFLAGS)
 
@@ -94,9 +87,6 @@ $(OBJFOLDR)/orbital.o: orbital.cpp
 
 $(OBJFOLDR)/period.o: period.cpp
 	$(CPPTOOL) -c period.cpp -o $(OBJFOLDR)/period.o $(CXXFLAGS)
-
-$(OBJFOLDR)/photon.o: photon.cpp
-	$(CPPTOOL) -c photon.cpp -o $(OBJFOLDR)/photon.o $(CXXFLAGS)
 
 $(OBJFOLDR)/polymer.o: polymer.cpp
 	$(CPPTOOL) -c polymer.cpp -o $(OBJFOLDR)/polymer.o $(CXXFLAGS)
