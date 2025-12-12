@@ -94,33 +94,28 @@ bool Quantity::operator==(const Quantity& peer) const {
 }
 
 Quantity Quantity::operator+(const Quantity& peer) const {
-    float result = (value + peer.value);
-    Unit newunit = unit;
-    return Quantity(result, scaling, newunit);
+    float result = (value + (peer.value / std::pow(10, (scaling - peer.scaling))));
+    return Quantity(result, scaling, getUnit());
 }
 
 Quantity Quantity::operator-(const Quantity& peer) const {
-    float result = (value - peer.value);
-    Unit newunit = unit;
-    return Quantity(result, scaling, newunit);
+    float result = (value - (peer.value / std::pow(10, (scaling - peer.scaling))));
+    return Quantity(result, scaling, getUnit());
 }
 
 Quantity Quantity::operator*(const Quantity& peer) const {
     float result = (value * peer.value);
-    Unit newunit = unit;
-    return Quantity(result, scaling, newunit);
+    return Quantity(result, (scaling + peer.scaling), getUnit());
 }
 
 Quantity Quantity::operator/(const Quantity& peer) const {
     float result = (value / peer.value);
-    Unit newunit = unit;
-    return Quantity(result, scaling, newunit);
+    return Quantity(result, (scaling - peer.scaling), getUnit());
 }
 
 Quantity Quantity::operator%(const Quantity& peer) const {
-    float result = fmod(value, peer.value);
-    Unit newunit = unit;
-    return Quantity(result, scaling, newunit);
+    float result = fmod(value, (peer.value / std::pow(10, (scaling - peer.scaling))));
+    return Quantity(result, scaling, getUnit());
 }
 
 Quantity Quantity::getInverse() const {

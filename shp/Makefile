@@ -60,6 +60,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/planar.o \
 		$(OBJFOLDR)/point.o \
 		$(OBJFOLDR)/polygon.o \
+		$(OBJFOLDR)/potential.o \
 		$(OBJFOLDR)/quantity.o \
 		$(OBJFOLDR)/shape.o \
 		$(OBJFOLDR)/shell.o \
@@ -82,6 +83,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/planar.o \
 		$(OBJFOLDR)/point.o \
 		$(OBJFOLDR)/polygon.o \
+		$(OBJFOLDR)/potential.o \
 		$(OBJFOLDR)/quantity.o \
 		$(OBJFOLDR)/shape.o \
 		$(OBJFOLDR)/shell.o \
@@ -133,6 +135,9 @@ $(OBJFOLDR)/point.o: point.cpp
 
 $(OBJFOLDR)/polygon.o: polygon.cpp
 	$(CPPTOOL) -c polygon.cpp -o $(OBJFOLDR)/polygon.o $(CXXFLAGS)
+
+$(OBJFOLDR)/potential.o: potential.cpp
+	$(CPPTOOL) -c potential.cpp -o $(OBJFOLDR)/potential.o $(CXXFLAGS)
 
 $(OBJFOLDR)/quantity.o: quantity.cpp
 	$(CPPTOOL) -c quantity.cpp -o $(OBJFOLDR)/quantity.o $(CXXFLAGS)

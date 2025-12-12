@@ -64,7 +64,7 @@ public:
     Unit getUnit()const { return unit; }
 
     // Setters
-    void setValue(const int amount) { this->value = amount; }
+    void setValue(const float amount) { this->value = amount; }
     void setScaling(const short int factor) { this->scaling = factor; }
     void setUnit(const Unit& object) { this->unit = object; }
 
