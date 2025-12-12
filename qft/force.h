@@ -50,11 +50,15 @@ public:
     Force(const float magnitude, short int scaling, const std::string unit);
     Force(const float magnitude, const float direction);
     Force(const float magnitude, const float direction, const std::string unit);
+    Force(const float magnitude, const float direction, short int scaling);
     Force(const float magnitude, const float direction, short int scaling, const std::string unit);
     Force(const shp::Quantity& magnitude, const shp::Direction& direction);
     Force(std::string name, const shp::Unit& unit);
+    Force(std::string name, const float magnitude);
+    Force(std::string name, const float magnitude, const shp::Unit& unit);
     Force(std::string name, const float magnitude, const float direction);
     Force(std::string name, const float magnitude, const float direction, const std::string unit);
+    Force(std::string name, const float magnitude, const float direction, short int scaling);
     Force(std::string name, const float magnitude, const float direction, short int scaling, const std::string unit);
     Force(std::string name, const shp::Quantity& magnitude, const shp::Direction& direction);
 
@@ -81,14 +85,14 @@ public:
     void setDirection(const shp::Direction& direction) { this->direction = direction; }
 
     // Additional methods
-    float getTotal() const;
+    shp::Quantity getTotal() const;
     void adjustScaling();
     virtual Force copy();
     virtual void clear();
     virtual std::string print();
     float getComponent(float change) const;
 protected:
-    std::complex<float> toComplex(float change);
+    std::complex<float> toComplex(float coefficient, float change);
 
 public:
     static const std::string UNIT;

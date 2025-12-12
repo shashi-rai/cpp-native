@@ -40,18 +40,28 @@ class Field : public shp::Cellular {
 public:
     // Constructors
     Field();
+    Field(const float spin);
     Field(Spin& spin);
     Field(std::string name);
+    Field(std::string name, const float spin);
     Field(std::string name, Spin& spin);
+    Field(const float mass, const float charge);
     Field(Mass& mass, Charge& charge);
+    Field(std::string name, const float mass, const float charge);
     Field(std::string name, Mass& mass, Charge& charge);
+    Field(const float spin, const float mass, const float charge);
     Field(Spin& spin, Mass& mass, Charge& charge);
+    Field(std::string name, const float spin, const float mass, const float charge);
     Field(std::string name, Spin& spin, Mass& mass, Charge& charge);
     Field(shp::Shape* physical);
     Field(std::string name, shp::Shape* physical);
+    Field(std::string name, shp::Shape* physical, const float spin);
     Field(std::string name, shp::Shape* physical, Spin& spin);
+    Field(std::string name, shp::Shape* physical, const float spin, const float mass);
     Field(std::string name, shp::Shape* physical, Spin& spin, Mass& mass);
+    Field(shp::Shape* physical, const float spin, const float mass, const float charge);
     Field(shp::Shape* physical, Spin& spin, Mass& mass, Charge& charge);
+    Field(std::string name, shp::Shape* physical, const float spin, const float mass, const float charge);
     Field(std::string name, shp::Shape* physical, Spin& spin, Mass& mass, Charge& charge);
 
     // Destructors

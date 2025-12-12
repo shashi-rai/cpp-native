@@ -38,6 +38,65 @@ Strong::Strong(std::string name, Field* field) : Force(name) {
     setField(field);
 }
 
+Strong::Strong(const float magnitude) : Force(magnitude) {
+    setField(nullptr);
+}
+
+Strong::Strong(const float magnitude, Field* field) : Force(magnitude) {
+    setField(field);
+}
+
+Strong::Strong(const float magnitude, const float direction)
+        : Force(magnitude, direction) {
+    setField(nullptr);
+}
+
+Strong::Strong(const float magnitude, const float direction, Field* field)
+        : Force(magnitude, direction) {
+    setField(field);
+}
+
+Strong::Strong(const float magnitude, const float direction, short int scaling)
+        : Force(magnitude, direction, scaling) {
+    setField(nullptr);
+}
+
+Strong::Strong(const float magnitude, const float direction, short int scaling, Field* field)
+        : Force(magnitude, direction, scaling) {
+    setField(field);
+}
+
+Strong::Strong(std::string name, const float magnitude) : Force(name, magnitude) {
+    setField(nullptr);
+}
+
+Strong::Strong(std::string name, const float magnitude, Field* field) :
+        Force(name, magnitude) {
+    setField(field);
+}
+
+Strong::Strong(std::string name, const float magnitude, const float direction) :
+        Force(name, magnitude, direction) {
+    setField(nullptr);
+}
+
+Strong::Strong(std::string name, const float magnitude, const float direction, Field* field) :
+        Force(name, magnitude, direction) {
+    setField(field);
+}
+
+Strong::Strong(std::string name, const float magnitude, const float direction,
+        short int scaling)
+        : Force(name, magnitude, direction, scaling) {
+    setField(nullptr);
+}
+
+Strong::Strong(std::string name, const float magnitude, const float direction,
+        short int scaling, Field* field)
+        : Force(name, magnitude, direction, scaling) {
+    setField(field);
+}
+
 Strong::~Strong() {
     setField(nullptr);
 }
@@ -64,10 +123,8 @@ void Strong::clear() {
 
 std::string Strong::print() {
     std::stringstream result;
-    result << "(";
-    result << Force::print() << ",f:";
+    result << Force::print() << ",";
     result << (field != nullptr ? field->print() : "");
-    result << ")";
 	return result.str();
 }
 

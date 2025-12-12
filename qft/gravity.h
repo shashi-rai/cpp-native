@@ -36,6 +36,18 @@ public:
     Gravity(std::string name);
     Gravity(Field* field);
     Gravity(std::string name, Field* field);
+    Gravity(const float magnitude);
+    Gravity(const float magnitude, Field* field);
+    Gravity(const float magnitude, const float direction);
+    Gravity(const float magnitude, const float direction, Field* field);
+    Gravity(const float magnitude, const float direction, short int scaling);
+    Gravity(const float magnitude, const float direction, short int scaling, Field* field);
+    Gravity(std::string name, const float magnitude);
+    Gravity(std::string name, const float magnitude, Field* field);
+    Gravity(std::string name, const float magnitude, const float direction);
+    Gravity(std::string name, const float magnitude, const float direction, Field* field);
+    Gravity(std::string name, const float magnitude, const float direction, short int scaling);
+    Gravity(std::string name, const float magnitude, const float direction, short int scaling, Field* field);
 
     // Operator overloading
     bool operator==(const Gravity& peer) const;

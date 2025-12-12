@@ -54,14 +54,20 @@ Force::Force(const float magnitude, short int scaling, const std::string unit)
 
 }
 
-Force::Force(const float magnitude, const float direction) : name(),
-        magnitude(magnitude, shp::Unit::getDerivedSymbol(shp::Unit::FORCE)),
+Force::Force(const float magnitude, const float direction)
+        : name(), magnitude(magnitude, shp::Unit::getDerivedSymbol(shp::Unit::FORCE)),
         direction(direction) {
 
 }
 
 Force::Force(const float magnitude, const float direction, const std::string unit)
         : name(),  magnitude(magnitude, unit), direction(direction) {
+
+}
+
+Force::Force(const float magnitude, const float direction, short int scaling)
+        : name(), magnitude(magnitude, scaling, shp::Unit::getDerivedSymbol(shp::Unit::FORCE)),
+        direction(direction) {
 
 }
 
@@ -81,6 +87,19 @@ Force::Force(std::string name, const shp::Unit& unit)
 
 }
 
+Force::Force(std::string name, const float magnitude)
+        : name(name),
+        magnitude(magnitude, shp::Unit::getDerivedSymbol(shp::Unit::FORCE)),
+        direction() {
+
+}
+
+Force::Force(std::string name, const float magnitude, const shp::Unit& unit)
+        : name(name), magnitude(magnitude, unit),
+        direction() {
+
+}
+
 Force::Force(std::string name, const float magnitude, const float direction)
         : name(name),
         magnitude(magnitude, shp::Unit::getDerivedSymbol(shp::Unit::FORCE)),
@@ -91,6 +110,14 @@ Force::Force(std::string name, const float magnitude, const float direction)
 Force::Force(std::string name, const float magnitude, const float direction,
         const std::string unit)
         : name(name), magnitude(magnitude, unit), direction(direction) {
+
+}
+
+Force::Force(std::string name, const float magnitude, const float direction,
+        short int scaling)
+        : name(name),
+        magnitude(magnitude, scaling, shp::Unit::getDerivedSymbol(shp::Unit::FORCE)),
+        direction(direction) {
 
 }
 
@@ -115,38 +142,50 @@ bool Force::operator==(const Force& peer) const {
 
 Force Force::operator+(const Force& peer) const {
     Force self = *this, other = peer;
-    std::complex<float> ap1 = self.toComplex(direction.toRadians()),
-        ap2 = other.toComplex(peer.direction.toRadians());
+    std::complex<float>
+		ap1 = self.toComplex(self.magnitude.getValue(), direction.toRadians()),
+        ap2 = other.toComplex((other.magnitude.getValue() / std::pow(10, (magnitude.getScaling() - other.magnitude.getScaling()))),
+			other.direction.toRadians());
     std::complex<float> a_phasor = ap1 + ap2;
-    return Force("+", std::abs(a_phasor), std::arg(a_phasor));
+    return Force("+", shp::Quantity(std::abs(a_phasor), magnitude.getScaling()),
+		shp::Direction(std::arg(a_phasor)));
 }
 
 Force Force::operator-(const Force& peer) const {
     Force self = *this, other = peer;
-    std::complex<float> ap1 = self.toComplex(direction.toRadians()),
-        ap2 = other.toComplex(peer.direction.toRadians());
+    std::complex<float>
+		ap1 = self.toComplex(self.magnitude.getValue(), direction.toRadians()),
+        ap2 = other.toComplex((other.magnitude.getValue() / std::pow(10, (magnitude.getScaling() - other.magnitude.getScaling()))),
+			other.direction.toRadians());
     std::complex<float> a_phasor = ap1 - ap2;
-    return Force("-", std::abs(a_phasor), std::arg(a_phasor));
+    return Force("-", shp::Quantity(std::abs(a_phasor), magnitude.getScaling()),
+		shp::Direction(std::arg(a_phasor)));
 }
 
 Force Force::operator*(const Force& peer) const {
     Force self = *this, other = peer;
-    std::complex<float> ap1 = self.toComplex(direction.toRadians()),
-        ap2 = other.toComplex(peer.direction.toRadians());
+    std::complex<float>
+		ap1 = self.toComplex(self.magnitude.getValue(), direction.toRadians()),
+        ap2 = other.toComplex(other.magnitude.getValue(), other.direction.toRadians());
     std::complex<float> a_phasor = ap1 * ap2;
-    return Force("*", std::abs(a_phasor), std::arg(a_phasor));
+    return Force("*", shp::Quantity(std::abs(a_phasor),
+			(magnitude.getScaling() + peer.magnitude.getScaling())),
+		shp::Direction(std::arg(a_phasor)));
 }
 
 Force Force::operator/(const Force& peer) const {
     Force self = *this, other = peer;
-    std::complex<float> ap1 = self.toComplex(direction.toRadians()),
-        ap2 = other.toComplex(peer.direction.toRadians());
+    std::complex<float>
+		ap1 = self.toComplex(self.magnitude.getValue(), direction.toRadians()),
+        ap2 = other.toComplex(other.magnitude.getValue(), other.direction.toRadians());
     std::complex<float> a_phasor = ap1 / ap2;
-    return Force("/", std::abs(a_phasor), std::arg(a_phasor));
+    return Force("/", shp::Quantity(std::abs(a_phasor),
+			(magnitude.getScaling() - peer.magnitude.getScaling())),
+		shp::Direction(std::arg(a_phasor)));
 }
 
-float Force::getTotal() const {
-    float result = (magnitude.getValue() * cos(direction.toRadians()));
+shp::Quantity Force::getTotal() const {
+    shp::Quantity result(magnitude.getValue(), magnitude.getScaling(), getUnit());
     return result;
 }
 
@@ -168,10 +207,10 @@ void Force::clear() {
 
 std::string Force::print() {
     std::stringstream result;
-    result << "{f:";
+    result << "𝐹:";
 	result << name << ",";
     result << magnitude.print() << ",";
-	result << direction.print() << "}";
+	result << direction.print();
 	return result.str();
 }
 
@@ -179,10 +218,10 @@ float Force::getComponent(float change) const {
     return magnitude.getValue() * cos(direction.toRadians() + change);
 }
 
-std::complex<float> Force::toComplex(float change) {
+std::complex<float> Force::toComplex(float coefficient, float change) {
     return std::complex<float>(
-        magnitude.getValue() * std::cos(change),
-        magnitude.getValue() * std::sin(change));
+        coefficient * std::cos(change),
+        coefficient * std::sin(change));
 }
 
 } // namespace qft

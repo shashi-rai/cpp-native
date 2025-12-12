@@ -27,6 +27,11 @@ Field::Field()
     setPhysical(nullptr);
 }
 
+Field::Field(const float spin)
+        : Cellular(), defaultSpin(spin), defaultMass(), defaultCharge() {
+    setPhysical(nullptr);
+}
+
 Field::Field(Spin& spin)
         : Cellular(), defaultSpin(spin), defaultMass(), defaultCharge() {
     setPhysical(nullptr);
@@ -37,8 +42,18 @@ Field::Field(std::string name)
     setPhysical(nullptr);
 }
 
+Field::Field(std::string name, const float spin)
+        : Cellular(name), defaultSpin(spin), defaultMass(), defaultCharge() {
+    setPhysical(nullptr);
+}
+
 Field::Field(std::string name, Spin& spin)
         : Cellular(name), defaultSpin(spin), defaultMass(), defaultCharge() {
+    setPhysical(nullptr);
+}
+
+Field::Field(std::string name, const float mass, const float charge)
+        : Cellular(name), defaultSpin(), defaultMass(mass), defaultCharge(charge) {
     setPhysical(nullptr);
 }
 
@@ -47,13 +62,28 @@ Field::Field(std::string name, Mass& mass, Charge& charge)
     setPhysical(nullptr);
 }
 
+Field::Field(const float mass, const float charge)
+        : Cellular(), defaultSpin(), defaultMass(mass), defaultCharge(charge) {
+    setPhysical(nullptr);
+}
+
 Field::Field(Mass& mass, Charge& charge)
         : Cellular(), defaultSpin(), defaultMass(mass), defaultCharge(charge) {
     setPhysical(nullptr);
 }
 
+Field::Field(const float spin, const float mass, const float charge)
+        : Cellular(), defaultSpin(spin), defaultMass(mass), defaultCharge(charge) {
+    setPhysical(nullptr);
+}
+
 Field::Field(Spin& spin, Mass& mass, Charge& charge)
         : Cellular(), defaultSpin(spin), defaultMass(mass), defaultCharge(charge) {
+    setPhysical(nullptr);
+}
+
+Field::Field(std::string name, const float spin, const float mass, const float charge)
+        : Cellular(name), defaultSpin(spin), defaultMass(mass), defaultCharge(charge) {
     setPhysical(nullptr);
 }
 
@@ -72,8 +102,18 @@ Field::Field(std::string name, shp::Shape* physical)
     setPhysical(physical);
 }
 
+Field::Field(std::string name, shp::Shape* physical, const float spin)
+        : Cellular(name), defaultSpin(spin), defaultMass(), defaultCharge() {
+    setPhysical(physical);
+}
+
 Field::Field(std::string name, shp::Shape* physical, Spin& spin)
         : Cellular(name), defaultSpin(spin), defaultMass(), defaultCharge() {
+    setPhysical(physical);
+}
+
+Field::Field(std::string name, shp::Shape* physical, const float spin, const float mass)
+        : Cellular(name), defaultSpin(spin), defaultMass(mass), defaultCharge() {
     setPhysical(physical);
 }
 
@@ -82,8 +122,18 @@ Field::Field(std::string name, shp::Shape* physical, Spin& spin, Mass& mass)
     setPhysical(physical);
 }
 
+Field::Field(shp::Shape* physical, const float spin, const float mass, const float charge)
+        : Cellular(), defaultSpin(spin), defaultMass(mass), defaultCharge(charge) {
+    setPhysical(physical);
+}
+
 Field::Field(shp::Shape* physical, Spin& spin, Mass& mass, Charge& charge)
         : Cellular(), defaultSpin(spin), defaultMass(mass), defaultCharge(charge) {
+    setPhysical(physical);
+}
+
+Field::Field(std::string name, shp::Shape* physical, const float spin, const float mass, const float charge)
+        : Cellular(name), defaultSpin(spin), defaultMass(mass), defaultCharge(charge) {
     setPhysical(physical);
 }
 
@@ -168,11 +218,11 @@ void Field::clear() {
 
 std::string Field::print() {
     std::stringstream result;
-    result << "[";
+    result << "∇";
     result << Cellular::print() << ",";
     result << defaultSpin.print() << ",";
     result << defaultMass.print() << ",";
-    result << defaultCharge.print() << "]";
+    result << defaultCharge.print();
 	return result.str();
 }
 

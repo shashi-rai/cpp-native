@@ -36,6 +36,18 @@ public:
     Weak(std::string name);
     Weak(Field* field);
     Weak(std::string name, Field* field);
+    Weak(const float magnitude);
+    Weak(const float magnitude, Field* field);
+    Weak(const float magnitude, const float direction);
+    Weak(const float magnitude, const float direction, Field* field);
+    Weak(const float magnitude, const float direction, short int scaling);
+    Weak(const float magnitude, const float direction, short int scaling, Field* field);
+    Weak(std::string name, const float magnitude);
+    Weak(std::string name, const float magnitude, Field* field);
+    Weak(std::string name, const float magnitude, const float direction);
+    Weak(std::string name, const float magnitude, const float direction, Field* field);
+    Weak(std::string name, const float magnitude, const float direction, short int scaling);
+    Weak(std::string name, const float magnitude, const float direction, short int scaling, Field* field);
 
     // Operator overloading
     bool operator==(const Weak& peer) const;

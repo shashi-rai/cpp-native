@@ -36,6 +36,18 @@ public:
     Electric(std::string name);
     Electric(Field* field);
     Electric(std::string name, Field* field);
+    Electric(const float magnitude);
+    Electric(const float magnitude, Field* field);
+    Electric(const float magnitude, const float direction);
+    Electric(const float magnitude, const float direction, Field* field);
+    Electric(const float magnitude, const float direction, short int scaling);
+    Electric(const float magnitude, const float direction, short int scaling, Field* field);
+    Electric(std::string name, const float magnitude);
+    Electric(std::string name, const float magnitude, Field* field);
+    Electric(std::string name, const float magnitude, const float direction);
+    Electric(std::string name, const float magnitude, const float direction, Field* field);
+    Electric(std::string name, const float magnitude, const float direction, short int scaling);
+    Electric(std::string name, const float magnitude, const float direction, short int scaling, Field* field);
 
     // Destructors
     ~Electric();

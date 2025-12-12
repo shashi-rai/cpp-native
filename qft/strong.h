@@ -36,6 +36,18 @@ public:
     Strong(std::string name);
     Strong(Field* field);
     Strong(std::string name, Field* field);
+    Strong(const float magnitude);
+    Strong(const float magnitude, Field* field);
+    Strong(const float magnitude, const float direction);
+    Strong(const float magnitude, const float direction, Field* field);
+    Strong(const float magnitude, const float direction, short int scaling);
+    Strong(const float magnitude, const float direction, short int scaling, Field* field);
+    Strong(std::string name, const float magnitude);
+    Strong(std::string name, const float magnitude, Field* field);
+    Strong(std::string name, const float magnitude, const float direction);
+    Strong(std::string name, const float magnitude, const float direction, Field* field);
+    Strong(std::string name, const float magnitude, const float direction, short int scaling);
+    Strong(std::string name, const float magnitude, const float direction, short int scaling, Field* field);
 
     // Operator overloading
     bool operator==(const Strong& peer) const;

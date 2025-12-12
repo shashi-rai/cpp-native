@@ -70,7 +70,7 @@ public:
     void setArea(const shp::Area& amount) { this->area = amount; }
 
     // Additional methods
-    float getTotal() const;
+    shp::Quantity getTotal() const;
     Density getDensity(const float volume) const;
     virtual Pressure copy();
     virtual void clear();

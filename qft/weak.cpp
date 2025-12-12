@@ -38,6 +38,66 @@ Weak::Weak(std::string name, Field* field) : Force(name) {
     setField(field);
 }
 
+Weak::Weak(const float magnitude) : Force(magnitude) {
+    setField(nullptr);
+}
+
+Weak::Weak(const float magnitude, Field* field) : Force(magnitude) {
+    setField(field);
+}
+
+Weak::Weak(const float magnitude, const float direction)
+        : Force(magnitude, direction) {
+    setField(nullptr);
+}
+
+Weak::Weak(const float magnitude, const float direction, Field* field)
+        : Force(magnitude, direction) {
+    setField(field);
+}
+
+Weak::Weak(const float magnitude, const float direction, short int scaling)
+        : Force(magnitude, direction, scaling) {
+    setField(nullptr);
+}
+
+Weak::Weak(const float magnitude, const float direction, short int scaling, Field* field)
+        : Force(magnitude, direction, scaling) {
+    setField(field);
+}
+
+Weak::Weak(std::string name, const float magnitude)
+        : Force(name, magnitude) {
+    setField(nullptr);
+}
+
+Weak::Weak(std::string name, const float magnitude, Field* field)
+        : Force(name, magnitude) {
+    setField(field);
+}
+
+Weak::Weak(std::string name, const float magnitude, const float direction)
+        : Force(name, magnitude, direction) {
+    setField(nullptr);
+}
+
+Weak::Weak(std::string name, const float magnitude, const float direction, Field* field)
+        : Force(name, magnitude, direction) {
+    setField(field);
+}
+
+Weak::Weak(std::string name, const float magnitude, const float direction,
+        short int scaling)
+        : Force(name, magnitude, direction, scaling) {
+    setField(nullptr);
+}
+
+Weak::Weak(std::string name, const float magnitude, const float direction,
+        short int scaling, Field* field)
+        : Force(name, magnitude, direction, scaling) {
+    setField(field);
+}
+
 Weak::~Weak() {
     setField(nullptr);
 }
@@ -64,10 +124,8 @@ void Weak::clear() {
 
 std::string Weak::print() {
     std::stringstream result;
-    result << "(";
-    result << Force::print() << ",f:";
+    result << Force::print() << ",";
     result << (field != nullptr ? field->print() : "");
-    result << ")";
 	return result.str();
 }
 
