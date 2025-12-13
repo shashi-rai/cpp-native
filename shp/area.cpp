@@ -22,9 +22,12 @@
 
 namespace shp {
 
-const std::string Area::UNIT = "m";     // System International
+const std::string Area::UNIT = "m";         // System International
+const short int Area::SCALING_FACTOR = 2;   // Mathematical Opertor
 
-Area::Area() : length(UNIT), breadth(UNIT) {
+Area::Area()
+        : length(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+        breadth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
@@ -38,7 +41,8 @@ Area::Area(short int scaling, const std::string unit)
 }
 
 Area::Area(const float length)
-        : length(length, UNIT), breadth(length, UNIT) {
+        : length(length, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+        breadth(length, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
@@ -53,12 +57,19 @@ Area::Area(const float length, short int scaling, const std::string unit)
 }
 
 Area::Area(const float length, const float breadth)
-        : length(length, UNIT), breadth(breadth, UNIT) {
+        : length(length, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+        breadth(breadth, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
 Area::Area(const float length, const float breadth, const std::string unit)
         : length(length, unit), breadth(breadth, unit) {
+
+}
+
+Area::Area(const float length, const float breadth, short int scaling)
+        : length(length, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+        breadth(breadth, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
@@ -86,46 +97,57 @@ bool Area::operator==(const Area& peer) const {
 }
 
 Area Area::operator+(const Area& peer) const {
-    float realarea = (getTotal() + peer.getTotal());
-    std::complex<float> complexarea(realarea, 0.0);
+    Quantity realarea = (getTotal() + peer.getTotal());
+    std::complex<float> complexarea(realarea.getValue(), 0.0);
     std::complex<float> part = std::sqrt(complexarea);
-    return Area(std::abs(part), std::abs(part));
+    realarea.setScaling(realarea.getScaling() / SCALING_FACTOR);
+    return Area(Quantity(std::abs(part), realarea.getScaling(), getUnit()),
+        Quantity(std::abs(part), realarea.getScaling(), getUnit()));
 }
 
 Area Area::operator-(const Area& peer) const {
-    float realarea = (getTotal() - peer.getTotal());
-    std::complex<float> complexarea(realarea, 0.0);
+    Quantity realarea = (getTotal() - peer.getTotal());
+    std::complex<float> complexarea(realarea.getValue(), 0.0);
     std::complex<float> part = std::sqrt(complexarea);
-    return Area(std::abs(part), std::abs(part));
+    realarea.setScaling(realarea.getScaling() / SCALING_FACTOR);
+    return Area(Quantity(std::abs(part), realarea.getScaling(), getUnit()),
+        Quantity(std::abs(part), realarea.getScaling(), getUnit()));
 }
 
 Area Area::operator*(const Area& peer) const {
-    float realarea = (getTotal() * peer.getTotal());
-    std::complex<float> complexarea(realarea, 0.0);
+    Quantity realarea = (getTotal() * peer.getTotal());
+    std::complex<float> complexarea(realarea.getValue(), 0.0);
     std::complex<float> part = std::sqrt(complexarea);
-    return Area(std::abs(part), std::abs(part));
+    realarea.setScaling(realarea.getScaling() / SCALING_FACTOR);
+    return Area(Quantity(std::abs(part), realarea.getScaling(), getUnit()),
+        Quantity(std::abs(part), realarea.getScaling(), getUnit()));
 }
 
 Area Area::operator/(const Area& peer) const {
-    float realarea = (getTotal() / peer.getTotal());
-    std::complex<float> complexarea(realarea, 0.0);
+    Quantity realarea = (getTotal() / peer.getTotal());
+    std::complex<float> complexarea(realarea.getValue(), 0.0);
     std::complex<float> part = std::sqrt(complexarea);
-    return Area(std::abs(part), std::abs(part));
+    realarea.setScaling(realarea.getScaling() / SCALING_FACTOR);
+    return Area(Quantity(std::abs(part), realarea.getScaling(), getUnit()),
+        Quantity(std::abs(part), realarea.getScaling(), getUnit()));
 }
 
 Area Area::operator%(const Area& peer) const {
-    float realarea = (fmod(getTotal(), peer.getTotal()));
-    std::complex<float> complexarea(realarea, 0.0);
+    Quantity realarea = (fmod(getTotal().getValue(), peer.getTotal().getValue()));
+    std::complex<float> complexarea(realarea.getValue(), 0.0);
     std::complex<float> part = std::sqrt(complexarea);
-    return Area(std::abs(part), std::abs(part));
+    realarea.setScaling(realarea.getScaling() / SCALING_FACTOR);
+    return Area(Quantity(std::abs(part), realarea.getScaling(), getUnit()),
+        Quantity(std::abs(part), realarea.getScaling(), getUnit()));
 }
 
-float Area::getTotal() const {
-    return (length.getValue() * breadth.getValue());
+Quantity Area::getTotal() const {
+    Quantity area = (length * breadth);
+    return Quantity(area.getValue(), area.getScaling(), area.getUnit());
 }
 
 std::string Area::getUnit() const {
-    return length.getUnit().getName() + "^2";
+    return (length.getUnit().getName());
 }
 
 Area Area::copy() {
@@ -141,14 +163,15 @@ void Area::clear() {
 
 std::string Area::print() {
     std::stringstream result;
-    result << "(l:";
+    result << "l:";
     result << length.print() << ",b:";
-    result << breadth.print() << ")";
+    result << breadth.print();
 	return result.str();
 }
 
-float Area::getComponent(float phase) const {
-    return getTotal() * cos(phase);
+Quantity Area::getComponent(float phase) const {
+    Quantity area = getTotal();
+    return Quantity((area.getValue() * cos(phase)), area.getScaling(), area.getUnit());
 }
 
 } // namespace shp

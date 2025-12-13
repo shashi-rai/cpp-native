@@ -145,38 +145,38 @@ bool Density::operator==(const Density& peer) const {
 }
 
 Density Density::operator+(const Density& peer) const {
-	float newmagnitude = (magnitude.getValue() + peer.magnitude.getValue());
-    float newvolume = (volume.getTotal() + peer.volume.getTotal());
-    return Density("+", newmagnitude, newvolume, magnitude.getUnit().getName());
+	shp::Quantity newmagnitude = (magnitude + peer.magnitude);
+    shp::Quantity newvolume = (volume.getTotal() + peer.volume.getTotal());
+    return Density("+", newmagnitude, newvolume);
 }
 
 Density Density::operator-(const Density& peer) const {
-	float newmagnitude = (magnitude.getValue() - peer.magnitude.getValue());
-    float newvolume = (volume.getTotal() - peer.volume.getTotal());
-    return Density("-", newmagnitude, newvolume, magnitude.getUnit().getName());
+	shp::Quantity newmagnitude = (magnitude - peer.magnitude);
+    shp::Quantity newvolume = (volume.getTotal() - peer.volume.getTotal());
+    return Density("-", newmagnitude, newvolume);
 }
 
 Density Density::operator*(const Density& peer) const {
-	float newmagnitude = (magnitude.getValue() * peer.magnitude.getValue());
-    float newvolume = (volume.getTotal() * peer.volume.getTotal());
-    return Density("*", newmagnitude, newvolume, magnitude.getUnit().getName());
+	shp::Quantity newmagnitude = (magnitude * peer.magnitude);
+    shp::Quantity newvolume = (volume.getTotal() * peer.volume.getTotal());
+    return Density("*", newmagnitude, newvolume);
 }
 
 Density Density::operator/(const Density& peer) const {
-	float newmagnitude = (magnitude.getValue() / peer.magnitude.getValue());
-    float newvolume = (volume.getTotal() / peer.volume.getTotal());
-    return Density("/", newmagnitude, newvolume, magnitude.getUnit().getName());
+	shp::Quantity newmagnitude = (magnitude / peer.magnitude);
+    shp::Quantity newvolume = (volume.getTotal() / peer.volume.getTotal());
+    return Density("/", newmagnitude, newvolume);
 }
 
 Density Density::operator%(const Density& peer) const {
-	float newmagnitude = fmod(magnitude.getValue(), peer.magnitude.getValue());
-    float newvolume = fmod(volume.getTotal(), peer.volume.getTotal());
-    return Density("%", newmagnitude, newvolume, magnitude.getUnit().getName());
+	shp::Quantity newmagnitude = (magnitude % peer.magnitude);
+    shp::Quantity newvolume = (volume.getTotal() % peer.volume.getTotal());
+    return Density("%", newmagnitude, newvolume);
 }
 
-float Density::getTotal() const {
-    float result = (magnitude.getValue() / volume.getTotal());
-    return result;
+shp::Quantity Density::getTotal() const {
+    shp::Quantity density = (magnitude / volume.getTotal());
+    return shp::Quantity(density.getValue(), density.getScaling(), density.getUnit());
 }
 
 Density Density::copy() {
@@ -196,14 +196,15 @@ std::string Density::print() {
     std::stringstream result;
     result << "[ρ:";
 	result << name << ",";
-    result << magnitude.print() << ",";
-	result << volume.print();
-    result << unit.print() << "]";
+    result << magnitude.print();
+	result << unit.print() << ",";
+	result << volume.print() << "]";
 	return result.str();
 }
 
-float Density::getComponent(float phase) const {
-    return getTotal() * cos(phase);
+shp::Quantity Density::getComponent(float phase) const {
+	shp::Quantity density = getTotal();
+    return shp::Quantity(getTotal().getValue() * cos(phase), density.getScaling(), density.getUnit());
 }
 
 } // namespace qft

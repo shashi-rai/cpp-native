@@ -19,7 +19,6 @@
 // THE SOFTWARE.
 
 #include "distance.h"
-#include "quantity.h"
 
 namespace shp {
 
@@ -27,6 +26,16 @@ const std::string Distance::UNIT = "m";     // System International
 
 Distance::Distance()
     : magnitude(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
+
+}
+
+Distance::Distance(const std::string unit)
+    : magnitude(unit) {
+
+}
+
+Distance::Distance(const Unit& unit)
+    : magnitude(unit) {
 
 }
 
@@ -40,7 +49,22 @@ Distance::Distance(const float magnitude, const std::string unit)
 
 }
 
+Distance::Distance(const float magnitude, const Unit& unit)
+    : magnitude(magnitude, unit) {
+
+}
+
+Distance::Distance(const float magnitude, short int scaling)
+    : magnitude(magnitude, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
+
+}
+
 Distance::Distance(const float magnitude, short int scaling, const std::string unit)
+    : magnitude(magnitude, scaling, unit) {
+
+}
+
+Distance::Distance(const float magnitude, short int scaling, const Unit& unit)
     : magnitude(magnitude, scaling, unit) {
 
 }
@@ -62,23 +86,27 @@ Distance Distance::operator+(const Distance& peer) const {
 }
 
 Distance Distance::operator-(const Distance& peer) const {
-return Distance(magnitude - peer.magnitude);
+    return Distance(magnitude - peer.magnitude);
 }
 
 Distance Distance::operator*(const Distance& peer) const {
-return Distance(magnitude * peer.magnitude);
+    return Distance(magnitude * peer.magnitude);
 }
 
 Distance Distance::operator/(const Distance& peer) const {
-return Distance(magnitude / peer.magnitude);
+    return Distance(magnitude / peer.magnitude);
 }
 
 Distance Distance::operator%(const Distance& peer) const {
-return Distance(magnitude % peer.magnitude);
+    return Distance(magnitude % peer.magnitude);
 }
 
-float Distance::getTotal() const {
-    return magnitude.getValue();
+Quantity Distance::getTotal() const {
+    return Quantity(magnitude.getValue(), magnitude.getScaling(), magnitude.getUnit());
+}
+
+short int Distance::getScaling() const {
+    return magnitude.getScaling();
 }
 
 std::string Distance::getUnit() const {
@@ -86,7 +114,7 @@ std::string Distance::getUnit() const {
 }
 
 Distance Distance::copy() {
-    Distance fresh(magnitude);
+    Distance fresh(magnitude.getValue(), magnitude.getScaling(), magnitude.getUnit());
     return fresh;
 }
 
@@ -97,13 +125,14 @@ void Distance::clear() {
 
 std::string Distance::print() {
     std::stringstream result;
-    result << "(l:";
-    result << magnitude.print() << ")";
+    result << "l:";
+    result << magnitude.print();
 	return result.str();
 }
 
-float Distance::getComponent(float phase) const {
-    return getTotal() * cos(phase);
+Quantity Distance::getComponent(float phase) const {
+    Quantity length = getTotal();
+    return Quantity((length.getValue() * cos(phase)), length.getScaling(), length.getUnit());
 }
 
 } // namespace shp

@@ -22,17 +22,29 @@
 
 namespace shp {
 
-Axis::Axis() : name(""), scaling(0.0f) {
+const float Axis::NORMAL = 1.5708f;         // 90 degrees rotation
+const float Axis::DEFAULT_VALUE = 0.0f;     // 0 degrees
+
+Axis::Axis() : name(), gradient(DEFAULT_VALUE), scaling(DEFAULT_VALUE) {
 
 }
 
 Axis::Axis(std::string name)
-        : name(name), scaling() {
+        : name(name), gradient(DEFAULT_VALUE), scaling(DEFAULT_VALUE) {
+
+}
+Axis::Axis(const float gradient)
+        : name(), gradient(gradient), scaling(DEFAULT_VALUE) {
 
 }
 
-Axis::Axis(std::string name, float scaling)
-        : name(name), scaling(scaling) {
+Axis::Axis(std::string name, const float gradient)
+        : name(name), gradient(gradient), scaling(DEFAULT_VALUE) {
+
+}
+
+Axis::Axis(std::string name, const float gradient, const float scaling)
+        : name(name), gradient(gradient), scaling(scaling) {
 
 }
 
@@ -40,20 +52,33 @@ Axis::~Axis() {
 
 }
 
+bool Axis::operator==(const Axis& peer) const {
+    return (name == peer.name) && ((gradient == peer.gradient)) && (scaling == peer.scaling);
+}
+
+Axis Axis::operator+(const Axis& peer) const {
+    return Axis("+", (gradient + (peer.gradient != 0 ? peer.gradient : NORMAL)), scaling);
+}
+
+Axis Axis::operator-(const Axis& peer) const {
+    return Axis("-", (gradient - (peer.gradient != 0 ? peer.gradient : NORMAL)), scaling);
+}
+
 Axis Axis::copy() {
-    Axis fresh(name, scaling);
+    Axis fresh(name, gradient, scaling);
     return fresh;
 }
 
 void Axis::clear() {
-    name = ""; scaling = 0.0f;
+    name = ""; gradient = scaling = DEFAULT_VALUE;
     return;
 }
 
 std::string Axis::print() {
     std::stringstream result;
     result << "{n:";
-    result << name << ",s:";
+    result << name << ",𝜙:";
+    result << gradient << ",s:";
     result << scaling << "}";
 	return result.str();
 }

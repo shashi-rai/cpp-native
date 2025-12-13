@@ -34,9 +34,14 @@ class Distance {
 public:
     // Constructors
     Distance();
+    Distance(const std::string unit);
+    Distance(const Unit& unit);
     Distance(const float magnitude);
     Distance(const float magnitude, const std::string unit);
+    Distance(const float magnitude, const Unit& unit);
+    Distance(const float magnitude, short int scaling);
     Distance(const float magnitude, short int scaling, const std::string unit);
+    Distance(const float magnitude, short int scaling, const Unit& unit);
     Distance(const Quantity& length);
 
     // Destructors
@@ -57,12 +62,13 @@ public:
     void setMagnitude(const Quantity& length) { this->magnitude = length; }
 
     // Additional methods
-    float getTotal() const;
+    Quantity getTotal() const;
+    short int getScaling() const;
     std::string getUnit() const;
     virtual Distance copy();
     virtual void clear();
     virtual std::string print();
-    float getComponent(float phase) const;
+    Quantity getComponent(float phase) const;
 public:
     static const std::string UNIT;
 };

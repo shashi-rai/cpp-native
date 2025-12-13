@@ -36,6 +36,7 @@ class Volume {
 public:
     // Constructors
     Volume();
+    Volume(const std::string unit);
     Volume(const Area& surface);
     Volume(const Area& surface, const std::string unit);
     Volume(const Area& surface, short int scaling, const std::string unit);
@@ -51,6 +52,7 @@ public:
     Volume(const float length, const float breadth, short int scaling, const std::string unit);
     Volume(const float length, const float breadth, const float height);
     Volume(const float length, const float breadth, const float height, const std::string unit);
+    Volume(const float length, const float breadth, const float height, short int scaling);
     Volume(const float length, const float breadth, const float height, short int scaling, const std::string unit);
     Volume(const Quantity& length);
     Volume(const Quantity& length, const Quantity& breadth);
@@ -82,14 +84,15 @@ public:
     void setHeight(const Quantity& height) { this->depth = height; }
 
     // Additional methods
-    float getTotal() const;
+    Quantity getTotal() const;
     std::string getUnit() const;
     virtual Volume copy();
     virtual void clear();
     virtual std::string print();
-    float getComponent(float phase) const;
+    Quantity getComponent(float phase) const;
 public:
     static const std::string UNIT;
+    static const short int SCALING_FACTOR;
 };
 
 typedef std::vector<Volume > VolumeArray;

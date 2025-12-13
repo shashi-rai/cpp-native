@@ -43,6 +43,7 @@ public:
     Area(const float length, short int scaling, const std::string unit);
     Area(const float length, const float breadth);
     Area(const float length, const float breadth, const std::string unit);
+    Area(const float length, const float breadth, short int scaling);
     Area(const float length, const float breadth, short int scaling, const std::string unit);
     Area(const Quantity& length);
     Area(const Quantity& length, const Quantity& breadth);
@@ -67,14 +68,15 @@ public:
     void setBreadth(const Quantity& breadth) { this->breadth = breadth; }
 
     // Additional methods
-    float getTotal() const;
+    Quantity getTotal() const;
     std::string getUnit() const;
     virtual Area copy();
     virtual void clear();
     virtual std::string print();
-    float getComponent(float phase) const;
+    Quantity getComponent(float phase) const;
 public:
     static const std::string UNIT;
+    static const short int SCALING_FACTOR;
 };
 
 typedef std::vector<Area > AreaArray;

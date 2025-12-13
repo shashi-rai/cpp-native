@@ -29,28 +29,41 @@ namespace shp {
 
 class Axis {
     std::string name;
+    float gradient;
     float scaling;
 public:
     // Constructors
     Axis();
     Axis(std::string name);
-    Axis(std::string name, float scaling);
+    Axis(const float gradient);
+    Axis(std::string name, const float gradient);
+    Axis(std::string name, const float gradient, const float scaling);
 
     // Destructors
     ~Axis();
 
+    // Operator overloading
+    bool operator==(const Axis& peer) const;
+    Axis operator+(const Axis& peer) const;
+    Axis operator-(const Axis& peer) const;
+
     // Getters
     std::string getName() const { return name; }
+    float getGradient() const { return gradient; }
     float getScaling() const { return scaling; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
-    void setScaling(float value) { this->scaling = value; }
+    void setGradient(const float value) { this->gradient = value; }
+    void setScaling(const float value) { this->scaling = value; }
 
     // Additional methods
     Axis copy();
     void clear();
     std::string print();
+public:
+    static const float NORMAL;
+    static const float DEFAULT_VALUE;
 };
 
 typedef std::vector<Axis > AxisArray;

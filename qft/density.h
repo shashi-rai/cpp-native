@@ -82,11 +82,11 @@ public:
     void setVolume(const shp::Volume& space) { this->volume = space; }
 
     // Additional methods
-    float getTotal() const;
+    shp::Quantity getTotal() const;
     virtual Density copy();
     virtual void clear();
     virtual std::string print();
-    float getComponent(float phase) const;
+    shp::Quantity getComponent(float phase) const;
 public:
     static const std::string UNIT;
 };
