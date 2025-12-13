@@ -32,7 +32,6 @@ namespace qft {
 
 class Velocity {
     std::string name;
-    shp::Unit unit;
     shp::Quantity magnitude;
     shp::Direction direction;
 public:
@@ -40,12 +39,21 @@ public:
     Velocity();
     Velocity(std::string name);
     Velocity(const float magnitude);
+    Velocity(const float magnitude, const std::string unit);
+    Velocity(const float magnitude, short int scaling, const std::string unit);
     Velocity(const float magnitude, const float direction);
+    Velocity(const float magnitude, const float direction, const std::string unit);
+    Velocity(const float magnitude, const float direction, short int scaling);
+    Velocity(const float magnitude, const float direction, short int scaling, const std::string unit);
     Velocity(const shp::Quantity& magnitude, const shp::Direction& direction);
     Velocity(std::string name, const shp::Unit& unit);
+    Velocity(std::string name, const float magnitude);
+    Velocity(std::string name, const float magnitude, const shp::Unit& unit);
     Velocity(std::string name, const float magnitude, const float direction);
+    Velocity(std::string name, const float magnitude, const float direction, const std::string unit);
+    Velocity(std::string name, const float magnitude, const float direction, short int scaling);
+    Velocity(std::string name, const float magnitude, const float direction, short int scaling, const std::string unit);
     Velocity(std::string name, const shp::Quantity& magnitude, const shp::Direction& direction);
-    Velocity(std::string name, const shp::Unit& unit, const shp::Quantity& magnitude, const shp::Direction& direction);
 
     // Destructors
     ~Velocity();
@@ -59,24 +67,25 @@ public:
 
     // Getters
     std::string getName() const { return name; }
-    shp::Unit getUnit() const { return unit; }
+    shp::Unit getUnit() const { return magnitude.getUnit(); }
     shp::Quantity getMagnitude() const { return magnitude; }
     shp::Direction getDirection() const { return direction; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
-    void setUnit(const shp::Unit& value) { this->unit = value; }
+    void setUnit(const shp::Unit& value) { this->magnitude.setUnit(value); }
     void setMagnitude(const shp::Quantity& magnitude) { this->magnitude = magnitude; }
     void setDirection(const shp::Direction& direction) { this->direction = direction; }
 
     // Additional methods
-    float getTotal() const;
+    shp::Quantity getTotal() const;
+    void adjustScaling();
     virtual Velocity copy();
     virtual void clear();
     virtual std::string print();
-    float getComponent(float change) const;
+    shp::Quantity getComponent(float phase) const;
 protected:
-    std::complex<float> toComplex(float change);
+    std::complex<float> toComplex(float coefficient, float change);
 
 public:
     static const std::string UNIT;

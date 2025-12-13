@@ -97,18 +97,18 @@ Force Mass::operator()(const Mass& peer, const float distance) const {
     return result;
 }
 
-float Mass::getTotal() const {
-    float result = quantity.getValue();
+shp::Quantity Mass::getTotal() const {
+    shp::Quantity result(quantity.getValue(), quantity.getScaling(), getUnit());
     return result;
 }
 
 Density Mass::getDensity(const float volume) const {
-    Density result(getTotal(), volume, quantity.getUnit().getName());
+    Density result(getTotal().getValue(), volume, quantity.getUnit().getName());
     return result;
 }
 
 Force Mass::getForce(const float acceleration) const {
-    float movable = (getTotal() * acceleration);
+    float movable = (getTotal().getValue() * acceleration);
     Force result(movable, quantity.getUnit().getName());
     result.adjustScaling();
     return result;
@@ -135,8 +135,9 @@ std::string Mass::print() {
 	return result.str();
 }
 
-float Mass::getComponent(float phase) const {
-    return getTotal() * cos(phase);
+shp::Quantity Mass::getComponent(float phase) const {
+	shp::Quantity mass = getTotal();
+	return shp::Quantity((mass.getValue() * cos(phase)), mass.getScaling(), mass.getUnit());
 }
 
 } // namespace qft

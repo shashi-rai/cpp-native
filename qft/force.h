@@ -90,7 +90,7 @@ public:
     virtual Force copy();
     virtual void clear();
     virtual std::string print();
-    float getComponent(float change) const;
+    shp::Quantity getComponent(float phase) const;
 protected:
     std::complex<float> toComplex(float coefficient, float change);
 

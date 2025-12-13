@@ -147,7 +147,7 @@ Force Force::operator+(const Force& peer) const {
         ap2 = other.toComplex((other.magnitude.getValue() / std::pow(10, (magnitude.getScaling() - other.magnitude.getScaling()))),
 			other.direction.toRadians());
     std::complex<float> a_phasor = ap1 + ap2;
-    return Force("+", shp::Quantity(std::abs(a_phasor), magnitude.getScaling()),
+    return Force("+", shp::Quantity(std::abs(a_phasor), magnitude.getScaling(), getUnit()),
 		shp::Direction(std::arg(a_phasor)));
 }
 
@@ -158,7 +158,7 @@ Force Force::operator-(const Force& peer) const {
         ap2 = other.toComplex((other.magnitude.getValue() / std::pow(10, (magnitude.getScaling() - other.magnitude.getScaling()))),
 			other.direction.toRadians());
     std::complex<float> a_phasor = ap1 - ap2;
-    return Force("-", shp::Quantity(std::abs(a_phasor), magnitude.getScaling()),
+    return Force("-", shp::Quantity(std::abs(a_phasor), magnitude.getScaling(), getUnit()),
 		shp::Direction(std::arg(a_phasor)));
 }
 
@@ -169,7 +169,7 @@ Force Force::operator*(const Force& peer) const {
         ap2 = other.toComplex(other.magnitude.getValue(), other.direction.toRadians());
     std::complex<float> a_phasor = ap1 * ap2;
     return Force("*", shp::Quantity(std::abs(a_phasor),
-			(magnitude.getScaling() + peer.magnitude.getScaling())),
+			(magnitude.getScaling() + peer.magnitude.getScaling()), getUnit()),
 		shp::Direction(std::arg(a_phasor)));
 }
 
@@ -180,7 +180,7 @@ Force Force::operator/(const Force& peer) const {
         ap2 = other.toComplex(other.magnitude.getValue(), other.direction.toRadians());
     std::complex<float> a_phasor = ap1 / ap2;
     return Force("/", shp::Quantity(std::abs(a_phasor),
-			(magnitude.getScaling() - peer.magnitude.getScaling())),
+			(magnitude.getScaling() - peer.magnitude.getScaling()), getUnit()),
 		shp::Direction(std::arg(a_phasor)));
 }
 
@@ -214,8 +214,9 @@ std::string Force::print() {
 	return result.str();
 }
 
-float Force::getComponent(float change) const {
-    return magnitude.getValue() * cos(direction.toRadians() + change);
+shp::Quantity Force::getComponent(float phase) const {
+	shp::Quantity force = getTotal();
+	return shp::Quantity((force.getValue() * cos(phase)), force.getScaling(), force.getUnit());
 }
 
 std::complex<float> Force::toComplex(float coefficient, float change) {

@@ -25,49 +25,53 @@ namespace qft {
 const std::string Acceleration::UNIT = "m/s^2";     // System International
 
 Acceleration::Acceleration()
-        : name(), unit(UNIT), velocity(), change() {
+        : unit(UNIT), velocity(), change() {
 
 }
 
 Acceleration::Acceleration(std::string name)
-        : name(name), unit(UNIT), velocity(), change() {
+        : unit(UNIT), velocity(name), change() {
 
 }
 
 Acceleration::Acceleration(const float change)
-        : name(), unit(UNIT), velocity(), change(change) {
+        : unit(UNIT), velocity(), change(change) {
 
 }
 
 Acceleration::Acceleration(const float velocity, const float change)
-        : name(), unit(UNIT), velocity(velocity), change(change) {
+        : unit(UNIT), velocity(velocity), change(change) {
 
 }
 
 Acceleration::Acceleration(const qft::Velocity& velocity, const shp::Change& change)
-        : name(), unit(UNIT), velocity(velocity), change(change) {
+        : unit(UNIT), velocity(velocity), change(change) {
 
 }
 
-Acceleration::Acceleration(std::string name, const shp::Unit& unit) : name(name), unit(unit),
-        velocity(), change() {
+Acceleration::Acceleration(const shp::Unit& unit)
+        : unit(unit), velocity(), change() {
+
+}
+
+Acceleration::Acceleration(std::string name, const shp::Unit& unit)
+        : unit(unit), velocity(name), change() {
+
+}
+
+Acceleration::Acceleration(std::string name, const float change)
+        : unit(UNIT), velocity(name), change(change) {
 
 }
 
 Acceleration::Acceleration(std::string name, const float velocity, const float change)
-        : name(name), unit(UNIT), velocity(velocity), change(change) {
+        : unit(UNIT), velocity(name, velocity), change(change) {
 
 }
 
-Acceleration::Acceleration(std::string name, const shp::Unit& unit,
-        const qft::Velocity& velocity, const shp::Change& change)
-        : name(name), unit(unit), velocity(velocity), change(change) {
-
-}
-
-Acceleration::Acceleration(std::string name,
-        const qft::Velocity& velocity, const shp::Change& change)
-        : name(name), unit(UNIT), velocity(velocity), change(change) {
+Acceleration::Acceleration(const qft::Velocity& velocity, const shp::Change& change,
+        const shp::Unit& unit)
+        : unit(unit), velocity(velocity), change(change) {
 
 }
 
@@ -80,33 +84,33 @@ bool Acceleration::operator==(const Acceleration& peer) const {
 }
 
 Acceleration Acceleration::operator+(const Acceleration& peer) const {
-    return Acceleration("+", (velocity + peer.velocity), (change + peer.change));
+    return Acceleration((velocity + peer.velocity), (change + peer.change));
 }
 
 Acceleration Acceleration::operator-(const Acceleration& peer) const {
-    return Acceleration("-", (velocity - peer.velocity), (change - peer.change));
+    return Acceleration((velocity - peer.velocity), (change - peer.change));
 }
 
 Acceleration Acceleration::operator*(const Acceleration& peer) const {
-    return Acceleration("*", (velocity * peer.velocity), (change * peer.change));
+    return Acceleration((velocity * peer.velocity), (change * peer.change));
 }
 
 Acceleration Acceleration::operator/(const Acceleration& peer) const {
-    return Acceleration("/", (velocity / peer.velocity), (change / peer.change));
+    return Acceleration((velocity / peer.velocity), (change / peer.change));
 }
 
-float Acceleration::getTotal() const {
-    float result = (velocity.getTotal() * cos(change.toRadians()));
+shp::Quantity Acceleration::getTotal() const {
+    float acceleration = (velocity.getTotal().getValue() * cos(change.toRadians()));
+    shp::Quantity result(acceleration, velocity.getMagnitude().getScaling(), getUnit());
     return result;
 }
 
 Acceleration Acceleration::copy() {
-    Acceleration fresh(name, unit, velocity, change);
+    Acceleration fresh(velocity, change, unit);
     return fresh;
 }
 
 void Acceleration::clear() {
-	name = "";
     unit.clear();
     velocity.clear();
     change.clear();
@@ -115,16 +119,16 @@ void Acceleration::clear() {
 
 std::string Acceleration::print() {
     std::stringstream result;
-    result << "[a:";
-	result << name << ",";
-    result << velocity.print() << ",";
+    result << "a";
+    result << velocity.print() << ",Δ";
 	result << change.print();
-    result << unit.print() << "]";
+    result << unit.print();
 	return result.str();
 }
 
-float Acceleration::getComponent(float phase) const {
-    return getTotal() * cos(phase);
+shp::Quantity Acceleration::getComponent(float phase) const {
+	shp::Quantity acceleration = getTotal();
+	return shp::Quantity((acceleration.getValue() * cos(phase)), acceleration.getScaling(), acceleration.getUnit());
 }
 
 } // namespace qft

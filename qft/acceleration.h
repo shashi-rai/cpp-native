@@ -30,7 +30,6 @@
 namespace qft {
 
 class Acceleration {
-    std::string name;
     shp::Unit unit;
     qft::Velocity velocity;
     shp::Change change;
@@ -41,10 +40,11 @@ public:
     Acceleration(const float change);
     Acceleration(const float velocity, const float change);
     Acceleration(const qft::Velocity& velocity, const shp::Change& change);
+    Acceleration(const shp::Unit& unit);
     Acceleration(std::string name, const shp::Unit& unit);
+    Acceleration(std::string name, const float change);
     Acceleration(std::string name, const float velocity, const float change);
-    Acceleration(std::string name, const qft::Velocity& velocity, const shp::Change& change);
-    Acceleration(std::string name, const shp::Unit& unit, const qft::Velocity& velocity, const shp::Change& change);
+    Acceleration(const qft::Velocity& velocity, const shp::Change& change, const shp::Unit& unit);
 
     // Destructors
     ~Acceleration();
@@ -57,23 +57,23 @@ public:
     Acceleration operator/(const Acceleration& peer) const;
 
     // Getters
-    std::string getName() const { return name; }
+    std::string getName() const { return velocity.getName(); }
     shp::Unit getUnit() const { return unit; }
     qft::Velocity getVelocity() const { return velocity; }
     shp::Change getChange() const { return change; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setName(const std::string& name) { this->velocity.setName(name); }
     void setUnit(const shp::Unit& value) { this->unit = value; }
     void setVelocity(const qft::Velocity& quantity) { this->velocity = quantity; }
     void setChange(const shp::Change& rate) { this->change = rate; }
 
     // Additional methods
-    float getTotal() const;
+    shp::Quantity getTotal() const;
     virtual Acceleration copy();
     virtual void clear();
     virtual std::string print();
-    float getComponent(float phase) const;
+    shp::Quantity getComponent(float phase) const;
 public:
     static const std::string UNIT;
 };
