@@ -34,9 +34,19 @@ LIBFILES = $(LIBFOLDR)/*.a
 
 .PHONY: all all-before all-after clean clean-custom
 
-all: all-before $(APPPROG) all-after
+SUBDIRS = dsa web shp qft phy che bio gis grt
+
+all: all-before subdirs $(APPPROG) all-after
+
+subdirs:
+	for dir in $(SUBDIRS); do \
+		$(MAKE) -C $$dir; \
+	done
 
 clean: clean-custom clean-objs clean-libs clean-apps
+	for dir in $(SUBDIRS); do \
+		$(MAKE) -C $$dir clean; \
+	done
 
 clean-objs: clean-custom
 	${RMCLEAN} $(OBJFILES)
@@ -47,7 +57,11 @@ clean-libs: clean-custom
 clean-apps: clean-custom
 	${RMCLEAN} $(APPPROG)
 
-$(APPPROG): $(LINKOBJ) $(LIBFILES)
+repo:
+	git commit -m "."
+	git push origin main
+
+$(APPPROG): $(LINKOBJ)
 	$(CPPTOOL) $(LINKOBJ) $(LIBFILES) -o $(APPPROG) $(LIBS)
 
 $(OBJFOLDR)/main.o: main.cpp

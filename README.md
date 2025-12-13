@@ -84,6 +84,47 @@ To clean only pre-compiled application files
 $ make clean-apps
 ```
 
+## Source Code Repository
+
+The source code of [cpp-native](https://github.com/shashi-rai/cpp-native) is fully
+maintained at [Github](https://github.com). You could push modified source code to
+the repository using the following command
+
+```bash
+$ make repo
+```
+
+However, use the changed commands first. For example
+
+### Add Source File/Folder
+
+To add new or affectd files or folders
+
+```bash
+$ git add a.cpp
+```
+
+### Remove Source File/Folder
+
+To remove existing files or folders
+
+```bash
+$ git rm a.cpp
+```
+
+## Executing Sample Application
+
+To run [bhojpur.app](bhojpur.app) (i.e., sample program) built using libraries
+compiled after calling __make__ command, you can issue the following in your
+command shell
+
+```bash
+$ ./bhojpur.app -v
+```
+
+It would simply print a copyright message. Perhaps, you could customise this
+[main.cpp](main.cpp) file further and recompile to test your ideas.
+
 ## Software Developer
 
-- Shashi Bhushan Rai
+- Shashi Bhushan Rai, [Bhojpur Consulting](https://www.bhojpur-consulting.com)
