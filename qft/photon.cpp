@@ -97,7 +97,7 @@ Photon Photon::operator%(const Photon& peer) const {
 }
 
 shp::Quantity Photon::getWavelength() const {
-    return this->getEnergy().getWavelength();
+    return this->getEnergy().getWavelength().getMagnitude();
 }
 
 shp::Point Photon::copy() {
@@ -116,7 +116,6 @@ std::string Photon::print() {
     std::stringstream result;
     result << "γ:";
 	result << Particle::print();
-    result << "}";
 	return result.str();
 }
 

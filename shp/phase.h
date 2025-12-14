@@ -34,13 +34,16 @@ public:
     // Constructors
     Phase();
     Phase(float gradient);
-    Phase(float polarization, float azimuthal);
+    Phase(float amplitude, float gradient);
+    Phase(float amplitude, float polarization, float azimuthal);
     Phase(std::string name);
     Phase(std::string name, float gradient);
-    Phase(std::string name, float polarization, float azimuthal);
+    Phase(std::string name, float amplitude, float gradient);
+    Phase(std::string name, float amplitude, float polarization, float azimuthal);
     Phase(std::string name, long timestamp);
     Phase(std::string name, float gradient, long timestamp);
-    Phase(std::string name, float polarization, float azimuthal, long timestamp);
+    Phase(std::string name, float amplitude, float gradient, long timestamp);
+    Phase(std::string name, float amplitude, float polarization, float azimuthal, long timestamp);
 
     // Destructors
     ~Phase();
@@ -66,6 +69,9 @@ public:
     float getAmplitudePolarization(float change) const;
 protected:
     std::complex<float> toPolarizationComplex(float change);
+public:
+    static const float DEFAULT_VALUE;
+    static const long DEFAULT_TIME;
 };
 
 typedef std::vector<Phase > PhaseArray;

@@ -22,45 +22,74 @@
 
 namespace shp {
 
-Phase::Phase() : Point(), polarization(0.0f), timestamp(0L) {
+const float Phase::DEFAULT_VALUE = 0.0f;        // 0.0f
+const long Phase::DEFAULT_TIME = 0L;            // 0L
+
+Phase::Phase() : Point(), polarization(DEFAULT_VALUE), timestamp(0L) {
 
 }
 
-Phase::Phase(float gradient) : Point(gradient), polarization(0.0f), timestamp(0L) {
+Phase::Phase(float gradient)
+        : Point(gradient), polarization(DEFAULT_VALUE),
+        timestamp(DEFAULT_TIME) {
 
 }
 
-Phase::Phase(float polarization, float azimuthal)
-        : Point(azimuthal), polarization(polarization), timestamp(0L) {
+Phase::Phase(float amplitude, float gradient)
+        : Point(amplitude, gradient), polarization(DEFAULT_VALUE),
+        timestamp(DEFAULT_TIME) {
 
 }
 
-Phase::Phase(std::string name) : Point(name), polarization(0.0f), timestamp(0L) {
+Phase::Phase(float amplitude, float polarization, float azimuthal)
+        : Point(amplitude, azimuthal), polarization(polarization),
+        timestamp(DEFAULT_TIME) {
+
+}
+
+Phase::Phase(std::string name)
+    : Point(name), polarization(DEFAULT_VALUE), timestamp(DEFAULT_TIME) {
 
 }
 
 Phase::Phase(std::string name, float gradient)
-        : Point(name, gradient), polarization(0.0f), timestamp(0L) {
+        : Point(name, gradient), polarization(DEFAULT_VALUE),
+        timestamp(DEFAULT_TIME) {
 
 }
 
-Phase::Phase(std::string name, float polarization, float azimuthal)
-        : Point(name, azimuthal), polarization(polarization), timestamp(0L) {
+Phase::Phase(std::string name, float amplitude, float gradient)
+        : Point(name, amplitude, gradient), polarization(DEFAULT_VALUE),
+        timestamp(DEFAULT_TIME) {
+
+}
+
+Phase::Phase(std::string name, float amplitude, float polarization, float azimuthal)
+        : Point(name, amplitude, azimuthal), polarization(polarization),
+        timestamp(DEFAULT_TIME) {
 
 }
 
 Phase::Phase(std::string name, long timestamp)
-        : Point(name), polarization(0.0f), timestamp(timestamp) {
+        : Point(name), polarization(DEFAULT_VALUE), timestamp(timestamp) {
 
 }
 
 Phase::Phase(std::string name, float gradient, long timestamp)
-        : Point(name, gradient), polarization(0.0f), timestamp(timestamp) {
+        : Point(name, gradient), polarization(DEFAULT_VALUE), timestamp(timestamp) {
 
 }
 
-Phase::Phase(std::string name, float polarization, float azimuthal, long timestamp)
-        : Point(name, azimuthal), polarization(polarization), timestamp(timestamp) {
+Phase::Phase(std::string name, float amplitude, float gradient, long timestamp)
+        : Point(name, amplitude, gradient), polarization(DEFAULT_VALUE),
+        timestamp(timestamp) {
+
+}
+
+Phase::Phase(std::string name, float amplitude, float polarization, float azimuthal,
+        long timestamp)
+        : Point(name, amplitude, azimuthal), polarization(polarization),
+        timestamp(timestamp) {
 
 }
 
@@ -109,8 +138,8 @@ Point Phase::copy() {
 
 void Phase::clear() {
     Shape::clear();
-    polarization = 0.0f;
-	timestamp = 0L;
+    polarization = DEFAULT_VALUE;
+	timestamp = DEFAULT_TIME;
     return;
 }
 

@@ -97,7 +97,7 @@ Neutrino Neutrino::operator%(const Neutrino& peer) const {
 }
 
 shp::Quantity Neutrino::getWavelength() const {
-    return this->getEnergy().getWavelength();
+    return this->getEnergy().getWavelength().getMagnitude();
 }
 
 shp::Point Neutrino::copy() {
@@ -116,7 +116,6 @@ std::string Neutrino::print() {
     std::stringstream result;
     result << "ν:";
 	result << Particle::print();
-    result << "}";
 	return result.str();
 }
 

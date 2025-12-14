@@ -98,7 +98,7 @@ Quark Quark::operator%(const Quark& peer) const {
 }
 
 shp::Quantity Quark::getWavelength() const {
-    return this->getEnergy().getWavelength();
+    return this->getEnergy().getWavelength().getMagnitude();
 }
 
 shp::Point Quark::copy() {
@@ -117,7 +117,6 @@ std::string Quark::print() {
     std::stringstream result;
     result << "q:";
 	result << Particle::print();
-    result << "}";
 	return result.str();
 }
 

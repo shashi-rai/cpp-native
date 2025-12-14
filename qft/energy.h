@@ -26,15 +26,15 @@
 #include "charge.h"
 #include "density.h"
 #include "mass.h"
-#include "../shp/point.h"
-#include "../shp/quantity.h"
+#include "../shp/distance.h"
+#include "../shp/phase.h"
 #include "../shp/unit.h"
 
 namespace qft {
 
-class Energy : public shp::Point {
+class Energy : public shp::Phase {
     shp::Unit unit;
-    shp::Quantity wavelength;
+    shp::Distance wavelength;
     qft::Mass mass;
     qft::Charge charge;
 public:
@@ -97,6 +97,7 @@ public:
     Energy(std::string name, float amplitude, float gradient, float wavelength, const Mass& mass);
     Energy(std::string name, float amplitude, float gradient, float wavelength, const Charge& charge);
     Energy(std::string name, float amplitude, float gradient, float wavelength, const Mass& mass, const Charge& charge);
+    Energy(std::string name, float amplitude, float gradient, float wavelength, short int scaling, const Mass& mass, const Charge& charge);
     Energy(std::string name, float amplitude, float gradient, float wavelength, const Mass& mass, const Charge& charge, const shp::Unit& unit);
     Energy(std::string name, float amplitude, float gradient, float wavelength, float mass, const shp::Unit& unit);
     Energy(std::string name, float amplitude, float gradient, float wavelength, const Mass& mass, const shp::Unit& unit);
@@ -119,15 +120,15 @@ public:
 
     // Getters
     shp::Unit getUnit() const { return unit; }
-    shp::Quantity getWavelength() const { return wavelength; }
+    shp::Distance getWavelength() const { return wavelength; }
     qft::Mass getMass() const { return mass; }
     qft::Charge getCharge() const { return charge; }
 
     // Setters
     void setUnit(const shp::Unit& value) { this->unit = value; }
-    void setWavelength(const float amount) { this->wavelength = amount; }
+    void setWavelength(const shp::Distance& length) { this->wavelength = length; }
     void setMass(const qft::Mass& amount) { this->mass = amount; }
-    void setCharge(const qft::Charge& amount) { charge = amount; }
+    void setCharge(const qft::Charge& quantum) { charge = quantum; }
 
     // Additional methods
     shp::Quantity getTotal() const;
