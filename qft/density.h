@@ -45,6 +45,7 @@ public:
     Density(const float magnitude, const float volume, const std::string unit);
     Density(const float magnitude, const float volume, short int scaling, const std::string unit);
     Density(const shp::Quantity& magnitude, const shp::Volume& volume);
+    Density(const shp::Quantity& magnitude, const shp::Volume& volume, const shp::Unit& unit);
     Density(std::string name, const shp::Unit& unit);
     Density(std::string name, short int scaling, const shp::Unit& unit);
     Density(std::string name, const float magnitude);
@@ -54,9 +55,9 @@ public:
     Density(std::string name, const float magnitude, const float volume, const std::string unit);
     Density(std::string name, const float magnitude, const float volume, short int scaling, const std::string unit);
     Density(std::string name, const shp::Quantity& magnitude);
-    Density(std::string name, const shp::Unit& unit, const shp::Quantity& magnitude);
+    Density(std::string name, const shp::Quantity& magnitude, const shp::Unit& unit);
     Density(std::string name, const shp::Quantity& magnitude, const shp::Volume& volume);
-    Density(std::string name, const shp::Unit& unit, const shp::Quantity& magnitude, const shp::Volume& volume);
+    Density(std::string name, const shp::Quantity& magnitude, const shp::Volume& volume, const shp::Unit& unit);
 
     // Destructors
     ~Density();

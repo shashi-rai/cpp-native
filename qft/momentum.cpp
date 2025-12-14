@@ -86,8 +86,10 @@ Momentum Momentum::operator/(const Momentum& peer) const {
     return Momentum("/", (mass / peer.mass), (velocity / peer.velocity));
 }
 
-float Momentum::getTotal() const {
-    float result = mass.getTotal() * velocity.getTotal();
+shp::Quantity Momentum::getTotal() const {
+    float momentum = mass.getTotal().getValue() * velocity.getTotal().getValue();
+    short int scaling = mass.getTotal().getScaling() + velocity.getTotal().getScaling();
+    shp::Quantity result(momentum, scaling, UNIT);
     return result;
 }
 
@@ -105,16 +107,17 @@ void Momentum::clear() {
 
 std::string Momentum::print() {
     std::stringstream result;
-    result << "[mo:";
+    result << "Π:";
     result << name << ",";
     result << mass.print() << ",";
     result << velocity.print();
-    result << UNIT << "]";
+    result << UNIT;
 	return result.str();
 }
 
-float Momentum::getComponent(float phase) const {
-    return getTotal() * cos(phase);
+shp::Quantity Momentum::getComponent(float phase) const {
+	shp::Quantity momentum = getTotal();
+	return shp::Quantity((momentum.getValue() * cos(phase)), momentum.getScaling(), momentum.getUnit());
 }
 
 } // namespace qft

@@ -63,11 +63,11 @@ public:
     void setVelocity(const qft::Velocity& value) { this->velocity = value; }
 
     // Additional methods
-    float getTotal() const;
+    shp::Quantity getTotal() const;
     virtual Momentum copy();
     virtual void clear();
     virtual std::string print();
-    float getComponent(float phase) const;
+    shp::Quantity getComponent(float phase) const;
 public:
     static const std::string UNIT;
 };

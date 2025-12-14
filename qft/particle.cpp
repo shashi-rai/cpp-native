@@ -185,7 +185,7 @@ Particle Particle::operator%(const Particle& peer) const {
     return Particle("%", newspin, newenergy);
 }
 
-float Particle::getTotal() const {
+shp::Quantity Particle::getTotal() const {
     return energy.getTotal();
 }
 
@@ -214,6 +214,11 @@ std::string Particle::print() {
     result << (physical != nullptr ? physical->print() : "");
     result << "]";
 	return result.str();
+}
+
+shp::Quantity Particle::getComponent(float phase) const {
+	shp::Quantity energy = getTotal();
+	return shp::Quantity((energy.getValue() * cos(phase)), energy.getScaling(), energy.getUnit());
 }
 
 } // namespace qft

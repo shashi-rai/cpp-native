@@ -59,7 +59,7 @@ public:
     void setQuantity(const float amount) { this->quantity = amount; }
 
     // Additional methods
-    float getTotal() const;
+    shp::Quantity getTotal() const;
     void fromCelsius(const float value);
     float toCelsius() const;
     void fromFahrenheit(const float value);
@@ -68,7 +68,7 @@ public:
     virtual Temperature copy();
     virtual void clear();
     virtual std::string print();
-    float getComponent(float phase) const;
+    shp::Quantity getComponent(float phase) const;
 public:
     static const std::string UNIT;
     static const short int DEFAULT_SCALE;

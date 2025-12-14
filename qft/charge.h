@@ -65,7 +65,7 @@ public:
 
     // Additional methods
     shp::Quantity getTotal() const;
-    Density getDensity(const float volume) const;
+    Density getDensity(const shp::Volume& volume) const;
     Force getForce(const float acceleration) const;
     void adjustScaling();
     virtual Charge copy();

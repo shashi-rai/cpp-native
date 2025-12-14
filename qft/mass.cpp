@@ -70,23 +70,28 @@ bool Mass::operator==(const Mass& peer) const {
 }
 
 Mass Mass::operator+(const Mass& peer) const {
-    return Mass((quantity + peer.quantity).getValue(), quantity.getUnit());
+    shp::Quantity mass = (quantity + peer.quantity);
+    return Mass(mass.getValue(), mass.getScaling(), mass.getUnit());
 }
 
 Mass Mass::operator-(const Mass& peer) const {
-    return Mass((quantity - peer.quantity).getValue(), quantity.getUnit());
+    shp::Quantity mass = (quantity - peer.quantity);
+    return Mass(mass.getValue(), mass.getScaling(), mass.getUnit());
 }
 
 Mass Mass::operator*(const Mass& peer) const {
-    return Mass((quantity * peer.quantity).getValue(), quantity.getUnit());
+    shp::Quantity mass = (quantity * peer.quantity);
+    return Mass(mass.getValue(), mass.getScaling(), mass.getUnit());
 }
 
 Mass Mass::operator/(const Mass& peer) const {
-    return Mass((quantity / peer.quantity).getValue(), quantity.getUnit());
+    shp::Quantity mass = (quantity / peer.quantity);
+    return Mass(mass.getValue(), mass.getScaling(), mass.getUnit());
 }
 
 Mass Mass::operator%(const Mass& peer) const {
-    return Mass((quantity % peer.quantity).getValue(), quantity.getUnit());
+    shp::Quantity mass = (quantity % peer.quantity);
+    return Mass(mass.getValue(), mass.getScaling(), mass.getUnit());
 }
 
 Force Mass::operator()(const Mass& peer, const float distance) const {
@@ -102,8 +107,8 @@ shp::Quantity Mass::getTotal() const {
     return result;
 }
 
-Density Mass::getDensity(const float volume) const {
-    Density result(getTotal().getValue(), volume, quantity.getUnit().getName());
+Density Mass::getDensity(const shp::Volume& volume) const {
+    Density result(getTotal(), volume, getUnit());
     return result;
 }
 
@@ -130,8 +135,8 @@ void Mass::clear() {
 
 std::string Mass::print() {
     std::stringstream result;
-    result << "(" << shp::Unit::getBaseDimension(shp::Unit::MASS) << ":";
-    result << quantity.print() << ")";
+    result << shp::Unit::getBaseDimension(shp::Unit::MASS) << ":";
+    result << quantity.print();
 	return result.str();
 }
 

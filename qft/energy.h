@@ -94,6 +94,8 @@ public:
     Energy(float amplitude, float gradient, float wavelength, short int scaling, float mass, const shp::Unit& unit);
     Energy(float amplitude, float gradient, float wavelength, short int scaling, const Mass& mass, const shp::Unit& unit);
     Energy(float amplitude, float gradient, float wavelength, short int scaling, const Charge& charge, const shp::Unit& unit);
+    Energy(std::string name, float amplitude, float gradient, float wavelength, const Mass& mass);
+    Energy(std::string name, float amplitude, float gradient, float wavelength, const Charge& charge);
     Energy(std::string name, float amplitude, float gradient, float wavelength, const Mass& mass, const Charge& charge);
     Energy(std::string name, float amplitude, float gradient, float wavelength, const Mass& mass, const Charge& charge, const shp::Unit& unit);
     Energy(std::string name, float amplitude, float gradient, float wavelength, float mass, const shp::Unit& unit);
@@ -128,19 +130,19 @@ public:
     void setCharge(const qft::Charge& amount) { charge = amount; }
 
     // Additional methods
-    float getTotal() const;
-    Density getDensity(const float volume) const;
+    shp::Quantity getTotal() const;
+    Density getDensity(const shp::Volume& volume) const;
     shp::Quantity getPotential() const;
     shp::Quantity getKinetic() const;
     shp::Quantity getFrequency() const;
-    float getSpatial(float state) const;
-    float getTemporal(float state) const;
+    shp::Quantity getSpatial(float state) const;
+    shp::Quantity getTemporal(float state) const;
     virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();
-    float getComponent(float phase) const;
+    shp::Quantity getComponent(float phase) const;
 public:
-    static const float getPhysicalLimit();
+    static const shp::Quantity getPhysicalLimit();
 
 public:
     static const std::string UNIT;

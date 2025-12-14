@@ -75,7 +75,7 @@ public:
     virtual Pressure copy();
     virtual void clear();
     virtual std::string print();
-    float getComponent(float phase) const;
+    shp::Quantity getComponent(float phase) const;
 public:
     static const std::string UNIT;
 };

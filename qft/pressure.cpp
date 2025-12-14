@@ -103,8 +103,9 @@ Pressure Pressure::operator/(const Pressure& peer) const {
 }
 
 shp::Quantity Pressure::getTotal() const {
-    shp::Quantity result((force.getTotal() / area.getTotal()).getValue(),
-        force.getMagnitude().getScaling(), getUnit());
+    float pressure = (force.getTotal().getValue() / area.getTotal().getValue());
+    short int scaling = (force.getTotal().getScaling() - area.getTotal().getScaling());
+    shp::Quantity result(pressure, scaling, getUnit());
     return result;
 }
 
@@ -128,16 +129,17 @@ void Pressure::clear() {
 
 std::string Pressure::print() {
     std::stringstream result;
-    result << "[p:";
+    result << "P:";
 	result << name << ",";
     result << force.print() << ",";
 	result << area.print();
-    result << unit.print() << "]";
+    result << unit.print();
 	return result.str();
 }
 
-float Pressure::getComponent(float phase) const {
-    return getTotal().getValue() * cos(phase);
+shp::Quantity Pressure::getComponent(float phase) const {
+	shp::Quantity pressure = getTotal();
+	return shp::Quantity((pressure.getValue() * cos(phase)), pressure.getScaling(), pressure.getUnit());
 }
 
 } // namespace qft

@@ -69,23 +69,28 @@ bool Charge::operator==(const Charge& peer) const {
 }
 
 Charge Charge::operator+(const Charge& peer) const {
-    return Charge((quantity + peer.quantity).getValue(), quantity.getUnit());
+    shp::Quantity charge = (quantity + peer.quantity);
+    return Charge(charge.getValue(), charge.getScaling(), quantity.getUnit());
 }
 
 Charge Charge::operator-(const Charge& peer) const {
-    return Charge((quantity - peer.quantity).getValue(), quantity.getUnit());
+    shp::Quantity charge = (quantity - peer.quantity);
+    return Charge(charge.getValue(), charge.getScaling(), quantity.getUnit());
 }
 
 Charge Charge::operator*(const Charge& peer) const {
-    return Charge((quantity * peer.quantity).getValue(), quantity.getUnit());
+    shp::Quantity charge = (quantity * peer.quantity);
+    return Charge(charge.getValue(), charge.getScaling(), quantity.getUnit());
 }
 
 Charge Charge::operator/(const Charge& peer) const {
-    return Charge((quantity / peer.quantity).getValue(), quantity.getUnit());
+    shp::Quantity charge = (quantity / peer.quantity);
+    return Charge(charge.getValue(), charge.getScaling(), quantity.getUnit());
 }
 
 Charge Charge::operator%(const Charge& peer) const {
-    return Charge((quantity % peer.quantity).getValue(), quantity.getUnit());
+    shp::Quantity charge = (quantity % peer.quantity);
+    return Charge(charge.getValue(), charge.getScaling(), quantity.getUnit());
 }
 
 Force Charge::operator()(const Charge& peer, const float distance) const {
@@ -101,8 +106,8 @@ shp::Quantity Charge::getTotal() const {
     return result;
 }
 
-Density Charge::getDensity(const float volume) const {
-    Density result(getTotal().getValue(), volume, quantity.getUnit().getName());
+Density Charge::getDensity(const shp::Volume& volume) const {
+    Density result(getTotal(), volume, getUnit());
     return result;
 }
 
@@ -129,8 +134,8 @@ void Charge::clear() {
 
 std::string Charge::print() {
     std::stringstream result;
-    result << "(q:";
-    result << quantity.print() << ")";
+    result << "q:";
+    result << quantity.print();
 	return result.str();
 }
 

@@ -96,10 +96,11 @@ public:
     void setMass(const Mass& value) { energy.setMass(value); }
     void setCharge(const Charge& value) { energy.setCharge(value); }
     bool isStructured() const;
-    float getTotal() const;
+    shp::Quantity getTotal() const;
     virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();
+    shp::Quantity getComponent(float phase) const;
 };
 
 typedef std::vector<Particle > ParticleArray;

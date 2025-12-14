@@ -68,27 +68,32 @@ bool Temperature::operator==(const Temperature& peer) const {
 }
 
 Temperature Temperature::operator+(const Temperature& peer) const {
-    return Temperature((quantity + peer.quantity).getValue(), quantity.getUnit());
+    shp::Quantity temperature = (quantity + peer.quantity);
+    return Temperature(temperature.getValue(), temperature.getScaling(), temperature.getUnit());
 }
 
 Temperature Temperature::operator-(const Temperature& peer) const {
-    return Temperature((quantity - peer.quantity).getValue(), quantity.getUnit());
+    shp::Quantity temperature = (quantity - peer.quantity);
+    return Temperature(temperature.getValue(), temperature.getScaling(), temperature.getUnit());
 }
 
 Temperature Temperature::operator*(const Temperature& peer) const {
-    return Temperature((quantity * peer.quantity).getValue(), quantity.getUnit());
+    shp::Quantity temperature = (quantity * peer.quantity);
+    return Temperature(temperature.getValue(), temperature.getScaling(), temperature.getUnit());
 }
 
 Temperature Temperature::operator/(const Temperature& peer) const {
-    return Temperature((quantity / peer.quantity).getValue(), quantity.getUnit());
+    shp::Quantity temperature = (quantity / peer.quantity);
+    return Temperature(temperature.getValue(), temperature.getScaling(), temperature.getUnit());
 }
 
 Temperature Temperature::operator%(const Temperature& peer) const {
-    return Temperature((quantity % peer.quantity).getValue(), quantity.getUnit());
+    shp::Quantity temperature = (quantity % peer.quantity);
+    return Temperature(temperature.getValue(), temperature.getScaling(), temperature.getUnit());
 }
 
-float Temperature::getTotal() const {
-    float result = quantity.getValue();
+shp::Quantity Temperature::getTotal() const {
+    shp::Quantity result(quantity.getValue(), quantity.getScaling(), getUnit());
     return result;
 }
 
@@ -125,13 +130,14 @@ void Temperature::clear() {
 
 std::string Temperature::print() {
     std::stringstream result;
-    result << "(" << shp::Unit::getBaseDimension(shp::Unit::TEMPERATURE) << ":";
-    result << quantity.print() << ")";
+    result << shp::Unit::getBaseDimension(shp::Unit::TEMPERATURE) << ":";
+    result << quantity.print();
 	return result.str();
 }
 
-float Temperature::getComponent(float phase) const {
-    return getTotal() * cos(phase);
+shp::Quantity Temperature::getComponent(float phase) const {
+	shp::Quantity temperature = getTotal();
+	return shp::Quantity((temperature.getValue() * cos(phase)), temperature.getScaling(), temperature.getUnit());
 }
 
 } // namespace qft
