@@ -611,7 +611,7 @@ Energy Energy::operator+(const Energy& peer) const {
     float planck_phase = (getPolarization() + peer.getPolarization());
     shp::Distance planck_wave = (wavelength + peer.wavelength);
     shp::Quantity length = planck_wave.getMagnitude(); length.adjustScaling();
-    Energy result("+", amplitude, gradient, length.getValue(), length.getScaling(),
+    Energy result("+", amplitude, gradient, length.getValue(), planck_wave.getScaling(),
             (mass + peer.mass), (charge + peer.charge), unit);
     result.setPolarization(planck_phase);
     return result;
@@ -623,7 +623,7 @@ Energy Energy::operator-(const Energy& peer) const {
     float planck_phase = (getPolarization() - peer.getPolarization());
     shp::Distance planck_wave = (wavelength - peer.wavelength);
     shp::Quantity length = planck_wave.getMagnitude(); length.adjustScaling();
-    Energy result("-", amplitude, gradient, length.getValue(), length.getScaling(),
+    Energy result("-", amplitude, gradient, length.getValue(), planck_wave.getScaling(),
             (mass - peer.mass), (charge - peer.charge), unit);
     result.setPolarization(planck_phase);
     return result;
@@ -635,7 +635,7 @@ Energy Energy::operator*(const Energy& peer) const {
     float planck_phase = (getPolarization() * peer.getPolarization());
     shp::Distance planck_wave = (wavelength * peer.wavelength);
     shp::Quantity length = planck_wave.getMagnitude(); length.adjustScaling();
-    Energy result("*", amplitude, gradient, length.getValue(), length.getScaling(),
+    Energy result("*", amplitude, gradient, length.getValue(), planck_wave.getScaling(),
             (mass * peer.mass), (charge * peer.charge), unit);
     result.setPolarization(planck_phase);
     return result;
@@ -647,7 +647,7 @@ Energy Energy::operator/(const Energy& peer) const {
     float planck_phase = (getPolarization() / peer.getPolarization());
     shp::Distance planck_wave = (wavelength / peer.wavelength);
     shp::Quantity length = planck_wave.getMagnitude(); length.adjustScaling();
-    Energy result("/", amplitude, gradient, length.getValue(), length.getScaling(),
+    Energy result("/", amplitude, gradient, length.getValue(), planck_wave.getScaling(),
             (mass / peer.mass), (charge / peer.charge), unit);
     result.setPolarization(planck_phase);
     return result;
@@ -659,7 +659,7 @@ Energy Energy::operator%(const Energy& peer) const {
     float planck_phase = fmod(getPolarization(), peer.getPolarization());
     shp::Distance planck_wave = (wavelength % peer.wavelength);
     shp::Quantity length = planck_wave.getMagnitude(); length.adjustScaling();
-    Energy result("%", amplitude, gradient, length.getValue(), length.getScaling(),
+    Energy result("%", amplitude, gradient, length.getValue(), planck_wave.getScaling(),
             (mass % peer.mass), (charge % peer.charge), unit);
     result.setPolarization(planck_phase);
     return result;
@@ -684,40 +684,47 @@ shp::Quantity Energy::getPotential() const {
     shp::Quantity speed_of_light(LIGHT_SPEED, LIGHT_SCALE);
     float energy = (mass.getQuantity() * (speed_of_light * speed_of_light)).getValue();
 	shp::Quantity result(energy, ((LIGHT_SCALE * 2) + mass.getQuantity().getScaling()), unit);
+    result.adjustScaling();
     return result;
 }
 
 shp::Quantity Energy::getKinetic() const {
-	shp::Quantity result(PLANCK_CONSTANT * getFrequency().getValue(), PLANCK_SCALE, unit);
+    shp::Quantity frequency = getFrequency();
+    float energy = (PLANCK_CONSTANT * frequency.getValue());
+    shp::Quantity result(energy, (PLANCK_SCALE + frequency.getScaling()), unit);
+    result.adjustScaling();
     return result;
 }
 
 shp::Quantity Energy::getFrequency() const {
-    return wavelength.getMagnitude().getInverse();
+    shp::Quantity result = wavelength.getMagnitude().getInverse();
+    result.setScaling((0 - wavelength.getScaling()));
+    result.setUnit(shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY));
+    result.adjustScaling();
+    return result;;
 }
 
 /*
  * Wavelength refers to the distance that Energy could traverse in one cycle
  * At a given point in space, no Planckian Energy exists if wavelength is zero
  */
-shp::Quantity Energy::getSpatial(float state) const {
-    shp::Quantity coefficient(wavelength.getMagnitude().getValue(),
+shp::Distance Energy::getDivergence(const float modulation) const {
+    shp::Quantity lambda(wavelength.getMagnitude().getValue(),
             wavelength.getScaling(), wavelength.getUnit());
-    float planck = (coefficient.getValue() * Phase::getAmplitudeAzimuthal(state));
-    shp::Quantity result((getPhysicalLimit().getValue() / planck),
-            (PLANCK_SCALE - wavelength.getScaling()), UNIT);
-    result.adjustScaling();
-    return result;
+    float coefficient = (lambda.getValue() * Phase::getAmplitudeAzimuthal(modulation));
+    shp::Quantity delta((getPhysicalLimit().getValue() / coefficient),
+            (lambda.getScaling() - PLANCK_SCALE), shp::Unit::getBaseSymbol(shp::Unit::LENGTH));
+    delta.adjustScaling();
+    return shp::Distance(delta.getValue(), delta.getScaling(), delta.getUnit());
 }
 
-shp::Quantity Energy::getTemporal(float state) const {
-    shp::Quantity coefficient(wavelength.getMagnitude().getInverse().getValue(),
-            wavelength.getScaling(), wavelength.getUnit());
-    float planck = (coefficient.getValue() * Phase::getAmplitudePolarization(state));
-    shp::Quantity result((getPhysicalLimit().getValue() / planck),
-            (PLANCK_SCALE - wavelength.getScaling()), UNIT);
-    result.adjustScaling();
-    return result;
+qft::Time Energy::getPerpetuity(const float modulation) const {
+    shp::Quantity frequency = getFrequency();
+    float coefficient = (frequency.getValue() * Phase::getAmplitudePolarization(modulation));
+    shp::Quantity delta((getPhysicalLimit().getValue() / coefficient),
+            (frequency.getScaling() - PLANCK_SCALE), shp::Unit::getBaseSymbol(shp::Unit::TIME));
+    delta.adjustScaling();
+    return qft::Time(delta.getValue(), delta.getScaling(), delta.getUnit());
 }
 
 const shp::Quantity Energy::getPhysicalLimit() {

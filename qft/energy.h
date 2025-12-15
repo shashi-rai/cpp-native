@@ -26,6 +26,7 @@
 #include "charge.h"
 #include "density.h"
 #include "mass.h"
+#include "time.h"
 #include "../shp/distance.h"
 #include "../shp/phase.h"
 #include "../shp/unit.h"
@@ -136,8 +137,8 @@ public:
     shp::Quantity getPotential() const;
     shp::Quantity getKinetic() const;
     shp::Quantity getFrequency() const;
-    shp::Quantity getSpatial(float state) const;
-    shp::Quantity getTemporal(float state) const;
+    shp::Distance getDivergence(const float modulation) const;
+    qft::Time getPerpetuity(const float modulation) const;
     virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();

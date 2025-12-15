@@ -21,22 +21,32 @@
 #ifndef QFT_TIME_H
 #define QFT_TIME_H
 
+#include <chrono>
+#include <string>
 #include <vector>
+#include "../shp/quantity.h"
 #include "../shp/unit.h"
 
 namespace qft {
 
 class Time {
-    shp::Unit unit;
-    long quantity;
-    short int scaling;
+    std::string name;
+    shp::Quantity duration;
 public:
     // Constructors
     Time();
-    Time(long time);
-    Time(long time, short int scaling);
-    Time(long time, const shp::Unit& unit);
-    Time(long time, short int scaling, const shp::Unit& unit);
+    Time(std::string name);
+    Time(const shp::Unit& unit);
+    Time(const float duration);
+    Time(const float duration, const shp::Unit& unit);
+    Time(const float duration, short int scaling);
+    Time(const float duration, short int scaling, const shp::Unit& unit);
+    Time(std::string duration, const shp::Unit& unit);
+    Time(std::string name, const float duration);
+    Time(std::string name, const float duration, const shp::Unit& unit);
+    Time(std::string name, const float duration, short int scaling);
+    Time(std::string name, const float duration, short int scaling, const shp::Unit& unit);
+    Time(std::string name, const shp::Quantity& duration);
 
     // Destructors
     ~Time();
@@ -50,17 +60,21 @@ public:
     Time operator%(const Time& peer) const;
 
     // Getters
-    shp::Unit getUnit() const { return unit; }
-    long getQuantity() const { return quantity; }
-    short int getScaling() const { return scaling; }
+    std::string getName() const { return name; }
+    shp::Quantity getDuration() const { return duration; }
 
     // Setters
-    void setUnit(const shp::Unit& value) { this->unit = value; }
-    void setQuantity(const long value) { this->quantity = value; }
-    void setScaling(const short int value) { this->scaling = value; }
+    void setName(const std::string& name) { this->name = name; }
+    void setDuration(const shp::Quantity& value) { this->duration = value; }
 
     // Additional methods
-    long getTotal() const;
+    shp::Unit getUnit() const;
+    void setUnit(const shp::Unit& value);
+    short int getScaling() const;
+    void setScaling(const short int value);
+    shp::Quantity getTotal() const;
+    long getMilliseconds() const;
+    long long getNanoseconds() const;
     virtual Time copy();
     virtual void clear();
     virtual std::string print();

@@ -82,23 +82,28 @@ bool Distance::operator==(const Distance& peer) const {
 }
 
 Distance Distance::operator+(const Distance& peer) const {
-    return Distance(magnitude + peer.magnitude);
+    Quantity distance = (magnitude + peer.magnitude);
+    return Distance(distance.getValue(), distance.getScaling(), distance.getUnit());
 }
 
 Distance Distance::operator-(const Distance& peer) const {
-    return Distance(magnitude - peer.magnitude);
+    Quantity distance = (magnitude - peer.magnitude);
+    return Distance(distance.getValue(), distance.getScaling(), distance.getUnit());
 }
 
 Distance Distance::operator*(const Distance& peer) const {
-    return Distance(magnitude * peer.magnitude);
+    Quantity distance = (magnitude * peer.magnitude);
+    return Distance(distance.getValue(), distance.getScaling(), distance.getUnit());
 }
 
 Distance Distance::operator/(const Distance& peer) const {
-    return Distance(magnitude / peer.magnitude);
+    Quantity distance = (magnitude / peer.magnitude);
+    return Distance(distance.getValue(), distance.getScaling(), distance.getUnit());
 }
 
 Distance Distance::operator%(const Distance& peer) const {
-    return Distance(magnitude % peer.magnitude);
+    Quantity distance = (magnitude % peer.magnitude);
+    return Distance(distance.getValue(), distance.getScaling(), distance.getUnit());
 }
 
 Quantity Distance::getTotal() const {
