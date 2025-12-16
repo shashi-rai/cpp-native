@@ -29,42 +29,44 @@ const float Neutron::DEFAULT_SPIN = 0.5f;    // Dirac Fermions have 1/2 spin
 
 Neutron::Neutron()
         : Particle(Spin(DEFAULT_SPIN), Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)), up(), down() {
-
+    initialize();
 }
 
 Neutron::Neutron(std::string name)
         : Particle(name, Spin(DEFAULT_SPIN), Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)), up(), down() {
-
+    initialize();
 }
 
 Neutron::Neutron(float wavelength)
         : Particle(Spin(DEFAULT_SPIN), Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)), up(), down() {
     this->getEnergy().setWavelength(wavelength);
+    initialize();
 }
 
 Neutron::Neutron(std::string name, float wavelength)
         : Particle(name, Spin(DEFAULT_SPIN), Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)), up(), down() {
     this->getEnergy().setWavelength(wavelength);
+    initialize();
 }
 
 Neutron::Neutron(std::string name, const Energy& energy)
         : Particle(name, Spin(DEFAULT_SPIN), energy), up(), down() {
-
+    initialize();
 }
 
 Neutron::Neutron(std::string name, const Spin& spin, const Energy& energy)
         : Particle(name, spin, energy), up(), down() {
-
+    initialize();
 }
 
 Neutron::Neutron(std::string name, const float spin, const float mass, const float charge)
         : Particle(name, Spin(spin), Energy(Mass(mass), Charge(charge))), up(), down() {
-
+    initialize();
 }
 
 Neutron::Neutron(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
         : Particle(name, spin, Energy(mass, charge)), up(), down() {
-
+    initialize();
 }
 
 Neutron::~Neutron() {
@@ -160,6 +162,12 @@ std::string Neutron::print() {
     result << down[1].print() << std::endl << "\tu:";
     result << up.print();
 	return result.str();
+}
+
+void Neutron::initialize() {
+    up = Quark("u", Quark::getMassLow(Quark::UP), Quark::getElectricCharge(Quark::UP));
+    down[0] = Quark("d", Quark::getMassLow(Quark::DOWN), Quark::getElectricCharge(Quark::DOWN));
+    down[1] = Quark("d", Quark::getMassLow(Quark::DOWN), Quark::getElectricCharge(Quark::DOWN));
 }
 
 } // namespace qft

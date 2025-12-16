@@ -38,6 +38,7 @@ public:
     Quark(std::string name, float wavelength);
     Quark(std::string name, const Energy& energy);
     Quark(std::string name, const Spin& spin, const Energy& energy);
+    Quark(std::string name, const Mass& mass, const Charge& charge);
     Quark(std::string name, const float spin, const float mass, const float charge);
     Quark(std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
 
@@ -61,6 +62,26 @@ public:
     virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();
+public:
+    static const Mass getMassLow(short int number);
+    static const Mass getMassHigh(short int number);
+    static const Charge getElectricCharge(short int number);
+public:
+    enum TYPE {
+        UP, DOWN,           // First Generation
+        CHARM, STRANGE,     // Second Generation
+        TOP, BOTTOM,        // Third Generation
+    };
+    enum COLOUR {
+        RED, GREEN, BLUE,
+    };
+    static const short int TYPE_MAX;
+    static const short int COLOUR_MAX;
+    static const short int GENERATION_MAX;
+    static const float MASS_LOWER[];
+     static const float MASS_HIGHER[];
+    static const float ELECTRIC_CHARGE[];
+    static const float DEFAULT_SPIN;
 };
 
 typedef std::vector<Quark > QuarkArray;

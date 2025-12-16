@@ -25,6 +25,11 @@ namespace qft {
 const std::string Energy::UNIT = "J";               // System International
 const float Energy::PLANCK_CONSTANT = 6.62607015f;  // 6.62607015 x 10^-34 m^2 kg/s
 const short int Energy::PLANCK_SCALE = -34;         // 10^-34 m^2 kg/s
+const float Energy::ELECTRON_VOLT = 1.602176634f;   // 1.602176634f J
+const short int Energy::EV_SCALE = -19;             // 10^-19 J
+const short int Energy::MEV_SCALE = -13;            // 10^-13 J
+const short int Energy::GEV_SCALE = -10;            // 10^-10 J
+const short int Energy::TEV_SCALE = -7;             // 10^-7 J
 const float Energy::LIGHT_SPEED = 2.99792458;       // 2.99792458 x 10^8 m/s
 const short int Energy::LIGHT_SCALE = 8;            // 10^8 m/s
 
@@ -729,6 +734,26 @@ qft::Time Energy::getPerpetuity(const float modulation) const {
 
 const shp::Quantity Energy::getPhysicalLimit() {
     shp::Quantity result((PLANCK_CONSTANT / 2), PLANCK_SCALE, UNIT);
+    return result;
+}
+
+const shp::Quantity Energy:: getElectronvolt(const float quantum) {
+    shp::Quantity result((ELECTRON_VOLT * quantum), EV_SCALE, UNIT);
+    return result;
+}
+
+const shp::Quantity Energy:: getMegaElectronvolt(const float quantum) {
+    shp::Quantity result((ELECTRON_VOLT * quantum), MEV_SCALE, UNIT);
+    return result;
+}
+
+const shp::Quantity Energy:: getGigaElectronvolt(const float quantum) {
+    shp::Quantity result((ELECTRON_VOLT * quantum), GEV_SCALE, UNIT);
+    return result;
+}
+
+const shp::Quantity Energy:: getTeraElectronvolt(const float quantum) {
+    shp::Quantity result((ELECTRON_VOLT * quantum), TEV_SCALE, UNIT);
     return result;
 }
 

@@ -69,6 +69,8 @@ public:
     virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();
+private:
+    void initialize();
 public:
     static const short int DOWN_MIN;
     static const short int DOWN_MAX;

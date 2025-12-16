@@ -19,28 +19,65 @@
 // THE SOFTWARE.
 
 #include "quark.h"
+#include "energy.h"
 
 namespace qft {
 
-Quark::Quark() : Particle() {
+const short int Quark::TYPE_MAX = 6;
+const short int Quark::COLOUR_MAX = 3;
+const short int Quark::GENERATION_MAX = 3;
+
+const float Quark::MASS_LOWER[] = {
+    1.7f, 4.1f,                 // First Generation (Up, Down)
+    1270.0f, 101.0f,            // Second Generation (Charm, Strange)
+    172000.0f, 4190.0f,         // Third Generation (Top, Bottom)
+};
+
+const float Quark::MASS_HIGHER[] = {
+    3.3f, 5.8f,                 // First Generation (Up, Down)
+    1270.0f, 101.0f,            // Second Generation (Charm, Strange)
+    172000.0f, 4190.0f,         // Third Generation (Top, Bottom)
+};
+
+const float Quark::ELECTRIC_CHARGE[] = {
+    +(2.0f/3.0f), -(1.0f/3.0f), // First Generation (Up, Down)
+    +(2.0f/3.0f), -(1.0f/3.0f), // Second Generation (Charm, Strange)
+    +(2.0f/3.0f), -(1.0f/3.0f), // Third Generation (Top, Bottom)
+};
+
+const float Quark::DEFAULT_SPIN = 0.5f;    // Dirac Fermions have 1/2 spin
+
+Quark::Quark()
+        : Particle(Spin(DEFAULT_SPIN),
+        getMassLow(Quark::UP), getElectricCharge(Quark::UP)) {
 
 }
 
-Quark::Quark(std::string name) : Particle(name) {
+Quark::Quark(std::string name)
+        : Particle(name, Spin(DEFAULT_SPIN),
+        getMassLow(Quark::UP), getElectricCharge(Quark::UP)) {
 
 }
 
-Quark::Quark(float wavelength) : Particle(wavelength) {
+Quark::Quark(float wavelength)
+        : Particle(Spin(DEFAULT_SPIN),
+        getMassLow(Quark::UP), getElectricCharge(Quark::UP)) {
     this->getEnergy().setWavelength(wavelength);
 }
 
 Quark::Quark(std::string name, float wavelength)
-        : Particle(name) {
+        : Particle(name, Spin(DEFAULT_SPIN),
+        getMassLow(Quark::UP), getElectricCharge(Quark::UP)) {
     this->getEnergy().setWavelength(wavelength);
 }
 
 Quark::Quark(std::string name, const Energy& energy)
-        : Particle(name, energy) {
+        : Particle(name, Spin(DEFAULT_SPIN), energy) {
+
+}
+
+Quark::Quark(std::string name, const Mass& mass, const Charge& charge)
+        : Particle(name, Spin(DEFAULT_SPIN), Energy(mass, charge)) {
 
 }
 
@@ -99,6 +136,36 @@ Quark Quark::operator%(const Quark& peer) const {
 
 shp::Quantity Quark::getWavelength() const {
     return this->getEnergy().getWavelength().getMagnitude();
+}
+
+const Mass Quark::getMassLow(short int number) {
+    Mass result;
+    if ((number > 0 && number <= TYPE_MAX)) {
+        result = Energy::getMegaElectronvolt(MASS_LOWER[number-1]);
+    } else {
+        result = Energy::getMegaElectronvolt(MASS_LOWER[0]);
+    }
+    return result;
+}
+
+const Mass Quark::getMassHigh(short int number) {
+    Mass result;
+    if ((number > 0 && number <= TYPE_MAX)) {
+        result = Energy::getMegaElectronvolt(MASS_HIGHER[number-1]);
+    } else {
+        result = Energy::getMegaElectronvolt(MASS_HIGHER[0]);
+    }
+    return result;
+}
+
+const Charge Quark::getElectricCharge(short int number) {
+    Charge result;
+    if ((number > 0 && number <= TYPE_MAX)) {
+        result = Charge(ELECTRIC_CHARGE[number-1]);
+    } else {
+        result = Charge(ELECTRIC_CHARGE[0]);
+    }
+    return result;
 }
 
 shp::Point Quark::copy() {

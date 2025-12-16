@@ -20,6 +20,7 @@
 
 #include "proton.h"
 #include "neutron.h"
+#include "quark.h"
 
 namespace qft {
 
@@ -29,42 +30,44 @@ const float Proton::DEFAULT_SPIN = 0.5f;    // Dirac Fermions have 1/2 spin
 
 Proton::Proton()
         : Particle(Spin(DEFAULT_SPIN), Mass(Mass::PROTON), Charge(Charge::PROTON)), up(), down() {
-
+    initialize();
 }
 
 Proton::Proton(std::string name)
         : Particle(name, Spin(DEFAULT_SPIN), Mass(Mass::PROTON), Charge(Charge::PROTON)), up(), down() {
-
+    initialize();
 }
 
 Proton::Proton(float wavelength)
         : Particle(Spin(DEFAULT_SPIN), Mass(Mass::PROTON), Charge(Charge::PROTON)), up(), down() {
     this->getEnergy().setWavelength(wavelength);
+    initialize();
 }
 
 Proton::Proton(std::string name, float wavelength)
         : Particle(name, Spin(DEFAULT_SPIN), Mass(Mass::PROTON), Charge(Charge::PROTON)), up(), down() {
     this->getEnergy().setWavelength(wavelength);
+    initialize();
 }
 
 Proton::Proton(std::string name, const Energy& energy)
         : Particle(name, Spin(DEFAULT_SPIN), energy), up(), down() {
-
+    initialize();
 }
 
 Proton::Proton(std::string name, const Spin& spin, const Energy& energy)
         : Particle(name, spin, energy), up(), down() {
-
+    initialize();
 }
 
 Proton::Proton(std::string name, const float spin, const float mass, const float charge)
         : Particle(name, Spin(spin), Energy(Mass(mass), Charge(charge))), up(), down() {
-
+    initialize();
 }
 
 Proton::Proton(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
         : Particle(name, spin, Energy(mass, charge)), up(), down() {
-
+    initialize();
 }
 
 Proton::~Proton() {
@@ -160,6 +163,12 @@ std::string Proton::print() {
     result << up[1].print() << std::endl << "\td:";
     result << down.print();
 	return result.str();
+}
+
+void Proton::initialize() {
+    up[0] = Quark("u", Quark::getMassLow(Quark::UP), Quark::getElectricCharge(Quark::UP));
+    up[1] = Quark("u", Quark::getMassLow(Quark::UP), Quark::getElectricCharge(Quark::UP));
+    down = Quark("d", Quark::getMassLow(Quark::DOWN), Quark::getElectricCharge(Quark::DOWN));
 }
 
 } // namespace qft
