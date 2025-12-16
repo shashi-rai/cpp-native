@@ -19,6 +19,8 @@
 // THE SOFTWARE.
 
 #include "force.h"
+#include "acceleration.h"
+#include "mass.h"
 
 namespace qft {
 
@@ -182,6 +184,13 @@ Force Force::operator/(const Force& peer) const {
     return Force("/", shp::Quantity(std::abs(a_phasor),
 			(magnitude.getScaling() - peer.magnitude.getScaling()), getUnit()),
 		shp::Direction(std::arg(a_phasor)));
+}
+
+Acceleration Force::getAcceleration(const Mass& mass) const {
+	shp::Quantity quantum = (magnitude / mass.getMagnitude());
+	Acceleration result(quantum.getValue(), quantum.getScaling(), quantum.getUnit());
+	result.adjustScaling();
+    return result;
 }
 
 shp::Quantity Force::getTotal() const {

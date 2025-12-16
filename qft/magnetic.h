@@ -29,25 +29,25 @@
 namespace qft {
 
 class Magnetic : public Force {
-    Field* field;
+    std::shared_ptr<Field> field;
 public:
     // Constructors
     Magnetic();
     Magnetic(std::string name);
-    Magnetic(Field* field);
-    Magnetic(std::string name, Field* field);
+    Magnetic(const std::shared_ptr<Field> field);
+    Magnetic(std::string name, const std::shared_ptr<Field> field);
     Magnetic(const float magnitude);
-    Magnetic(const float magnitude, Field* field);
+    Magnetic(const float magnitude, const std::shared_ptr<Field> field);
     Magnetic(const float magnitude, const float direction);
-    Magnetic(const float magnitude, const float direction, Field* field);
+    Magnetic(const float magnitude, const float direction, const std::shared_ptr<Field> field);
     Magnetic(const float magnitude, const float direction, short int scaling);
-    Magnetic(const float magnitude, const float direction, short int scaling, Field* field);
+    Magnetic(const float magnitude, const float direction, short int scaling, const std::shared_ptr<Field> field);
     Magnetic(std::string name, const float magnitude);
-    Magnetic(std::string name, const float magnitude, Field* field);
+    Magnetic(std::string name, const float magnitude, const std::shared_ptr<Field> field);
     Magnetic(std::string name, const float magnitude, const float direction);
-    Magnetic(std::string name, const float magnitude, const float direction, Field* field);
+    Magnetic(std::string name, const float magnitude, const float direction, const std::shared_ptr<Field> field);
     Magnetic(std::string name, const float magnitude, const float direction, short int scaling);
-    Magnetic(std::string name, const float magnitude, const float direction, short int scaling, Field* field);
+    Magnetic(std::string name, const float magnitude, const float direction, short int scaling, const std::shared_ptr<Field> field);
 
     // Destructors
     ~Magnetic();
@@ -56,10 +56,10 @@ public:
     bool operator==(const Magnetic& peer) const;
 
     // Getters
-    Field getField() const { return field; }
+    std::shared_ptr<Field> getField() const { return field; }
 
     // Setters
-    void setField(Field* value) { this->field = value; }
+    void setField(const std::shared_ptr<Field> address) { this->field = address; }
 
     // Additional methods
     bool isOwned() const;

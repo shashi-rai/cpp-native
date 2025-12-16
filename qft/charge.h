@@ -22,24 +22,36 @@
 #define QFT_CHARGE_H
 
 #include <sstream>
+#include <string>
 #include <vector>
 #include "density.h"
 #include "force.h"
+#include "../shp/angular.h"
 #include "../shp/quantity.h"
 #include "../shp/unit.h"
 
 namespace qft {
 
+// To enable compiler resolve forward declarations
+class Field;
+
 class Charge {
-    shp::Quantity quantity;
+    std::shared_ptr<Field> field;
+    shp::Quantity magnitude;
 public:
     // Constructors
     Charge();
-    Charge(float quantity);
-    Charge(float quantity, short int scaling);
-    Charge(float quantity, const shp::Unit& unit);
-    Charge(float quantity, short int scaling, const shp::Unit& unit);
-    Charge(const shp::Quantity& quantity, const shp::Unit& unit);
+    Charge(const std::shared_ptr<Field> field);
+    Charge(std::string unit);
+    Charge(const shp::Unit& unit);
+    Charge(const float magnitude);
+    Charge(const float magnitude, std::string unit);
+    Charge(const float magnitude, const shp::Unit& unit);
+    Charge(const float magnitude, short int scaling);
+    Charge(const float magnitude, short int scaling, std::string unit);
+    Charge(const float magnitude, short int scaling, const shp::Unit& unit);
+    Charge(const shp::Quantity& magnitude);
+    Charge(const std::shared_ptr<Field> field, const shp::Quantity& magnitude);
 
     // Destructors
     ~Charge();
@@ -56,17 +68,20 @@ public:
     Force operator()(const Charge& peer, const float distance) const;
 
     // Getters
-    shp::Unit getUnit() const { return quantity.getUnit(); }
-    shp::Quantity getQuantity() const { return quantity; }
+    std::shared_ptr<Field> getField() const { return field; }
+    shp::Quantity getMagnitude() const { return magnitude; }
 
     // Setters
-    void setUnit(const shp::Unit& value) { this->quantity.setUnit(value); }
-    void setQuantity(const float amount) { this->quantity = amount; }
+    void setField(std::shared_ptr<Field> address) { this->field = address; }
+    void setMagnitude(const float amount) { this->magnitude = amount; }
 
     // Additional methods
+    shp::Unit getUnit() const;
+    void setUnit(const shp::Unit& value);
+    bool isOwned() const;
     shp::Quantity getTotal() const;
     Density getDensity(const shp::Volume& volume) const;
-    Force getForce(const float acceleration) const;
+    Force getForce(const shp::Angular& coordinates) const;
     void adjustScaling();
     virtual Charge copy();
     virtual void clear();

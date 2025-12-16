@@ -72,6 +72,7 @@ public:
 public:
     static const short int UP_MIN;
     static const short int UP_MAX;
+    static const float DEFAULT_SPIN;
 };
 
 typedef std::vector<Proton > ProtonArray;

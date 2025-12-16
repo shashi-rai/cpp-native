@@ -19,6 +19,8 @@
 // THE SOFTWARE.
 
 #include "charge.h"
+#include "electric.h"
+#include "field.h"
 
 namespace qft {
 
@@ -29,80 +31,124 @@ const float Charge::NEUTRON = 0.0f;                 // 0.0 x 10^-19 C
 const float Charge::ELECTRON = -1.6021766341019f;   // 1.602 x 10^-19 C
 
 Charge::Charge()
-        : quantity(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE,
+        : magnitude(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE,
             shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_CHARGE)) {
-
+    setField(nullptr);
 }
 
-Charge::Charge(float quantity)
-        : quantity(quantity, ATOMIC_SCALE,
+Charge::Charge(const std::shared_ptr<Field> field)
+        : magnitude(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE,
             shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_CHARGE)) {
-
+    setField(field);
 }
 
-Charge::Charge(float quantity, short int scaling)
-        : quantity(quantity, scaling,
+Charge::Charge(std::string unit)
+        : magnitude(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, std::string(unit)) {
+    setField(nullptr);
+}
+
+Charge::Charge(const shp::Unit& unit)
+        : magnitude(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, unit) {
+    setField(nullptr);
+}
+
+Charge::Charge(const float magnitude)
+        : magnitude(magnitude, ATOMIC_SCALE,
             shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_CHARGE)) {
-
+    setField(nullptr);
 }
 
-Charge::Charge(float quantity, const shp::Unit& unit)
-        : quantity(quantity, ATOMIC_SCALE, unit) {
-
+Charge::Charge(const float magnitude, std::string unit)
+        : magnitude(magnitude, ATOMIC_SCALE, shp::Unit(unit)) {
+    setField(nullptr);
 }
 
-Charge::Charge(float quantity, short int scaling, const shp::Unit& unit)
-        : quantity(quantity, scaling, unit) {
-
+Charge::Charge(const float magnitude, const shp::Unit& unit)
+        : magnitude(magnitude, ATOMIC_SCALE, unit) {
+    setField(nullptr);
 }
 
-Charge::Charge(const shp::Quantity& quantity, const shp::Unit& unit) : quantity(unit) {
+Charge::Charge(const float magnitude, short int scaling)
+        : magnitude(magnitude, scaling,
+            shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_CHARGE)) {
+    setField(nullptr);
+}
 
+Charge::Charge(const float magnitude, short int scaling, std::string unit)
+        : magnitude(magnitude, scaling, shp::Unit(unit)) {
+    setField(nullptr);
+}
+
+Charge::Charge(const float magnitude, short int scaling, const shp::Unit& unit)
+        : magnitude(magnitude, scaling, unit) {
+    setField(nullptr);
+}
+
+Charge::Charge(const shp::Quantity& magnitude)
+        : magnitude(magnitude) {
+    setField(nullptr);
+}
+
+Charge::Charge(const std::shared_ptr<Field> field, const shp::Quantity& magnitude)
+        : magnitude(magnitude) {
+    setField(nullptr);
 }
 
 Charge::~Charge() {
-
+    setField(nullptr);
 }
 
 bool Charge::operator==(const Charge& peer) const {
-    return (quantity == peer.quantity);
+    return (magnitude == peer.magnitude);
 }
 
 Charge Charge::operator+(const Charge& peer) const {
-    shp::Quantity charge = (quantity + peer.quantity);
-    return Charge(charge.getValue(), charge.getScaling(), quantity.getUnit());
+    shp::Quantity charge = (magnitude + peer.magnitude);
+    return Charge(charge.getValue(), charge.getScaling(), charge.getUnit());
 }
 
 Charge Charge::operator-(const Charge& peer) const {
-    shp::Quantity charge = (quantity - peer.quantity);
-    return Charge(charge.getValue(), charge.getScaling(), quantity.getUnit());
+    shp::Quantity charge = (magnitude - peer.magnitude);
+    return Charge(charge.getValue(), charge.getScaling(), charge.getUnit());
 }
 
 Charge Charge::operator*(const Charge& peer) const {
-    shp::Quantity charge = (quantity * peer.quantity);
-    return Charge(charge.getValue(), charge.getScaling(), quantity.getUnit());
+    shp::Quantity charge = (magnitude * peer.magnitude);
+    return Charge(charge.getValue(), charge.getScaling(), charge.getUnit());
 }
 
 Charge Charge::operator/(const Charge& peer) const {
-    shp::Quantity charge = (quantity / peer.quantity);
-    return Charge(charge.getValue(), charge.getScaling(), quantity.getUnit());
+    shp::Quantity charge = (magnitude / peer.magnitude);
+    return Charge(charge.getValue(), charge.getScaling(), charge.getUnit());
 }
 
 Charge Charge::operator%(const Charge& peer) const {
-    shp::Quantity charge = (quantity % peer.quantity);
-    return Charge(charge.getValue(), charge.getScaling(), quantity.getUnit());
+    shp::Quantity charge = (magnitude % peer.magnitude);
+    return Charge(charge.getValue(), charge.getScaling(), charge.getUnit());
 }
 
 Force Charge::operator()(const Charge& peer, const float distance) const {
-    float charged = (quantity.getValue() * peer.quantity.getValue());
+    float charged = (magnitude.getValue() * peer.magnitude.getValue());
     float quantum = (Force::COULOMB_CONSTANT * (charged / (distance * distance)));
     Force result(quantum, Force::COULOMB_SCALE, shp::Unit::getDerivedSymbol(shp::Unit::FORCE));
     result.adjustScaling();
     return result;
 }
 
+shp::Unit Charge::getUnit() const {
+    return magnitude.getUnit();
+}
+
+void Charge::setUnit(const shp::Unit& value) {
+    this->magnitude.setUnit(value);
+}
+
+bool Charge::isOwned() const {
+    return field != nullptr;
+}
+
 shp::Quantity Charge::getTotal() const {
-    shp::Quantity result(quantity.getValue(), quantity.getScaling(), getUnit());
+    shp::Quantity result(magnitude.getValue(), magnitude.getScaling(), getUnit());
     return result;
 }
 
@@ -111,31 +157,35 @@ Density Charge::getDensity(const shp::Volume& volume) const {
     return result;
 }
 
-Force Charge::getForce(const float acceleration) const {
-    float movable = (getTotal().getValue() * acceleration);
-    Force result(movable, quantity.getUnit().getName());
+Force Charge::getForce(const shp::Angular& coordinates) const {
+    shp::Quantity force = (getTotal() * field->getTotal());
+    shp::Direction direction = field->getDirection();
+    Electric result(force.getValue(), direction.toRadians(), force.getScaling(), field);
     result.adjustScaling();
     return result;
 }
 
 void Charge::adjustScaling() {
-    quantity.adjustScaling();
+    magnitude.adjustScaling();
 }
 
 Charge Charge::copy() {
-    Charge fresh(quantity, quantity.getUnit());
+    Charge fresh(magnitude.getValue(), magnitude.getScaling(), magnitude.getUnit());
+    fresh.setField(field);
     return fresh;
 }
 
 void Charge::clear() {
-    quantity.clear();
+    magnitude.clear();
+    setField(nullptr);
     return;
 }
 
 std::string Charge::print() {
     std::stringstream result;
     result << "q:";
-    result << quantity.print();
+    result << magnitude.print() << ",";
+    result << (field != nullptr ? field->print() : "");
 	return result.str();
 }
 

@@ -98,6 +98,7 @@ public:
 
 public:
     static const short int DEFAULT_VALUE;
+    static const float DEFAULT_SPIN;
 };
 
 typedef std::vector<Electron > ElectronArray;

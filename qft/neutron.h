@@ -72,6 +72,7 @@ public:
 public:
     static const short int DOWN_MIN;
     static const short int DOWN_MAX;
+    static const float DEFAULT_SPIN;
 };
 
 typedef std::vector<Neutron > NeutronArray;

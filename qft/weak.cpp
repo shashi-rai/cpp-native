@@ -30,11 +30,12 @@ Weak::Weak(std::string name) : Force(name) {
     setField(nullptr);
 }
 
-Weak::Weak(Field* field) : Force() {
+Weak::Weak(const std::shared_ptr<Field> field) : Force() {
     setField(field);
 }
 
-Weak::Weak(std::string name, Field* field) : Force(name) {
+Weak::Weak(std::string name, const std::shared_ptr<Field> field)
+        : Force(name) {
     setField(field);
 }
 
@@ -42,7 +43,8 @@ Weak::Weak(const float magnitude) : Force(magnitude) {
     setField(nullptr);
 }
 
-Weak::Weak(const float magnitude, Field* field) : Force(magnitude) {
+Weak::Weak(const float magnitude, const std::shared_ptr<Field> field)
+        : Force(magnitude) {
     setField(field);
 }
 
@@ -51,7 +53,8 @@ Weak::Weak(const float magnitude, const float direction)
     setField(nullptr);
 }
 
-Weak::Weak(const float magnitude, const float direction, Field* field)
+Weak::Weak(const float magnitude, const float direction,
+        const std::shared_ptr<Field> field)
         : Force(magnitude, direction) {
     setField(field);
 }
@@ -61,7 +64,8 @@ Weak::Weak(const float magnitude, const float direction, short int scaling)
     setField(nullptr);
 }
 
-Weak::Weak(const float magnitude, const float direction, short int scaling, Field* field)
+Weak::Weak(const float magnitude, const float direction, short int scaling,
+        const std::shared_ptr<Field> field)
         : Force(magnitude, direction, scaling) {
     setField(field);
 }
@@ -71,7 +75,7 @@ Weak::Weak(std::string name, const float magnitude)
     setField(nullptr);
 }
 
-Weak::Weak(std::string name, const float magnitude, Field* field)
+Weak::Weak(std::string name, const float magnitude, const std::shared_ptr<Field> field)
         : Force(name, magnitude) {
     setField(field);
 }
@@ -81,7 +85,8 @@ Weak::Weak(std::string name, const float magnitude, const float direction)
     setField(nullptr);
 }
 
-Weak::Weak(std::string name, const float magnitude, const float direction, Field* field)
+Weak::Weak(std::string name, const float magnitude, const float direction,
+        const std::shared_ptr<Field> field)
         : Force(name, magnitude, direction) {
     setField(field);
 }
@@ -93,7 +98,7 @@ Weak::Weak(std::string name, const float magnitude, const float direction,
 }
 
 Weak::Weak(std::string name, const float magnitude, const float direction,
-        short int scaling, Field* field)
+        short int scaling, const std::shared_ptr<Field> field)
         : Force(name, magnitude, direction, scaling) {
     setField(field);
 }

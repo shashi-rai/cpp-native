@@ -25,29 +25,30 @@ namespace qft {
 
 const short int Neutron::DOWN_MIN = 0;
 const short int Neutron::DOWN_MAX = 2;
+const float Neutron::DEFAULT_SPIN = 0.5f;    // Dirac Fermions have 1/2 spin
 
 Neutron::Neutron()
-        : Particle(Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)), up(), down() {
+        : Particle(Spin(DEFAULT_SPIN), Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)), up(), down() {
 
 }
 
 Neutron::Neutron(std::string name)
-        : Particle(name, Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)), up(), down() {
+        : Particle(name, Spin(DEFAULT_SPIN), Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)), up(), down() {
 
 }
 
 Neutron::Neutron(float wavelength)
-        : Particle(wavelength, Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)), up(), down() {
+        : Particle(Spin(DEFAULT_SPIN), Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)), up(), down() {
     this->getEnergy().setWavelength(wavelength);
 }
 
 Neutron::Neutron(std::string name, float wavelength)
-        : Particle(name, Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)), up(), down() {
+        : Particle(name, Spin(DEFAULT_SPIN), Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)), up(), down() {
     this->getEnergy().setWavelength(wavelength);
 }
 
 Neutron::Neutron(std::string name, const Energy& energy)
-        : Particle(name, energy), up(), down() {
+        : Particle(name, Spin(DEFAULT_SPIN), energy), up(), down() {
 
 }
 

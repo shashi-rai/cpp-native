@@ -30,11 +30,12 @@ Gravity::Gravity(std::string name) : Force(name) {
     setField(nullptr);
 }
 
-Gravity::Gravity(Field* field) : Force() {
+Gravity::Gravity(const std::shared_ptr<Field> field) : Force() {
     setField(field);
 }
 
-Gravity::Gravity(std::string name, Field* field) : Force(name) {
+Gravity::Gravity(std::string name, const std::shared_ptr<Field> field)
+        : Force(name) {
     setField(field);
 }
 
@@ -42,7 +43,8 @@ Gravity::Gravity(const float magnitude) : Force(magnitude) {
     setField(nullptr);
 }
 
-Gravity::Gravity(const float magnitude, Field* field) : Force(magnitude) {
+Gravity::Gravity(const float magnitude, const std::shared_ptr<Field> field)
+        : Force(magnitude) {
     setField(field);
 }
 
@@ -51,7 +53,8 @@ Gravity::Gravity(const float magnitude, const float direction)
     setField(nullptr);
 }
 
-Gravity::Gravity(const float magnitude, const float direction, Field* field)
+Gravity::Gravity(const float magnitude, const float direction,
+        const std::shared_ptr<Field> field)
         : Force(magnitude, direction) {
     setField(field);
 }
@@ -61,7 +64,8 @@ Gravity::Gravity(const float magnitude, const float direction, short int scaling
     setField(nullptr);
 }
 
-Gravity::Gravity(const float magnitude, const float direction, short int scaling, Field* field)
+Gravity::Gravity(const float magnitude, const float direction, short int scaling,
+        const std::shared_ptr<Field> field)
         : Force(magnitude, direction, scaling) {
     setField(field);
 }
@@ -71,7 +75,8 @@ Gravity::Gravity(std::string name, const float magnitude)
     setField(nullptr);
 }
 
-Gravity::Gravity(std::string name, const float magnitude, Field* field)
+Gravity::Gravity(std::string name, const float magnitude,
+        const std::shared_ptr<Field> field)
         : Force(name, magnitude) {
     setField(field);
 }
@@ -81,7 +86,8 @@ Gravity::Gravity(std::string name, const float magnitude, const float direction)
     setField(nullptr);
 }
 
-Gravity::Gravity(std::string name, const float magnitude, const float direction, Field* field)
+Gravity::Gravity(std::string name, const float magnitude, const float direction,
+        const std::shared_ptr<Field> field)
         : Force(name, magnitude, direction) {
     setField(field);
 }
@@ -93,7 +99,7 @@ Gravity::Gravity(std::string name, const float magnitude, const float direction,
 }
 
 Gravity::Gravity(std::string name, const float magnitude, const float direction,
-        short int scaling, Field* field)
+        short int scaling, const std::shared_ptr<Field> field)
         : Force(name, magnitude, direction, scaling) {
     setField(field);
 }

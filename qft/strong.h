@@ -29,25 +29,25 @@
 namespace qft {
 
 class Strong : public Force {
-    Field* field;
+    std::shared_ptr<Field> field;
 public:
     // Constructors
     Strong();
     Strong(std::string name);
-    Strong(Field* field);
-    Strong(std::string name, Field* field);
+    Strong(const std::shared_ptr<Field> field);
+    Strong(std::string name, const std::shared_ptr<Field> field);
     Strong(const float magnitude);
-    Strong(const float magnitude, Field* field);
+    Strong(const float magnitude, const std::shared_ptr<Field> field);
     Strong(const float magnitude, const float direction);
-    Strong(const float magnitude, const float direction, Field* field);
+    Strong(const float magnitude, const float direction, const std::shared_ptr<Field>field);
     Strong(const float magnitude, const float direction, short int scaling);
-    Strong(const float magnitude, const float direction, short int scaling, Field* field);
+    Strong(const float magnitude, const float direction, short int scaling, const std::shared_ptr<Field> field);
     Strong(std::string name, const float magnitude);
-    Strong(std::string name, const float magnitude, Field* field);
+    Strong(std::string name, const float magnitude, const std::shared_ptr<Field> field);
     Strong(std::string name, const float magnitude, const float direction);
-    Strong(std::string name, const float magnitude, const float direction, Field* field);
+    Strong(std::string name, const float magnitude, const float direction, const std::shared_ptr<Field> field);
     Strong(std::string name, const float magnitude, const float direction, short int scaling);
-    Strong(std::string name, const float magnitude, const float direction, short int scaling, Field* field);
+    Strong(std::string name, const float magnitude, const float direction, short int scaling, const std::shared_ptr<Field> field);
 
     // Operator overloading
     bool operator==(const Strong& peer) const;
@@ -56,10 +56,10 @@ public:
     ~Strong();
 
     // Getters
-    Field getField() const { return field; }
+    std::shared_ptr<Field> getField() const { return field; }
 
     // Setters
-    void setField(Field* value) { this->field = value; }
+    void setField(const std::shared_ptr<Field> address) { this->field = address; }
 
     // Additional methods
     bool isOwned() const;

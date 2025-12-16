@@ -23,6 +23,7 @@
 namespace qft {
 
 const short int Electron::DEFAULT_VALUE = 0;
+const float Electron::DEFAULT_SPIN = 0.5f;    // Dirac Fermions have 1/2 spin
 
 Electron::Electron()
 		: Particle(Mass(Mass::ELECTRON), Charge(Charge::ELECTRON)),

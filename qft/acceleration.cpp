@@ -105,6 +105,10 @@ shp::Quantity Acceleration::getTotal() const {
     return result;
 }
 
+void Acceleration::adjustScaling() {
+    velocity.adjustScaling();
+}
+
 Acceleration Acceleration::copy() {
     Acceleration fresh(velocity, change, unit);
     return fresh;

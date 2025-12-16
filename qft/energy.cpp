@@ -682,8 +682,8 @@ Density Energy::getDensity(const shp::Volume& volume) const {
 
 shp::Quantity Energy::getPotential() const {
     shp::Quantity speed_of_light(LIGHT_SPEED, LIGHT_SCALE);
-    float energy = (mass.getQuantity() * (speed_of_light * speed_of_light)).getValue();
-	shp::Quantity result(energy, ((LIGHT_SCALE * 2) + mass.getQuantity().getScaling()), unit);
+    float energy = (mass.getMagnitude() * (speed_of_light * speed_of_light)).getValue();
+	shp::Quantity result(energy, ((LIGHT_SCALE * 2) + mass.getMagnitude().getScaling()), unit);
     result.adjustScaling();
     return result;
 }
@@ -734,7 +734,7 @@ const shp::Quantity Energy::getPhysicalLimit() {
 
 shp::Point Energy::copy() {
     Energy fresh(wavelength.getMagnitude().getValue(),
-            mass.getQuantity().getValue(), charge.getQuantity().getValue(), getUnit());
+            mass.getMagnitude().getValue(), charge.getMagnitude().getValue(), getUnit());
     return fresh;
 }
 

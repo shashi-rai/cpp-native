@@ -25,29 +25,30 @@ namespace qft {
 
 const short int Proton::UP_MIN = 0;
 const short int Proton::UP_MAX = 2;
+const float Proton::DEFAULT_SPIN = 0.5f;    // Dirac Fermions have 1/2 spin
 
 Proton::Proton()
-        : Particle(Mass(Mass::PROTON), Charge(Charge::PROTON)), up(), down() {
+        : Particle(Spin(DEFAULT_SPIN), Mass(Mass::PROTON), Charge(Charge::PROTON)), up(), down() {
 
 }
 
 Proton::Proton(std::string name)
-        : Particle(name, Mass(Mass::PROTON), Charge(Charge::PROTON)), up(), down() {
+        : Particle(name, Spin(DEFAULT_SPIN), Mass(Mass::PROTON), Charge(Charge::PROTON)), up(), down() {
 
 }
 
 Proton::Proton(float wavelength)
-        : Particle(wavelength, Mass(Mass::PROTON), Charge(Charge::PROTON)), up(), down() {
+        : Particle(Spin(DEFAULT_SPIN), Mass(Mass::PROTON), Charge(Charge::PROTON)), up(), down() {
     this->getEnergy().setWavelength(wavelength);
 }
 
 Proton::Proton(std::string name, float wavelength)
-        : Particle(name, Mass(Mass::PROTON), Charge(Charge::PROTON)), up(), down() {
+        : Particle(name, Spin(DEFAULT_SPIN), Mass(Mass::PROTON), Charge(Charge::PROTON)), up(), down() {
     this->getEnergy().setWavelength(wavelength);
 }
 
 Proton::Proton(std::string name, const Energy& energy)
-        : Particle(name, energy), up(), down() {
+        : Particle(name, Spin(DEFAULT_SPIN), energy), up(), down() {
 
 }
 

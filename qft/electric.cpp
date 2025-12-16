@@ -30,19 +30,23 @@ Electric::Electric(std::string name) : Force(name) {
     setField(nullptr);
 }
 
-Electric::Electric(Field* field) : Force() {
+Electric::Electric(const std::shared_ptr<Field> field)
+        : Force() {
     setField(field);
 }
 
-Electric::Electric(std::string name, Field* field) : Force(name) {
+Electric::Electric(std::string name, const std::shared_ptr<Field> field)
+        : Force(name) {
     setField(field);
 }
 
-Electric::Electric(const float magnitude) : Force(magnitude) {
+Electric::Electric(const float magnitude)
+        : Force(magnitude) {
     setField(nullptr);
 }
 
-Electric::Electric(const float magnitude, Field* field) : Force(magnitude) {
+Electric::Electric(const float magnitude, const std::shared_ptr<Field> field)
+        : Force(magnitude) {
     setField(field);
 }
 
@@ -51,7 +55,8 @@ Electric::Electric(const float magnitude, const float direction)
     setField(nullptr);
 }
 
-Electric::Electric(const float magnitude, const float direction, Field* field)
+Electric::Electric(const float magnitude, const float direction,
+        const std::shared_ptr<Field> field)
         : Force(magnitude, direction) {
     setField(field);
 }
@@ -61,7 +66,8 @@ Electric::Electric(const float magnitude, const float direction, short int scali
     setField(nullptr);
 }
 
-Electric::Electric(const float magnitude, const float direction, short int scaling, Field* field)
+Electric::Electric(const float magnitude, const float direction, short int scaling,
+        const std::shared_ptr<Field> field)
         : Force(magnitude, direction, scaling) {
     setField(field);
 }
@@ -71,7 +77,8 @@ Electric::Electric(std::string name, const float magnitude)
     setField(nullptr);
 }
 
-Electric::Electric(std::string name, const float magnitude, Field* field)
+Electric::Electric(std::string name, const float magnitude,
+        const std::shared_ptr<Field> field)
         : Force(name, magnitude) {
     setField(field);
 }
@@ -81,20 +88,21 @@ Electric::Electric(std::string name, const float magnitude, const float directio
     setField(nullptr);
 }
 
-Electric::Electric(std::string name, const float magnitude, const float direction, Field* field)
+Electric::Electric(std::string name, const float magnitude, const float direction,
+        const std::shared_ptr<Field> field)
         : Force(name, magnitude, direction) {
     setField(field);
 }
 
 Electric::Electric(std::string name, const float magnitude, const float direction,
         short int scaling)
-    : Force(name, magnitude, direction, scaling) {
+        : Force(name, magnitude, direction, scaling) {
     setField(nullptr);
 }
 
 Electric::Electric(std::string name, const float magnitude, const float direction,
-        short int scaling, Field* field)
-    : Force(name, magnitude, direction, scaling) {
+        short int scaling, const std::shared_ptr<Field> field)
+        : Force(name, magnitude, direction, scaling) {
     setField(field);
 }
 

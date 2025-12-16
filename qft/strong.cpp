@@ -30,11 +30,12 @@ Strong::Strong(std::string name) : Force(name) {
     setField(nullptr);
 }
 
-Strong::Strong(Field* field) : Force() {
+Strong::Strong(const std::shared_ptr<Field> field) : Force() {
     setField(field);
 }
 
-Strong::Strong(std::string name, Field* field) : Force(name) {
+Strong::Strong(std::string name, const std::shared_ptr<Field> field)
+        : Force(name) {
     setField(field);
 }
 
@@ -42,7 +43,8 @@ Strong::Strong(const float magnitude) : Force(magnitude) {
     setField(nullptr);
 }
 
-Strong::Strong(const float magnitude, Field* field) : Force(magnitude) {
+Strong::Strong(const float magnitude, const std::shared_ptr<Field> field)
+        : Force(magnitude) {
     setField(field);
 }
 
@@ -51,7 +53,8 @@ Strong::Strong(const float magnitude, const float direction)
     setField(nullptr);
 }
 
-Strong::Strong(const float magnitude, const float direction, Field* field)
+Strong::Strong(const float magnitude, const float direction,
+        const std::shared_ptr<Field> field)
         : Force(magnitude, direction) {
     setField(field);
 }
@@ -61,7 +64,8 @@ Strong::Strong(const float magnitude, const float direction, short int scaling)
     setField(nullptr);
 }
 
-Strong::Strong(const float magnitude, const float direction, short int scaling, Field* field)
+Strong::Strong(const float magnitude, const float direction, short int scaling,
+        const std::shared_ptr<Field> field)
         : Force(magnitude, direction, scaling) {
     setField(field);
 }
@@ -70,18 +74,19 @@ Strong::Strong(std::string name, const float magnitude) : Force(name, magnitude)
     setField(nullptr);
 }
 
-Strong::Strong(std::string name, const float magnitude, Field* field) :
-        Force(name, magnitude) {
+Strong::Strong(std::string name, const float magnitude, const std::shared_ptr<Field> field)
+        : Force(name, magnitude) {
     setField(field);
 }
 
-Strong::Strong(std::string name, const float magnitude, const float direction) :
-        Force(name, magnitude, direction) {
+Strong::Strong(std::string name, const float magnitude, const float direction)
+        : Force(name, magnitude, direction) {
     setField(nullptr);
 }
 
-Strong::Strong(std::string name, const float magnitude, const float direction, Field* field) :
-        Force(name, magnitude, direction) {
+Strong::Strong(std::string name, const float magnitude, const float direction,
+        const std::shared_ptr<Field> field)
+        : Force(name, magnitude, direction) {
     setField(field);
 }
 
@@ -92,7 +97,7 @@ Strong::Strong(std::string name, const float magnitude, const float direction,
 }
 
 Strong::Strong(std::string name, const float magnitude, const float direction,
-        short int scaling, Field* field)
+        short int scaling, const std::shared_ptr<Field> field)
         : Force(name, magnitude, direction, scaling) {
     setField(field);
 }

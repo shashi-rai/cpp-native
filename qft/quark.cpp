@@ -115,7 +115,6 @@ void Quark::clear() {
 
 std::string Quark::print() {
     std::stringstream result;
-    result << "q:";
 	result << Particle::print();
 	return result.str();
 }

@@ -31,11 +31,13 @@
 namespace qft {
 
 // To enable compiler resolve forward declarations
+class Acceleration;
 class Electric;
 class Gravity;
 class Magnetic;
+class Mass;
 class Strong;
-class Weak;
+class Weak;;
 
 class Force {
     std::string name;
@@ -85,6 +87,7 @@ public:
     void setDirection(const shp::Direction& direction) { this->direction = direction; }
 
     // Additional methods
+    Acceleration getAcceleration(const Mass& mass) const;
     shp::Quantity getTotal() const;
     void adjustScaling();
     virtual Force copy();

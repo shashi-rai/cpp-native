@@ -22,9 +22,7 @@
 #define QFT_PARTICLE_H
 
 #include <vector>
-#include "charge.h"
 #include "energy.h"
-#include "mass.h"
 #include "spin.h"
 #include "../shp/point.h"
 #include "../shp/wave.h"

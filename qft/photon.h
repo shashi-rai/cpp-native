@@ -61,6 +61,8 @@ public:
     virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();
+public:
+    static const float DEFAULT_SPIN;
 };
 
 typedef std::vector<Photon > PhotonArray;

@@ -26,43 +26,39 @@
 #include "charge.h"
 #include "mass.h"
 #include "particle.h"
-#include "spin.h"
 #include "../shp/cellular.h"
+#include "../shp/potential.h"
 #include "../shp/shape.h"
 
 namespace qft {
 
+// To enable compiler resolve forward declarations
+class Charge;
+class Mass;
+
 class Field : public shp::Cellular {
-    shp::Shape* physical;
-    Spin defaultSpin;
-    Mass defaultMass;
-    Charge defaultCharge;
+    std::shared_ptr<shp::Shape> physical;
+    shp::Potential potential;
+    shp::Direction direction;
 public:
     // Constructors
     Field();
-    Field(const float spin);
-    Field(Spin& spin);
     Field(std::string name);
-    Field(std::string name, const float spin);
-    Field(std::string name, Spin& spin);
-    Field(const float mass, const float charge);
-    Field(Mass& mass, Charge& charge);
-    Field(std::string name, const float mass, const float charge);
-    Field(std::string name, Mass& mass, Charge& charge);
-    Field(const float spin, const float mass, const float charge);
-    Field(Spin& spin, Mass& mass, Charge& charge);
-    Field(std::string name, const float spin, const float mass, const float charge);
-    Field(std::string name, Spin& spin, Mass& mass, Charge& charge);
-    Field(shp::Shape* physical);
-    Field(std::string name, shp::Shape* physical);
-    Field(std::string name, shp::Shape* physical, const float spin);
-    Field(std::string name, shp::Shape* physical, Spin& spin);
-    Field(std::string name, shp::Shape* physical, const float spin, const float mass);
-    Field(std::string name, shp::Shape* physical, Spin& spin, Mass& mass);
-    Field(shp::Shape* physical, const float spin, const float mass, const float charge);
-    Field(shp::Shape* physical, Spin& spin, Mass& mass, Charge& charge);
-    Field(std::string name, shp::Shape* physical, const float spin, const float mass, const float charge);
-    Field(std::string name, shp::Shape* physical, Spin& spin, Mass& mass, Charge& charge);
+    Field(const std::shared_ptr<shp::Shape> physical);
+    Field(std::string name, const std::shared_ptr<shp::Shape> physical);
+    Field(const float direction);
+    Field(const shp::Direction& direction);
+    Field(const float potential, const float direction);
+    Field(const shp::Potential& potential, const shp::Direction& direction);
+    Field(std::string name, const float direction);
+    Field(std::string name, const shp::Direction& direction);
+    Field(std::string name, const float direction, const std::shared_ptr<shp::Shape> physical);
+    Field(std::string name, const shp::Direction& direction, const std::shared_ptr<shp::Shape> physical);
+
+    Field(std::string name, const float potential, const float direction);
+    Field(std::string name, const float potential, const float direction, const std::shared_ptr<shp::Shape> physical);
+    Field(std::string name, const shp::Potential& potential, const shp::Direction& direction);
+    Field(std::string name, const shp::Potential& potential, const shp::Direction& direction, const std::shared_ptr<shp::Shape> physical);
 
     // Destructors
     ~Field();
@@ -77,25 +73,25 @@ public:
 	const Point operator()(int x, int y, int z) const { return this->get(x).get(y).get(z); }
 
     // Getters
-    shp::Shape* getPhysical() const { return physical; }
-    Spin getDefaultSpin() const { return defaultSpin; }
-    Mass getDefaultMass() const { return defaultMass; }
-    Charge getDefaultCharge() const { return defaultCharge; }
+    std::shared_ptr<shp::Shape> getPhysical() const { return physical; }
+    shp::Potential getPotential() const { return potential; }
+    shp::Direction getDirection() const { return direction; }
 
     // Setters
-    void setPhysical(shp::Shape* structure) { this->physical = structure; }
-    void setDefaultSpin(const Spin& value) { defaultSpin = value; }
-    void setDefaultMass(const Mass& value) { defaultMass = value; }
-    void setDefaultCharge(const Charge& value) { defaultCharge = value; }
+    void setPhysical(const std::shared_ptr<shp::Shape> structure) { this->physical = structure; }
+    void setPotential(const shp::Potential& difference) { this->potential = difference; }
+    void setDirection(const shp::Direction& direction) { this->direction = direction; }
 
     // Additional methods
     bool isStructured() const;
-    void changePoint(Action& action);
-    Particle* getDivergence(Action& action) const;
-    Particle* getConvergence(Action& action) const;
+    void changePoint(const Action& action);
+    Particle* getDivergence(const Action& action) const;
+    Particle* getConvergence(const Action& action) const;
+    shp::Quantity getTotal() const;
     virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();
+    shp::Quantity getComponent(float phase) const;
 };
 
 typedef std::vector<Field > FieldArray;

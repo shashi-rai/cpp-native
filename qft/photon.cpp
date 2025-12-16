@@ -22,24 +22,29 @@
 
 namespace qft {
 
-Photon::Photon() : Particle() {
+const float Photon::DEFAULT_SPIN = 1.0f;    // Guage Bosons have integer spin
+
+Photon::Photon() : Particle(DEFAULT_SPIN) {
 
 }
 
-Photon::Photon(std::string name) : Particle(name) {
+Photon::Photon(std::string name)
+        : Particle(name, DEFAULT_SPIN) {
 
 }
 
-Photon::Photon(float wavelength) : Particle(wavelength) {
+Photon::Photon(float wavelength)
+        : Particle(DEFAULT_SPIN) {
     this->getEnergy().setWavelength(wavelength);
 }
 
-Photon::Photon(std::string name, float wavelength) : Particle(name) {
+Photon::Photon(std::string name, float wavelength)
+        : Particle(name, DEFAULT_SPIN) {
     this->getEnergy().setWavelength(wavelength);
 }
 
 Photon::Photon(std::string name, const Energy& energy)
-        : Particle(name, energy) {
+        : Particle(name, DEFAULT_SPIN, energy) {
 
 }
 

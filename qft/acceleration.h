@@ -70,6 +70,7 @@ public:
 
     // Additional methods
     shp::Quantity getTotal() const;
+    void adjustScaling();
     virtual Acceleration copy();
     virtual void clear();
     virtual std::string print();

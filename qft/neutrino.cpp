@@ -22,24 +22,26 @@
 
 namespace qft {
 
-Neutrino::Neutrino() : Particle() {
+const float Neutrino::DEFAULT_SPIN = 0.5f;    // Dirac Fermions have 1/2 spin
+
+Neutrino::Neutrino() : Particle(Spin(DEFAULT_SPIN)) {
 
 }
 
-Neutrino::Neutrino(std::string name) : Particle(name) {
+Neutrino::Neutrino(std::string name) : Particle(name, Spin(DEFAULT_SPIN)) {
 
 }
 
-Neutrino::Neutrino(float wavelength) : Particle(wavelength) {
+Neutrino::Neutrino(float wavelength) : Particle(Spin(DEFAULT_SPIN)) {
     this->getEnergy().setWavelength(wavelength);
 }
 
-Neutrino::Neutrino(std::string name, float wavelength) : Particle(name) {
+Neutrino::Neutrino(std::string name, float wavelength) : Particle(name, Spin(DEFAULT_SPIN)) {
     this->getEnergy().setWavelength(wavelength);
 }
 
 Neutrino::Neutrino(std::string name, const Energy& energy)
-        : Particle(name, energy) {
+        : Particle(name, Spin(DEFAULT_SPIN), energy) {
 
 }
 
