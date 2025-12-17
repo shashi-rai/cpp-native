@@ -127,12 +127,19 @@ Charge Charge::operator%(const Charge& peer) const {
     return Charge(charge.getValue(), charge.getScaling(), charge.getUnit());
 }
 
-Force Charge::operator()(const Charge& peer, const float distance) const {
-    float charged = (magnitude.getValue() * peer.magnitude.getValue());
-    float quantum = (Force::COULOMB_CONSTANT * (charged / (distance * distance)));
-    Force result(quantum, Force::COULOMB_SCALE, shp::Unit::getDerivedSymbol(shp::Unit::FORCE));
-    result.adjustScaling();
-    return result;
+Force Charge::operator()(const Charge& peer, const shp::Distance distance) const {
+    if (field != nullptr) {
+        shp::Quantity separation = (distance * distance).getMagnitude();
+        shp::Quantity chargeable = (magnitude * peer.magnitude).getValue();
+        float quantum = (Force::COULOMB_CONSTANT * (chargeable.getValue() / separation.getValue()));
+        short int scaling = Force::COULOMB_SCALE - (chargeable.getScaling() - separation.getScaling());
+        Force result(quantum, scaling, shp::Unit::getDerivedSymbol(shp::Unit::FORCE));
+        result.adjustScaling();
+        return result;
+    } else {
+        float quantum = 0.0f;
+        return Force(quantum, Force::COULOMB_SCALE, shp::Unit::getDerivedSymbol(shp::Unit::FORCE));
+    }
 }
 
 shp::Unit Charge::getUnit() const {

@@ -128,12 +128,19 @@ Mass Mass::operator%(const Mass& peer) const {
     return Mass(mass.getValue(), mass.getScaling(), mass.getUnit());
 }
 
-Force Mass::operator()(const Mass& peer, const float distance) const {
-    float movable = (magnitude.getValue() * peer.magnitude.getValue());
-    float quantum = (Force::GRAVITATIONAL_CONSTANT * (movable / (distance * distance)));
-    Force result(quantum, Force::GRAVITATIONAL_SCALE, shp::Unit::getDerivedSymbol(shp::Unit::FORCE));
-    result.adjustScaling();
-    return result;
+Force Mass::operator()(const Mass& peer, const shp::Distance& distance) const {
+    if (field != nullptr) {
+        shp::Quantity separation = (distance * distance).getMagnitude();
+        shp::Quantity gravitable = (magnitude * peer.magnitude).getValue();
+        float quantum = (Force::GRAVITATIONAL_CONSTANT * (gravitable.getValue() / separation.getValue()));
+        short int scaling = Force::GRAVITATIONAL_SCALE - (gravitable.getScaling() - separation.getScaling());
+        Force result(quantum, scaling, shp::Unit::getDerivedSymbol(shp::Unit::FORCE));
+        result.adjustScaling();
+        return result;
+    } else {
+        float quantum = 0.0f;
+        return Force(quantum, Force::GRAVITATIONAL_SCALE, shp::Unit::getDerivedSymbol(shp::Unit::FORCE));
+    }
 }
 
 shp::Unit Mass::getUnit() const {

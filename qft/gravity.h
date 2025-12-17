@@ -49,11 +49,14 @@ public:
     Gravity(std::string name, const float magnitude, const float direction, short int scaling);
     Gravity(std::string name, const float magnitude, const float direction, short int scaling, const std::shared_ptr<Field> field);
 
+    // Destructors
+    ~Gravity();
+
     // Operator overloading
     bool operator==(const Gravity& peer) const;
 
-    // Destructors
-    ~Gravity();
+    // Access operator
+    Gravity operator()(const Mass& host, const Mass& peer) const;
 
     // Getters
     std::shared_ptr<Field> getField() const { return field; }

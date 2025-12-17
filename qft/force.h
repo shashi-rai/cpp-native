@@ -96,7 +96,8 @@ public:
     shp::Quantity getComponent(float phase) const;
 protected:
     std::complex<float> toComplex(float coefficient, float change);
-
+public:
+    static const shp::Quantity getGavitationLimit();
 public:
     static const std::string UNIT;
     enum TYPE {

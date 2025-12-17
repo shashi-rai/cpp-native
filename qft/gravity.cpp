@@ -113,6 +113,14 @@ bool Gravity::operator==(const Gravity& peer) const {
         && (field == peer.field);
 }
 
+Gravity Gravity::operator()(const Mass& host, const Mass& peer) const {
+    shp::Potential potential_host = host.getField()->getPotential();
+    shp::Potential potential_peer = peer.getField()->getPotential();
+    shp::Distance distance = (potential_host.getDifference() - potential_peer.getDifference());
+    Force effect = host(peer, distance);
+    return Gravity(effect.getMagnitude().getValue(), effect.getDirection().toRadians(), field);
+}
+
 bool Gravity::isOwned() const {
     return field != nullptr;
 }

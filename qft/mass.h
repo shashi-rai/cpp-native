@@ -27,6 +27,7 @@
 #include "density.h"
 #include "force.h"
 #include "../shp/angular.h"
+#include "../shp/distance.h"
 #include "../shp/quantity.h"
 #include "../shp/unit.h"
 
@@ -65,7 +66,7 @@ public:
     Mass operator%(const Mass& peer) const;
 
     // Access operator
-    Force operator()(const Mass& peer, const float distance) const;
+    Force operator()(const Mass& peer, const shp::Distance& distance) const;
 
     // Getters
     std::shared_ptr<Field> getField() const { return field; }

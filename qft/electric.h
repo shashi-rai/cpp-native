@@ -55,6 +55,9 @@ public:
     // Operator overloading
     bool operator==(const Electric& peer) const;
 
+    // Access operator
+    Electric operator()(const Charge& host, const Charge& peer) const;
+
     // Getters
     std::shared_ptr<Field> getField() const { return field; }
 

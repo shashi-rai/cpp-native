@@ -115,6 +115,14 @@ bool Electric::operator==(const Electric& peer) const {
         && (field == peer.field);
 }
 
+Electric Electric::operator()(const Charge& host, const Charge& peer) const {
+    shp::Potential potential_host = host.getField()->getPotential();
+    shp::Potential potential_peer = peer.getField()->getPotential();
+    shp::Distance distance = (potential_host.getDifference() - potential_peer.getDifference());
+    Force effect = host(peer, distance);
+    return Electric(effect.getMagnitude().getValue(), effect.getDirection().toRadians(), field);
+}
+
 bool Electric::isOwned() const {
     return field != nullptr;
 }

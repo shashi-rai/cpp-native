@@ -234,4 +234,8 @@ std::complex<float> Force::toComplex(float coefficient, float change) {
         coefficient * std::sin(change));
 }
 
+const shp::Quantity Force::getGavitationLimit() {
+    return shp::Quantity(GRAVITATIONAL_CONSTANT, GRAVITATIONAL_SCALE, UNIT);
+}
+
 } // namespace qft
