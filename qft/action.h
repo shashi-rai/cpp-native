@@ -23,22 +23,38 @@
 
 #include <string>
 #include <vector>
+#include "../shp/change.h"
 #include "../shp/coordinate.h"
 #include "../shp/wave.h"
 
 namespace qft {
 
-class Action {
+class Action : public shp::Change {
     std::string name;
     shp::Coordinate coordinate;
     shp::Wave wave;
 public:
     // Constructors
     Action();
-    Action(std::string name, shp::Coordinate& location, shp::Wave& wave);
+    Action(std::string name);
+    Action(const shp::Coordinate& location);
+    Action(const shp::Coordinate& location, shp::Wave& wave);
+    Action(const shp::Quantity& potential);
+    Action(const shp::Quantity& kinetic, const shp::Quantity& potential);
+    Action(std::string name, const shp::Quantity& potential);
+    Action(std::string name, const shp::Quantity& kinetic, const shp::Quantity& potential);
+    Action(std::string name, const shp::Quantity& kinetic, const shp::Quantity& potential, const shp::Coordinate& location);
+    Action(std::string name, const shp::Quantity& kinetic, const shp::Quantity& potential, const shp::Coordinate& location, const shp::Wave& wave);
+    Action(std::string name, const shp::Coordinate& location);
+    Action(std::string name, const shp::Coordinate& location, const shp::Wave& wave);
 
     // Destructors
     ~Action();
+
+    // Operator overloading
+    bool operator==(const Action& peer) const;
+    Action operator+(const Action& peer) const;
+    Action operator-(const Action& peer) const;
 
     // Getters
     std::string getName() const { return name; }
@@ -51,9 +67,11 @@ public:
     void setWave(const shp::Wave& pulse) { this->wave = pulse; }
 
     // Additional methods
-    virtual Action copy();
+    shp::Quantity getTotal() const;
+    virtual shp::Change copy();
     virtual void clear();
     virtual std::string print();
+    shp::Quantity getComponent(float phase) const;
 };
 
 typedef std::vector<Action > ActionArray;

@@ -54,7 +54,6 @@ public:
     Field(std::string name, const shp::Direction& direction);
     Field(std::string name, const float direction, const std::shared_ptr<shp::Shape> physical);
     Field(std::string name, const shp::Direction& direction, const std::shared_ptr<shp::Shape> physical);
-
     Field(std::string name, const float potential, const float direction);
     Field(std::string name, const float potential, const float direction, const std::shared_ptr<shp::Shape> physical);
     Field(std::string name, const shp::Potential& potential, const shp::Direction& direction);
