@@ -24,8 +24,8 @@
 #include <string>
 #include <vector>
 #include "orbit.h"
-#include "../qft/gravity.h"
 #include "../qft/mass.h"
+#include "../shp/potential.h"
 #include "../shp/shape.h"
 
 namespace grt {
@@ -33,16 +33,16 @@ namespace grt {
 class Celestial : public shp::Shape {
     Orbit* orbit;
     qft::Mass mass;
-    qft::Gravity gravity;
+    shp::Potential gravity;
 public:
     // Constructors
     Celestial();
     Celestial(std::string name);
     Celestial(const qft::Mass& mass);
     Celestial(std::string name, const qft::Mass& mass);
-    Celestial(const qft::Gravity& gravity);
-    Celestial(std::string name, const qft::Gravity& gravity);
-    Celestial(std::string name, const qft::Mass& mass, const qft::Gravity& gravity);
+    Celestial(const shp::Potential& gravity);
+    Celestial(std::string name, const shp::Potential& gravity);
+    Celestial(std::string name, const qft::Mass& mass, const shp::Potential& gravity);
 
     // Destructors
     ~Celestial();
@@ -50,14 +50,16 @@ public:
     // Getters
     Orbit* getOrbit() const { return orbit; }
     qft::Mass getMass() const { return mass; }
-    qft::Gravity getGravity() const { return gravity; }
+    shp::Potential getGravity() const { return gravity; }
 
     // Setters
     void setOrbit(Orbit* value) { this->orbit = value; }
     void setMass(const qft::Mass& value) { mass = value; }
-    void setGravity(const qft::Gravity& value) { gravity = value; }
+    void setGravity(const shp::Potential& value) { gravity = value; }
 
     // Additional methods
+    shp::Distance getRadius() const { return gravity.getRadius(); }
+    void setRadius(const shp::Distance& length) { gravity.setRadius(length); }
     float getRotation() const;
     void setRotation(const float value);
     float getRevolution() const;

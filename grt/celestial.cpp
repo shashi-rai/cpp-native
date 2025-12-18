@@ -40,17 +40,17 @@ Celestial::Celestial(std::string name, const qft::Mass& mass)
 
 }
 
-Celestial::Celestial(const qft::Gravity& gravity)
+Celestial::Celestial(const shp::Potential& gravity)
     : Shape(), mass(), gravity(gravity) {
 
 }
 
-Celestial::Celestial(std::string name, const qft::Gravity& gravity)
+Celestial::Celestial(std::string name, const shp::Potential& gravity)
     : Shape(name), mass(), gravity(gravity) {
 
 }
 
-Celestial::Celestial(std::string name, const qft::Mass& mass, const qft::Gravity& gravity)
+Celestial::Celestial(std::string name, const qft::Mass& mass, const shp::Potential& gravity)
     : Shape(name), mass(mass), gravity(gravity) {
 
 }

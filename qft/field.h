@@ -46,10 +46,12 @@ public:
     Field(std::string name);
     Field(const std::shared_ptr<shp::Shape> physical);
     Field(std::string name, const std::shared_ptr<shp::Shape> physical);
+    Field(shp::Potential potential);
     Field(const float direction);
     Field(const shp::Direction& direction);
     Field(const float potential, const float direction);
     Field(const shp::Potential& potential, const shp::Direction& direction);
+    Field(std::string name, shp::Potential potential);
     Field(std::string name, const float direction);
     Field(std::string name, const shp::Direction& direction);
     Field(std::string name, const float direction, const std::shared_ptr<shp::Shape> physical);
@@ -70,6 +72,8 @@ public:
     // Access operator
     Point operator()(int x, int y, int z) { return this->get(x).get(y).get(z); }
 	const Point operator()(int x, int y, int z) const { return this->get(x).get(y).get(z); }
+    shp::Quantity operator()(const Field& peer,
+        const shp::Distance& separation, const shp::Distance& position) const;
 
     // Getters
     std::shared_ptr<shp::Shape> getPhysical() const { return physical; }

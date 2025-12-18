@@ -22,6 +22,10 @@
 
 namespace grt {
 
+const float Planet::EARTH_RADIUS = 6400.0f;     // 6400 km
+const float Planet::EARTH_MASS = 5.972f;        // 5.972x10^24 kg
+const float Planet::EARTH_GRAVITY = 9.80665f;   // 9.80665 m/s²
+
 Planet::Planet() : Celestial(), satellites() {
 
 }
@@ -90,6 +94,18 @@ void Planet::set(int index, const Satellite& object) {
         satellites.push_back(object);
     }
     return;
+}
+
+const shp::Distance Planet::getEarthRadius() {
+    return shp::Distance(Planet::EARTH_RADIUS, 3);
+}
+
+const qft::Mass Planet::getEarthMass() {
+    return qft::Mass(Planet::EARTH_MASS, 24);
+}
+
+const shp::Potential Planet::getEarthGravity() {
+    return shp::Potential(Planet::EARTH_GRAVITY, "m/s^2", getEarthRadius());
 }
 
 Celestial Planet::copy() {

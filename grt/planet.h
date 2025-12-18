@@ -61,6 +61,14 @@ public:
     virtual Celestial copy();
     virtual void clear();
     virtual std::string print();
+public:
+    static const shp::Distance getEarthRadius();
+    static const qft::Mass getEarthMass();
+    static const shp::Potential getEarthGravity();
+public:
+    static const float EARTH_RADIUS;
+    static const float EARTH_MASS;
+    static const float EARTH_GRAVITY;
 };
 
 typedef std::vector<Planet > PlanetArray;

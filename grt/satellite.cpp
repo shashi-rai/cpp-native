@@ -22,6 +22,10 @@
 
 namespace grt {
 
+const float Satellite::MOON_RADIUS = 1737.4f;       // 1737.4 km
+const float Satellite::MOON_MASS = 7.34767309f;     // 7.34767309x10^22 kg
+const float Satellite::MOON_GRAVITY = 1.6205f;      // 1.6205 m/s²
+
 Satellite::Satellite() : Celestial(), celestials() {
 
 }
@@ -90,6 +94,18 @@ void Satellite::set(int index, const Celestial& object) {
         celestials.push_back(object);
     }
     return;
+}
+
+const shp::Distance Satellite::getMoonRadius() {
+    return shp::Distance(Satellite::MOON_RADIUS, 3);
+}
+
+const qft::Mass Satellite::getMoonMass() {
+    return qft::Mass(Satellite::MOON_MASS, 22);
+}
+
+const shp::Potential Satellite::getMoonGravity() {
+    return shp::Potential(Satellite::MOON_GRAVITY, "m/s^2", getMoonRadius());
 }
 
 Celestial Satellite::copy() {

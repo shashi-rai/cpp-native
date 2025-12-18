@@ -62,6 +62,15 @@ public:
     virtual Celestial copy();
     virtual void clear();
     virtual std::string print();
+public:
+    static const shp::Distance getMoonRadius();
+    static const qft::Mass getMoonMass();
+    static const shp::Potential getMoonGravity();
+public:
+public:
+    static const float MOON_RADIUS;
+    static const float MOON_MASS;
+    static const float MOON_GRAVITY;
 };
 
 typedef std::vector<Satellite > SatelliteArray;

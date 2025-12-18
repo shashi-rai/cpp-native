@@ -22,58 +22,106 @@
 
 namespace shp {
 
-Potential::Potential() : Quantity(), low() {
+Potential::Potential()
+        : Quantity(), low(), radius() {
 
 }
 
-Potential::Potential(float low) : Quantity(), low(low) {
+Potential::Potential(const Distance& radius)
+        : Quantity(), low(), radius(radius) {
 
 }
 
-Potential::Potential(float high, float low) : Quantity(high), low(low) {
+Potential::Potential(float high)
+        : Quantity(high), low(), radius() {
 
 }
 
-Potential::Potential(const std::string unit) : Quantity(unit), low() {
+Potential::Potential(float high, const Distance& radius)
+        : Quantity(high), low(), radius(radius) {
+}
 
+Potential::Potential(float high, float low)
+        : Quantity(high), low(low), radius() {
+
+}
+
+Potential::Potential(float high, float low, const Distance& radius)
+        : Quantity(high), low(low), radius(radius) {
+
+}
+
+Potential::Potential(const std::string unit)
+    : Quantity(unit), low(), radius() {
+
+}
+
+Potential::Potential(const Unit& unit)
+    : Quantity(unit), low(), radius() {
+}
+
+Potential::Potential(const Unit& unit, const Distance& radius)
+    : Quantity(unit), low(), radius(radius) {
 }
 
 Potential::Potential(short int scaling, const std::string unit)
-    : Quantity(scaling, unit), low() {
-
-}
-
-Potential::Potential(const Unit& unit) : Quantity(unit), low() {
+    : Quantity(scaling, unit), low(), radius() {
 
 }
 
 Potential::Potential(short int scaling, const Unit& unit)
-    : Quantity(scaling, unit), low() {
+    : Quantity(scaling, unit), low(), radius() {
+
+}
+
+Potential::Potential(short int scaling, const Unit& unit, const Distance& radius)
+    : Quantity(scaling, unit), low(), radius(radius) {
+
+}
+
+Potential::Potential(float high, const std::string unit, const Distance& radius)
+        : Quantity(high, unit), low(), radius(radius) {
 
 }
 
 Potential::Potential(float high, float low, const std::string unit)
-        : Quantity(high, unit), low(low) {
+        : Quantity(high, unit), low(low), radius() {
+
+}
+
+Potential::Potential(float high, float low, const std::string unit, const Distance& radius)
+        : Quantity(high, unit), low(low), radius(radius) {
 
 }
 
 Potential::Potential(float high, float low, const Unit& unit)
-        : Quantity(high, unit), low(low) {
+        : Quantity(high, unit), low(low), radius() {
+
+}
+
+Potential::Potential(float high, float low, const Unit& unit, const Distance& radius)
+        : Quantity(high, unit), low(low), radius(radius) {
 
 }
 
 Potential::Potential(float high, float low, short int scaling)
-        : Quantity(high, scaling), low(low) {
+        : Quantity(high, scaling), low(low), radius() {
 
 }
 
 Potential::Potential(float high, float low, short int scaling, const std::string unit)
-        : Quantity(high, scaling, unit), low(low) {
+        : Quantity(high, scaling, unit), low(low), radius() {
 
 }
 
 Potential::Potential(float high, float low, short int scaling, const Unit& unit)
-        : Quantity(high, scaling, unit), low(low) {
+        : Quantity(high, scaling, unit), low(low), radius() {
+
+}
+
+Potential::Potential(float high, float low, short int scaling, const Unit& unit,
+        const Distance& radius)
+        : Quantity(high, scaling, unit), low(low), radius(radius) {
 
 }
 
@@ -83,7 +131,7 @@ Potential::~Potential() {
 
 bool Potential::operator==(const Potential& peer) const {
     return (static_cast<const Quantity&>(*this) == static_cast<const Quantity&>(peer))
-        && (getLow() == peer.getLow());
+        && (low == peer.low) && (radius == peer.radius);
 }
 
 Potential Potential::operator+(const Potential& peer) const {
@@ -116,8 +164,27 @@ Potential Potential::operator%(const Potential& peer) const {
     return Potential(newhigh, newlow, getScaling(), getUnit());
 }
 
+Quantity Potential::operator()(const Potential& peer,
+        const Distance& separation, const Distance& position) const {
+    Potential self = *this, other = peer;
+    Distance x = position, y = (separation - position);
+    Quantity px = self.getRelative(x), py = other.getRelative(y);
+    Quantity result = (px - py);
+    result.adjustScaling();
+    return result;
+}
+
 Quantity Potential::getDifference() const {
     Quantity result((getHigh() - getLow()), getScaling(), getUnit());
+    return result;
+}
+
+Quantity Potential::getRelative(const Distance& location) const {
+    float distribution = (getHigh() - getLow());
+    Distance distance = (radius / (radius + location));
+    Distance coefficient = (distance * distance);
+    Quantity result((coefficient.getMagnitude().getValue() * distribution), getScaling(), getUnit());
+    result.adjustScaling();
     return result;
 }
 
@@ -133,8 +200,8 @@ void Potential::clear() {
 
 std::string Potential::print() {
     std::stringstream result;
-    result << "(";
-    result << getHigh() << ",";
+    result << radius.print() << ",(";
+    result << getHigh() << "~";
     result << getLow() << ")x10^";
     result << getScaling();
     result << getUnit().print();

@@ -24,27 +24,37 @@
 #include <cmath>
 #include <sstream>
 #include <vector>
-#include "quantity.h"
+#include "distance.h"
 #include "unit.h"
 
 namespace shp {
 
 class Potential : protected Quantity {
     float low;
+    Distance radius;
 public:
     // Constructors
     Potential();
-    Potential(float low);
+    Potential(const Distance& radius);
+    Potential(float high);
+    Potential(float high, const Distance& radius);
     Potential(float high, float low);
+    Potential(float high, float low, const Distance& radius);
     Potential(const std::string unit);
-    Potential(short int scaling, const std::string unit);
     Potential(const Unit& unit);
+    Potential(const Unit& unit, const Distance& radius);
+    Potential(short int scaling, const std::string unit);
     Potential(short int scaling, const Unit& unit);
+    Potential(short int scaling, const Unit& unit, const Distance& radius);
+    Potential(float high, const std::string unit, const Distance& radius);
     Potential(float high, float low, const std::string unit);
+    Potential(float high, float low, const std::string unit, const Distance& radius);
     Potential(float high, float low, const Unit& unit);
+    Potential(float high, float low, const Unit& unit, const Distance& radius);
     Potential(float high, float low, short int scaling);
     Potential(float high, float low, short int scaling, const std::string unit);
     Potential(float high, float low, short int scaling, const Unit& unit);
+    Potential(float high, float low, short int scaling, const Unit& unit, const Distance& radius);
 
     // Destructors
     ~Potential();
@@ -57,16 +67,23 @@ public:
     Potential operator/(const Potential& peer) const;
     Potential operator%(const Potential& peer) const;
 
+    // Access operator
+    Quantity operator()(const Potential& peer,
+        const Distance& separation, const Distance& position) const;
+
     // Getters
     float getHigh() const { return this->getValue(); }
     float getLow() const { return low; }
+    Distance getRadius() const { return radius; }
 
     // Setters
     void setHigh(const float value) { this->setValue(value); }
     void setLow(const float value) { this->low = value; }
+    void setRadius(const Distance& radius) { this->radius = radius; }
 
     // Additional methods
     Quantity getDifference() const;
+    Quantity getRelative(const Distance& location) const;
     Potential copy();
     void clear();
     std::string print();

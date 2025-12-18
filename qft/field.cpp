@@ -42,6 +42,11 @@ Field::Field(std::string name, const std::shared_ptr<shp::Shape> physical)
     setPhysical(physical);
 }
 
+Field::Field(shp::Potential potential)
+        : Cellular(), potential(potential), direction() {
+    setPhysical(nullptr);
+}
+
 Field::Field(const float direction)
         : Cellular(), potential(), direction(direction) {
     setPhysical(nullptr);
@@ -59,6 +64,11 @@ Field::Field(const float potential, const float direction)
 
 Field::Field(const shp::Potential& potential, const shp::Direction& direction)
         : Cellular(), potential(potential), direction(direction) {
+    setPhysical(nullptr);
+}
+
+Field::Field(std::string name, shp::Potential potential)
+        : Cellular(name), potential(potential), direction() {
     setPhysical(nullptr);
 }
 
@@ -124,6 +134,11 @@ Field Field::operator-(const Field& peer) const {
     shp::Direction newdirection = (direction - peer.direction);
     return Field("-", newpotential, newdirection);
 }
+
+shp::Quantity Field::operator()(const Field& peer,
+        const shp::Distance& separation, const shp::Distance& position) const {
+    return potential(peer.potential, separation, position);
+}  
 
 bool Field::isStructured() const {
     return physical != nullptr;
