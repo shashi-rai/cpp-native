@@ -130,7 +130,6 @@ void Distance::clear() {
 
 std::string Distance::print() {
     std::stringstream result;
-    result << "l:";
     result << magnitude.print();
 	return result.str();
 }

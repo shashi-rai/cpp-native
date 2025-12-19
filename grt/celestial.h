@@ -31,35 +31,42 @@
 namespace grt {
 
 class Celestial : public shp::Shape {
-    Orbit* orbit;
+    std::shared_ptr<grt::Orbit> orbit;
     qft::Mass mass;
     shp::Potential gravity;
 public:
     // Constructors
     Celestial();
     Celestial(std::string name);
+    Celestial(std::shared_ptr<grt::Orbit> orbit);
+    Celestial(std::string name, std::shared_ptr<grt::Orbit> orbit);
     Celestial(const qft::Mass& mass);
+    Celestial(const qft::Mass& mass, std::shared_ptr<grt::Orbit> orbit);
     Celestial(std::string name, const qft::Mass& mass);
+    Celestial(std::string name, const qft::Mass& mass, std::shared_ptr<grt::Orbit> orbit);
     Celestial(const shp::Potential& gravity);
+    Celestial(const shp::Potential& gravity, std::shared_ptr<grt::Orbit> orbit);
     Celestial(std::string name, const shp::Potential& gravity);
+    Celestial(std::string name, const shp::Potential& gravity, std::shared_ptr<grt::Orbit> orbit);
     Celestial(std::string name, const qft::Mass& mass, const shp::Potential& gravity);
+    Celestial(std::string name, const qft::Mass& mass, const shp::Potential& gravity, std::shared_ptr<grt::Orbit> orbit);
 
     // Destructors
     ~Celestial();
 
     // Getters
-    Orbit* getOrbit() const { return orbit; }
+    std::shared_ptr<grt::Orbit> getOrbit() const { return orbit; }
     qft::Mass getMass() const { return mass; }
     shp::Potential getGravity() const { return gravity; }
 
     // Setters
-    void setOrbit(Orbit* value) { this->orbit = value; }
+    void setOrbit(std::shared_ptr<grt::Orbit> value) { this->orbit = value; }
     void setMass(const qft::Mass& value) { mass = value; }
     void setGravity(const shp::Potential& value) { gravity = value; }
 
     // Additional methods
-    shp::Distance getRadius() const { return gravity.getRadius(); }
-    void setRadius(const shp::Distance& length) { gravity.setRadius(length); }
+    shp::Distance getRadius() const;
+    void setRadius(const shp::Distance& length);
     float getRotation() const;
     void setRotation(const float value);
     float getRevolution() const;
@@ -67,6 +74,13 @@ public:
     virtual Celestial copy();
     virtual void clear();
     virtual std::string print();
+public:
+    static const shp::Distance getLightYear();
+public:
+    static const std::string GRAVITY_UNIT;
+    static const float GRAVITY_MIN;
+    static const float LIGHT_YEAR;
+    static const short int LIGHT_SCALE;
 };
 
 typedef std::vector<Celestial > CelestialArray;

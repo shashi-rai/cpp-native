@@ -22,6 +22,11 @@
 
 namespace grt {
 
+const float Galaxy::MILKYWAY_RADIUS = 129000.0f;    // 129,000 light year
+const float Galaxy::MILKYWAY_MASS = 1.5f;           // 1.0~1.5x10^12 solar mass
+const float Galaxy::MILKYWAY_DENSITY = 1.0f;        // 1.0x10^-21 kg/m^3
+const float Galaxy::MILKYWAY_GRAVITY = 3.54f;       // 3.54x10^6 m/s²
+
 Galaxy::Galaxy() : Celestial(), stars() {
 
 }
@@ -90,6 +95,32 @@ void Galaxy::set(int index, const Star& object) {
         stars.push_back(object);
     }
     return;
+}
+
+const shp::Distance Galaxy::getMilkywayRadius() {
+    shp::Distance lightyear = Celestial::getLightYear();
+    float radius = (Galaxy::MILKYWAY_RADIUS * lightyear.getMagnitude().getValue());
+    short int scaling = lightyear.getScaling();
+    return shp::Distance(radius, scaling);
+}
+
+const qft::Mass Galaxy::getMilkywayMass() {
+    qft::Mass solar = Star::getSunMass();
+    float mass = (Galaxy::MILKYWAY_MASS * solar.getMagnitude().getValue());
+    short int scaling = (12 + solar.getMagnitude().getScaling());
+    return qft::Mass(mass, scaling);
+}
+
+const qft::Density Galaxy::getMilkywayDensity() {
+    short int scaling = -21;
+    return qft::Density(Galaxy::MILKYWAY_DENSITY, scaling, shp::Unit::getBaseSymbol(shp::Unit::MASS));
+}
+
+const shp::Potential Galaxy::getMilkywayGravity() {
+    float highGravity = Galaxy::MILKYWAY_GRAVITY, lowGravity = Celestial::GRAVITY_MIN;
+    short int scaling = 6;
+    return shp::Potential(highGravity, lowGravity, scaling,
+        shp::Unit(Celestial::GRAVITY_UNIT), getMilkywayRadius());
 }
 
 Celestial Galaxy::copy() {

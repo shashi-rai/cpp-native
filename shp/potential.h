@@ -24,37 +24,38 @@
 #include <cmath>
 #include <sstream>
 #include <vector>
-#include "distance.h"
+#include "angular.h"
+#include "direction.h"
 #include "unit.h"
 
 namespace shp {
 
 class Potential : protected Quantity {
     float low;
-    Distance radius;
+    Angular origin;
 public:
     // Constructors
     Potential();
-    Potential(const Distance& radius);
+    Potential(const Angular& origin);
     Potential(float high);
-    Potential(float high, const Distance& radius);
+    Potential(float high, const Angular& origin);
     Potential(float high, float low);
-    Potential(float high, float low, const Distance& radius);
+    Potential(float high, float low, const Angular& origin);
     Potential(const std::string unit);
     Potential(const Unit& unit);
-    Potential(const Unit& unit, const Distance& radius);
+    Potential(const Unit& unit, const Angular& origin);
     Potential(short int scaling, const std::string unit);
     Potential(short int scaling, const Unit& unit);
-    Potential(short int scaling, const Unit& unit, const Distance& radius);
-    Potential(float high, const std::string unit, const Distance& radius);
+    Potential(short int scaling, const Unit& unit, const Angular& origin);
+    Potential(float high, const std::string unit, const Angular& origin);
     Potential(float high, float low, const std::string unit);
-    Potential(float high, float low, const std::string unit, const Distance& radius);
+    Potential(float high, float low, const std::string unit, const Angular& origin);
     Potential(float high, float low, const Unit& unit);
-    Potential(float high, float low, const Unit& unit, const Distance& radius);
+    Potential(float high, float low, const Unit& unit, const Angular& origin);
     Potential(float high, float low, short int scaling);
     Potential(float high, float low, short int scaling, const std::string unit);
     Potential(float high, float low, short int scaling, const Unit& unit);
-    Potential(float high, float low, short int scaling, const Unit& unit, const Distance& radius);
+    Potential(float high, float low, short int scaling, const Unit& unit, const Angular& origin);
 
     // Destructors
     ~Potential();
@@ -70,18 +71,24 @@ public:
     // Access operator
     Quantity operator()(const Potential& peer,
         const Distance& separation, const Distance& position) const;
+    Quantity operator()(const Potential& peerX, const Potential& peerY,
+        const Distance& separationX, const Distance& separationY) const;
 
     // Getters
     float getHigh() const { return this->getValue(); }
     float getLow() const { return low; }
-    Distance getRadius() const { return radius; }
+    Angular getOrigin() const { return origin; }
 
     // Setters
     void setHigh(const float value) { this->setValue(value); }
     void setLow(const float value) { this->low = value; }
-    void setRadius(const Distance& radius) { this->radius = radius; }
+    void setOrigin(const Angular& position) { this->origin = position; }
 
     // Additional methods
+    Direction getPolar() const;
+    void setPolar(const Direction& angle);
+    Direction getAzimuthal() const;
+    void setAzimuthal(const Direction& angle);
     Quantity getDifference() const;
     Quantity getRelative(const Distance& location) const;
     Potential copy();

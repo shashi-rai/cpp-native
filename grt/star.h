@@ -61,6 +61,18 @@ public:
     virtual Celestial copy();
     virtual void clear();
     virtual std::string print();
+public:
+    static const shp::Distance getSunRadius();
+    static const qft::Mass getSunMass();
+    static const qft::Density getSunDensity();
+    static const shp::Potential getSunGravity();
+    static const shp::Distance getSunToHorizon();
+public:
+    static const float SUN_RADIUS;
+    static const float SUN_MASS;
+    static const float SUN_DENSITY;
+    static const float SUN_GRAVITY;
+    static const float SUN_TO_HORIZON;
 };
 
 typedef std::vector<Star > StarArray;

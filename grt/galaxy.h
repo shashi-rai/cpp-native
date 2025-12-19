@@ -61,6 +61,16 @@ public:
     virtual Celestial copy();
     virtual void clear();
     virtual std::string print();
+public:
+    static const shp::Distance getMilkywayRadius();
+    static const qft::Mass getMilkywayMass();
+    static const qft::Density getMilkywayDensity();
+    static const shp::Potential getMilkywayGravity();
+public:
+    static const float MILKYWAY_RADIUS;
+    static const float MILKYWAY_MASS;
+    static const float MILKYWAY_DENSITY;
+    static const float MILKYWAY_GRAVITY;
 };
 
 typedef std::vector<Galaxy > GalaxyArray;

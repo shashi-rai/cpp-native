@@ -64,11 +64,15 @@ public:
 public:
     static const shp::Distance getEarthRadius();
     static const qft::Mass getEarthMass();
+    static const qft::Density getEarthDensity();
     static const shp::Potential getEarthGravity();
+    static const shp::Distance getEarthToSun();
 public:
     static const float EARTH_RADIUS;
     static const float EARTH_MASS;
+    static const float EARTH_DENSITY;
     static const float EARTH_GRAVITY;
+    static const float EARTH_TO_SUN;
 };
 
 typedef std::vector<Planet > PlanetArray;

@@ -65,12 +65,16 @@ public:
 public:
     static const shp::Distance getMoonRadius();
     static const qft::Mass getMoonMass();
+    static const qft::Density getMoonDensity();
     static const shp::Potential getMoonGravity();
+    static const shp::Distance getMoonToEarth();
 public:
 public:
     static const float MOON_RADIUS;
     static const float MOON_MASS;
+    static const float MOON_DENSITY;
     static const float MOON_GRAVITY;
+    static const float MOON_TO_EARTH;
 };
 
 typedef std::vector<Satellite > SatelliteArray;

@@ -61,6 +61,16 @@ public:
     virtual Celestial copy();
     virtual void clear();
     virtual std::string print();
+public:
+    static const shp::Distance getRadius();
+    static const qft::Mass getMass();
+    static const qft::Density getDensity();
+    static const shp::Potential getGravity();
+public:
+    static const float RADIUS;
+    static const float MASS;
+    static const float DENSITY;
+    static const float GRAVITY;
 };
 
 typedef std::vector<Universe > UniverseArray;

@@ -24,26 +24,36 @@
 #include <string>
 #include <vector>
 #include "direction.h"
-#include "quantity.h"
+#include "distance.h"
 
 namespace shp {
 
-class Angular {
-    Quantity radius;        // r - radial distance from the origin
-    Direction polar;        // 𝜃 - polar zenith angle from Y axis
-    Direction azimuthal;    // 𝜙 - angle within the XY plane only
+class Angular : protected Distance {    // r - radial distance from the origin
+    Direction polar;                    // 𝜃 - polar zenith angle from Y axis
+    Direction azimuthal;                // 𝜙 - angle within the XY plane only
 public:
     // Constructors
     Angular();
     Angular(float radius);
     Angular(float radius, short int scaling);
-    Angular(Quantity radius);
+    Angular(float radius, short int scaling, std::string unit);
+    Angular(float radius, short int scaling, const Unit& unit);
+    Angular(const Distance& radius);
     Angular(float radius, float azimuthal);
     Angular(float radius, short int scaling, float azimuthal);
-    Angular(Quantity radius, Direction& azimuthal);
+    Angular(float radius, short int scaling, std::string unit, float azimuthal);
+    Angular(float radius, short int scaling, const Unit& unit, float azimuthal);
+    Angular(float radius, short int scaling, const Unit& unit, const Direction& azimuthal);
+    Angular(const Distance& radius, const Direction& azimuthal);
     Angular(float radius, float polar, float azimuthal);
+    Angular(float radius, std::string unit, float polar, float azimuthal);
+    Angular(float radius, const Unit& unit, float polar, float azimuthal);
     Angular(float radius, short int scaling, float polar, float azimuthal);
-    Angular(Quantity radius, Direction& polar, Direction& azimuthal);
+    Angular(float radius, short int scaling, std::string unit, float polar, float azimuthal);
+    Angular(float radius, short int scaling, const Unit& unit, float polar, float azimuthal);
+    Angular(float radius, short int scaling, const Unit& unit,
+        const Direction& polar, const Direction& azimuthal);
+    Angular(const Distance& radius, const Direction& polar, const Direction& azimuthal);
 
     // Destructors
     ~Angular();
@@ -56,18 +66,39 @@ public:
     Angular operator/(const Angular& peer) const;
     Angular operator%(const Angular& peer) const;
 
+    // Distance operator
+    Quantity operator+(const Quantity& peer) const;
+    Quantity operator-(const Quantity& peer) const;
+    Quantity operator*(const Quantity& peer) const;
+    Quantity operator/(const Quantity& peer) const;
+    Quantity operator%(const Quantity& peer) const;
+
+    // Azimuthal operator
+    Angular operator+(const Direction& peer) const;
+    Angular operator-(const Direction& peer) const;
+    Angular operator*(const Direction& peer) const;
+    Angular operator/(const Direction& peer) const;
+    Angular operator%(const Direction& peer) const;
+
+    // Access operator
+    Quantity operator()(const Angular& peer,
+        const Distance& separation, const Distance& position) const;
+    Quantity operator()(const Angular& peerX, const Angular& peerY,
+        const Distance& separationX, const Distance& separationY) const;
+
     // Getters
-    Quantity getRadius() const { return radius; }
     Direction getPolar() const { return polar; }
     Direction getAzimuthal() const { return azimuthal; }
 
     // Setters
-    void setRadius(Quantity value) { this->radius = value; }
     void setPolar(const Direction& angle) { this->polar = angle; }
     void setAzimuthal(const Direction& angle) { this->azimuthal = angle; }
 
     // Additional methods
-    Angular copy();
+    Distance getRadius() const;
+    void setRadius(const Distance& distance);
+    Quantity getRelative(const Distance& location) const;
+    Distance copy();
     void clear();
     std::string print();
 

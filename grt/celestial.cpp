@@ -22,41 +22,93 @@
 
 namespace grt {
 
-Celestial::Celestial() : Shape(), mass(), gravity() {
+const std::string Celestial::GRAVITY_UNIT = "m/s²";     // m/s²
+const float Celestial::GRAVITY_MIN = 0.0f;              // at infinite distance
+const float Celestial::LIGHT_YEAR = 9.4607304725808f;   // 9,460,730,472,580.8 km
+const short int Celestial::LIGHT_SCALE = 18;            // 10^18 m
 
+Celestial::Celestial()
+        : Shape(), mass(), gravity() {
+    setOrbit(nullptr);
 }
 
-Celestial::Celestial(std::string name) : Shape(name), mass(), gravity() {
+Celestial::Celestial(std::string name)
+        : Shape(name), mass(), gravity() {
+    setOrbit(nullptr);
+}
 
+Celestial::Celestial(std::shared_ptr<grt::Orbit> orbit)
+        : Shape(), mass(), gravity() {
+    setOrbit(orbit);
+}
+
+Celestial::Celestial(std::string name, std::shared_ptr<grt::Orbit> orbit)
+        : Shape(name), mass(), gravity() {
+    setOrbit(orbit);
 }
 
 Celestial::Celestial(const qft::Mass& mass)
-    : Shape(), mass(mass), gravity() {
+        : Shape(), mass(mass), gravity() {
+    setOrbit(nullptr);
+}
 
+Celestial::Celestial(const qft::Mass& mass, std::shared_ptr<grt::Orbit> orbit)
+        : Shape(), mass(mass), gravity() {
+    setOrbit(orbit);
 }
 
 Celestial::Celestial(std::string name, const qft::Mass& mass)
-    : Shape(name), mass(mass), gravity() {
+        : Shape(name), mass(mass), gravity() {
+    setOrbit(nullptr);
+}
 
+Celestial::Celestial(std::string name, const qft::Mass& mass, std::shared_ptr<grt::Orbit> orbit)
+        : Shape(name), mass(mass), gravity() {
+    setOrbit(orbit);
 }
 
 Celestial::Celestial(const shp::Potential& gravity)
-    : Shape(), mass(), gravity(gravity) {
+        : Shape(), mass(), gravity(gravity) {
+    setOrbit(nullptr);
+}
 
+Celestial::Celestial(const shp::Potential& gravity, std::shared_ptr<grt::Orbit> orbit)
+        : Shape(), mass(), gravity(gravity) {
+    setOrbit(orbit);
 }
 
 Celestial::Celestial(std::string name, const shp::Potential& gravity)
-    : Shape(name), mass(), gravity(gravity) {
+        : Shape(name), mass(), gravity(gravity) {
+    setOrbit(nullptr);
+}
 
+Celestial::Celestial(std::string name, const shp::Potential& gravity,
+        std::shared_ptr<grt::Orbit> orbit)
+        : Shape(name), mass(), gravity(gravity) {
+    setOrbit(orbit);
 }
 
 Celestial::Celestial(std::string name, const qft::Mass& mass, const shp::Potential& gravity)
-    : Shape(name), mass(mass), gravity(gravity) {
+        : Shape(name), mass(mass), gravity(gravity) {
+    setOrbit(nullptr);
+}
 
+Celestial::Celestial(std::string name, const qft::Mass& mass, const shp::Potential& gravity,
+        std::shared_ptr<grt::Orbit> orbit)
+        : Shape(name), mass(mass), gravity(gravity) {
+    setOrbit(orbit);
 }
 
 Celestial::~Celestial() {
+    setOrbit(nullptr);
+}
 
+shp::Distance Celestial::getRadius() const {
+    return gravity.getOrigin().getRadius();
+}
+
+void Celestial::setRadius(const shp::Distance& length) {
+    gravity.setOrigin(length);
 }
 
 float Celestial::getRotation() const {
@@ -75,8 +127,12 @@ void Celestial::setRevolution(const float value) {
     orbit->setRevolution(value);
 }
 
+const shp::Distance Celestial::getLightYear() {
+    return shp::Distance(Celestial::LIGHT_YEAR, Celestial::LIGHT_SCALE);
+}
+
 Celestial Celestial::copy() {
-    Celestial fresh(getName(), mass, gravity);
+    Celestial fresh(getName(), mass, gravity, orbit);
     return fresh;
 }
 
@@ -92,7 +148,9 @@ std::string Celestial::print() {
     result << "(C:";
 	result << Shape::print() << ",m:";
 	result << mass.print() << ",g:";
-    result << gravity.print() << ")";
+    result << gravity.print() << ",";
+    result << (orbit != nullptr ? orbit->print() : "");
+    result << ")";
 	return result.str();
 }
 

@@ -22,6 +22,12 @@
 
 namespace grt {
 
+const float Star::SUN_RADIUS = 695000.0f;   // 695,000 km
+const float Star::SUN_MASS = 1.99f;         // 1.99x10^30 kg
+const float Star::SUN_DENSITY = 1410.0f;    // 1410 kg/m^3
+const float Star::SUN_GRAVITY = 274.0f;     // 274.0 m/s²
+const float Star::SUN_TO_HORIZON = 2.55f;   // 2.55x10^20 m (27,000 light years)
+
 Star::Star() : Celestial(), planets() {
 
 }
@@ -90,6 +96,27 @@ void Star::set(int index, const Planet& object) {
         planets.push_back(object);
     }
     return;
+}
+
+const shp::Distance Star::getSunRadius() {
+    return shp::Distance(Star::SUN_RADIUS, 3);
+}
+
+const qft::Mass Star::getSunMass() {
+    return qft::Mass(Star::SUN_MASS, 30);
+}
+
+const qft::Density Star::getSunDensity() {
+    return qft::Density(Star::SUN_DENSITY, shp::Unit::getBaseSymbol(shp::Unit::MASS));
+}
+
+const shp::Potential Star::getSunGravity() {
+    return shp::Potential(Star::SUN_GRAVITY, Celestial::GRAVITY_MIN,
+        shp::Unit(Celestial::GRAVITY_UNIT), getSunRadius());
+}
+
+const shp::Distance Star::getSunToHorizon() {
+    return shp::Distance(Star::SUN_TO_HORIZON, 20);
 }
 
 Celestial Star::copy() {

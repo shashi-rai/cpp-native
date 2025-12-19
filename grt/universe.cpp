@@ -22,6 +22,11 @@
 
 namespace grt {
 
+const float Universe::RADIUS = 46.5f;       // 46.6 billion light year
+const float Universe::MASS = 1.0f;          // 1.0x10^53 kg
+const float Universe::DENSITY = 2.56f;      // 2.56x10^-27 kg/m^3
+const float Universe::GRAVITY = 6.6743015f; // 6.6743015x10^-11 N.m²/kg²
+
 Universe::Universe() : Celestial(), galaxies() {
 
 }
@@ -90,6 +95,29 @@ void Universe::set(int index, const Galaxy& object) {
         galaxies.push_back(object);
     }
     return;
+}
+
+const shp::Distance Universe::getRadius() {
+    shp::Distance lightyear = Celestial::getLightYear();
+    float radius = (Universe::RADIUS * lightyear.getMagnitude().getValue());
+    short int scaling = (9 + lightyear.getScaling());
+    return shp::Distance(radius, scaling);
+}
+
+const qft::Mass Universe::getMass() {
+    short int scaling = 53;
+    return qft::Mass(Universe::MASS, scaling);
+}
+
+const qft::Density Universe::getDensity() {
+    short int scaling = -27;
+    return qft::Density(Universe::DENSITY, scaling, shp::Unit::getBaseSymbol(shp::Unit::MASS));
+}
+
+const shp::Potential Universe::getGravity() {
+    float highGravity = Universe::GRAVITY, lowGravity = Celestial::GRAVITY_MIN;
+    short int scaling = -11;
+    return shp::Potential(highGravity, lowGravity, scaling, shp::Unit("N.m²/kg²"), getRadius());
 }
 
 Celestial Universe::copy() {
