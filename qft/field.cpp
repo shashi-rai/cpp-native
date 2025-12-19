@@ -23,92 +23,166 @@
 namespace qft {
 
 Field::Field()
-        : Cellular(), potential(), direction() {
+        : Cellular(), potential(), orientation() {
     setPhysical(nullptr);
 }
 
 Field::Field(std::string name)
-        : Cellular(name), potential(), direction() {
+        : Cellular(name), potential(), orientation() {
     setPhysical(nullptr);
 }
 
 Field::Field(const std::shared_ptr<shp::Shape> physical)
-        : Cellular(), potential(), direction() {
+        : Cellular(), potential(), orientation() {
     setPhysical(physical);
 }
 
 Field::Field(std::string name, const std::shared_ptr<shp::Shape> physical)
-        : Cellular(name), potential(), direction() {
+        : Cellular(name), potential(), orientation() {
     setPhysical(physical);
 }
 
 Field::Field(shp::Potential potential)
-        : Cellular(), potential(potential), direction() {
+        : Cellular(), potential(potential), orientation() {
     setPhysical(nullptr);
+}
+
+Field::Field(shp::Potential potential,
+        const std::shared_ptr<shp::Shape> physical)
+        : Cellular(), potential(potential), orientation() {
+    setPhysical(physical);
 }
 
 Field::Field(const float direction)
-        : Cellular(), potential(), direction(direction) {
+        : Cellular(), potential(), orientation(direction) {
     setPhysical(nullptr);
+}
+
+Field::Field(const float direction,
+        const std::shared_ptr<shp::Shape> physical)
+        : Cellular(), potential(), orientation(direction) {
+    setPhysical(physical);
 }
 
 Field::Field(const shp::Direction& direction)
-        : Cellular(), potential(), direction(direction) {
+        : Cellular(), potential(), orientation(direction) {
     setPhysical(nullptr);
+}
+
+Field::Field(const shp::Direction& direction,
+        const std::shared_ptr<shp::Shape> physical)
+        : Cellular(), potential(), orientation(direction) {
+    setPhysical(physical);
+}
+
+Field::Field(const shp::Angular& orientation)
+        : Cellular(), potential(), orientation(orientation) {
+    setPhysical(nullptr);
+}
+
+Field::Field(const shp::Angular& orientation,
+        const std::shared_ptr<shp::Shape> physical)
+        : Cellular(), potential(), orientation(orientation) {
+    setPhysical(physical);
 }
 
 Field::Field(const float potential, const float direction)
-        : Cellular(), potential(potential), direction(direction) {
+        : Cellular(), potential(potential), orientation(direction) {
     setPhysical(nullptr);
+}
+
+Field::Field(const float potential, const float direction,
+        const std::shared_ptr<shp::Shape> physical)
+        : Cellular(), potential(potential), orientation(direction) {
+    setPhysical(physical);
 }
 
 Field::Field(const shp::Potential& potential, const shp::Direction& direction)
-        : Cellular(), potential(potential), direction(direction) {
+        : Cellular(), potential(potential), orientation(direction) {
     setPhysical(nullptr);
+}
+
+Field::Field(const shp::Potential& potential, const shp::Direction& direction,
+        const std::shared_ptr<shp::Shape> physical)
+        : Cellular(), potential(potential), orientation(direction) {
+    setPhysical(physical);
+}
+
+Field::Field(const shp::Potential& potential, const shp::Angular& orientation)
+        : Cellular(), potential(potential), orientation(orientation) {
+    setPhysical(nullptr);
+}
+
+Field::Field(const shp::Potential& potential, const shp::Angular& orientation,
+        const std::shared_ptr<shp::Shape> physical)
+        : Cellular(), potential(potential), orientation(orientation) {
+    setPhysical(physical);
 }
 
 Field::Field(std::string name, shp::Potential potential)
-        : Cellular(name), potential(potential), direction() {
+        : Cellular(name), potential(potential), orientation() {
     setPhysical(nullptr);
 }
 
+Field::Field(std::string name, shp::Potential potential,
+        const std::shared_ptr<shp::Shape> physical)
+        : Cellular(name), potential(potential), orientation() {
+    setPhysical(physical);
+}
+
 Field::Field(std::string name, const float direction)
-        : Cellular(name), potential(), direction(direction) {
+        : Cellular(name), potential(), orientation(direction) {
     setPhysical(nullptr);
 }
 
 Field::Field(std::string name, const shp::Direction& direction)
-        : Cellular(name), potential(), direction(direction) {
+        : Cellular(name), potential(), orientation(direction) {
     setPhysical(nullptr);
 }
 
-Field::Field(std::string name, const float direction, const std::shared_ptr<shp::Shape> physical)
-        : Cellular(name), potential(), direction(direction) {
+Field::Field(std::string name, const float direction,
+        const std::shared_ptr<shp::Shape> physical)
+        : Cellular(name), potential(), orientation(direction) {
     setPhysical(physical);
 }
 
-Field::Field(std::string name, const shp::Direction& direction, const std::shared_ptr<shp::Shape> physical)
-        : Cellular(name), potential(), direction(direction) {
+Field::Field(std::string name, const shp::Direction& direction,
+        const std::shared_ptr<shp::Shape> physical)
+        : Cellular(name), potential(), orientation(direction) {
     setPhysical(physical);
 }
 
 Field::Field(std::string name, const float potential, const float direction)
-        : Cellular(name), potential(potential), direction(direction) {
+        : Cellular(name), potential(potential), orientation(direction) {
     setPhysical(nullptr);
 }
 
 Field::Field(std::string name, const shp::Potential& potential, const shp::Direction& direction)
-        : Cellular(name), potential(potential), direction(direction) {
+        : Cellular(name), potential(potential), orientation(direction) {
     setPhysical(nullptr);
 }
 
-Field::Field(std::string name, const float potential, const float direction, const std::shared_ptr<shp::Shape> physical)
-        : Cellular(name), potential(potential), direction(direction) {
+Field::Field(std::string name, const float potential, const float direction,
+        const std::shared_ptr<shp::Shape> physical)
+        : Cellular(name), potential(potential), orientation(direction) {
     setPhysical(physical);
 }
 
-Field::Field(std::string name, const shp::Potential& potential, const shp::Direction& direction, const std::shared_ptr<shp::Shape> physical)
-        : Cellular(name), potential(potential), direction(direction) {
+Field::Field(std::string name, const shp::Potential& potential,
+        const shp::Direction& direction, const std::shared_ptr<shp::Shape> physical)
+        : Cellular(name), potential(potential), orientation(direction) {
+    setPhysical(physical);
+}
+
+Field::Field(std::string name, const shp::Potential& potential,
+        const shp::Angular& orientation)
+        : Cellular(name), potential(potential), orientation(orientation) {
+    setPhysical(nullptr);
+}
+
+Field::Field(std::string name, const shp::Potential& potential,
+        const shp::Angular& orientation, const std::shared_ptr<shp::Shape> physical)
+        : Cellular(name), potential(potential), orientation(orientation) {
     setPhysical(physical);
 }
 
@@ -120,25 +194,52 @@ bool Field::operator==(const Field& peer) const {
     return (static_cast<const Cellular&>(*this) == static_cast<const Cellular&>(peer))
         && (physical == peer.physical)
         && (potential == peer.potential)
-        && (direction == peer.direction);
+        && (orientation == peer.orientation);
 }
 
 Field Field::operator+(const Field& peer) const {
     shp::Potential newpotential = (potential + peer.potential);
-    shp::Direction newdirection = (direction + peer.direction);
-    return Field("+", newpotential, newdirection);
+    shp::Angular neworientation = (orientation + peer.orientation);
+    return Field("+", newpotential, neworientation);
 }
 
 Field Field::operator-(const Field& peer) const {
     shp::Potential newpotential = (potential - peer.potential);
-    shp::Direction newdirection = (direction - peer.direction);
-    return Field("-", newpotential, newdirection);
+    shp::Angular neworientation = (orientation - peer.orientation);
+    return Field("-", newpotential, neworientation);
+}
+
+Field Field::operator*(const Field& peer) const {
+    shp::Potential newpotential = (potential * peer.potential);
+    shp::Angular neworientation = (orientation * peer.orientation);
+    return Field("*", newpotential, neworientation);
+}
+
+Field Field::operator/(const Field& peer) const {
+    shp::Potential newpotential = (potential / peer.potential);
+    shp::Angular neworientation = (orientation / peer.orientation);
+    return Field("/", newpotential, neworientation);
+}
+
+Field Field::operator%(const Field& peer) const {
+    shp::Potential newpotential = (potential % peer.potential);
+    shp::Angular neworientation = (orientation % peer.orientation);
+    return Field("%", newpotential, neworientation);
 }
 
 shp::Quantity Field::operator()(const Field& peer,
         const shp::Distance& separation, const shp::Distance& position) const {
-    return potential(peer.potential, separation, position);
-}  
+    shp::Quantity result = potential(peer.potential, separation, position);
+    result.adjustScaling();
+    return result;
+}
+
+shp::Quantity Field::operator()(const Field& peerX, const Field& peerY,
+    const shp::Distance& separationX, const shp::Distance& separationY) const {
+    shp::Quantity result = potential(peerX.getPotential(), peerY.getPotential(), separationX, separationY);
+    result.adjustScaling();
+    return result;
+}
 
 bool Field::isStructured() const {
     return physical != nullptr;
@@ -156,16 +257,17 @@ void Field::changePoint(const Action& action) {
     return;
 }
 
-Particle* Field::getDivergence(const Action& action) const {
+std::shared_ptr<Particle> Field::getDivergence(const Action& action) const {
     // TODO: how is particle destroyed
-    Particle* result = new Particle();
+    std::shared_ptr<Particle> result = std::make_shared<Particle>();
     result->setAmplitude(0);
     return result;
 }
 
-Particle* Field::getConvergence(const Action& action) const {
+std::shared_ptr<Particle> Field::getConvergence(const Action& action) const {
     // TODO: how is particle generated
-    Particle* result = new Particle();
+    std::shared_ptr<Particle> result = std::make_shared<Particle>();
+    result->setAmplitude(0);
     return result;
 }
 
@@ -176,14 +278,14 @@ shp::Quantity Field::getTotal() const {
 }
 
 shp::Point Field::copy() {
-    Field fresh(getName(), potential, direction, physical);
+    Field fresh(getName(), potential, orientation, physical);
     return fresh;
 }
 
 void Field::clear() {
     Cellular::clear();
     potential.clear();
-    direction.clear();
+    orientation.clear();
     return;
 }
 
@@ -192,7 +294,7 @@ std::string Field::print() {
     result << "∇";
     result << Cellular::print() << ",";
     result << potential.print() << ",";
-    result << direction.print();
+    result << orientation.print();
 	return result.str();
 }
 

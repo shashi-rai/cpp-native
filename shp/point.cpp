@@ -75,7 +75,7 @@ Point Point::operator-(const Point& peer) const {
 
 Angular Point::getOrientation() const {
     Direction azimuth(gradient);
-    Angular result(Angular::DEFAULT_RADIUS, azimuth);
+    Angular result(Distance(Angular::DEFAULT_RADIUS), azimuth);
     return result;
 }
 

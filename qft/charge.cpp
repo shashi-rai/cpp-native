@@ -166,7 +166,7 @@ Density Charge::getDensity(const shp::Volume& volume) const {
 
 Force Charge::getForce(const shp::Angular& coordinates) const {
     shp::Quantity force = (getTotal() * field->getTotal());
-    shp::Direction direction = field->getDirection();
+    shp::Direction direction = field->getLinear();
     Electric result(force.getValue(), direction.toRadians(), force.getScaling(), field);
     result.adjustScaling();
     return result;

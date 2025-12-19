@@ -167,7 +167,7 @@ Density Mass::getDensity(const shp::Volume& volume) const {
 
 Force Mass::getForce(const shp::Angular& coordinates) const {
     shp::Quantity force = (getTotal() * field->getTotal());
-    shp::Direction direction = field->getDirection();
+    shp::Direction direction = field->getLinear();
     Gravity result(force.getValue(), direction.toRadians(), force.getScaling(), field);
     result.adjustScaling();
     return result;

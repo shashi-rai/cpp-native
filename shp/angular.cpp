@@ -123,6 +123,16 @@ Angular::Angular(float radius, short int scaling, const Unit& unit,
 
 }
 
+Angular::Angular(const Direction& azimuthal)
+		: Distance(), polar(), azimuthal(azimuthal) {
+
+}
+
+Angular::Angular(const Direction& polar, const Direction& azimuthal)
+		: Distance(), polar(polar), azimuthal(azimuthal) {
+
+}
+
 Angular::Angular(const Distance& radius, const Direction& polar, const Direction& azimuthal)
 		: Distance(radius), polar(polar), azimuthal(azimuthal) {
 

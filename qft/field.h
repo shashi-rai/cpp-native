@@ -39,7 +39,7 @@ class Mass;
 class Field : public shp::Cellular {
     std::shared_ptr<shp::Shape> physical;
     shp::Potential potential;
-    shp::Direction direction;
+    shp::Angular orientation;
 public:
     // Constructors
     Field();
@@ -47,11 +47,21 @@ public:
     Field(const std::shared_ptr<shp::Shape> physical);
     Field(std::string name, const std::shared_ptr<shp::Shape> physical);
     Field(shp::Potential potential);
+    Field(shp::Potential potential, const std::shared_ptr<shp::Shape> physical);
     Field(const float direction);
+    Field(const float direction, const std::shared_ptr<shp::Shape> physical);
     Field(const shp::Direction& direction);
+    Field(const shp::Direction& direction, const std::shared_ptr<shp::Shape> physical);
+    Field(const shp::Angular& orientation);
+    Field(const shp::Angular& orientation, const std::shared_ptr<shp::Shape> physical);
     Field(const float potential, const float direction);
+    Field(const float potential, const float direction, const std::shared_ptr<shp::Shape> physical);
     Field(const shp::Potential& potential, const shp::Direction& direction);
+    Field(const shp::Potential& potential, const shp::Direction& direction, const std::shared_ptr<shp::Shape> physical);
+    Field(const shp::Potential& potential, const shp::Angular& orientation);
+    Field(const shp::Potential& potential, const shp::Angular& orientation, const std::shared_ptr<shp::Shape> physical);
     Field(std::string name, shp::Potential potential);
+    Field(std::string name, shp::Potential potential, const std::shared_ptr<shp::Shape> physical);
     Field(std::string name, const float direction);
     Field(std::string name, const shp::Direction& direction);
     Field(std::string name, const float direction, const std::shared_ptr<shp::Shape> physical);
@@ -60,6 +70,8 @@ public:
     Field(std::string name, const float potential, const float direction, const std::shared_ptr<shp::Shape> physical);
     Field(std::string name, const shp::Potential& potential, const shp::Direction& direction);
     Field(std::string name, const shp::Potential& potential, const shp::Direction& direction, const std::shared_ptr<shp::Shape> physical);
+    Field(std::string name, const shp::Potential& potential, const shp::Angular& orientation);
+    Field(std::string name, const shp::Potential& potential, const shp::Angular& orientation, const std::shared_ptr<shp::Shape> physical);
 
     // Destructors
     ~Field();
@@ -68,28 +80,35 @@ public:
     bool operator==(const Field& peer) const;
     Field operator+(const Field& peer) const;
     Field operator-(const Field& peer) const;
+    Field operator*(const Field& peer) const;
+    Field operator/(const Field& peer) const;
+    Field operator%(const Field& peer) const;
 
     // Access operator
     Point operator()(int x, int y, int z) { return this->get(x).get(y).get(z); }
 	const Point operator()(int x, int y, int z) const { return this->get(x).get(y).get(z); }
     shp::Quantity operator()(const Field& peer,
         const shp::Distance& separation, const shp::Distance& position) const;
+    shp::Quantity operator()(const Field& peerX, const Field& peerY,
+        const shp::Distance& separationX, const shp::Distance& separationY) const;
 
     // Getters
     std::shared_ptr<shp::Shape> getPhysical() const { return physical; }
     shp::Potential getPotential() const { return potential; }
-    shp::Direction getDirection() const { return direction; }
+    shp::Direction getLinear() const { return orientation.getAzimuthal(); }
+    shp::Direction getCircular() const { return orientation.getPolar(); }
 
     // Setters
     void setPhysical(const std::shared_ptr<shp::Shape> structure) { this->physical = structure; }
     void setPotential(const shp::Potential& difference) { this->potential = difference; }
-    void setDirection(const shp::Direction& direction) { this->direction = direction; }
+    void setLinear(const shp::Direction& direction) { this->orientation.setAzimuthal(direction); }
+    void setCircular(const shp::Direction& direction) { this->orientation.setPolar(direction); }
 
     // Additional methods
     bool isStructured() const;
     void changePoint(const Action& action);
-    Particle* getDivergence(const Action& action) const;
-    Particle* getConvergence(const Action& action) const;
+    std::shared_ptr<Particle> getDivergence(const Action& action) const;
+    std::shared_ptr<Particle> getConvergence(const Action& action) const;
     shp::Quantity getTotal() const;
     virtual shp::Point copy();
     virtual void clear();

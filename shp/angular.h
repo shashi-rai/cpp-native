@@ -53,6 +53,8 @@ public:
     Angular(float radius, short int scaling, const Unit& unit, float polar, float azimuthal);
     Angular(float radius, short int scaling, const Unit& unit,
         const Direction& polar, const Direction& azimuthal);
+    Angular(const Direction& azimuthal);
+    Angular(const Direction& polar, const Direction& azimuthal);
     Angular(const Distance& radius, const Direction& polar, const Direction& azimuthal);
 
     // Destructors
