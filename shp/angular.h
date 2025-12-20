@@ -21,6 +21,7 @@
 #ifndef SHP_ANGULAR_H
 #define SHP_ANGULAR_H
 
+#include <complex>
 #include <string>
 #include <vector>
 #include "direction.h"
@@ -99,7 +100,9 @@ public:
     // Additional methods
     Distance getRadius() const;
     void setRadius(const Distance& distance);
-    Quantity getRelative(const Distance& location) const;
+    Quantity getRelative(const Distance& location, const float angle) const;
+    Quantity getPolarComponent(const Distance& location) const;
+    Quantity getAzimuthalComponent(const Distance& location) const;
     Distance copy();
     void clear();
     std::string print();

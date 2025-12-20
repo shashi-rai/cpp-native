@@ -90,7 +90,9 @@ public:
     Direction getAzimuthal() const;
     void setAzimuthal(const Direction& angle);
     Quantity getDifference() const;
-    Quantity getRelative(const Distance& location) const;
+    Quantity getRelative(const Distance& location, const float angle) const;
+    Quantity getPolarComponent(const Distance& location) const;
+    Quantity getAzimuthalComponent(const Distance& location) const;
     Potential copy();
     void clear();
     std::string print();

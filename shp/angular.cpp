@@ -242,26 +242,20 @@ Quantity Angular::operator()(const Angular& peer,
         const Distance& separation, const Distance& position) const {
     Angular self = *this;
     Distance rx = position, ry = (separation - position);
-    Quantity ax = self.getRelative(rx), ay = peer.getRelative(ry);
-    Quantity result = (ax - ay);
-    result.adjustScaling();
+    Quantity ax = self.getAzimuthalComponent(rx), ay = peer.getAzimuthalComponent(ry);
+    Quantity result = (ax - ay); result.adjustScaling();
     return result;
 }
 
 Quantity Angular::operator()(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const {
-    Angular self = *this;
-    Distance radiusX = (self.getRadius() + peerX.getRadius());
-    Distance totalX = (radiusX + separationX.getMagnitude());
-    Distance radiusY = (self.getRadius() + peerY.getRadius());
-    Distance totalY = (radiusY + separationY.getMagnitude());
-    Distance hx = (totalY * cos(self.azimuthal.toRadians()));
-    //Distance hy = (totalY * sin(self.azimuthal.toRadians()));
-    Distance r0 = hx, rx = (separationX - hx);
-    Quantity a0 = self.getRelative((r0 - self.getRadius()));
-    Quantity ax = peerX.getRelative((rx - peerX.getRadius()));    
-    Quantity result = (a0 - ax);
-    result.adjustScaling();
+    Angular self = *this; float end = 0.0f;
+    Quantity azimX = (self(peerX, separationX, end) * cos(peerX.polar.toRadians()));
+    Quantity azimY = (self(peerY, separationY, end) * cos(peerY.polar.toRadians()));
+    std::complex<float> radial(azimX.getValue(), azimY.getValue());
+    std::complex<float> polarized = std::sqrt(radial);
+    shp::Quantity result((std::abs(polarized) * cos(self.polar.toRadians())),
+            azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
     return result;
 }
 
@@ -273,14 +267,21 @@ void Angular::setRadius(const Distance& distance) {
     this->setMagnitude(distance.getMagnitude());
 }
 
-Quantity Angular::getRelative(const Distance& location) const {
-    Angular self = *this;
-    Distance radius = self.getRadius();
-    Distance distance = (radius / (radius + location));
-    Distance coefficient = (distance * distance);
+Quantity Angular::getRelative(const Distance& location, const float angle) const {
+    Angular self = *this; Distance radius = self.getRadius();
+    Distance distance = (radius / (radius + location)); distance.adjustNumeric();
+    Distance coefficient = (distance.getComponent(angle) * distance.getComponent(angle));
     Quantity result((coefficient.getMagnitude().getValue()), getScaling(), getUnit());
     result.adjustScaling();
     return result;
+}
+
+Quantity Angular::getPolarComponent(const Distance& location) const {
+    return getRelative(location, this->polar.toRadians());
+}
+
+Quantity Angular::getAzimuthalComponent(const Distance& location) const {
+    return getRelative(location, this->azimuthal.toRadians());
 }
 
 Distance Angular::copy() {

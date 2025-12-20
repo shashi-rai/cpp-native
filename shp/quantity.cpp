@@ -135,6 +135,12 @@ short int Quantity::checkScaling(float amount) const {
     return log10(amount);
 }
 
+void Quantity::adjustNumeric() {
+    if (std::isnan(value)) {
+        value = Quantity::DEFAULT_VALUE;
+    }
+}
+
 void Quantity::adjustScaling() {
     float current = value;
     if (current == DEFAULT_VALUE) {

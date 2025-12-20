@@ -7,14 +7,14 @@ developers to include the same in their own applications.
 
 ## Basic Requirements
 
-Prior to start using this repository, a POSIX compliant software development
-environment would be required. Ideally, you could have 
+Prior using this repository, a POSIX compliant software development environment
+would be required. Ideally, you could have 
 
 1. __macOS__ or __Linux__ operating system
-2. __git__ - version control system
-3. __make__ - software build tool
-4. GNU __C++__ Compiler
-5. Microsoft Visual Studio Code IDE
+2. __git__ - version control system for maintaining the source code
+3. __make__ - software build tool to compile C++ programs
+4. GNU __C++__ Compiler - free &amp; opern soure software
+5. Microsoft Visual Studio Code IDE for editing the source code
 
 ## Folder Hierarchy
 
@@ -35,11 +35,18 @@ The following folders serve specific purpose with regard to software development
 
 ## Source Code Compilation
 
-Besides using following command in the main folder, you could compile each
+Besides using te following command in the main folder, you could compile each
 domain-specific folder independently
 
 ```bash
 $ make all
+```
+
+Once all the libraries are built in respective sub-directories, you could compile
+the application alone by simply using the following command
+
+```bash
+$ make app
 ```
 
 ### Understanding Dependencies
@@ -87,7 +94,7 @@ $ make clean-apps
 ## Source Code Repository
 
 The source code of [cpp-native](https://github.com/shashi-rai/cpp-native) is fully
-maintained at [Github](https://github.com). You could push modified source code to
+maintained at [GitHub](https://github.com). You could push modified source code to
 the repository using the following command
 
 ```bash
@@ -127,4 +134,4 @@ It would simply print a copyright message. Perhaps, you could customise this
 
 ## Software Developer
 
-- Shashi Bhushan Rai, [Bhojpur Consulting](https://www.bhojpur-consulting.com)
+- Shashi Bhushan Rai, [Bhojpur Consulting](https://www.bhojpur-consulting.com) Private Limited, India

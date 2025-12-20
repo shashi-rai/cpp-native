@@ -65,6 +65,8 @@ public:
     Quantity getTotal() const;
     short int getScaling() const;
     std::string getUnit() const;
+    void adjustNumeric();
+    void adjustScaling();
     virtual Distance copy();
     virtual void clear();
     virtual std::string print();

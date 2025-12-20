@@ -38,6 +38,8 @@ SUBDIRS = dsa web shp qft phy che bio gis grt
 
 all: all-before subdirs $(APPPROG) all-after
 
+app: all-before $(APPPROG) all-after
+
 subdirs:
 	for dir in $(SUBDIRS); do \
 		$(MAKE) -C $$dir; \

@@ -166,18 +166,17 @@ Potential Potential::operator%(const Potential& peer) const {
 
 Quantity Potential::operator()(const Potential& peer,
         const Distance& separation, const Distance& position) const {
-    Potential self = *this;
-    Distance x = position, y = (separation - position);
-    Quantity px = self.getRelative(x), py = peer.getRelative(y);
-    Quantity result = (px - py);
-    result.adjustScaling();
+    Potential self = *this; float distribution = (getHigh() - getLow());
+    Quantity coefficient = (origin(peer.origin, separation, position) * distribution);
+    Quantity result(coefficient.getValue(), getScaling(), getUnit()); result.adjustScaling();
     return result;
 }
 
 Quantity Potential::operator()(const Potential& peerX, const Potential& peerY,
         const Distance& separationX, const Distance& separationY) const {
-    Quantity result = origin(peerX.getOrigin(), peerY.getOrigin(), separationX, separationY);
-    result.adjustScaling();
+    float distribution = (getHigh() - getLow());
+    Quantity coefficient = (origin(peerX.getOrigin(), peerY.getOrigin(), separationX, separationY) * distribution);
+    Quantity result(coefficient.getValue(), getScaling(), getUnit()); result.adjustScaling();
     return result;
 }
 
@@ -202,15 +201,19 @@ Quantity Potential::getDifference() const {
     return result;
 }
 
-Quantity Potential::getRelative(const Distance& location) const {
-    Potential self = *this;
-    float distribution = (getHigh() - getLow());
-    Distance radius = self.getOrigin().getRadius();
-    Distance distance = (radius / (radius + location.getMagnitude()));
-    Distance coefficient = (distance * distance);
-    Quantity result((coefficient.getMagnitude().getValue() * distribution), getScaling(), getUnit());
-    result.adjustScaling();
+Quantity Potential::getRelative(const Distance& location, const float angle) const {
+    Potential self = *this; float distribution = (getHigh() - getLow());
+    Quantity coefficient = (origin.getRelative(location, angle) * distribution);
+    Quantity result(coefficient.getValue(), getScaling(), getUnit()); result.adjustScaling();
     return result;
+}
+
+Quantity Potential::getPolarComponent(const Distance& location) const {
+    return getRelative(location, origin.getPolar().toRadians());
+}
+
+Quantity Potential::getAzimuthalComponent(const Distance& location) const {
+    return getRelative(location, origin.getAzimuthal().toRadians());
 }
 
 Potential Potential::copy() {

@@ -118,6 +118,14 @@ std::string Distance::getUnit() const {
     return magnitude.getUnit().getName();
 }
 
+void Distance::adjustNumeric() {
+    magnitude.adjustNumeric();
+}
+
+void Distance::adjustScaling() {
+    magnitude.adjustScaling();
+}
+
 Distance Distance::copy() {
     Distance fresh(magnitude.getValue(), magnitude.getScaling(), magnitude.getUnit());
     return fresh;
