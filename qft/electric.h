@@ -56,7 +56,7 @@ public:
     bool operator==(const Electric& peer) const;
 
     // Access operator
-    Electric operator()(const Charge& host, const Charge& peer) const;
+    Electric operator()(const Charge& host, const Charge& peer, const shp::Distance& sepration) const;
 
     // Getters
     std::shared_ptr<Field> getField() const { return field; }
@@ -65,6 +65,7 @@ public:
     void setField(const std::shared_ptr<Field> value) { this->field = value; }
 
     // Additional methods
+    virtual Acceleration getAcceleration(const Charge& charge) const;
     bool isOwned() const;
     virtual Force copy();
     virtual void clear();

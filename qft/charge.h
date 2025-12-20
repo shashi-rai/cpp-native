@@ -66,12 +66,12 @@ public:
     Charge operator%(const Charge& peer) const;
 
     // Access operator
-    Force operator()(const Charge& peer, const shp::Distance distance) const;
+    Force operator()(const Charge& peer, const shp::Distance sepration,
+        const shp::Distance distance) const;
 
     // Getters
     std::shared_ptr<Field> getField() const { return field; }
     shp::Quantity getMagnitude() const { return magnitude; }
-
 
     // Setters
     void setField(std::shared_ptr<Field> address) { this->field = address; }

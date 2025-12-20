@@ -56,7 +56,7 @@ public:
     bool operator==(const Gravity& peer) const;
 
     // Access operator
-    Gravity operator()(const Mass& host, const Mass& peer) const;
+    Gravity operator()(const Mass& host, const Mass& peer, const shp::Distance& sepration) const;
 
     // Getters
     std::shared_ptr<Field> getField() const { return field; }
@@ -65,6 +65,7 @@ public:
     void setField(const std::shared_ptr<Field> address) { this->field = address; }
 
     // Additional methods
+    virtual Acceleration getAcceleration(const Mass& mass) const;
     bool isOwned() const;
     virtual Force copy();
     virtual void clear();

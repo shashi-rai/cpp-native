@@ -19,6 +19,8 @@
 // THE SOFTWARE.
 
 #include "gravity.h"
+#include "acceleration.h"
+#include "mass.h"
 
 namespace qft {
 
@@ -113,12 +115,23 @@ bool Gravity::operator==(const Gravity& peer) const {
         && (field == peer.field);
 }
 
-Gravity Gravity::operator()(const Mass& host, const Mass& peer) const {
+Gravity Gravity::operator()(const Mass& host, const Mass& peer, const shp::Distance& sepration) const {
     shp::Potential potential_host = host.getField()->getPotential();
     shp::Potential potential_peer = peer.getField()->getPotential();
     shp::Distance distance = (potential_host.getDifference() - potential_peer.getDifference());
-    Force effect = host(peer, distance);
+    Force effect = host(peer, sepration, distance);
     return Gravity(effect.getMagnitude().getValue(), effect.getDirection().toRadians(), field);
+}
+
+Acceleration Gravity::getAcceleration(const Mass& mass) const {
+    Acceleration result;
+    if (isOwned()) {
+	    result = Force::getAcceleration(mass);
+    } else {
+        result = Force::getAcceleration(0);
+    }
+	result.adjustScaling();
+    return result;
 }
 
 bool Gravity::isOwned() const {

@@ -66,7 +66,8 @@ public:
     Mass operator%(const Mass& peer) const;
 
     // Access operator
-    Force operator()(const Mass& peer, const shp::Distance& distance) const;
+    Force operator()(const Mass& peer, const shp::Distance sepration,
+        const shp::Distance& distance) const;
 
     // Getters
     std::shared_ptr<Field> getField() const { return field; }

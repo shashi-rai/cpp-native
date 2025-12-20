@@ -128,18 +128,19 @@ Mass Mass::operator%(const Mass& peer) const {
     return Mass(mass.getValue(), mass.getScaling(), mass.getUnit());
 }
 
-Force Mass::operator()(const Mass& peer, const shp::Distance& distance) const {
-    if (field != nullptr) {
-        shp::Quantity separation = (distance * distance).getMagnitude();
-        shp::Quantity gravitable = (magnitude * peer.magnitude).getValue();
-        float quantum = (Force::GRAVITATIONAL_CONSTANT * (gravitable.getValue() / separation.getValue()));
-        short int scaling = Force::GRAVITATIONAL_SCALE - (gravitable.getScaling() - separation.getScaling());
-        Force result(quantum, scaling, shp::Unit::getDerivedSymbol(shp::Unit::FORCE));
+Force Mass::operator()(const Mass& peer, const shp::Distance sepration,
+        const shp::Distance& distance) const {
+    if (isOwned()) {
+        shp::Potential self = field->getPotential();
+        shp::Potential other = peer.field->getPotential();
+        shp::Quantity factor = self(other, sepration, distance);
+        shp::Quantity force = (magnitude * factor);
+        Gravity result(force.getValue(), self.getAzimuthal().toRadians(), force.getScaling(), field);
         result.adjustScaling();
         return result;
     } else {
-        float quantum = 0.0f;
-        return Force(quantum, Force::GRAVITATIONAL_SCALE, shp::Unit::getDerivedSymbol(shp::Unit::FORCE));
+        float quantum = 0.0f; shp::Direction direction(quantum);
+        return Gravity(quantum, direction.toRadians(), Force::GRAVITATIONAL_SCALE, field);
     }
 }
 
@@ -166,11 +167,16 @@ Density Mass::getDensity(const shp::Volume& volume) const {
 }
 
 Force Mass::getForce(const shp::Angular& coordinates) const {
-    shp::Quantity force = (getTotal() * field->getTotal());
-    shp::Direction direction = field->getLinear();
-    Gravity result(force.getValue(), direction.toRadians(), force.getScaling(), field);
-    result.adjustScaling();
-    return result;
+    if (isOwned()) {
+        shp::Quantity force = (getTotal() * field->getTotal());
+        shp::Direction direction = field->getLinear();
+        Gravity result(force.getValue(), direction.toRadians(), force.getScaling(), field);
+        result.adjustScaling();
+        return result;
+    } else {
+        float quantum = 0.0f; shp::Direction direction(quantum);
+        return Gravity(quantum, direction.toRadians(), Force::GRAVITATIONAL_SCALE, field);
+    }
 }
 
 void Mass::adjustScaling() {

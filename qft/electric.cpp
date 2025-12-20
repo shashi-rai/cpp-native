@@ -19,6 +19,7 @@
 // THE SOFTWARE.
 
 #include "electric.h"
+#include "acceleration.h"
 
 namespace qft {
 
@@ -115,12 +116,25 @@ bool Electric::operator==(const Electric& peer) const {
         && (field == peer.field);
 }
 
-Electric Electric::operator()(const Charge& host, const Charge& peer) const {
+Electric Electric::operator()(const Charge& host, const Charge& peer, const shp::Distance& sepration) const {
     shp::Potential potential_host = host.getField()->getPotential();
     shp::Potential potential_peer = peer.getField()->getPotential();
     shp::Distance distance = (potential_host.getDifference() - potential_peer.getDifference());
-    Force effect = host(peer, distance);
+    Force effect = host(peer, sepration, distance);
     return Electric(effect.getMagnitude().getValue(), effect.getDirection().toRadians(), field);
+}
+
+Acceleration Electric::getAcceleration(const Charge& charge) const {
+    Acceleration result;
+    if (isOwned()) {
+        shp::Quantity quantum = (this->getMagnitude() / charge.getMagnitude());
+	    result = Acceleration(quantum.getValue(), quantum.getScaling(), quantum.getUnit());
+    } else {
+        shp::Quantity quantum = this->getMagnitude();
+        result = Acceleration(quantum.getValue(), quantum.getScaling(), quantum.getUnit());
+    }
+	result.adjustScaling();
+    return result;
 }
 
 bool Electric::isOwned() const {

@@ -127,18 +127,19 @@ Charge Charge::operator%(const Charge& peer) const {
     return Charge(charge.getValue(), charge.getScaling(), charge.getUnit());
 }
 
-Force Charge::operator()(const Charge& peer, const shp::Distance distance) const {
-    if (field != nullptr) {
-        shp::Quantity separation = (distance * distance).getMagnitude();
-        shp::Quantity chargeable = (magnitude * peer.magnitude).getValue();
-        float quantum = (Force::COULOMB_CONSTANT * (chargeable.getValue() / separation.getValue()));
-        short int scaling = Force::COULOMB_SCALE - (chargeable.getScaling() - separation.getScaling());
-        Force result(quantum, scaling, shp::Unit::getDerivedSymbol(shp::Unit::FORCE));
+Force Charge::operator()(const Charge& peer, const shp::Distance sepration,
+        const shp::Distance distance) const {
+    if (isOwned()) {
+        shp::Potential self = field->getPotential();
+        shp::Potential other = peer.field->getPotential();
+        shp::Quantity factor = self(other, sepration, distance);
+        shp::Quantity force = (magnitude * factor);
+        Electric result(force.getValue(), self.getAzimuthal().toRadians(), force.getScaling(), field);
         result.adjustScaling();
         return result;
     } else {
-        float quantum = 0.0f;
-        return Force(quantum, Force::COULOMB_SCALE, shp::Unit::getDerivedSymbol(shp::Unit::FORCE));
+        float quantum = 0.0f; shp::Direction direction(quantum);
+        return Electric(quantum, direction.toRadians(), Force::COULOMB_SCALE, field);
     }
 }
 
@@ -165,11 +166,16 @@ Density Charge::getDensity(const shp::Volume& volume) const {
 }
 
 Force Charge::getForce(const shp::Angular& coordinates) const {
-    shp::Quantity force = (getTotal() * field->getTotal());
-    shp::Direction direction = field->getLinear();
-    Electric result(force.getValue(), direction.toRadians(), force.getScaling(), field);
-    result.adjustScaling();
-    return result;
+    if (isOwned()) {
+        shp::Quantity force = (getTotal() * field->getTotal());
+        shp::Direction direction = field->getLinear();
+        Electric result(force.getValue(), direction.toRadians(), force.getScaling(), field);
+        result.adjustScaling();
+        return result;
+    } else {
+        float quantum = 0.0f; shp::Direction direction(quantum);
+        return Electric(quantum, direction.toRadians(), Force::COULOMB_SCALE, field);
+    }
 }
 
 void Charge::adjustScaling() {
