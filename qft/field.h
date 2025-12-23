@@ -114,6 +114,8 @@ public:
     virtual void clear();
     virtual std::string print();
     shp::Quantity getComponent(float phase) const;
+public:
+    static std::shared_ptr<qft::Field> shareable(std::string name);
 };
 
 typedef std::vector<Field > FieldArray;

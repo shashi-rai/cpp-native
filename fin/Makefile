@@ -19,36 +19,24 @@
 # THE SOFTWARE.
 
 CPPTOOL	 = g++
-CXXINCS  = -I"./inc" 
+CXXINCS  = -I"../inc" 
 CXXFLAGS = $(CXXINCS) -std=c++11
-LIBS     = -L"$(LIBFOLDR)"
 RMCLEAN	 = rm -f
 
-APPPROG	 = bhojpur.app
-LINKOBJ  = $(OBJFOLDR)/main.o
-
-OBJFOLDR = ./obj
+LIBMAKR	 = ar
+LIBFOLDR = ../lib
+LIBNAME	 = libfin.a
+LIBFILES = $(LIBFOLDR)/$(LIBNAME)
+OBJFOLDR = ../obj
 OBJFILES = $(OBJFOLDR)/*.o
-LIBFOLDR = ./lib
-LIBFILES = $(LIBFOLDR)/*.a
 
 .PHONY: all all-before all-after clean clean-custom
 
-SUBDIRS = dsa web shp qft phy che bio gis grt act fin
+all: all-before \
+	$(LIBFOLDR)/$(LIBNAME) \
+	all-after
 
-all: all-before subdirs $(APPPROG) all-after
-
-app: all-before $(APPPROG) all-after
-
-subdirs:
-	for dir in $(SUBDIRS); do \
-		$(MAKE) -C $$dir; \
-	done
-
-clean: clean-custom clean-objs clean-libs clean-apps
-	for dir in $(SUBDIRS); do \
-		$(MAKE) -C $$dir clean; \
-	done
+clean: clean-custom clean-objs clean-libs
 
 clean-objs: clean-custom
 	${RMCLEAN} $(OBJFILES)
@@ -56,15 +44,20 @@ clean-objs: clean-custom
 clean-libs: clean-custom
 	${RMCLEAN} $(LIBFILES)
 
-clean-apps: clean-custom
-	${RMCLEAN} $(APPPROG)
+$(LIBFOLDR)/$(LIBNAME): \
+		$(OBJFOLDR)/future.o \
+		$(OBJFOLDR)/option.o \
+		$(OBJFOLDR)/securities.o
+	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
+		$(OBJFOLDR)/future.o \
+		$(OBJFOLDR)/option.o \
+		$(OBJFOLDR)/securities.o
 
-repo:
-	git commit -m "."
-	git push origin main
+$(OBJFOLDR)/future.o: future.cpp
+	$(CPPTOOL) -c future.cpp -o $(OBJFOLDR)/future.o $(CXXFLAGS)
 
-$(APPPROG): $(LINKOBJ)
-	$(CPPTOOL) $(LINKOBJ) $(LIBFILES) -o $(APPPROG) $(LIBS)
+$(OBJFOLDR)/option.o: option.cpp
+	$(CPPTOOL) -c option.cpp -o $(OBJFOLDR)/option.o $(CXXFLAGS)
 
-$(OBJFOLDR)/main.o: main.cpp
-	$(CPPTOOL) -c main.cpp -o $(OBJFOLDR)/main.o $(CXXFLAGS)
+$(OBJFOLDR)/securities.o: securities.cpp
+	$(CPPTOOL) -c securities.cpp -o $(OBJFOLDR)/securities.o $(CXXFLAGS)

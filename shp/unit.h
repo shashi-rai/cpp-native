@@ -37,11 +37,11 @@ public:
     // Destructors
     ~Unit();
 
-    // Getters
-    std::string getName() const { return name; }
-
     // Operator overloading
     bool operator==(const Unit& peer) const;
+
+    // Getters
+    std::string getName() const { return name; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }

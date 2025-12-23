@@ -303,4 +303,9 @@ shp::Quantity Field::getComponent(float phase) const {
 	return shp::Quantity((intensity.getValue() * cos(phase)), intensity.getScaling(), intensity.getUnit());
 }
 
+std::shared_ptr<qft::Field> Field::shareable(std::string name) {
+    std::shared_ptr<qft::Field> result = std::make_shared<qft::Field>(name);
+    return result;
+}
+
 } // namespace qft

@@ -23,15 +23,17 @@ The following folders serve specific purpose with regard to software development
 1. [inc](/inc/) - include header files
 2. [lib](/lib/) - pre-compiled library files
 3. [obj](/obj/) - pre-compiled object files
-4. [bio](/bio/) - biological algorithms
-5. [che](/che/) - chemical algorithms
-6. [dsa](/dsa/) - data structure algorithms
-7. [gis](/gis/) - geospatial system algorithms
-8. [grt](/grt/) - general relativity algorithms
-9. [phy](/phy/) - physical algorithms
-10. [qft](/qft/) - quantum field algorithms
-11. [shp](/shp/) - geometrical shape algorithms
-12. [web](/web/) - web development system
+4. [act](/act/) - accounting algorithms
+5. [bio](/bio/) - biological algorithms
+6. [che](/che/) - chemical algorithms
+7. [dsa](/dsa/) - data structure algorithms
+8. [fin](/fin/) - financial algorithms
+9. [gis](/gis/) - geospatial system algorithms
+10. [grt](/grt/) - general relativity algorithms
+11. [phy](/phy/) - physical algorithms
+12. [qft](/qft/) - quantum field algorithms
+13. [shp](/shp/) - geometrical shape algorithms
+14. [web](/web/) - web development system
 
 ## Source Code Compilation
 
@@ -64,6 +66,11 @@ The macro-world phenomenon is modeled using the following libraries
 
 - the [gis](/gis/) library could be compiled after [shp](/shp/) library is ready
 - the [grt](/grt/) library could be compiled after [gis](/gis/) library is ready
+
+The financial system is modeled using the following libraries
+
+- the [act](/act/) library could be compiled after [shp](/shp/) library is ready
+- the [fin](/fin/) library could be compiled after [act](/act/) library is ready
 
 ## Folder Cleanup
 
@@ -134,4 +141,4 @@ It would simply print a copyright message. Perhaps, you could customise this
 
 ## Software Developer
 
-- Shashi Bhushan Rai, [Bhojpur Consulting](https://www.bhojpur-consulting.com) Private Limited, India
+- Shashi Bhushan Rai, [Bhojpur Consulting Private Limited](https://www.bhojpur-consulting.com), India
