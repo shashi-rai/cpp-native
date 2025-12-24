@@ -24,34 +24,49 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "discount.h"
 #include "price.h"
+#include "tax.h"
 
 namespace act {
 
-class Sale {
-    std::string name;
-    Price price;
+class Sale : public Price {
+    std::string code;
+    Discount discount;
+    Tax tax;
 public:
     // Constructors
     Sale();
-    Sale(std::string name);
+    Sale(std::string code);
+    Sale(const Discount& discount);
+    Sale(std::string code, const Discount& discount);
+    Sale(const Tax& tax);
+    Sale(std::string code, const Tax& tax);
+    Sale(std::string code, const Discount& discount, const Tax& tax);
 
     // Destructors
     ~Sale();
 
     // Operator overloading
     bool operator==(const Sale& peer) const;
+    Sale operator+(const Sale& peer) const;
+    Sale operator-(const Sale& peer) const;
+    Sale operator*(const Sale& peer) const;
+    Sale operator/(const Sale& peer) const;
+    Sale operator%(const Sale& peer) const;
 
     // Getters
-    std::string getName() const { return name; }
-    Price getPrice() const { return price; }
+    std::string getCode() const { return code; }
+    Discount getDiscount() const { return discount; }
+    Tax getTax() const { return tax; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
-    void setPrice(const Price& value) { this->price = value; }
+    void setCode(const std::string& number) { this->code = number; }
+    void setDiscount(const Discount& free) { this->discount = free; }
+    void setTax(const Tax& vat) { this->tax = vat; }
 
     // Additional methods
-    virtual Sale copy();
+    virtual Price copy();
     virtual void clear();
     virtual std::string print();
 };

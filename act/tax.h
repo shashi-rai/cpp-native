@@ -24,32 +24,51 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "amount.h"
 
 namespace act {
 
 class Tax {
     std::string name;
+    float percent;
+    Amount amount;
 public:
     // Constructors
     Tax();
     Tax(std::string name);
+    Tax(const float percent);
+    Tax(const Amount& amount);
+    Tax(const float percent, const Amount& amount);
+    Tax(std::string name, const Amount& amount);
+    Tax(std::string name, const float percent, const Amount& amount);
 
     // Destructors
     ~Tax();
 
     // Operator overloading
     bool operator==(const Tax& peer) const;
+    Tax operator+(const Tax& peer) const;
+    Tax operator-(const Tax& peer) const;
+    Tax operator*(const Tax& peer) const;
+    Tax operator/(const Tax& peer) const;
+    Tax operator%(const Tax& peer) const;
 
     // Getters
     std::string getName() const { return name; }
+    float getPercent() const { return percent; }
+    Amount getAmount() const { return amount; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
+    void getPercent(const float rate) { this->percent = rate; }
+    void setAmount(const Amount& value) { this->amount = value; }
 
     // Additional methods
     virtual Tax copy();
     virtual void clear();
     virtual std::string print();
+public:
+    static const float DEFAULT_VALUE;
 };
 
 typedef std::vector<Tax > TaxArray;

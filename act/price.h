@@ -35,12 +35,19 @@ public:
     // Constructors
     Price();
     Price(std::string name);
+    Price(const Amount& amount);
+    Price(std::string name, const Amount& amount);
 
     // Destructors
     ~Price();
 
     // Operator overloading
     bool operator==(const Price& peer) const;
+    Price operator+(const Price& peer) const;
+    Price operator-(const Price& peer) const;
+    Price operator*(const Price& peer) const;
+    Price operator/(const Price& peer) const;
+    Price operator%(const Price& peer) const;
 
     // Getters
     std::string getName() const { return name; }

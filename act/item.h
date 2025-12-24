@@ -24,19 +24,31 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "batch.h"
 #include "cost.h"
 #include "sale.h"
+#include "../shp/quantity.h"
 
 namespace act {
 
 class Item {
     std::string name;
+    std::string code;
     Cost cost;
     Sale sale;
+    Batch batch;
+    shp::Quantity quantity;
 public:
     // Constructors
     Item();
+    Item(const float quantity);
     Item(std::string name);
+    Item(std::string name, const float quantity);
+    Item(std::string name, std::string code);
+    Item(std::string name, std::string code, const float quantity);
+    Item(std::string name, std::string code, const shp::Quantity& quantity);
+    Item(std::string name, std::string code, const shp::Quantity& quantity, const Cost& cost);
+    Item(std::string name, std::string code, const shp::Quantity& quantity, const Sale& sale);
 
     // Destructors
     ~Item();
@@ -46,15 +58,23 @@ public:
 
     // Getters
     std::string getName() const { return name; }
+    std::string getCode() const { return code; }
     Cost getCost() const { return cost; }
     Sale getSale() const { return sale; }
+    Batch getBatch() const { return batch; }
+    shp::Quantity getQuantity() const { return quantity; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
+    void setCode(const std::string& number) { this->code = number; }
     void setCost(const Cost& object) { this->cost = object; }
     void setSale(const Sale& object) { this->sale = object; }
+    void setBatch(const Batch& object) { this->batch = object; }
+    void setQuantity(const shp::Quantity& object) { this->quantity = object; }
 
     // Additional methods
+    virtual Amount getCostTotal();
+    virtual Amount getSaleTotal();
     virtual Item copy();
     virtual void clear();
     virtual std::string print();

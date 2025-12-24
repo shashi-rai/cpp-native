@@ -22,12 +22,22 @@
 
 namespace act {
 
-Price::Price() : name() {
+Price::Price() : name(), amount() {
 
 }
 
 Price::Price(std::string name)
-        : name(name) {
+        : name(name), amount() {
+
+}
+
+Price::Price(const Amount& amount)
+        : name(), amount(amount) {
+
+}
+
+Price::Price(std::string name, const Amount& amount)
+        : name(name), amount(amount) {
 
 }
 
@@ -36,22 +46,44 @@ Price::~Price() {
 }
 
 bool Price::operator==(const Price& peer) const {
-    return (name == peer.name);
+    return (name == peer.name) && (amount == peer.amount);
+}
+
+Price Price::operator+(const Price& peer) const {
+    return Price("+", (amount + peer.amount));
+}
+
+Price Price::operator-(const Price& peer) const {
+    return Price("-", (amount - peer.amount));
+}
+
+Price Price::operator*(const Price& peer) const {
+    return Price("*", (amount * peer.amount));
+}
+
+Price Price::operator/(const Price& peer) const {
+    return Price("/", (amount / peer.amount));
+}
+
+Price Price::operator%(const Price& peer) const {
+    return Price("%", (amount % peer.amount));
 }
 
 Price Price::copy() {
-    Price fresh(name);
+    Price fresh(name, amount);
     return fresh;
 }
 
 void Price::clear() {
     name = "";
+    amount.clear();
     return;
 }
 
 std::string Price::print() {
     std::stringstream result;
     result << name << ",";
+    result << amount.print();
 	return result.str();
 }
 

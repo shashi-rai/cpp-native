@@ -22,12 +22,47 @@
 
 namespace act {
 
-Item::Item() : name() {
+Item::Item() : name(), code(), cost(), sale(), batch(), quantity() {
+
+}
+
+Item::Item(const float quantity)
+        : name(), code(), cost(), sale(), batch(), quantity(quantity) {
 
 }
 
 Item::Item(std::string name)
-        : name(name) {
+        : name(name), code(), cost(), sale(), batch(), quantity() {
+
+}
+
+Item::Item(std::string name, const float quantity)
+        : name(name), code(), cost(), sale(), batch(), quantity(quantity) {
+
+}
+
+Item::Item(std::string name, std::string code)
+        : name(name), code(code), cost(), sale(), batch(), quantity() {
+
+}
+
+Item::Item(std::string name, std::string code, const float quantity)
+        : name(name), code(code), cost(), sale(), batch(), quantity(quantity) {
+
+}
+
+Item::Item(std::string name, std::string code, const shp::Quantity& quantity)
+        : name(name), code(code), cost(), sale(), batch(), quantity(quantity) {
+
+}
+
+Item::Item(std::string name, std::string code, const shp::Quantity& quantity, const Cost& cost)
+        : name(name), code(code), cost(cost), sale(), batch(), quantity(quantity) {
+
+}
+
+Item::Item(std::string name, std::string code, const shp::Quantity& quantity, const Sale& sale)
+        : name(name), code(code), cost(), sale(sale), batch(), quantity(quantity) {
 
 }
 
@@ -39,19 +74,52 @@ bool Item::operator==(const Item& peer) const {
     return (name == peer.name);
 }
 
+Amount Item::getCostTotal() {
+    float quantity_bought = getQuantity().getValue();
+    float cost_price = getCost().getAmount().getValue();
+    float discount_received = getCost().getDiscount().getAmount().getValue();
+    float value_added_tax = getCost().getTax().getPercent();
+    float pretax_amount = (quantity_bought * (cost_price - discount_received));
+    float posttax_amount = (pretax_amount + (pretax_amount * value_added_tax));
+    Amount result(posttax_amount, getCost().getAmount().getCurrency());
+    return result;
+}
+
+Amount Item::getSaleTotal() {
+    float quantity_sold = getQuantity().getValue();
+    float sale_price = getSale().getAmount().getValue();
+    float discount_provided = getSale().getDiscount().getAmount().getValue();
+    float value_added_tax = getSale().getTax().getPercent();
+    float pretax_amount = (quantity_sold * (sale_price - discount_provided));
+    float posttax_amount = (pretax_amount + (pretax_amount * value_added_tax));
+    Amount result(posttax_amount, getSale().getAmount().getCurrency());
+    return result;
+}
+
 Item Item::copy() {
     Item fresh(name);
     return fresh;
 }
 
 void Item::clear() {
-    name = "";
+    name = code = "";
+    cost.clear();
+    sale.clear();
+    batch.clear();
+    quantity.clear();
     return;
 }
 
 std::string Item::print() {
     std::stringstream result;
     result << name << ",";
+    result << code << ",";
+    result << cost.print() << ",";
+    result << sale.print() << ",";
+    result << batch.print() << ",";
+    result << quantity.print() << ",";
+    result << getCostTotal().print() << ",";
+    result << getSaleTotal().print();
 	return result.str();
 }
 

@@ -22,12 +22,37 @@
 
 namespace act {
 
-Cost::Cost() : name() {
+Cost::Cost() : Price(), code(), discount(), tax() {
 
 }
 
-Cost::Cost(std::string name)
-        : name(name) {
+Cost::Cost(std::string code)
+        : Price(), code(code), discount(), tax() {
+
+}
+
+Cost::Cost(const Discount& discount)
+        : Price(), code(), discount(discount), tax() {
+
+}
+
+Cost::Cost(std::string code, const Discount& discount)
+        : Price(), code(code), discount(discount), tax() {
+
+}
+
+Cost::Cost(const Tax& tax)
+        : Price(), code(), discount(), tax(tax) {
+
+}
+
+Cost::Cost(std::string code, const Tax& tax)
+        : Price(), code(code), discount(), tax(tax) {
+
+}
+
+Cost::Cost(std::string code, const Discount& discount, const Tax& tax)
+        : Price(), code(code), discount(discount), tax(tax) {
 
 }
 
@@ -36,22 +61,47 @@ Cost::~Cost() {
 }
 
 bool Cost::operator==(const Cost& peer) const {
-    return (name == peer.name);
+    return (code == peer.code) && (discount == peer.discount) && (tax == peer.tax);
 }
 
-Cost Cost::copy() {
-    Cost fresh(name);
+Cost Cost::operator+(const Cost& peer) const {
+    return Cost("+", (discount + peer.discount), (tax + peer.tax));
+}
+
+Cost Cost::operator-(const Cost& peer) const {
+    return Cost("-", (discount - peer.discount), (tax - peer.tax));
+}
+
+Cost Cost::operator*(const Cost& peer) const {
+    return Cost("*", (discount * peer.discount), (tax * peer.tax));
+}
+
+Cost Cost::operator/(const Cost& peer) const {
+    return Cost("/", (discount / peer.discount), (tax / peer.tax));
+}
+
+Cost Cost::operator%(const Cost& peer) const {
+    return Cost("%", (discount % peer.discount), (tax % peer.tax));
+}
+
+Price Cost::copy() {
+    Cost fresh(code, discount, tax);
     return fresh;
 }
 
 void Cost::clear() {
-    name = "";
+    code = "";
+    discount.clear();
+    tax.clear();
     return;
 }
 
 std::string Cost::print() {
     std::stringstream result;
-    result << name << ",";
+    result << Price::print() << ",";
+    result << code << ",";
+    result << discount.print() << ",";
+    result << tax.print();
 	return result.str();
 }
 

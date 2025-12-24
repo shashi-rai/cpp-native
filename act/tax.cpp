@@ -22,12 +22,39 @@
 
 namespace act {
 
-Tax::Tax() : name() {
+const float Tax::DEFAULT_VALUE = 0.18f;     // 18%
+
+Tax::Tax() : name(), percent(DEFAULT_VALUE), amount() {
 
 }
 
 Tax::Tax(std::string name)
-        : name(name) {
+        : name(name), percent(DEFAULT_VALUE), amount() {
+
+}
+
+Tax::Tax(const float percent)
+        : name(), percent(percent), amount() {
+
+}
+
+Tax::Tax(const Amount& amount)
+        : name(), percent(DEFAULT_VALUE), amount(amount) {
+
+}
+
+Tax::Tax(const float percent, const Amount& amount)
+        : name(), percent(percent), amount(amount) {
+
+}
+
+Tax::Tax(std::string name, const Amount& amount)
+        : name(name), percent(DEFAULT_VALUE), amount(amount) {
+
+}
+
+Tax::Tax(std::string name, const float percent, const Amount& amount)
+        : name(name), percent(percent), amount(amount) {
 
 }
 
@@ -36,22 +63,46 @@ Tax::~Tax() {
 }
 
 bool Tax::operator==(const Tax& peer) const {
-    return (name == peer.name);
+    return (name == peer.name) && (percent == peer.percent) && (amount == peer.amount);
+}
+
+Tax Tax::operator+(const Tax& peer) const {
+    return Tax("+", (percent + peer.percent), (amount + peer.amount));
+}
+
+Tax Tax::operator-(const Tax& peer) const {
+    return Tax("-", (percent - peer.percent), (amount - peer.amount));
+}
+
+Tax Tax::operator*(const Tax& peer) const {
+    return Tax("*", (percent * peer.percent), (amount * peer.amount));
+}
+
+Tax Tax::operator/(const Tax& peer) const {
+    return Tax("/", (percent / peer.percent), (amount / peer.amount));
+}
+
+Tax Tax::operator%(const Tax& peer) const {
+    return Tax("%", fmod(percent, peer.percent), (amount % peer.amount));
 }
 
 Tax Tax::copy() {
-    Tax fresh(name);
+    Tax fresh(name, percent, amount);
     return fresh;
 }
 
 void Tax::clear() {
     name = "";
+    percent = DEFAULT_VALUE;
+    amount.clear();
     return;
 }
 
 std::string Tax::print() {
     std::stringstream result;
-    result << name << ",";
+    result << name << ",%:";
+    result << percent << ",";
+    result << amount.print();
 	return result.str();
 }
 

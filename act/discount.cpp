@@ -22,12 +22,22 @@
 
 namespace act {
 
-Discount::Discount() : name() {
+Discount::Discount() : name(), amount() {
 
 }
 
 Discount::Discount(std::string name)
-        : name(name) {
+        : name(name), amount() {
+
+}
+
+Discount::Discount(const Amount& amount)
+        : name(), amount(amount) {
+
+}
+
+Discount::Discount(std::string name, const Amount& amount)
+        : name(name), amount(amount) {
 
 }
 
@@ -36,22 +46,44 @@ Discount::~Discount() {
 }
 
 bool Discount::operator==(const Discount& peer) const {
-    return (name == peer.name);
+    return (name == peer.name) && (amount == peer.amount);
+}
+
+Discount Discount::operator+(const Discount& peer) const {
+    return Discount("+", (amount + peer.amount));
+}
+
+Discount Discount::operator-(const Discount& peer) const {
+    return Discount("-", (amount - peer.amount));
+}
+
+Discount Discount::operator*(const Discount& peer) const {
+    return Discount("*", (amount * peer.amount));
+}
+
+Discount Discount::operator/(const Discount& peer) const {
+    return Discount("/", (amount / peer.amount));
+}
+
+Discount Discount::operator%(const Discount& peer) const {
+    return Discount("%", (amount % peer.amount));
 }
 
 Discount Discount::copy() {
-    Discount fresh(name);
+    Discount fresh(name, amount);
     return fresh;
 }
 
 void Discount::clear() {
     name = "";
+    amount.clear();
     return;
 }
 
 std::string Discount::print() {
     std::stringstream result;
     result << name << ",";
+    result << amount.print();
 	return result.str();
 }
 

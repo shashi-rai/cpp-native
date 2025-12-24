@@ -24,27 +24,38 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "amount.h"
 
 namespace act {
-
+ 
 class Discount {
     std::string name;
+    Amount amount;
 public:
     // Constructors
     Discount();
     Discount(std::string name);
+    Discount(const Amount& amount);
+    Discount(std::string name, const Amount& amount);
 
     // Destructors
     ~Discount();
 
     // Operator overloading
     bool operator==(const Discount& peer) const;
+    Discount operator+(const Discount& peer) const;
+    Discount operator-(const Discount& peer) const;
+    Discount operator*(const Discount& peer) const;
+    Discount operator/(const Discount& peer) const;
+    Discount operator%(const Discount& peer) const;
 
     // Getters
     std::string getName() const { return name; }
+    Amount getAmount() const { return amount; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
+    void setAmount(const Amount& value) { this->amount = value; }
 
     // Additional methods
     virtual Discount copy();
