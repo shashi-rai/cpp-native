@@ -35,6 +35,8 @@ public:
     // Constructors
     Service();
     Service(std::string name);
+    Service(const Brand& brand);
+    Service(std::string name, const Brand& brand);
 
     // Destructors
     ~Service();

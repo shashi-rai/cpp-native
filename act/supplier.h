@@ -29,25 +29,36 @@
 namespace act {
 
 class Supplier : public Party {
-    std::string name;
+    PartyArray partners;
 public:
     // Constructors
     Supplier();
     Supplier(std::string name);
+    Supplier(const PartyArray& partners);
+    Supplier(std::string name, const PartyArray& partners);
 
     // Destructors
     ~Supplier();
 
     // Operator overloading
     bool operator==(const Supplier& peer) const;
+    Supplier operator+(const Supplier& peer) const;
+    Supplier operator-(const Supplier& peer) const;
+
+    // Access operator
+    Party& operator()(int x) { return partners[x]; }
+    const Party& operator()(int x) const { return partners[x]; }
 
     // Getters
-    std::string getName() const { return name; }
+    PartyArray getPartners() const { return partners; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setPartners(const PartyArray& object) { this->partners = object; }
 
     // Additional methods
+    int getPartnerCount() const;
+    Party get(int index) const;
+    void set(int index, const Party& object);
     virtual Party copy();
     virtual void clear();
     virtual std::string print();

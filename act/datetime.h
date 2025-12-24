@@ -61,6 +61,18 @@ public:
     static const long getCurrent();
 public:
     static const long DEFAULT_VALUE;
+    static const short int YEAR_MIN;
+    static const short int YEAR_MAX;
+    static const short int MONTH_MIN;
+    static const short int MONTH_MAX;
+    static const short int DAY_MIN;
+    static const short int DAY_MAX;
+    static const short int HOUR_MIN;
+    static const short int HOUR_MAX;
+    static const short int MINUTE_MIN;
+    static const short int MINUTE_MAX;
+    static const short int SECOND_MIN;
+    static const short int SECOND_MAX;
 };
 
 typedef std::vector<DateTime > DateTimeArray;

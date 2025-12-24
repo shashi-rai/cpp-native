@@ -24,27 +24,43 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "balance.h"
+#include "../gis/address.h"
 
 namespace act {
 
 class Party {
     std::string name;
+    gis::Address address;
+    Balance balance;
 public:
     // Constructors
     Party();
     Party(std::string name);
+    Party(const gis::Address& address);
+    Party(const Balance& balance);
+    Party(const gis::Address& address, const Balance& balance);
+    Party(std::string name, const gis::Address& address);
+    Party(std::string name, const Balance& balance);
+    Party(std::string name, const gis::Address& address, const Balance& balance);
 
     // Destructors
     ~Party();
 
     // Operator overloading
     bool operator==(const Party& peer) const;
+    Party operator+(const Party& peer) const;
+    Party operator-(const Party& peer) const;
 
     // Getters
     std::string getName() const { return name; }
+    gis::Address getAddress() const { return address; }
+    Balance getBalance() const { return balance; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
+    void setAddress(const gis::Address& object) { this->address = object; }
+    void setBalance(const Balance& object) { this->balance = object; }
 
     // Additional methods
     virtual Party copy();

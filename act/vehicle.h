@@ -48,7 +48,7 @@ public:
     void setNumber(const std::string& registered) { this->number = registered; }
 
     // Additional methods
-    virtual Asset copy();
+    virtual Amount copy();
     virtual void clear();
     virtual std::string print();
 };

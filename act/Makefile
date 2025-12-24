@@ -62,7 +62,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/datetime.o \
 		$(OBJFOLDR)/department.o \
 		$(OBJFOLDR)/depot.o \
-		$(OBJFOLDR)/depriciation.o \
+		$(OBJFOLDR)/depreciation.o \
 		$(OBJFOLDR)/discount.o \
 		$(OBJFOLDR)/distributor.o \
 		$(OBJFOLDR)/dividend.o \
@@ -70,6 +70,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/employee.o \
 		$(OBJFOLDR)/equity.o \
 		$(OBJFOLDR)/expense.o \
+		$(OBJFOLDR)/factory.o \
 		$(OBJFOLDR)/fiscal.o \
 		$(OBJFOLDR)/income.o \
 		$(OBJFOLDR)/interest.o \
@@ -101,7 +102,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/task.o \
 		$(OBJFOLDR)/tax.o \
 		$(OBJFOLDR)/transaction.o \
-		$(OBJFOLDR)/transport.o \
+		$(OBJFOLDR)/transporter.o \
 		$(OBJFOLDR)/usage.o \
 		$(OBJFOLDR)/vehicle.o \
 		$(OBJFOLDR)/warehouse.o
@@ -123,7 +124,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/datetime.o \
 		$(OBJFOLDR)/department.o \
 		$(OBJFOLDR)/depot.o \
-		$(OBJFOLDR)/depriciation.o \
+		$(OBJFOLDR)/depreciation.o \
 		$(OBJFOLDR)/discount.o \
 		$(OBJFOLDR)/distributor.o \
 		$(OBJFOLDR)/dividend.o \
@@ -131,6 +132,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/employee.o \
 		$(OBJFOLDR)/equity.o \
 		$(OBJFOLDR)/expense.o \
+		$(OBJFOLDR)/factory.o \
 		$(OBJFOLDR)/fiscal.o \
 		$(OBJFOLDR)/income.o \
 		$(OBJFOLDR)/interest.o \
@@ -162,7 +164,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/task.o \
 		$(OBJFOLDR)/tax.o \
 		$(OBJFOLDR)/transaction.o \
-		$(OBJFOLDR)/transport.o \
+		$(OBJFOLDR)/transporter.o \
 		$(OBJFOLDR)/usage.o \
 		$(OBJFOLDR)/vehicle.o \
 		$(OBJFOLDR)/warehouse.o
@@ -218,8 +220,8 @@ $(OBJFOLDR)/department.o: department.cpp
 $(OBJFOLDR)/depot.o: depot.cpp
 	$(CPPTOOL) -c depot.cpp -o $(OBJFOLDR)/depot.o $(CXXFLAGS)
 
-$(OBJFOLDR)/depriciation.o: depriciation.cpp
-	$(CPPTOOL) -c depriciation.cpp -o $(OBJFOLDR)/depriciation.o $(CXXFLAGS)
+$(OBJFOLDR)/depreciation.o: depreciation.cpp
+	$(CPPTOOL) -c depreciation.cpp -o $(OBJFOLDR)/depreciation.o $(CXXFLAGS)
 
 $(OBJFOLDR)/discount.o: discount.cpp
 	$(CPPTOOL) -c discount.cpp -o $(OBJFOLDR)/discount.o $(CXXFLAGS)
@@ -241,6 +243,9 @@ $(OBJFOLDR)/equity.o: equity.cpp
 
 $(OBJFOLDR)/expense.o: expense.cpp
 	$(CPPTOOL) -c expense.cpp -o $(OBJFOLDR)/expense.o $(CXXFLAGS)
+
+$(OBJFOLDR)/factory.o: factory.cpp
+	$(CPPTOOL) -c factory.cpp -o $(OBJFOLDR)/factory.o $(CXXFLAGS)
 
 $(OBJFOLDR)/fiscal.o: fiscal.cpp
 	$(CPPTOOL) -c fiscal.cpp -o $(OBJFOLDR)/fiscal.o $(CXXFLAGS)
@@ -335,8 +340,8 @@ $(OBJFOLDR)/tax.o: tax.cpp
 $(OBJFOLDR)/transaction.o: transaction.cpp
 	$(CPPTOOL) -c transaction.cpp -o $(OBJFOLDR)/transaction.o $(CXXFLAGS)
 
-$(OBJFOLDR)/transport.o: transport.cpp
-	$(CPPTOOL) -c transport.cpp -o $(OBJFOLDR)/transport.o $(CXXFLAGS)
+$(OBJFOLDR)/transporter.o: transporter.cpp
+	$(CPPTOOL) -c transporter.cpp -o $(OBJFOLDR)/transporter.o $(CXXFLAGS)
 
 $(OBJFOLDR)/usage.o: usage.cpp
 	$(CPPTOOL) -c usage.cpp -o $(OBJFOLDR)/usage.o $(CXXFLAGS)

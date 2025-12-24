@@ -24,30 +24,42 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "party.h"
 
 namespace act {
 
-class Business {
-    std::string name;
+class Business : public Party {
+    PartyArray partners;
 public:
     // Constructors
     Business();
     Business(std::string name);
+    Business(const PartyArray& partners);
+    Business(std::string name, const PartyArray& partners);
 
     // Destructors
     ~Business();
 
     // Operator overloading
     bool operator==(const Business& peer) const;
+    Business operator+(const Business& peer) const;
+    Business operator-(const Business& peer) const;
+
+    // Access operator
+    Party& operator()(int x) { return partners[x]; }
+    const Party& operator()(int x) const { return partners[x]; }
 
     // Getters
-    std::string getName() const { return name; }
+    PartyArray getPartners() const { return partners; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setPartners(const PartyArray& object) { this->partners = object; }
 
     // Additional methods
-    virtual Business copy();
+    int getPartnerCount() const;
+    Party get(int index) const;
+    void set(int index, const Party& object);
+    virtual Party copy();
     virtual void clear();
     virtual std::string print();
 };

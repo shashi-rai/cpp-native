@@ -23,6 +23,18 @@
 namespace act {
 
 const long DateTime::DEFAULT_VALUE = 0L;
+const short int DateTime::YEAR_MIN = 0;
+const short int DateTime::YEAR_MAX = 99;
+const short int DateTime::MONTH_MIN = 1;
+const short int DateTime::MONTH_MAX = 12;
+const short int DateTime::DAY_MIN = 1;
+const short int DateTime::DAY_MAX = 31;
+const short int DateTime::HOUR_MIN = 0;
+const short int DateTime::HOUR_MAX = 24;
+const short int DateTime::MINUTE_MIN = 0;
+const short int DateTime::MINUTE_MAX = 60;
+const short int DateTime::SECOND_MIN  = 0;
+const short int DateTime::SECOND_MAX = 60;
 
 DateTime::DateTime() : value(getCurrent()) {
 

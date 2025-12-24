@@ -22,22 +22,42 @@
 
 namespace act {
 
-Branch::Branch() : name(), address() {
+Branch::Branch() : name(), address(), certificate() {
 
 }
 
 Branch::Branch(std::string name)
-        : name(name), address() {
+        : name(name), address(), certificate() {
 
 }
 
 Branch::Branch(const gis::Address& address)
-        : name(), address(address) {
+        : name(), address(address), certificate() {
+
+}
+
+Branch::Branch(const Document& certificate)
+        : name(), address(), certificate(certificate) {
+
+}
+
+Branch::Branch(const gis::Address& address, const Document& certificate)
+        : name(), address(address), certificate(certificate) {
 
 }
 
 Branch::Branch(std::string name, const gis::Address& address)
-        : name(name), address(address) {
+        : name(name), address(address), certificate() {
+
+}
+
+Branch::Branch(std::string name, const Document& certificate)
+        : name(name), address(), certificate(certificate) {
+
+}
+
+Branch::Branch(std::string name, const gis::Address& address, const Document& certificate)
+        : name(name), address(address), certificate(certificate) {
 
 }
 
@@ -46,24 +66,26 @@ Branch::~Branch() {
 }
 
 bool Branch::operator==(const Branch& peer) const {
-    return (name == peer.name) && (address == peer.address);
+    return (name == peer.name) && (address == peer.address) && (certificate == peer.certificate);
 }
 
 Branch Branch::copy() {
-    Branch fresh(name, address);
+    Branch fresh(name, address, certificate);
     return fresh;
 }
 
 void Branch::clear() {
     name = "";
     address.clear();
+    certificate.clear();
     return;
 }
 
 std::string Branch::print() {
     std::stringstream result;
     result << name << ",";
-    result << address.print();
+    result << address.print() << ",";
+    result << certificate.print();
 	return result.str();
 }
 

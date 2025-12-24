@@ -24,11 +24,12 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "amount.h"
 #include "document.h"
 
 namespace act {
 
-class Liability {
+class Liability : public Amount {
     std::string name;
     Document registration;
 public:
@@ -37,12 +38,18 @@ public:
     Liability(std::string name);
     Liability(const Document& registration);
     Liability(std::string name, const Document& registration);
+    Liability(std::string name, std::string remarks);
+    Liability(std::string name, const Currency& currency, std::string remarks);
+    Liability(std::string name, const float value, const Currency& currency, std::string remarks);
+    Liability(std::string name, const long datetime, const float value, const Currency& currency, std::string remarks);
 
     // Destructors
     ~Liability();
 
     // Operator overloading
     bool operator==(const Liability& peer) const;
+    Liability operator+(const Liability& peer) const;
+    Liability operator-(const Liability& peer) const;
 
     // Getters
     std::string getName() const { return name; }
@@ -53,7 +60,7 @@ public:
     void setRegistration(const Document& document) { this->registration = document; }
 
     // Additional methods
-    virtual Liability copy();
+    virtual Amount copy();
     virtual void clear();
     virtual std::string print();
 };

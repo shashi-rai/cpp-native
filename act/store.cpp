@@ -22,12 +22,42 @@
 
 namespace act {
 
-Store::Store() : name() {
+Store::Store() : Warehouse(), taxation() {
 
 }
 
 Store::Store(std::string name)
-        : name(name) {
+        : Warehouse(name), taxation() {
+
+}
+
+Store::Store(const Inventory& inventory)
+        : Warehouse(inventory), taxation() {
+
+}
+
+Store::Store(std::string name, const Inventory& inventory)
+        : Warehouse(name, inventory), taxation() {
+
+}
+
+Store::Store(const gis::Address& address)
+        : Warehouse(address), taxation() {
+
+}
+
+Store::Store(const Inventory& inventory, const gis::Address& address)
+        : Warehouse(inventory, address), taxation() {
+
+}
+
+Store::Store(std::string name, const gis::Address& address)
+        : Warehouse(name, address), taxation() {
+
+}
+
+Store::Store(std::string name, const Inventory& inventory, const gis::Address& address)
+        : Warehouse(name, inventory, address), taxation() {
 
 }
 
@@ -36,22 +66,25 @@ Store::~Store() {
 }
 
 bool Store::operator==(const Store& peer) const {
-    return (name == peer.name);
+    return (static_cast<const Warehouse&>(*this) == static_cast<const Warehouse&>(peer))
+        && (taxation == peer.taxation);
 }
 
-Store Store::copy() {
-    Store fresh(name);
+Branch Store::copy() {
+    Store fresh(getName(), getInventory(), getAddress());
     return fresh;
 }
 
 void Store::clear() {
-    name = "";
+    Warehouse::clear();
+    taxation.clear();
     return;
 }
 
 std::string Store::print() {
     std::stringstream result;
-    result << name << ",";
+    result << Warehouse::print() << ",";
+    result << taxation.print();
 	return result.str();
 }
 

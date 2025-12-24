@@ -22,12 +22,22 @@
 
 namespace act {
 
-Retailer::Retailer() : name() {
+Retailer::Retailer() : Party(), stores() {
 
 }
 
 Retailer::Retailer(std::string name)
-        : name(name) {
+        : Party(name), stores() {
+
+}
+
+Retailer::Retailer(const StoreArray& stores)
+        : Party(), stores(stores) {
+
+}
+
+Retailer::Retailer(std::string name, const StoreArray& stores)
+        : Party(name), stores(stores) {
 
 }
 
@@ -36,22 +46,74 @@ Retailer::~Retailer() {
 }
 
 bool Retailer::operator==(const Retailer& peer) const {
-    return (name == peer.name);
+    return (static_cast<const Party&>(*this) == static_cast<const Party&>(peer))
+        && (stores == peer.stores);
 }
 
-Retailer Retailer::copy() {
-    Retailer fresh(name);
+Retailer Retailer::operator+(const Retailer& peer) const {
+    StoreArray result(stores);
+    result.insert(result.end(), peer.stores.begin(), peer.stores.end());
+    return Retailer("+", result);
+}
+
+Retailer Retailer::operator-(const Retailer& peer) const {
+    StoreArray result(stores);
+    for (StoreArray::const_iterator it = peer.stores.begin(); it != peer.stores.end(); ++it) {
+        StoreArray::iterator found = std::find(result.begin(), result.end(), *it);
+        if (found != result.end()) {
+            result.erase(found);
+        }
+    }
+    return Retailer("-", result);
+}
+
+int Retailer::getStoreCount() const {
+    return stores.size();
+}
+
+Store Retailer::get(int index) const {
+    Store result;
+    if (index < 0) {
+        return result;
+    }
+    if (index >= static_cast<int>(stores.size())) {
+        return result;
+    }
+    return stores[index];
+}
+
+void Retailer::set(int index, const Store& object) {
+    if (index < 0) {
+        return;
+    }
+    if (index < static_cast<int>(stores.size())) {
+        // replace existing element
+        stores[index] = object;
+    } else if (index == static_cast<int>(stores.size())) {
+        // append at end
+        stores.push_back(object);
+    } else {
+        // index beyond current size: append at end
+        stores.push_back(object);
+    }
+    return;
+}
+
+Party Retailer::copy() {
+    Retailer fresh(getName(), stores);
     return fresh;
 }
 
 void Retailer::clear() {
-    name = "";
+    Party::clear();
+    stores.clear();
     return;
 }
 
 std::string Retailer::print() {
     std::stringstream result;
-    result << name << ",";
+    result << Party::print() << ",sz:";
+    result << stores.size();
 	return result.str();
 }
 

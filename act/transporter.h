@@ -24,30 +24,43 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "party.h"
+#include "vehicle.h"
 
 namespace act {
 
-class Transporter {
-    std::string name;
+class Transporter : public Party {
+    VehicleArray vehicles;
 public:
     // Constructors
     Transporter();
     Transporter(std::string name);
+    Transporter(const VehicleArray& vehicles);
+    Transporter(std::string name, const VehicleArray& vehicles);
 
     // Destructors
     ~Transporter();
 
     // Operator overloading
     bool operator==(const Transporter& peer) const;
+    Transporter operator+(const Transporter& peer) const;
+    Transporter operator-(const Transporter& peer) const;
+
+    // Access operator
+    Vehicle& operator()(int x) { return vehicles[x]; }
+    const Vehicle& operator()(int x) const { return vehicles[x]; }
 
     // Getters
-    std::string getName() const { return name; }
+    VehicleArray getVehicles() const { return vehicles; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setVehicles(const VehicleArray& object) { this->vehicles = object; }
 
     // Additional methods
-    virtual Transporter copy();
+    int getVehicleCount() const;
+    Vehicle get(int index) const;
+    void set(int index, const Vehicle& object);
+    virtual Party copy();
     virtual void clear();
     virtual std::string print();
 };

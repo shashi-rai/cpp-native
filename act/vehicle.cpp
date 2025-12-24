@@ -40,7 +40,7 @@ bool Vehicle::operator==(const Vehicle& peer) const {
         && (number == peer.number);
 }
 
-Asset Vehicle::copy() {
+Amount Vehicle::copy() {
     Vehicle fresh(number);
     return fresh;
 }

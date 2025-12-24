@@ -22,12 +22,22 @@
 
 namespace act {
 
-Service::Service() : name() {
+Service::Service() : Item(), brand() {
 
 }
 
 Service::Service(std::string name)
-        : name(name) {
+        : Item(name), brand() {
+
+}
+
+Service::Service(const Brand& brand)
+        : Item(), brand(brand) {
+
+}
+
+Service::Service(std::string name, const Brand& brand)
+        : Item(name), brand(brand) {
 
 }
 
@@ -36,22 +46,25 @@ Service::~Service() {
 }
 
 bool Service::operator==(const Service& peer) const {
-    return (name == peer.name);
+    return static_cast<const Item&>(*this) == static_cast<const Item&>(peer)
+        && (brand == peer.brand);
 }
 
-Service Service::copy() {
-    Service fresh(name);
+Item Service::copy() {
+    Service fresh(getName(), brand);
     return fresh;
 }
 
 void Service::clear() {
-    name = "";
+    Item::clear();
+    brand.clear();
     return;
 }
 
 std::string Service::print() {
     std::stringstream result;
-    result << name << ",";
+    result << Item::print() << ",";
+    result << brand.print();
 	return result.str();
 }
 

@@ -22,22 +22,45 @@
 
 namespace act {
 
-Asset::Asset() : name(), registration() {
+Asset::Asset() : Amount(), name(), registration() {
 
 }
 
 Asset::Asset(std::string name)
-        : name(name), registration() {
+        : Amount(), name(name), registration() {
 
 }
 
 Asset::Asset(const Document& registration)
-        : name(), registration(registration) {
+        : Amount(), name(), registration(registration) {
 
 }
 
 Asset::Asset(std::string name, const Document& registration)
-        : name(name), registration(registration) {
+        : Amount(), name(name), registration(registration) {
+
+}
+
+Asset::Asset(std::string name, std::string remarks)
+        : Amount(remarks), name(name), registration() {
+
+}
+
+Asset::Asset(std::string name,
+        const Currency& currency, std::string remarks)
+        : Amount(currency, remarks), name(name), registration() {
+
+}
+
+Asset::Asset(std::string name, const float value,
+        const Currency& currency, std::string remarks)
+        : Amount(value, currency, remarks), name(name), registration() {
+
+}
+
+Asset::Asset(std::string name, const long datetime, const float value,
+        const Currency& currency, std::string remarks)
+        : Amount(datetime, value, currency, remarks), name(name), registration() {
 
 }
 
@@ -46,15 +69,27 @@ Asset::~Asset() {
 }
 
 bool Asset::operator==(const Asset& peer) const {
-    return (name == peer.name) && (registration == peer.registration);
+    return (static_cast<const Amount&>(*this) == static_cast<const Amount&>(peer))
+        && (name == peer.name) && (registration == peer.registration);
 }
 
-Asset Asset::copy() {
+Asset Asset::operator+(const Asset& peer) const {
+    return Asset("+", getDateTime().getValue(),
+        (getValue() + peer.getValue()), getCurrency(), getRemarks());
+}
+
+Asset Asset::operator-(const Asset& peer) const {
+    return Asset("-", getDateTime().getValue(),
+        (getValue() - peer.getValue()), getCurrency(), getRemarks());
+}
+
+Amount Asset::copy() {
     Asset fresh(name, registration);
     return fresh;
 }
 
 void Asset::clear() {
+    Amount::clear();
     name = "";
     registration.clear();
     return;
@@ -62,6 +97,7 @@ void Asset::clear() {
 
 std::string Asset::print() {
     std::stringstream result;
+    result << Amount::print() << ",";
     result << name << ",";
     result << registration.print();
 	return result.str();

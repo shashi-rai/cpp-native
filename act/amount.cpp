@@ -105,6 +105,26 @@ Amount Amount::operator%(const Amount& peer) const {
     return Amount(fmod(value, peer.value), currency);
 }
 
+Amount Amount::operator+(const float number) const {
+    return Amount((value + number), currency);
+}
+
+Amount Amount::operator-(const float number) const {
+    return Amount((value - number), currency);
+}
+
+Amount Amount::operator*(const float number) const {
+    return Amount((value * number), currency);
+}
+
+Amount Amount::operator/(const float number) const {
+    return Amount((value / number), currency);
+}
+
+Amount Amount::operator%(const float number) const {
+    return Amount(fmod(value, number), currency);
+}
+
 Amount Amount::copy() {
     Amount fresh(datetime.getValue(), value, currency, remarks);
     return fresh;

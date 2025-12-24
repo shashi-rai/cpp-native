@@ -22,12 +22,22 @@
 
 namespace act {
 
-Transporter::Transporter() : name() {
+Transporter::Transporter() : Party(), vehicles() {
 
 }
 
 Transporter::Transporter(std::string name)
-        : name(name) {
+        : Party(name), vehicles() {
+
+}
+
+Transporter::Transporter(const VehicleArray& vehicles)
+        : Party(), vehicles(vehicles) {
+
+}
+
+Transporter::Transporter(std::string name, const VehicleArray& vehicles)
+        : Party(name), vehicles(vehicles) {
 
 }
 
@@ -36,22 +46,74 @@ Transporter::~Transporter() {
 }
 
 bool Transporter::operator==(const Transporter& peer) const {
-    return (name == peer.name);
+    return (static_cast<const Party&>(*this) == static_cast<const Party&>(peer))
+        && (vehicles == peer.vehicles);
 }
 
-Transporter Transporter::copy() {
-    Transporter fresh(name);
+Transporter Transporter::operator+(const Transporter& peer) const {
+    VehicleArray result(vehicles);
+    result.insert(result.end(), peer.vehicles.begin(), peer.vehicles.end());
+    return Transporter("+", result);
+}
+
+Transporter Transporter::operator-(const Transporter& peer) const {
+    VehicleArray result(vehicles);
+    for (VehicleArray::const_iterator it = peer.vehicles.begin(); it != peer.vehicles.end(); ++it) {
+        VehicleArray::iterator found = std::find(result.begin(), result.end(), *it);
+        if (found != result.end()) {
+            result.erase(found);
+        }
+    }
+    return Transporter("-", result);
+}
+
+int Transporter::getVehicleCount() const {
+    return vehicles.size();
+}
+
+Vehicle Transporter::get(int index) const {
+    Vehicle result;
+    if (index < 0) {
+        return result;
+    }
+    if (index >= static_cast<int>(vehicles.size())) {
+        return result;
+    }
+    return vehicles[index];
+}
+
+void Transporter::set(int index, const Vehicle& object) {
+    if (index < 0) {
+        return;
+    }
+    if (index < static_cast<int>(vehicles.size())) {
+        // replace existing element
+        vehicles[index] = object;
+    } else if (index == static_cast<int>(vehicles.size())) {
+        // append at end
+        vehicles.push_back(object);
+    } else {
+        // index beyond current size: append at end
+        vehicles.push_back(object);
+    }
+    return;
+}
+
+Party Transporter::copy() {
+    Transporter fresh(getName(), vehicles);
     return fresh;
 }
 
 void Transporter::clear() {
-    name = "";
+    Party::clear();
+    vehicles.clear();
     return;
 }
 
 std::string Transporter::print() {
     std::stringstream result;
-    result << name << ",";
+    result << Party::print() << ",sz:";
+    result << vehicles.size();
 	return result.str();
 }
 

@@ -59,6 +59,12 @@ public:
     Amount operator/(const Amount& peer) const;
     Amount operator%(const Amount& peer) const;
 
+    Amount operator+(const float number) const;
+    Amount operator-(const float number) const;
+    Amount operator*(const float number) const;
+    Amount operator/(const float number) const;
+    Amount operator%(const float number) const;
+
     // Getters
     DateTime getDateTime() const { return datetime; }
     float getValue() const { return value; }

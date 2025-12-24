@@ -18,8 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef ACT_STORE_H
-#define ACT_STORE_H
+#ifndef ACT_FACTORY_H
+#define ACT_FACTORY_H
 
 #include <sstream>
 #include <string>
@@ -29,30 +29,30 @@
 
 namespace act {
 
-class Store : public Warehouse {
-    Document taxation;
+class Factory : public Warehouse {
+    Document license;
 public:
     // Constructors
-    Store();
-    Store(std::string name);
-    Store(const Inventory& inventory);
-    Store(std::string name, const Inventory& inventory);
-    Store(const gis::Address& address);
-    Store(const Inventory& inventory, const gis::Address& address);
-    Store(std::string name, const gis::Address& address);
-    Store(std::string name, const Inventory& inventory, const gis::Address& address);
+    Factory();
+    Factory(std::string name);
+    Factory(const Inventory& inventory);
+    Factory(std::string name, const Inventory& inventory);
+    Factory(const gis::Address& address);
+    Factory(const Inventory& inventory, const gis::Address& address);
+    Factory(std::string name, const gis::Address& address);
+    Factory(std::string name, const Inventory& inventory, const gis::Address& address);
 
     // Destructors
-    ~Store();
+    ~Factory();
 
     // Operator overloading
-    bool operator==(const Store& peer) const;
+    bool operator==(const Factory& peer) const;
 
     // Getters
-    Document getTaxation() const { return taxation; }
+    Document getLicense() const { return license; }
 
     // Setters
-    void setTaxation(const Document& certificate) { this->taxation = certificate; }
+    void setLicense(const Document& certificate) { this->license = certificate; }
 
     // Additional methods
     virtual Branch copy();
@@ -60,8 +60,8 @@ public:
     virtual std::string print();
 };
 
-typedef std::vector<Store > StoreArray;
+typedef std::vector<Factory > FactoryArray;
 
 } // namespace act
 
-#endif //ACT_STORE_H
+#endif //ACT_FACTORY_H

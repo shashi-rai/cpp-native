@@ -142,8 +142,22 @@ void Order::set(int index, const Item& object) {
     return;
 }
 
-Amount Order::getTotal() {
-    return Amount(0);
+Amount Order::getCostTotal() {
+    Amount result(0, getCurrency(), "Cost Total");
+    for (ItemArray::const_iterator it = items.begin(); it != items.end(); ++it) {
+        Cost cost = (*it).getCost();
+        result = (result + cost.getPrice().getAmount());
+    }
+    return result;
+}
+
+Amount Order::getSaleTotal() {
+    Amount result(0, getCurrency(), "Sale Total");
+    for (ItemArray::const_iterator it = items.begin(); it != items.end(); ++it) {
+        Sale sale = (*it).getSale();
+        result = (result + sale.getPrice().getAmount());
+    }
+    return result;
 }
 
 Amount Order::copy() {

@@ -22,12 +22,42 @@
 
 namespace act {
 
-Party::Party() : name() {
+Party::Party() : name(), address(), balance() {
 
 }
 
 Party::Party(std::string name)
-        : name(name) {
+        : name(name), address(), balance() {
+
+}
+
+Party::Party(const gis::Address& address)
+        : name(), address(address), balance() {
+
+}
+
+Party::Party(const Balance& balance)
+        : name(), address(), balance(balance) {
+
+}
+
+Party::Party(const gis::Address& address, const Balance& balance)
+        : name(), address(address), balance(balance) {
+
+}
+
+Party::Party(std::string name, const gis::Address& address)
+        : name(name), address(address), balance() {
+
+}
+
+Party::Party(std::string name, const Balance& balance)
+        : name(name), address(), balance(balance) {
+
+}
+
+Party::Party(std::string name, const gis::Address& address, const Balance& balance)
+        : name(name), address(address), balance(balance) {
 
 }
 
@@ -36,22 +66,34 @@ Party::~Party() {
 }
 
 bool Party::operator==(const Party& peer) const {
-    return (name == peer.name);
+    return (name == peer.name) && (address == peer.address) && (balance == peer.balance);
+}
+
+Party Party::operator+(const Party& peer) const {
+    return Party("+", address, (balance + peer.balance));
+}
+
+Party Party::operator-(const Party& peer) const {
+    return Party("-", address, (balance - peer.balance));
 }
 
 Party Party::copy() {
-    Party fresh(name);
+    Party fresh(name, address, balance);
     return fresh;
 }
 
 void Party::clear() {
     name = "";
+    address.clear();
+    balance.clear();
     return;
 }
 
 std::string Party::print() {
     std::stringstream result;
     result << name << ",";
+    result << address.print() << ",";
+    result << balance.print();
 	return result.str();
 }
 

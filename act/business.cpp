@@ -22,12 +22,22 @@
 
 namespace act {
 
-Business::Business() : name() {
+Business::Business() : Party(), partners() {
 
 }
 
 Business::Business(std::string name)
-        : name(name) {
+        : Party(name), partners() {
+
+}
+
+Business::Business(const PartyArray& partners)
+        : Party(), partners(partners) {
+
+}
+
+Business::Business(std::string name, const PartyArray& partners)
+        : Party(name), partners(partners) {
 
 }
 
@@ -36,22 +46,74 @@ Business::~Business() {
 }
 
 bool Business::operator==(const Business& peer) const {
-    return (name == peer.name);
+    return (static_cast<const Party&>(*this) == static_cast<const Party&>(peer))
+        && (partners == peer.partners);
 }
 
-Business Business::copy() {
-    Business fresh(name);
+Business Business::operator+(const Business& peer) const {
+    PartyArray result(partners);
+    result.insert(result.end(), peer.partners.begin(), peer.partners.end());
+    return Business("+", result);
+}
+
+Business Business::operator-(const Business& peer) const {
+    PartyArray result(partners);
+    for (PartyArray::const_iterator it = peer.partners.begin(); it != peer.partners.end(); ++it) {
+        PartyArray::iterator found = std::find(result.begin(), result.end(), *it);
+        if (found != result.end()) {
+            result.erase(found);
+        }
+    }
+    return Business("-", result);
+}
+
+int Business::getPartnerCount() const {
+    return partners.size();
+}
+
+Party Business::get(int index) const {
+    Party result;
+    if (index < 0) {
+        return result;
+    }
+    if (index >= static_cast<int>(partners.size())) {
+        return result;
+    }
+    return partners[index];
+}
+
+void Business::set(int index, const Party& object) {
+    if (index < 0) {
+        return;
+    }
+    if (index < static_cast<int>(partners.size())) {
+        // replace existing element
+        partners[index] = object;
+    } else if (index == static_cast<int>(partners.size())) {
+        // append at end
+        partners.push_back(object);
+    } else {
+        // index beyond current size: append at end
+        partners.push_back(object);
+    }
+    return;
+}
+
+Party Business::copy() {
+    Business fresh(getName(), partners);
     return fresh;
 }
 
 void Business::clear() {
-    name = "";
+    Party::clear();
+    partners.clear();
     return;
 }
 
 std::string Business::print() {
     std::stringstream result;
-    result << name << ",";
+    result << Party::print() << ",sz:";
+    result << partners.size();
 	return result.str();
 }
 

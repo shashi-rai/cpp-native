@@ -22,12 +22,22 @@
 
 namespace act {
 
-Manufacturer::Manufacturer() : name() {
+Manufacturer::Manufacturer() : Party(), factories() {
 
 }
 
 Manufacturer::Manufacturer(std::string name)
-        : name(name) {
+        : Party(name), factories() {
+
+}
+
+Manufacturer::Manufacturer(const FactoryArray& factories)
+        : Party(), factories(factories) {
+
+}
+
+Manufacturer::Manufacturer(std::string name, const FactoryArray& factories)
+        : Party(name), factories(factories) {
 
 }
 
@@ -36,22 +46,74 @@ Manufacturer::~Manufacturer() {
 }
 
 bool Manufacturer::operator==(const Manufacturer& peer) const {
-    return (name == peer.name);
+    return (static_cast<const Party&>(*this) == static_cast<const Party&>(peer))
+        && (factories == peer.factories);
 }
 
-Manufacturer Manufacturer::copy() {
-    Manufacturer fresh(name);
+Manufacturer Manufacturer::operator+(const Manufacturer& peer) const {
+    FactoryArray result(factories);
+    result.insert(result.end(), peer.factories.begin(), peer.factories.end());
+    return Manufacturer("+", result);
+}
+
+Manufacturer Manufacturer::operator-(const Manufacturer& peer) const {
+    FactoryArray result(factories);
+    for (FactoryArray::const_iterator it = peer.factories.begin(); it != peer.factories.end(); ++it) {
+        FactoryArray::iterator found = std::find(result.begin(), result.end(), *it);
+        if (found != result.end()) {
+            result.erase(found);
+        }
+    }
+    return Manufacturer("-", result);
+}
+
+int Manufacturer::getFactoryCount() const {
+    return factories.size();
+}
+
+Factory Manufacturer::get(int index) const {
+    Factory result;
+    if (index < 0) {
+        return result;
+    }
+    if (index >= static_cast<int>(factories.size())) {
+        return result;
+    }
+    return factories[index];
+}
+
+void Manufacturer::set(int index, const Factory& object) {
+    if (index < 0) {
+        return;
+    }
+    if (index < static_cast<int>(factories.size())) {
+        // replace existing element
+        factories[index] = object;
+    } else if (index == static_cast<int>(factories.size())) {
+        // append at end
+        factories.push_back(object);
+    } else {
+        // index beyond current size: append at end
+        factories.push_back(object);
+    }
+    return;
+}
+
+Party Manufacturer::copy() {
+    Manufacturer fresh(getName(), factories);
     return fresh;
 }
 
 void Manufacturer::clear() {
-    name = "";
+    Party::clear();
+    factories.clear();
     return;
 }
 
 std::string Manufacturer::print() {
     std::stringstream result;
-    result << name << ",";
+    result << Party::print() << ",sz:";
+    result << factories.size();
 	return result.str();
 }
 

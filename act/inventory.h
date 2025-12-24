@@ -24,35 +24,50 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "item.h"
 
 namespace act {
 
 class Inventory {
     std::string name;
+    ItemArray items;
 public:
     // Constructors
     Inventory();
     Inventory(std::string name);
+    Inventory(const ItemArray& items);
+    Inventory(std::string name, const ItemArray& items);
 
     // Destructors
     ~Inventory();
 
     // Operator overloading
     bool operator==(const Inventory& peer) const;
+    Inventory operator+(const Inventory& peer) const;
+    Inventory operator-(const Inventory& peer) const;
+
+    // Access operator
+    Item& operator()(int x) { return items[x]; }
+    const Item& operator()(int x) const { return items[x]; }
 
     // Getters
     std::string getName() const { return name; }
+    ItemArray getItems() const { return items; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
+    void setItems(const ItemArray& objects) { this->items = objects; }
 
     // Additional methods
+    int getItemCount() const;
+    Item get(int index) const;
+    void set(int index, const Item& object);
     virtual Inventory copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Inventory > PartyArray;
+typedef std::vector<Inventory > InventoryArray;
 
 } // namespace act
 

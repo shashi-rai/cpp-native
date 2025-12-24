@@ -29,25 +29,36 @@
 namespace act {
 
 class Customer : public Party {
-    std::string name;
+    PartyArray partners;
 public:
     // Constructors
     Customer();
     Customer(std::string name);
+    Customer(const PartyArray& partners);
+    Customer(std::string name, const PartyArray& partners);
 
     // Destructors
     ~Customer();
 
     // Operator overloading
     bool operator==(const Customer& peer) const;
+    Customer operator+(const Customer& peer) const;
+    Customer operator-(const Customer& peer) const;
+
+    // Access operator
+    Party& operator()(int x) { return partners[x]; }
+    const Party& operator()(int x) const { return partners[x]; }
 
     // Getters
-    std::string getName() const { return name; }
+    PartyArray getPartners() const { return partners; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setPartners(const PartyArray& object) { this->partners = object; }
 
     // Additional methods
+    int getPartnerCount() const;
+    Party get(int index) const;
+    void set(int index, const Party& object);
     virtual Party copy();
     virtual void clear();
     virtual std::string print();

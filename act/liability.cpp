@@ -22,22 +22,45 @@
 
 namespace act {
 
-Liability::Liability() : name() {
+Liability::Liability() : Amount(), name(), registration() {
 
 }
 
 Liability::Liability(std::string name)
-        : name(name) {
+        : Amount(), name(name), registration() {
 
 }
 
 Liability::Liability(const Document& registration)
-        : name(), registration(registration) {
+        : Amount(), name(), registration(registration) {
 
 }
 
 Liability::Liability(std::string name, const Document& registration)
-        : name(name), registration(registration) {
+        : Amount(), name(name), registration(registration) {
+
+}
+
+Liability::Liability(std::string name, std::string remarks)
+        : Amount(remarks), name(name), registration() {
+
+}
+
+Liability::Liability(std::string name,
+        const Currency& currency, std::string remarks)
+        : Amount(currency, remarks), name(name), registration() {
+
+}
+
+Liability::Liability(std::string name,
+        const float value, const Currency& currency, std::string remarks)
+        : Amount(value, currency, remarks), name(name), registration() {
+
+}
+
+Liability::Liability(std::string name, const long datetime,
+        const float value, const Currency& currency, std::string remarks)
+        : Amount(datetime, value, currency, remarks), name(name), registration() {
 
 }
 
@@ -46,15 +69,27 @@ Liability::~Liability() {
 }
 
 bool Liability::operator==(const Liability& peer) const {
-    return (name == peer.name) && (registration == peer.registration);
+    return (static_cast<const Amount&>(*this) == static_cast<const Amount&>(peer))
+        && (name == peer.name) && (registration == peer.registration);
 }
 
-Liability Liability::copy() {
+Liability Liability::operator+(const Liability& peer) const {
+    return Liability("+", getDateTime().getValue(),
+        (getValue() + peer.getValue()), getCurrency(), getRemarks());
+}
+
+Liability Liability::operator-(const Liability& peer) const {
+    return Liability("-", getDateTime().getValue(),
+        (getValue() - peer.getValue()), getCurrency(), getRemarks());
+}
+
+Amount Liability::copy() {
     Liability fresh(name, registration);
     return fresh;
 }
 
 void Liability::clear() {
+    Amount::clear();
     name = "";
     registration.clear();
     return;
@@ -62,6 +97,7 @@ void Liability::clear() {
 
 std::string Liability::print() {
     std::stringstream result;
+    result << Amount::print() << ",";
     result << name << ",";
     result << registration.print() << ",";
 	return result.str();

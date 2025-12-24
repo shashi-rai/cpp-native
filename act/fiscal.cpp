@@ -22,12 +22,15 @@
 
 namespace act {
 
-Fiscal::Fiscal() : name() {
+const std::string Fiscal::DEFAULT_SYMBOL = "FY";
+const char Fiscal::DELIMITER = '0';
+const short int Fiscal::YEAR_WIDTH = 4;
+
+Fiscal::Fiscal() : year(DateTime::YEAR_MIN) {
 
 }
 
-Fiscal::Fiscal(std::string name)
-        : name(name) {
+Fiscal::Fiscal(short int year) : year(year) {
 
 }
 
@@ -36,22 +39,51 @@ Fiscal::~Fiscal() {
 }
 
 bool Fiscal::operator==(const Fiscal& peer) const {
-    return (name == peer.name);
+    return (year == peer.year);
+}
+
+Fiscal Fiscal::operator+(const Fiscal& peer) const {
+    return Fiscal((year + peer.year));
+}
+
+Fiscal Fiscal::operator-(const Fiscal& peer) const {
+    return Fiscal((year - peer.year));
+}
+
+Fiscal Fiscal::operator%(const Fiscal& peer) const {
+    return Fiscal((year % peer.year));
+}
+
+Fiscal Fiscal::operator+(const short int number) const {
+    short int newyear = year + number;
+    newyear = (newyear > DateTime::YEAR_MAX) ? (newyear - DateTime::YEAR_MAX - 1) : newyear;
+    return Fiscal(newyear);
+}
+
+Fiscal Fiscal::operator-(const short int number) const {
+    short int newyear = year - number;
+    newyear = (newyear < DateTime::YEAR_MIN) ? (DateTime::YEAR_MIN + newyear + 1) : newyear;
+    return Fiscal(newyear);
+}
+
+std::string Fiscal::getName() {
+    return print();
 }
 
 Fiscal Fiscal::copy() {
-    Fiscal fresh(name);
+    Fiscal fresh(year);
     return fresh;
 }
 
 void Fiscal::clear() {
-    name = "";
+    year = DateTime::YEAR_MIN;
     return;
 }
 
 std::string Fiscal::print() {
     std::stringstream result;
-    result << name << ",";
+    result << "FY";
+    result << std::setw(Fiscal::YEAR_WIDTH) << std::setfill(Fiscal::DELIMITER) << year;
 	return result.str();
 }
 

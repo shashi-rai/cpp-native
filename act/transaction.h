@@ -25,6 +25,7 @@
 #include <string>
 #include <vector>
 #include "amount.h"
+#include "batch.h"
 #include "customer.h"
 #include "supplier.h"
 
@@ -33,20 +34,31 @@ namespace act {
 // abstract
 
 class Transaction : public Amount {
+    Batch batch;
     Customer customer;
     Supplier supplier;
 public:
     // Constructors
     Transaction();
+    Transaction(const Batch& batch);
     Transaction(const float value);
+    Transaction(const Batch& batch, const float value);
     Transaction(std::string remarks);
+    Transaction(const Batch& batch, std::string remarks);
     Transaction(const float value, std::string remarks);
+    Transaction(const Batch& batch, const float value, std::string remarks);
     Transaction(const float value, const Currency& currency, std::string remarks);
+    Transaction(const Batch& batch, const float value, const Currency& currency, std::string remarks);
     Transaction(const long datetime, const float value, std::string remarks);
+    Transaction(const Batch& batch, const long datetime, const float value, std::string remarks);
     Transaction(const long datetime, const float value, const Currency& currency, std::string remarks);
+    Transaction(const Batch& batch, const long datetime, const float value, const Currency& currency, std::string remarks);
     Transaction(const Customer& customer);
+    Transaction(const Batch& batch, const Customer& customer);
     Transaction(const Supplier& supplier);
+    Transaction(const Batch& batch, const Supplier& supplier);
     Transaction(const Customer& customer, const Supplier& supplier);
+    Transaction(const Batch& batch, const Customer& customer, const Supplier& supplier);
 
     // Destructors
     ~Transaction();
@@ -55,15 +67,19 @@ public:
     bool operator==(const Transaction& peer) const;
 
     // Getters
+    Batch getBatch() const { return batch; }
     Customer getCustomer() const { return customer; }
     Supplier getSupplier() const { return supplier; }
 
     // Setters
+    void setBatch(const Batch& object) { this->batch = object; }
     void setCustomer(const Customer& object) { this->customer = object; }
     void setSupplier(const Supplier& object) { this->supplier = object; }
 
     // Additional methods
-    virtual Amount getTotal() = 0;
+    virtual Amount getGrossMargin();
+    virtual Amount getCostTotal() = 0;
+    virtual Amount getSaleTotal() = 0;
     virtual void clear();
     virtual std::string print();
 };

@@ -24,30 +24,43 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "party.h"
+#include "retailer.h"
 
 namespace act {
 
-class Distributor {
-    std::string name;
+class Distributor : public Party {
+    RetailerArray retailers;
 public:
     // Constructors
     Distributor();
     Distributor(std::string name);
+    Distributor(const RetailerArray& retailers);
+    Distributor(std::string name, const RetailerArray& retailers);
 
     // Destructors
     ~Distributor();
 
     // Operator overloading
     bool operator==(const Distributor& peer) const;
+    Distributor operator+(const Distributor& peer) const;
+    Distributor operator-(const Distributor& peer) const;
+
+    // Access operator
+    Party& operator()(int x) { return retailers[x]; }
+    const Party& operator()(int x) const { return retailers[x]; }
 
     // Getters
-    std::string getName() const { return name; }
+    RetailerArray getRetailers() const { return retailers; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setRetailers(const RetailerArray& object) { this->retailers = object; }
 
     // Additional methods
-    virtual Distributor copy();
+    int getRetailerCount() const;
+    Retailer get(int index) const;
+    void set(int index, const Retailer& object);
+    virtual Party copy();
     virtual void clear();
     virtual std::string print();
 };

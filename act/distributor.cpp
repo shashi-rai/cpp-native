@@ -22,12 +22,22 @@
 
 namespace act {
 
-Distributor::Distributor() : name() {
+Distributor::Distributor() : Party(), retailers() {
 
 }
 
 Distributor::Distributor(std::string name)
-        : name(name) {
+        : Party(name), retailers() {
+
+}
+
+Distributor::Distributor(const RetailerArray& retailers)
+        : Party(), retailers(retailers) {
+
+}
+
+Distributor::Distributor(std::string name, const RetailerArray& retailers)
+        : Party(name), retailers(retailers) {
 
 }
 
@@ -36,22 +46,74 @@ Distributor::~Distributor() {
 }
 
 bool Distributor::operator==(const Distributor& peer) const {
-    return (name == peer.name);
+    return (static_cast<const Party&>(*this) == static_cast<const Party&>(peer))
+        && (retailers == peer.retailers);
 }
 
-Distributor Distributor::copy() {
-    Distributor fresh(name);
+Distributor Distributor::operator+(const Distributor& peer) const {
+    RetailerArray result(retailers);
+    result.insert(result.end(), peer.retailers.begin(), peer.retailers.end());
+    return Distributor("+", result);
+}
+
+Distributor Distributor::operator-(const Distributor& peer) const {
+    RetailerArray result(retailers);
+    for (RetailerArray::const_iterator it = peer.retailers.begin(); it != peer.retailers.end(); ++it) {
+        RetailerArray::iterator found = std::find(result.begin(), result.end(), *it);
+        if (found != result.end()) {
+            result.erase(found);
+        }
+    }
+    return Distributor("-", result);
+}
+
+int Distributor::getRetailerCount() const {
+    return retailers.size();
+}
+
+Retailer Distributor::get(int index) const {
+    Retailer result;
+    if (index < 0) {
+        return result;
+    }
+    if (index >= static_cast<int>(retailers.size())) {
+        return result;
+    }
+    return retailers[index];
+}
+
+void Distributor::set(int index, const Retailer& object) {
+    if (index < 0) {
+        return;
+    }
+    if (index < static_cast<int>(retailers.size())) {
+        // replace existing element
+        retailers[index] = object;
+    } else if (index == static_cast<int>(retailers.size())) {
+        // append at end
+        retailers.push_back(object);
+    } else {
+        // index beyond current size: append at end
+        retailers.push_back(object);
+    }
+    return;
+}
+
+Party Distributor::copy() {
+    Distributor fresh(getName(), retailers);
     return fresh;
 }
 
 void Distributor::clear() {
-    name = "";
+    Party::clear();
+    retailers.clear();
     return;
 }
 
 std::string Distributor::print() {
     std::stringstream result;
-    result << name << ",";
+    result << Party::print() << ",sz:";
+    result << retailers.size();
 	return result.str();
 }
 

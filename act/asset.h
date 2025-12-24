@@ -24,11 +24,12 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "amount.h"
 #include "document.h"
 
 namespace act {
 
-class Asset {
+class Asset : public Amount {
     std::string name;
     Document registration;
 public:
@@ -37,12 +38,18 @@ public:
     Asset(std::string name);
     Asset(const Document& registration);
     Asset(std::string name, const Document& registration);
+    Asset(std::string name, std::string remarks);
+    Asset(std::string name, const Currency& currency, std::string remarks);
+    Asset(std::string name, const float value, const Currency& currency, std::string remarks);
+    Asset(std::string name, const long datetime, const float value, const Currency& currency, std::string remarks);
 
     // Destructors
     ~Asset();
 
     // Operator overloading
     bool operator==(const Asset& peer) const;
+    Asset operator+(const Asset& peer) const;
+    Asset operator-(const Asset& peer) const;
 
     // Getters
     std::string getName() const { return name; }
@@ -53,7 +60,7 @@ public:
     void setRegistration(const Document& document) { this->registration = document; }
 
     // Additional methods
-    virtual Asset copy();
+    virtual Amount copy();
     virtual void clear();
     virtual std::string print();
 };

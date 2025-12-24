@@ -69,7 +69,8 @@ public:
     int getItemCount() const;
     Item get(int index) const;
     void set(int index, const Item& object);
-    virtual Amount getTotal();
+    virtual Amount getCostTotal();
+    virtual Amount getSaleTotal();
     virtual Amount copy();
     virtual void clear();
     virtual std::string print();

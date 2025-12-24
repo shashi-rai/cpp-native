@@ -22,54 +22,108 @@
 
 namespace act {
 
-Transaction::Transaction() : Amount(), customer(), supplier() {
+Transaction::Transaction()
+		: Amount(), batch(), customer(), supplier() {
+
+}
+
+Transaction::Transaction(const Batch& batch)
+		: Amount(), batch(batch), customer(), supplier() {
 
 }
 
 Transaction::Transaction(const float value)
-        : Amount(value), customer(), supplier() {
+        : Amount(value), batch(), customer(), supplier() {
+
+}
+
+Transaction::Transaction(const Batch& batch, const float value)
+        : Amount(value), batch(batch), customer(), supplier() {
 
 }
 
 Transaction::Transaction(std::string remarks)
-        : Amount(remarks), customer(), supplier() {
+        : Amount(remarks), batch(), customer(), supplier() {
+
+}
+
+Transaction::Transaction(const Batch& batch, std::string remarks)
+        : Amount(remarks), batch(batch), customer(), supplier() {
 
 }
 
 Transaction::Transaction(const float value, std::string remarks)
-        : Amount(value, remarks), customer(), supplier() {
+        : Amount(value, remarks), batch(), customer(), supplier() {
+
+}
+
+Transaction::Transaction(const Batch& batch, const float value, std::string remarks)
+        : Amount(value, remarks), batch(batch), customer(), supplier() {
 
 }
 
 Transaction::Transaction(const float value, const Currency& currency, std::string remarks)
-        : Amount(value, currency, remarks), customer(), supplier() {
+        : Amount(value, currency, remarks), batch(), customer(), supplier() {
+
+}
+
+Transaction::Transaction(const Batch& batch, const float value,
+		const Currency& currency, std::string remarks)
+        : Amount(value, currency, remarks), batch(batch), customer(), supplier() {
 
 }
 
 Transaction::Transaction(const long datetime, const float value,
         std::string remarks)
-        : Amount(datetime, value, remarks), customer(), supplier() {
+        : Amount(datetime, value, remarks), batch(), customer(), supplier() {
+
+}
+
+Transaction::Transaction(const Batch& batch, const long datetime, const float value,
+        std::string remarks)
+        : Amount(datetime, value, remarks), batch(batch), customer(), supplier() {
 
 }
 
 Transaction::Transaction(const long datetime, const float value,
         const Currency& currency, std::string remarks)
-        : Amount(datetime, value, currency, remarks), customer(), supplier() {
+        : Amount(datetime, value, currency, remarks), batch(), customer(), supplier() {
+
+}
+
+Transaction::Transaction(const Batch& batch, const long datetime, const float value,
+        const Currency& currency, std::string remarks)
+        : Amount(datetime, value, currency, remarks), batch(batch), customer(), supplier() {
 
 }
 
 Transaction::Transaction(const Customer& customer)
-        : Amount(), customer(customer), supplier() {
+        : Amount(), batch(), customer(customer), supplier() {
+
+}
+
+Transaction::Transaction(const Batch& batch, const Customer& customer)
+        : Amount(), batch(batch), customer(customer), supplier() {
 
 }
 
 Transaction::Transaction(const Supplier& supplier)
-        : Amount(), customer(), supplier(supplier) {
+        : Amount(), batch(), customer(), supplier(supplier) {
+
+}
+
+Transaction::Transaction(const Batch& batch, const Supplier& supplier)
+        : Amount(), batch(batch), customer(), supplier(supplier) {
 
 }
 
 Transaction::Transaction(const Customer& customer, const Supplier& supplier)
-        : Amount(), customer(customer), supplier(supplier) {
+        : Amount(), batch(), customer(customer), supplier(supplier) {
+
+}
+
+Transaction::Transaction(const Batch& batch, const Customer& customer, const Supplier& supplier)
+        : Amount(), batch(batch), customer(customer), supplier(supplier) {
 
 }
 
@@ -79,11 +133,19 @@ Transaction::~Transaction() {
 
 bool Transaction::operator==(const Transaction& peer) const {
     return (static_cast<const Amount&>(*this) == static_cast<const Amount&>(peer))
-        && (customer == peer.customer) && (supplier == peer.supplier);
+		&& (batch == peer.batch)
+        && (customer == peer.customer)
+		&& (supplier == peer.supplier);
+}
+
+Amount Transaction::getGrossMargin() {
+	Amount result = (getSaleTotal() - getCostTotal());
+    return result;
 }
 
 void Transaction::clear() {
     Amount::clear();
+	batch.clear();
     customer.clear();
     supplier.clear();
     return;
@@ -91,8 +153,9 @@ void Transaction::clear() {
 
 std::string Transaction::print() {
     std::stringstream result;
-    result << Amount::print() << ",";
-	result << customer.print() << ",";
+    result << Amount::print() << ",b:";
+	result << batch.print() << ",c:";
+	result << customer.print() << ",s:";
     result << supplier.print();
 	return result.str();
 }

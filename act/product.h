@@ -35,6 +35,8 @@ public:
     // Constructors
     Product();
     Product(std::string name);
+    Product(const Brand& brand);
+    Product(std::string name, const Brand& brand);
 
     // Destructors
     ~Product();

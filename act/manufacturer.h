@@ -24,30 +24,43 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "factory.h"
+#include "party.h"
 
 namespace act {
 
-class Manufacturer {
-    std::string name;
+class Manufacturer : public Party {
+    FactoryArray factories;
 public:
     // Constructors
     Manufacturer();
     Manufacturer(std::string name);
+    Manufacturer(const FactoryArray& factories);
+    Manufacturer(std::string name, const FactoryArray& factories);
 
     // Destructors
     ~Manufacturer();
 
     // Operator overloading
     bool operator==(const Manufacturer& peer) const;
+    Manufacturer operator+(const Manufacturer& peer) const;
+    Manufacturer operator-(const Manufacturer& peer) const;
+
+    // Access operator
+    Factory& operator()(int x) { return factories[x]; }
+    const Factory& operator()(int x) const { return factories[x]; }
 
     // Getters
-    std::string getName() const { return name; }
+    FactoryArray getFactories() const { return factories; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setFactories(const FactoryArray& object) { this->factories = object; }
 
     // Additional methods
-    virtual Manufacturer copy();
+    int getFactoryCount() const;
+    Factory get(int index) const;
+    void set(int index, const Factory& object);
+    virtual Party copy();
     virtual void clear();
     virtual std::string print();
 };

@@ -18,53 +18,73 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "product.h"
+#include "factory.h"
 
 namespace act {
 
-Product::Product() : Item(), brand() {
+Factory::Factory() : Warehouse(), license() {
 
 }
 
-Product::Product(std::string name)
-        : Item(name), brand() {
+Factory::Factory(std::string name)
+        : Warehouse(name), license() {
 
 }
 
-Product::Product(const Brand& brand)
-        : Item(), brand(brand) {
+Factory::Factory(const Inventory& inventory)
+        : Warehouse(inventory), license() {
 
 }
 
-Product::Product(std::string name, const Brand& brand)
-        : Item(name), brand(brand) {
+Factory::Factory(std::string name, const Inventory& inventory)
+        : Warehouse(name, inventory), license() {
 
 }
 
-Product::~Product() {
+Factory::Factory(const gis::Address& address)
+        : Warehouse(address), license() {
 
 }
 
-bool Product::operator==(const Product& peer) const {
-    return (static_cast<const Item&>(*this) == static_cast<const Item&>(peer))
-        && (brand == peer.brand);
+Factory::Factory(const Inventory& inventory, const gis::Address& address)
+        : Warehouse(inventory, address), license() {
+
 }
 
-Item Product::copy() {
-    Product fresh(getName(), brand);
+Factory::Factory(std::string name, const gis::Address& address)
+        : Warehouse(name, address), license() {
+
+}
+
+Factory::Factory(std::string name, const Inventory& inventory, const gis::Address& address)
+        : Warehouse(name, inventory, address), license() {
+
+}
+
+Factory::~Factory() {
+
+}
+
+bool Factory::operator==(const Factory& peer) const {
+    return (static_cast<const Warehouse&>(*this) == static_cast<const Warehouse&>(peer))
+        && (license == peer.license);
+}
+
+Branch Factory::copy() {
+    Factory fresh(getName(), getInventory(), getAddress());
     return fresh;
 }
 
-void Product::clear() {
-    Item::clear();
-    brand.clear();
+void Factory::clear() {
+    Warehouse::clear();
+    license.clear();
     return;
 }
 
-std::string Product::print() {
+std::string Factory::print() {
     std::stringstream result;
-    result << Item::print() << ",";
-    result << brand.print();
+    result << Warehouse::print() << ",";
+    result << license.print();
 	return result.str();
 }
 

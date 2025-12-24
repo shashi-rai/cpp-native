@@ -21,35 +21,48 @@
 #ifndef ACT_FISCAL_H
 #define ACT_FISCAL_H
 
+#include <iomanip>
 #include <sstream>
 #include <string>
 #include <vector>
+#include "datetime.h"
 
 namespace act {
 
 class Fiscal {
-    std::string name;
+    short int year;
 public:
     // Constructors
     Fiscal();
-    Fiscal(std::string name);
+    Fiscal(const short int year);
 
     // Destructors
     ~Fiscal();
 
     // Operator overloading
     bool operator==(const Fiscal& peer) const;
+    Fiscal operator+(const Fiscal& peer) const;
+    Fiscal operator-(const Fiscal& peer) const;
+    Fiscal operator%(const Fiscal& peer) const;
+    Fiscal operator+(const short int number) const;
+    Fiscal operator-(const short int number) const;
 
     // Getters
-    std::string getName() const { return name; }
+    short int getYear() const { return year; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setYear(const short int number) { this->year = number; }
 
     // Additional methods
+    std::string getName();
     virtual Fiscal copy();
     virtual void clear();
     virtual std::string print();
+
+public:
+    static const std::string DEFAULT_SYMBOL;
+    static const char DELIMITER;
+    static const short int YEAR_WIDTH;
 };
 
 typedef std::vector<Fiscal > FiscalArray;

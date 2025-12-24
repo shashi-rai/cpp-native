@@ -24,6 +24,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "amount.h"
 #include "asset.h"
 #include "equity.h"
 #include "liability.h"
@@ -53,6 +54,8 @@ public:
 
     // Operator overloading
     bool operator==(const Balance& peer) const;
+    Balance operator+(const Balance& peer) const;
+    Balance operator-(const Balance& peer) const;
 
     // Getters
     AssetArray getAssets() const { return assets; }
@@ -65,6 +68,18 @@ public:
     void setEquities(const EquityArray& objects) { this->equities = objects; }
 
     // Additional methods
+    int getAssetCount() const;
+    Asset getAsset(int index) const;
+    void setAsset(int index, const Asset& object);
+    Amount getAssetTotal() const;
+    int getLiabilityCount() const;
+    Liability getLiability(int index) const;
+    void setLiability(int index, const Liability& object);
+    Amount getLiabilityTotal() const;
+    int getEquityCount() const;
+    Equity getEquity(int index) const;
+    void setEquity(int index, const Equity& object);
+    Amount getEquityTotal() const;
     virtual Document copy();
     virtual void clear();
     virtual std::string print();
