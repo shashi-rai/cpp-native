@@ -22,12 +22,39 @@
 
 namespace act {
 
-Interest::Interest() : name() {
+const float Interest::DEFAULT_VALUE = 0.0f;     // Interest Rate
+
+Interest::Interest() : name(), rate(DEFAULT_VALUE), principal() {
 
 }
 
 Interest::Interest(std::string name)
-        : name(name) {
+        : name(name), rate(DEFAULT_VALUE), principal() {
+
+}
+
+Interest::Interest(const float rate)
+        : name(), rate(rate), principal() {
+
+}
+
+Interest::Interest(const Amount& principal)
+        : name(), rate(DEFAULT_VALUE), principal(principal) {
+
+}
+
+Interest::Interest(const float rate, const Amount& principal)
+        : name(), rate(rate), principal(principal) {
+
+}
+
+Interest::Interest(std::string name, const Amount& principal)
+        : name(name), rate(DEFAULT_VALUE), principal(principal) {
+
+}
+
+Interest::Interest(std::string name, const float rate, const Amount& principal)
+        : name(name), rate(rate), principal(principal) {
 
 }
 
@@ -36,22 +63,56 @@ Interest::~Interest() {
 }
 
 bool Interest::operator==(const Interest& peer) const {
-    return (name == peer.name);
+    return (name == peer.name) && (rate == peer.rate) && (principal == peer.principal);
+}
+
+Interest Interest::operator+(const Interest& peer) const {
+    return Interest("+", (rate + peer.rate), (principal + peer.principal));
+}
+
+Interest Interest::operator-(const Interest& peer) const {
+    return Interest("-", (rate - peer.rate), (principal - peer.principal));
+}
+
+Interest Interest::operator*(const Interest& peer) const {
+    return Interest("*", (rate * peer.rate), (principal * peer.principal));
+}
+
+Interest Interest::operator/(const Interest& peer) const {
+    return Interest("/", (rate / peer.rate), (principal / peer.principal));
+}
+
+Interest Interest::operator%(const Interest& peer) const {
+    return Interest("%", fmod(rate, peer.rate), (principal % peer.principal));
+}
+
+Amount Interest::getSimple(const float time) {
+    float total = (principal.getValue() * rate * time);
+    return Amount(total, principal.getCurrency());
+}
+
+Amount Interest::getCompound(const short int period, const float time) {
+    float total = (principal.getValue() * pow((1 + (rate / period)), (period * time)));
+    return Amount(total, principal.getCurrency());
 }
 
 Interest Interest::copy() {
-    Interest fresh(name);
+    Interest fresh(name, rate, principal);
     return fresh;
 }
 
 void Interest::clear() {
     name = "";
+    rate = DEFAULT_VALUE;
+    principal.clear();
     return;
 }
 
 std::string Interest::print() {
     std::stringstream result;
-    result << name << ",";
+    result << name << ",%:";
+    result << rate << ",";
+    result << principal.print();
 	return result.str();
 }
 

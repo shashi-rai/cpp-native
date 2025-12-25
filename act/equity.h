@@ -36,9 +36,11 @@ class Equity : public Amount {
 public:
     // Constructors
     Equity();
+    Equity(const float value);
     Equity(std::string name);
     Equity(const Document& registration);
     Equity(std::string name, const Document& registration);
+    Equity(std::string name, const float value);
     Equity(std::string name, std::string remarks);
     Equity(std::string name, const Currency& currency, std::string remarks);
     Equity(std::string name, const float value, const Currency& currency, std::string remarks);
@@ -51,6 +53,9 @@ public:
     bool operator==(const Equity& peer) const;
     Equity operator+(const Equity& peer) const;
     Equity operator-(const Equity& peer) const;
+    Equity operator*(const Equity& peer) const;
+    Equity operator/(const Equity& peer) const;
+    Equity operator%(const Equity& peer) const;
 
     // Getters
     std::string getName() const { return name; }

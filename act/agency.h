@@ -18,54 +18,55 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef ACT_SERVICE_H
-#define ACT_SERVICE_H
+#ifndef ACT_AGENCY_H
+#define ACT_AGENCY_H
 
 #include <sstream>
 #include <string>
 #include <vector>
-#include "brand.h"
-#include "item.h"
+#include "department.h"
+#include "party.h"
 
 namespace act {
 
-class Service : public Item {
-    Brand brand;
+class Agency : public Party {
+    DepartmentArray departments;
 public:
     // Constructors
-    Service();
-    Service(std::string name);
-    Service(const shp::Quantity& quantity);
-    Service(std::string name, const shp::Quantity& quantity);
-    Service(const Brand& brand);
-    Service(std::string name, const Brand& brand);
-    Service(std::string name, const shp::Quantity& quantity, const Brand& brand);
+    Agency();
+    Agency(std::string name);
+    Agency(const DepartmentArray& departments);
+    Agency(std::string name, const DepartmentArray& departments);
 
     // Destructors
-    ~Service();
+    ~Agency();
 
     // Operator overloading
-    bool operator==(const Service& peer) const;
-    Service operator+(const Service& peer) const;
-    Service operator-(const Service& peer) const;
-    Service operator*(const Service& peer) const;
-    Service operator/(const Service& peer) const;
-    Service operator%(const Service& peer) const;
+    bool operator==(const Agency& peer) const;
+    Agency operator+(const Agency& peer) const;
+    Agency operator-(const Agency& peer) const;
+
+    // Access operator
+    Department& operator()(int x) { return departments[x]; }
+    const Department& operator()(int x) const { return departments[x]; }
 
     // Getters
-    Brand getBrand() const { return brand; }
+    DepartmentArray getDepartments() const { return departments; }
 
     // Setters
-    void setBrand(const Brand& object) { this->brand = object; }
+    void setDepartments(const DepartmentArray& object) { this->departments = object; }
 
     // Additional methods
-    virtual Item copy();
+    int getDepartmentCount() const;
+    Department get(int index) const;
+    void set(int index, const Department& object);
+    virtual Party copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Service > ServiceArray;
+typedef std::vector<Agency > AgencyArray;
 
 } // namespace act
 
-#endif //ACT_SERVICE_H
+#endif //ACT_AGENCY_H

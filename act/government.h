@@ -18,54 +18,55 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef ACT_SERVICE_H
-#define ACT_SERVICE_H
+#ifndef ACT_GOVERNMENT_H
+#define ACT_GOVERNMENT_H
 
 #include <sstream>
 #include <string>
 #include <vector>
-#include "brand.h"
-#include "item.h"
+#include "agency.h"
+#include "party.h"
 
 namespace act {
 
-class Service : public Item {
-    Brand brand;
+class Government : public Party {
+    AgencyArray agencies;
 public:
     // Constructors
-    Service();
-    Service(std::string name);
-    Service(const shp::Quantity& quantity);
-    Service(std::string name, const shp::Quantity& quantity);
-    Service(const Brand& brand);
-    Service(std::string name, const Brand& brand);
-    Service(std::string name, const shp::Quantity& quantity, const Brand& brand);
+    Government();
+    Government(std::string name);
+    Government(const AgencyArray& agencies);
+    Government(std::string name, const AgencyArray& agencies);
 
     // Destructors
-    ~Service();
+    ~Government();
 
     // Operator overloading
-    bool operator==(const Service& peer) const;
-    Service operator+(const Service& peer) const;
-    Service operator-(const Service& peer) const;
-    Service operator*(const Service& peer) const;
-    Service operator/(const Service& peer) const;
-    Service operator%(const Service& peer) const;
+    bool operator==(const Government& peer) const;
+    Government operator+(const Government& peer) const;
+    Government operator-(const Government& peer) const;
+
+    // Access operator
+    Party& operator()(int x) { return agencies[x]; }
+    const Party& operator()(int x) const { return agencies[x]; }
 
     // Getters
-    Brand getBrand() const { return brand; }
+    AgencyArray getAgencies() const { return agencies; }
 
     // Setters
-    void setBrand(const Brand& object) { this->brand = object; }
+    void setAgencies(const AgencyArray& object) { this->agencies = object; }
 
     // Additional methods
-    virtual Item copy();
+    int getAgencyCount() const;
+    Agency get(int index) const;
+    void set(int index, const Agency& object);
+    virtual Party copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Service > ServiceArray;
+typedef std::vector<Government > GovernmentArray;
 
 } // namespace act
 
-#endif //ACT_SERVICE_H
+#endif //ACT_GOVERNMENT_H

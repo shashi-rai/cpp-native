@@ -31,6 +31,16 @@ Product::Product(std::string name)
 
 }
 
+Product::Product(const shp::Quantity& quantity)
+        : Item(quantity), brand() {
+
+}
+
+Product::Product(std::string name, const shp::Quantity& quantity)
+        : Item(name, quantity), brand() {
+
+}
+
 Product::Product(const Brand& brand)
         : Item(), brand(brand) {
 
@@ -38,6 +48,11 @@ Product::Product(const Brand& brand)
 
 Product::Product(std::string name, const Brand& brand)
         : Item(name), brand(brand) {
+
+}
+
+Product::Product(std::string name, const shp::Quantity& quantity, const Brand& brand)
+        : Item(name, quantity), brand(brand) {
 
 }
 
@@ -50,8 +65,28 @@ bool Product::operator==(const Product& peer) const {
         && (brand == peer.brand);
 }
 
+Product Product::operator+(const Product& peer) const {
+    return Product("+", (getQuantity() + peer.getQuantity()), brand);
+}
+
+Product Product::operator-(const Product& peer) const {
+    return Product("-", (getQuantity() - peer.getQuantity()), brand);
+}
+
+Product Product::operator*(const Product& peer) const {
+    return Product("*", (getQuantity() * peer.getQuantity()), brand);
+}
+
+Product Product::operator/(const Product& peer) const {
+    return Product("/", (getQuantity() / peer.getQuantity()), brand);
+}
+
+Product Product::operator%(const Product& peer) const {
+    return Product("%", (getQuantity() % peer.getQuantity()), brand);
+}
+
 Item Product::copy() {
-    Product fresh(getName(), brand);
+    Product fresh(getName(), getQuantity(), brand);
     return fresh;
 }
 

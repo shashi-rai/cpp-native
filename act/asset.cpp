@@ -26,6 +26,11 @@ Asset::Asset() : Amount(), name(), registration() {
 
 }
 
+Asset::Asset(const float value)
+        : Amount(value), name(), registration() {
+
+}
+
 Asset::Asset(std::string name)
         : Amount(), name(name), registration() {
 
@@ -38,6 +43,11 @@ Asset::Asset(const Document& registration)
 
 Asset::Asset(std::string name, const Document& registration)
         : Amount(), name(name), registration(registration) {
+
+}
+
+Asset::Asset(std::string name, const float value)
+        : Amount(value), name(name), registration() {
 
 }
 
@@ -81,6 +91,21 @@ Asset Asset::operator+(const Asset& peer) const {
 Asset Asset::operator-(const Asset& peer) const {
     return Asset("-", getDateTime().getValue(),
         (getValue() - peer.getValue()), getCurrency(), getRemarks());
+}
+
+Asset Asset::operator*(const Asset& peer) const {
+    return Asset("*", getDateTime().getValue(),
+        (getValue() * peer.getValue()), getCurrency(), getRemarks());
+}
+
+Asset Asset::operator/(const Asset& peer) const {
+    return Asset("/", getDateTime().getValue(),
+        (getValue() / peer.getValue()), getCurrency(), getRemarks());
+}
+
+Asset Asset::operator%(const Asset& peer) const {
+    return Asset("%", getDateTime().getValue(),
+        fmod(getValue(), peer.getValue()), getCurrency(), getRemarks());
 }
 
 Amount Asset::copy() {

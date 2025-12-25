@@ -18,60 +18,51 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef ACT_LIABILITY_H
-#define ACT_LIABILITY_H
+#ifndef ACT_LOAN_H
+#define ACT_LOAN_H
 
 #include <sstream>
 #include <string>
 #include <vector>
-#include "amount.h"
-#include "document.h"
+#include "coupon.h"
+#include "liability.h"
 
 namespace act {
 
-class Liability : public Amount {
-    std::string name;
-    Document registration;
+class Loan : public Liability {
+    CouponArray installments;
 public:
     // Constructors
-    Liability();
-    Liability(const float value);
-    Liability(std::string name);
-    Liability(const Document& registration);
-    Liability(std::string name, const Document& registration);
-    Liability(std::string name, const float value);
-    Liability(std::string name, std::string remarks);
-    Liability(std::string name, const Currency& currency, std::string remarks);
-    Liability(std::string name, const float value, const Currency& currency, std::string remarks);
-    Liability(std::string name, const long datetime, const float value, const Currency& currency, std::string remarks);
+    Loan();
+    Loan(std::string name);
+    Loan(const CouponArray& installments);
+    Loan(std::string name, const CouponArray& installments);
 
     // Destructors
-    ~Liability();
+    ~Loan();
 
     // Operator overloading
-    bool operator==(const Liability& peer) const;
-    Liability operator+(const Liability& peer) const;
-    Liability operator-(const Liability& peer) const;
-    Liability operator*(const Liability& peer) const;
-    Liability operator/(const Liability& peer) const;
-    Liability operator%(const Liability& peer) const;
+    bool operator==(const Loan& peer) const;
+    Loan operator+(const Loan& peer) const;
+    Loan operator-(const Loan& peer) const;
 
     // Getters
-    std::string getName() const { return name; }
-    Document getRegistration() const { return registration; }
+    CouponArray getInstallments() const { return installments; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
-    void setRegistration(const Document& document) { this->registration = document; }
+    void setInstallments(const CouponArray& object) { this->installments = object; }
 
     // Additional methods
+    int getInstallmentCount() const;
+    Coupon get(int index) const;
+    void set(int index, const Coupon& object);
     virtual Amount copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Liability > LiabilityArray;
+typedef std::vector<Loan > LoanArray;
 
 } // namespace act
 
-#endif //ACT_LIABILITY_H
+#endif //ACT_LOAN_H

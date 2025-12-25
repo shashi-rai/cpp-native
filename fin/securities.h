@@ -21,19 +21,38 @@
 #ifndef FIN_SECURITIES_H
 #define FIN_SECURITIES_H
 
+#include <sstream>
 #include <string>
 #include <vector>
 #include "../act/contract.h"
+#include "../act/coupon.h"
+#include "../act/datetime.h"
+#include "../act/item.h"
 
 namespace fin {
 
-class Securities {
+class Securities : public act::Item {
     act::Contract contract;
+    act::DateTime maturity;
+    act::CouponArray coupons;
 public:
     // Constructors
     Securities();
     Securities(std::string name);
     Securities(const act::Contract& contract);
+    Securities(const act::DateTime& maturity);
+    Securities(const act::CouponArray& coupons);
+    Securities(const act::DateTime& maturity, const act::CouponArray& coupons);
+    Securities(std::string name, const act::Contract& contract);
+    Securities(std::string name, const act::DateTime& maturity);
+    Securities(std::string name, const act::CouponArray& coupons);
+    Securities(std::string name, const act::DateTime& maturity, const act::CouponArray& coupons);
+    Securities(const act::Contract& contract, const act::DateTime& maturity);
+    Securities(const act::Contract& contract, const act::CouponArray& coupons);
+    Securities(const act::Contract& contract, const act::DateTime& maturity, const act::CouponArray& coupons);
+    Securities(std::string name, const act::Contract& contract, const act::DateTime& maturity);
+    Securities(std::string name, const act::Contract& contract, const act::CouponArray& coupons);
+    Securities(std::string name, const act::Contract& contract, const act::DateTime& maturity, const act::CouponArray& coupons);
 
     // Destructors
     ~Securities();
@@ -43,16 +62,25 @@ public:
     Securities operator+(const Securities& peer) const;
     Securities operator-(const Securities& peer) const;
 
+    // Access operator
+    act::Coupon& operator()(int x) { return coupons[x]; }
+    const act::Coupon& operator()(int x) const { return coupons[x]; }
+
     // Getters
-    std::string getName() const { return contract.getName(); }
     act::Contract getContract() const { return contract; }
+    act::DateTime getMaturity() const { return maturity; }
+    act::CouponArray getCoupons() const { return coupons; }
 
     // Setters
-    void setName(const std::string& name) { this->contract.setName(name); }
     void setContract(const act::Contract& object) { this->contract = object; }
+    void setMaturity(const act::DateTime& object) { this->maturity = object; }
+    void setCoupons(const act::CouponArray& object) { this->coupons = object; }
 
     // Additional methods
-    virtual Securities copy();
+    int getCouponCount() const;
+    act::Coupon get(int index) const;
+    void set(int index, const act::Coupon& object);
+    virtual Item copy();
     virtual void clear();
     virtual std::string print();
 };

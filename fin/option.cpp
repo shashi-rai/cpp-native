@@ -22,17 +22,84 @@
 
 namespace fin {
 
-Option::Option() : Securities() {
+Option::Option() : Securities(), underlying(), strike() {
 
 }
 
 Option::Option(std::string name)
-        : Securities(name) {
+        : Securities(name), underlying(), strike() {
 
 }
 
 Option::Option(const act::Contract& contract)
-        : Securities(contract) {
+        : Securities(contract), underlying(), strike() {
+
+}
+
+Option::Option(const act::Asset& underlying)
+        : Securities(), underlying(underlying), strike() {
+
+}
+
+Option::Option(const act::Price& strike)
+    : Securities(), underlying(), strike(strike) {
+
+}
+
+Option::Option(const act::Asset& underlying, const act::Price& strike)
+        : Securities(), underlying(underlying), strike(strike) {
+
+}
+
+Option::Option(const act::Contract& contract, const act::Asset& underlying)
+        : Securities(contract), underlying(underlying), strike() {
+
+}
+
+Option::Option(const act::Contract& contract, const act::Price& strike)
+        : Securities(contract), underlying(), strike(strike) {
+
+}
+
+Option::Option(const act::Contract& contract, const act::Asset& underlying,
+        const act::Price& strike)
+        : Securities(contract), underlying(underlying), strike(strike) {
+
+}
+
+Option::Option(std::string name, const act::Contract& contract)
+        : Securities(name, contract), underlying(), strike() {
+
+}
+
+Option::Option(std::string name, const act::Asset& underlying)
+        : Securities(name), underlying(underlying), strike() {
+
+}
+
+Option::Option(std::string name, const act::Price& strike)
+        : Securities(name), underlying(), strike(strike) {
+
+}
+
+Option::Option(std::string name, const act::Asset& underlying, const act::Price& strike)
+        : Securities(name), underlying(underlying), strike(strike) {
+
+}
+
+Option::Option(std::string name, const act::Contract& contract, const act::Asset& underlying)
+        : Securities(name, contract), underlying(underlying), strike() {
+
+}
+
+Option::Option(std::string name, const act::Contract& contract, const act::Price& strike)
+        : Securities(name, contract), underlying(), strike(strike) {
+
+}
+
+Option::Option(std::string name, const act::Contract& contract, const act::Asset& underlying,
+        const act::Price& strike)
+        : Securities(name, contract), underlying(underlying), strike(strike) {
 
 }
 
@@ -41,30 +108,37 @@ Option::~Option() {
 }
 
 bool Option::operator==(const Option& peer) const {
-    return (static_cast<const Securities&>(*this) == static_cast<const Securities&>(peer));
+    return (static_cast<const Securities&>(*this) == static_cast<const Securities&>(peer))
+        && (underlying == peer.underlying) && (strike == peer.strike);
 }
 
 Option Option::operator+(const Option& peer) const {
-    return Option((getContract() + peer.getContract()));
+    return Option("+", (getContract() + peer.getContract()),
+        (underlying + peer.underlying), (strike + peer.strike));
 }
 
 Option Option::operator-(const Option& peer) const {
-    return Option((getContract() - peer.getContract()));
+    return Option("-", (getContract() - peer.getContract()),
+        (underlying - peer.underlying), (strike - peer.strike));
 }
 
-Securities Option::copy() {
-    Securities fresh(this->getContract());
+act::Item Option::copy() {
+    Option fresh(getName(), getContract(), underlying, strike);
     return fresh;
 }
 
 void Option::clear() {
     Securities::clear();
+    underlying.clear();
+    strike.clear();
     return;
 }
 
 std::string Option::print() {
     std::stringstream result;
-    result << Securities::print();
+    result << Securities::print() << ",";
+    result << underlying.print() << ",";
+    result << strike.print();
 	return result.str();
 }
 

@@ -26,6 +26,11 @@ Equity::Equity() : Amount(), name(), registration() {
 
 }
 
+Equity::Equity(const float value)
+        : Amount(value), name(), registration() {
+
+}
+
 Equity::Equity(std::string name)
         : Amount(), name(name), registration() {
 
@@ -38,6 +43,11 @@ Equity::Equity(const Document& registration)
 
 Equity::Equity(std::string name, const Document& registration)
         : Amount(), name(name), registration(registration) {
+
+}
+
+Equity::Equity(std::string name, const float value)
+        : Amount(value), name(name), registration() {
 
 }
 
@@ -81,6 +91,21 @@ Equity Equity::operator+(const Equity& peer) const {
 Equity Equity::operator-(const Equity& peer) const {
     return Equity("-", getDateTime().getValue(),
         (getValue() - peer.getValue()), getCurrency(), getRemarks());
+}
+
+Equity Equity::operator*(const Equity& peer) const {
+    return Equity("*", getDateTime().getValue(),
+        (getValue() * peer.getValue()), getCurrency(), getRemarks());
+}
+
+Equity Equity::operator/(const Equity& peer) const {
+    return Equity("/", getDateTime().getValue(),
+        (getValue() / peer.getValue()), getCurrency(), getRemarks());
+}
+
+Equity Equity::operator%(const Equity& peer) const {
+    return Equity("%", getDateTime().getValue(),
+        fmod(getValue(), peer.getValue()), getCurrency(), getRemarks());
 }
 
 Amount Equity::copy() {

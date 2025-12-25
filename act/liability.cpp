@@ -26,6 +26,11 @@ Liability::Liability() : Amount(), name(), registration() {
 
 }
 
+Liability::Liability(const float value)
+        : Amount(value), name(), registration() {
+
+}
+
 Liability::Liability(std::string name)
         : Amount(), name(name), registration() {
 
@@ -38,6 +43,11 @@ Liability::Liability(const Document& registration)
 
 Liability::Liability(std::string name, const Document& registration)
         : Amount(), name(name), registration(registration) {
+
+}
+
+Liability::Liability(std::string name, const float value)
+        : Amount(value), name(name), registration() {
 
 }
 
@@ -81,6 +91,21 @@ Liability Liability::operator+(const Liability& peer) const {
 Liability Liability::operator-(const Liability& peer) const {
     return Liability("-", getDateTime().getValue(),
         (getValue() - peer.getValue()), getCurrency(), getRemarks());
+}
+
+Liability Liability::operator*(const Liability& peer) const {
+    return Liability("*", getDateTime().getValue(),
+        (getValue() * peer.getValue()), getCurrency(), getRemarks());
+}
+
+Liability Liability::operator/(const Liability& peer) const {
+    return Liability("/", getDateTime().getValue(),
+        (getValue() / peer.getValue()), getCurrency(), getRemarks());
+}
+
+Liability Liability::operator%(const Liability& peer) const {
+    return Liability("%", getDateTime().getValue(),
+        fmod(getValue(), peer.getValue()), getCurrency(), getRemarks());
 }
 
 Amount Liability::copy() {

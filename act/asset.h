@@ -35,9 +35,11 @@ class Asset : public Amount {
 public:
     // Constructors
     Asset();
+    Asset(const float value);
     Asset(std::string name);
     Asset(const Document& registration);
     Asset(std::string name, const Document& registration);
+    Asset(std::string name, const float value);
     Asset(std::string name, std::string remarks);
     Asset(std::string name, const Currency& currency, std::string remarks);
     Asset(std::string name, const float value, const Currency& currency, std::string remarks);
@@ -50,6 +52,9 @@ public:
     bool operator==(const Asset& peer) const;
     Asset operator+(const Asset& peer) const;
     Asset operator-(const Asset& peer) const;
+    Asset operator*(const Asset& peer) const;
+    Asset operator/(const Asset& peer) const;
+    Asset operator%(const Asset& peer) const;
 
     // Getters
     std::string getName() const { return name; }

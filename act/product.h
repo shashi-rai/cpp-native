@@ -35,14 +35,22 @@ public:
     // Constructors
     Product();
     Product(std::string name);
+    Product(const shp::Quantity& quantity);
+    Product(std::string name, const shp::Quantity& quantity);
     Product(const Brand& brand);
     Product(std::string name, const Brand& brand);
+    Product(std::string name, const shp::Quantity& quantity, const Brand& brand);
 
     // Destructors
     ~Product();
 
     // Operator overloading
     bool operator==(const Product& peer) const;
+    Product operator+(const Product& peer) const;
+    Product operator-(const Product& peer) const;
+    Product operator*(const Product& peer) const;
+    Product operator/(const Product& peer) const;
+    Product operator%(const Product& peer) const;
 
     // Getters
     Brand getBrand() const { return brand; }

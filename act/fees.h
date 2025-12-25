@@ -18,60 +18,53 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef ACT_LIABILITY_H
-#define ACT_LIABILITY_H
+#ifndef ACT_FEES_H
+#define ACT_FEES_H
 
 #include <sstream>
 #include <string>
 #include <vector>
 #include "amount.h"
-#include "document.h"
 
 namespace act {
 
-class Liability : public Amount {
+class Fees {
     std::string name;
-    Document registration;
+    Amount amount;
 public:
     // Constructors
-    Liability();
-    Liability(const float value);
-    Liability(std::string name);
-    Liability(const Document& registration);
-    Liability(std::string name, const Document& registration);
-    Liability(std::string name, const float value);
-    Liability(std::string name, std::string remarks);
-    Liability(std::string name, const Currency& currency, std::string remarks);
-    Liability(std::string name, const float value, const Currency& currency, std::string remarks);
-    Liability(std::string name, const long datetime, const float value, const Currency& currency, std::string remarks);
+    Fees();
+    Fees(std::string name);
+    Fees(const Amount& amount);
+    Fees(std::string name, const Amount& amount);
 
     // Destructors
-    ~Liability();
+    ~Fees();
 
     // Operator overloading
-    bool operator==(const Liability& peer) const;
-    Liability operator+(const Liability& peer) const;
-    Liability operator-(const Liability& peer) const;
-    Liability operator*(const Liability& peer) const;
-    Liability operator/(const Liability& peer) const;
-    Liability operator%(const Liability& peer) const;
+    bool operator==(const Fees& peer) const;
+    Fees operator+(const Fees& peer) const;
+    Fees operator-(const Fees& peer) const;
+    Fees operator*(const Fees& peer) const;
+    Fees operator/(const Fees& peer) const;
+    Fees operator%(const Fees& peer) const;
 
     // Getters
     std::string getName() const { return name; }
-    Document getRegistration() const { return registration; }
+    Amount getAmount() const { return amount; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
-    void setRegistration(const Document& document) { this->registration = document; }
+    void setAmount(const Amount& value) { this->amount = value; }
 
     // Additional methods
-    virtual Amount copy();
+    virtual Fees copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Liability > LiabilityArray;
+typedef std::vector<Fees > FeesArray;
 
 } // namespace act
 
-#endif //ACT_LIABILITY_H
+#endif //ACT_FEES_H

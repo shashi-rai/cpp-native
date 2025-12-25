@@ -23,17 +23,84 @@
 namespace fin {
 
 Future::Future()
-        : Securities() {
+        : Securities(), underlying(), strike() {
 
 }
 
 Future::Future(std::string name)
-        : Securities(name) {
+        : Securities(name), underlying(), strike() {
 
 }
 
 Future::Future(const act::Contract& contract)
-        : Securities(contract) {
+        : Securities(contract), underlying(), strike() {
+
+}
+
+Future::Future(const act::Asset& underlying)
+        : Securities(), underlying(underlying), strike() {
+
+}
+
+Future::Future(const act::Price& strike)
+    : Securities(), underlying(), strike(strike) {
+
+}
+
+Future::Future(const act::Asset& underlying, const act::Price& strike)
+        : Securities(), underlying(underlying), strike(strike) {
+
+}
+
+Future::Future(const act::Contract& contract, const act::Asset& underlying)
+        : Securities(contract), underlying(underlying), strike() {
+
+}
+
+Future::Future(const act::Contract& contract, const act::Price& strike)
+        : Securities(contract), underlying(), strike(strike) {
+
+}
+
+Future::Future(const act::Contract& contract, const act::Asset& underlying,
+        const act::Price& strike)
+        : Securities(contract), underlying(underlying), strike(strike) {
+
+}
+
+Future::Future(std::string name, const act::Contract& contract)
+        : Securities(name, contract), underlying(), strike() {
+
+}
+
+Future::Future(std::string name, const act::Asset& underlying)
+        : Securities(name), underlying(underlying), strike() {
+
+}
+
+Future::Future(std::string name, const act::Price& strike)
+        : Securities(name), underlying(), strike(strike) {
+
+}
+
+Future::Future(std::string name, const act::Asset& underlying, const act::Price& strike)
+        : Securities(name), underlying(underlying), strike(strike) {
+
+}
+
+Future::Future(std::string name, const act::Contract& contract, const act::Asset& underlying)
+        : Securities(name, contract), underlying(underlying), strike() {
+
+}
+
+Future::Future(std::string name, const act::Contract& contract, const act::Price& strike)
+        : Securities(name, contract), underlying(), strike(strike) {
+
+}
+
+Future::Future(std::string name, const act::Contract& contract, const act::Asset& underlying,
+        const act::Price& strike)
+        : Securities(name, contract), underlying(underlying), strike(strike) {
 
 }
 
@@ -42,30 +109,37 @@ Future::~Future() {
 }
 
 bool Future::operator==(const Future& peer) const {
-    return (static_cast<const Securities&>(*this) == static_cast<const Securities&>(peer));
+    return (static_cast<const Securities&>(*this) == static_cast<const Securities&>(peer))
+        && (underlying == peer.underlying) && (strike == peer.strike);
 }
 
 Future Future::operator+(const Future& peer) const {
-    return Future((getContract() + peer.getContract()));
+    return Future("+", (getContract() + peer.getContract()),
+        (underlying + peer.underlying), (strike + peer.strike));
 }
 
 Future Future::operator-(const Future& peer) const {
-    return Future((getContract() - peer.getContract()));
+    return Future("-", (getContract() - peer.getContract()),
+        (underlying - peer.underlying), (strike - peer.strike));
 }
 
-Securities Future::copy() {
-    Securities fresh(this->getContract());
+act::Item Future::copy() {
+    Future fresh(getName(), getContract(), underlying, strike);
     return fresh;
 }
 
 void Future::clear() {
     Securities::clear();
+    underlying.clear();
+    strike.clear();
     return;
 }
 
 std::string Future::print() {
     std::stringstream result;
-    result << Securities::print();
+    result << Securities::print() << ",";
+    result << underlying.print() << ",";
+    result << strike.print();
 	return result.str();
 }
 

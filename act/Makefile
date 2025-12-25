@@ -46,6 +46,7 @@ clean-libs: clean-custom
 
 $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/account.o \
+		$(OBJFOLDR)/agency.o \
 		$(OBJFOLDR)/amount.o \
 		$(OBJFOLDR)/asset.o \
 		$(OBJFOLDR)/balance.o \
@@ -57,6 +58,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/contract.o \
 		$(OBJFOLDR)/cost.o \
 		$(OBJFOLDR)/country.o \
+		$(OBJFOLDR)/coupon.o \
 		$(OBJFOLDR)/currency.o \
 		$(OBJFOLDR)/customer.o \
 		$(OBJFOLDR)/datetime.o \
@@ -71,7 +73,9 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/equity.o \
 		$(OBJFOLDR)/expense.o \
 		$(OBJFOLDR)/factory.o \
+		$(OBJFOLDR)/fees.o \
 		$(OBJFOLDR)/fiscal.o \
+		$(OBJFOLDR)/government.o \
 		$(OBJFOLDR)/income.o \
 		$(OBJFOLDR)/interest.o \
 		$(OBJFOLDR)/inventory.o \
@@ -79,6 +83,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/item.o \
 		$(OBJFOLDR)/ledger.o \
 		$(OBJFOLDR)/liability.o \
+		$(OBJFOLDR)/loan.o \
 		$(OBJFOLDR)/manufacturer.o \
 		$(OBJFOLDR)/milestone.o \
 		$(OBJFOLDR)/office.o \
@@ -108,6 +113,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/warehouse.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
 		$(OBJFOLDR)/account.o \
+		$(OBJFOLDR)/agency.o \
 		$(OBJFOLDR)/amount.o \
 		$(OBJFOLDR)/asset.o \
 		$(OBJFOLDR)/balance.o \
@@ -119,6 +125,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/contract.o \
 		$(OBJFOLDR)/cost.o \
 		$(OBJFOLDR)/country.o \
+		$(OBJFOLDR)/coupon.o \
 		$(OBJFOLDR)/currency.o \
 		$(OBJFOLDR)/customer.o \
 		$(OBJFOLDR)/datetime.o \
@@ -133,7 +140,9 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/equity.o \
 		$(OBJFOLDR)/expense.o \
 		$(OBJFOLDR)/factory.o \
+		$(OBJFOLDR)/fees.o \
 		$(OBJFOLDR)/fiscal.o \
+		$(OBJFOLDR)/government.o \
 		$(OBJFOLDR)/income.o \
 		$(OBJFOLDR)/interest.o \
 		$(OBJFOLDR)/inventory.o \
@@ -141,6 +150,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/item.o \
 		$(OBJFOLDR)/ledger.o \
 		$(OBJFOLDR)/liability.o \
+		$(OBJFOLDR)/loan.o \
 		$(OBJFOLDR)/manufacturer.o \
 		$(OBJFOLDR)/milestone.o \
 		$(OBJFOLDR)/office.o \
@@ -171,6 +181,9 @@ $(LIBFOLDR)/$(LIBNAME): \
 
 $(OBJFOLDR)/account.o: account.cpp
 	$(CPPTOOL) -c account.cpp -o $(OBJFOLDR)/account.o $(CXXFLAGS)
+
+$(OBJFOLDR)/agency.o: agency.cpp
+	$(CPPTOOL) -c agency.cpp -o $(OBJFOLDR)/agency.o $(CXXFLAGS)
 
 $(OBJFOLDR)/amount.o: amount.cpp
 	$(CPPTOOL) -c amount.cpp -o $(OBJFOLDR)/amount.o $(CXXFLAGS)
@@ -204,6 +217,9 @@ $(OBJFOLDR)/cost.o: cost.cpp
 
 $(OBJFOLDR)/country.o: country.cpp
 	$(CPPTOOL) -c country.cpp -o $(OBJFOLDR)/country.o $(CXXFLAGS)
+
+$(OBJFOLDR)/coupon.o: coupon.cpp
+	$(CPPTOOL) -c coupon.cpp -o $(OBJFOLDR)/coupon.o $(CXXFLAGS)
 
 $(OBJFOLDR)/currency.o: currency.cpp
 	$(CPPTOOL) -c currency.cpp -o $(OBJFOLDR)/currency.o $(CXXFLAGS)
@@ -247,8 +263,14 @@ $(OBJFOLDR)/expense.o: expense.cpp
 $(OBJFOLDR)/factory.o: factory.cpp
 	$(CPPTOOL) -c factory.cpp -o $(OBJFOLDR)/factory.o $(CXXFLAGS)
 
+$(OBJFOLDR)/fees.o: fees.cpp
+	$(CPPTOOL) -c fees.cpp -o $(OBJFOLDR)/fees.o $(CXXFLAGS)
+
 $(OBJFOLDR)/fiscal.o: fiscal.cpp
 	$(CPPTOOL) -c fiscal.cpp -o $(OBJFOLDR)/fiscal.o $(CXXFLAGS)
+
+$(OBJFOLDR)/government.o: government.cpp
+	$(CPPTOOL) -c government.cpp -o $(OBJFOLDR)/government.o $(CXXFLAGS)
 
 $(OBJFOLDR)/income.o: income.cpp
 	$(CPPTOOL) -c income.cpp -o $(OBJFOLDR)/income.o $(CXXFLAGS)
@@ -270,6 +292,9 @@ $(OBJFOLDR)/ledger.o: ledger.cpp
 
 $(OBJFOLDR)/liability.o: liability.cpp
 	$(CPPTOOL) -c liability.cpp -o $(OBJFOLDR)/liability.o $(CXXFLAGS)
+
+$(OBJFOLDR)/loan.o: loan.cpp
+	$(CPPTOOL) -c loan.cpp -o $(OBJFOLDR)/loan.o $(CXXFLAGS)
 
 $(OBJFOLDR)/manufacturer.o: manufacturer.cpp
 	$(CPPTOOL) -c manufacturer.cpp -o $(OBJFOLDR)/manufacturer.o $(CXXFLAGS)

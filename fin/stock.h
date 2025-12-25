@@ -18,54 +18,49 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef ACT_SERVICE_H
-#define ACT_SERVICE_H
+#ifndef FIN_STOCK_H
+#define FIN_STOCK_H
 
 #include <sstream>
 #include <string>
 #include <vector>
-#include "brand.h"
-#include "item.h"
+#include "../act/item.h"
 
-namespace act {
+namespace fin {
 
-class Service : public Item {
-    Brand brand;
+class Stock : public act::Item {
+
 public:
     // Constructors
-    Service();
-    Service(std::string name);
-    Service(const shp::Quantity& quantity);
-    Service(std::string name, const shp::Quantity& quantity);
-    Service(const Brand& brand);
-    Service(std::string name, const Brand& brand);
-    Service(std::string name, const shp::Quantity& quantity, const Brand& brand);
+    Stock();
+    Stock(std::string name);
+    Stock(std::string name, const shp::Quantity& quantity);
 
     // Destructors
-    ~Service();
+    ~Stock();
 
     // Operator overloading
-    bool operator==(const Service& peer) const;
-    Service operator+(const Service& peer) const;
-    Service operator-(const Service& peer) const;
-    Service operator*(const Service& peer) const;
-    Service operator/(const Service& peer) const;
-    Service operator%(const Service& peer) const;
+    bool operator==(const Stock& peer) const;
+    Stock operator+(const Stock& peer) const;
+    Stock operator-(const Stock& peer) const;
+    Stock operator*(const Stock& peer) const;
+    Stock operator/(const Stock& peer) const;
+    Stock operator%(const Stock& peer) const;
 
     // Getters
-    Brand getBrand() const { return brand; }
 
     // Setters
-    void setBrand(const Brand& object) { this->brand = object; }
 
     // Additional methods
-    virtual Item copy();
+    virtual act::Item copy();
     virtual void clear();
     virtual std::string print();
+public:
+    static const float DEFAULT_VALUE;
 };
 
-typedef std::vector<Service > ServiceArray;
+typedef std::vector<Stock > StockArray;
 
-} // namespace act
+} // namespace fin
 
-#endif //ACT_SERVICE_H
+#endif //FIN_STOCK_H

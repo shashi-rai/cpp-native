@@ -31,6 +31,16 @@ Service::Service(std::string name)
 
 }
 
+Service::Service(const shp::Quantity& quantity)
+        : Item(quantity), brand() {
+
+}
+
+Service::Service(std::string name, const shp::Quantity& quantity)
+        : Item(name, quantity), brand() {
+
+}
+
 Service::Service(const Brand& brand)
         : Item(), brand(brand) {
 
@@ -38,6 +48,11 @@ Service::Service(const Brand& brand)
 
 Service::Service(std::string name, const Brand& brand)
         : Item(name), brand(brand) {
+
+}
+
+Service::Service(std::string name, const shp::Quantity& quantity, const Brand& brand)
+        : Item(name, quantity), brand(brand) {
 
 }
 
@@ -50,8 +65,28 @@ bool Service::operator==(const Service& peer) const {
         && (brand == peer.brand);
 }
 
+Service Service::operator+(const Service& peer) const {
+    return Service("+", (getQuantity() + peer.getQuantity()), brand);
+}
+
+Service Service::operator-(const Service& peer) const {
+    return Service("-", (getQuantity() - peer.getQuantity()), brand);
+}
+
+Service Service::operator*(const Service& peer) const {
+    return Service("*", (getQuantity() * peer.getQuantity()), brand);
+}
+
+Service Service::operator/(const Service& peer) const {
+    return Service("/", (getQuantity() / peer.getQuantity()), brand);
+}
+
+Service Service::operator%(const Service& peer) const {
+    return Service("%", (getQuantity() % peer.getQuantity()), brand);
+}
+
 Item Service::copy() {
-    Service fresh(getName(), brand);
+    Service fresh(getName(), getQuantity(), brand);
     return fresh;
 }
 

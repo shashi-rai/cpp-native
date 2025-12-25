@@ -24,16 +24,32 @@
 #include <string>
 #include <vector>
 #include "securities.h"
+#include "../act/asset.h"
+#include "../act/price.h"
 
 namespace fin {
 
 class Option : public Securities {
-
+    act::Asset underlying;
+    act::Price strike;
 public:
     // Constructors
     Option();
     Option(std::string name);
     Option(const act::Contract& contract);
+    Option(const act::Asset& underlying);
+    Option(const act::Price& strike);
+    Option(const act::Asset& underlying, const act::Price& strike);
+    Option(const act::Contract& contract, const act::Asset& underlying);
+    Option(const act::Contract& contract, const act::Price& strike);
+    Option(const act::Contract& contract, const act::Asset& underlying, const act::Price& strike);
+    Option(std::string name, const act::Contract& contract);
+    Option(std::string name, const act::Asset& underlying);
+    Option(std::string name, const act::Price& strike);
+    Option(std::string name, const act::Asset& underlying, const act::Price& strike);
+    Option(std::string name, const act::Contract& contract, const act::Asset& underlying);
+    Option(std::string name, const act::Contract& contract, const act::Price& strike);
+    Option(std::string name, const act::Contract& contract, const act::Asset& underlying, const act::Price& strike);
 
     // Destructors
     ~Option();
@@ -44,13 +60,22 @@ public:
     Option operator-(const Option& peer) const;
 
     // Getters
+    act::Asset getUnderlying() const { return underlying; }
+    act::Price getStrike() const { return strike; }
 
     // Setters
+    void setUnderlying(const act::Asset& asset) { this->underlying = asset; }
+    void setStrike(const act::Price& price) { this->strike = price; }
 
     // Additional methods
-    virtual Securities copy();
+    virtual act::Item copy();
     virtual void clear();
     virtual std::string print();
+public:
+    enum TYPE {
+        CALL,   // buyer has right-to-buy Asset
+        PUT,    // buyer has right-to-sell Asset
+    };
 };
 
 typedef std::vector<Option > OptionArray;

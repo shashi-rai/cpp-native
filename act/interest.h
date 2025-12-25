@@ -21,35 +21,57 @@
 #ifndef ACT_INTEREST_H
 #define ACT_INTEREST_H
 
+#include <cmath>
 #include <sstream>
 #include <string>
 #include <vector>
+#include "amount.h"
 
 namespace act {
 
 class Interest {
     std::string name;
+    float rate;
+    Amount principal;
 public:
     // Constructors
     Interest();
     Interest(std::string name);
+    Interest(const float rate);
+    Interest(const Amount& principal);
+    Interest(const float rate, const Amount& principal);
+    Interest(std::string name, const Amount& principal);
+    Interest(std::string name, const float rate, const Amount& principal);
 
     // Destructors
     ~Interest();
 
     // Operator overloading
     bool operator==(const Interest& peer) const;
+    Interest operator+(const Interest& peer) const;
+    Interest operator-(const Interest& peer) const;
+    Interest operator*(const Interest& peer) const;
+    Interest operator/(const Interest& peer) const;
+    Interest operator%(const Interest& peer) const;
 
     // Getters
     std::string getName() const { return name; }
+    float getRate() const { return rate; }
+    Amount getPrincipal() const { return principal; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
+    void getRate(const float rate) { this->rate = rate; }
+    void setPrincipal(const Amount& value) { this->principal = value; }
 
     // Additional methods
+    Amount getSimple(const float time);
+    Amount getCompound(const short int period, const float time);
     virtual Interest copy();
     virtual void clear();
     virtual std::string print();
+public:
+    static const float DEFAULT_VALUE;
 };
 
 typedef std::vector<Interest > InterestArray;

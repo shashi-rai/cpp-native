@@ -31,12 +31,22 @@ Item::Item(const float quantity)
 
 }
 
+Item::Item(const shp::Quantity& quantity)
+        : name(), code(), cost(), sale(), batch(), quantity(quantity) {
+
+}
+
 Item::Item(std::string name)
         : name(name), code(), cost(), sale(), batch(), quantity() {
 
 }
 
 Item::Item(std::string name, const float quantity)
+        : name(name), code(), cost(), sale(), batch(), quantity(quantity) {
+
+}
+
+Item::Item(std::string name, const shp::Quantity& quantity)
         : name(name), code(), cost(), sale(), batch(), quantity(quantity) {
 
 }
@@ -56,6 +66,11 @@ Item::Item(std::string name, std::string code, const shp::Quantity& quantity)
 
 }
 
+Item::Item(std::string name, std::string code, const Batch& batch, const shp::Quantity& quantity)
+        : name(name), code(code), cost(), sale(), batch(batch), quantity(quantity) {
+
+}
+
 Item::Item(std::string name, std::string code, const shp::Quantity& quantity, const Cost& cost)
         : name(name), code(code), cost(cost), sale(), batch(), quantity(quantity) {
 
@@ -66,12 +81,52 @@ Item::Item(std::string name, std::string code, const shp::Quantity& quantity, co
 
 }
 
+Item::Item(std::string name, std::string code, const shp::Quantity& quantity, const Cost& cost, const Sale& sale)
+        : name(name), code(code), cost(cost), sale(sale), batch(), quantity(quantity) {
+
+}
+
+Item::Item(std::string name, std::string code, const Batch& batch, const shp::Quantity& quantity, const Cost& cost)
+        : name(name), code(code), cost(cost), sale(), batch(batch), quantity(quantity) {
+
+}
+
+Item::Item(std::string name, std::string code, const Batch& batch, const shp::Quantity& quantity, const Sale& sale)
+        : name(name), code(code), cost(), sale(sale), batch(batch), quantity(quantity) {
+
+}
+
+Item::Item(std::string name, std::string code, const Batch& batch, const shp::Quantity& quantity, const Cost& cost, const Sale& sale)
+        : name(name), code(code), cost(cost), sale(sale), batch(batch), quantity(quantity) {
+
+}
+
 Item::~Item() {
 
 }
 
 bool Item::operator==(const Item& peer) const {
-    return (name == peer.name);
+    return (name == peer.name) && (code == peer.code) && (batch == peer.batch);
+}
+
+Item Item::operator+(const Item& peer) const {
+    return Item("+", code, batch, (quantity + peer.quantity), cost, sale);
+}
+
+Item Item::operator-(const Item& peer) const {
+    return Item("-", code, batch, (quantity - peer.quantity), cost, sale);
+}
+
+Item Item::operator*(const Item& peer) const {
+    return Item("*", code, batch, (quantity * peer.quantity), cost, sale);
+}
+
+Item Item::operator/(const Item& peer) const {
+    return Item("/", code, batch, (quantity / peer.quantity), cost, sale);
+}
+
+Item Item::operator%(const Item& peer) const {
+    return Item("%", code, batch, (quantity % peer.quantity), cost, sale);
 }
 
 Amount Item::getCostTotal() {
@@ -97,7 +152,7 @@ Amount Item::getSaleTotal() {
 }
 
 Item Item::copy() {
-    Item fresh(name);
+    Item fresh(name, code, batch, quantity, cost, sale);
     return fresh;
 }
 

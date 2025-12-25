@@ -42,19 +42,31 @@ public:
     // Constructors
     Item();
     Item(const float quantity);
+    Item(const shp::Quantity& quantity);
     Item(std::string name);
     Item(std::string name, const float quantity);
+    Item(std::string name, const shp::Quantity& quantity);
     Item(std::string name, std::string code);
     Item(std::string name, std::string code, const float quantity);
     Item(std::string name, std::string code, const shp::Quantity& quantity);
+    Item(std::string name, std::string code, const Batch& batch, const shp::Quantity& quantity);
     Item(std::string name, std::string code, const shp::Quantity& quantity, const Cost& cost);
     Item(std::string name, std::string code, const shp::Quantity& quantity, const Sale& sale);
+    Item(std::string name, std::string code, const shp::Quantity& quantity, const Cost& cost, const Sale& sale);
+    Item(std::string name, std::string code, const Batch& batch, const shp::Quantity& quantity, const Cost& cost);
+    Item(std::string name, std::string code, const Batch& batch, const shp::Quantity& quantity, const Sale& sale);
+    Item(std::string name, std::string code, const Batch& batch, const shp::Quantity& quantity, const Cost& cost, const Sale& sale);
 
     // Destructors
     ~Item();
 
     // Operator overloading
     bool operator==(const Item& peer) const;
+    Item operator+(const Item& peer) const;
+    Item operator-(const Item& peer) const;
+    Item operator*(const Item& peer) const;
+    Item operator/(const Item& peer) const;
+    Item operator%(const Item& peer) const;
 
     // Getters
     std::string getName() const { return name; }

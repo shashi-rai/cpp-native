@@ -18,54 +18,58 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef ACT_SERVICE_H
-#define ACT_SERVICE_H
+#ifndef FIN_INDEX_H
+#define FIN_INDEX_H
 
 #include <sstream>
 #include <string>
 #include <vector>
-#include "brand.h"
-#include "item.h"
+#include "../act/asset.h"
 
-namespace act {
+namespace fin {
 
-class Service : public Item {
-    Brand brand;
+class Index : public act::Asset {
+    act::AssetArray assets;
 public:
     // Constructors
-    Service();
-    Service(std::string name);
-    Service(const shp::Quantity& quantity);
-    Service(std::string name, const shp::Quantity& quantity);
-    Service(const Brand& brand);
-    Service(std::string name, const Brand& brand);
-    Service(std::string name, const shp::Quantity& quantity, const Brand& brand);
+    Index();
+    Index(std::string name);
+    Index(std::string name, const float value);
+    Index(const act::AssetArray& assets);
+    Index(std::string name, const act::AssetArray& assets);
+    Index(std::string name, const float value, const act::AssetArray& assets);
 
     // Destructors
-    ~Service();
+    ~Index();
 
     // Operator overloading
-    bool operator==(const Service& peer) const;
-    Service operator+(const Service& peer) const;
-    Service operator-(const Service& peer) const;
-    Service operator*(const Service& peer) const;
-    Service operator/(const Service& peer) const;
-    Service operator%(const Service& peer) const;
+    bool operator==(const Index& peer) const;
+    Index operator+(const Index& peer) const;
+    Index operator-(const Index& peer) const;
+
+    // Access operator
+    act::Asset& operator()(int x) { return assets[x]; }
+    const act::Asset& operator()(int x) const { return assets[x]; }
 
     // Getters
-    Brand getBrand() const { return brand; }
+    act::AssetArray getAssets() const { return assets; }
 
     // Setters
-    void setBrand(const Brand& object) { this->brand = object; }
+    void setAssets(const act::AssetArray& object) { this->assets = object; }
 
     // Additional methods
-    virtual Item copy();
+    int getAssetCount() const;
+    act::Asset get(int index) const;
+    void set(int index, const act::Asset& object);
+    virtual act::Amount copy();
     virtual void clear();
     virtual std::string print();
+public:
+    static const float DEFAULT_VALUE;
 };
 
-typedef std::vector<Service > ServiceArray;
+typedef std::vector<Index > IndexArray;
 
-} // namespace act
+} // namespace fin
 
-#endif //ACT_SERVICE_H
+#endif //FIN_INDEX_H

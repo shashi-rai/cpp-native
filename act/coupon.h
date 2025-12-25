@@ -18,54 +18,51 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef ACT_SERVICE_H
-#define ACT_SERVICE_H
+#ifndef ACT_COUPON_H
+#define ACT_COUPON_H
 
 #include <sstream>
 #include <string>
 #include <vector>
-#include "brand.h"
-#include "item.h"
+#include "datetime.h"
+#include "interest.h"
 
 namespace act {
 
-class Service : public Item {
-    Brand brand;
+class Coupon : public Interest {
+    DateTime datetime;
 public:
     // Constructors
-    Service();
-    Service(std::string name);
-    Service(const shp::Quantity& quantity);
-    Service(std::string name, const shp::Quantity& quantity);
-    Service(const Brand& brand);
-    Service(std::string name, const Brand& brand);
-    Service(std::string name, const shp::Quantity& quantity, const Brand& brand);
+    Coupon();
+    Coupon(std::string name);
+    Coupon(const DateTime& datetime);
+    Coupon(std::string name, const DateTime& datetime);
 
     // Destructors
-    ~Service();
+    ~Coupon();
 
     // Operator overloading
-    bool operator==(const Service& peer) const;
-    Service operator+(const Service& peer) const;
-    Service operator-(const Service& peer) const;
-    Service operator*(const Service& peer) const;
-    Service operator/(const Service& peer) const;
-    Service operator%(const Service& peer) const;
+    bool operator==(const Coupon& peer) const;
+    Coupon operator+(const Coupon& peer) const;
+    Coupon operator-(const Coupon& peer) const;
+    Coupon operator*(const Coupon& peer) const;
+    Coupon operator/(const Coupon& peer) const;
+    Coupon operator%(const Coupon& peer) const;
 
     // Getters
-    Brand getBrand() const { return brand; }
+    DateTime getDateTime() const { return datetime; }
 
     // Setters
-    void setBrand(const Brand& object) { this->brand = object; }
+    void setDateTime(const DateTime& value) { this->datetime = value; }
 
     // Additional methods
-    virtual Item copy();
+    virtual Interest copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Service > ServiceArray;
+typedef std::vector<Coupon > CouponArray;
 
 } // namespace act
 
-#endif //ACT_SERVICE_H
+#endif //ACT_COUPON_H

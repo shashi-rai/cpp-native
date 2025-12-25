@@ -24,16 +24,32 @@
 #include <string>
 #include <vector>
 #include "securities.h"
+#include "../act/asset.h"
+#include "../act/price.h"
 
 namespace fin {
 
 class Future : public Securities {
-
+    act::Asset underlying;
+    act::Price strike;
 public:
     // Constructors
     Future();
     Future(std::string name);
     Future(const act::Contract& contract);
+    Future(const act::Asset& underlying);
+    Future(const act::Price& strike);
+    Future(const act::Asset& underlying, const act::Price& strike);
+    Future(const act::Contract& contract, const act::Asset& underlying);
+    Future(const act::Contract& contract, const act::Price& strike);
+    Future(const act::Contract& contract, const act::Asset& underlying, const act::Price& strike);
+    Future(std::string name, const act::Contract& contract);
+    Future(std::string name, const act::Asset& underlying);
+    Future(std::string name, const act::Price& strike);
+    Future(std::string name, const act::Asset& underlying, const act::Price& strike);
+    Future(std::string name, const act::Contract& contract, const act::Asset& underlying);
+    Future(std::string name, const act::Contract& contract, const act::Price& strike);
+    Future(std::string name, const act::Contract& contract, const act::Asset& underlying, const act::Price& strike);
 
     // Destructors
     ~Future();
@@ -44,11 +60,15 @@ public:
     Future operator-(const Future& peer) const;
 
     // Getters
+    act::Asset getUnderlying() const { return underlying; }
+    act::Price getStrike() const { return strike; }
 
     // Setters
+    void setUnderlying(const act::Asset& asset) { this->underlying = asset; }
+    void setStrike(const act::Price& price) { this->strike = price; }
 
     // Additional methods
-    virtual Securities copy();
+    virtual act::Item copy();
     virtual void clear();
     virtual std::string print();
 };

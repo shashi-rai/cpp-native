@@ -45,19 +45,34 @@ clean-libs: clean-custom
 	${RMCLEAN} $(LIBFILES)
 
 $(LIBFOLDR)/$(LIBNAME): \
+		$(OBJFOLDR)/commodity.o \
 		$(OBJFOLDR)/future.o \
+		$(OBJFOLDR)/index.o \
 		$(OBJFOLDR)/option.o \
-		$(OBJFOLDR)/securities.o
+		$(OBJFOLDR)/securities.o \
+		$(OBJFOLDR)/stock.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
+		$(OBJFOLDR)/commodity.o \
 		$(OBJFOLDR)/future.o \
+		$(OBJFOLDR)/index.o \
 		$(OBJFOLDR)/option.o \
-		$(OBJFOLDR)/securities.o
+		$(OBJFOLDR)/securities.o \
+		$(OBJFOLDR)/stock.o
+
+$(OBJFOLDR)/commodity.o: commodity.cpp
+	$(CPPTOOL) -c commodity.cpp -o $(OBJFOLDR)/commodity.o $(CXXFLAGS)
 
 $(OBJFOLDR)/future.o: future.cpp
 	$(CPPTOOL) -c future.cpp -o $(OBJFOLDR)/future.o $(CXXFLAGS)
+
+$(OBJFOLDR)/index.o: index.cpp
+	$(CPPTOOL) -c index.cpp -o $(OBJFOLDR)/index.o $(CXXFLAGS)
 
 $(OBJFOLDR)/option.o: option.cpp
 	$(CPPTOOL) -c option.cpp -o $(OBJFOLDR)/option.o $(CXXFLAGS)
 
 $(OBJFOLDR)/securities.o: securities.cpp
 	$(CPPTOOL) -c securities.cpp -o $(OBJFOLDR)/securities.o $(CXXFLAGS)
+
+$(OBJFOLDR)/stock.o: stock.cpp
+	$(CPPTOOL) -c stock.cpp -o $(OBJFOLDR)/stock.o $(CXXFLAGS)
