@@ -23,6 +23,7 @@
 
 #include <chrono>
 #include <cmath>
+#include <iomanip>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -30,11 +31,11 @@
 namespace act {
 
 class DateTime {
-    long value;
+    std::time_t value;
 public:
     // Constructors
     DateTime();
-    DateTime(long value);
+    DateTime(const std::time_t value);
 
     // Destructors
     ~DateTime();
@@ -48,19 +49,31 @@ public:
     DateTime operator%(const DateTime& peer) const;
 
     // Getters
-    long getValue() const { return value; }
+    std::time_t getValue() const { return value; }
 
     // Setters
-    void setValue(const long time) { this->value = time; }
+    void setValue(const std::time_t time) { this->value = time; }
 
     // Additional methods
+    const int getYear();
+    const int getMonth();
+    const int getDay();
+    const int getHour();
+    const int getMinute();
+    const int getSecond();
+    const long long getCurrent();
+    const std::chrono::seconds getSeconds();
+    const long long getMilliseconds();
+    const long long getNanoseconds();
     virtual DateTime copy();
     virtual void clear();
     virtual std::string print();
 public:
-    static const long getCurrent();
+    static const std::time_t getSystem();
+    static const std::time_t getFormat(const std::string& datetime, const std::string& format);
 public:
     static const long DEFAULT_VALUE;
+    static const short int YEAR_BASE;
     static const short int YEAR_MIN;
     static const short int YEAR_MAX;
     static const short int MONTH_MIN;
