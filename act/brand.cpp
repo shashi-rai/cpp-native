@@ -22,12 +22,22 @@
 
 namespace act {
 
-Brand::Brand() : name() {
+Brand::Brand() : name(), manufacturer() {
 
 }
 
 Brand::Brand(std::string name)
-        : name(name) {
+        : name(name), manufacturer() {
+
+}
+
+Brand::Brand(const Manufacturer& manufacturer)
+        : name(), manufacturer(manufacturer) {
+
+}
+
+Brand::Brand(std::string name, const Manufacturer& manufacturer)
+        : name(name), manufacturer(manufacturer) {
 
 }
 
@@ -36,22 +46,24 @@ Brand::~Brand() {
 }
 
 bool Brand::operator==(const Brand& peer) const {
-    return (name == peer.name);
+    return (name == peer.name) && (manufacturer == peer.manufacturer);
 }
 
 Brand Brand::copy() {
-    Brand fresh(name);
+    Brand fresh(name, manufacturer);
     return fresh;
 }
 
 void Brand::clear() {
     name = "";
+    manufacturer.clear();
     return;
 }
 
 std::string Brand::print() {
     std::stringstream result;
     result << name << ",";
+    result << manufacturer.print();
 	return result.str();
 }
 

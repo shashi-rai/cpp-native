@@ -24,15 +24,19 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "manufacturer.h"
 
 namespace act {
 
 class Brand {
     std::string name;
+    Manufacturer manufacturer;
 public:
     // Constructors
     Brand();
     Brand(std::string name);
+    Brand(const Manufacturer& manufacturer);
+    Brand(std::string name, const Manufacturer& manufacturer);
 
     // Destructors
     ~Brand();
@@ -42,9 +46,11 @@ public:
 
     // Getters
     std::string getName() const { return name; }
+    Manufacturer getManufacturer() const { return manufacturer; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
+    void setManufacturer(const Manufacturer& object) { this->manufacturer = object; }
 
     // Additional methods
     virtual Brand copy();

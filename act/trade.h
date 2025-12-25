@@ -18,8 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef ACT_CHARGES_H
-#define ACT_CHARGES_H
+#ifndef ACT_TRADE_H
+#define ACT_TRADE_H
 
 #include <sstream>
 #include <string>
@@ -28,43 +28,41 @@
 
 namespace act {
 
-class Charges {
-    std::string name;
-    Amount amount;
+class Trade {
+    Amount incoming;
+    Amount outgoing;
 public:
     // Constructors
-    Charges();
-    Charges(std::string name);
-    Charges(const Amount& amount);
-    Charges(std::string name, const Amount& amount);
+    Trade();
+    Trade(const Amount& incoming, const Amount& outgoing);
 
     // Destructors
-    ~Charges();
+    ~Trade();
 
     // Operator overloading
-    bool operator==(const Charges& peer) const;
-    Charges operator+(const Charges& peer) const;
-    Charges operator-(const Charges& peer) const;
-    Charges operator*(const Charges& peer) const;
-    Charges operator/(const Charges& peer) const;
-    Charges operator%(const Charges& peer) const;
+    bool operator==(const Trade& peer) const;
+    Trade operator+(const Trade& peer) const;
+    Trade operator-(const Trade& peer) const;
+    Trade operator*(const Trade& peer) const;
+    Trade operator/(const Trade& peer) const;
+    Trade operator%(const Trade& peer) const;
 
     // Getters
-    std::string getName() const { return name; }
-    Amount getAmount() const { return amount; }
+    Amount getIncoming() const { return incoming; }
+    Amount getOutgoing() const { return outgoing; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
-    void setAmount(const Amount& value) { this->amount = value; }
+    void setIncoming(const Amount& object) { this->incoming = object; }
+    void setOutgoing(const Amount& object) { this->outgoing = object; }
 
     // Additional methods
-    virtual Charges copy();
+    virtual Trade copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Charges > ChargesArray;
+typedef std::vector<Trade > TradeArray;
 
 } // namespace act
 
-#endif //ACT_CHARGES_H
+#endif //ACT_TRADE_H

@@ -18,72 +18,65 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "charges.h"
+#include "trade.h"
 
 namespace act {
 
-Charges::Charges() : name(), amount() {
+Trade::Trade() : incoming(), outgoing() {
 
 }
 
-Charges::Charges(std::string name)
-        : name(name), amount() {
+Trade::Trade(const Amount& incoming, const Amount& outgoing)
+        : incoming(incoming), outgoing(outgoing) {
 
 }
 
-Charges::Charges(const Amount& amount)
-        : name(), amount(amount) {
+Trade::~Trade() {
 
 }
 
-Charges::Charges(std::string name, const Amount& amount)
-        : name(name), amount(amount) {
-
+bool Trade::operator==(const Trade& peer) const {
+    return (incoming == peer.incoming) && (outgoing == peer.outgoing);
 }
 
-Charges::~Charges() {
-
+Trade Trade::operator+(const Trade& peer) const {
+    return Trade((incoming + peer.incoming), (outgoing + peer.outgoing));
 }
 
-bool Charges::operator==(const Charges& peer) const {
-    return (name == peer.name) && (amount == peer.amount);
+Trade Trade::operator-(const Trade& peer) const {
+    return Trade((incoming - peer.incoming), (outgoing - peer.outgoing));
 }
 
-Charges Charges::operator+(const Charges& peer) const {
-    return Charges("+", (amount + peer.amount));
+Trade Trade::operator*(const Trade& peer) const {
+    return Trade((incoming * peer.incoming), (outgoing * peer.outgoing));
 }
 
-Charges Charges::operator-(const Charges& peer) const {
-    return Charges("-", (amount - peer.amount));
+Trade Trade::operator/(const Trade& peer) const {
+    return Trade((incoming / peer.incoming), (outgoing / peer.outgoing));
 }
 
-Charges Charges::operator*(const Charges& peer) const {
-    return Charges("*", (amount * peer.amount));
+
+Trade Trade::operator%(const Trade& peer) const {
+    return Trade((incoming % peer.incoming), (outgoing % peer.outgoing));
 }
 
-Charges Charges::operator/(const Charges& peer) const {
-    return Charges("/", (amount / peer.amount));
-}
-
-Charges Charges::operator%(const Charges& peer) const {
-    return Charges("%", (amount % peer.amount));
-}
-
-Charges Charges::copy() {
-    Charges fresh(name, amount);
+Trade Trade::copy() {
+    Trade fresh(incoming, outgoing);
     return fresh;
 }
 
-void Charges::clear() {
-    name = "";
-    amount.clear();
+void Trade::clear() {
+    incoming.clear();
+    outgoing.clear();
     return;
 }
 
-std::string Charges::print() {
+std::string Trade::print() {
     std::stringstream result;
-    result << name << ",";
-    result << amount.print();
+    result << "{";
+    result << incoming.print() << ",";
+    result << outgoing.print();
+    result << "}";
 	return result.str();
 }
 

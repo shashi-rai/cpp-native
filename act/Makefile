@@ -106,6 +106,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/supplier.o \
 		$(OBJFOLDR)/task.o \
 		$(OBJFOLDR)/tax.o \
+		$(OBJFOLDR)/trade.o \
 		$(OBJFOLDR)/transaction.o \
 		$(OBJFOLDR)/transporter.o \
 		$(OBJFOLDR)/usage.o \
@@ -173,6 +174,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/supplier.o \
 		$(OBJFOLDR)/task.o \
 		$(OBJFOLDR)/tax.o \
+		$(OBJFOLDR)/trade.o \
 		$(OBJFOLDR)/transaction.o \
 		$(OBJFOLDR)/transporter.o \
 		$(OBJFOLDR)/usage.o \
@@ -361,6 +363,9 @@ $(OBJFOLDR)/task.o: task.cpp
 
 $(OBJFOLDR)/tax.o: tax.cpp
 	$(CPPTOOL) -c tax.cpp -o $(OBJFOLDR)/tax.o $(CXXFLAGS)
+
+$(OBJFOLDR)/trade.o: trade.cpp
+	$(CPPTOOL) -c trade.cpp -o $(OBJFOLDR)/trade.o $(CXXFLAGS)
 
 $(OBJFOLDR)/transaction.o: transaction.cpp
 	$(CPPTOOL) -c transaction.cpp -o $(OBJFOLDR)/transaction.o $(CXXFLAGS)
