@@ -35,12 +35,12 @@ public:
     // Constructors
     Store();
     Store(std::string name);
-    Store(const Inventory& inventory);
-    Store(std::string name, const Inventory& inventory);
+    Store(const Inventory& saleable);
+    Store(std::string name, const Inventory& saleable);
     Store(const gis::Address& address);
-    Store(const Inventory& inventory, const gis::Address& address);
+    Store(const Inventory& saleable, const gis::Address& address);
     Store(std::string name, const gis::Address& address);
-    Store(std::string name, const Inventory& inventory, const gis::Address& address);
+    Store(std::string name, const Inventory& saleable, const gis::Address& address);
 
     // Destructors
     ~Store();

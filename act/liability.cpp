@@ -22,55 +22,55 @@
 
 namespace act {
 
-Liability::Liability() : Amount(), name(), registration() {
+Liability::Liability() : Amount(), name(), registration(), interest() {
 
 }
 
 Liability::Liability(const float value)
-        : Amount(value), name(), registration() {
+        : Amount(value), name(), registration(), interest() {
 
 }
 
 Liability::Liability(std::string name)
-        : Amount(), name(name), registration() {
+        : Amount(), name(name), registration(), interest() {
 
 }
 
 Liability::Liability(const Document& registration)
-        : Amount(), name(), registration(registration) {
+        : Amount(), name(), registration(registration), interest() {
 
 }
 
 Liability::Liability(std::string name, const Document& registration)
-        : Amount(), name(name), registration(registration) {
+        : Amount(), name(name), registration(registration), interest() {
 
 }
 
 Liability::Liability(std::string name, const float value)
-        : Amount(value), name(name), registration() {
+        : Amount(value), name(name), registration(), interest() {
 
 }
 
 Liability::Liability(std::string name, std::string remarks)
-        : Amount(remarks), name(name), registration() {
+        : Amount(remarks), name(name), registration(), interest() {
 
 }
 
 Liability::Liability(std::string name,
         const Currency& currency, std::string remarks)
-        : Amount(currency, remarks), name(name), registration() {
+        : Amount(currency, remarks), name(name), registration(), interest() {
 
 }
 
 Liability::Liability(std::string name,
         const float value, const Currency& currency, std::string remarks)
-        : Amount(value, currency, remarks), name(name), registration() {
+        : Amount(value, currency, remarks), name(name), registration(), interest() {
 
 }
 
 Liability::Liability(std::string name, const long datetime,
         const float value, const Currency& currency, std::string remarks)
-        : Amount(datetime, value, currency, remarks), name(name), registration() {
+        : Amount(datetime, value, currency, remarks), name(name), registration(), interest() {
 
 }
 
@@ -80,7 +80,8 @@ Liability::~Liability() {
 
 bool Liability::operator==(const Liability& peer) const {
     return (static_cast<const Amount&>(*this) == static_cast<const Amount&>(peer))
-        && (name == peer.name) && (registration == peer.registration);
+        && (name == peer.name) && (registration == peer.registration)
+        && (interest == peer.interest);
 }
 
 Liability Liability::operator+(const Liability& peer) const {
@@ -110,6 +111,7 @@ Liability Liability::operator%(const Liability& peer) const {
 
 Amount Liability::copy() {
     Liability fresh(name, registration);
+    fresh.setInterest(interest);
     return fresh;
 }
 
@@ -117,6 +119,7 @@ void Liability::clear() {
     Amount::clear();
     name = "";
     registration.clear();
+    interest.clear();
     return;
 }
 
@@ -125,6 +128,7 @@ std::string Liability::print() {
     result << Amount::print() << ",";
     result << name << ",";
     result << registration.print() << ",";
+	result << interest.print();
 	return result.str();
 }
 

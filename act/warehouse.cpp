@@ -22,42 +22,64 @@
 
 namespace act {
 
-Warehouse::Warehouse() : Branch(), inventory() {
+Warehouse::Warehouse() : Branch(), saleable(), expired() {
 
 }
 
 Warehouse::Warehouse(std::string name)
-        : Branch(name), inventory() {
+        : Branch(name), saleable(), expired() {
 
 }
 
-Warehouse::Warehouse(const Inventory& inventory)
-        : Branch(), inventory(inventory) {
+Warehouse::Warehouse(const Inventory& saleable)
+        : Branch(), saleable(saleable), expired() {
 
 }
 
-Warehouse::Warehouse(std::string name, const Inventory& inventory)
-        : Branch(name), inventory(inventory) {
+Warehouse::Warehouse(const Inventory& saleable, const Inventory& expired)
+        : Branch(), saleable(saleable), expired(expired) {
+
+}
+
+Warehouse::Warehouse(std::string name, const Inventory& saleable)
+        : Branch(name), saleable(saleable), expired() {
+
+}
+
+Warehouse::Warehouse(std::string name, const Inventory& saleable, const Inventory& expired)
+        : Branch(name), saleable(saleable), expired(expired) {
 
 }
 
 Warehouse::Warehouse(const gis::Address& address)
-        : Branch(address), inventory() {
+        : Branch(address), saleable(), expired() {
 
 }
 
-Warehouse::Warehouse(const Inventory& inventory, const gis::Address& address)
-        : Branch(address), inventory(inventory) {
+Warehouse::Warehouse(const Inventory& saleable, const gis::Address& address)
+        : Branch(address), saleable(saleable), expired() {
+
+}
+
+Warehouse::Warehouse(const Inventory& saleable, const Inventory& expired,
+		const gis::Address& address)
+        : Branch(address), saleable(saleable), expired(expired) {
 
 }
 
 Warehouse::Warehouse(std::string name, const gis::Address& address)
-        : Branch(name, address), inventory() {
+        : Branch(name, address), saleable(), expired() {
 
 }
 
-Warehouse::Warehouse(std::string name, const Inventory& inventory, const gis::Address& address)
-        : Branch(name, address), inventory(inventory) {
+Warehouse::Warehouse(std::string name, const Inventory& saleable, const gis::Address& address)
+        : Branch(name, address), saleable(saleable), expired() {
+
+}
+
+Warehouse::Warehouse(std::string name, const Inventory& saleable, const Inventory& expired,
+		const gis::Address& address)
+        : Branch(name, address), saleable(saleable), expired(expired) {
 
 }
 
@@ -67,24 +89,26 @@ Warehouse::~Warehouse() {
 
 bool Warehouse::operator==(const Warehouse& peer) const {
     return (static_cast<const Branch&>(*this) == static_cast<const Branch&>(peer))
-        && (inventory == peer.inventory);
+        && (saleable == peer.saleable) && (expired == peer.expired);
 }
 
 Branch Warehouse::copy() {
-    Warehouse fresh(getName(), inventory, getAddress());
+    Warehouse fresh(getName(), saleable, expired, getAddress());
     return fresh;
 }
 
 void Warehouse::clear() {
     Branch::clear();
-    inventory.clear();
+    saleable.clear();
+    expired.clear();
     return;
 }
 
 std::string Warehouse::print() {
     std::stringstream result;
     result << Branch::print() << ",";
-    result << inventory.print();;
+    result << saleable.print() << ",";
+	result << expired.print();
 	return result.str();
 }
 

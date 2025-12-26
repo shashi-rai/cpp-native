@@ -56,6 +56,7 @@ public:
     void setOutgoing(const Amount& object) { this->outgoing = object; }
 
     // Additional methods
+    Amount getBalance() const;
     virtual Trade copy();
     virtual void clear();
     virtual std::string print();

@@ -22,12 +22,39 @@
 
 namespace act {
 
-Depreciation::Depreciation() : name() {
+const float Depreciation::DEFAULT_VALUE = 0.0f;     // Deterioration Rate
+
+Depreciation::Depreciation() : name(), rate(DEFAULT_VALUE), principal() {
 
 }
 
 Depreciation::Depreciation(std::string name)
-        : name(name) {
+        : name(name), rate(DEFAULT_VALUE), principal() {
+
+}
+
+Depreciation::Depreciation(const float rate)
+        : name(), rate(rate), principal() {
+
+}
+
+Depreciation::Depreciation(const Amount& principal)
+        : name(), rate(DEFAULT_VALUE), principal(principal) {
+
+}
+
+Depreciation::Depreciation(const float rate, const Amount& principal)
+        : name(), rate(rate), principal(principal) {
+
+}
+
+Depreciation::Depreciation(std::string name, const Amount& principal)
+        : name(name), rate(DEFAULT_VALUE), principal(principal) {
+
+}
+
+Depreciation::Depreciation(std::string name, const float rate, const Amount& principal)
+        : name(name), rate(rate), principal(principal) {
 
 }
 
@@ -36,22 +63,56 @@ Depreciation::~Depreciation() {
 }
 
 bool Depreciation::operator==(const Depreciation& peer) const {
-    return (name == peer.name);
+    return (name == peer.name) && (rate == peer.rate) && (principal == peer.principal);
+}
+
+Depreciation Depreciation::operator+(const Depreciation& peer) const {
+    return Depreciation("+", (rate + peer.rate), (principal + peer.principal));
+}
+
+Depreciation Depreciation::operator-(const Depreciation& peer) const {
+    return Depreciation("-", (rate - peer.rate), (principal - peer.principal));
+}
+
+Depreciation Depreciation::operator*(const Depreciation& peer) const {
+    return Depreciation("*", (rate * peer.rate), (principal * peer.principal));
+}
+
+Depreciation Depreciation::operator/(const Depreciation& peer) const {
+    return Depreciation("/", (rate / peer.rate), (principal / peer.principal));
+}
+
+Depreciation Depreciation::operator%(const Depreciation& peer) const {
+    return Depreciation("%", fmod(rate, peer.rate), (principal % peer.principal));
+}
+
+Amount Depreciation::getSimple(const float time) {
+    float total = (principal.getValue() * rate * time);
+    return Amount(total, principal.getCurrency());
+}
+
+Amount Depreciation::getCompound(const short int period, const float time) {
+    float total = (principal.getValue() * pow((1 + (rate / period)), (period * time)));
+    return Amount(total, principal.getCurrency());
 }
 
 Depreciation Depreciation::copy() {
-    Depreciation fresh(name);
+    Depreciation fresh(name, rate, principal);
     return fresh;
 }
 
 void Depreciation::clear() {
     name = "";
+    rate = DEFAULT_VALUE;
+    principal.clear();
     return;
 }
 
 std::string Depreciation::print() {
     std::stringstream result;
-    result << name << ",";
+    result << name << ",%:";
+    result << rate << ",";
+    result << principal.print();
 	return result.str();
 }
 

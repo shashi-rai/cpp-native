@@ -22,55 +22,55 @@
 
 namespace act {
 
-Equity::Equity() : Amount(), name(), registration() {
+Equity::Equity() : Amount(), name(), registration(), dividend() {
 
 }
 
 Equity::Equity(const float value)
-        : Amount(value), name(), registration() {
+        : Amount(value), name(), registration(), dividend() {
 
 }
 
 Equity::Equity(std::string name)
-        : Amount(), name(name), registration() {
+        : Amount(), name(name), registration(), dividend() {
 
 }
 
 Equity::Equity(const Document& registration)
-        : Amount(), name(), registration(registration) {
+        : Amount(), name(), registration(registration), dividend() {
 
 }
 
 Equity::Equity(std::string name, const Document& registration)
-        : Amount(), name(name), registration(registration) {
+        : Amount(), name(name), registration(registration), dividend() {
 
 }
 
 Equity::Equity(std::string name, const float value)
-        : Amount(value), name(name), registration() {
+        : Amount(value), name(name), registration(), dividend() {
 
 }
 
 Equity::Equity(std::string name, std::string remarks)
-        : Amount(remarks), name(name), registration() {
+        : Amount(remarks), name(name), registration(), dividend() {
 
 }
 
 Equity::Equity(std::string name,
         const Currency& currency, std::string remarks)
-        : Amount(currency, remarks), name(name), registration() {
+        : Amount(currency, remarks), name(name), registration(), dividend() {
 
 }
 
 Equity::Equity(std::string name, const float value,
         const Currency& currency, std::string remarks)
-        : Amount(value, currency, remarks), name(name), registration() {
+        : Amount(value, currency, remarks), name(name), registration(), dividend() {
 
 }
 
 Equity::Equity(std::string name, const long datetime, const float value,
         const Currency& currency, std::string remarks)
-        : Amount(datetime, value, currency, remarks), name(name), registration() {
+        : Amount(datetime, value, currency, remarks), name(name), registration(), dividend() {
 
 }
 
@@ -80,7 +80,8 @@ Equity::~Equity() {
 
 bool Equity::operator==(const Equity& peer) const {
     return (static_cast<const Amount&>(*this) == static_cast<const Amount&>(peer))
-        && (name == peer.name) && (registration == peer.registration);
+        && (name == peer.name) && (registration == peer.registration)
+		&& (dividend == peer.dividend);
 }
 
 Equity Equity::operator+(const Equity& peer) const {
@@ -110,6 +111,7 @@ Equity Equity::operator%(const Equity& peer) const {
 
 Amount Equity::copy() {
     Equity fresh(name, registration);
+	fresh.setDividend(dividend);
     return fresh;
 }
 
@@ -117,6 +119,7 @@ void Equity::clear() {
     Amount::clear();
     name = "";
     registration.clear();
+	dividend.clear();
     return;
 }
 
@@ -124,7 +127,8 @@ std::string Equity::print() {
     std::stringstream result;
     result << Amount::print() << ",";
     result << name << ",";
-    result << registration.print();
+    result << registration.print() << ",";
+	result << dividend.print();
 	return result.str();
 }
 

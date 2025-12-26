@@ -67,7 +67,7 @@ Document Document::copy() {
 }
 
 void Document::clear() {
-    name = "";
+    name.clear();
     created.clear();
     expired.clear();
     return;
@@ -75,9 +75,10 @@ void Document::clear() {
 
 std::string Document::print() {
     std::stringstream result;
-    result << name << ",";
-    result << created.print() << ",";
-    result << expired.print();
+	result << "D(";
+    result << name << ",c:";
+    result << created.print() << ",x:";
+    result << expired.print() << ")";
 	return result.str();
 }
 

@@ -22,37 +22,67 @@
 
 namespace act {
 
-Account::Account() : name(), currency(), transactions() {
+Account::Account() : name(), code(), currency(), entries() {
 
 }
 
 Account::Account(std::string name)
-        : name(name), currency(), transactions() {
+        : name(name), code(), currency(), entries() {
+
+}
+
+Account::Account(std::string name, std::string code)
+        : name(name), code(code), currency(), entries() {
+
+}
+
+Account::Account(const Currency& currency)
+        : name(), code(), currency(currency), entries() {
 
 }
 
 Account::Account(std::string name, const Currency& currency)
-        : name(name), currency(currency), transactions() {
+        : name(name), code(), currency(currency), entries() {
 
 }
 
-Account::Account(const TradeArray& transactions)
-        : name(), currency(), transactions(transactions) {
+Account::Account(std::string name, const Currency& currency, std::string code)
+        : name(name), code(code), currency(currency), entries() {
 
 }
 
-Account::Account(const Currency& currency, const TradeArray& transactions)
-        : name(), currency(currency), transactions(transactions) {
+Account::Account(const TradeArray& entries)
+        : name(), code(), currency(), entries(entries) {
 
 }
 
-Account::Account(std::string name, const TradeArray& transactions)
-        : name(name), currency(), transactions(transactions) {
+Account::Account(const Currency& currency, const TradeArray& entries)
+        : name(), code(), currency(currency), entries(entries) {
 
 }
 
-Account::Account(std::string name, const Currency& currency, const TradeArray& transactions)
-        : name(name), currency(currency), transactions(transactions) {
+Account::Account(const Currency& currency, std::string code, const TradeArray& entries)
+        : name(), code(code), currency(currency), entries(entries) {
+
+}
+
+Account::Account(std::string name, const TradeArray& entries)
+        : name(name), code(), currency(), entries(entries) {
+
+}
+
+Account::Account(std::string name, std::string code, const TradeArray& entries)
+        : name(name), code(code), currency(), entries(entries) {
+
+}
+
+Account::Account(std::string name, const Currency& currency, const TradeArray& entries)
+        : name(name), code(), currency(currency), entries(entries) {
+
+}
+
+Account::Account(std::string name, const Currency& currency, std::string code, const TradeArray& entries)
+        : name(name), code(code), currency(currency), entries(entries) {
 
 }
 
@@ -61,28 +91,29 @@ Account::~Account() {
 }
 
 bool Account::operator==(const Account& peer) const {
-    return (name == peer.name) && (currency == peer.currency) && (transactions == peer.transactions);
+    return (name == peer.name) && (code == peer.code)
+        && (currency == peer.currency) && (entries == peer.entries);
 }
 
 Account Account::operator+(const Account& peer) const {
-    TradeArray result(transactions);
-    result.insert(result.end(), peer.transactions.begin(), peer.transactions.end());
-    return Account("+", currency, result);
+    TradeArray result(entries);
+    result.insert(result.end(), peer.entries.begin(), peer.entries.end());
+    return Account("+", currency, code, result);
 }
 
 Account Account::operator-(const Account& peer) const {
-    TradeArray result(transactions);
-    for (TradeArray::const_iterator it = peer.transactions.begin(); it != peer.transactions.end(); ++it) {
+    TradeArray result(entries);
+    for (TradeArray::const_iterator it = peer.entries.begin(); it != peer.entries.end(); ++it) {
         TradeArray::iterator found = std::find(result.begin(), result.end(), *it);
         if (found != result.end()) {
             result.erase(found);
         }
     }
-    return Account("-", currency, result);
+    return Account("-", currency, code, result);
 }
 
-int Account::getTransactionCount() const {
-    return transactions.size();
+int Account::getEntryCount() const {
+    return entries.size();
 }
 
 Trade Account::get(int index) const {
@@ -90,32 +121,32 @@ Trade Account::get(int index) const {
     if (index < 0) {
         return result;
     }
-    if (index >= static_cast<int>(transactions.size())) {
+    if (index >= static_cast<int>(entries.size())) {
         return result;
     }
-    return transactions[index];
+    return entries[index];
 }
 
 void Account::set(int index, const Trade& object) {
     if (index < 0) {
         return;
     }
-    if (index < static_cast<int>(transactions.size())) {
+    if (index < static_cast<int>(entries.size())) {
         // replace existing element
-        transactions[index] = object;
-    } else if (index == static_cast<int>(transactions.size())) {
+        entries[index] = object;
+    } else if (index == static_cast<int>(entries.size())) {
         // append at end
-        transactions.push_back(object);
+        entries.push_back(object);
     } else {
         // index beyond current size: append at end
-        transactions.push_back(object);
+        entries.push_back(object);
     }
     return;
 }
 
 Amount Account::getIncoming() {
     Amount result(0, currency, "Incoming Total");
-    for (TradeArray::const_iterator it = transactions.begin(); it != transactions.end(); ++it) {
+    for (TradeArray::const_iterator it = entries.begin(); it != entries.end(); ++it) {
         float amount = (*it).getIncoming().getValue();
         result = (result + amount);
     }
@@ -124,7 +155,7 @@ Amount Account::getIncoming() {
 
 Amount Account::getOutgoing() {
     Amount result(0, currency, "Outgoing Total");
-    for (TradeArray::const_iterator it = transactions.begin(); it != transactions.end(); ++it) {
+    for (TradeArray::const_iterator it = entries.begin(); it != entries.end(); ++it) {
         float amount = (*it).getOutgoing().getValue();
         result = (result + amount);
     }
@@ -132,26 +163,41 @@ Amount Account::getOutgoing() {
 }
 
 Amount Account::getBalance() {
-    return (getOutgoing() - getIncoming());
+    return (getIncoming() - getOutgoing());
+}
+
+std::string Account::findEntryImbalance() {
+    std::stringstream result;
+    for (TradeArray::const_iterator it = entries.begin(); it != entries.end(); ++it) {
+        float amount = (*it).getBalance().getValue();
+        if (amount != 0) {
+            result << (*it).getIncoming().print() << " ≠ ";
+            result << (*it).getOutgoing().print() << std::endl;
+        }
+    }
+	return result.str(); 
 }
 
 Account Account::copy() {
-    Account fresh(name, currency, transactions);
+    Account fresh(name, currency, code, entries);
     return fresh;
 }
 
 void Account::clear() {
-    name = "";
+    name.clear();
+    code.clear();
     currency.clear();
-    transactions.clear();
+    entries.clear();
     return;
 }
 
 std::string Account::print() {
     std::stringstream result;
+    result << "(a:";
     result << name << ",";
-    result << currency.print() << ",sz:";
-    result << transactions.size();
+    result << code << ",";
+    result << currency.print() << "),sz:";
+    result << entries.size();
 	return result.str();
 }
 

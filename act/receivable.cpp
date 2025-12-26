@@ -18,78 +18,78 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "ledger.h"
+#include "receivable.h"
 
 namespace act {
 
-Ledger::Ledger() : Account(), batch() {
+Receivable::Receivable() : Account(), batch() {
 
 }
 
-Ledger::Ledger(std::string name)
+Receivable::Receivable(std::string name)
         : Account(name), batch() {
 
 }
 
-Ledger::Ledger(const Currency& currency)
+Receivable::Receivable(const Currency& currency)
         : Account(currency), batch() {
 
 }
 
-Ledger::Ledger(std::string name, const Currency& currency)
+Receivable::Receivable(std::string name, const Currency& currency)
         : Account(name, currency), batch() {
 
 }
 
-Ledger::Ledger(const Batch& batch)
+Receivable::Receivable(const Batch& batch)
         : Account(), batch(batch) {
 
 }
 
-Ledger::Ledger(std::string name, const Batch& batch)
+Receivable::Receivable(std::string name, const Batch& batch)
         : Account(name), batch(batch) {
 
 }
 
-Ledger::Ledger(const Batch& batch, const Currency& currency)
+Receivable::Receivable(const Batch& batch, const Currency& currency)
         : Account(currency), batch(batch) {
 
 }
 
-Ledger::Ledger(std::string name, const Batch& batch, const Currency& currency)
+Receivable::Receivable(std::string name, const Batch& batch, const Currency& currency)
         : Account(name, currency), batch(batch) {
 
 }
 
-Ledger::~Ledger() {
+Receivable::~Receivable() {
 
 }
 
-bool Ledger::operator==(const Ledger& peer) const {
+bool Receivable::operator==(const Receivable& peer) const {
     return (static_cast<const Account&>(*this) == static_cast<const Account&>(peer))
         && (batch == peer.batch);
 }
 
-Ledger Ledger::operator+(const Ledger& peer) const {
-    return Ledger("+", (batch + peer.batch), getCurrency());
+Receivable Receivable::operator+(const Receivable& peer) const {
+    return Receivable("+", (batch + peer.batch), getCurrency());
 }
 
-Ledger Ledger::operator-(const Ledger& peer) const {
-    return Ledger("-", (batch - peer.batch), getCurrency());
+Receivable Receivable::operator-(const Receivable& peer) const {
+    return Receivable("-", (batch - peer.batch), getCurrency());
 }
 
-Account Ledger::copy() {
-    Ledger fresh(getName(), batch, getCurrency());
+Account Receivable::copy() {
+    Receivable fresh(getName(), batch, getCurrency());
     return fresh;
 }
 
-void Ledger::clear() {
+void Receivable::clear() {
     Account::clear();
     batch.clear();
     return;
 }
 
-std::string Ledger::print() {
+std::string Receivable::print() {
     std::stringstream result;
     result << Account::print() << ",";
     result << batch.print();

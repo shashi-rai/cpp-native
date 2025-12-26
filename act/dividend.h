@@ -24,35 +24,56 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "amount.h"
 
 namespace act {
 
 class Dividend {
     std::string name;
+    float rate;
+    Amount principal;
 public:
     // Constructors
     Dividend();
     Dividend(std::string name);
+    Dividend(const float rate);
+    Dividend(const Amount& principal);
+    Dividend(const float rate, const Amount& principal);
+    Dividend(std::string name, const Amount& principal);
+    Dividend(std::string name, const float rate, const Amount& principal);
 
     // Destructors
     ~Dividend();
 
     // Operator overloading
     bool operator==(const Dividend& peer) const;
+    Dividend operator+(const Dividend& peer) const;
+    Dividend operator-(const Dividend& peer) const;
+    Dividend operator*(const Dividend& peer) const;
+    Dividend operator/(const Dividend& peer) const;
+    Dividend operator%(const Dividend& peer) const;
 
     // Getters
     std::string getName() const { return name; }
+    float getRate() const { return rate; }
+    Amount getPrincipal() const { return principal; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
+    void getRate(const float rate) { this->rate = rate; }
+    void setPrincipal(const Amount& value) { this->principal = value; }
 
     // Additional methods
+    Amount getSimple(const float time);
+    Amount getCompound(const short int period, const float time);
     virtual Dividend copy();
     virtual void clear();
     virtual std::string print();
+public:
+    static const float DEFAULT_VALUE;
 };
 
-typedef std::vector<Dividend > PartyArray;
+typedef std::vector<Dividend > DividendArray;
 
 } // namespace act
 

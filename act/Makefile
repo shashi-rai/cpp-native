@@ -50,11 +50,15 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/amount.o \
 		$(OBJFOLDR)/asset.o \
 		$(OBJFOLDR)/balance.o \
+		$(OBJFOLDR)/bank.o \
 		$(OBJFOLDR)/batch.o \
 		$(OBJFOLDR)/branch.o \
 		$(OBJFOLDR)/brand.o \
 		$(OBJFOLDR)/business.o \
+		$(OBJFOLDR)/cash.o \
 		$(OBJFOLDR)/charges.o \
+		$(OBJFOLDR)/chart.o \
+		$(OBJFOLDR)/cheque.o \
 		$(OBJFOLDR)/contract.o \
 		$(OBJFOLDR)/cost.o \
 		$(OBJFOLDR)/country.o \
@@ -89,6 +93,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/office.o \
 		$(OBJFOLDR)/order.o \
 		$(OBJFOLDR)/party.o \
+		$(OBJFOLDR)/payable.o \
 		$(OBJFOLDR)/payment.o \
 		$(OBJFOLDR)/person.o \
 		$(OBJFOLDR)/price.o \
@@ -96,8 +101,10 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/project.o \
 		$(OBJFOLDR)/purchase.o \
 		$(OBJFOLDR)/quote.o \
+		$(OBJFOLDR)/receivable.o \
 		$(OBJFOLDR)/report.o \
 		$(OBJFOLDR)/retailer.o \
+		$(OBJFOLDR)/revenue.o \
 		$(OBJFOLDR)/role.o \
 		$(OBJFOLDR)/sale.o \
 		$(OBJFOLDR)/service.o \
@@ -118,11 +125,15 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/amount.o \
 		$(OBJFOLDR)/asset.o \
 		$(OBJFOLDR)/balance.o \
+		$(OBJFOLDR)/bank.o \
 		$(OBJFOLDR)/batch.o \
 		$(OBJFOLDR)/branch.o \
 		$(OBJFOLDR)/brand.o \
 		$(OBJFOLDR)/business.o \
+		$(OBJFOLDR)/cash.o \
 		$(OBJFOLDR)/charges.o \
+		$(OBJFOLDR)/chart.o \
+		$(OBJFOLDR)/cheque.o \
 		$(OBJFOLDR)/contract.o \
 		$(OBJFOLDR)/cost.o \
 		$(OBJFOLDR)/country.o \
@@ -157,6 +168,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/office.o \
 		$(OBJFOLDR)/order.o \
 		$(OBJFOLDR)/party.o \
+		$(OBJFOLDR)/payable.o \
 		$(OBJFOLDR)/payment.o \
 		$(OBJFOLDR)/person.o \
 		$(OBJFOLDR)/price.o \
@@ -164,8 +176,10 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/project.o \
 		$(OBJFOLDR)/purchase.o \
 		$(OBJFOLDR)/quote.o \
+		$(OBJFOLDR)/receivable.o \
 		$(OBJFOLDR)/report.o \
 		$(OBJFOLDR)/retailer.o \
+		$(OBJFOLDR)/revenue.o \
 		$(OBJFOLDR)/role.o \
 		$(OBJFOLDR)/sale.o \
 		$(OBJFOLDR)/service.o \
@@ -196,6 +210,9 @@ $(OBJFOLDR)/asset.o: asset.cpp
 $(OBJFOLDR)/balance.o: balance.cpp
 	$(CPPTOOL) -c balance.cpp -o $(OBJFOLDR)/balance.o $(CXXFLAGS)
 
+$(OBJFOLDR)/bank.o: bank.cpp
+	$(CPPTOOL) -c bank.cpp -o $(OBJFOLDR)/bank.o $(CXXFLAGS)
+
 $(OBJFOLDR)/batch.o: batch.cpp
 	$(CPPTOOL) -c batch.cpp -o $(OBJFOLDR)/batch.o $(CXXFLAGS)
 
@@ -208,8 +225,17 @@ $(OBJFOLDR)/brand.o: brand.cpp
 $(OBJFOLDR)/business.o: business.cpp
 	$(CPPTOOL) -c business.cpp -o $(OBJFOLDR)/business.o $(CXXFLAGS)
 
+$(OBJFOLDR)/cash.o: cash.cpp
+	$(CPPTOOL) -c cash.cpp -o $(OBJFOLDR)/cash.o $(CXXFLAGS)
+
 $(OBJFOLDR)/charges.o: charges.cpp
 	$(CPPTOOL) -c charges.cpp -o $(OBJFOLDR)/charges.o $(CXXFLAGS)
+
+$(OBJFOLDR)/chart.o: chart.cpp
+	$(CPPTOOL) -c chart.cpp -o $(OBJFOLDR)/chart.o $(CXXFLAGS)
+
+$(OBJFOLDR)/cheque.o: cheque.cpp
+	$(CPPTOOL) -c cheque.cpp -o $(OBJFOLDR)/cheque.o $(CXXFLAGS)
 
 $(OBJFOLDR)/contract.o: contract.cpp
 	$(CPPTOOL) -c contract.cpp -o $(OBJFOLDR)/contract.o $(CXXFLAGS)
@@ -313,6 +339,9 @@ $(OBJFOLDR)/order.o: order.cpp
 $(OBJFOLDR)/party.o: party.cpp
 	$(CPPTOOL) -c party.cpp -o $(OBJFOLDR)/party.o $(CXXFLAGS)
 
+$(OBJFOLDR)/payable.o: payable.cpp
+	$(CPPTOOL) -c payable.cpp -o $(OBJFOLDR)/payable.o $(CXXFLAGS)
+
 $(OBJFOLDR)/payment.o: payment.cpp
 	$(CPPTOOL) -c payment.cpp -o $(OBJFOLDR)/payment.o $(CXXFLAGS)
 
@@ -334,11 +363,17 @@ $(OBJFOLDR)/purchase.o: purchase.cpp
 $(OBJFOLDR)/quote.o: quote.cpp
 	$(CPPTOOL) -c quote.cpp -o $(OBJFOLDR)/quote.o $(CXXFLAGS)
 
+$(OBJFOLDR)/receivable.o: receivable.cpp
+	$(CPPTOOL) -c receivable.cpp -o $(OBJFOLDR)/receivable.o $(CXXFLAGS)
+
 $(OBJFOLDR)/report.o: report.cpp
 	$(CPPTOOL) -c report.cpp -o $(OBJFOLDR)/report.o $(CXXFLAGS)
 
 $(OBJFOLDR)/retailer.o: retailer.cpp
 	$(CPPTOOL) -c retailer.cpp -o $(OBJFOLDR)/retailer.o $(CXXFLAGS)
+
+$(OBJFOLDR)/revenue.o: revenue.cpp
+	$(CPPTOOL) -c revenue.cpp -o $(OBJFOLDR)/revenue.o $(CXXFLAGS)
 
 $(OBJFOLDR)/role.o: role.cpp
 	$(CPPTOOL) -c role.cpp -o $(OBJFOLDR)/role.o $(CXXFLAGS)

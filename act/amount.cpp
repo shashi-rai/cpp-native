@@ -134,16 +134,17 @@ void Amount::clear() {
     datetime.clear();
     value = DEFAULT_VALUE;
     currency.clear();
-    remarks = "";
+    remarks.clear();
     return;
 }
 
 std::string Amount::print() {
     std::stringstream result;
-    result << datetime.print() << ",";
-	result << value << ",";
-    result << currency.print() << ",";
-    result << remarks;
+    result << "(";
+    result << currency.print();
+    result << value << " @";
+    result << datetime.print() << "!";
+    result << remarks << ")";
 	return result.str();
 }
 

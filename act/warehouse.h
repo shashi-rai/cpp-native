@@ -30,17 +30,22 @@
 namespace act {
 
 class Warehouse : public Branch {
-    Inventory inventory;
+    Inventory saleable;
+    Inventory expired;
 public:
     // Constructors
     Warehouse();
     Warehouse(std::string name);
-    Warehouse(const Inventory& inventory);
-    Warehouse(std::string name, const Inventory& inventory);
+    Warehouse(const Inventory& saleable);
+    Warehouse(const Inventory& saleable, const Inventory& expired);
+    Warehouse(std::string name, const Inventory& saleable);
+    Warehouse(std::string name, const Inventory& saleable, const Inventory& expired);
     Warehouse(const gis::Address& address);
-    Warehouse(const Inventory& inventory, const gis::Address& address);
+    Warehouse(const Inventory& saleable, const gis::Address& address);
+    Warehouse(const Inventory& saleable, const Inventory& expired, const gis::Address& address);
     Warehouse(std::string name, const gis::Address& address);
-    Warehouse(std::string name, const Inventory& inventory, const gis::Address& address);
+    Warehouse(std::string name, const Inventory& saleable, const gis::Address& address);
+    Warehouse(std::string name, const Inventory& saleable, const Inventory& expired, const gis::Address& address);
 
     // Destructors
     ~Warehouse();
@@ -49,10 +54,12 @@ public:
     bool operator==(const Warehouse& peer) const;
 
     // Getters
-    Inventory getInventory() const { return inventory; }
+    Inventory getSaleable() const { return saleable; }
+    Inventory getExpired() const { return expired; }
 
     // Setters
-    void setInventory(const Inventory& items) { this->inventory = items; }
+    void setSaleable(const Inventory& items) { this->saleable = items; }
+    void setExpired(const Inventory& items) { this->expired = items; }
 
     // Additional methods
     virtual Branch copy();

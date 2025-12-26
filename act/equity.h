@@ -26,6 +26,7 @@
 #include <vector>
 #include "amount.h"
 #include "currency.h"
+#include "dividend.h"
 #include "document.h"
 
 namespace act {
@@ -33,6 +34,7 @@ namespace act {
 class Equity : public Amount {
     std::string name;
     Document registration;
+    Dividend dividend;
 public:
     // Constructors
     Equity();
@@ -60,10 +62,12 @@ public:
     // Getters
     std::string getName() const { return name; }
     Document getRegistration() const { return registration; }
+    Dividend getDividend() const { return dividend; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
     void setRegistration(const Document& document) { this->registration = document; }
+    void setDividend(const Dividend& offered) { this->dividend = offered; }
 
     // Additional methods
     virtual Amount copy();

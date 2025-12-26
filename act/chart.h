@@ -18,53 +18,64 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef ACT_LEDGER_H
-#define ACT_LEDGER_H
+#ifndef ACT_CHART_H
+#define ACT_CHART_H
 
 #include <sstream>
 #include <string>
 #include <vector>
 #include "account.h"
-#include "batch.h"
+#include "balance.h"
 
 namespace act {
 
-class Ledger : public Account {
-    Batch batch;
+class Chart {
+    std::string name;
+    Balance balance;
+    AccountArray accounts;
 public:
     // Constructors
-    Ledger();
-    Ledger(std::string name);
-    Ledger(const Currency& currency);
-    Ledger(std::string name, const Currency& currency);
-    Ledger(const Batch& batch);
-    Ledger(std::string name, const Batch& batch);
-    Ledger(const Batch& batch, const Currency& currency);
-    Ledger(std::string name, const Batch& batch, const Currency& currency);
-
+    Chart();
+    Chart(std::string name);
+    Chart(const Balance& balance);
+    Chart(const AccountArray& accounts);
+    Chart(std::string name, const Balance& balance);
+    Chart(std::string name, const AccountArray& accounts);
+    Chart(std::string name, const Balance& balance, const AccountArray& accounts);
 
     // Destructors
-    ~Ledger();
+    ~Chart();
 
     // Operator overloading
-    bool operator==(const Ledger& peer) const;
-    Ledger operator+(const Ledger& peer) const;
-    Ledger operator-(const Ledger& peer) const;
+    bool operator==(const Chart& peer) const;
+    Chart operator+(const Chart& peer) const;
+    Chart operator-(const Chart& peer) const;
+
+    // Access operator
+    Account& operator()(int x) { return accounts[x]; }
+    const Account& operator()(int x) const { return accounts[x]; }
 
     // Getters
-    Batch getBatch() const { return batch; }
+    std::string getName() const { return name; }
+    Balance getBalance() const { return balance; }
+    AccountArray getAccounts() const { return accounts; }
 
     // Setters
-    void setBatch(const Batch& posting) { this->batch = posting; }
+    void setName(const std::string& name) { this->name = name; }
+    void setBalance(const Balance& object) { this->balance = object; }
+    void setAccounts(const AccountArray& object) { this->accounts = object; }
 
     // Additional methods
-    virtual Account copy();
+    int getAccountCount() const;
+    Account get(int index) const;
+    void set(int index, const Account& object);
+    virtual Chart copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Ledger > LedgerArray;
+typedef std::vector<Chart > ChartArray;
 
 } // namespace act
 
-#endif //ACT_LEDGER_H
+#endif //ACT_CHART_H

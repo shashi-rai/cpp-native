@@ -60,6 +60,10 @@ Trade Trade::operator%(const Trade& peer) const {
     return Trade((incoming % peer.incoming), (outgoing % peer.outgoing));
 }
 
+Amount Trade::getBalance() const {
+    return (incoming - outgoing);
+}
+
 Trade Trade::copy() {
     Trade fresh(incoming, outgoing);
     return fresh;

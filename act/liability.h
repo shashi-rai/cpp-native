@@ -26,12 +26,14 @@
 #include <vector>
 #include "amount.h"
 #include "document.h"
+#include "interest.h"
 
 namespace act {
 
 class Liability : public Amount {
     std::string name;
     Document registration;
+    Interest interest;
 public:
     // Constructors
     Liability();
@@ -59,10 +61,12 @@ public:
     // Getters
     std::string getName() const { return name; }
     Document getRegistration() const { return registration; }
+    Interest getInterest() const { return interest; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
     void setRegistration(const Document& document) { this->registration = document; }
+    void setInterest(const Interest& payable) { this->interest = payable; }
 
     // Additional methods
     virtual Amount copy();

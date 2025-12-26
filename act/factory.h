@@ -30,17 +30,23 @@
 namespace act {
 
 class Factory : public Warehouse {
+    Inventory material;
+    Inventory working;
     Document license;
 public:
     // Constructors
     Factory();
     Factory(std::string name);
-    Factory(const Inventory& inventory);
-    Factory(std::string name, const Inventory& inventory);
+    Factory(const Inventory& working);
+    Factory(const Inventory& material, const Inventory& working);
+    Factory(std::string name, const Inventory& working);
+    Factory(std::string name, const Inventory& material, const Inventory& working);
     Factory(const gis::Address& address);
-    Factory(const Inventory& inventory, const gis::Address& address);
+    Factory(const Inventory& working, const gis::Address& address);
+    Factory(const Inventory& material, const Inventory& working, const gis::Address& address);
     Factory(std::string name, const gis::Address& address);
-    Factory(std::string name, const Inventory& inventory, const gis::Address& address);
+    Factory(std::string name, const Inventory& working, const gis::Address& address);
+    Factory(std::string name, const Inventory& material, const Inventory& working, const gis::Address& address);
 
     // Destructors
     ~Factory();
@@ -49,9 +55,13 @@ public:
     bool operator==(const Factory& peer) const;
 
     // Getters
+    Inventory getMaterial() const { return material; }
+    Inventory getWorking() const { return working; }
     Document getLicense() const { return license; }
 
     // Setters
+    void setMaterial(const Inventory& raw) { this->material = raw; }
+    void setWorking(const Inventory& items) { this->working = items; }
     void setLicense(const Document& certificate) { this->license = certificate; }
 
     // Additional methods

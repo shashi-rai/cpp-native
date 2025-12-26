@@ -22,12 +22,22 @@
 
 namespace act {
 
-Department::Department() : name() {
+Department::Department() : name(), head() {
 
 }
 
 Department::Department(std::string name)
-        : name(name) {
+        : name(name), head() {
+
+}
+
+Department::Department(const Staff& head)
+        : name(), head(head) {
+
+}
+
+Department::Department(std::string name, const Staff& head)
+        : name(name), head(head) {
 
 }
 
@@ -36,22 +46,24 @@ Department::~Department() {
 }
 
 bool Department::operator==(const Department& peer) const {
-    return (name == peer.name);
+    return (name == peer.name) && (head == peer.head);
 }
 
 Department Department::copy() {
-    Department fresh(name);
+    Department fresh(name, head);
     return fresh;
 }
 
 void Department::clear() {
-    name = "";
+    name.clear();
+    head.clear();
     return;
 }
 
 std::string Department::print() {
     std::stringstream result;
     result << name << ",";
+    result << head.print();
 	return result.str();
 }
 

@@ -18,78 +18,78 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "ledger.h"
+#include "cash.h"
 
 namespace act {
 
-Ledger::Ledger() : Account(), batch() {
+Cash::Cash() : Account(), batch() {
 
 }
 
-Ledger::Ledger(std::string name)
+Cash::Cash(std::string name)
         : Account(name), batch() {
 
 }
 
-Ledger::Ledger(const Currency& currency)
+Cash::Cash(const Currency& currency)
         : Account(currency), batch() {
 
 }
 
-Ledger::Ledger(std::string name, const Currency& currency)
+Cash::Cash(std::string name, const Currency& currency)
         : Account(name, currency), batch() {
 
 }
 
-Ledger::Ledger(const Batch& batch)
+Cash::Cash(const Batch& batch)
         : Account(), batch(batch) {
 
 }
 
-Ledger::Ledger(std::string name, const Batch& batch)
+Cash::Cash(std::string name, const Batch& batch)
         : Account(name), batch(batch) {
 
 }
 
-Ledger::Ledger(const Batch& batch, const Currency& currency)
+Cash::Cash(const Batch& batch, const Currency& currency)
         : Account(currency), batch(batch) {
 
 }
 
-Ledger::Ledger(std::string name, const Batch& batch, const Currency& currency)
+Cash::Cash(std::string name, const Batch& batch, const Currency& currency)
         : Account(name, currency), batch(batch) {
 
 }
 
-Ledger::~Ledger() {
+Cash::~Cash() {
 
 }
 
-bool Ledger::operator==(const Ledger& peer) const {
+bool Cash::operator==(const Cash& peer) const {
     return (static_cast<const Account&>(*this) == static_cast<const Account&>(peer))
         && (batch == peer.batch);
 }
 
-Ledger Ledger::operator+(const Ledger& peer) const {
-    return Ledger("+", (batch + peer.batch), getCurrency());
+Cash Cash::operator+(const Cash& peer) const {
+    return Cash("+", (batch + peer.batch), getCurrency());
 }
 
-Ledger Ledger::operator-(const Ledger& peer) const {
-    return Ledger("-", (batch - peer.batch), getCurrency());
+Cash Cash::operator-(const Cash& peer) const {
+    return Cash("-", (batch - peer.batch), getCurrency());
 }
 
-Account Ledger::copy() {
-    Ledger fresh(getName(), batch, getCurrency());
+Account Cash::copy() {
+    Cash fresh(getName(), batch, getCurrency());
     return fresh;
 }
 
-void Ledger::clear() {
+void Cash::clear() {
     Account::clear();
     batch.clear();
     return;
 }
 
-std::string Ledger::print() {
+std::string Cash::print() {
     std::stringstream result;
     result << Account::print() << ",";
     result << batch.print();

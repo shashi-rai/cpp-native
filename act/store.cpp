@@ -31,13 +31,13 @@ Store::Store(std::string name)
 
 }
 
-Store::Store(const Inventory& inventory)
-        : Warehouse(inventory), taxation() {
+Store::Store(const Inventory& saleable)
+        : Warehouse(saleable), taxation() {
 
 }
 
-Store::Store(std::string name, const Inventory& inventory)
-        : Warehouse(name, inventory), taxation() {
+Store::Store(std::string name, const Inventory& saleable)
+        : Warehouse(name, saleable), taxation() {
 
 }
 
@@ -46,8 +46,8 @@ Store::Store(const gis::Address& address)
 
 }
 
-Store::Store(const Inventory& inventory, const gis::Address& address)
-        : Warehouse(inventory, address), taxation() {
+Store::Store(const Inventory& saleable, const gis::Address& address)
+        : Warehouse(saleable, address), taxation() {
 
 }
 
@@ -56,8 +56,8 @@ Store::Store(std::string name, const gis::Address& address)
 
 }
 
-Store::Store(std::string name, const Inventory& inventory, const gis::Address& address)
-        : Warehouse(name, inventory, address), taxation() {
+Store::Store(std::string name, const Inventory& saleable, const gis::Address& address)
+        : Warehouse(name, saleable, address), taxation() {
 
 }
 
@@ -71,7 +71,7 @@ bool Store::operator==(const Store& peer) const {
 }
 
 Branch Store::copy() {
-    Store fresh(getName(), getInventory(), getAddress());
+    Store fresh(getName(), getSaleable(), getAddress());
     return fresh;
 }
 

@@ -22,55 +22,55 @@
 
 namespace act {
 
-Asset::Asset() : Amount(), name(), registration() {
+Asset::Asset() : Amount(), name(), registration(), depreciation() {
 
 }
 
 Asset::Asset(const float value)
-        : Amount(value), name(), registration() {
+        : Amount(value), name(), registration(), depreciation() {
 
 }
 
 Asset::Asset(std::string name)
-        : Amount(), name(name), registration() {
+        : Amount(), name(name), registration(), depreciation() {
 
 }
 
 Asset::Asset(const Document& registration)
-        : Amount(), name(), registration(registration) {
+        : Amount(), name(), registration(registration), depreciation() {
 
 }
 
 Asset::Asset(std::string name, const Document& registration)
-        : Amount(), name(name), registration(registration) {
+        : Amount(), name(name), registration(registration), depreciation() {
 
 }
 
 Asset::Asset(std::string name, const float value)
-        : Amount(value), name(name), registration() {
+        : Amount(value), name(name), registration(), depreciation() {
 
 }
 
 Asset::Asset(std::string name, std::string remarks)
-        : Amount(remarks), name(name), registration() {
+        : Amount(remarks), name(name), registration(), depreciation() {
 
 }
 
 Asset::Asset(std::string name,
         const Currency& currency, std::string remarks)
-        : Amount(currency, remarks), name(name), registration() {
+        : Amount(currency, remarks), name(name), registration(), depreciation() {
 
 }
 
 Asset::Asset(std::string name, const float value,
         const Currency& currency, std::string remarks)
-        : Amount(value, currency, remarks), name(name), registration() {
+        : Amount(value, currency, remarks), name(name), registration(), depreciation() {
 
 }
 
 Asset::Asset(std::string name, const long datetime, const float value,
         const Currency& currency, std::string remarks)
-        : Amount(datetime, value, currency, remarks), name(name), registration() {
+        : Amount(datetime, value, currency, remarks), name(name), registration(), depreciation() {
 
 }
 
@@ -80,7 +80,8 @@ Asset::~Asset() {
 
 bool Asset::operator==(const Asset& peer) const {
     return (static_cast<const Amount&>(*this) == static_cast<const Amount&>(peer))
-        && (name == peer.name) && (registration == peer.registration);
+        && (name == peer.name) && (registration == peer.registration)
+        && (depreciation == peer.depreciation);
 }
 
 Asset Asset::operator+(const Asset& peer) const {
@@ -110,6 +111,7 @@ Asset Asset::operator%(const Asset& peer) const {
 
 Amount Asset::copy() {
     Asset fresh(name, registration);
+	fresh.setDepreciation(depreciation);
     return fresh;
 }
 
@@ -117,6 +119,7 @@ void Asset::clear() {
     Amount::clear();
     name = "";
     registration.clear();
+	depreciation.clear();
     return;
 }
 
@@ -124,7 +127,8 @@ std::string Asset::print() {
     std::stringstream result;
     result << Amount::print() << ",";
     result << name << ",";
-    result << registration.print();
+    result << registration.print() << ",";
+	result << depreciation.print();
 	return result.str();
 }
 

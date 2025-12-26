@@ -18,8 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef ACT_LEDGER_H
-#define ACT_LEDGER_H
+#ifndef ACT_PAYABLE_H
+#define ACT_PAYABLE_H
 
 #include <sstream>
 #include <string>
@@ -29,27 +29,27 @@
 
 namespace act {
 
-class Ledger : public Account {
+class Payable : public Account {
     Batch batch;
 public:
     // Constructors
-    Ledger();
-    Ledger(std::string name);
-    Ledger(const Currency& currency);
-    Ledger(std::string name, const Currency& currency);
-    Ledger(const Batch& batch);
-    Ledger(std::string name, const Batch& batch);
-    Ledger(const Batch& batch, const Currency& currency);
-    Ledger(std::string name, const Batch& batch, const Currency& currency);
+    Payable();
+    Payable(std::string name);
+    Payable(const Currency& currency);
+    Payable(std::string name, const Currency& currency);
+    Payable(const Batch& batch);
+    Payable(std::string name, const Batch& batch);
+    Payable(const Batch& batch, const Currency& currency);
+    Payable(std::string name, const Batch& batch, const Currency& currency);
 
 
     // Destructors
-    ~Ledger();
+    ~Payable();
 
     // Operator overloading
-    bool operator==(const Ledger& peer) const;
-    Ledger operator+(const Ledger& peer) const;
-    Ledger operator-(const Ledger& peer) const;
+    bool operator==(const Payable& peer) const;
+    Payable operator+(const Payable& peer) const;
+    Payable operator-(const Payable& peer) const;
 
     // Getters
     Batch getBatch() const { return batch; }
@@ -63,8 +63,8 @@ public:
     virtual std::string print();
 };
 
-typedef std::vector<Ledger > LedgerArray;
+typedef std::vector<Payable > PayableArray;
 
 } // namespace act
 
-#endif //ACT_LEDGER_H
+#endif //ACT_PAYABLE_H

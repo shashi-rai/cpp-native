@@ -24,15 +24,19 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "department.h"
+#include "staff.h"
 
 namespace act {
 
-class Employee {
-    std::string name;
+class Employee : public Staff {
+    Department department;
 public:
     // Constructors
     Employee();
-    Employee(std::string name);
+    Employee(std::string identity);
+    Employee(const Department& department);
+    Employee(std::string identity, const Department& department);
 
     // Destructors
     ~Employee();
@@ -41,13 +45,13 @@ public:
     bool operator==(const Employee& peer) const;
 
     // Getters
-    std::string getName() const { return name; }
+    Department getDepartment() const { return department; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setDepartment(const Department& group) { this->department = group; }
 
     // Additional methods
-    virtual Employee copy();
+    virtual Person copy();
     virtual void clear();
     virtual std::string print();
 };

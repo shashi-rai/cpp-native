@@ -24,15 +24,29 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "document.h"
+#include "warehouse.h"
 
 namespace act {
 
-class Depot {
-    std::string name;
+class Depot : public Warehouse {
+    Inventory exports;
+    Inventory imports;
+    Document license;
 public:
     // Constructors
     Depot();
     Depot(std::string name);
+    Depot(const Inventory& exports);
+    Depot(const Inventory& imports, const Inventory& exports);
+    Depot(std::string name, const Inventory& exports);
+    Depot(std::string name, const Inventory& imports, const Inventory& exports);
+    Depot(const gis::Address& address);
+    Depot(const Inventory& exports, const gis::Address& address);
+    Depot(const Inventory& imports, const Inventory& exports, const gis::Address& address);
+    Depot(std::string name, const gis::Address& address);
+    Depot(std::string name, const Inventory& exports, const gis::Address& address);
+    Depot(std::string name, const Inventory& imports, const Inventory& exports, const gis::Address& address);
 
     // Destructors
     ~Depot();
@@ -41,13 +55,17 @@ public:
     bool operator==(const Depot& peer) const;
 
     // Getters
-    std::string getName() const { return name; }
+    Inventory getExports() const { return exports; }
+    Inventory getImports() const { return imports; }
+    Document getLicense() const { return license; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setMaterial(const Inventory& items) { this->exports = items; }
+    void setWorking(const Inventory& items) { this->imports = items; }
+    void setLicense(const Document& certificate) { this->license = certificate; }
 
     // Additional methods
-    virtual Depot copy();
+    virtual Branch copy();
     virtual void clear();
     virtual std::string print();
 };

@@ -24,15 +24,19 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "staff.h"
 
 namespace act {
 
 class Department {
     std::string name;
+    Staff head;
 public:
     // Constructors
     Department();
     Department(std::string name);
+    Department(const Staff& head);
+    Department(std::string name, const Staff& head);
 
     // Destructors
     ~Department();
@@ -42,9 +46,11 @@ public:
 
     // Getters
     std::string getName() const { return name; }
+    Staff getHead() const { return head; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
+    void setHead(const Staff& manager) { this->head = manager; }
 
     // Additional methods
     virtual Department copy();

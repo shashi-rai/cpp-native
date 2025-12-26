@@ -18,53 +18,60 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef ACT_LEDGER_H
-#define ACT_LEDGER_H
+#ifndef ACT_REVENUE_H
+#define ACT_REVENUE_H
 
 #include <sstream>
 #include <string>
 #include <vector>
-#include "account.h"
-#include "batch.h"
+#include "amount.h"
+#include "document.h"
 
 namespace act {
 
-class Ledger : public Account {
-    Batch batch;
+class Revenue : public Amount {
+    std::string name;
+    Document receipt;
 public:
     // Constructors
-    Ledger();
-    Ledger(std::string name);
-    Ledger(const Currency& currency);
-    Ledger(std::string name, const Currency& currency);
-    Ledger(const Batch& batch);
-    Ledger(std::string name, const Batch& batch);
-    Ledger(const Batch& batch, const Currency& currency);
-    Ledger(std::string name, const Batch& batch, const Currency& currency);
-
+    Revenue();
+    Revenue(const float value);
+    Revenue(std::string name);
+    Revenue(const Document& receipt);
+    Revenue(std::string name, const Document& receipt);
+    Revenue(std::string name, const float value);
+    Revenue(std::string name, std::string remarks);
+    Revenue(std::string name, const Currency& currency, std::string remarks);
+    Revenue(std::string name, const float value, const Currency& currency, std::string remarks);
+    Revenue(std::string name, const long datetime, const float value, const Currency& currency, std::string remarks);
 
     // Destructors
-    ~Ledger();
+    ~Revenue();
 
     // Operator overloading
-    bool operator==(const Ledger& peer) const;
-    Ledger operator+(const Ledger& peer) const;
-    Ledger operator-(const Ledger& peer) const;
+    bool operator==(const Revenue& peer) const;
+    Revenue operator+(const Revenue& peer) const;
+    Revenue operator-(const Revenue& peer) const;
+    Revenue operator*(const Revenue& peer) const;
+    Revenue operator/(const Revenue& peer) const;
+    Revenue operator%(const Revenue& peer) const;
 
     // Getters
-    Batch getBatch() const { return batch; }
+    std::string getName() const { return name; }
+    Document getReceipt() const { return receipt; }
 
     // Setters
-    void setBatch(const Batch& posting) { this->batch = posting; }
+    void setName(const std::string& name) { this->name = name; }
+    void setReceipt(const Document& document) { this->receipt = document; }
 
     // Additional methods
-    virtual Account copy();
+    virtual Amount copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Ledger > LedgerArray;
+typedef std::vector<Revenue > RevenueArray;
 
 } // namespace act
 
-#endif //ACT_LEDGER_H
+#endif //ACT_REVENUE_H

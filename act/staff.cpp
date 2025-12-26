@@ -22,12 +22,22 @@
 
 namespace act {
 
-Staff::Staff() : name() {
+Staff::Staff() : Person(), identity(), salary() {
 
 }
 
-Staff::Staff(std::string name)
-        : name(name) {
+Staff::Staff(std::string identity)
+        : Person(), identity(identity), salary() {
+
+}
+
+Staff::Staff(const Amount& salary)
+        : Person(), identity(), salary(salary) {
+
+}
+
+Staff::Staff(std::string identity, const Amount& salary)
+        : Person(), identity(identity), salary(salary) {
 
 }
 
@@ -36,22 +46,26 @@ Staff::~Staff() {
 }
 
 bool Staff::operator==(const Staff& peer) const {
-    return (name == peer.name);
+    return (static_cast<const Person&>(*this) == static_cast<const Person&>(peer))
+        && (identity == peer.identity) && (salary == peer.salary);
 }
 
-Staff Staff::copy() {
-    Staff fresh(name);
+Person Staff::copy() {
+    Staff fresh(identity, salary);
     return fresh;
 }
 
 void Staff::clear() {
-    name = "";
+    Person::clear();
+    identity.clear();
+    salary.clear();
     return;
 }
 
 std::string Staff::print() {
     std::stringstream result;
-    result << name << ",";
+    result << identity << ",";
+    result << Person::print();
 	return result.str();
 }
 

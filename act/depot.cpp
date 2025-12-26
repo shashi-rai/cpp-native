@@ -22,12 +22,63 @@
 
 namespace act {
 
-Depot::Depot() : name() {
+Depot::Depot() : Warehouse(), imports(), exports(), license() {
 
 }
 
 Depot::Depot(std::string name)
-        : name(name) {
+        : Warehouse(name), imports(), exports(), license() {
+
+}
+
+Depot::Depot(const Inventory& exports)
+        : Warehouse(), imports(), exports(exports), license() {
+
+}
+
+Depot::Depot(const Inventory& imports, const Inventory& exports)
+        : Warehouse(), imports(imports), exports(exports), license() {
+
+}
+
+Depot::Depot(std::string name, const Inventory& exports)
+        : Warehouse(name), imports(), exports(exports), license() {
+
+}
+
+Depot::Depot(std::string name, const Inventory& imports, const Inventory& exports)
+        : Warehouse(name), imports(imports), exports(exports), license() {
+
+}
+
+Depot::Depot(const gis::Address& address)
+        : Warehouse(address), imports(), exports(), license() {
+
+}
+
+Depot::Depot(const Inventory& exports, const gis::Address& address)
+        : Warehouse(address), imports(), exports(exports), license() {
+
+}
+
+Depot::Depot(const Inventory& imports, const Inventory& exports, const gis::Address& address)
+        : Warehouse(address), imports(imports), exports(exports), license() {
+
+}
+
+Depot::Depot(std::string name, const gis::Address& address)
+        : Warehouse(name, address), imports(), exports(), license() {
+
+}
+
+Depot::Depot(std::string name, const Inventory& exports, const gis::Address& address)
+        : Warehouse(name, address), imports(), exports(exports), license() {
+
+}
+
+Depot::Depot(std::string name, const Inventory& imports, const Inventory& exports,
+        const gis::Address& address)
+        : Warehouse(name, address), imports(imports), exports(exports), license() {
 
 }
 
@@ -36,22 +87,29 @@ Depot::~Depot() {
 }
 
 bool Depot::operator==(const Depot& peer) const {
-    return (name == peer.name);
+    return (static_cast<const Warehouse&>(*this) == static_cast<const Warehouse&>(peer))
+        && (license == peer.license) && (imports == peer.imports) && (exports == peer.exports);
 }
 
-Depot Depot::copy() {
-    Depot fresh(name);
+Branch Depot::copy() {
+    Depot fresh(getName(), imports, exports, getAddress());
     return fresh;
 }
 
 void Depot::clear() {
-    name = "";
+    Warehouse::clear();
+    imports.clear();
+    exports.clear();
+    license.clear();
     return;
 }
 
 std::string Depot::print() {
     std::stringstream result;
-    result << name << ",";
+    result << Warehouse::print() << ",";
+	result << license.print() << ",";
+	result << imports.print() << ",";
+	result << exports.print();
 	return result.str();
 }
 

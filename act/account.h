@@ -30,17 +30,24 @@ namespace act {
 
 class Account {
     std::string name;
+    std::string code;
     Currency currency;
-    TradeArray transactions;
+    TradeArray entries;
 public:
     // Constructors
     Account();
     Account(std::string name);
+    Account(std::string name, std::string code);
+    Account(const Currency& currency);
     Account(std::string name, const Currency& currency);
-    Account(const TradeArray& transactions);
-    Account(const Currency& currency, const TradeArray& transactions);
-    Account(std::string name, const TradeArray& transactions);
-    Account(std::string name, const Currency& currency, const TradeArray& transactions);
+    Account(std::string name, const Currency& currency, std::string code);
+    Account(const TradeArray& entries);
+    Account(const Currency& currency, const TradeArray& entries);
+    Account(const Currency& currency, std::string code, const TradeArray& entries);
+    Account(std::string name, const TradeArray& entries);
+    Account(std::string name, std::string code, const TradeArray& entries);
+    Account(std::string name, const Currency& currency, const TradeArray& entries);
+    Account(std::string name, const Currency& currency, std::string code, const TradeArray& entries);
 
     // Destructors
     ~Account();
@@ -51,26 +58,29 @@ public:
     Account operator-(const Account& peer) const;
 
     // Access operator
-    Trade& operator()(int x) { return transactions[x]; }
-    const Trade& operator()(int x) const { return transactions[x]; }
+    Trade& operator()(int x) { return entries[x]; }
+    const Trade& operator()(int x) const { return entries[x]; }
 
     // Getters
     std::string getName() const { return name; }
+    std::string getCode() const { return code; }
     Currency getCurrency() const { return currency; }
-    TradeArray getTransactions() const { return transactions; }
+    TradeArray getEntries() const { return entries; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
+    void setcode(const std::string& code) { this->code = name; }
     void setCurrency(const Currency& object) { this->currency = object; }
-    void setTransactions(const TradeArray& objects) { this->transactions = objects; }
+    void setEntries(const TradeArray& objects) { this->entries = objects; }
 
     // Additional methods
-    int getTransactionCount() const;
+    int getEntryCount() const;
     Trade get(int index) const;
     void set(int index, const Trade& object);
     virtual Amount getIncoming();
     virtual Amount getOutgoing();
     virtual Amount getBalance();
+    virtual std::string findEntryImbalance();
     virtual Account copy();
     virtual void clear();
     virtual std::string print();

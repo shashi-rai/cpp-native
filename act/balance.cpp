@@ -250,10 +250,10 @@ void Balance::clear() {
 
 std::string Balance::print() {
     std::stringstream result;
-    result << Report::print() << ",a:";
-    result << assets.size() << ",l:";
-    result << liabilities.size() << ",e:";
-    result << equities.size();
+    result << Report::print() << ",A![";
+    result << assets.size() << "],L![";
+    result << liabilities.size() << "],E![";
+    result << equities.size() << "]";
 	return result.str();
 }
 

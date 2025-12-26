@@ -18,53 +18,55 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef ACT_LEDGER_H
-#define ACT_LEDGER_H
+#ifndef ACT_BANK_H
+#define ACT_BANK_H
 
 #include <sstream>
 #include <string>
 #include <vector>
-#include "account.h"
-#include "batch.h"
+#include "ledger.h"
+#include "party.h"
 
 namespace act {
 
-class Ledger : public Account {
-    Batch batch;
+class Bank : public Party {
+    LedgerArray accounts;
 public:
     // Constructors
-    Ledger();
-    Ledger(std::string name);
-    Ledger(const Currency& currency);
-    Ledger(std::string name, const Currency& currency);
-    Ledger(const Batch& batch);
-    Ledger(std::string name, const Batch& batch);
-    Ledger(const Batch& batch, const Currency& currency);
-    Ledger(std::string name, const Batch& batch, const Currency& currency);
-
+    Bank();
+    Bank(std::string name);
+    Bank(const LedgerArray& accounts);
+    Bank(std::string name, const LedgerArray& accounts);
 
     // Destructors
-    ~Ledger();
+    ~Bank();
 
     // Operator overloading
-    bool operator==(const Ledger& peer) const;
-    Ledger operator+(const Ledger& peer) const;
-    Ledger operator-(const Ledger& peer) const;
+    bool operator==(const Bank& peer) const;
+    Bank operator+(const Bank& peer) const;
+    Bank operator-(const Bank& peer) const;
+
+    // Access operator
+    Ledger& operator()(int x) { return accounts[x]; }
+    const Ledger& operator()(int x) const { return accounts[x]; }
 
     // Getters
-    Batch getBatch() const { return batch; }
+    LedgerArray getLedgers() const { return accounts; }
 
     // Setters
-    void setBatch(const Batch& posting) { this->batch = posting; }
+    void setLedgers(const LedgerArray& object) { this->accounts = object; }
 
     // Additional methods
-    virtual Account copy();
+    int getLedgerCount() const;
+    Ledger get(int index) const;
+    void set(int index, const Ledger& object);
+    virtual Party copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Ledger > LedgerArray;
+typedef std::vector<Bank > BankArray;
 
 } // namespace act
 
-#endif //ACT_LEDGER_H
+#endif //ACT_BANK_H

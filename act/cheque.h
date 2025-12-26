@@ -18,53 +18,62 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef ACT_LEDGER_H
-#define ACT_LEDGER_H
+#ifndef ACT_CHEQUE_H
+#define ACT_CHEQUE_H
 
 #include <sstream>
 #include <string>
 #include <vector>
-#include "account.h"
-#include "batch.h"
+#include "amount.h"
+#include "datetime.h"
+#include "party.h"
+#include "staff.h"
 
 namespace act {
 
-class Ledger : public Account {
-    Batch batch;
+class Cheque {
+    Party receipient;
+    Amount amount;
+    Staff signatory;
 public:
     // Constructors
-    Ledger();
-    Ledger(std::string name);
-    Ledger(const Currency& currency);
-    Ledger(std::string name, const Currency& currency);
-    Ledger(const Batch& batch);
-    Ledger(std::string name, const Batch& batch);
-    Ledger(const Batch& batch, const Currency& currency);
-    Ledger(std::string name, const Batch& batch, const Currency& currency);
-
+    Cheque();
+    Cheque(const Party& receipient);
+    Cheque(const Amount& amount);
+    Cheque(const Staff& signatory);
+    Cheque(const Amount& amount, const Staff& signatory);
+    Cheque(const Party& receipient, const Amount& amount);
+    Cheque(const Party& receipient, const Amount& amount, const Staff& signatory);
 
     // Destructors
-    ~Ledger();
+    ~Cheque();
 
     // Operator overloading
-    bool operator==(const Ledger& peer) const;
-    Ledger operator+(const Ledger& peer) const;
-    Ledger operator-(const Ledger& peer) const;
+    bool operator==(const Cheque& peer) const;
+    Cheque operator+(const Cheque& peer) const;
+    Cheque operator-(const Cheque& peer) const;
+    Cheque operator*(const Cheque& peer) const;
+    Cheque operator/(const Cheque& peer) const;
+    Cheque operator%(const Cheque& peer) const;
 
     // Getters
-    Batch getBatch() const { return batch; }
+    Party getReceipient() const { return receipient; }
+    Amount getAmount() const { return amount; }
+    Staff getSignatory() const { return signatory; }
 
     // Setters
-    void setBatch(const Batch& posting) { this->batch = posting; }
+    void setReceipient(const Party& party) { this->receipient = party; }
+    void setAmount(const Amount& value) { this->amount = value; }
+    void setSignatory(const Staff& autorized) { this->signatory = autorized; }
 
     // Additional methods
-    virtual Account copy();
+    virtual Cheque copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Ledger > LedgerArray;
+typedef std::vector<Cheque > ChequeArray;
 
 } // namespace act
 
-#endif //ACT_LEDGER_H
+#endif //ACT_CHEQUE_H

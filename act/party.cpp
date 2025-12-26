@@ -22,42 +22,42 @@
 
 namespace act {
 
-Party::Party() : name(), address(), balance() {
+Party::Party() : name(), address(), chart() {
 
 }
 
 Party::Party(std::string name)
-        : name(name), address(), balance() {
+        : name(name), address(), chart() {
 
 }
 
 Party::Party(const gis::Address& address)
-        : name(), address(address), balance() {
+        : name(), address(address), chart() {
 
 }
 
-Party::Party(const Balance& balance)
-        : name(), address(), balance(balance) {
+Party::Party(const Chart& chart)
+        : name(), address(), chart(chart) {
 
 }
 
-Party::Party(const gis::Address& address, const Balance& balance)
-        : name(), address(address), balance(balance) {
+Party::Party(const gis::Address& address, const Chart& chart)
+        : name(), address(address), chart(chart) {
 
 }
 
 Party::Party(std::string name, const gis::Address& address)
-        : name(name), address(address), balance() {
+        : name(name), address(address), chart() {
 
 }
 
-Party::Party(std::string name, const Balance& balance)
-        : name(name), address(), balance(balance) {
+Party::Party(std::string name, const Chart& chart)
+        : name(name), address(), chart(chart) {
 
 }
 
-Party::Party(std::string name, const gis::Address& address, const Balance& balance)
-        : name(name), address(address), balance(balance) {
+Party::Party(std::string name, const gis::Address& address, const Chart& chart)
+        : name(name), address(address), chart(chart) {
 
 }
 
@@ -66,34 +66,33 @@ Party::~Party() {
 }
 
 bool Party::operator==(const Party& peer) const {
-    return (name == peer.name) && (address == peer.address) && (balance == peer.balance);
+    return (name == peer.name) && (address == peer.address) && (chart == peer.chart);
 }
 
 Party Party::operator+(const Party& peer) const {
-    return Party("+", address, (balance + peer.balance));
+    return Party("+", address, (chart + peer.chart));
 }
 
 Party Party::operator-(const Party& peer) const {
-    return Party("-", address, (balance - peer.balance));
+    return Party("-", address, (chart - peer.chart));
 }
 
 Party Party::copy() {
-    Party fresh(name, address, balance);
+    Party fresh(name, address, chart);
     return fresh;
 }
 
 void Party::clear() {
     name = "";
     address.clear();
-    balance.clear();
+    chart.clear();
     return;
 }
 
 std::string Party::print() {
     std::stringstream result;
     result << name << ",";
-    result << address.print() << ",";
-    result << balance.print();
+    result << chart.print();
 	return result.str();
 }
 

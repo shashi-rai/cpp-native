@@ -24,7 +24,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "balance.h"
+#include "chart.h"
 #include "../gis/address.h"
 
 namespace act {
@@ -32,17 +32,17 @@ namespace act {
 class Party {
     std::string name;
     gis::Address address;
-    Balance balance;
+    Chart chart;
 public:
     // Constructors
     Party();
     Party(std::string name);
     Party(const gis::Address& address);
-    Party(const Balance& balance);
-    Party(const gis::Address& address, const Balance& balance);
+    Party(const Chart& chart);
+    Party(const gis::Address& address, const Chart& chart);
     Party(std::string name, const gis::Address& address);
-    Party(std::string name, const Balance& balance);
-    Party(std::string name, const gis::Address& address, const Balance& balance);
+    Party(std::string name, const Chart& chart);
+    Party(std::string name, const gis::Address& address, const Chart& chart);
 
     // Destructors
     ~Party();
@@ -55,12 +55,12 @@ public:
     // Getters
     std::string getName() const { return name; }
     gis::Address getAddress() const { return address; }
-    Balance getBalance() const { return balance; }
+    Chart getChart() const { return chart; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
     void setAddress(const gis::Address& object) { this->address = object; }
-    void setBalance(const Balance& object) { this->balance = object; }
+    void setChart(const Chart& object) { this->chart = object; }
 
     // Additional methods
     virtual Party copy();

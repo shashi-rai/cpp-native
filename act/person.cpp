@@ -117,8 +117,6 @@ void Person::clear() {
 std::string Person::print() {
     std::stringstream result;
     result << this->getName() << ",";
-    result << residence.print() << ",";
-    result << office.print() << ",";
 	return result.str();
 }
 

@@ -63,8 +63,9 @@ void Report::clear() {
 
 std::string Report::print() {
     std::stringstream result;
-    result << Document::print() << ",";
-    result << owner.print();
+    result << "{";
+    result << Document::print() << ",O:";
+    result << owner.print() << "}";
 	return result.str();
 }
 
