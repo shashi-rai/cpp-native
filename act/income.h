@@ -24,29 +24,51 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "expense.h"
+#include "revenue.h"
 
 namespace act {
 
 class Income {
     std::string name;
+    RevenueArray revenues;
+    ExpenseArray expenses;
 public:
     // Constructors
     Income();
     Income(std::string name);
+    Income(const RevenueArray& revenues);
+    Income(const ExpenseArray& expenses);
+    Income(const RevenueArray& revenues, const ExpenseArray& expenses);
+    Income(std::string name, const RevenueArray& revenues);
+    Income(std::string name, const ExpenseArray& expenses);
+    Income(std::string name, const RevenueArray& revenues, const ExpenseArray& expenses);
 
     // Destructors
     ~Income();
 
     // Operator overloading
     bool operator==(const Income& peer) const;
+    Income operator+(const Income& peer) const;
+    Income operator-(const Income& peer) const;
 
     // Getters
     std::string getName() const { return name; }
+    RevenueArray getRevenues() const { return revenues; }
+    ExpenseArray getExpenses() const { return expenses; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
+    void setRevenues(const RevenueArray& object) { this->revenues = object; }
+    void setExpenses(const ExpenseArray& object) { this->expenses = object; }
 
     // Additional methods
+    int getRevenueCount() const;
+    Revenue getRevenue(int index) const;
+    void setRevenue(int index, const Revenue& object);
+    int getExpenseCount() const;
+    Expense getExpense(int index) const;
+    void setExpense(int index, const Expense& object);
     virtual Income copy();
     virtual void clear();
     virtual std::string print();

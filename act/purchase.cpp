@@ -20,14 +20,25 @@
 
 #include "purchase.h"
 
+
 namespace act {
 
-Purchase::Purchase() : name() {
+Purchase::Purchase() : name(), order() {
 
 }
 
 Purchase::Purchase(std::string name)
-        : name(name) {
+        : name(name), order() {
+
+}
+
+Purchase::Purchase(const Order& order)
+        : name(), order(order) {
+
+}
+
+Purchase::Purchase(std::string name, const Order& order)
+        : name(name), order(order) {
 
 }
 
@@ -36,22 +47,24 @@ Purchase::~Purchase() {
 }
 
 bool Purchase::operator==(const Purchase& peer) const {
-    return (name == peer.name);
+    return (name == peer.name) && (order == peer.order);
 }
 
 Purchase Purchase::copy() {
-    Purchase fresh(name);
+    Purchase fresh(name, order);
     return fresh;
 }
 
 void Purchase::clear() {
-    name = "";
+    name.clear();
+    order.clear();
     return;
 }
 
 std::string Purchase::print() {
     std::stringstream result;
     result << name << ",";
+    result << order.print();
 	return result.str();
 }
 

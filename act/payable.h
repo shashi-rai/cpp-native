@@ -42,7 +42,6 @@ public:
     Payable(const Batch& batch, const Currency& currency);
     Payable(std::string name, const Batch& batch, const Currency& currency);
 
-
     // Destructors
     ~Payable();
 

@@ -24,15 +24,19 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "order.h"
 
 namespace act {
 
 class Quote {
     std::string name;
+    Order order;
 public:
     // Constructors
     Quote();
     Quote(std::string name);
+    Quote(const Order& order);
+    Quote(std::string name, const Order& order);
 
     // Destructors
     ~Quote();
@@ -42,9 +46,11 @@ public:
 
     // Getters
     std::string getName() const { return name; }
+    Order getOrder() const { return order; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
+    void setOrder(const Order& estimate) { this->order = estimate; }
 
     // Additional methods
     virtual Quote copy();

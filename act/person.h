@@ -60,7 +60,6 @@ public:
     gis::Address getResidence() const { return residence; }
     gis::Address getOffice() const { return office; }
 
-
     // Setters
     void setFirstName(const std::string& name) { this->firstname = name; }
     void setMiddleName(const std::string& name) { this->middlename = name; }

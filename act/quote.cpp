@@ -22,12 +22,22 @@
 
 namespace act {
 
-Quote::Quote() : name() {
+Quote::Quote() : name(), order() {
 
 }
 
 Quote::Quote(std::string name)
-        : name(name) {
+        : name(name), order() {
+
+}
+
+Quote::Quote(const Order& order)
+        : name(), order(order) {
+
+}
+
+Quote::Quote(std::string name, const Order& order)
+        : name(name), order(order) {
 
 }
 
@@ -36,22 +46,24 @@ Quote::~Quote() {
 }
 
 bool Quote::operator==(const Quote& peer) const {
-    return (name == peer.name);
+    return (name == peer.name) && (order == peer.order);
 }
 
 Quote Quote::copy() {
-    Quote fresh(name);
+    Quote fresh(name, order);
     return fresh;
 }
 
 void Quote::clear() {
-    name = "";
+    name.clear();
+    order.clear();
     return;
 }
 
 std::string Quote::print() {
     std::stringstream result;
     result << name << ",";
+    result << order.print();
 	return result.str();
 }
 

@@ -42,7 +42,6 @@ public:
     Receivable(const Batch& batch, const Currency& currency);
     Receivable(std::string name, const Batch& batch, const Currency& currency);
 
-
     // Destructors
     ~Receivable();
 

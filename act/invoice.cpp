@@ -22,12 +22,22 @@
 
 namespace act {
 
-Invoice::Invoice() : name() {
+Invoice::Invoice() : name(), order() {
 
 }
 
 Invoice::Invoice(std::string name)
-        : name(name) {
+        : name(name), order() {
+
+}
+
+Invoice::Invoice(const Order& order)
+        : name(), order(order) {
+
+}
+
+Invoice::Invoice(std::string name, const Order& order)
+        : name(name), order(order) {
 
 }
 
@@ -36,22 +46,24 @@ Invoice::~Invoice() {
 }
 
 bool Invoice::operator==(const Invoice& peer) const {
-    return (name == peer.name);
+    return (name == peer.name) && (order == peer.order);
 }
 
 Invoice Invoice::copy() {
-    Invoice fresh(name);
+    Invoice fresh(name, order);
     return fresh;
 }
 
 void Invoice::clear() {
-    name = "";
+    name.clear();
+    order.clear();
     return;
 }
 
 std::string Invoice::print() {
     std::stringstream result;
     result << name << ",";
+    result << order.print();
 	return result.str();
 }
 

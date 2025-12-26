@@ -24,15 +24,19 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "order.h"
 
 namespace act {
 
-class Purchase {
+class Purchase { 
     std::string name;
+    Order order;
 public:
     // Constructors
     Purchase();
     Purchase(std::string name);
+    Purchase(const Order& order);
+    Purchase(std::string name, const Order& order);
 
     // Destructors
     ~Purchase();
@@ -42,9 +46,11 @@ public:
 
     // Getters
     std::string getName() const { return name; }
+    Order getOrder() const { return order; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
+    void setOrder(const Order& requisition) { this->order = requisition; }
 
     // Additional methods
     virtual Purchase copy();

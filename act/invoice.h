@@ -24,15 +24,19 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "order.h"
 
 namespace act {
 
 class Invoice {
     std::string name;
+    Order order;
 public:
     // Constructors
     Invoice();
     Invoice(std::string name);
+    Invoice(const Order& order);
+    Invoice(std::string name, const Order& order);
 
     // Destructors
     ~Invoice();
@@ -42,9 +46,11 @@ public:
 
     // Getters
     std::string getName() const { return name; }
+    Order getOrder() const { return order; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
+    void setOrder(const Order& object) { this->order = object; }
 
     // Additional methods
     virtual Invoice copy();
