@@ -52,12 +52,12 @@ Time::Time(const float time, const shp::Unit& unit)
 
 }
 
-Time::Time(const float time, short int scaling)
+Time::Time(const float time, const short int scaling)
         : name(), duration(time, scaling, shp::Unit::getBaseSymbol(shp::Unit::TIME)) {
 
 }
 
-Time::Time(const float time, short int scaling, const shp::Unit& unit)
+Time::Time(const float time, const short int scaling, const shp::Unit& unit)
         : name(), duration(time, scaling, unit) {
 
 }
@@ -77,12 +77,12 @@ Time::Time(std::string name, const float time, const shp::Unit& unit)
 
 }
 
-Time::Time(std::string name, const float time, short int scaling)
+Time::Time(std::string name, const float time, const short int scaling)
         : name(name), duration(time, scaling, shp::Unit::getBaseSymbol(shp::Unit::TIME)) {
 
 }
 
-Time::Time(std::string name, const float time, short int scaling, const shp::Unit& unit)
+Time::Time(std::string name, const float time, const short int scaling, const shp::Unit& unit)
         : name(name), duration(time, scaling, unit) {
 
 }
@@ -137,19 +137,19 @@ void Time::setScaling(const short int value) {
 }
 
 shp::Quantity Time::getTotal() const {
-    shp::Quantity result(duration.getValue(), duration.getScaling(), duration.getUnit());
+    shp::Quantity result(duration.getMagnitude(), duration.getScaling(), duration.getUnit());
     return result;
 }
 
 long Time::getMilliseconds() const {
-    std::chrono::duration<float> period(duration.getValue());
+    std::chrono::duration<float> period(duration.getMagnitude());
     std::chrono::milliseconds milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(period);
     long result = milliseconds.count();
     return result;
 }
 
 long long Time::getNanoseconds() const {
-    std::chrono::duration<float> period(duration.getValue());
+    std::chrono::duration<float> period(duration.getMagnitude());
     std::chrono::nanoseconds nanoseconds = std::chrono::duration_cast<std::chrono::nanoseconds>(period);
     long long result = nanoseconds.count();
     return result;
@@ -161,7 +161,7 @@ Time Time::copy() {
 }
 
 void Time::clear() {
-    name = "";
+    name.clear();
     duration.clear();
     return;
 }

@@ -38,11 +38,11 @@ class Electron : public Particle {
 public:
     // Constructors
     Electron();
-    Electron(float polarization);
-    Electron(float polarization, float azimuthal);
+    Electron(const float polarization);
+    Electron(const float polarization, const float azimuthal);
     Electron(std::string name);
-    Electron(std::string name, float polarization);
-    Electron(std::string name, float polarization, float azimuthal);
+    Electron(std::string name, const float polarization);
+    Electron(std::string name, const float polarization, const float azimuthal);
     Electron(const Energy& energy);
     Electron(std::string name, const Energy& energy);
     Electron(std::string name, const Spin& spin, const Energy& energy);
@@ -50,19 +50,19 @@ public:
     Electron(std::string name, const Mass& mass, const Charge& charge);
     Electron(std::string name, const float spin, const float mass, const float charge);
     Electron(std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
-    Electron(short int principal, short int azimuthal,
-        short int magnetic, float spin);
-    Electron(std::string name, short int principal, short int azimuthal,
-        short int magnetic, const Spin& spin,
+    Electron(const short int principal, const short int azimuthal,
+        const short int magnetic, const float spin);
+    Electron(std::string name, const short int principal, const short int azimuthal,
+        const short int magnetic, const Spin& spin,
         const Energy& energy);
-    Electron(std::string name, short int principal, short int azimuthal,
-        short int magnetic, const Spin& spin,
+    Electron(std::string name, const short int principal, const short int azimuthal,
+        const short int magnetic, const Spin& spin,
         const Mass& mass);
-    Electron(std::string name, short int principal, short int azimuthal,
-        short int magnetic, const Spin& spin,
+    Electron(std::string name, const short int principal, const short int azimuthal,
+        const short int magnetic, const Spin& spin,
         const Charge& charge);
-    Electron(std::string name, short int principal, short int azimuthal,
-        short int magnetic, const Spin& spin,
+    Electron(std::string name, const short int principal, const short int azimuthal,
+        const short int magnetic, const Spin& spin,
         const Mass& mass, const Charge& charge);
 
     // Destructors

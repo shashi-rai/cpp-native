@@ -33,11 +33,11 @@ class Frame : public Point {
 public:
     // Constructors
     Frame();
-    Frame(float gradient);
+    Frame(const float gradient);
     Frame(std::string name);
-    Frame(std::string name, float gradient);
-    Frame(std::string name, PlanarArray& planes);
-    Frame(std::string name, PlanarArray& planes, float gradient);
+    Frame(std::string name, const float gradient);
+    Frame(std::string name, const PlanarArray& planes);
+    Frame(std::string name, const PlanarArray& planes, const float gradient);
 
     // Destructors
     ~Frame();
@@ -48,12 +48,12 @@ public:
     Frame operator-(const Frame& peer) const;
 
     // Access operator
-    Planar& operator()(int x) { return planes[x]; }
-    const Planar& operator()(int x) const { return planes[x]; }
-    Linear& operator()(int x, int y) { return planes[x](y); }
-	const Linear& operator()(int x, int y) const { return planes[x](y); }
-    Point& operator()(int x, int y, int z) { return planes[x](y)(z); }
-	const Point& operator()(int x, int y, int z) const { return planes[x](y)(z); }
+    Planar operator()(int x) { return planes[x]; }
+    const Planar operator()(int x) const { return planes[x]; }
+    Linear operator()(int x, int y) { return planes[x](y); }
+	const Linear operator()(int x, int y) const { return planes[x](y); }
+    Point operator()(int x, int y, int z) { return planes[x](y)(z); }
+	const Point operator()(int x, int y, int z) const { return planes[x](y)(z); }
 
     // Getters
     PlanarArray getPlanes() const { return planes; }

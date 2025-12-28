@@ -37,25 +37,25 @@ public:
     // Constructors
     Potential();
     Potential(const Angular& origin);
-    Potential(float high);
-    Potential(float high, const Angular& origin);
-    Potential(float high, float low);
-    Potential(float high, float low, const Angular& origin);
+    Potential(const float high);
+    Potential(const float high, const Angular& origin);
+    Potential(const float high, const float low);
+    Potential(const float high, const float low, const Angular& origin);
     Potential(const std::string unit);
     Potential(const Unit& unit);
     Potential(const Unit& unit, const Angular& origin);
-    Potential(short int scaling, const std::string unit);
-    Potential(short int scaling, const Unit& unit);
-    Potential(short int scaling, const Unit& unit, const Angular& origin);
-    Potential(float high, const std::string unit, const Angular& origin);
-    Potential(float high, float low, const std::string unit);
-    Potential(float high, float low, const std::string unit, const Angular& origin);
-    Potential(float high, float low, const Unit& unit);
-    Potential(float high, float low, const Unit& unit, const Angular& origin);
-    Potential(float high, float low, short int scaling);
-    Potential(float high, float low, short int scaling, const std::string unit);
-    Potential(float high, float low, short int scaling, const Unit& unit);
-    Potential(float high, float low, short int scaling, const Unit& unit, const Angular& origin);
+    Potential(const short int scaling, const std::string unit);
+    Potential(const short int scaling, const Unit& unit);
+    Potential(const short int scaling, const Unit& unit, const Angular& origin);
+    Potential(const float high, const std::string unit, const Angular& origin);
+    Potential(const float high, const float low, const std::string unit);
+    Potential(const float high, const float low, const std::string unit, const Angular& origin);
+    Potential(const float high, const float low, const Unit& unit);
+    Potential(const float high, const float low, const Unit& unit, const Angular& origin);
+    Potential(const float high, const float low, const short int scaling);
+    Potential(const float high, const float low, const short int scaling, const std::string unit);
+    Potential(const float high, const float low, const short int scaling, const Unit& unit);
+    Potential(const float high, const float low, const short int scaling, const Unit& unit, const Angular& origin);
 
     // Destructors
     ~Potential();
@@ -75,12 +75,12 @@ public:
         const Distance& separationX, const Distance& separationY) const;
 
     // Getters
-    float getHigh() const { return this->getValue(); }
+    float getHigh() const { return this->getMagnitude(); }
     float getLow() const { return low; }
     Angular getOrigin() const { return origin; }
 
     // Setters
-    void setHigh(const float value) { this->setValue(value); }
+    void setHigh(const float value) { this->setMagnitude(value); }
     void setLow(const float value) { this->low = value; }
     void setOrigin(const Angular& position) { this->origin = position; }
 

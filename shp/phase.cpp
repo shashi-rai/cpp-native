@@ -22,26 +22,27 @@
 
 namespace shp {
 
-const float Phase::DEFAULT_VALUE = 0.0f;        // 0.0f
-const long Phase::DEFAULT_TIME = 0L;            // 0L
+const float Phase::DEFAULT_VALUE = Quantity::DEFAULT_VALUE; // 0.0f
+const std::time_t Phase::DEFAULT_TIME = Phase::getSystem(); // 0L
 
-Phase::Phase() : Point(), polarization(DEFAULT_VALUE), timestamp(0L) {
+Phase::Phase()
+    : Point(), polarization(DEFAULT_VALUE), timestamp(DEFAULT_TIME) {
 
 }
 
-Phase::Phase(float gradient)
+Phase::Phase(const float gradient)
         : Point(gradient), polarization(DEFAULT_VALUE),
         timestamp(DEFAULT_TIME) {
 
 }
 
-Phase::Phase(float amplitude, float gradient)
+Phase::Phase(const float amplitude, const float gradient)
         : Point(amplitude, gradient), polarization(DEFAULT_VALUE),
         timestamp(DEFAULT_TIME) {
 
 }
 
-Phase::Phase(float amplitude, float polarization, float azimuthal)
+Phase::Phase(const float amplitude, const float polarization, const float azimuthal)
         : Point(amplitude, azimuthal), polarization(polarization),
         timestamp(DEFAULT_TIME) {
 
@@ -52,42 +53,42 @@ Phase::Phase(std::string name)
 
 }
 
-Phase::Phase(std::string name, float gradient)
+Phase::Phase(std::string name, const float gradient)
         : Point(name, gradient), polarization(DEFAULT_VALUE),
         timestamp(DEFAULT_TIME) {
 
 }
 
-Phase::Phase(std::string name, float amplitude, float gradient)
+Phase::Phase(std::string name, const float amplitude, const float gradient)
         : Point(name, amplitude, gradient), polarization(DEFAULT_VALUE),
         timestamp(DEFAULT_TIME) {
 
 }
 
-Phase::Phase(std::string name, float amplitude, float polarization, float azimuthal)
+Phase::Phase(std::string name, const float amplitude, const float polarization, const float azimuthal)
         : Point(name, amplitude, azimuthal), polarization(polarization),
         timestamp(DEFAULT_TIME) {
 
 }
 
-Phase::Phase(std::string name, long timestamp)
+Phase::Phase(std::string name, const std::time_t timestamp)
         : Point(name), polarization(DEFAULT_VALUE), timestamp(timestamp) {
 
 }
 
-Phase::Phase(std::string name, float gradient, long timestamp)
+Phase::Phase(std::string name, const float gradient, const std::time_t timestamp)
         : Point(name, gradient), polarization(DEFAULT_VALUE), timestamp(timestamp) {
 
 }
 
-Phase::Phase(std::string name, float amplitude, float gradient, long timestamp)
+Phase::Phase(std::string name, const float amplitude, const float gradient, const std::time_t timestamp)
         : Point(name, amplitude, gradient), polarization(DEFAULT_VALUE),
         timestamp(timestamp) {
 
 }
 
-Phase::Phase(std::string name, float amplitude, float polarization, float azimuthal,
-        long timestamp)
+Phase::Phase(std::string name, const float amplitude, const float polarization, const float azimuthal,
+        const std::time_t timestamp)
         : Point(name, amplitude, azimuthal), polarization(polarization),
         timestamp(timestamp) {
 
@@ -104,9 +105,13 @@ bool Phase::operator==(const Phase& peer) const {
 
 Phase Phase::operator+(const Phase& peer) const {
     Phase self = *this, other = peer;
-    std::complex<float> ap1 = self.toAzimuthalComplex(self.getGradient()), ap2 = other.toAzimuthalComplex(peer.getGradient());
+    std::complex<float>
+        ap1 = self.toAzimuthalComplex(self.getGradient()),
+        ap2 = other.toAzimuthalComplex(peer.getGradient());
     std::complex<float> a_phasor = ap1 + ap2;
-    std::complex<float> pp1 = self.toPolarizationComplex(self.polarization), pp2 = other.toPolarizationComplex(peer.polarization);
+    std::complex<float>
+        pp1 = self.toPolarizationComplex(self.polarization),
+        pp2 = other.toPolarizationComplex(peer.polarization);
     std::complex<float> p_phasor = pp1 + pp2;
     Phase result = Phase("+", std::arg(p_phasor), std::arg(a_phasor), (timestamp + peer.timestamp));
     result.setAmplitude(std::abs(p_phasor));
@@ -115,9 +120,13 @@ Phase Phase::operator+(const Phase& peer) const {
 
 Phase Phase::operator-(const Phase& peer) const {
     Phase self = *this, other = peer;
-    std::complex<float> ap1 = self.toAzimuthalComplex(self.getGradient()), ap2 = other.toAzimuthalComplex(peer.getGradient());
+    std::complex<float>
+        ap1 = self.toAzimuthalComplex(self.getGradient()),
+        ap2 = other.toAzimuthalComplex(peer.getGradient());
     std::complex<float> a_phasor = ap1 - ap2;
-    std::complex<float> pp1 = self.toPolarizationComplex(self.polarization), pp2 = other.toPolarizationComplex(peer.polarization);
+    std::complex<float>
+        pp1 = self.toPolarizationComplex(self.polarization),
+        pp2 = other.toPolarizationComplex(peer.polarization);
     std::complex<float> p_phasor = pp1 - pp2;
     Phase result = Phase("-", std::arg(p_phasor), std::arg(a_phasor), (timestamp - peer.timestamp));
     result.setAmplitude(std::abs(p_phasor));
@@ -132,7 +141,7 @@ Angular Phase::getOrientation() const {
 }
 
 Point Phase::copy() {
-    Phase fresh(this->getName(), this->getPolarization(), this->getGradient(), timestamp);
+    Phase fresh(getName(), getPolarization(), getGradient(), timestamp);
     return fresh;
 }
 
@@ -148,7 +157,8 @@ std::string Phase::print() {
     result << "[Φ:";
 	result << Point::print() << ",𝜃:";
     result << polarization << ",t:";
-    result << timestamp << "]:";
+    result << std::put_time(std::localtime(&timestamp), "[%Y-%m-%d %H:%M:%S]");
+    result << "]:";
 	return result.str();
 }
 
@@ -160,5 +170,8 @@ std::complex<float> Phase::toPolarizationComplex(float change) {
     return std::complex<float>(getAmplitude() * std::cos(change), getAmplitude() * std::sin(change));
 }
 
+const std::time_t Phase::getSystem() {
+    return std::time(nullptr);
+}
 
 } // namespace shp

@@ -28,11 +28,13 @@ Gravity::Gravity() : Force() {
     setField(nullptr);
 }
 
-Gravity::Gravity(std::string name) : Force(name) {
+Gravity::Gravity(std::string name)
+        : Force(name) {
     setField(nullptr);
 }
 
-Gravity::Gravity(const std::shared_ptr<Field> field) : Force() {
+Gravity::Gravity(const std::shared_ptr<Field> field)
+        : Force() {
     setField(field);
 }
 
@@ -61,12 +63,12 @@ Gravity::Gravity(const float magnitude, const float direction,
     setField(field);
 }
 
-Gravity::Gravity(const float magnitude, const float direction, short int scaling)
+Gravity::Gravity(const float magnitude, const float direction, const short int scaling)
         : Force(magnitude, direction, scaling) {
     setField(nullptr);
 }
 
-Gravity::Gravity(const float magnitude, const float direction, short int scaling,
+Gravity::Gravity(const float magnitude, const float direction, const short int scaling,
         const std::shared_ptr<Field> field)
         : Force(magnitude, direction, scaling) {
     setField(field);
@@ -95,13 +97,13 @@ Gravity::Gravity(std::string name, const float magnitude, const float direction,
 }
 
 Gravity::Gravity(std::string name, const float magnitude, const float direction,
-        short int scaling)
+        const short int scaling)
         : Force(name, magnitude, direction, scaling) {
     setField(nullptr);
 }
 
 Gravity::Gravity(std::string name, const float magnitude, const float direction,
-        short int scaling, const std::shared_ptr<Field> field)
+        const short int scaling, const std::shared_ptr<Field> field)
         : Force(name, magnitude, direction, scaling) {
     setField(field);
 }
@@ -120,7 +122,8 @@ Gravity Gravity::operator()(const Mass& host, const Mass& peer, const shp::Dista
     shp::Potential potential_peer = peer.getField()->getPotential();
     shp::Distance distance = (potential_host.getDifference() - potential_peer.getDifference());
     Force effect = host(peer, sepration, distance);
-    return Gravity(effect.getMagnitude().getValue(), effect.getDirection().toRadians(), field);
+    shp::Quantity force = effect.getMagnitude();
+    return Gravity(force.getMagnitude(), effect.getDirection().toRadians(), field);
 }
 
 Acceleration Gravity::getAcceleration(const Mass& mass) const {

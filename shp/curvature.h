@@ -34,14 +34,14 @@ class Curvature : public Point {
 public:
     // Constructors
     Curvature();
-    Curvature(float polarization);
-    Curvature(float polarization, float azimuthal);
+    Curvature(const float polarization);
+    Curvature(const float polarization, const float azimuthal);
     Curvature(std::string name);
-    Curvature(std::string name, float polarization);
-    Curvature(std::string name, float polarization, float azimuthal);
-    Curvature(std::string name, PhaseArray& deforms);
-    Curvature(std::string name, PhaseArray& deforms, float polarization);
-    Curvature(std::string name, PhaseArray& deforms, float polarization, float azimuthal);
+    Curvature(std::string name, const float polarization);
+    Curvature(std::string name, const float polarization, const float azimuthal);
+    Curvature(std::string name, const PhaseArray& deforms);
+    Curvature(std::string name, const PhaseArray& deforms, const float polarization);
+    Curvature(std::string name, const PhaseArray& deforms, const float polarization, const float azimuthal);
 
     // Destructors
     ~Curvature();
@@ -52,8 +52,8 @@ public:
     Curvature operator-(const Curvature& peer) const;
 
     // Access operator
-    Phase& operator()(int position) { return deforms[position]; }
-    const Phase& operator()(int position) const { return deforms[position]; }
+    Phase operator()(int position) { return deforms[position]; }
+    const Phase operator()(int position) const { return deforms[position]; }
 
     // Getters
     float getPolarization() const { return polarization; }

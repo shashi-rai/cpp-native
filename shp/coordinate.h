@@ -34,9 +34,9 @@ class Coordinate {
 public:
     // Constructors
     Coordinate();
-    Coordinate(int x);
-    Coordinate(int x, int y);
-    Coordinate(int x, int y, int z);
+    Coordinate(const int x);
+    Coordinate(const int x, const int y);
+    Coordinate(const int x, const int y, const int z);
 
     // Destructors
     ~Coordinate();
@@ -45,6 +45,9 @@ public:
     bool operator==(const Coordinate& peer) const;
     Coordinate operator+(const Coordinate& peer) const;
     Coordinate operator-(const Coordinate& peer) const;
+    Coordinate operator*(const Coordinate& peer) const;
+    Coordinate operator/(const Coordinate& peer) const;
+    Coordinate operator%(const Coordinate& peer) const;
 
     // Getters
     int getX() const { return x; }
@@ -52,14 +55,20 @@ public:
     int getZ() const { return z; }
 
     // Setters
-    void setX(int value) { this->x = value; }
-    void setY(int value) { this->y = value; }
-    void setZ(int value) { this->z = value; }
+    void setX(const int value) { this->x = value; }
+    void setY(const int value) { this->y = value; }
+    void setZ(const int value) { this->z = value; }
 
     // Additional methods
+    Coordinate shiftX(const int step) const;
+    Coordinate shiftY(const int step) const;
+    Coordinate shiftZ(const int step) const;
     Coordinate copy();
     void clear();
     std::string print();
+
+public:
+    static const int ORIGIN;
 };
 
 typedef std::vector<Coordinate > CoordinateArray;

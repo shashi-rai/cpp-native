@@ -23,111 +23,111 @@
 namespace shp {
 
 Change::Change() : gradient(),
-	kinetic(shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)),
+	dynamical(shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)),
 	potential(shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)) {
 
 }
 
 Change::Change(const float gradient)
 		: gradient(gradient),
-		kinetic(shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)),
+		dynamical(shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)),
 		potential(shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)) {
 
 }
 
 Change::Change(const float gradient, short int scaling)
         : gradient(gradient),
-		kinetic(scaling, shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)),
+		dynamical(scaling, shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)),
 		potential(scaling, shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)) {
 
 }
 
 Change::Change(const float gradient, short int scaling, std::string unit)
         : gradient(gradient),
-		kinetic(scaling, unit), potential(scaling, unit) {
+		dynamical(scaling, unit), potential(scaling, unit) {
 
 }
 
 Change::Change(const float gradient, short int scaling, const Unit& unit)
         : gradient(gradient),
-		kinetic(scaling, unit), potential(scaling, unit) {
+		dynamical(scaling, unit), potential(scaling, unit) {
 
 }
 
 Change::Change(const Direction& gradient)
         : gradient(gradient),
-		kinetic(shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)),
+		dynamical(shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)),
 		potential(shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)) {
 
 }
 
 Change::Change(const float gradient, const float potential)
         : gradient(gradient),
-		kinetic(shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)),
+		dynamical(shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)),
 		potential(potential, shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)) {
 
 }
 
 Change::Change(const float gradient, const float potential, short int scaling)
         : gradient(gradient),
-		kinetic(scaling, shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)),
+		dynamical(scaling, shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)),
 		potential(potential, scaling, shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)) {
 
 }
 
 Change::Change(const float gradient, const float potential, short int scaling, std::string unit)
-        : gradient(gradient), kinetic(scaling, unit), potential(potential, scaling, unit) {
+        : gradient(gradient), dynamical(scaling, unit), potential(potential, scaling, unit) {
 
 }
 
 Change::Change(const float gradient, const float potential, short int scaling, const Unit& unit)
-        : gradient(gradient), kinetic(scaling, unit), potential(potential, scaling, unit) {
+        : gradient(gradient), dynamical(scaling, unit), potential(potential, scaling, unit) {
 
 }
 
 Change::Change(const Quantity& potential)
         : gradient(),
-		kinetic(shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)), potential(potential) {
+		dynamical(shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)), potential(potential) {
 
 }
 
-Change::Change(const Quantity& kinetic, const Quantity& potential)
-        : gradient(), kinetic(kinetic), potential(potential) {
+Change::Change(const Quantity& dynamical, const Quantity& potential)
+        : gradient(), dynamical(dynamical), potential(potential) {
 
 }
 
 Change::Change(const Direction& gradient, const Quantity& potential)
         : gradient(gradient),
-		kinetic(shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)), potential(potential) {
+		dynamical(shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)), potential(potential) {
 
 }
 
-Change::Change(const Direction& gradient, const Quantity& kinetic, const Quantity& potential)
-        : gradient(gradient), kinetic(kinetic), potential(potential) {
+Change::Change(const Direction& gradient, const Quantity& dynamical, const Quantity& potential)
+        : gradient(gradient), dynamical(dynamical), potential(potential) {
 
 }
 
-Change::Change(const float gradient, const float kinetic, const float potential)
+Change::Change(const float gradient, const float dynamical, const float potential)
         : gradient(gradient),
-		kinetic(kinetic, shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)),
+		dynamical(dynamical, shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)),
 		potential(potential, shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)) {
 
 }
 
-Change::Change(const float gradient, const float kinetic, const float potential, short int scaling)
+Change::Change(const float gradient, const float dynamical, const float potential, short int scaling)
         : gradient(gradient),
-		kinetic(kinetic, scaling, shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)),
+		dynamical(dynamical, scaling, shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)),
 		potential(potential, scaling, shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)) {
 
 }
 
-Change::Change(const float gradient, const float kinetic, const float potential, short int scaling, std::string unit)
-        : gradient(gradient), kinetic(kinetic, scaling, unit), potential(potential, scaling, unit) {
+Change::Change(const float gradient, const float dynamical, const float potential, short int scaling, std::string unit)
+        : gradient(gradient), dynamical(dynamical, scaling, unit), potential(potential, scaling, unit) {
 
 }
 
-Change::Change(const float gradient, const float kinetic, const float potential, short int scaling, const Unit& unit)
-        : gradient(gradient), kinetic(kinetic, scaling, unit), potential(potential, scaling, unit) {
+Change::Change(const float gradient, const float dynamical, const float potential, short int scaling, const Unit& unit)
+        : gradient(gradient), dynamical(dynamical, scaling, unit), potential(potential, scaling, unit) {
 
 }
 
@@ -137,33 +137,33 @@ Change::~Change() {
 
 bool Change::operator==(const Change& peer) const {
     return (gradient == peer.gradient)
-        && (kinetic == peer.kinetic)
+        && (dynamical == peer.dynamical)
         && (potential == peer.potential);
 }
 
 Change Change::operator+(const Change& peer) const {
     return Change((gradient + peer.gradient),
-            (kinetic + peer.kinetic), (potential + peer.potential));
+            (dynamical + peer.dynamical), (potential + peer.potential));
 }
 
 Change Change::operator-(const Change& peer) const {
     return Change((gradient - peer.gradient),
-            (kinetic - peer.kinetic), (potential - peer.potential));
+            (dynamical - peer.dynamical), (potential - peer.potential));
 }
 
 Change Change::operator*(const Change& peer) const {
     return Change((gradient * peer.gradient),
-            (kinetic * peer.kinetic), (potential * peer.potential));
+            (dynamical * peer.dynamical), (potential * peer.potential));
 }
 
 Change Change::operator/(const Change& peer) const {
     return Change((gradient / peer.gradient),
-            (kinetic / peer.kinetic), (potential / peer.potential));
+            (dynamical / peer.dynamical), (potential / peer.potential));
 }
 
 Change Change::operator%(const Change& peer) const {
     return Change((gradient % peer.gradient),
-            (kinetic % peer.kinetic), (potential % peer.potential));
+            (dynamical % peer.dynamical), (potential % peer.potential));
 }
 
 float Change::toRadians() const {
@@ -171,31 +171,31 @@ float Change::toRadians() const {
 }
 
 shp::Quantity Change::getLagrangian() const {
-    Quantity difference = (kinetic - potential); difference.adjustScaling();
-    return Quantity(difference.getValue(), difference.getScaling(), difference.getUnit());
+    Quantity difference = (dynamical - potential); difference.adjustScaling();
+    return Quantity(difference.getMagnitude(), difference.getScaling(), difference.getUnit());
 }
 
 shp::Quantity Change::getHamiltonian() const {
-    Quantity sumtotal = (kinetic + potential); sumtotal.adjustScaling();
-    return Quantity(sumtotal.getValue(), sumtotal.getScaling(), sumtotal.getUnit());
+    Quantity sumtotal = (dynamical + potential); sumtotal.adjustScaling();
+    return Quantity(sumtotal.getMagnitude(), sumtotal.getScaling(), sumtotal.getUnit());
 }
 
 float Change::leastAction() {
-    float hamiltonian = getHamiltonian().getValue();
-    float lagrangian = getLagrangian().getValue();
+    float hamiltonian = getHamiltonian().getMagnitude();
+    float lagrangian = getLagrangian().getMagnitude();
     float conversion = (lagrangian * cos(gradient.toRadians()));
-    kinetic.setValue((hamiltonian * conversion));
-    potential.setValue((hamiltonian * (1 - conversion)));
+    dynamical.setMagnitude((hamiltonian * conversion));
+    potential.setMagnitude((hamiltonian * (1 - conversion)));
     return conversion;
 }
 
 Change Change::copy() {
-    Change fresh(gradient, kinetic, potential);
+    Change fresh(gradient, dynamical, potential);
     return fresh;
 }
 
 void Change::clear() {
-    kinetic.clear();
+    dynamical.clear();
     potential.clear();
     gradient.clear();
     return;
@@ -204,7 +204,7 @@ void Change::clear() {
 std::string Change::print() {
     std::stringstream result;
     result << "T:";
-    result << kinetic.print() << ",U:";
+    result << dynamical.print() << ",U:";
 	result << potential.print() << ",";
 	result << gradient.print();
 	return result.str();

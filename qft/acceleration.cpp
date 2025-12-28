@@ -100,8 +100,8 @@ Acceleration Acceleration::operator/(const Acceleration& peer) const {
 }
 
 shp::Quantity Acceleration::getTotal() const {
-    float acceleration = (velocity.getTotal().getValue() * cos(change.toRadians()));
-    shp::Quantity result(acceleration, velocity.getMagnitude().getScaling(), getUnit());
+    float acceleration = (velocity.getTotal().getMagnitude() * cos(change.toRadians()));
+    shp::Quantity result(acceleration, velocity.getDisplacement().getScaling(), getUnit());
     return result;
 }
 
@@ -132,7 +132,7 @@ std::string Acceleration::print() {
 
 shp::Quantity Acceleration::getComponent(float phase) const {
 	shp::Quantity acceleration = getTotal();
-	return shp::Quantity((acceleration.getValue() * cos(phase)), acceleration.getScaling(), acceleration.getUnit());
+	return shp::Quantity((acceleration.getMagnitude() * cos(phase)), acceleration.getScaling(), acceleration.getUnit());
 }
 
 } // namespace qft

@@ -25,7 +25,6 @@
 #include <vector>
 #include "velocity.h"
 #include "../shp/change.h"
-#include "../shp/unit.h"
 
 namespace qft {
 

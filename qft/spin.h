@@ -24,6 +24,7 @@
 #include <cmath>
 #include <sstream>
 #include <vector>
+#include "../shp/quantity.h"
 
 namespace qft {
 
@@ -52,9 +53,9 @@ public:
     void setValue(const float amount) { this->value = amount; }
 
     // Additional methods
-    bool hasNoSpin() const { return value == 0; }
-    bool isClockwise() const { return value < 0; }
-    bool isAntiClockwise() const { return value > 0; }
+    bool hasNoSpin() const;
+    bool isClockwise() const;
+    bool isAntiClockwise() const;
     virtual Spin copy();
     virtual void clear();
     virtual std::string print();

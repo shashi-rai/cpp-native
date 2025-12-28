@@ -24,7 +24,8 @@ namespace qft {
 
 const std::string Density::UNIT = "/m^3";   // System International
 
-Density::Density() : name(), unit(UNIT), magnitude(), volume() {
+Density::Density()
+        : name(), unit(UNIT), magnitude(), volume() {
 
 }
 
@@ -43,7 +44,7 @@ Density::Density(const float magnitude, const std::string unit)
 
 }
 
-Density::Density(const float magnitude, short int scaling, const std::string unit)
+Density::Density(const float magnitude, const short int scaling, const std::string unit)
         : name(), unit(UNIT), magnitude(magnitude, scaling, unit), volume() {
 
 }
@@ -60,7 +61,7 @@ Density::Density(const float magnitude, const float volume,
 }
 
 Density::Density(const float magnitude, const float volume,
-        short int scaling, const std::string unit)
+        const short int scaling, const std::string unit)
         : name(), unit(UNIT), magnitude(magnitude, scaling, unit), volume(std::cbrt(volume)) {
 
 }
@@ -81,7 +82,7 @@ Density::Density(std::string name, const shp::Unit& unit)
 
 }
 
-Density::Density(std::string name, short int scaling, const shp::Unit& unit)
+Density::Density(std::string name, const short int scaling, const shp::Unit& unit)
         : name(name), unit(UNIT), magnitude(scaling, unit), volume() {
 
 }
@@ -97,7 +98,7 @@ Density::Density(std::string name, const float magnitude, const std::string unit
 }
 
 Density::Density(std::string name, const float magnitude,
-        short int scaling, const std::string unit)
+        const short int scaling, const std::string unit)
         : name(name), unit(UNIT), magnitude(magnitude, scaling, unit), volume() {
 
 }
@@ -114,7 +115,7 @@ Density::Density(std::string name, const float magnitude, const float volume,
 }
 
 Density::Density(std::string name, const float magnitude, const float volume,
-        short int scaling, const std::string unit)
+        const short int scaling, const std::string unit)
         : name(name), unit(UNIT), magnitude(magnitude, scaling, unit), volume(std::cbrt(volume)) {
 
 }
@@ -187,7 +188,7 @@ Density Density::operator%(const Density& peer) const {
 
 shp::Quantity Density::getTotal() const {
     shp::Quantity density = (magnitude / volume.getTotal());
-    return shp::Quantity(density.getValue(), density.getScaling(), density.getUnit());
+    return shp::Quantity(density.getMagnitude(), density.getScaling(), density.getUnit());
 }
 
 Density Density::copy() {
@@ -196,7 +197,7 @@ Density Density::copy() {
 }
 
 void Density::clear() {
-	name = "";
+	name.clear();
     unit.clear();
     magnitude.clear();
     volume.clear();
@@ -215,7 +216,7 @@ std::string Density::print() {
 
 shp::Quantity Density::getComponent(float phase) const {
 	shp::Quantity density = getTotal();
-    return shp::Quantity(getTotal().getValue() * cos(phase), density.getScaling(), density.getUnit());
+    return shp::Quantity(getTotal().getMagnitude() * cos(phase), density.getScaling(), density.getUnit());
 }
 
 } // namespace qft

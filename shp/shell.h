@@ -34,14 +34,14 @@ class Shell : public Point {
 public:
     // Constructors
     Shell();
-    Shell(float gradient);
+    Shell(const float gradient);
     Shell(std::string name);
-    Shell(std::string name, int limit);
-    Shell(std::string name, float gradient);
-    Shell(std::string name, float gradient, int limit);
-    Shell(std::string name, OrbitalArray& orbitals);
-    Shell(std::string name, OrbitalArray& orbitals, float gradient);
-    Shell(std::string name, OrbitalArray& orbitals, float gradient, int limit);
+    Shell(std::string name, const int limit);
+    Shell(std::string name, const float gradient);
+    Shell(std::string name, const float gradient, const int limit);
+    Shell(std::string name, const OrbitalArray& orbitals);
+    Shell(std::string name, const OrbitalArray& orbitals, const float gradient);
+    Shell(std::string name, const OrbitalArray& orbitals, const float gradient, const int limit);
 
     // Destructors
     ~Shell();
@@ -52,17 +52,17 @@ public:
     Shell operator-(const Shell& peer) const;
 
     // Access operator
-    Polygon& operator()(int x) { return orbitals[x]; }
-	const Polygon& operator()(int x) const { return orbitals[x]; }
-    Wave& operator()(int x, int y) { return orbitals[x](y); }
-	const Wave& operator()(int x, int y) const { return orbitals[x](y); }
+    Polygon operator()(int x) { return orbitals[x]; }
+	const Polygon operator()(int x) const { return orbitals[x]; }
+    Wave operator()(int x, int y) { return orbitals[x](y); }
+	const Wave operator()(int x, int y) const { return orbitals[x](y); }
 
     // Getters
     int getLimit() const { return limit; }
     OrbitalArray getOrbitals() const { return orbitals; }
 
     // Setters
-    void setLimit(int value) { this->limit = value; }
+    void setLimit(const int value) { this->limit = value; }
     void setOrbitals(const OrbitalArray& objects) { this->orbitals = objects; }
 
     // Additional methods
@@ -72,6 +72,9 @@ public:
     virtual Point copy();
     virtual void clear();
     virtual std::string print();
+
+public:
+    static const int DEFAULT_LIMIT;
 };
 
 typedef std::vector<Shell > ShellArray;

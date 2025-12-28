@@ -33,17 +33,17 @@ class Wave : public Curvature {
 public:
     // Constructors
     Wave();
-    Wave(float polarization);
-    Wave(float polarization, float azimuthal);
+    Wave(const float polarization);
+    Wave(const float polarization, const float azimuthal);
     Wave(std::string name);
-    Wave(std::string name, float polarization);
-    Wave(std::string name, float polarization, float azimuthal);
-    Wave(std::string name, long frequency, float wavelength);
-    Wave(std::string name, long frequency, float wavelength, float polarization);
-    Wave(std::string name, long frequency, float wavelength, float polarization, float azimuthal);
-    Wave(std::string name, long frequency, float wavelength, CurvatureArray& wavelets);
-    Wave(std::string name, long frequency, float wavelength, CurvatureArray& wavelets, float polarization);
-    Wave(std::string name, long frequency, float wavelength, CurvatureArray& wavelets, float polarization, float azimuthal);
+    Wave(std::string name, const float polarization);
+    Wave(std::string name, const float polarization, const float azimuthal);
+    Wave(std::string name, const long frequency, const float wavelength);
+    Wave(std::string name, const long frequency, const float wavelength, const float polarization);
+    Wave(std::string name, const long frequency, const float wavelength, const float polarization, const float azimuthal);
+    Wave(std::string name, const long frequency, const float wavelength, const CurvatureArray& wavelets);
+    Wave(std::string name, const long frequency, const float wavelength, const CurvatureArray& wavelets, const float polarization);
+    Wave(std::string name, const long frequency, const float wavelength, const CurvatureArray& wavelets, const float polarization, const float azimuthal);
 
     // Destructors
     ~Wave();
@@ -54,8 +54,8 @@ public:
     Wave operator-(const Wave& peer) const;
 
     // Access operator
-    Curvature& operator()(int index) { return wavelets[index]; }
-    const Curvature& operator()(int index) const { return wavelets[index]; }
+    Curvature operator()(int index) { return wavelets[index]; }
+    const Curvature operator()(int index) const { return wavelets[index]; }
 
     // Getters
     long getFrequency() const { return frequency; }
@@ -63,8 +63,8 @@ public:
     CurvatureArray getWavelets() const { return wavelets; }
 
     // Setters
-    void setFrequency(long value) { this->frequency = value; }
-    void setWavelength(float value) { this->wavelength = value; }
+    void setFrequency(const long value) { this->frequency = value; }
+    void setWavelength(const float value) { this->wavelength = value; }
     void setWavelets(const CurvatureArray& curves) { this->wavelets = curves; }
 
     // Additional methods
@@ -74,6 +74,8 @@ public:
     virtual Point copy();
     virtual void clear();
     virtual std::string print();
+public:
+    static const long DEFAULT_FREQUENCY;
 };
 
 typedef std::vector<Wave > WaveArray;

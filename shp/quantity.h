@@ -29,23 +29,23 @@
 namespace shp {
 
 class Quantity {
-    float value;
+    float magnitude;
     short int scaling;
     Unit unit;
 public:
     // Constructors
     Quantity();
-    Quantity(float value);
-    Quantity(short int scaling);
+    Quantity(const float magnitude);
+    Quantity(const short int scaling);
     Quantity(const std::string unit);
-    Quantity(short int scaling, const std::string unit);
+    Quantity(const short int scaling, const std::string unit);
     Quantity(const Unit& unit);
-    Quantity(short int scaling, const Unit& unit);
-    Quantity(float value, const std::string unit);
-    Quantity(float value, const Unit& unit);
-    Quantity(float value, short int scaling);
-    Quantity(float value, short int scaling, const std::string unit);
-    Quantity(float value, short int scaling, const Unit& unit);
+    Quantity(const short int scaling, const Unit& unit);
+    Quantity(const float magnitude, const std::string unit);
+    Quantity(const float magnitude, const Unit& unit);
+    Quantity(const float magnitude, const short int scaling);
+    Quantity(const float magnitude, const short int scaling, const std::string unit);
+    Quantity(const float magnitude, const short int scaling, const Unit& unit);
 
     // Destructors
     ~Quantity();
@@ -59,17 +59,18 @@ public:
     Quantity operator%(const Quantity& peer) const;
 
     // Getters
-    float getValue() const { return value; }
+    float getMagnitude() const { return magnitude; }
     short int getScaling() const { return scaling; }
     Unit getUnit()const { return unit; }
 
     // Setters
-    void setValue(const float amount) { this->value = amount; }
+    void setMagnitude(const float amount) { this->magnitude = amount; }
     void setScaling(const short int factor) { this->scaling = factor; }
     void setUnit(const Unit& object) { this->unit = object; }
 
     // Additional methods
     Quantity getInverse() const;
+    bool checkInfinity() const;
     short int checkScaling(float amount) const;
     void adjustNumeric();
     void adjustScaling();
@@ -79,6 +80,7 @@ public:
     float getComponent(float phase) const;
 public:
     static const float DEFAULT_VALUE;
+    static const float DECIMAL_SCALE;
     static const short int DEFAULT_SCALE;
 };
 

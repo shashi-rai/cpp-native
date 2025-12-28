@@ -22,30 +22,42 @@
 
 namespace shp {
 
-Point::Point() : Shape(), amplitude(0.0), gradient(0.0f) {
+Point::Point()
+        : Shape(),
+        amplitude(Quantity::DEFAULT_VALUE),
+        gradient(Quantity::DEFAULT_VALUE) {
 
 }
 
-Point::Point(float gradient) : Shape(), amplitude(0.0), gradient(gradient) {
+Point::Point(const float gradient)
+        : Shape(),
+        amplitude(0.0), gradient(gradient) {
 
 }
 
-Point::Point(float amplitude, float gradient)
-        : Shape(), amplitude(amplitude), gradient(gradient) {
+Point::Point(const float amplitude, const float gradient)
+        : Shape(),
+        amplitude(amplitude), gradient(gradient) {
 
 }
 
-Point::Point(std::string name) : Shape(name), amplitude(0.0), gradient(0.0f) {
+Point::Point(std::string name)
+        : Shape(name),
+        amplitude(Quantity::DEFAULT_VALUE),
+        gradient(Quantity::DEFAULT_VALUE) {
 
 }
 
-Point::Point(std::string name, float gradient)
-        : Shape(name), amplitude(0.0), gradient(gradient) {
+Point::Point(std::string name, const float gradient)
+        : Shape(name),
+        amplitude(Quantity::DEFAULT_VALUE),
+        gradient(gradient) {
 
 }
 
-Point::Point(std::string name, float amplitude, float gradient)
-        : Shape(name), amplitude(amplitude), gradient(gradient) {
+Point::Point(std::string name, const float amplitude, const float gradient)
+        : Shape(name),
+        amplitude(amplitude), gradient(gradient) {
 
 }
 
@@ -60,7 +72,9 @@ bool Point::operator==(const Point& peer) const {
 
 Point Point::operator+(const Point& peer) const {
     Point self = *this, other = peer;
-    std::complex<float> ap1 = self.toAzimuthalComplex(gradient), ap2 = other.toAzimuthalComplex(peer.gradient);
+    std::complex<float>
+        ap1 = self.toAzimuthalComplex(gradient),
+        ap2 = other.toAzimuthalComplex(peer.gradient);
     std::complex<float> a_phasor = ap1 + ap2;
 
     return Point("+", std::abs(a_phasor), std::arg(a_phasor));
@@ -68,7 +82,9 @@ Point Point::operator+(const Point& peer) const {
 
 Point Point::operator-(const Point& peer) const {
     Point self = *this, other = peer;
-    std::complex<float> ap1 = self.toAzimuthalComplex(gradient), ap2 = other.toAzimuthalComplex(peer.gradient);
+    std::complex<float>
+        ap1 = self.toAzimuthalComplex(gradient),
+        ap2 = other.toAzimuthalComplex(peer.gradient);
     std::complex<float> a_phasor = ap1 - ap2;
     return Point("-", std::abs(a_phasor), std::arg(a_phasor));
 }
@@ -80,13 +96,13 @@ Angular Point::getOrientation() const {
 }
 
 Point Point::copy() {
-    Point fresh(this->getName(), amplitude, gradient);
+    Point fresh(getName(), amplitude, gradient);
     return fresh;
 }
 
 void Point::clear() {
     Shape::clear();
-	amplitude = 0.0f; gradient = 0.0f;
+	amplitude = gradient = Quantity::DEFAULT_VALUE;
     return;
 }
 

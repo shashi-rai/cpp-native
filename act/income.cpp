@@ -22,42 +22,78 @@
 
 namespace act {
  
-Income::Income() : name(), revenues(), expenses() {
+Income::Income() : name(), currency(), revenues(), expenses() {
 
 }
 
 Income::Income(std::string name)
-        : name(name), revenues(), expenses() {
+        : name(name), currency(), revenues(), expenses() {
+
+}
+
+Income::Income(const Currency& currency)
+        : name(), currency(currency), revenues(), expenses() {
 
 }
 
 Income::Income(const RevenueArray& revenues)
-        : name(), revenues(revenues), expenses() {
+        : name(), currency(), revenues(revenues), expenses() {
+
+}
+
+Income::Income(const Currency& currency, const RevenueArray& revenues)
+        : name(), currency(currency), revenues(revenues), expenses() {
 
 }
 
 Income::Income(const ExpenseArray& expenses)
-        : name(), revenues(), expenses(expenses) {
+        : name(), currency(), revenues(), expenses(expenses) {
+
+}
+
+Income::Income(const Currency& currency, const ExpenseArray& expenses)
+        : name(), currency(currency), revenues(), expenses(expenses) {
 
 }
 
 Income::Income(const RevenueArray& revenues, const ExpenseArray& expenses)
-        : name(), revenues(revenues), expenses(expenses) {
+        : name(), currency(), revenues(revenues), expenses(expenses) {
+
+}
+
+Income::Income(const Currency& currency, const RevenueArray& revenues, const ExpenseArray& expenses)
+        : name(), currency(currency), revenues(revenues), expenses(expenses) {
 
 }
 
 Income::Income(std::string name, const RevenueArray& revenues)
-        : name(name), revenues(revenues), expenses() {
+        : name(name), currency(), revenues(revenues), expenses() {
+
+}
+
+Income::Income(std::string name, const Currency& currency, const RevenueArray& revenues)
+        : name(name), currency(currency), revenues(revenues), expenses() {
 
 }
 
 Income::Income(std::string name, const ExpenseArray& expenses)
-        : name(name), revenues(), expenses(expenses) {
+        : name(name), currency(), revenues(), expenses(expenses) {
+
+}
+
+Income::Income(std::string name, const Currency& currency, const ExpenseArray& expenses)
+        : name(name), currency(currency), revenues(), expenses(expenses) {
 
 }
 
 Income::Income(std::string name, const RevenueArray& revenues, const ExpenseArray& expenses)
-        : name(name), revenues(revenues), expenses(expenses) {
+        : name(name), currency(), revenues(revenues), expenses(expenses) {
+
+}
+
+Income::Income(std::string name, const Currency& currency,
+        const RevenueArray& revenues, const ExpenseArray& expenses)
+        : name(name), currency(currency), revenues(revenues), expenses(expenses) {
 
 }
 
@@ -66,7 +102,7 @@ Income::~Income() {
 }
 
 bool Income::operator==(const Income& peer) const {
-    return (name == peer.name)
+    return (name == peer.name) && (currency == peer.currency)
         && (revenues == peer.revenues) && (expenses == peer.expenses);
 }
 
@@ -75,7 +111,7 @@ Income Income::operator+(const Income& peer) const {
     incoming.insert(incoming.end(), peer.revenues.begin(), peer.revenues.end());
     ExpenseArray outgoing(expenses);
     outgoing.insert(outgoing.end(), peer.expenses.begin(), peer.expenses.end());
-    return Income("+", incoming, outgoing);
+    return Income("+", currency, incoming, outgoing);
 }
 
 Income Income::operator-(const Income& peer) const {
@@ -93,7 +129,7 @@ Income Income::operator-(const Income& peer) const {
             outgoing.erase(found);
         }
     }
-    return Income("-", incoming, outgoing);
+    return Income("-", currency, incoming, outgoing);
 }
 
 int Income::getRevenueCount() const {
@@ -160,13 +196,36 @@ void Income::setExpense(int index, const Expense& object) {
     return;
 }
 
+Amount Income::getRevenueTotal() const {
+    Amount result(0, "Revenue Total");
+    for (RevenueArray::const_iterator it = revenues.begin(); it != revenues.end(); ++it) {
+        float amount = (*it).getValue();
+        result = (result + amount);
+    }
+    return result;
+}
+
+Amount Income::getExpenseTotal() const {
+    Amount result(0, "Expense Total");
+    for (ExpenseArray::const_iterator it = expenses.begin(); it != expenses.end(); ++it) {
+        float amount = (*it).getValue();
+        result = (result + amount);
+    }
+    return result;
+}
+
+Amount Income::getBalance() const {
+    return (getRevenueTotal() - getExpenseTotal());
+}
+
 Income Income::copy() {
-    Income fresh(name, revenues, expenses);
+    Income fresh(name, currency, revenues, expenses);
     return fresh;
 }
 
 void Income::clear() {
     name.clear();
+    currency.clear();
     revenues.clear();
     expenses.clear();
     return;
@@ -174,7 +233,8 @@ void Income::clear() {
 
 std::string Income::print() {
     std::stringstream result;
-    result << name << ",sz:";
+    result << name << ",";
+    result << currency.print() << ",sz:";
     result << revenues.size() << ",sz:";
     result << expenses.size();
 	return result.str();

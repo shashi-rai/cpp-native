@@ -40,14 +40,18 @@ public:
     Magnetic(const float magnitude, const std::shared_ptr<Field> field);
     Magnetic(const float magnitude, const float direction);
     Magnetic(const float magnitude, const float direction, const std::shared_ptr<Field> field);
-    Magnetic(const float magnitude, const float direction, short int scaling);
-    Magnetic(const float magnitude, const float direction, short int scaling, const std::shared_ptr<Field> field);
+    Magnetic(const float magnitude, const float direction, const short int scaling);
+    Magnetic(const float magnitude, const float direction, const short int scaling,
+        const std::shared_ptr<Field> field);
     Magnetic(std::string name, const float magnitude);
     Magnetic(std::string name, const float magnitude, const std::shared_ptr<Field> field);
     Magnetic(std::string name, const float magnitude, const float direction);
-    Magnetic(std::string name, const float magnitude, const float direction, const std::shared_ptr<Field> field);
-    Magnetic(std::string name, const float magnitude, const float direction, short int scaling);
-    Magnetic(std::string name, const float magnitude, const float direction, short int scaling, const std::shared_ptr<Field> field);
+    Magnetic(std::string name, const float magnitude, const float direction,
+        const std::shared_ptr<Field> field);
+    Magnetic(std::string name, const float magnitude, const float direction,
+        const short int scaling);
+    Magnetic(std::string name, const float magnitude, const float direction,
+        const short int scaling, const std::shared_ptr<Field> field);
 
     // Destructors
     ~Magnetic();

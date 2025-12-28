@@ -22,28 +22,32 @@
 
 namespace shp {
 
-Planar::Planar() : Point(), lines() {
+Planar::Planar()
+        : Point(), lines() {
 
 }
 
-Planar::Planar(float gradient) : Point(gradient), lines() {
+Planar::Planar(const float gradient)
+        : Point(gradient), lines() {
 
 }
 
-Planar::Planar(std::string name) : Point(name), lines() {
+Planar::Planar(std::string name)
+        : Point(name), lines() {
 
 }
 
-Planar::Planar(std::string name, float gradient) : Point(name, gradient), lines() {
+Planar::Planar(std::string name, const float gradient)
+        : Point(name, gradient), lines() {
 
 }
 
-Planar::Planar(std::string name, LinearArray& lines)
+Planar::Planar(std::string name, const LinearArray& lines)
         : Point(name), lines(lines) {
 
 }
 
-Planar::Planar(std::string name, LinearArray& lines, float gradient)
+Planar::Planar(std::string name, const LinearArray& lines, const float gradient)
         : Point(name, gradient), lines(lines) {
 
 }
@@ -60,7 +64,7 @@ bool Planar::operator==(const Planar& peer) const {
 Planar Planar::operator+(const Planar& peer) const {
     LinearArray result(lines);
     result.insert(result.end(), peer.lines.begin(), peer.lines.end());
-    return Planar("+", result);
+    return Planar("+", result, (getGradient() + peer.getGradient()));
 }
 
 Planar Planar::operator-(const Planar& peer) const {
@@ -71,7 +75,7 @@ Planar Planar::operator-(const Planar& peer) const {
             result.erase(found);
         }
     }
-    return Planar("-", result);
+    return Planar("-", result, (getGradient() - peer.getGradient()));
 }
 
 int Planar::getLineCount() const {
@@ -107,7 +111,7 @@ void Planar::set(int index, const Linear& object) {
 }
 
 Point Planar::copy() {
-    Planar fresh(this->getName(), this->lines);
+    Planar fresh(getName(), lines, getGradient());
     return fresh;
 }
 

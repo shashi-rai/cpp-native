@@ -22,11 +22,13 @@
 
 namespace qft {
 
-Magnetic::Magnetic() : Force() {
+Magnetic::Magnetic()
+        : Force() {
     setField(nullptr);
 }
 
-Magnetic::Magnetic(std::string name) : Force(name) {
+Magnetic::Magnetic(std::string name)
+        : Force(name) {
     setField(nullptr);
 }
 
@@ -60,12 +62,12 @@ Magnetic::Magnetic(const float magnitude, const float direction,
     setField(field);
 }
 
-Magnetic::Magnetic(const float magnitude, const float direction, short int scaling)
+Magnetic::Magnetic(const float magnitude, const float direction, const short int scaling)
         : Force(magnitude, direction, scaling) {
     setField(nullptr);
 }
 
-Magnetic::Magnetic(const float magnitude, const float direction, short int scaling,
+Magnetic::Magnetic(const float magnitude, const float direction, const short int scaling,
         const std::shared_ptr<Field> field)
         : Force(magnitude, direction, scaling) {
     setField(field);
@@ -94,13 +96,13 @@ Magnetic::Magnetic(std::string name, const float magnitude, const float directio
 }
 
 Magnetic::Magnetic(std::string name, const float magnitude, const float direction,
-        short int scaling)
+        const short int scaling)
         : Force(name, magnitude, direction, scaling) {
     setField(nullptr);
 }
 
 Magnetic::Magnetic(std::string name, const float magnitude, const float direction,
-        short int scaling, const std::shared_ptr<Field> field)
+        const short int scaling, const std::shared_ptr<Field> field)
         : Force(name, magnitude, direction, scaling) {
     setField(field);
 }

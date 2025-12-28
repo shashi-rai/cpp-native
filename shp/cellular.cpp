@@ -26,24 +26,27 @@ Cellular::Cellular() : Point(), shells() {
 
 }
 
-Cellular::Cellular(float gradient) : Point(gradient), shells() {
+Cellular::Cellular(float gradient)
+        : Point(gradient), shells() {
 
 }
 
-Cellular::Cellular(std::string name) : Point(name), shells() {
+Cellular::Cellular(std::string name)
+        : Point(name), shells() {
 
 }
 
-Cellular::Cellular(std::string name, float gradient) : Point(name, gradient), shells() {
+Cellular::Cellular(std::string name, const float gradient)
+        : Point(name, gradient), shells() {
 
 }
 
-Cellular::Cellular(std::string name, ShellArray& shells)
+Cellular::Cellular(std::string name, const ShellArray& shells)
         : Point(name), shells(shells) {
 
 }
 
-Cellular::Cellular(std::string name, ShellArray& shells, float gradient)
+Cellular::Cellular(std::string name, const ShellArray& shells, const float gradient)
         : Point(name, gradient), shells(shells) {
 
 }
@@ -60,7 +63,7 @@ bool Cellular::operator==(const Cellular& peer) const {
 Cellular Cellular::operator+(const Cellular& peer) const {
     ShellArray result(shells);
     result.insert(result.end(), peer.shells.begin(), peer.shells.end());
-    return Cellular("+", result);
+    return Cellular("+", result, (getGradient() + peer.getGradient()));
 }
 
 Cellular Cellular::operator-(const Cellular& peer) const {
@@ -71,7 +74,7 @@ Cellular Cellular::operator-(const Cellular& peer) const {
             result.erase(found);
         }
     }
-    return Cellular("-", result);
+    return Cellular("-", result, (getGradient() - peer.getGradient()));
 }
 
 int Cellular::getShellCount() const {
@@ -107,7 +110,7 @@ void Cellular::set(int index, const Shell& object) {
 }
 
 Point Cellular::copy() {
-    Cellular fresh(this->getName(), this->shells);
+    Cellular fresh(getName(), shells, getGradient());
     return fresh;
 }
 

@@ -26,7 +26,6 @@
 #include <vector>
 #include "../shp/direction.h"
 #include "../shp/quantity.h"
-#include "../shp/unit.h"
 
 namespace qft {
 
@@ -50,19 +49,21 @@ public:
     Force(std::string name);
     Force(const float magnitude);
     Force(const float magnitude, const std::string unit);
-    Force(const float magnitude, short int scaling, const std::string unit);
+    Force(const float magnitude, const short int scaling, const std::string unit);
     Force(const float magnitude, const float direction);
     Force(const float magnitude, const float direction, const std::string unit);
-    Force(const float magnitude, const float direction, short int scaling);
-    Force(const float magnitude, const float direction, short int scaling, const std::string unit);
+    Force(const float magnitude, const float direction, const short int scaling);
+    Force(const float magnitude, const float direction, const short int scaling,
+        const std::string unit);
     Force(const shp::Quantity& magnitude, const shp::Direction& direction);
     Force(std::string name, const shp::Unit& unit);
     Force(std::string name, const float magnitude);
     Force(std::string name, const float magnitude, const shp::Unit& unit);
     Force(std::string name, const float magnitude, const float direction);
     Force(std::string name, const float magnitude, const float direction, const std::string unit);
-    Force(std::string name, const float magnitude, const float direction, short int scaling);
-    Force(std::string name, const float magnitude, const float direction, short int scaling, const std::string unit);
+    Force(std::string name, const float magnitude, const float direction, const short int scaling);
+    Force(std::string name, const float magnitude, const float direction, const short int scaling,
+        const std::string unit);
     Force(std::string name, const shp::Quantity& magnitude, const shp::Direction& direction);
 
     // Destructors

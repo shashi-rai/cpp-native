@@ -100,7 +100,7 @@ Membrane Membrane::copy() {
 
 void Membrane::clear() {
     Shape::clear();
-    potential = 0.0f;
+    potential = shp::Quantity::DEFAULT_VALUE;
     proteins.clear();
     return;
 }

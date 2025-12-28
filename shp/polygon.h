@@ -34,14 +34,14 @@ class Polygon : public Point {
 public:
     // Constructors
     Polygon();
-    Polygon(float gradient);
+    Polygon(const float gradient);
     Polygon(std::string name);
-    Polygon(std::string name, int limit);
-    Polygon(std::string name, float gradient);
-    Polygon(std::string name, float gradient, int limit);
-    Polygon(std::string name, WaveArray& waves);
-    Polygon(std::string name, WaveArray& waves, float gradient);
-    Polygon(std::string name, WaveArray& waves, float gradient, int limit);
+    Polygon(std::string name, const int limit);
+    Polygon(std::string name, const float gradient);
+    Polygon(std::string name, const float gradient, const int limit);
+    Polygon(std::string name, const WaveArray& waves);
+    Polygon(std::string name, const WaveArray& waves, const float gradient);
+    Polygon(std::string name, const WaveArray& waves, const float gradient, const int limit);
 
     // Destructors
     ~Polygon();
@@ -52,15 +52,15 @@ public:
     Polygon operator-(const Polygon& peer) const;
 
     // Access operator
-    Wave& operator()(int x) { return waves[x]; }
-    const Wave& operator()(int x) const { return waves[x]; }
+    Wave operator()(int x) { return waves[x]; }
+    const Wave operator()(int x) const { return waves[x]; }
 
     // Getters
     int getLimit() const { return limit; }
     WaveArray getWaves() const { return waves; }
 
     // Setters
-    void setLimit(int value) { this->limit = value; }
+    void setLimit(const int value) { this->limit = value; }
     void setWaves(const WaveArray& objects) { this->waves = objects; }
 
     // Additional methods
@@ -70,6 +70,9 @@ public:
     virtual Point copy();
     virtual void clear();
     virtual std::string print();
+
+public:
+    static const int DEFAULT_LIMIT;
 };
 
 typedef std::vector<Polygon > OrbitalArray;

@@ -125,7 +125,7 @@ Quark Quark::operator*(const Quark& peer) const {
 Quark Quark::operator/(const Quark& peer) const {
     return Quark("/",
         (this->getSpin() * peer.getSpin()),
-        (this->getEnergy() / peer.getEnergy()));
+        (this->getEnergy() * peer.getEnergy()));
 }
 
 Quark Quark::operator%(const Quark& peer) const {
@@ -135,27 +135,27 @@ Quark Quark::operator%(const Quark& peer) const {
 }
 
 shp::Quantity Quark::getWavelength() const {
-    return this->getEnergy().getWavelength().getMagnitude();
+    return this->getEnergy().getWavelength().getLength();
 }
 
 const Mass Quark::getMassLow(short int number) {
-    Mass result;
+    shp::Quantity result;
     if ((number > 0 && number <= TYPE_MAX)) {
         result = Energy::getMegaElectronvolt(MASS_LOWER[number-1]);
     } else {
         result = Energy::getMegaElectronvolt(MASS_LOWER[0]);
     }
-    return result;
+    return Mass(result.getMagnitude(), result.getScaling(), result.getUnit());
 }
 
 const Mass Quark::getMassHigh(short int number) {
-    Mass result;
+    shp::Quantity result;
     if ((number > 0 && number <= TYPE_MAX)) {
         result = Energy::getMegaElectronvolt(MASS_HIGHER[number-1]);
     } else {
         result = Energy::getMegaElectronvolt(MASS_HIGHER[0]);
     }
-    return result;
+    return Mass(result.getMagnitude(), result.getScaling(), result.getUnit());
 }
 
 const Charge Quark::getElectricCharge(short int number) {

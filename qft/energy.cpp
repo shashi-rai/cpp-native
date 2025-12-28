@@ -51,7 +51,7 @@ Energy::Energy(std::string name) : Phase(name),
 
 }
 
-Energy::Energy(float gradient) : Phase(gradient),
+Energy::Energy(const float gradient) : Phase(gradient),
 		wavelength(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
 		mass(shp::Quantity::DEFAULT_VALUE),
@@ -60,7 +60,7 @@ Energy::Energy(float gradient) : Phase(gradient),
 
 }
 
-Energy::Energy(std::string name, float gradient) : Phase(name, gradient),
+Energy::Energy(std::string name, const float gradient) : Phase(name, gradient),
 		wavelength(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
 		mass(shp::Quantity::DEFAULT_VALUE),
@@ -69,7 +69,7 @@ Energy::Energy(std::string name, float gradient) : Phase(name, gradient),
 
 }
 
-Energy::Energy(float amplitude, float gradient)
+Energy::Energy(float amplitude, const float gradient)
         : Phase(amplitude, gradient),
 		wavelength(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -79,7 +79,7 @@ Energy::Energy(float amplitude, float gradient)
 
 }
 
-Energy::Energy(std::string name, float amplitude, float gradient)
+Energy::Energy(std::string name, const float amplitude, const float gradient)
         : Phase(name, amplitude, gradient),
 		wavelength(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -89,7 +89,7 @@ Energy::Energy(std::string name, float amplitude, float gradient)
 
 }
 
-Energy::Energy(float amplitude, float gradient, float wavelength)
+Energy::Energy(float amplitude, const float gradient, const float wavelength)
         : Phase(amplitude, gradient),
 		wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -99,7 +99,8 @@ Energy::Energy(float amplitude, float gradient, float wavelength)
 
 }
 
-Energy::Energy(float amplitude, float gradient, float wavelength, short int scaling)
+Energy::Energy(const float amplitude, const float gradient,
+        const float wavelength, const short int scaling)
         : Phase(amplitude, gradient), wavelength(wavelength, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
 		mass(shp::Quantity::DEFAULT_VALUE),
@@ -108,7 +109,8 @@ Energy::Energy(float amplitude, float gradient, float wavelength, short int scal
 
 }
 
-Energy::Energy(std::string name, float amplitude, float gradient, float wavelength)
+Energy::Energy(std::string name, const float amplitude, const float gradient,
+        const float wavelength)
         : Phase(name, amplitude, gradient), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
 		mass(shp::Quantity::DEFAULT_VALUE),
@@ -117,8 +119,8 @@ Energy::Energy(std::string name, float amplitude, float gradient, float waveleng
 
 }
 
-Energy::Energy(std::string name, float amplitude, float gradient,
-		float wavelength, short int scaling)
+Energy::Energy(std::string name, const float amplitude, const float gradient,
+		const float wavelength, const short int scaling)
         : Phase(name, amplitude, gradient), wavelength(wavelength, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
 		mass(shp::Quantity::DEFAULT_VALUE),
@@ -127,7 +129,7 @@ Energy::Energy(std::string name, float amplitude, float gradient,
 
 }
 
-Energy::Energy(float wavelength, const shp::Unit& unit)
+Energy::Energy(const float wavelength, const shp::Unit& unit)
         : Phase(), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
 		mass(shp::Quantity::DEFAULT_VALUE),
@@ -135,7 +137,7 @@ Energy::Energy(float wavelength, const shp::Unit& unit)
 
 }
 
-Energy::Energy(float wavelength, short int scaling, const shp::Unit& unit)
+Energy::Energy(const float wavelength, const short int scaling, const shp::Unit& unit)
         : Phase(), wavelength(wavelength, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
 		mass(shp::Quantity::DEFAULT_VALUE),
@@ -143,7 +145,7 @@ Energy::Energy(float wavelength, short int scaling, const shp::Unit& unit)
 
 }
 
-Energy::Energy(std::string name, float wavelength, const shp::Unit& unit)
+Energy::Energy(std::string name, const float wavelength, const shp::Unit& unit)
         : Phase(name), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
 		mass(shp::Quantity::DEFAULT_VALUE),
@@ -151,7 +153,7 @@ Energy::Energy(std::string name, float wavelength, const shp::Unit& unit)
 
 }
 
-Energy::Energy(std::string name, float wavelength, short int scaling,
+Energy::Energy(std::string name, const float wavelength, const short int scaling,
 		const shp::Unit& unit)
         : Phase(name), wavelength(wavelength, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -244,7 +246,7 @@ Energy::Energy(std::string name, const Charge& charge, const shp::Unit& unit)
 
 }
 
-Energy::Energy(float wavelength, const Mass& mass)
+Energy::Energy(const float wavelength, const Mass& mass)
         : Phase(), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         mass(mass), charge(shp::Quantity::DEFAULT_VALUE),
@@ -252,7 +254,7 @@ Energy::Energy(float wavelength, const Mass& mass)
 
 }
 
-Energy::Energy(float wavelength, const Charge& charge)
+Energy::Energy(const float wavelength, const Charge& charge)
         : Phase(), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         mass(shp::Quantity::DEFAULT_VALUE), charge(charge),
@@ -260,7 +262,7 @@ Energy::Energy(float wavelength, const Charge& charge)
 
 }
 
-Energy::Energy(float wavelength, const Mass& mass, const Charge& charge)
+Energy::Energy(const float wavelength, const Mass& mass, const Charge& charge)
         : Phase(), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         mass(mass), charge(charge),
@@ -268,7 +270,7 @@ Energy::Energy(float wavelength, const Mass& mass, const Charge& charge)
 
 }
 
-Energy::Energy(float wavelength, float mass, const shp::Unit& unit)
+Energy::Energy(const float wavelength, const float mass, const shp::Unit& unit)
         : Phase(), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
 		mass(mass), charge(shp::Quantity::DEFAULT_VALUE),
@@ -276,7 +278,7 @@ Energy::Energy(float wavelength, float mass, const shp::Unit& unit)
 
 }
 
-Energy::Energy(float wavelength, const Mass& mass, const shp::Unit& unit)
+Energy::Energy(const float wavelength, const Mass& mass, const shp::Unit& unit)
         : Phase(), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         mass(mass), charge(shp::Quantity::DEFAULT_VALUE),
@@ -284,7 +286,7 @@ Energy::Energy(float wavelength, const Mass& mass, const shp::Unit& unit)
 
 }
 
-Energy::Energy(float wavelength, const Charge& charge, const shp::Unit& unit)
+Energy::Energy(const float wavelength, const Charge& charge, const shp::Unit& unit)
         : Phase(), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         mass(shp::Quantity::DEFAULT_VALUE), charge(charge),
@@ -292,7 +294,7 @@ Energy::Energy(float wavelength, const Charge& charge, const shp::Unit& unit)
 
 }
 
-Energy::Energy(float wavelength, const Mass& mass, const Charge& charge,
+Energy::Energy(const float wavelength, const Mass& mass, const Charge& charge,
         const shp::Unit& unit)
         : Phase(), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -300,7 +302,8 @@ Energy::Energy(float wavelength, const Mass& mass, const Charge& charge,
 
 }
 
-Energy::Energy(float wavelength, short int scaling, float mass, const shp::Unit& unit)
+Energy::Energy(const float wavelength, const short int scaling,
+        const float mass, const shp::Unit& unit)
         : Phase(), wavelength(wavelength, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         mass(mass), charge(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE),
@@ -308,7 +311,7 @@ Energy::Energy(float wavelength, short int scaling, float mass, const shp::Unit&
 
 }
 
-Energy::Energy(float wavelength, short int scaling, const Mass& mass,
+Energy::Energy(const float wavelength, const short int scaling, const Mass& mass,
         const shp::Unit& unit)
         : Phase(), wavelength(wavelength, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -317,7 +320,7 @@ Energy::Energy(float wavelength, short int scaling, const Mass& mass,
 
 }
 
-Energy::Energy(float wavelength, short int scaling, const Charge& charge,
+Energy::Energy(const float wavelength, const short int scaling, const Charge& charge,
         const shp::Unit& unit)
         : Phase(), wavelength(wavelength, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -326,7 +329,7 @@ Energy::Energy(float wavelength, short int scaling, const Charge& charge,
 
 }
 
-Energy::Energy(float wavelength, short int scaling, const Mass& mass,
+Energy::Energy(const float wavelength, const short int scaling, const Mass& mass,
         const Charge& charge, const shp::Unit& unit)
         : Phase(), wavelength(wavelength, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -334,7 +337,7 @@ Energy::Energy(float wavelength, short int scaling, const Mass& mass,
 
 }
 
-Energy::Energy(std::string name, float wavelength, float mass,
+Energy::Energy(std::string name, const float wavelength, const float mass,
         const shp::Unit& unit)
         : Phase(name), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -343,7 +346,7 @@ Energy::Energy(std::string name, float wavelength, float mass,
 
 }
 
-Energy::Energy(std::string name, float wavelength, const Mass& mass,
+Energy::Energy(std::string name, const float wavelength, const Mass& mass,
         const shp::Unit& unit)
         : Phase(name), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -352,7 +355,7 @@ Energy::Energy(std::string name, float wavelength, const Mass& mass,
 
 }
 
-Energy::Energy(std::string name, float wavelength, const Charge& charge,
+Energy::Energy(std::string name, const float wavelength, const Charge& charge,
         const shp::Unit& unit)
         : Phase(name), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -361,7 +364,7 @@ Energy::Energy(std::string name, float wavelength, const Charge& charge,
 
 }
 
-Energy::Energy(std::string name, float wavelength, const Mass& mass,
+Energy::Energy(std::string name, const float wavelength, const Mass& mass,
         const Charge& charge)
         : Phase(name), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -370,7 +373,7 @@ Energy::Energy(std::string name, float wavelength, const Mass& mass,
 
 }
 
-Energy::Energy(std::string name, float wavelength, const Mass& mass,
+Energy::Energy(std::string name, const float wavelength, const Mass& mass,
         const Charge& charge, const shp::Unit& unit)
         : Phase(name), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -378,8 +381,8 @@ Energy::Energy(std::string name, float wavelength, const Mass& mass,
 
 }
 
-Energy::Energy(std::string name, float wavelength, short int scaling,
-		float mass, const shp::Unit& unit)
+Energy::Energy(std::string name, const float wavelength, const short int scaling,
+		const float mass, const shp::Unit& unit)
         : Phase(name), wavelength(wavelength, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
 		mass(mass), charge(shp::Quantity::DEFAULT_VALUE),
@@ -387,7 +390,7 @@ Energy::Energy(std::string name, float wavelength, short int scaling,
 
 }
 
-Energy::Energy(std::string name, float wavelength, short int scaling,
+Energy::Energy(std::string name, const float wavelength, const short int scaling,
 		const Mass& mass, const shp::Unit& unit)
         : Phase(name), wavelength(wavelength, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -396,7 +399,7 @@ Energy::Energy(std::string name, float wavelength, short int scaling,
 
 }
 
-Energy::Energy(std::string name, float wavelength, short int scaling,
+Energy::Energy(std::string name, const float wavelength, const short int scaling,
 		const Charge& charge, const shp::Unit& unit)
         : Phase(name), wavelength(wavelength, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -405,7 +408,7 @@ Energy::Energy(std::string name, float wavelength, short int scaling,
 
 }
 
-Energy::Energy(std::string name, float wavelength, short int scaling,
+Energy::Energy(std::string name, const float wavelength, const short int scaling,
 		const Mass& mass, const Charge& charge)
         : Phase(name), wavelength(wavelength, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -414,7 +417,7 @@ Energy::Energy(std::string name, float wavelength, short int scaling,
 
 }
 
-Energy::Energy(std::string name, float wavelength, short int scaling,
+Energy::Energy(std::string name, const float wavelength, const short int scaling,
 		const Mass& mass, const Charge& charge, const shp::Unit& unit)
         : Phase(name), wavelength(wavelength, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -422,8 +425,8 @@ Energy::Energy(std::string name, float wavelength, short int scaling,
 
 }
 
-Energy::Energy(float amplitude, float gradient, float wavelength,
-        float mass, const shp::Unit& unit)
+Energy::Energy(const float amplitude, const float gradient, const float wavelength,
+        const float mass, const shp::Unit& unit)
         : Phase(amplitude, gradient), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         mass(mass), charge(shp::Quantity::DEFAULT_VALUE),
@@ -431,7 +434,7 @@ Energy::Energy(float amplitude, float gradient, float wavelength,
 
 }
 
-Energy::Energy(float amplitude, float gradient, float wavelength,
+Energy::Energy(const float amplitude, const float gradient, const float wavelength,
         const Mass& mass, const shp::Unit& unit)
         : Phase(amplitude, gradient), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -440,7 +443,7 @@ Energy::Energy(float amplitude, float gradient, float wavelength,
 
 }
 
-Energy::Energy(float amplitude, float gradient, float wavelength,
+Energy::Energy(const float amplitude, const float gradient, const float wavelength,
         const Charge& charge, const shp::Unit& unit)
         : Phase(amplitude, gradient), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -449,7 +452,7 @@ Energy::Energy(float amplitude, float gradient, float wavelength,
 
 }
 
-Energy::Energy(float amplitude, float gradient, float wavelength,
+Energy::Energy(const float amplitude, const float gradient, const float wavelength,
         const Mass& mass, const Charge& charge)
         : Phase(amplitude, gradient), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -458,7 +461,7 @@ Energy::Energy(float amplitude, float gradient, float wavelength,
 
 }
 
-Energy::Energy(float amplitude, float gradient, float wavelength,
+Energy::Energy(const float amplitude, const float gradient, const float wavelength,
         const Mass& mass, const Charge& charge, const shp::Unit& unit)
         : Phase(amplitude, gradient), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -466,8 +469,9 @@ Energy::Energy(float amplitude, float gradient, float wavelength,
 
 }
 
-Energy::Energy(float amplitude, float gradient, float wavelength, short int scaling,
-        float mass, const shp::Unit& unit)
+Energy::Energy(const float amplitude, const float gradient,
+        const float wavelength, const short int scaling,
+        const float mass, const shp::Unit& unit)
         : Phase(amplitude, gradient), wavelength(wavelength, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         mass(mass), charge(shp::Quantity::DEFAULT_VALUE),
@@ -475,7 +479,8 @@ Energy::Energy(float amplitude, float gradient, float wavelength, short int scal
 
 }
 
-Energy::Energy(float amplitude, float gradient, float wavelength, short int scaling,
+Energy::Energy(const float amplitude, const float gradient,
+        const float wavelength, const short int scaling,
         const Mass& mass, const shp::Unit& unit)
         : Phase(amplitude, gradient), wavelength(wavelength, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -484,7 +489,8 @@ Energy::Energy(float amplitude, float gradient, float wavelength, short int scal
 
 }
 
-Energy::Energy(float amplitude, float gradient, float wavelength, short int scaling,
+Energy::Energy(const float amplitude, const float gradient,
+        const float wavelength, const short int scaling,
         const Charge& charge, const shp::Unit& unit)
         : Phase(amplitude, gradient), wavelength(wavelength, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -493,8 +499,8 @@ Energy::Energy(float amplitude, float gradient, float wavelength, short int scal
 
 }
 
-Energy::Energy(std::string name, float amplitude, float gradient, float wavelength,
-        const Mass& mass)
+Energy::Energy(std::string name, const float amplitude, const float gradient,
+        const float wavelength, const Mass& mass)
         : Phase(name, amplitude, gradient), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         mass(mass), charge(shp::Quantity::DEFAULT_VALUE),
@@ -502,8 +508,8 @@ Energy::Energy(std::string name, float amplitude, float gradient, float waveleng
 
 }
 
-Energy::Energy(std::string name, float amplitude, float gradient, float wavelength,
-        const Charge& charge)
+Energy::Energy(std::string name, const float amplitude, const float gradient,
+        const float wavelength, const Charge& charge)
         : Phase(name, amplitude, gradient), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         mass(shp::Quantity::DEFAULT_VALUE), charge(charge),
@@ -511,8 +517,8 @@ Energy::Energy(std::string name, float amplitude, float gradient, float waveleng
 
 }
 
-Energy::Energy(std::string name, float amplitude, float gradient, float wavelength,
-        const Mass& mass, const Charge& charge)
+Energy::Energy(std::string name, const float amplitude, const float gradient,
+        const float wavelength, const Mass& mass, const Charge& charge)
         : Phase(name, amplitude, gradient), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         mass(mass), charge(charge),
@@ -520,8 +526,8 @@ Energy::Energy(std::string name, float amplitude, float gradient, float waveleng
 
 }
 
-Energy::Energy(std::string name, float amplitude, float gradient, float wavelength,
-        short int scaling, const Mass& mass, const Charge& charge)
+Energy::Energy(std::string name, const float amplitude, const float gradient,
+        const float wavelength, const short int scaling, const Mass& mass, const Charge& charge)
         : Phase(name, amplitude, gradient), wavelength(wavelength, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         mass(mass), charge(charge),
@@ -529,16 +535,16 @@ Energy::Energy(std::string name, float amplitude, float gradient, float waveleng
 
 }
 
-Energy::Energy(std::string name, float amplitude, float gradient, float wavelength,
-        const Mass& mass, const Charge& charge, const shp::Unit& unit)
+Energy::Energy(std::string name, const float amplitude, const float gradient,
+        const float wavelength, const Mass& mass, const Charge& charge, const shp::Unit& unit)
         : Phase(name, amplitude, gradient), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         mass(mass), charge(charge), unit(unit) {
 
 }
 
-Energy::Energy(std::string name, float amplitude, float gradient, float wavelength,
-        float mass, const shp::Unit& unit)
+Energy::Energy(std::string name, const float amplitude, const float gradient,
+        const float wavelength, const float mass, const shp::Unit& unit)
         : Phase(name, amplitude, gradient), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         mass(mass), charge(shp::Quantity::DEFAULT_VALUE),
@@ -546,8 +552,8 @@ Energy::Energy(std::string name, float amplitude, float gradient, float waveleng
 
 }
 
-Energy::Energy(std::string name, float amplitude, float gradient, float wavelength,
-        const Mass& mass, const shp::Unit& unit)
+Energy::Energy(std::string name, const float amplitude, const float gradient,
+        const float wavelength, const Mass& mass, const shp::Unit& unit)
         : Phase(name, amplitude, gradient), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         mass(mass), charge(shp::Quantity::DEFAULT_VALUE),
@@ -555,8 +561,8 @@ Energy::Energy(std::string name, float amplitude, float gradient, float waveleng
 
 }
 
-Energy::Energy(std::string name, float amplitude, float gradient, float wavelength,
-        const Charge& charge, const shp::Unit& unit)
+Energy::Energy(std::string name, const float amplitude, const float gradient,
+        const float wavelength, const Charge& charge, const shp::Unit& unit)
         : Phase(name, amplitude, gradient), wavelength(wavelength, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         mass(shp::Quantity::DEFAULT_VALUE), charge(charge),
@@ -564,8 +570,8 @@ Energy::Energy(std::string name, float amplitude, float gradient, float waveleng
 
 }
 
-Energy::Energy(std::string name, float amplitude, float gradient, float wavelength,
-		short int scaling, float mass, const shp::Unit& unit)
+Energy::Energy(std::string name, const float amplitude, const float gradient,
+        const float wavelength, const short int scaling, const float mass, const shp::Unit& unit)
         : Phase(name, amplitude, gradient), wavelength(wavelength, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         mass(mass), charge(shp::Quantity::DEFAULT_VALUE),
@@ -573,8 +579,8 @@ Energy::Energy(std::string name, float amplitude, float gradient, float waveleng
 
 }
 
-Energy::Energy(std::string name, float amplitude, float gradient, float wavelength,
-		short int scaling, const Mass& mass, const shp::Unit& unit)
+Energy::Energy(std::string name, const float amplitude, const float gradient,
+        const float wavelength, const short int scaling, const Mass& mass, const shp::Unit& unit)
         : Phase(name, amplitude, gradient), wavelength(wavelength, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         mass(mass), charge(shp::Quantity::DEFAULT_VALUE),
@@ -582,8 +588,8 @@ Energy::Energy(std::string name, float amplitude, float gradient, float waveleng
 
 }
 
-Energy::Energy(std::string name, float amplitude, float gradient, float wavelength,
-		short int scaling, const Charge& charge, const shp::Unit& unit)
+Energy::Energy(std::string name, const float amplitude, const float gradient,
+        const float wavelength, const short int scaling, const Charge& charge, const shp::Unit& unit)
         : Phase(name, amplitude, gradient), wavelength(wavelength, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         mass(shp::Quantity::DEFAULT_VALUE), charge(charge),
@@ -591,8 +597,9 @@ Energy::Energy(std::string name, float amplitude, float gradient, float waveleng
 
 }
 
-Energy::Energy(std::string name, float amplitude, float gradient, float wavelength,
-		short int scaling, const Mass& mass, const Charge& charge, const shp::Unit& unit)
+Energy::Energy(std::string name, const float amplitude, const float gradient,
+        const float wavelength, const short int scaling, const Mass& mass, const Charge& charge,
+        const shp::Unit& unit)
         : Phase(name, amplitude, gradient), wavelength(wavelength, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         mass(mass), charge(charge), unit(unit) {
@@ -615,8 +622,8 @@ Energy Energy::operator+(const Energy& peer) const {
     float gradient = (getGradient() + peer.getGradient());
     float planck_phase = (getPolarization() + peer.getPolarization());
     shp::Distance planck_wave = (wavelength + peer.wavelength);
-    shp::Quantity length = planck_wave.getMagnitude(); length.adjustScaling();
-    Energy result("+", amplitude, gradient, length.getValue(), planck_wave.getScaling(),
+    shp::Quantity length = planck_wave.getLength(); length.adjustScaling();
+    Energy result("+", amplitude, gradient, length.getMagnitude(), planck_wave.getScaling(),
             (mass + peer.mass), (charge + peer.charge), unit);
     result.setPolarization(planck_phase);
     return result;
@@ -627,8 +634,8 @@ Energy Energy::operator-(const Energy& peer) const {
     float gradient = (getGradient() - peer.getGradient());
     float planck_phase = (getPolarization() - peer.getPolarization());
     shp::Distance planck_wave = (wavelength - peer.wavelength);
-    shp::Quantity length = planck_wave.getMagnitude(); length.adjustScaling();
-    Energy result("-", amplitude, gradient, length.getValue(), planck_wave.getScaling(),
+    shp::Quantity length = planck_wave.getLength(); length.adjustScaling();
+    Energy result("-", amplitude, gradient, length.getMagnitude(), planck_wave.getScaling(),
             (mass - peer.mass), (charge - peer.charge), unit);
     result.setPolarization(planck_phase);
     return result;
@@ -639,8 +646,8 @@ Energy Energy::operator*(const Energy& peer) const {
     float gradient = (getGradient() * peer.getGradient());
     float planck_phase = (getPolarization() * peer.getPolarization());
     shp::Distance planck_wave = (wavelength * peer.wavelength);
-    shp::Quantity length = planck_wave.getMagnitude(); length.adjustScaling();
-    Energy result("*", amplitude, gradient, length.getValue(), planck_wave.getScaling(),
+    shp::Quantity length = planck_wave.getLength(); length.adjustScaling();
+    Energy result("*", amplitude, gradient, length.getMagnitude(), planck_wave.getScaling(),
             (mass * peer.mass), (charge * peer.charge), unit);
     result.setPolarization(planck_phase);
     return result;
@@ -651,8 +658,8 @@ Energy Energy::operator/(const Energy& peer) const {
     float gradient = (getGradient() / peer.getGradient());
     float planck_phase = (getPolarization() / peer.getPolarization());
     shp::Distance planck_wave = (wavelength / peer.wavelength);
-    shp::Quantity length = planck_wave.getMagnitude(); length.adjustScaling();
-    Energy result("/", amplitude, gradient, length.getValue(), planck_wave.getScaling(),
+    shp::Quantity length = planck_wave.getLength(); length.adjustScaling();
+    Energy result("/", amplitude, gradient, length.getMagnitude(), planck_wave.getScaling(),
             (mass / peer.mass), (charge / peer.charge), unit);
     result.setPolarization(planck_phase);
     return result;
@@ -663,8 +670,8 @@ Energy Energy::operator%(const Energy& peer) const {
     float gradient = fmod(getGradient(), peer.getGradient());
     float planck_phase = fmod(getPolarization(), peer.getPolarization());
     shp::Distance planck_wave = (wavelength % peer.wavelength);
-    shp::Quantity length = planck_wave.getMagnitude(); length.adjustScaling();
-    Energy result("%", amplitude, gradient, length.getValue(), planck_wave.getScaling(),
+    shp::Quantity length = planck_wave.getLength(); length.adjustScaling();
+    Energy result("%", amplitude, gradient, length.getMagnitude(), planck_wave.getScaling(),
             (mass % peer.mass), (charge % peer.charge), unit);
     result.setPolarization(planck_phase);
     return result;
@@ -674,7 +681,7 @@ shp::Quantity Energy::getTotal() const {
     shp::Quantity potential = getPotential(); potential.adjustScaling();
     shp::Quantity kinetic = getKinetic(); kinetic.adjustScaling();
     short int scaling = (potential.getScaling() - kinetic.getScaling());
-    float quantum = (potential.getValue() + (kinetic.getValue() / std::pow(10, scaling)));
+    float quantum = (potential.getMagnitude() + (kinetic.getMagnitude() / std::pow(shp::Quantity::DECIMAL_SCALE, scaling)));
     shp::Quantity result(quantum, potential.getScaling(), potential.getUnit());
     result.adjustScaling();
     return result;
@@ -687,22 +694,22 @@ Density Energy::getDensity(const shp::Volume& volume) const {
 
 shp::Quantity Energy::getPotential() const {
     shp::Quantity speed_of_light(LIGHT_SPEED, LIGHT_SCALE);
-    float energy = (mass.getMagnitude() * (speed_of_light * speed_of_light)).getValue();
-	shp::Quantity result(energy, ((LIGHT_SCALE * 2) + mass.getMagnitude().getScaling()), unit);
+    float energy = ((speed_of_light * speed_of_light) * mass.getMagnitude()).getMagnitude();
+	shp::Quantity result(energy, ((LIGHT_SCALE * 2) + mass.getScaling()), unit);
     result.adjustScaling();
     return result;
 }
 
 shp::Quantity Energy::getKinetic() const {
     shp::Quantity frequency = getFrequency();
-    float energy = (PLANCK_CONSTANT * frequency.getValue());
+    float energy = (PLANCK_CONSTANT * frequency.getMagnitude());
     shp::Quantity result(energy, (PLANCK_SCALE + frequency.getScaling()), unit);
     result.adjustScaling();
     return result;
 }
 
 shp::Quantity Energy::getFrequency() const {
-    shp::Quantity result = wavelength.getMagnitude().getInverse();
+    shp::Quantity result = wavelength.getLength().getInverse();
     result.setScaling((0 - wavelength.getScaling()));
     result.setUnit(shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY));
     result.adjustScaling();
@@ -714,22 +721,22 @@ shp::Quantity Energy::getFrequency() const {
  * At a given point in space, no Planckian Energy exists if wavelength is zero
  */
 shp::Distance Energy::getDivergence(const float modulation) const {
-    shp::Quantity lambda(wavelength.getMagnitude().getValue(),
+    shp::Quantity lambda(wavelength.getLength().getMagnitude(),
             wavelength.getScaling(), wavelength.getUnit());
-    float coefficient = (lambda.getValue() * Phase::getAmplitudeAzimuthal(modulation));
-    shp::Quantity delta((getPhysicalLimit().getValue() / coefficient),
+    float coefficient = (lambda.getMagnitude() * Phase::getAmplitudeAzimuthal(modulation));
+    shp::Quantity delta((getPhysicalLimit().getMagnitude() / coefficient),
             (lambda.getScaling() - PLANCK_SCALE), shp::Unit::getBaseSymbol(shp::Unit::LENGTH));
     delta.adjustScaling();
-    return shp::Distance(delta.getValue(), delta.getScaling(), delta.getUnit());
+    return shp::Distance(delta.getMagnitude(), delta.getScaling(), delta.getUnit());
 }
 
 qft::Time Energy::getPerpetuity(const float modulation) const {
     shp::Quantity frequency = getFrequency();
-    float coefficient = (frequency.getValue() * Phase::getAmplitudePolarization(modulation));
-    shp::Quantity delta((getPhysicalLimit().getValue() / coefficient),
+    float coefficient = (frequency.getMagnitude() * Phase::getAmplitudePolarization(modulation));
+    shp::Quantity delta((getPhysicalLimit().getMagnitude() / coefficient),
             (frequency.getScaling() - PLANCK_SCALE), shp::Unit::getBaseSymbol(shp::Unit::TIME));
     delta.adjustScaling();
-    return qft::Time(delta.getValue(), delta.getScaling(), delta.getUnit());
+    return qft::Time(delta.getMagnitude(), delta.getScaling(), delta.getUnit());
 }
 
 const shp::Quantity Energy::getPhysicalLimit() {
@@ -758,12 +765,13 @@ const shp::Quantity Energy:: getTeraElectronvolt(const float quantum) {
 }
 
 shp::Point Energy::copy() {
-    Energy fresh(wavelength.getMagnitude().getValue(),
-            mass.getMagnitude().getValue(), charge.getMagnitude().getValue(), getUnit());
+    Energy fresh(wavelength.getLength().getMagnitude(),
+            mass.getMagnitude(), charge.getMagnitude(), getUnit());
     return fresh;
 }
 
 void Energy::clear() {
+    shp::Phase::clear();
     wavelength.clear();
     mass.clear();
     charge.clear();
@@ -784,7 +792,7 @@ std::string Energy::print() {
 
 shp::Quantity Energy::getComponent(float phase) const {
 	shp::Quantity energy = getTotal();
-	return shp::Quantity((energy.getValue() * cos(phase)), energy.getScaling(), energy.getUnit());
+	return shp::Quantity((energy.getMagnitude() * cos(phase)), energy.getScaling(), energy.getUnit());
 }
 
 } // namespace qft

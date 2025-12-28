@@ -37,8 +37,8 @@ public:
     // Constructors
     Proton();
     Proton(std::string name);
-    Proton(float wavelength);
-    Proton(std::string name, float wavelength);
+    Proton(const float wavelength);
+    Proton(std::string name, const float wavelength);
     Proton(std::string name, const Energy& energy);
     Proton(std::string name, const Spin& spin, const Energy& energy);
     Proton(std::string name, const float spin, const float mass, const float charge);

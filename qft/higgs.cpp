@@ -18,101 +18,102 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "photon.h"
+#include "higgs.h"
 
 namespace qft {
 
-Photon::Photon() : Boson() {
+Higgs::Higgs()
+        : Boson(Spin(Boson::SCALAR_SPIN)) {
 
 }
 
-Photon::Photon(std::string name)
-        : Boson(name) {
+Higgs::Higgs(std::string name)
+        : Boson(name, Spin(Boson::SCALAR_SPIN)) {
 
 }
 
-Photon::Photon(const float wavelength)
+Higgs::Higgs(const float wavelength)
         : Boson(wavelength) {
 }
 
-Photon::Photon(std::string name, const float wavelength)
+Higgs::Higgs(std::string name, const float wavelength)
         : Boson(name, wavelength) {
 
 }
 
-Photon::Photon(std::string name, const Energy& energy)
+Higgs::Higgs(std::string name, const Energy& energy)
         : Boson(name, energy) {
 
 }
 
-Photon::Photon(std::string name, const Spin& spin, const Energy& energy)
+Higgs::Higgs(std::string name, const Spin& spin, const Energy& energy)
         : Boson(name, spin, energy) {
 
 }
 
-Photon::Photon(std::string name, const float spin, const float mass, const float charge)
+Higgs::Higgs(std::string name, const float spin, const float mass, const float charge)
         : Boson(name, Spin(spin), Energy(Mass(mass), Charge(charge))) {
 
 }
 
-Photon::Photon(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
+Higgs::Higgs(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
         : Boson(name, spin, Energy(mass, charge)) {
 
 }
 
-Photon::~Photon() {
+Higgs::~Higgs() {
 
 }
 
-bool Photon::operator==(const Photon& peer) const {
+bool Higgs::operator==(const Higgs& peer) const {
     return (static_cast<const Boson&>(*this) == static_cast<const Boson&>(peer));
 }
 
-Photon Photon::operator+(const Photon& peer) const {
-    return Photon("+",
+Higgs Higgs::operator+(const Higgs& peer) const {
+    return Higgs("+",
         (this->getSpin() + peer.getSpin()),
         (this->getEnergy() + peer.getEnergy()));
 }
 
-Photon Photon::operator-(const Photon& peer) const {
-    return Photon("-",
+Higgs Higgs::operator-(const Higgs& peer) const {
+    return Higgs("-",
         (this->getSpin() - peer.getSpin()),
         (this->getEnergy() - peer.getEnergy()));
 }
 
-Photon Photon::operator*(const Photon& peer) const {
-    return Photon("*",
+Higgs Higgs::operator*(const Higgs& peer) const {
+    return Higgs("*",
         (this->getSpin() * peer.getSpin()),
         (this->getEnergy() * peer.getEnergy()));
 }
 
-Photon Photon::operator/(const Photon& peer) const {
-    return Photon("/",
+Higgs Higgs::operator/(const Higgs& peer) const {
+    return Higgs("/",
         (this->getSpin() / peer.getSpin()),
         (this->getEnergy() / peer.getEnergy()));
 }
 
-Photon Photon::operator%(const Photon& peer) const {
-    return Photon("%",
+Higgs Higgs::operator%(const Higgs& peer) const {
+    return Higgs("%",
         (this->getSpin() % peer.getSpin()),
         (this->getEnergy() % peer.getEnergy()));
 }
 
-shp::Point Photon::copy() {
-    Photon fresh(this->getName(), this->getEnergy());
+shp::Point Higgs::copy() {
+    Higgs fresh(this->getName(), this->getEnergy());
 	fresh.setAmplitude(this->getAmplitude());
 	fresh.setGradient(this->getGradient());
     return fresh;
 }
 
-void Photon::clear() {
+void Higgs::clear() {
     Boson::clear();
     return;
 }
 
-std::string Photon::print() {
+std::string Higgs::print() {
     std::stringstream result;
-    result << "γ:";
+    result << "H0:";
 	result << Boson::print();
 	return result.str();
 }

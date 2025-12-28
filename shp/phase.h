@@ -21,6 +21,8 @@
 #ifndef SHP_PHASE_H
 #define SHP_PHASE_H
 
+#include <chrono>
+#include <iomanip>
 #include <string>
 #include <vector>
 #include "point.h"
@@ -29,21 +31,21 @@ namespace shp {
 
 class Phase : public Point {
     float polarization;
-    long timestamp;
+    std::time_t timestamp;
 public:
     // Constructors
     Phase();
-    Phase(float gradient);
-    Phase(float amplitude, float gradient);
-    Phase(float amplitude, float polarization, float azimuthal);
+    Phase(const float gradient);
+    Phase(const float amplitude, const float gradient);
+    Phase(const float amplitude, const float polarization, const float azimuthal);
     Phase(std::string name);
-    Phase(std::string name, float gradient);
-    Phase(std::string name, float amplitude, float gradient);
-    Phase(std::string name, float amplitude, float polarization, float azimuthal);
-    Phase(std::string name, long timestamp);
-    Phase(std::string name, float gradient, long timestamp);
-    Phase(std::string name, float amplitude, float gradient, long timestamp);
-    Phase(std::string name, float amplitude, float polarization, float azimuthal, long timestamp);
+    Phase(std::string name, const float gradient);
+    Phase(std::string name, const float amplitude, const float gradient);
+    Phase(std::string name, const float amplitude, const float polarization, const float azimuthal);
+    Phase(std::string name, const std::time_t timestamp);
+    Phase(std::string name, const float gradient, const std::time_t timestamp);
+    Phase(std::string name, const float amplitude, const float gradient, const std::time_t timestamp);
+    Phase(std::string name, const float amplitude, const float polarization, const float azimuthal, const std::time_t timestamp);
 
     // Destructors
     ~Phase();
@@ -55,11 +57,11 @@ public:
 
     // Getters
     float getPolarization() const { return polarization; }
-    long getTimestamp() const { return timestamp; }
+    std::time_t getTimestamp() const { return timestamp; }
 
     // Setters
-    void setPolarization(float value) { this->polarization = value; }
-    void setTimestamp(long value) { this->timestamp = value; }
+    void setPolarization(const float value) { this->polarization = value; }
+    void setTimestamp(const std::time_t value) { this->timestamp = value; }
 
     // Additional methods
     virtual Angular getOrientation() const;
@@ -70,8 +72,10 @@ public:
 protected:
     std::complex<float> toPolarizationComplex(float change);
 public:
+    static const std::time_t getSystem();
+public:
     static const float DEFAULT_VALUE;
-    static const long DEFAULT_TIME;
+    static const std::time_t DEFAULT_TIME;
 };
 
 typedef std::vector<Phase > PhaseArray;

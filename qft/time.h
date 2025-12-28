@@ -25,7 +25,6 @@
 #include <string>
 #include <vector>
 #include "../shp/quantity.h"
-#include "../shp/unit.h"
 
 namespace qft {
 
@@ -39,13 +38,13 @@ public:
     Time(const shp::Unit& unit);
     Time(const float duration);
     Time(const float duration, const shp::Unit& unit);
-    Time(const float duration, short int scaling);
-    Time(const float duration, short int scaling, const shp::Unit& unit);
+    Time(const float duration, const short int scaling);
+    Time(const float duration, const short int scaling, const shp::Unit& unit);
     Time(std::string duration, const shp::Unit& unit);
     Time(std::string name, const float duration);
     Time(std::string name, const float duration, const shp::Unit& unit);
-    Time(std::string name, const float duration, short int scaling);
-    Time(std::string name, const float duration, short int scaling, const shp::Unit& unit);
+    Time(std::string name, const float duration, const short int scaling);
+    Time(std::string name, const float duration, const short int scaling, const shp::Unit& unit);
     Time(std::string name, const shp::Quantity& duration);
 
     // Destructors

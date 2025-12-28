@@ -273,7 +273,7 @@ std::shared_ptr<Particle> Field::getConvergence(const Action& action) const {
 
 shp::Quantity Field::getTotal() const {
     shp::Quantity difference = potential.getDifference();
-    shp::Quantity result(difference.getValue(), difference.getScaling(), difference.getUnit());
+    shp::Quantity result(difference.getMagnitude(), difference.getScaling(), difference.getUnit());
     return result;
 }
 
@@ -300,7 +300,7 @@ std::string Field::print() {
 
 shp::Quantity Field::getComponent(float phase) const {
 	shp::Quantity intensity = getTotal();
-	return shp::Quantity((intensity.getValue() * cos(phase)), intensity.getScaling(), intensity.getUnit());
+	return shp::Quantity((intensity.getMagnitude() * cos(phase)), intensity.getScaling(), intensity.getUnit());
 }
 
 std::shared_ptr<qft::Field> Field::shareable(std::string name) {

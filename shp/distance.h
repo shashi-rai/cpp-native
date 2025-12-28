@@ -25,23 +25,22 @@
 #include <string>
 #include <vector>
 #include "quantity.h"
-#include "unit.h"
 
 namespace shp {
 
 class Distance {
-    Quantity magnitude;
+    Quantity length;
 public:
     // Constructors
     Distance();
     Distance(const std::string unit);
     Distance(const Unit& unit);
-    Distance(const float magnitude);
-    Distance(const float magnitude, const std::string unit);
-    Distance(const float magnitude, const Unit& unit);
-    Distance(const float magnitude, short int scaling);
-    Distance(const float magnitude, short int scaling, const std::string unit);
-    Distance(const float magnitude, short int scaling, const Unit& unit);
+    Distance(const float length);
+    Distance(const float length, const std::string unit);
+    Distance(const float length, const Unit& unit);
+    Distance(const float length, const short int scaling);
+    Distance(const float length, const short int scaling, const std::string unit);
+    Distance(const float length, const short int scaling, const Unit& unit);
     Distance(const Quantity& length);
 
     // Destructors
@@ -56,10 +55,10 @@ public:
     Distance operator%(const Distance& peer) const;
 
     // Getters
-    Quantity getMagnitude() const { return magnitude; }
+    Quantity getLength() const { return length; }
 
     // Setters
-    void setMagnitude(const Quantity& length) { this->magnitude = length; }
+    void setLength(const Quantity& length) { this->length = length; }
 
     // Additional methods
     Quantity getTotal() const;

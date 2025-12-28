@@ -33,11 +33,11 @@ class Cellular : public Point {
 public:
     // Constructors
     Cellular();
-    Cellular(float gradient);
+    Cellular(const float gradient);
     Cellular(std::string name);
-    Cellular(std::string name, float gradient);
-    Cellular(std::string name, ShellArray& shells);
-    Cellular(std::string name, ShellArray& shells, float gradient);
+    Cellular(std::string name, const float gradient);
+    Cellular(std::string name, const ShellArray& shells);
+    Cellular(std::string name, const ShellArray& shells, const float gradient);
 
     // Destructors
     ~Cellular();
@@ -48,12 +48,12 @@ public:
     Cellular operator-(const Cellular& peer) const;
 
     // Access operator
-    Shell& operator()(int x) { return shells[x]; }
-    const Shell& operator()(int x) const { return shells[x]; }
-    Polygon& operator()(int x, int y) { return shells[x](y); }
-	const Polygon& operator()(int x, int y) const { return shells[x](y); }
-    Wave& operator()(int x, int y, int z) { return shells[x](y)(z); }
-	const Wave& operator()(int x, int y, int z) const { return shells[x](y)(z); }
+    Shell operator()(int x) { return shells[x]; }
+    const Shell operator()(int x) const { return shells[x]; }
+    Polygon operator()(int x, int y) { return shells[x](y); }
+	const Polygon operator()(int x, int y) const { return shells[x](y); }
+    Wave operator()(int x, int y, int z) { return shells[x](y)(z); }
+	const Wave operator()(int x, int y, int z) const { return shells[x](y)(z); }
 
     // Getters
     ShellArray getShells() const { return shells; }

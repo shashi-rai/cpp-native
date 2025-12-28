@@ -22,42 +22,49 @@
 
 namespace shp {
 
-Shell::Shell() : Point(), orbitals(), limit(0) {
+const int Shell::DEFAULT_LIMIT = 0;
+
+Shell::Shell()
+        : Point(), orbitals(), limit(DEFAULT_LIMIT) {
 
 }
 
-Shell::Shell(float gradient) : Point(gradient), orbitals(), limit(0) {
+Shell::Shell(const float gradient)
+        : Point(gradient), orbitals(), limit(DEFAULT_LIMIT) {
 
 }
 
-Shell::Shell(std::string name) : Point(name), orbitals(), limit(0) {
+Shell::Shell(std::string name)
+        : Point(name), orbitals(), limit(DEFAULT_LIMIT) {
 
 }
 
-Shell::Shell(std::string name, int limit) : Point(name), orbitals(), limit(limit) {
+Shell::Shell(std::string name, const int limit)
+        : Point(name), orbitals(), limit(limit) {
 
 }
 
-Shell::Shell(std::string name, float gradient) : Point(name, gradient), orbitals(), limit(0) {
+Shell::Shell(std::string name, const float gradient)
+        : Point(name, gradient), orbitals(), limit(DEFAULT_LIMIT) {
 
 }
 
-Shell::Shell(std::string name, float gradient, int limit)
+Shell::Shell(std::string name, const float gradient, const int limit)
     : Point(name, gradient), orbitals(), limit(limit) {
 
 }
 
-Shell::Shell(std::string name, OrbitalArray& orbitals)
-        : Point(name), orbitals(orbitals), limit(0) {
+Shell::Shell(std::string name, const OrbitalArray& orbitals)
+        : Point(name), orbitals(orbitals), limit(DEFAULT_LIMIT) {
 
 }
 
-Shell::Shell(std::string name, OrbitalArray& orbitals, float gradient)
-        : Point(name, gradient), orbitals(orbitals), limit(0) {
+Shell::Shell(std::string name, const OrbitalArray& orbitals, const float gradient)
+        : Point(name, gradient), orbitals(orbitals), limit(DEFAULT_LIMIT) {
 
 }
 
-Shell::Shell(std::string name, OrbitalArray& orbitals, float gradient, int limit)
+Shell::Shell(std::string name, const OrbitalArray& orbitals, const float gradient, const int limit)
         : Point(name, gradient), orbitals(orbitals), limit(limit) {
 
 }
@@ -68,13 +75,13 @@ Shell::~Shell() {
 
 bool Shell::operator==(const Shell& peer) const {
     return (static_cast<const Point&>(*this) == static_cast<const Point&>(peer))
-        && (orbitals == peer.orbitals);
+        && (orbitals == peer.orbitals) && (limit == peer.limit);
 }
 
 Shell Shell::operator+(const Shell& peer) const {
     OrbitalArray result(orbitals);
     result.insert(result.end(), peer.orbitals.begin(), peer.orbitals.end());
-    return Shell("+", result);
+    return Shell("+", result, (getGradient() + peer.getGradient()), limit);
 }
 
 Shell Shell::operator-(const Shell& peer) const {
@@ -85,7 +92,7 @@ Shell Shell::operator-(const Shell& peer) const {
             result.erase(found);
         }
     }
-    return Shell("-", result);
+    return Shell("-", result, (getGradient() - peer.getGradient()), limit);
 }
 
 int Shell::getOrbitalCount() const {
@@ -121,13 +128,13 @@ void Shell::set(int index, const Polygon& object) {
 }
 
 Point Shell::copy() {
-    Shell fresh(this->getName(), this->orbitals, this->getGradient(), limit);
+    Shell fresh(getName(), orbitals, getGradient(), limit);
     return fresh;
 }
 
 void Shell::clear() {
     Point::clear();
-    limit = 0;
+    limit = DEFAULT_LIMIT;
     orbitals.clear();
     return;
 }

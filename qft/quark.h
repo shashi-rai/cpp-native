@@ -34,8 +34,8 @@ public:
     // Constructors
     Quark();
     Quark(std::string name);
-    Quark(float wavelength);
-    Quark(std::string name, float wavelength);
+    Quark(const float wavelength);
+    Quark(std::string name, const float wavelength);
     Quark(std::string name, const Energy& energy);
     Quark(std::string name, const Spin& spin, const Energy& energy);
     Quark(std::string name, const Mass& mass, const Charge& charge);

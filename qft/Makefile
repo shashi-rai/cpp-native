@@ -47,14 +47,19 @@ clean-libs: clean-custom
 $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/acceleration.o \
 		$(OBJFOLDR)/action.o \
+		$(OBJFOLDR)/boson.o \
 		$(OBJFOLDR)/charge.o \
+		$(OBJFOLDR)/current.o \
 		$(OBJFOLDR)/density.o \
 		$(OBJFOLDR)/electric.o \
 		$(OBJFOLDR)/electron.o \
+		$(OBJFOLDR)/electroweak.o \
 		$(OBJFOLDR)/energy.o \
 		$(OBJFOLDR)/field.o \
 		$(OBJFOLDR)/force.o \
+		$(OBJFOLDR)/gluon.o \
 		$(OBJFOLDR)/gravity.o \
+		$(OBJFOLDR)/higgs.o \
 		$(OBJFOLDR)/magnetic.o \
 		$(OBJFOLDR)/mass.o \
 		$(OBJFOLDR)/momentum.o \
@@ -74,14 +79,19 @@ $(LIBFOLDR)/$(LIBNAME): \
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
 		$(OBJFOLDR)/acceleration.o \
 		$(OBJFOLDR)/action.o \
+		$(OBJFOLDR)/boson.o \
 		$(OBJFOLDR)/charge.o \
+		$(OBJFOLDR)/current.o \
 		$(OBJFOLDR)/density.o \
 		$(OBJFOLDR)/electric.o \
 		$(OBJFOLDR)/electron.o \
+		$(OBJFOLDR)/electroweak.o \
 		$(OBJFOLDR)/energy.o \
 		$(OBJFOLDR)/field.o \
 		$(OBJFOLDR)/force.o \
+		$(OBJFOLDR)/gluon.o \
 		$(OBJFOLDR)/gravity.o \
+		$(OBJFOLDR)/higgs.o \
 		$(OBJFOLDR)/magnetic.o \
 		$(OBJFOLDR)/mass.o \
 		$(OBJFOLDR)/momentum.o \
@@ -105,8 +115,14 @@ $(OBJFOLDR)/acceleration.o: acceleration.cpp
 $(OBJFOLDR)/action.o: action.cpp
 	$(CPPTOOL) -c action.cpp -o $(OBJFOLDR)/action.o $(CXXFLAGS)
 
+$(OBJFOLDR)/boson.o: boson.cpp
+	$(CPPTOOL) -c boson.cpp -o $(OBJFOLDR)/boson.o $(CXXFLAGS)
+
 $(OBJFOLDR)/charge.o: charge.cpp
 	$(CPPTOOL) -c charge.cpp -o $(OBJFOLDR)/charge.o $(CXXFLAGS)
+
+$(OBJFOLDR)/current.o: current.cpp
+	$(CPPTOOL) -c current.cpp -o $(OBJFOLDR)/current.o $(CXXFLAGS)
 
 $(OBJFOLDR)/density.o: density.cpp
 	$(CPPTOOL) -c density.cpp -o $(OBJFOLDR)/density.o $(CXXFLAGS)
@@ -117,6 +133,9 @@ $(OBJFOLDR)/electric.o: electric.cpp
 $(OBJFOLDR)/electron.o: electron.cpp
 	$(CPPTOOL) -c electron.cpp -o $(OBJFOLDR)/electron.o $(CXXFLAGS)
 
+$(OBJFOLDR)/electroweak.o: electroweak.cpp
+	$(CPPTOOL) -c electroweak.cpp -o $(OBJFOLDR)/electroweak.o $(CXXFLAGS)
+
 $(OBJFOLDR)/energy.o: energy.cpp
 	$(CPPTOOL) -c energy.cpp -o $(OBJFOLDR)/energy.o $(CXXFLAGS)
 
@@ -126,8 +145,14 @@ $(OBJFOLDR)/field.o: field.cpp
 $(OBJFOLDR)/force.o: force.cpp
 	$(CPPTOOL) -c force.cpp -o $(OBJFOLDR)/force.o $(CXXFLAGS)
 
+$(OBJFOLDR)/gluon.o: gluon.cpp
+	$(CPPTOOL) -c gluon.cpp -o $(OBJFOLDR)/gluon.o $(CXXFLAGS)
+
 $(OBJFOLDR)/gravity.o: gravity.cpp
 	$(CPPTOOL) -c gravity.cpp -o $(OBJFOLDR)/gravity.o $(CXXFLAGS)
+
+$(OBJFOLDR)/higgs.o: higgs.cpp
+	$(CPPTOOL) -c higgs.cpp -o $(OBJFOLDR)/higgs.o $(CXXFLAGS)
 
 $(OBJFOLDR)/magnetic.o: magnetic.cpp
 	$(CPPTOOL) -c magnetic.cpp -o $(OBJFOLDR)/magnetic.o $(CXXFLAGS)

@@ -25,96 +25,96 @@ namespace qft {
 const std::string Velocity::UNIT = "m/s";   // System International
 
 Velocity::Velocity() : name(),
-        magnitude(UNIT), direction() {
+        displacement(UNIT), direction() {
 
 }
 
 Velocity::Velocity(std::string name) : name(name),
-        magnitude(UNIT), direction() {
+        displacement(UNIT), direction() {
 
 }
 
-Velocity::Velocity(const float magnitude) : name(),
-        magnitude(magnitude, UNIT), direction() {
+Velocity::Velocity(const float displacement) : name(),
+        displacement(displacement, UNIT), direction() {
 
 }
 
-Velocity::Velocity(const float magnitude, const std::string unit)
-        : name(), magnitude(magnitude, unit), direction() {
+Velocity::Velocity(const float displacement, const std::string unit)
+        : name(), displacement(displacement, unit), direction() {
 
 }
 
-Velocity::Velocity(const float magnitude, short int scaling, const std::string unit)
-        : name(), magnitude(magnitude, scaling, unit), direction() {
+Velocity::Velocity(const float displacement, const short int scaling, const std::string unit)
+        : name(), displacement(displacement, scaling, unit), direction() {
 
 }
 
-Velocity::Velocity(const float magnitude, const float direction)
-        : name(), magnitude(magnitude, UNIT), direction(direction) {
+Velocity::Velocity(const float displacement, const float direction)
+        : name(), displacement(displacement, UNIT), direction(direction) {
 
 }
 
-Velocity::Velocity(const float magnitude, const float direction, const std::string unit)
-        : name(),  magnitude(magnitude, unit), direction(direction) {
+Velocity::Velocity(const float displacement, const float direction, const std::string unit)
+        : name(),  displacement(displacement, unit), direction(direction) {
 
 }
 
-Velocity::Velocity(const float magnitude, const float direction, short int scaling)
-        : name(), magnitude(magnitude, scaling, UNIT), direction(direction) {
+Velocity::Velocity(const float displacement, const float direction, const short int scaling)
+        : name(), displacement(displacement, scaling, UNIT), direction(direction) {
 
 }
 
-Velocity::Velocity(const float magnitude, const float direction,
-        short int scaling, const std::string unit)
-        : name(), magnitude(magnitude, scaling, unit), direction(direction) {
+Velocity::Velocity(const float displacement, const float direction,
+        const short int scaling, const std::string unit)
+        : name(), displacement(displacement, scaling, unit), direction(direction) {
 
 }
 
-Velocity::Velocity(const shp::Quantity& magnitude, const shp::Direction& direction)
-        : name(), magnitude(magnitude), direction(direction) {
+Velocity::Velocity(const shp::Quantity& displacement, const shp::Direction& direction)
+        : name(), displacement(displacement), direction(direction) {
 
 }
 
 Velocity::Velocity(std::string name, const shp::Unit& unit)
-        : name(name), magnitude(unit), direction() {
+        : name(name), displacement(unit), direction() {
 
 }
 
-Velocity::Velocity(std::string name, const float magnitude)
-        : name(name), magnitude(magnitude, UNIT), direction() {
+Velocity::Velocity(std::string name, const float displacement)
+        : name(name), displacement(displacement, UNIT), direction() {
 
 }
 
-Velocity::Velocity(std::string name, const float magnitude, const shp::Unit& unit)
-        : name(name), magnitude(magnitude, unit), direction() {
+Velocity::Velocity(std::string name, const float displacement, const shp::Unit& unit)
+        : name(name), displacement(displacement, unit), direction() {
 
 }
 
-Velocity::Velocity(std::string name, const float magnitude, const float direction)
-        : name(name), magnitude(magnitude, UNIT), direction(direction) {
+Velocity::Velocity(std::string name, const float displacement, const float direction)
+        : name(name), displacement(displacement, UNIT), direction(direction) {
 
 }
 
-Velocity::Velocity(std::string name, const float magnitude, const float direction,
+Velocity::Velocity(std::string name, const float displacement, const float direction,
         const std::string unit)
-        : name(name), magnitude(magnitude, unit), direction(direction) {
+        : name(name), displacement(displacement, unit), direction(direction) {
 
 }
 
-Velocity::Velocity(std::string name, const float magnitude, const float direction,
-        short int scaling)
-        : name(name), magnitude(magnitude, scaling, UNIT), direction(direction) {
+Velocity::Velocity(std::string name, const float displacement, const float direction,
+        const short int scaling)
+        : name(name), displacement(displacement, scaling, UNIT), direction(direction) {
 
 }
 
-Velocity::Velocity(std::string name, const float magnitude, const float direction,
-        short int scaling, const std::string unit)
-        : name(name), magnitude(magnitude, scaling, unit), direction(direction) {
+Velocity::Velocity(std::string name, const float displacement, const float direction,
+        const short int scaling, const std::string unit)
+        : name(name), displacement(displacement, scaling, unit), direction(direction) {
 
 }
 
-Velocity::Velocity(std::string name, const shp::Quantity& magnitude, const shp::Direction& direction)
-        : name(name), magnitude(magnitude), direction(direction) {
+Velocity::Velocity(std::string name, const shp::Quantity& displacement, const shp::Direction& direction)
+        : name(name), displacement(displacement), direction(direction) {
 
 }
 
@@ -123,70 +123,70 @@ Velocity::~Velocity() {
 }
 
 bool Velocity::operator==(const Velocity& peer) const {
-    return (magnitude == peer.magnitude) && (direction == peer.direction);
+    return (displacement == peer.displacement) && (direction == peer.direction);
 }
 
 Velocity Velocity::operator+(const Velocity& peer) const {
     Velocity self = *this, other = peer;
     std::complex<float>
-		ap1 = self.toComplex(self.magnitude.getValue(), direction.toRadians()),
-        ap2 = other.toComplex((other.magnitude.getValue() / std::pow(10, (magnitude.getScaling() - other.magnitude.getScaling()))),
+		ap1 = self.toComplex(self.displacement.getMagnitude(), direction.toRadians()),
+        ap2 = other.toComplex((other.displacement.getMagnitude() / std::pow(shp::Quantity::DECIMAL_SCALE, (displacement.getScaling() - other.displacement.getScaling()))),
 			other.direction.toRadians());
     std::complex<float> a_phasor = ap1 + ap2;
-    return Velocity("+", shp::Quantity(std::abs(a_phasor), magnitude.getScaling(), getUnit()),
+    return Velocity("+", shp::Quantity(std::abs(a_phasor), displacement.getScaling(), getUnit()),
 		shp::Direction(std::arg(a_phasor)));
 }
 
 Velocity Velocity::operator-(const Velocity& peer) const {
     Velocity self = *this, other = peer;
     std::complex<float>
-		ap1 = self.toComplex(self.magnitude.getValue(), direction.toRadians()),
-        ap2 = other.toComplex((other.magnitude.getValue() / std::pow(10, (magnitude.getScaling() - other.magnitude.getScaling()))),
+		ap1 = self.toComplex(self.displacement.getMagnitude(), direction.toRadians()),
+        ap2 = other.toComplex((other.displacement.getMagnitude() / std::pow(shp::Quantity::DECIMAL_SCALE, (displacement.getScaling() - other.displacement.getScaling()))),
 			other.direction.toRadians());
     std::complex<float> a_phasor = ap1 - ap2;
-    return Velocity("-", shp::Quantity(std::abs(a_phasor), magnitude.getScaling(), getUnit()),
+    return Velocity("-", shp::Quantity(std::abs(a_phasor), displacement.getScaling(), getUnit()),
 		shp::Direction(std::arg(a_phasor)));
 }
 
 Velocity Velocity::operator*(const Velocity& peer) const {
     Velocity self = *this, other = peer;
     std::complex<float>
-		ap1 = self.toComplex(self.magnitude.getValue(), direction.toRadians()),
-        ap2 = other.toComplex(other.magnitude.getValue(), other.direction.toRadians());
+		ap1 = self.toComplex(self.displacement.getMagnitude(), direction.toRadians()),
+        ap2 = other.toComplex(other.displacement.getMagnitude(), other.direction.toRadians());
     std::complex<float> a_phasor = ap1 * ap2;
     return Velocity("*", shp::Quantity(std::abs(a_phasor),
-			(magnitude.getScaling() + peer.magnitude.getScaling()), getUnit()),
+			(displacement.getScaling() + peer.displacement.getScaling()), getUnit()),
 		shp::Direction(std::arg(a_phasor)));
 }
 
 Velocity Velocity::operator/(const Velocity& peer) const {
     Velocity self = *this, other = peer;
     std::complex<float>
-		ap1 = self.toComplex(self.magnitude.getValue(), direction.toRadians()),
-        ap2 = other.toComplex(other.magnitude.getValue(), other.direction.toRadians());
+		ap1 = self.toComplex(self.displacement.getMagnitude(), direction.toRadians()),
+        ap2 = other.toComplex(other.displacement.getMagnitude(), other.direction.toRadians());
     std::complex<float> a_phasor = ap1 / ap2;
     return Velocity("/", shp::Quantity(std::abs(a_phasor),
-			(magnitude.getScaling() - peer.magnitude.getScaling()), getUnit()),
+			(displacement.getScaling() - peer.displacement.getScaling()), getUnit()),
 		shp::Direction(std::arg(a_phasor)));
 }
 
 shp::Quantity Velocity::getTotal() const {
-    shp::Quantity result(magnitude.getValue(), magnitude.getScaling(), getUnit());
+    shp::Quantity result(displacement.getMagnitude(), displacement.getScaling(), getUnit());
     return result;
 }
 
 void Velocity::adjustScaling() {
-    magnitude.adjustScaling();
+    displacement.adjustScaling();
 }
 
 Velocity Velocity::copy() {
-    Velocity fresh(name, magnitude, direction);
+    Velocity fresh(name, displacement, direction);
     return fresh;
 }
 
 void Velocity::clear() {
-	name = "";
-    magnitude.clear();
+	name.clear();
+    displacement.clear();
     direction.clear();
     return;
 }
@@ -195,14 +195,14 @@ std::string Velocity::print() {
     std::stringstream result;
     result << "(v:";
 	result << name << ",";
-    result << magnitude.print() << ",";
+    result << displacement.print() << ",";
 	result << direction.print() << ")";
 	return result.str();
 }
 
 shp::Quantity Velocity::getComponent(float phase) const {
 	shp::Quantity velocity = getTotal();
-	return shp::Quantity((velocity.getValue() * cos(phase)), velocity.getScaling(), velocity.getUnit());
+	return shp::Quantity((velocity.getMagnitude() * cos(phase)), velocity.getScaling(), velocity.getUnit());
 }
 
 std::complex<float> Velocity::toComplex(float coefficient, float change) {

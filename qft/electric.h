@@ -40,14 +40,18 @@ public:
     Electric(const float magnitude, const std::shared_ptr<Field> field);
     Electric(const float magnitude, const float direction);
     Electric(const float magnitude, const float direction, const std::shared_ptr<Field> field);
-    Electric(const float magnitude, const float direction, short int scaling);
-    Electric(const float magnitude, const float direction, short int scaling, const std::shared_ptr<Field> field);
+    Electric(const float magnitude, const float direction, const short int scaling);
+    Electric(const float magnitude, const float direction, const short int scaling,
+        const std::shared_ptr<Field> field);
     Electric(std::string name, const float magnitude);
     Electric(std::string name, const float magnitude, const std::shared_ptr<Field> field);
     Electric(std::string name, const float magnitude, const float direction);
-    Electric(std::string name, const float magnitude, const float direction, const std::shared_ptr<Field> field);
-    Electric(std::string name, const float magnitude, const float direction, short int scaling);
-    Electric(std::string name, const float magnitude, const float direction, short int scaling, const std::shared_ptr<Field> field);
+    Electric(std::string name, const float magnitude, const float direction,
+        const std::shared_ptr<Field> field);
+    Electric(std::string name, const float magnitude, const float direction,
+        const short int scaling);
+    Electric(std::string name, const float magnitude, const float direction,
+        const short int scaling, const std::shared_ptr<Field> field);
 
     // Destructors
     ~Electric();

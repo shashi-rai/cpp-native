@@ -34,6 +34,7 @@ public:
     // Constructors
     Shape();
     Shape(std::string name);
+    Shape(Shape* parent);
     Shape(std::string name, Shape* parent);
 
     // Destructors

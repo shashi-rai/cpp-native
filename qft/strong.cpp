@@ -22,15 +22,18 @@
 
 namespace qft {
 
-Strong::Strong() : Force() {
+Strong::Strong()
+        : Force() {
     setField(nullptr);
 }
 
-Strong::Strong(std::string name) : Force(name) {
+Strong::Strong(std::string name)
+        : Force(name) {
     setField(nullptr);
 }
 
-Strong::Strong(const std::shared_ptr<Field> field) : Force() {
+Strong::Strong(const std::shared_ptr<Field> field)
+        : Force() {
     setField(field);
 }
 
@@ -39,7 +42,8 @@ Strong::Strong(std::string name, const std::shared_ptr<Field> field)
     setField(field);
 }
 
-Strong::Strong(const float magnitude) : Force(magnitude) {
+Strong::Strong(const float magnitude)
+        : Force(magnitude) {
     setField(nullptr);
 }
 
@@ -59,18 +63,19 @@ Strong::Strong(const float magnitude, const float direction,
     setField(field);
 }
 
-Strong::Strong(const float magnitude, const float direction, short int scaling)
+Strong::Strong(const float magnitude, const float direction, const short int scaling)
         : Force(magnitude, direction, scaling) {
     setField(nullptr);
 }
 
-Strong::Strong(const float magnitude, const float direction, short int scaling,
+Strong::Strong(const float magnitude, const float direction, const short int scaling,
         const std::shared_ptr<Field> field)
         : Force(magnitude, direction, scaling) {
     setField(field);
 }
 
-Strong::Strong(std::string name, const float magnitude) : Force(name, magnitude) {
+Strong::Strong(std::string name, const float magnitude)
+        : Force(name, magnitude) {
     setField(nullptr);
 }
 
@@ -91,13 +96,13 @@ Strong::Strong(std::string name, const float magnitude, const float direction,
 }
 
 Strong::Strong(std::string name, const float magnitude, const float direction,
-        short int scaling)
+        const short int scaling)
         : Force(name, magnitude, direction, scaling) {
     setField(nullptr);
 }
 
 Strong::Strong(std::string name, const float magnitude, const float direction,
-        short int scaling, const std::shared_ptr<Field> field)
+        const short int scaling, const std::shared_ptr<Field> field)
         : Force(name, magnitude, direction, scaling) {
     setField(field);
 }

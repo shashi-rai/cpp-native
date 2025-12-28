@@ -22,8 +22,8 @@
 
 namespace shp {
 
-const float Axis::NORMAL = 1.5708f;         // 90 degrees rotation
-const float Axis::DEFAULT_VALUE = 0.0f;     // 0 degrees
+const float Axis::NORMAL = 1.5708f;                         // 90 degrees rotation
+const float Axis::DEFAULT_VALUE = Quantity::DEFAULT_VALUE;  // 0 degrees
 
 Axis::Axis() : name(), gradient(DEFAULT_VALUE), scaling(DEFAULT_VALUE) {
 

@@ -22,27 +22,32 @@
 
 namespace shp {
 
-Linear::Linear() : Point(), points() {
+Linear::Linear()
+        : Point(), points() {
 
 }
 
-Linear::Linear(float gradient) : Point(gradient), points() {
+Linear::Linear(const float gradient)
+        : Point(gradient), points() {
 
 }
 
-Linear::Linear(std::string name) : Point(name), points() {
+Linear::Linear(std::string name)
+        : Point(name), points() {
 
 }
 
-Linear::Linear(std::string name, float gradient) : Point(name, gradient), points() {
+Linear::Linear(std::string name, const float gradient)
+        : Point(name, gradient), points() {
 
 }
 
-Linear::Linear(std::string name, PointArray& objects) : Point(name), points(objects) {
+Linear::Linear(std::string name, const PointArray& objects)
+        : Point(name), points(objects) {
 
 }
 
-Linear::Linear(std::string name, PointArray& objects, float gradient)
+Linear::Linear(std::string name, const PointArray& objects, const float gradient)
         : Point(name, gradient), points(objects) {
 
 }
@@ -59,7 +64,7 @@ bool Linear::operator==(const Linear& peer) const {
 Linear Linear::operator+(const Linear& peer) const {
     PointArray result(points);
     result.insert(result.end(), peer.points.begin(), peer.points.end());
-    return Linear("+", result);
+    return Linear("+", result, (getGradient() + peer.getGradient()));
 }
 
 Linear Linear::operator-(const Linear& peer) const {
@@ -70,7 +75,7 @@ Linear Linear::operator-(const Linear& peer) const {
             result.erase(found);
         }
     }
-    return Linear("-", result);
+    return Linear("-", result, (getGradient() - peer.getGradient()));
 }
 
 int Linear::getPointCount() const {
@@ -106,7 +111,7 @@ void Linear::set(int index, const Point& object) {
 }
 
 Point Linear::copy() {
-    Linear fresh(this->getName(), this->points);
+    Linear fresh(getName(), points,getGradient());
     return fresh;
 }
 

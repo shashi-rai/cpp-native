@@ -37,13 +37,13 @@ Neutron::Neutron(std::string name)
     initialize();
 }
 
-Neutron::Neutron(float wavelength)
+Neutron::Neutron(const float wavelength)
         : Particle(Spin(DEFAULT_SPIN), Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)), up(), down() {
     this->getEnergy().setWavelength(wavelength);
     initialize();
 }
 
-Neutron::Neutron(std::string name, float wavelength)
+Neutron::Neutron(std::string name, const float wavelength)
         : Particle(name, Spin(DEFAULT_SPIN), Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)), up(), down() {
     this->getEnergy().setWavelength(wavelength);
     initialize();
@@ -136,7 +136,7 @@ Proton Neutron::operator-(const Electron& peer) const {
 }
 
 shp::Quantity Neutron::getWavelength() const {
-    return this->getEnergy().getWavelength().getMagnitude();
+    return this->getEnergy().getWavelength().getLength();
 }
 
 shp::Point Neutron::copy() {

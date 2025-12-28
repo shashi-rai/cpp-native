@@ -129,7 +129,8 @@ qft::Electron Period::getElectron(int azimuthal, int magnetic) const {
 	if (this->getOrbitalCount() > 0) {
 		shp::Polygon orbital = orbitals[azimuthal];
 		if (orbital.getWaveCount() > 0) {
-			result = static_cast<qft::Electron&>(orbital(magnetic));
+			shp::Wave electron = orbital(magnetic);
+			result = static_cast<qft::Electron&>(electron);
 		}
 	}
 	return result;

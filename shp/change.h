@@ -26,13 +26,21 @@
 #include <vector>
 #include "direction.h"
 #include "quantity.h"
-#include "unit.h"
 
 namespace shp {
 
+/*
+ * A change represents some action in Nature.
+ * - an infinitesimal change in a physical quantity (e.g., Energy) results
+ *   into certain conversion from its potential form into dynamical form or
+ *   vice versa
+ * - a rate of change could be represented by a gradient (i.e., direction)
+ * - a change in direction (e.g., angular) alone represents an action in some
+ *   cases (e.g., momentum) 
+ */
 class Change {
     Direction gradient;
-    Quantity kinetic;
+    Quantity dynamical;
     Quantity potential;
 public:
     // Constructors
@@ -47,13 +55,13 @@ public:
     Change(const float gradient, const float potential, short int scaling, std::string unit);
     Change(const float gradient, const float potential, short int scaling, const Unit& unit);
     Change(const Quantity& potential);
-    Change(const Quantity& kinetic, const Quantity& potential);
+    Change(const Quantity& dynamical, const Quantity& potential);
     Change(const Direction& gradient, const Quantity& potential);
-    Change(const Direction& gradient, const Quantity& kinetic, const Quantity& potential);
-    Change(const float gradient, const float kinetic, const float potential);
-    Change(const float gradient, const float kinetic, const float potential, short int scaling);
-    Change(const float gradient, const float kinetic, const float potential, short int scaling, std::string unit);
-    Change(const float gradient, const float kinetic, const float potential, short int scaling, const Unit& unit);
+    Change(const Direction& gradient, const Quantity& dynamical, const Quantity& potential);
+    Change(const float gradient, const float dynamical, const float potential);
+    Change(const float gradient, const float dynamical, const float potential, short int scaling);
+    Change(const float gradient, const float dynamical, const float potential, short int scaling, std::string unit);
+    Change(const float gradient, const float dynamical, const float potential, short int scaling, const Unit& unit);
 
     // Destructors
     ~Change();
@@ -68,14 +76,14 @@ public:
 
     // Getters
     Direction getGradient() const { return gradient; }
-    Quantity getKinetic() const { return kinetic; }
+    Quantity getDynamical() const { return dynamical; }
     Quantity getPotential() const { return potential; }
 
     // Setters
     void setGradient(const float phase) { this->gradient = Direction(phase); }
     void setGradient(const Direction& phase) { this->gradient = phase; }
-    void setKinetic(const Quantity& energy) { this->kinetic = energy; }
-    void setPotential(const Quantity& energy) { this->potential = energy; }
+    void setDynamical(const Quantity& property) { this->dynamical = property; }
+    void setPotential(const Quantity& property) { this->potential = property; }
 
     // Additional methods
     float toRadians() const;

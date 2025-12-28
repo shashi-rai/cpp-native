@@ -22,9 +22,10 @@
 
 namespace qft {
 
-const std::string Temperature::UNIT = "K";          // System International
-const short int Temperature::DEFAULT_SCALE = 0;     // 10^0 K
-const float Temperature::DEFAULT_VALUE = 0.0f;      // O.0 K
+const std::string Temperature::UNIT = "K";                              // System International
+const float Temperature::BASE_VALUE = 273.15f;                          // 0.0K
+const short int Temperature::DEFAULT_SCALE = 0;                         // 10^0 K
+const float Temperature::DEFAULT_VALUE = shp::Quantity::DEFAULT_VALUE;  // 0.0 K
 
 Temperature::Temperature()
         : quantity(shp::Quantity::DEFAULT_VALUE, DEFAULT_SCALE,
@@ -32,30 +33,25 @@ Temperature::Temperature()
 
 }
 
-Temperature::Temperature(float quantity)
+Temperature::Temperature(const float quantity)
         : quantity(quantity, DEFAULT_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::TEMPERATURE)) {
 
 }
 
-Temperature::Temperature(float quantity, short int scaling)
+Temperature::Temperature(const float quantity, const short int scaling)
         : quantity(quantity, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::TEMPERATURE)) {
 
 }
 
-Temperature::Temperature(float quantity, const shp::Unit& unit)
+Temperature::Temperature(const float quantity, const shp::Unit& unit)
         : quantity(quantity, DEFAULT_SCALE, unit) {
 
 }
 
-Temperature::Temperature(float quantity, short int scaling, const shp::Unit& unit)
+Temperature::Temperature(const float quantity, const short int scaling, const shp::Unit& unit)
         : quantity(quantity, scaling, unit) {
-
-}
-
-Temperature::Temperature(const shp::Quantity& quantity, const shp::Unit& unit)
-        : quantity(unit) {
 
 }
 
@@ -69,45 +65,45 @@ bool Temperature::operator==(const Temperature& peer) const {
 
 Temperature Temperature::operator+(const Temperature& peer) const {
     shp::Quantity temperature = (quantity + peer.quantity);
-    return Temperature(temperature.getValue(), temperature.getScaling(), temperature.getUnit());
+    return Temperature(temperature.getMagnitude(), temperature.getScaling(), temperature.getUnit());
 }
 
 Temperature Temperature::operator-(const Temperature& peer) const {
     shp::Quantity temperature = (quantity - peer.quantity);
-    return Temperature(temperature.getValue(), temperature.getScaling(), temperature.getUnit());
+    return Temperature(temperature.getMagnitude(), temperature.getScaling(), temperature.getUnit());
 }
 
 Temperature Temperature::operator*(const Temperature& peer) const {
     shp::Quantity temperature = (quantity * peer.quantity);
-    return Temperature(temperature.getValue(), temperature.getScaling(), temperature.getUnit());
+    return Temperature(temperature.getMagnitude(), temperature.getScaling(), temperature.getUnit());
 }
 
 Temperature Temperature::operator/(const Temperature& peer) const {
     shp::Quantity temperature = (quantity / peer.quantity);
-    return Temperature(temperature.getValue(), temperature.getScaling(), temperature.getUnit());
+    return Temperature(temperature.getMagnitude(), temperature.getScaling(), temperature.getUnit());
 }
 
 Temperature Temperature::operator%(const Temperature& peer) const {
     shp::Quantity temperature = (quantity % peer.quantity);
-    return Temperature(temperature.getValue(), temperature.getScaling(), temperature.getUnit());
+    return Temperature(temperature.getMagnitude(), temperature.getScaling(), temperature.getUnit());
 }
 
 shp::Quantity Temperature::getTotal() const {
-    shp::Quantity result(quantity.getValue(), quantity.getScaling(), getUnit());
+    shp::Quantity result(quantity.getMagnitude(), quantity.getScaling(), getUnit());
     return result;
 }
 
 void Temperature::fromCelsius(const float value) {
-    quantity.setValue(value + 273.15f);
+    quantity.setMagnitude(value + BASE_VALUE);
 }
 
 float Temperature::toCelsius() const {
-    return (toKelvin() - 273.15f);
+    return (toKelvin() - BASE_VALUE);
 }
 
 void Temperature::fromFahrenheit(const float value) {
     float celsius = ((5.0f / 9.0f) * (value - 32));
-    quantity.setValue((celsius + 273.15f));
+    quantity.setMagnitude((celsius + BASE_VALUE));
 }
 
 float Temperature::toFahrenheit() const {
@@ -115,11 +111,11 @@ float Temperature::toFahrenheit() const {
 }
 
 float Temperature::toKelvin() const {
-    return quantity.getValue();
+    return quantity.getMagnitude();
 }
 
 Temperature Temperature::copy() {
-    Temperature fresh(quantity, quantity.getUnit());
+    Temperature fresh(quantity.getMagnitude(), quantity.getScaling(), quantity.getUnit());
     return fresh;
 }
 
@@ -137,7 +133,7 @@ std::string Temperature::print() {
 
 shp::Quantity Temperature::getComponent(float phase) const {
 	shp::Quantity temperature = getTotal();
-	return shp::Quantity((temperature.getValue() * cos(phase)), temperature.getScaling(), temperature.getUnit());
+	return shp::Quantity((temperature.getMagnitude() * cos(phase)), temperature.getScaling(), temperature.getUnit());
 }
 
 } // namespace qft

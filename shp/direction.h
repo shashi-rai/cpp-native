@@ -29,16 +29,16 @@
 namespace shp {
 
 class Direction {
-    int degrees;
-    int minutes;
-    int seconds;
+    short int degrees;
+    short int minutes;
+    short int seconds;
 public:
     // Constructors
     Direction();
-    Direction(float radians);
-    Direction(int degrees);
-    Direction(int degrees, int minutes);
-    Direction(int degrees, int minutes, int seconds);
+    Direction(const float radians);
+    Direction(const short int degrees);
+    Direction(const short int degrees, const short int minutes);
+    Direction(const short int degrees, const short int minutes, const short int seconds);
 
     // Destructors
     ~Direction();
@@ -52,31 +52,46 @@ public:
     Direction operator%(const Direction& peer) const;
 
     // Getters
-    int getDegrees() const { return degrees; }
-    int getMinutes() const { return minutes; }
-    int getSeconds()const { return seconds; }
+    short int getDegrees() const { return degrees; }
+    short int getMinutes() const { return minutes; }
+    short int getSeconds() const { return seconds; }
 
     // Setters
-    void setDegrees(const int value) { this->degrees = getIndexDegrees(value); }
-    void setMinutes(const int value) { this->minutes = getIndexMinutes(value); }
-    void setSeconds(const int value) { this->seconds = getIndexSeconds(value); }
+    void setDegrees(const short int value) { this->degrees = getIndexDegrees(value); }
+    void setMinutes(const short int value) { this->minutes = getIndexMinutes(value); }
+    void setSeconds(const short int value) { this->seconds = getIndexSeconds(value); }
 
     // Additional methods
     float toRadians() const;
+    Direction getRotation(const short int degree);
     Direction copy();
     void clear();
     std::string print();
+
 private:
-    int getIndexDegrees(const int value) const;
-    int getIndexMinutes(const int value) const;
-    int getIndexSeconds(const int value) const;
+    short int getIndexDegrees(const short int value) const;
+    short int getIndexMinutes(const short int value) const;
+    short int getIndexSeconds(const short int value) const;
+
 public:
-    static const int DEGREES_MIN;
-    static const int DEGREES_MAX;
-    static const int MINUTES_MIN;
-    static const int MINUTES_MAX;
-    static const int SECONDS_MIN;
-    static const int SECONDS_MAX;
+    static const short int DEGREES_MIN;
+    static const short int DEGREES_MAX;
+    static const short int MINUTES_MIN;
+    static const short int MINUTES_MAX;
+    static const short int SECONDS_MIN;
+    static const short int SECONDS_MAX;
+
+    // Common high-Precision Radians
+    static const float DEGREE_001;
+    static const float DEGREE_005;
+    static const float DEGREE_010;
+    static const float DEGREE_030;
+    static const float DEGREE_045;
+    static const float DEGREE_060;
+    static const float DEGREE_090;
+    static const float DEGREE_180;
+    static const float DEGREE_270;
+    static const float DEGREE_360;
 };
 
 typedef std::vector<Direction > DirectionArray;

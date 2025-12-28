@@ -22,15 +22,18 @@
 
 namespace qft {
 
-Weak::Weak() : Force() {
+Weak::Weak()
+        : Force() {
     setField(nullptr);
 }
 
-Weak::Weak(std::string name) : Force(name) {
+Weak::Weak(std::string name)
+        : Force(name) {
     setField(nullptr);
 }
 
-Weak::Weak(const std::shared_ptr<Field> field) : Force() {
+Weak::Weak(const std::shared_ptr<Field> field)
+        : Force() {
     setField(field);
 }
 
@@ -39,7 +42,8 @@ Weak::Weak(std::string name, const std::shared_ptr<Field> field)
     setField(field);
 }
 
-Weak::Weak(const float magnitude) : Force(magnitude) {
+Weak::Weak(const float magnitude)
+        : Force(magnitude) {
     setField(nullptr);
 }
 
@@ -59,12 +63,12 @@ Weak::Weak(const float magnitude, const float direction,
     setField(field);
 }
 
-Weak::Weak(const float magnitude, const float direction, short int scaling)
+Weak::Weak(const float magnitude, const float direction, const short int scaling)
         : Force(magnitude, direction, scaling) {
     setField(nullptr);
 }
 
-Weak::Weak(const float magnitude, const float direction, short int scaling,
+Weak::Weak(const float magnitude, const float direction, const short int scaling,
         const std::shared_ptr<Field> field)
         : Force(magnitude, direction, scaling) {
     setField(field);
@@ -92,13 +96,13 @@ Weak::Weak(std::string name, const float magnitude, const float direction,
 }
 
 Weak::Weak(std::string name, const float magnitude, const float direction,
-        short int scaling)
+        const short int scaling)
         : Force(name, magnitude, direction, scaling) {
     setField(nullptr);
 }
 
 Weak::Weak(std::string name, const float magnitude, const float direction,
-        short int scaling, const std::shared_ptr<Field> field)
+        const short int scaling, const std::shared_ptr<Field> field)
         : Force(name, magnitude, direction, scaling) {
     setField(field);
 }

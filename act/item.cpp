@@ -130,7 +130,7 @@ Item Item::operator%(const Item& peer) const {
 }
 
 Amount Item::getCostTotal() {
-    float quantity_bought = getQuantity().getValue();
+    float quantity_bought = getQuantity().getMagnitude();
     float cost_price = getCost().getAmount().getValue();
     float discount_received = getCost().getDiscount().getAmount().getValue();
     float value_added_tax = getCost().getTax().getPercent();
@@ -141,7 +141,7 @@ Amount Item::getCostTotal() {
 }
 
 Amount Item::getSaleTotal() {
-    float quantity_sold = getQuantity().getValue();
+    float quantity_sold = getQuantity().getMagnitude();
     float sale_price = getSale().getAmount().getValue();
     float discount_provided = getSale().getDiscount().getAmount().getValue();
     float value_added_tax = getSale().getTax().getPercent();

@@ -31,13 +31,13 @@ Electron::Electron()
 
 }
 
-Electron::Electron(float polarization)
+Electron::Electron(const float polarization)
 		: Particle(Mass(Mass::ELECTRON), Charge(Charge::ELECTRON)),
 		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
 	setPolarization(polarization);
 }
 
-Electron::Electron(float polarization, float azimuthal)
+Electron::Electron(const float polarization, const float azimuthal)
 		: Particle(Mass(Mass::ELECTRON), Charge(Charge::ELECTRON)),
 		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
 	setPolarization(polarization);
@@ -50,13 +50,13 @@ Electron::Electron(std::string name)
 
 }
 
-Electron::Electron(std::string name, float polarization)
+Electron::Electron(std::string name, const float polarization)
 	: Particle(name, Mass(Mass::ELECTRON), Charge(Charge::ELECTRON)),
 		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
 	setPolarization(polarization);
 }
 
-Electron::Electron(std::string name, float polarization, float azimuthal)
+Electron::Electron(std::string name, const float polarization, const float azimuthal)
         : Particle(name, Mass(Mass::ELECTRON), Charge(Charge::ELECTRON)),
 		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
 	setPolarization(polarization);
@@ -105,34 +105,34 @@ Electron::Electron(std::string name, const Spin& spin, const Mass& mass, const C
 
 }
 
-Electron::Electron(short int principal, short int azimuthal, short int magnetic, float spin)
+Electron::Electron(const short int principal, const short int azimuthal, const short int magnetic, const float spin)
         : Particle(Spin(spin), Mass(Mass::ELECTRON), Charge(Charge::ELECTRON)),
 		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
 
 }
 
-Electron::Electron(std::string name, short int principal, short int azimuthal, short int magnetic,
+Electron::Electron(std::string name, const short int principal, const short int azimuthal, const short int magnetic,
 		const Spin& spin, const Energy& energy)
         : Particle(name, spin, energy),
 		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
 
 }
 
-Electron::Electron(std::string name, short int principal, short int azimuthal, short int magnetic,
+Electron::Electron(std::string name, const short int principal, const short int azimuthal, const short int magnetic,
 		const Spin& spin, const Mass& mass)
         : Particle(name, spin, mass, Charge(Charge::ELECTRON)),
 		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
 
 }
 
-Electron::Electron(std::string name, short int principal, short int azimuthal, short int magnetic,
+Electron::Electron(std::string name, const short int principal, const short int azimuthal, const short int magnetic,
 		const Spin& spin, const Charge& charge)
         : Particle(name, spin, Mass(Mass::ELECTRON), charge),
 		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
 
 }
 
-Electron::Electron(std::string name, short int principal, short int azimuthal, short int magnetic,
+Electron::Electron(std::string name, const short int principal, const short int azimuthal, const short int magnetic,
 		const Spin& spin, const Mass& mass, const Charge& charge)
         : Particle(name, spin, mass, charge),
 		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {

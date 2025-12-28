@@ -200,6 +200,7 @@ shp::Point Particle::copy() {
 
 void Particle::clear() {
     Wave::clear();
+    setPhysical(nullptr);
     spin.clear();
     energy.clear();
     return;
@@ -218,7 +219,7 @@ std::string Particle::print() {
 
 shp::Quantity Particle::getComponent(float phase) const {
 	shp::Quantity energy = getTotal();
-	return shp::Quantity((energy.getValue() * cos(phase)), energy.getScaling(), energy.getUnit());
+	return shp::Quantity((energy.getMagnitude() * cos(phase)), energy.getScaling(), energy.getUnit());
 }
 
 } // namespace qft

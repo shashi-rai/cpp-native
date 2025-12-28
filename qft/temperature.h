@@ -24,7 +24,6 @@
 #include <sstream>
 #include <vector>
 #include "../shp/quantity.h"
-#include "../shp/unit.h"
 
 namespace qft {
 
@@ -33,11 +32,10 @@ class Temperature {
 public:
     // Constructors
     Temperature();
-    Temperature(float quantity);
-    Temperature(float quantity, short int scaling);
-    Temperature(float quantity, const shp::Unit& unit);
-    Temperature(float quantity, short int scaling, const shp::Unit& unit);
-    Temperature(const shp::Quantity& quantity, const shp::Unit& unit);
+    Temperature(const float quantity);
+    Temperature(const float quantity, const short int scaling);
+    Temperature(const float quantity, const shp::Unit& unit);
+    Temperature(const float quantity, const short int scaling, const shp::Unit& unit);
 
     // Destructors
     ~Temperature();
@@ -71,6 +69,7 @@ public:
     shp::Quantity getComponent(float phase) const;
 public:
     static const std::string UNIT;
+    static const float BASE_VALUE;
     static const short int DEFAULT_SCALE;
     static const float DEFAULT_VALUE;
 };

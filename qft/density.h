@@ -24,7 +24,6 @@
 #include <string>
 #include <vector>
 #include "../shp/quantity.h"
-#include "../shp/unit.h"
 #include "../shp/volume.h"
 
 namespace qft {
@@ -40,20 +39,20 @@ public:
     Density(std::string name);
     Density(const float magnitude);
     Density(const float magnitude, const std::string unit);
-    Density(const float magnitude, short int scaling, const std::string unit);
+    Density(const float magnitude, const short int scaling, const std::string unit);
     Density(const float magnitude, const float volume);
     Density(const float magnitude, const float volume, const std::string unit);
-    Density(const float magnitude, const float volume, short int scaling, const std::string unit);
+    Density(const float magnitude, const float volume, const short int scaling, const std::string unit);
     Density(const shp::Quantity& magnitude, const shp::Volume& volume);
     Density(const shp::Quantity& magnitude, const shp::Volume& volume, const shp::Unit& unit);
     Density(std::string name, const shp::Unit& unit);
-    Density(std::string name, short int scaling, const shp::Unit& unit);
+    Density(std::string name, const short int scaling, const shp::Unit& unit);
     Density(std::string name, const float magnitude);
     Density(std::string name, const float magnitude, const std::string unit);
-    Density(std::string name, const float magnitude, short int scaling, const std::string unit);
+    Density(std::string name, const float magnitude, const short int scaling, const std::string unit);
     Density(std::string name, const float magnitude, const float volume);
     Density(std::string name, const float magnitude, const float volume, const std::string unit);
-    Density(std::string name, const float magnitude, const float volume, short int scaling, const std::string unit);
+    Density(std::string name, const float magnitude, const float volume, const short int scaling, const std::string unit);
     Density(std::string name, const shp::Quantity& magnitude);
     Density(std::string name, const shp::Quantity& magnitude, const shp::Unit& unit);
     Density(std::string name, const shp::Quantity& magnitude, const shp::Volume& volume);

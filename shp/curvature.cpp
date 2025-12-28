@@ -22,46 +22,49 @@
 
 namespace shp {
 
-Curvature::Curvature() : Point(), deforms(), polarization(0.0f) {
+Curvature::Curvature()
+        : Point(), deforms(), polarization(Quantity::DEFAULT_VALUE) {
 
 }
 
-Curvature::Curvature(float polarization)
+Curvature::Curvature(const float polarization)
         : Point(), deforms(), polarization(polarization) {
 
 }
 
-Curvature::Curvature(float polarization, float azimuthal)
+Curvature::Curvature(const float polarization, const float azimuthal)
         : Point(azimuthal), deforms(), polarization(polarization) {
 
 }
 
 Curvature::Curvature(std::string name)
-        : Point(name), deforms(), polarization(0.0f) {
+        : Point(name), deforms(), polarization(Quantity::DEFAULT_VALUE) {
 
 }
 
-Curvature::Curvature(std::string name, float polarization)
+Curvature::Curvature(std::string name, const float polarization)
         : Point(name), deforms(), polarization(polarization) {
 
 }
 
-Curvature::Curvature(std::string name, float polarization, float azimuthal)
+Curvature::Curvature(std::string name, const float polarization, const float azimuthal)
         : Point(name, azimuthal), deforms(), polarization(polarization) {
 
 }
 
-Curvature::Curvature(std::string name, PhaseArray& deforms)
-        : Point(name), deforms(deforms), polarization(0.0f) {
+Curvature::Curvature(std::string name, const PhaseArray& deforms)
+        : Point(name), deforms(deforms), polarization(Quantity::DEFAULT_VALUE) {
 
 }
 
-Curvature::Curvature(std::string name, PhaseArray& deforms, float polarization)
+Curvature::Curvature(std::string name, const PhaseArray& deforms,
+        const float polarization)
         : Point(name), deforms(deforms), polarization(polarization) {
 
 }
 
-Curvature::Curvature(std::string name, PhaseArray& deforms, float polarization, float azimuthal)
+Curvature::Curvature(std::string name, const PhaseArray& deforms,
+        const float polarization, const float azimuthal)
         : Point(name, azimuthal), deforms(deforms), polarization(polarization) {
 
 }
@@ -79,9 +82,13 @@ Curvature Curvature::operator+(const Curvature& peer) const {
     Curvature self = *this, other = peer;
     PhaseArray phases(deforms);
     phases.insert(phases.end(), peer.deforms.begin(), peer.deforms.end());
-    std::complex<float> ap1 = self.toAzimuthalComplex(self.getGradient()), ap2 = other.toAzimuthalComplex(peer.getGradient());
+    std::complex<float>
+        ap1 = self.toAzimuthalComplex(self.getGradient()),
+        ap2 = other.toAzimuthalComplex(peer.getGradient());
     std::complex<float> a_phasor = ap1 + ap2;
-    std::complex<float> pp1 = self.toPolarizationComplex(polarization), pp2 = other.toPolarizationComplex(peer.polarization);
+    std::complex<float>
+        pp1 = self.toPolarizationComplex(polarization),
+        pp2 = other.toPolarizationComplex(peer.polarization);
     std::complex<float> p_phasor = pp1 + pp2;
     Curvature result = Curvature("+", phases, std::arg(p_phasor), std::arg(a_phasor));
     result.setAmplitude(std::abs(p_phasor));
@@ -97,9 +104,13 @@ Curvature Curvature::operator-(const Curvature& peer) const {
             phases.erase(found);
         }
     }
-    std::complex<float> ap1 = self.toAzimuthalComplex(self.getGradient()), ap2 = other.toAzimuthalComplex(peer.getGradient());
+    std::complex<float>
+        ap1 = self.toAzimuthalComplex(self.getGradient()),
+        ap2 = other.toAzimuthalComplex(peer.getGradient());
     std::complex<float> a_phasor = ap1 - ap2;
-    std::complex<float> pp1 = self.toPolarizationComplex(polarization), pp2 = other.toPolarizationComplex(peer.polarization);
+    std::complex<float>
+        pp1 = self.toPolarizationComplex(polarization),
+        pp2 = other.toPolarizationComplex(peer.polarization);
     std::complex<float> p_phasor = pp1 - pp2;
     Curvature result = Curvature("-", phases, std::arg(p_phasor), std::arg(a_phasor));
     result.setAmplitude(std::abs(p_phasor));
@@ -146,13 +157,13 @@ Angular Curvature::getOrientation() const {
 }
 
 Point Curvature::copy() {
-    Curvature fresh(this->getName(), this->deforms, this->polarization, this->getGradient());
+    Curvature fresh(getName(), deforms, polarization, getGradient());
     return fresh;
 }
 
 void Curvature::clear() {
     Point::clear();
-    polarization = 0.0f;
+    polarization = Quantity::DEFAULT_VALUE;
     deforms.clear();
     return;
 }

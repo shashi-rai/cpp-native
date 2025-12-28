@@ -22,7 +22,7 @@
 
 namespace qft {
 
-const float Spin::DEFAULT_VALUE = 0.0f;     // e.g., -1/2 or +1/2 
+const float Spin::DEFAULT_VALUE = shp::Quantity::DEFAULT_VALUE; // e.g., -1/2 or +1/2 
 
 Spin::Spin() : value(DEFAULT_VALUE) {
 
@@ -59,6 +59,18 @@ Spin Spin::operator/(const Spin& peer) const {
 Spin Spin::operator%(const Spin& peer) const {
     float result = fmod(value, peer.value);
     return Spin((result));
+}
+
+bool Spin::hasNoSpin() const {
+    return value == DEFAULT_VALUE;
+}
+
+bool Spin::isClockwise() const {
+    return value < DEFAULT_VALUE;
+}
+
+bool Spin::isAntiClockwise() const {
+    return value > DEFAULT_VALUE;
 }
 
 Spin Spin::copy() {

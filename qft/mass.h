@@ -27,18 +27,14 @@
 #include "density.h"
 #include "force.h"
 #include "../shp/angular.h"
-#include "../shp/distance.h"
-#include "../shp/quantity.h"
-#include "../shp/unit.h"
 
 namespace qft {
 
 // To enable compiler resolve forward declarations
 class Field;
 
-class Mass {
+class Mass : public shp::Quantity {
     std::shared_ptr<Field> field;
-    shp::Quantity magnitude;
 public:
     // Constructors
     Mass();
@@ -48,11 +44,10 @@ public:
     Mass(const float magnitude);
     Mass(const float magnitude, std::string unit);
     Mass(const float magnitude, const shp::Unit& unit);
-    Mass(const float magnitude, short int scaling);
-    Mass(const float magnitude, short int scaling, std::string unit);
-    Mass(const float magnitude, short int scaling, const shp::Unit& unit);
-    Mass(const shp::Quantity& quantity);
-    Mass(const std::shared_ptr<Field> field, const shp::Quantity& quantity);
+    Mass(const float magnitude, const short int scaling);
+    Mass(const float magnitude, const short int scaling, std::string unit);
+    Mass(const float magnitude, const short int scaling, const shp::Unit& unit);
+    Mass(const float magnitude, const short int scaling, const shp::Unit& unit, const std::shared_ptr<Field> field);
 
     // Destructors
     ~Mass();
@@ -71,20 +66,14 @@ public:
 
     // Getters
     std::shared_ptr<Field> getField() const { return field; }
-    shp::Quantity getMagnitude() const { return magnitude; }
 
     // Setters
     void setField(std::shared_ptr<Field> address) { this->field = address; }
-    void setMagnitude(const float amount) { this->magnitude = amount; }
 
     // Additional methods
-    shp::Unit getUnit() const;
-    void setUnit(const shp::Unit& value);
     bool isOwned() const;
-    shp::Quantity getTotal() const;
     Density getDensity(const shp::Volume& volume) const;
     Force getForce(const shp::Angular& coordinates) const;
-    void adjustScaling();
     virtual Mass copy();
     virtual void clear();
     virtual std::string print();

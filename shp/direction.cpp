@@ -22,12 +22,23 @@
 
 namespace shp {
 
-const int Direction::DEGREES_MIN = 0;
-const int Direction::DEGREES_MAX = 360;
-const int Direction::MINUTES_MIN = 0;
-const int Direction::MINUTES_MAX = 60;
-const int Direction::SECONDS_MIN = 0;
-const int Direction::SECONDS_MAX = 3600;
+const short int Direction::DEGREES_MIN = 0;
+const short int Direction::DEGREES_MAX = 360;
+const short int Direction::MINUTES_MIN = 0;
+const short int Direction::MINUTES_MAX = 60;
+const short int Direction::SECONDS_MIN = 0;
+const short int Direction::SECONDS_MAX = 3600;
+
+const float Direction::DEGREE_001 = 0.017453292519943295f;
+const float Direction::DEGREE_005 = 0.087266462599716000f;
+const float Direction::DEGREE_010 = 0.174532925199432950f;
+const float Direction::DEGREE_030 = 0.523598775598299000f;
+const float Direction::DEGREE_045 = 0.785398163397448000f;
+const float Direction::DEGREE_060 = 1.047197551196598000f;
+const float Direction::DEGREE_090 = 1.570796326794897000f;
+const float Direction::DEGREE_180 = 3.141592653589793000f;
+const float Direction::DEGREE_270 = 4.712388980384690000f;
+const float Direction::DEGREE_360 = 6.283185307179586000f;
 
 Direction::Direction()
         : degrees(DEGREES_MIN), minutes(MINUTES_MIN), seconds(SECONDS_MIN) {
@@ -37,7 +48,7 @@ Direction::Direction()
 /*
  * Used for converting radians to degrees, minutes, seconds
  */
-Direction::Direction(float radians) {
+Direction::Direction(const float radians) {
     float deciDegrees = radians * (180.0 / M_PI);
     degrees = getIndexDegrees(static_cast<int>(deciDegrees));
     float fraDegrees = deciDegrees - degrees;
@@ -50,18 +61,18 @@ Direction::Direction(float radians) {
     seconds = getIndexSeconds(static_cast<int>(round(deciSeconds)));
 }
 
-Direction::Direction(int degrees)
+Direction::Direction(const short int degrees)
         : degrees(getIndexDegrees(degrees)), minutes(0), seconds(0) {
 
 }
 
-Direction::Direction(int degrees, int minutes)
+Direction::Direction(const short int degrees, const short int minutes)
         : degrees(getIndexDegrees(degrees)),
         minutes(getIndexMinutes(minutes)), seconds(0) {
 
 }
 
-Direction::Direction(int degrees, int minutes, int seconds)
+Direction::Direction(const short int degrees, const short int minutes, const short int seconds)
         : degrees(getIndexDegrees(degrees)),
         minutes(getIndexMinutes(minutes)), seconds(getIndexSeconds(seconds)) {
 
@@ -114,6 +125,10 @@ float Direction::toRadians() const {
     return (total * (M_PI / 180.0f));
 }
 
+Direction Direction::getRotation(const short int degree) {
+    return Direction((toRadians() + (DEGREE_001 * degree)));
+}
+
 Direction Direction::copy() {
     Direction fresh(degrees, minutes, seconds);
     return fresh;
@@ -136,7 +151,7 @@ std::string Direction::print() {
 /*
  * Used for converting degrees between 0 ~ 360
  */
-int Direction::getIndexDegrees(const int value) const {
+short int Direction::getIndexDegrees(const short int value) const {
     int result = (value % DEGREES_MAX);
     if (value >= MINUTES_MIN)
         return result;
@@ -147,7 +162,7 @@ int Direction::getIndexDegrees(const int value) const {
 /*
  * Used for converting minutes between 0 ~ 60
  */
-int Direction::getIndexMinutes(const int value) const {
+short int Direction::getIndexMinutes(const short int value) const {
     int result = (value % MINUTES_MAX);
     if (value >= MINUTES_MIN)
         return result;
@@ -158,7 +173,7 @@ int Direction::getIndexMinutes(const int value) const {
 /*
  * Used for converting seconds between 0 ~ 3600
  */
-int Direction::getIndexSeconds(const int value) const {
+short int Direction::getIndexSeconds(const short int value) const {
     int result = (value % SECONDS_MAX);
     if (value >= SECONDS_MIN)
         return result;

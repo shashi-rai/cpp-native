@@ -99,15 +99,15 @@ void Galaxy::set(int index, const Star& object) {
 
 const shp::Distance Galaxy::getMilkywayRadius() {
     shp::Distance lightyear = Celestial::getLightYear();
-    float radius = (Galaxy::MILKYWAY_RADIUS * lightyear.getMagnitude().getValue());
+    float radius = (Galaxy::MILKYWAY_RADIUS * lightyear.getLength().getMagnitude());
     short int scaling = lightyear.getScaling();
     return shp::Distance(radius, scaling);
 }
 
 const qft::Mass Galaxy::getMilkywayMass() {
     qft::Mass solar = Star::getSunMass();
-    float mass = (Galaxy::MILKYWAY_MASS * solar.getMagnitude().getValue());
-    short int scaling = (12 + solar.getMagnitude().getScaling());
+    float mass = (Galaxy::MILKYWAY_MASS * solar.getMagnitude());
+    short int scaling = (12 + solar.getScaling());
     return qft::Mass(mass, scaling);
 }
 

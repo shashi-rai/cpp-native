@@ -18,64 +18,64 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef QFT_ACTION_H
-#define QFT_ACTION_H
+#ifndef QFT_CURRENT_H
+#define QFT_CURRENT_H
 
-#include <string>
 #include <vector>
-#include "../shp/change.h"
-#include "../shp/coordinate.h"
-#include "../shp/wave.h"
+#include "../qft/charge.h"
+#include "../qft/velocity.h"
 
 namespace qft {
 
-class Action : public shp::Change {
+class Current {
     std::string name;
-    shp::Coordinate coordinate;
-    shp::Wave wave;
+    qft::Charge charge;
+    qft::Velocity velocity;
 public:
     // Constructors
-    Action();
-    Action(std::string name);
-    Action(const shp::Coordinate& location);
-    Action(const shp::Coordinate& location, const shp::Wave& wave);
-    Action(const shp::Quantity& potential);
-    Action(const shp::Quantity& dynamical, const shp::Quantity& potential);
-    Action(std::string name, const shp::Quantity& potential);
-    Action(std::string name, const shp::Quantity& dynamical, const shp::Quantity& potential);
-    Action(std::string name, const shp::Quantity& dynamical, const shp::Quantity& potential, const shp::Coordinate& location);
-    Action(std::string name, const shp::Quantity& dynamical, const shp::Quantity& potential, const shp::Coordinate& location, const shp::Wave& wave);
-    Action(std::string name, const shp::Coordinate& location);
-    Action(std::string name, const shp::Coordinate& location, const shp::Wave& wave);
+    Current();
+    Current(std::string name);
+    Current(const qft::Charge& charge);
+    Current(std::string name, const qft::Charge& charge);
+    Current(const float charge, const float velocity);
+    Current(const qft::Charge& charge, const qft::Velocity& velocity);
+    Current(std::string name, const float charge, const float velocity);
+    Current(std::string name, const qft::Charge& charge, const qft::Velocity& velocity);
 
     // Destructors
-    ~Action();
+    ~Current();
 
     // Operator overloading
-    bool operator==(const Action& peer) const;
-    Action operator+(const Action& peer) const;
-    Action operator-(const Action& peer) const;
+    bool operator==(const Current& peer) const;
+    Current operator+(const Current& peer) const;
+    Current operator-(const Current& peer) const;
+    Current operator*(const Current& peer) const;
+    Current operator/(const Current& peer) const;
 
     // Getters
     std::string getName() const { return name; }
-    shp::Coordinate getCoordinate() const { return coordinate; }
-    shp::Wave getWave() const { return wave; }
+    qft::Charge getCharge() const { return charge; }
+    qft::Velocity getVelocity() const { return velocity; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
-    void setCoordinate(const shp::Coordinate& location) { this->coordinate = location; }
-    void setWave(const shp::Wave& pulse) { this->wave = pulse; }
+    void setCharge(const qft::Charge& value) { this->charge = value; }
+    void setVelocity(const qft::Velocity& value) { this->velocity = value; }
 
     // Additional methods
     shp::Quantity getTotal() const;
-    virtual shp::Change copy();
+    virtual Current copy();
     virtual void clear();
     virtual std::string print();
     shp::Quantity getComponent(float phase) const;
+public:
+    static const std::string UNIT;
+    static const float ELECTRON_FLOW_RATE;
+    static const short int ELECTRON_FLOW_SCALE;
 };
 
-typedef std::vector<Action > ActionArray;
+typedef std::vector<Current > CurrentArray;
 
 } // namespace qft
 
-#endif //QFT_ACTION_H
+#endif //QFT_CURRENT_H

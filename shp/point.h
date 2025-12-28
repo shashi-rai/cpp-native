@@ -36,11 +36,11 @@ class Point : public Shape {
 public:
     // Constructors
     Point();
-    Point(float gradient);
-    Point(float amplitude, float gradient);
+    Point(const float gradient);
+    Point(const float amplitude, const float gradient);
     Point(std::string name);
-    Point(std::string name, float gradient);
-    Point(std::string name, float amplitude, float gradient);
+    Point(std::string name, const float gradient);
+    Point(std::string name, const float amplitude, const float gradient);
 
     // Destructors
     ~Point();
@@ -55,8 +55,8 @@ public:
     float getGradient() const { return gradient; }
 
     // Setters
-    void setAmplitude(float value) { this->amplitude = value; }
-    void setGradient(float value) { this->gradient = value; }
+    void setAmplitude(const float value) { this->amplitude = value; }
+    void setGradient(const float value) { this->gradient = value; }
 
     // Additional methods
     virtual Angular getOrientation() const;

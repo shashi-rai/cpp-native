@@ -24,10 +24,11 @@
 namespace qft {
 
 Electric::Electric() : Force() {
-    setField(nullptr);
+        setField(nullptr);
 }
 
-Electric::Electric(std::string name) : Force(name) {
+Electric::Electric(std::string name)
+        : Force(name) {
     setField(nullptr);
 }
 
@@ -62,12 +63,12 @@ Electric::Electric(const float magnitude, const float direction,
     setField(field);
 }
 
-Electric::Electric(const float magnitude, const float direction, short int scaling)
+Electric::Electric(const float magnitude, const float direction, const short int scaling)
         : Force(magnitude, direction, scaling) {
     setField(nullptr);
 }
 
-Electric::Electric(const float magnitude, const float direction, short int scaling,
+Electric::Electric(const float magnitude, const float direction, const short int scaling,
         const std::shared_ptr<Field> field)
         : Force(magnitude, direction, scaling) {
     setField(field);
@@ -96,13 +97,13 @@ Electric::Electric(std::string name, const float magnitude, const float directio
 }
 
 Electric::Electric(std::string name, const float magnitude, const float direction,
-        short int scaling)
+        const short int scaling)
         : Force(name, magnitude, direction, scaling) {
     setField(nullptr);
 }
 
 Electric::Electric(std::string name, const float magnitude, const float direction,
-        short int scaling, const std::shared_ptr<Field> field)
+        const short int scaling, const std::shared_ptr<Field> field)
         : Force(name, magnitude, direction, scaling) {
     setField(field);
 }
@@ -121,17 +122,18 @@ Electric Electric::operator()(const Charge& host, const Charge& peer, const shp:
     shp::Potential potential_peer = peer.getField()->getPotential();
     shp::Distance distance = (potential_host.getDifference() - potential_peer.getDifference());
     Force effect = host(peer, sepration, distance);
-    return Electric(effect.getMagnitude().getValue(), effect.getDirection().toRadians(), field);
+    shp::Quantity force = effect.getMagnitude();
+    return Electric(force.getMagnitude(), effect.getDirection().toRadians(), field);
 }
 
 Acceleration Electric::getAcceleration(const Charge& charge) const {
     Acceleration result;
     if (isOwned()) {
         shp::Quantity quantum = (this->getMagnitude() / charge.getMagnitude());
-	    result = Acceleration(quantum.getValue(), quantum.getScaling(), quantum.getUnit());
+	    result = Acceleration(quantum.getMagnitude(), quantum.getScaling(), quantum.getUnit());
     } else {
         shp::Quantity quantum = this->getMagnitude();
-        result = Acceleration(quantum.getValue(), quantum.getScaling(), quantum.getUnit());
+        result = Acceleration(quantum.getMagnitude(), quantum.getScaling(), quantum.getUnit());
     }
 	result.adjustScaling();
     return result;

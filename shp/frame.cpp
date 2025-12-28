@@ -22,28 +22,32 @@
 
 namespace shp {
 
-Frame::Frame() : Point(), planes() {
+Frame::Frame()
+        : Point(), planes() {
 
 }
 
-Frame::Frame(float gradient) : Point(gradient), planes() {
+Frame::Frame(const float gradient)
+        : Point(gradient), planes() {
 
 }
 
-Frame::Frame(std::string name) : Point(name), planes() {
+Frame::Frame(std::string name)
+        : Point(name), planes() {
 
 }
 
-Frame::Frame(std::string name, float gradient) : Point(name, gradient), planes() {
+Frame::Frame(std::string name, const float gradient)
+        : Point(name, gradient), planes() {
 
 }
 
-Frame::Frame(std::string name, PlanarArray& planes)
+Frame::Frame(std::string name, const PlanarArray& planes)
         : Point(name), planes(planes) {
 
 }
 
-Frame::Frame(std::string name, PlanarArray& planes, float gradient)
+Frame::Frame(std::string name, const PlanarArray& planes, const float gradient)
         : Point(name, gradient), planes(planes) {
 
 }
@@ -60,7 +64,7 @@ bool Frame::operator==(const Frame& peer) const {
 Frame Frame::operator+(const Frame& peer) const {
     PlanarArray result(planes);
     result.insert(result.end(), peer.planes.begin(), peer.planes.end());
-    return Frame("+", result);
+    return Frame("+", result, (getGradient() + peer.getGradient()));
 }
 
 Frame Frame::operator-(const Frame& peer) const {
@@ -71,7 +75,7 @@ Frame Frame::operator-(const Frame& peer) const {
             result.erase(found);
         }
     }
-    return Frame("-", result);
+    return Frame("-", result, (getGradient() - peer.getGradient()));
 }
 
 int Frame::getPlaneCount() const {
@@ -107,7 +111,7 @@ void Frame::set(int index, const Planar& object) {
 }
 
 Point Frame::copy() {
-    Frame fresh(this->getName(), this->planes);
+    Frame fresh(getName(), planes, getGradient());
     return fresh;
 }
 

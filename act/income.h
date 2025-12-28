@@ -31,18 +31,27 @@ namespace act {
 
 class Income {
     std::string name;
+    Currency currency;
     RevenueArray revenues;
     ExpenseArray expenses;
 public:
     // Constructors
     Income();
     Income(std::string name);
+    Income(const Currency& currency);
+    Income(std::string name, const Currency& currency);
     Income(const RevenueArray& revenues);
+    Income(const Currency& currency, const RevenueArray& revenues);
     Income(const ExpenseArray& expenses);
+    Income(const Currency& currency, const ExpenseArray& expenses);
     Income(const RevenueArray& revenues, const ExpenseArray& expenses);
+    Income(const Currency& currency, const RevenueArray& revenues, const ExpenseArray& expenses);
     Income(std::string name, const RevenueArray& revenues);
+    Income(std::string name, const Currency& currency, const RevenueArray& revenues);
     Income(std::string name, const ExpenseArray& expenses);
+    Income(std::string name, const Currency& currency, const ExpenseArray& expenses);
     Income(std::string name, const RevenueArray& revenues, const ExpenseArray& expenses);
+    Income(std::string name, const Currency& currency, const RevenueArray& revenues, const ExpenseArray& expenses);
 
     // Destructors
     ~Income();
@@ -54,11 +63,13 @@ public:
 
     // Getters
     std::string getName() const { return name; }
+    Currency getCurrency() const { return currency; }
     RevenueArray getRevenues() const { return revenues; }
     ExpenseArray getExpenses() const { return expenses; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
+    void setCurrency(const Currency& object) { this->currency = object; }
     void setRevenues(const RevenueArray& object) { this->revenues = object; }
     void setExpenses(const ExpenseArray& object) { this->expenses = object; }
 
@@ -69,6 +80,9 @@ public:
     int getExpenseCount() const;
     Expense getExpense(int index) const;
     void setExpense(int index, const Expense& object);
+    virtual Amount getRevenueTotal() const;
+    virtual Amount getExpenseTotal() const;
+    virtual Amount getBalance() const;
     virtual Income copy();
     virtual void clear();
     virtual std::string print();

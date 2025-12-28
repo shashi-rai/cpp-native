@@ -18,67 +18,52 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef QFT_NEUTRON_H
-#define QFT_NEUTRON_H
+#ifndef QFT_HIGGS_H
+#define QFT_HIGGS_H
 
 #include <string>
 #include <vector>
-#include "electron.h"
 #include "energy.h"
-#include "particle.h"
-#include "quark.h"
+#include "boson.h"
 
 namespace qft {
 
-class Neutron : public Particle {
-    Quark up;
-    Quark down[2];
+class Higgs : public Boson {
+
 public:
     // Constructors
-    Neutron();
-    Neutron(std::string name);
-    Neutron(const float wavelength);
-    Neutron(std::string name, const float wavelength);
-    Neutron(std::string name, const Energy& energy);
-    Neutron(std::string name, const Spin& spin, const Energy& energy);
-    Neutron(std::string name, const float spin, const float mass, const float charge);
-    Neutron(std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
+    Higgs();
+    Higgs(std::string name);
+    Higgs(const float wavelength);
+    Higgs(std::string name, const float wavelength);
+    Higgs(std::string name, const Energy& energy);
+    Higgs(std::string name, const Spin& spin, const Energy& energy);
+    Higgs(std::string name, const float spin, const float mass, const float charge);
+    Higgs(std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
 
     // Destructors
-    ~Neutron();
+    ~Higgs();
 
     // Operator overloading
-    bool operator==(const Neutron& peer) const;
-    Neutron operator+(const Neutron& peer) const;
-    Neutron operator-(const Neutron& peer) const;
-    Neutron operator*(const Neutron& peer) const;
-    Neutron operator/(const Neutron& peer) const;
-    Neutron operator%(const Neutron& peer) const;
-    Proton operator-(const Electron& peer) const;
+    bool operator==(const Higgs& peer) const;
+    Higgs operator+(const Higgs& peer) const;
+    Higgs operator-(const Higgs& peer) const;
+    Higgs operator*(const Higgs& peer) const;
+    Higgs operator/(const Higgs& peer) const;
+    Higgs operator%(const Higgs& peer) const;
 
     // Getters
-    Quark getUp() const;
-    Quark getDown(short int index) const;
 
     // Setters
-    void setUp(const Quark& particle);
-    void setDown(const Quark& particle, short int index);
 
     // Additional methods
-    shp::Quantity getWavelength() const;
     virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();
-private:
-    void initialize();
-public:
-    static const short int DOWN_MIN;
-    static const short int DOWN_MAX;
-    static const float DEFAULT_SPIN;
 };
 
-typedef std::vector<Neutron > NeutronArray;
+typedef std::vector<Higgs > HiggsArray;
 
 } // namespace qft
 
-#endif //QFT_NEUTRON_H
+#endif //QFT_HIGGS_H

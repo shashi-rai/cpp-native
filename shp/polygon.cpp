@@ -22,42 +22,49 @@
 
 namespace shp {
 
-Polygon::Polygon() : Point(), waves(), limit(0) {
+const int Polygon::DEFAULT_LIMIT = 0;
+
+Polygon::Polygon()
+        : Point(), waves(), limit(DEFAULT_LIMIT) {
 
 }
 
-Polygon::Polygon(float gradient) : Point(gradient), waves(), limit(0) {
+Polygon::Polygon(const float gradient)
+        : Point(gradient), waves(), limit(DEFAULT_LIMIT) {
 
 }
 
-Polygon::Polygon(std::string name) : Point(name), waves(), limit(0) {
+Polygon::Polygon(std::string name)
+        : Point(name), waves(), limit(DEFAULT_LIMIT) {
 
 }
 
-Polygon::Polygon(std::string name, int limit) : Point(name), waves(), limit(limit) {
+Polygon::Polygon(std::string name, const int limit)
+        : Point(name), waves(), limit(limit) {
 
 }
 
-Polygon::Polygon(std::string name, float gradient) : Point(name, gradient), waves(), limit(0) {
+Polygon::Polygon(std::string name, const float gradient)
+        : Point(name, gradient), waves(), limit(0) {
 
 }
 
-Polygon::Polygon(std::string name, float gradient, int limit)
+Polygon::Polygon(std::string name, const float gradient, const int limit)
     : Point(name, gradient), waves(), limit(limit) {
 
 }
 
-Polygon::Polygon(std::string name, WaveArray& waves)
-        : Point(name), waves(waves), limit(0) {
+Polygon::Polygon(std::string name, const WaveArray& waves)
+        : Point(name), waves(waves), limit(DEFAULT_LIMIT) {
 
 }
 
-Polygon::Polygon(std::string name, WaveArray& waves, float gradient)
-        : Point(name, gradient), waves(waves), limit(0) {
+Polygon::Polygon(std::string name, const WaveArray& waves, const float gradient)
+        : Point(name, gradient), waves(waves), limit(DEFAULT_LIMIT) {
 
 }
 
-Polygon::Polygon(std::string name, WaveArray& waves, float gradient, int limit)
+Polygon::Polygon(std::string name, const WaveArray& waves, const float gradient, const int limit)
         : Point(name, gradient), waves(waves), limit(limit) {
 
 }
@@ -68,13 +75,13 @@ Polygon::~Polygon() {
 
 bool Polygon::operator==(const Polygon& peer) const {
     return (static_cast<const Point&>(*this) == static_cast<const Point&>(peer))
-        && (waves == peer.waves);
+        && (waves == peer.waves) && (limit == peer.limit);
 }
 
 Polygon Polygon::operator+(const Polygon& peer) const {
     WaveArray result(waves);
     result.insert(result.end(), peer.waves.begin(), peer.waves.end());
-    return Polygon("+", result);
+    return Polygon("+", result, (getGradient() + peer.getGradient()), limit);
 }
 
 Polygon Polygon::operator-(const Polygon& peer) const {
@@ -85,7 +92,7 @@ Polygon Polygon::operator-(const Polygon& peer) const {
             result.erase(found);
         }
     }
-    return Polygon("-", result);
+    return Polygon("-", result, (getGradient() - peer.getGradient()), limit);
 }
 
 int Polygon::getWaveCount() const {
@@ -121,13 +128,13 @@ void Polygon::set(int index, const Wave& object) {
 }
 
 Point Polygon::copy() {
-    Polygon fresh(this->getName(), this->waves, this->getGradient(), limit);
+    Polygon fresh(getName(), waves, getGradient(), limit);
     return fresh;
 }
 
 void Polygon::clear() {
     Point::clear();
-    limit = 0;
+    limit = DEFAULT_LIMIT;
     waves.clear();
     return;
 }

@@ -33,11 +33,11 @@ class Planar : public Point {
 public:
     // Constructors
     Planar();
-    Planar(float gradient);
+    Planar(const float gradient);
     Planar(std::string name);
-    Planar(std::string name, float gradient);
-    Planar(std::string name, LinearArray& lines);
-    Planar(std::string name, LinearArray& lines, float gradient);
+    Planar(std::string name, const float gradient);
+    Planar(std::string name, const LinearArray& lines);
+    Planar(std::string name, const LinearArray& lines, const float gradient);
 
     // Destructors
     ~Planar();
@@ -48,10 +48,10 @@ public:
     Planar operator-(const Planar& peer) const;
 
     // Access operator
-    Linear& operator()(int x) { return lines[x]; }
-    const Linear& operator()(int x) const { return lines[x]; }
-    Point& operator()(int x, int y) { return lines[x](y); }
-	const Point& operator()(int x, int y) const { return lines[x](y); }
+    Linear operator()(int x) { return lines[x]; }
+    const Linear operator()(int x) const { return lines[x]; }
+    Point operator()(int x, int y) { return lines[x](y); }
+	const Point operator()(int x, int y) const { return lines[x](y); }
 
     // Getters
     LinearArray getLines() const { return lines; }

@@ -123,7 +123,7 @@ Orbital Atom::getOrbital(int primary, int azimuthal) const {
 		shp::Shell period = shells[primary];
 		if (period.getOrbitalCount()) {
 			shp::Polygon orbital = period(azimuthal);
-			result = static_cast<Orbital&>(period(azimuthal));
+			result = static_cast<Orbital&>(orbital);
 		}
 	}
 	return result;
@@ -142,7 +142,8 @@ qft::Electron Atom::getElectron(int primary, int azimuthal, int magnetic) const 
 		if (period.getOrbitalCount()) {
 			shp::Polygon orbital = period(azimuthal);
 			if (orbital.getWaveCount() > 0) {
-				result = static_cast<qft::Electron&>(orbital(magnetic));
+				shp::Wave electron = orbital(magnetic);
+				result = static_cast<qft::Electron&>(electron);
 			}
 		}
 	}

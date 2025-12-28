@@ -22,19 +22,25 @@
 
 namespace shp {
 
-Coordinate::Coordinate() : x(0), y(0), z(0) {
+const int Coordinate::ORIGIN = 0;
+
+Coordinate::Coordinate()
+        : x(ORIGIN), y(ORIGIN), z(ORIGIN) {
 
 }
 
-Coordinate::Coordinate(int x) : x(x), y(0), z(0) {
+Coordinate::Coordinate(const int x)
+        : x(x), y(ORIGIN), z(ORIGIN) {
 
 }
 
-Coordinate::Coordinate(int x, int y) : x(x), y(y), z(0) {
+Coordinate::Coordinate(const int x, const int y)
+        : x(x), y(y), z(ORIGIN) {
 
 }
 
-Coordinate::Coordinate(int x, int y, int z) : x(x), y(y), z(z) {
+Coordinate::Coordinate(const int x, const int y, const int z)
+        : x(x), y(y), z(z) {
 
 }
 
@@ -54,13 +60,37 @@ Coordinate Coordinate::operator-(const Coordinate& peer) const {
     return Coordinate((x - peer.x), (y - peer.y), (z - peer.z));
 }
 
+Coordinate Coordinate::operator*(const Coordinate& peer) const {
+    return Coordinate((x * peer.x), (y * peer.y), (z * peer.z));
+}
+
+Coordinate Coordinate::operator/(const Coordinate& peer) const {
+    return Coordinate((x / peer.x), (y / peer.y), (z / peer.z));
+}
+
+Coordinate Coordinate::operator%(const Coordinate& peer) const {
+    return Coordinate((x % peer.x), (y % peer.y), (z % peer.z));
+}
+
+Coordinate Coordinate::shiftX(const int step) const {
+    return Coordinate((x + step), y, z);
+}
+
+Coordinate Coordinate::shiftY(const int step) const {
+    return Coordinate(x, (y + step), z);
+}
+
+Coordinate Coordinate::shiftZ(const int step) const {
+    return Coordinate(x, y, (z + step));
+}
+
 Coordinate Coordinate::copy() {
     Coordinate fresh(x, y, z);
     return fresh;
 }
 
 void Coordinate::clear() {
-    x = 0; y = 0; z = 0;
+    x = y = z = ORIGIN;
     return;
 }
 

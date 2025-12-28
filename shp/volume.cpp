@@ -44,7 +44,7 @@ Volume::Volume(const Area& surface, const std::string unit)
 
 }
 
-Volume::Volume(const Area& surface, short int scaling, const std::string unit)
+Volume::Volume(const Area& surface, const short int scaling, const std::string unit)
     : surface(surface), depth(scaling, unit) {
 
 }
@@ -59,7 +59,7 @@ Volume::Volume(const Area& surface, const float depth, const std::string unit)
 
 }
 
-Volume::Volume(const Area& surface, const float depth, short int scaling, const std::string unit)
+Volume::Volume(const Area& surface, const float depth, const short int scaling, const std::string unit)
         : surface(surface), depth(depth, scaling, unit) {
 
 }
@@ -81,7 +81,7 @@ Volume::Volume(const float length, const std::string unit)
 
 }
 
-Volume::Volume(const float length, short int scaling, const std::string unit)
+Volume::Volume(const float length, const short int scaling, const std::string unit)
         : surface(length, length, scaling, unit),
 		depth(length, scaling, unit) {
 
@@ -98,7 +98,7 @@ Volume::Volume(const float length, const float breadth, const std::string unit)
 
 }
 
-Volume::Volume(const float length, const float breadth, short int scaling, const std::string unit)
+Volume::Volume(const float length, const float breadth, const short int scaling, const std::string unit)
         : surface(length, breadth, scaling, unit), depth(scaling, unit) {
 
 }
@@ -116,14 +116,14 @@ Volume::Volume(const float length, const float breadth, const float height,
 }
 
 Volume::Volume(const float length, const float breadth, const float height,
-        short int scaling)
+        const short int scaling)
         : surface(length, breadth, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
 		depth(height, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
 Volume::Volume(const float length, const float breadth, const float height,
-        short int scaling, const std::string unit)
+        const short int scaling, const std::string unit)
         : surface(length, breadth, scaling, unit),
 		depth(height, scaling, unit) {
 
@@ -155,7 +155,7 @@ bool Volume::operator==(const Volume& peer) const {
 
 Volume Volume::operator+(const Volume& peer) const {
 	Quantity realvolume = (getTotal() + peer.getTotal());
-    float part = std::cbrt(realvolume.getValue());
+    float part = std::cbrt(realvolume.getMagnitude());
 	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
     return Volume(Quantity(part, realvolume.getScaling(), getUnit()),
 			Quantity(part, realvolume.getScaling(), getUnit()),
@@ -164,7 +164,7 @@ Volume Volume::operator+(const Volume& peer) const {
 
 Volume Volume::operator-(const Volume& peer) const {
 	Quantity realvolume = (getTotal() - peer.getTotal());
-    float part = std::cbrt(realvolume.getValue());
+    float part = std::cbrt(realvolume.getMagnitude());
 	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
     return Volume(Quantity(part, realvolume.getScaling(), getUnit()),
 			Quantity(part, realvolume.getScaling(), getUnit()),
@@ -173,7 +173,7 @@ Volume Volume::operator-(const Volume& peer) const {
 
 Volume Volume::operator*(const Volume& peer) const {
 	Quantity realvolume = (getTotal() * peer.getTotal());
-    float part = std::cbrt(realvolume.getValue());
+    float part = std::cbrt(realvolume.getMagnitude());
 	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
     return Volume(Quantity(part, realvolume.getScaling(), getUnit()),
 			Quantity(part, realvolume.getScaling(), getUnit()),
@@ -182,7 +182,7 @@ Volume Volume::operator*(const Volume& peer) const {
 
 Volume Volume::operator/(const Volume& peer) const {
 	Quantity realvolume = (getTotal() / peer.getTotal());
-    float part = std::cbrt(realvolume.getValue());
+    float part = std::cbrt(realvolume.getMagnitude());
 	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
     return Volume(Quantity(part, realvolume.getScaling(), getUnit()),
 			Quantity(part, realvolume.getScaling(), getUnit()),
@@ -191,7 +191,7 @@ Volume Volume::operator/(const Volume& peer) const {
 
 Volume Volume::operator%(const Volume& peer) const {
 	Quantity realvolume = (getTotal() % peer.getTotal());
-    float part = std::cbrt(realvolume.getValue());
+    float part = std::cbrt(realvolume.getMagnitude());
 	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
     return Volume(Quantity(part, realvolume.getScaling(), getUnit()),
 			Quantity(part, realvolume.getScaling(), getUnit()),
@@ -200,7 +200,7 @@ Volume Volume::operator%(const Volume& peer) const {
 
 Quantity Volume::getTotal() const {
     Quantity volume = (surface.getTotal() * depth);
-    return Quantity(volume.getValue(), volume.getScaling(), volume.getUnit());
+    return Quantity(volume.getMagnitude(), volume.getScaling(), volume.getUnit());
 }
 
 std::string Volume::getUnit() const {
@@ -227,7 +227,7 @@ std::string Volume::print() {
 
 Quantity Volume::getComponent(float phase) const {
 	Quantity volume = getTotal();
-	return Quantity((volume.getValue() * cos(phase)), volume.getScaling(), volume.getUnit());
+	return Quantity((volume.getMagnitude() * cos(phase)), volume.getScaling(), volume.getUnit());
 }
 
 } // namespace shp

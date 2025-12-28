@@ -26,34 +26,33 @@
 #include <vector>
 #include "../shp/direction.h"
 #include "../shp/quantity.h"
-#include "../shp/unit.h"
 
 namespace qft {
 
 class Velocity {
     std::string name;
-    shp::Quantity magnitude;
+    shp::Quantity displacement;
     shp::Direction direction;
 public:
     // Constructors
     Velocity();
     Velocity(std::string name);
-    Velocity(const float magnitude);
-    Velocity(const float magnitude, const std::string unit);
-    Velocity(const float magnitude, short int scaling, const std::string unit);
-    Velocity(const float magnitude, const float direction);
-    Velocity(const float magnitude, const float direction, const std::string unit);
-    Velocity(const float magnitude, const float direction, short int scaling);
-    Velocity(const float magnitude, const float direction, short int scaling, const std::string unit);
-    Velocity(const shp::Quantity& magnitude, const shp::Direction& direction);
+    Velocity(const float displacement);
+    Velocity(const float displacement, const std::string unit);
+    Velocity(const float displacement, const short int scaling, const std::string unit);
+    Velocity(const float displacement, const float direction);
+    Velocity(const float displacement, const float direction, const std::string unit);
+    Velocity(const float displacement, const float direction, const short int scaling);
+    Velocity(const float displacement, const float direction, const short int scaling, const std::string unit);
+    Velocity(const shp::Quantity& displacement, const shp::Direction& direction);
     Velocity(std::string name, const shp::Unit& unit);
-    Velocity(std::string name, const float magnitude);
-    Velocity(std::string name, const float magnitude, const shp::Unit& unit);
-    Velocity(std::string name, const float magnitude, const float direction);
-    Velocity(std::string name, const float magnitude, const float direction, const std::string unit);
-    Velocity(std::string name, const float magnitude, const float direction, short int scaling);
-    Velocity(std::string name, const float magnitude, const float direction, short int scaling, const std::string unit);
-    Velocity(std::string name, const shp::Quantity& magnitude, const shp::Direction& direction);
+    Velocity(std::string name, const float displacement);
+    Velocity(std::string name, const float displacement, const shp::Unit& unit);
+    Velocity(std::string name, const float displacement, const float direction);
+    Velocity(std::string name, const float displacement, const float direction, const std::string unit);
+    Velocity(std::string name, const float displacement, const float direction, const short int scaling);
+    Velocity(std::string name, const float displacement, const float direction, const short int scaling, const std::string unit);
+    Velocity(std::string name, const shp::Quantity& displacement, const shp::Direction& direction);
 
     // Destructors
     ~Velocity();
@@ -67,14 +66,14 @@ public:
 
     // Getters
     std::string getName() const { return name; }
-    shp::Unit getUnit() const { return magnitude.getUnit(); }
-    shp::Quantity getMagnitude() const { return magnitude; }
+    shp::Unit getUnit() const { return displacement.getUnit(); }
+    shp::Quantity getDisplacement() const { return displacement; }
     shp::Direction getDirection() const { return direction; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
-    void setUnit(const shp::Unit& value) { this->magnitude.setUnit(value); }
-    void setMagnitude(const shp::Quantity& magnitude) { this->magnitude = magnitude; }
+    void setUnit(const shp::Unit& value) { this->displacement.setUnit(value); }
+    void setDisplacement(const shp::Quantity& magnitude) { this->displacement = magnitude; }
     void setDirection(const shp::Direction& direction) { this->direction = direction; }
 
     // Additional methods

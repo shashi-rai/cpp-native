@@ -32,11 +32,11 @@ class Linear : public Point {
 public:
     // Constructors
     Linear();
-    Linear(float gradient);
+    Linear(const float gradient);
     Linear(std::string name);
-    Linear(std::string name, float gradient);
-    Linear(std::string name, PointArray& objects);
-    Linear(std::string name, PointArray& objects, float gradient);
+    Linear(std::string name, const float gradient);
+    Linear(std::string name, const PointArray& objects);
+    Linear(std::string name, const PointArray& objects, const float gradient);
 
     // Destructors
     ~Linear();
@@ -47,8 +47,8 @@ public:
     Linear operator-(const Linear& peer) const;
 
     // Access operator
-    Point& operator()(int x) { return points[x]; }
-    const Point& operator()(int x) const { return points[x]; }
+    Point operator()(int x) { return points[x]; }
+    const Point operator()(int x) const { return points[x]; }
 
     // Getters
     PointArray getPoints() const { return points; }

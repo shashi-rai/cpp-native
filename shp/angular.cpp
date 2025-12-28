@@ -22,9 +22,9 @@
 
 namespace shp {
 
-const float Angular::DEFAULT_RADIUS = 0.0f;
-const float Angular::DEFAULT_POLARITY = 0.0f;
-const float Angular::DEFAULT_AZIMUTH = 0.0f;
+const float Angular::DEFAULT_RADIUS = Quantity::DEFAULT_VALUE;
+const float Angular::DEFAULT_POLARITY = Quantity::DEFAULT_VALUE;
+const float Angular::DEFAULT_AZIMUTH = Quantity::DEFAULT_VALUE;
 
 Angular::Angular()
         : Distance(), polar(), azimuthal() {
@@ -184,32 +184,32 @@ Angular Angular::operator%(const Angular& peer) const {
 }
 
 Quantity Angular::operator+(const Quantity& peer) const {
-    Distance newRadius = (getRadius() + peer.getValue());
-    return Quantity(newRadius.getMagnitude().getValue(),
+    Distance newRadius = (getRadius() + peer.getMagnitude());
+    return Quantity(newRadius.getLength().getMagnitude(),
         newRadius.getScaling(), getRadius().getUnit());
 }
 
 Quantity Angular::operator-(const Quantity& peer) const {
-    Distance newRadius = (getRadius() - peer.getValue());
-    return Quantity(newRadius.getMagnitude().getValue(),
+    Distance newRadius = (getRadius() - peer.getMagnitude());
+    return Quantity(newRadius.getLength().getMagnitude(),
         newRadius.getScaling(), getRadius().getUnit());
 }
 
 Quantity Angular::operator*(const Quantity& peer) const {
-    Distance newRadius = (getRadius() * peer.getValue());
-    return Quantity(newRadius.getMagnitude().getValue(),
+    Distance newRadius = (getRadius() * peer.getMagnitude());
+    return Quantity(newRadius.getLength().getMagnitude(),
         newRadius.getScaling(), getRadius().getUnit());
 }
 
 Quantity Angular::operator/(const Quantity& peer) const {
-    Distance newRadius = (getRadius() / peer.getValue());
-    return Quantity(newRadius.getMagnitude().getValue(),
+    Distance newRadius = (getRadius() / peer.getMagnitude());
+    return Quantity(newRadius.getLength().getMagnitude(),
         newRadius.getScaling(), getRadius().getUnit());
 }
 
 Quantity Angular::operator%(const Quantity& peer) const {
-    Distance newRadius = (getRadius() % peer.getValue());
-    return Quantity(newRadius.getMagnitude().getValue(),
+    Distance newRadius = (getRadius() % peer.getMagnitude());
+    return Quantity(newRadius.getLength().getMagnitude(),
         newRadius.getScaling(), getRadius().getUnit());
 }
 
@@ -249,10 +249,10 @@ Quantity Angular::operator()(const Angular& peer,
 
 Quantity Angular::operator()(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const {
-    Angular self = *this; float end = 0.0f;
+    Angular self = *this; float end = Quantity::DEFAULT_VALUE;
     Quantity azimX = (self(peerX, separationX, end) * cos(peerX.polar.toRadians()));
     Quantity azimY = (self(peerY, separationY, end) * cos(peerY.polar.toRadians()));
-    std::complex<float> radial(azimX.getValue(), azimY.getValue());
+    std::complex<float> radial(azimX.getMagnitude(), azimY.getMagnitude());
     std::complex<float> polarized = std::sqrt(radial);
     shp::Quantity result((std::abs(polarized) * cos(self.polar.toRadians())),
             azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
@@ -260,18 +260,18 @@ Quantity Angular::operator()(const Angular& peerX, const Angular& peerY,
 }
 
 Distance Angular::getRadius() const {
-    return this->getMagnitude();
+    return this->getLength();
 }
 
 void Angular::setRadius(const Distance& distance) {
-    this->setMagnitude(distance.getMagnitude());
+    this->setLength(distance.getLength());
 }
 
 Quantity Angular::getRelative(const Distance& location, const float angle) const {
     Angular self = *this; Distance radius = self.getRadius();
     Distance distance = (radius / (radius + location)); distance.adjustNumeric();
     Distance coefficient = (distance.getComponent(angle) * distance.getComponent(angle));
-    Quantity result((coefficient.getMagnitude().getValue()), getScaling(), getUnit());
+    Quantity result((coefficient.getLength().getMagnitude()), getScaling(), getUnit());
     result.adjustScaling();
     return result;
 }

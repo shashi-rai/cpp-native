@@ -121,7 +121,7 @@ Proton Proton::operator*(const Proton& peer) const {
 Proton Proton::operator/(const Proton& peer) const {
     return Proton("/",
         (this->getSpin() * peer.getSpin()),
-        (this->getEnergy() / peer.getEnergy()));
+        (this->getEnergy() * peer.getEnergy()));
 }
 
 Proton Proton::operator%(const Proton& peer) const {
@@ -137,7 +137,7 @@ Neutron Proton::operator+(const Electron& peer) const {
 }
 
 shp::Quantity Proton::getWavelength() const {
-    return this->getEnergy().getWavelength().getMagnitude();
+    return this->getEnergy().getWavelength().getLength();
 }
 
 shp::Point Proton::copy() {

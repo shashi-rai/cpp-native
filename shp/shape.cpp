@@ -30,6 +30,10 @@ Shape::Shape(std::string name) : name(name) {
     setOwner(nullptr);
 }
 
+Shape::Shape(Shape* parent) : name("") {
+    setOwner(parent);
+}
+
 Shape::Shape(std::string name, Shape* parent) : name(name) {
     setOwner(parent);
 }

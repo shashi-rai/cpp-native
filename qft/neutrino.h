@@ -34,8 +34,8 @@ public:
     // Constructors
     Neutrino();
     Neutrino(std::string name);
-    Neutrino(float wavelength);
-    Neutrino(std::string name, float wavelength);
+    Neutrino(const float wavelength);
+    Neutrino(std::string name, const float wavelength);
     Neutrino(std::string name, const Energy& energy);
     Neutrino(std::string name, const Spin& spin, const Energy& energy);
     Neutrino(std::string name, const float spin, const float mass, const float charge);

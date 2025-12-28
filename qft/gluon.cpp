@@ -18,101 +18,101 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "photon.h"
+#include "gluon.h"
 
 namespace qft {
 
-Photon::Photon() : Boson() {
+Gluon::Gluon() : Boson() {
 
 }
 
-Photon::Photon(std::string name)
+Gluon::Gluon(std::string name)
         : Boson(name) {
 
 }
 
-Photon::Photon(const float wavelength)
+Gluon::Gluon(const float wavelength)
         : Boson(wavelength) {
 }
 
-Photon::Photon(std::string name, const float wavelength)
+Gluon::Gluon(std::string name, const float wavelength)
         : Boson(name, wavelength) {
 
 }
 
-Photon::Photon(std::string name, const Energy& energy)
+Gluon::Gluon(std::string name, const Energy& energy)
         : Boson(name, energy) {
 
 }
 
-Photon::Photon(std::string name, const Spin& spin, const Energy& energy)
+Gluon::Gluon(std::string name, const Spin& spin, const Energy& energy)
         : Boson(name, spin, energy) {
 
 }
 
-Photon::Photon(std::string name, const float spin, const float mass, const float charge)
+Gluon::Gluon(std::string name, const float spin, const float mass, const float charge)
         : Boson(name, Spin(spin), Energy(Mass(mass), Charge(charge))) {
 
 }
 
-Photon::Photon(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
+Gluon::Gluon(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
         : Boson(name, spin, Energy(mass, charge)) {
 
 }
 
-Photon::~Photon() {
+Gluon::~Gluon() {
 
 }
 
-bool Photon::operator==(const Photon& peer) const {
+bool Gluon::operator==(const Gluon& peer) const {
     return (static_cast<const Boson&>(*this) == static_cast<const Boson&>(peer));
 }
 
-Photon Photon::operator+(const Photon& peer) const {
-    return Photon("+",
+Gluon Gluon::operator+(const Gluon& peer) const {
+    return Gluon("+",
         (this->getSpin() + peer.getSpin()),
         (this->getEnergy() + peer.getEnergy()));
 }
 
-Photon Photon::operator-(const Photon& peer) const {
-    return Photon("-",
+Gluon Gluon::operator-(const Gluon& peer) const {
+    return Gluon("-",
         (this->getSpin() - peer.getSpin()),
         (this->getEnergy() - peer.getEnergy()));
 }
 
-Photon Photon::operator*(const Photon& peer) const {
-    return Photon("*",
+Gluon Gluon::operator*(const Gluon& peer) const {
+    return Gluon("*",
         (this->getSpin() * peer.getSpin()),
         (this->getEnergy() * peer.getEnergy()));
 }
 
-Photon Photon::operator/(const Photon& peer) const {
-    return Photon("/",
+Gluon Gluon::operator/(const Gluon& peer) const {
+    return Gluon("/",
         (this->getSpin() / peer.getSpin()),
         (this->getEnergy() / peer.getEnergy()));
 }
 
-Photon Photon::operator%(const Photon& peer) const {
-    return Photon("%",
+Gluon Gluon::operator%(const Gluon& peer) const {
+    return Gluon("%",
         (this->getSpin() % peer.getSpin()),
         (this->getEnergy() % peer.getEnergy()));
 }
 
-shp::Point Photon::copy() {
-    Photon fresh(this->getName(), this->getEnergy());
+shp::Point Gluon::copy() {
+    Gluon fresh(this->getName(), this->getEnergy());
 	fresh.setAmplitude(this->getAmplitude());
 	fresh.setGradient(this->getGradient());
     return fresh;
 }
 
-void Photon::clear() {
+void Gluon::clear() {
     Boson::clear();
     return;
 }
 
-std::string Photon::print() {
+std::string Gluon::print() {
     std::stringstream result;
-    result << "γ:";
+    result << "g:";
 	result << Boson::print();
 	return result.str();
 }

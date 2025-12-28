@@ -40,14 +40,18 @@ public:
     Strong(const float magnitude, const std::shared_ptr<Field> field);
     Strong(const float magnitude, const float direction);
     Strong(const float magnitude, const float direction, const std::shared_ptr<Field>field);
-    Strong(const float magnitude, const float direction, short int scaling);
-    Strong(const float magnitude, const float direction, short int scaling, const std::shared_ptr<Field> field);
+    Strong(const float magnitude, const float direction, const short int scaling);
+    Strong(const float magnitude, const float direction, const short int scaling,
+        const std::shared_ptr<Field> field);
     Strong(std::string name, const float magnitude);
     Strong(std::string name, const float magnitude, const std::shared_ptr<Field> field);
     Strong(std::string name, const float magnitude, const float direction);
-    Strong(std::string name, const float magnitude, const float direction, const std::shared_ptr<Field> field);
-    Strong(std::string name, const float magnitude, const float direction, short int scaling);
-    Strong(std::string name, const float magnitude, const float direction, short int scaling, const std::shared_ptr<Field> field);
+    Strong(std::string name, const float magnitude, const float direction,
+        const std::shared_ptr<Field> field);
+    Strong(std::string name, const float magnitude, const float direction,
+        const short int scaling);
+    Strong(std::string name, const float magnitude, const float direction,
+        const short int scaling, const std::shared_ptr<Field> field);
 
     // Operator overloading
     bool operator==(const Strong& peer) const;

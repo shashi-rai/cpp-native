@@ -55,11 +55,11 @@ Orbit::~Orbit() {
 }
 
 float Orbit::getEccentricity() const {
-    return 0.0f;
+    return shp::Quantity::DEFAULT_VALUE;
 }
 
 float Orbit::getRotation() const {
-    return 0.0f;
+    return shp::Quantity::DEFAULT_VALUE;
 }
 
 void Orbit::setRotation(const float value) {
@@ -67,7 +67,7 @@ void Orbit::setRotation(const float value) {
 }
 
 float Orbit::getRevolution() const {
-    return 0.0f;
+    return shp::Quantity::DEFAULT_VALUE;
 }
 
 void Orbit::setRevolution(const float value) {

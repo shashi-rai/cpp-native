@@ -23,63 +23,66 @@
 namespace shp {
 
 const float Quantity::DEFAULT_VALUE = 0.0f;     // 0.0f
+const float Quantity::DECIMAL_SCALE = 10.0f;    // 10.0f
 const short int Quantity::DEFAULT_SCALE = 0;    // 10^0
 
-Quantity::Quantity() : value(DEFAULT_VALUE), scaling(DEFAULT_SCALE), unit() {
+Quantity::Quantity()
+        : magnitude(DEFAULT_VALUE), scaling(DEFAULT_SCALE), unit() {
 
 }
 
-Quantity::Quantity(float value): value(value), scaling(DEFAULT_SCALE), unit() {
+Quantity::Quantity(const float magnitude)
+        : magnitude(magnitude), scaling(DEFAULT_SCALE), unit() {
 
 }
 
-Quantity::Quantity(short int scaling)
-        : value(), scaling(scaling), unit() {
+Quantity::Quantity(const short int scaling)
+        : magnitude(), scaling(scaling), unit() {
 
 }
 
 Quantity::Quantity(const std::string unit)
-        : value(), scaling(DEFAULT_SCALE), unit(unit) {
+        : magnitude(), scaling(DEFAULT_SCALE), unit(unit) {
 
 }
 
-Quantity::Quantity(short int scaling, const std::string unit)
-        : value(), scaling(scaling), unit(unit) {
+Quantity::Quantity(const short int scaling, const std::string unit)
+        : magnitude(), scaling(scaling), unit(unit) {
 
 }
 
 Quantity::Quantity(const Unit& unit)
-        : value(), scaling(DEFAULT_SCALE), unit(unit) {
+        : magnitude(), scaling(DEFAULT_SCALE), unit(unit) {
 
 }
 
-Quantity::Quantity(short int scaling, const Unit& unit)
-        : value(), scaling(scaling), unit(unit) {
+Quantity::Quantity(const short int scaling, const Unit& unit)
+        : magnitude(), scaling(scaling), unit(unit) {
 
 }
 
-Quantity::Quantity(float value, const std::string unit)
-        : value(value), scaling(DEFAULT_SCALE), unit(unit) {
+Quantity::Quantity(const float magnitude, const std::string unit)
+        : magnitude(magnitude), scaling(DEFAULT_SCALE), unit(unit) {
 
 }
 
-Quantity::Quantity(float value, const Unit& unit)
-        : value(value), scaling(DEFAULT_SCALE), unit(unit) {
+Quantity::Quantity(const float magnitude, const Unit& unit)
+        : magnitude(magnitude), scaling(DEFAULT_SCALE), unit(unit) {
 
 }
 
-Quantity::Quantity(float value, short int scaling)
-        : value(value), scaling(scaling), unit() {
+Quantity::Quantity(const float magnitude, const short int scaling)
+        : magnitude(magnitude), scaling(scaling), unit() {
 
 }
 
-Quantity::Quantity(float value, short int scaling, const std::string unit)
-        : value(value), scaling(scaling), unit(unit) {
+Quantity::Quantity(const float magnitude, const short int scaling, const std::string unit)
+        : magnitude(magnitude), scaling(scaling), unit(unit) {
 
 }
 
-Quantity::Quantity(float value, short int scaling, const Unit& unit)
-        : value(value), scaling(scaling), unit(unit) {
+Quantity::Quantity(const float magnitude, const short int scaling, const Unit& unit)
+        : magnitude(magnitude), scaling(scaling), unit(unit) {
 
 }
 
@@ -88,47 +91,51 @@ Quantity::~Quantity() {
 }
 
 bool Quantity::operator==(const Quantity& peer) const {
-    return (value == peer.value) &&
-            (scaling == peer.scaling) &&
-            (unit == peer.unit);
+    return (magnitude == peer.magnitude)
+        && (scaling == peer.scaling)
+        && (unit == peer.unit);
 }
 
 Quantity Quantity::operator+(const Quantity& peer) const {
     short int exponent = (scaling - peer.scaling);
-    float mantissa = (value + (peer.value / std::pow(10, exponent)));
+    float mantissa = (magnitude + (peer.magnitude / std::pow(DECIMAL_SCALE, exponent)));
     Quantity result(mantissa, scaling, getUnit());
     return result;
 }
 
 Quantity Quantity::operator-(const Quantity& peer) const {
     short int exponent = (scaling - peer.scaling);
-    float mantissa = (value - (peer.value / std::pow(10, exponent)));
+    float mantissa = (magnitude - (peer.magnitude / std::pow(DECIMAL_SCALE, exponent)));
     Quantity result(mantissa, scaling, getUnit());
     return result;
 }
 
 Quantity Quantity::operator*(const Quantity& peer) const {
-    float mantissa = (value * peer.value);
+    float mantissa = (magnitude * peer.magnitude);
     Quantity result(mantissa, (scaling + peer.scaling), getUnit());
     return result;
 }
 
 Quantity Quantity::operator/(const Quantity& peer) const {
-    float mantissa = (value / peer.value);
+    float mantissa = (magnitude / peer.magnitude);
     Quantity result(mantissa, (scaling - peer.scaling), getUnit());
     return result;
 }
 
 Quantity Quantity::operator%(const Quantity& peer) const {
     short int exponent = (scaling - peer.scaling);
-    float mantissa = fmod(value, (peer.value / std::pow(10, exponent)));
+    float mantissa = fmod(magnitude, (peer.magnitude / std::pow(DECIMAL_SCALE, exponent)));
     Quantity result(mantissa, scaling, getUnit());
     return result;
 }
 
 Quantity Quantity::getInverse() const {
-    Quantity fresh(value != DEFAULT_VALUE ? (1 / value) : DEFAULT_VALUE, scaling, unit);
+    Quantity fresh(magnitude != DEFAULT_VALUE ? (1 / magnitude) : DEFAULT_VALUE, scaling, unit);
     return fresh;
+}
+
+bool Quantity::checkInfinity() const {
+    return std::isinf(magnitude);
 }
 
 short int Quantity::checkScaling(float amount) const {
@@ -136,30 +143,30 @@ short int Quantity::checkScaling(float amount) const {
 }
 
 void Quantity::adjustNumeric() {
-    if (std::isnan(value)) {
-        value = Quantity::DEFAULT_VALUE;
+    if (std::isnan(magnitude)) {
+        magnitude = Quantity::DEFAULT_VALUE;
     }
 }
 
 void Quantity::adjustScaling() {
-    float current = value;
+    float current = magnitude;
     if (current == DEFAULT_VALUE) {
         return;
     }
     int exponent = static_cast<int>(std::floor(std::log10(std::fabs(current))));
-    float mantissa = current / std::pow(10.0f, exponent);
+    float mantissa = current / std::pow(DECIMAL_SCALE, exponent);
     scaling += exponent;
-    value = mantissa;
+    magnitude = mantissa;
     return;
 }
 
 Quantity Quantity::copy() {
-    Quantity fresh(value, scaling, unit);
+    Quantity fresh(magnitude, scaling, unit);
     return fresh;
 }
 
 void Quantity::clear() {
-    value = DEFAULT_VALUE;
+    magnitude = DEFAULT_VALUE;
     scaling = DEFAULT_SCALE;
     unit.clear();
     return;
@@ -167,14 +174,14 @@ void Quantity::clear() {
 
 std::string Quantity::print() {
     std::stringstream result;
-    result << value << "x10^";
+    result << magnitude << "x10^";
     result << scaling;
     result << unit.print();
 	return result.str();
 }
 
 float Quantity::getComponent(float phase) const {
-    return getValue() * cos(phase);
+    return getMagnitude() * cos(phase);
 }
 
 } // namespace shp

@@ -40,14 +40,18 @@ public:
     Weak(const float magnitude, const std::shared_ptr<Field> field);
     Weak(const float magnitude, const float direction);
     Weak(const float magnitude, const float direction, const std::shared_ptr<Field> field);
-    Weak(const float magnitude, const float direction, short int scaling);
-    Weak(const float magnitude, const float direction, short int scaling, const std::shared_ptr<Field> field);
+    Weak(const float magnitude, const float direction, const short int scaling);
+    Weak(const float magnitude, const float direction, const short int scaling,
+        const std::shared_ptr<Field> field);
     Weak(std::string name, const float magnitude);
     Weak(std::string name, const float magnitude, const std::shared_ptr<Field> field);
     Weak(std::string name, const float magnitude, const float direction);
-    Weak(std::string name, const float magnitude, const float direction, const std::shared_ptr<Field> field);
-    Weak(std::string name, const float magnitude, const float direction, short int scaling);
-    Weak(std::string name, const float magnitude, const float direction, short int scaling, const std::shared_ptr<Field> field);
+    Weak(std::string name, const float magnitude, const float direction,
+        const std::shared_ptr<Field> field);
+    Weak(std::string name, const float magnitude, const float direction,
+        const short int scaling);
+    Weak(std::string name, const float magnitude, const float direction,
+        const short int scaling, const std::shared_ptr<Field> field);
 
     // Operator overloading
     bool operator==(const Weak& peer) const;

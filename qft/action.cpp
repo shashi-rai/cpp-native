@@ -22,12 +22,13 @@
 
 namespace qft {
 
-Action::Action() : Change(), name(), coordinate(), wave() {
+Action::Action()
+		: Change(), name(), coordinate(), wave() {
 
 }
 
 Action::Action(std::string name)
-        : name(name), coordinate(), wave() {
+        : Change(), name(name), coordinate(), wave() {
 
 }
 
@@ -36,7 +37,7 @@ Action::Action(const shp::Coordinate& location)
 
 }
 
-Action::Action(const shp::Coordinate& location, shp::Wave& wave)
+Action::Action(const shp::Coordinate& location, const shp::Wave& wave)
         : Change(), name(), coordinate(location), wave(wave) {
 
 }
@@ -46,8 +47,8 @@ Action::Action(const shp::Quantity& potential)
 
 }
 
-Action::Action(const shp::Quantity& kinetic, const shp::Quantity& potential)
-        : Change(kinetic, potential), name(), coordinate(), wave() {
+Action::Action(const shp::Quantity& dynamical, const shp::Quantity& potential)
+        : Change(dynamical, potential), name(), coordinate(), wave() {
 
 }
 
@@ -57,20 +58,20 @@ Action::Action(std::string name, const shp::Quantity& potential)
 }
 
 Action::Action(std::string name,
-        const shp::Quantity& kinetic, const shp::Quantity& potential)
-        : Change(kinetic, potential), name(name), coordinate(), wave() {
+        const shp::Quantity& dynamical, const shp::Quantity& potential)
+        : Change(dynamical, potential), name(name), coordinate(), wave() {
 
 }
 
-Action::Action(std::string name, const shp::Quantity& kinetic, const shp::Quantity& potential,
+Action::Action(std::string name, const shp::Quantity& dynamical, const shp::Quantity& potential,
         const shp::Coordinate& location)
-        : Change(kinetic, potential), name(name), coordinate(location), wave() {
+        : Change(dynamical, potential), name(name), coordinate(location), wave() {
 
 }
 
-Action::Action(std::string name, const shp::Quantity& kinetic, const shp::Quantity& potential,
+Action::Action(std::string name, const shp::Quantity& dynamical, const shp::Quantity& potential,
         const shp::Coordinate& location, const shp::Wave& wave)
-        : Change(kinetic, potential), name(name), coordinate(location), wave(wave) {
+        : Change(dynamical, potential), name(name), coordinate(location), wave(wave) {
 
 }
 
@@ -90,37 +91,36 @@ Action::~Action() {
 
 bool Action::operator==(const Action& peer) const {
     return (static_cast<const Change&>(*this) == static_cast<const Change&>(peer))
-        && (coordinate == peer.coordinate) && (wave == peer.wave);
+        && (coordinate == peer.coordinate) && (wave == peer.wave) && (name == peer.name);
 }
 
 Action Action::operator+(const Action& peer) const {
-    shp::Quantity kinetic = (getKinetic() + peer.getKinetic());
+    shp::Quantity dynamical = (getDynamical() + peer.getDynamical());
     shp::Quantity potential = (getPotential() + peer.getPotential());
-
-    Action result("+", kinetic, potential, (coordinate + peer.coordinate), (wave + peer.wave));
+    Action result("+", dynamical, potential, (coordinate + peer.coordinate), (wave + peer.wave));
     return result;
 }
 
 Action Action::operator-(const Action& peer) const {
-    shp::Quantity kinetic = (getKinetic() - peer.getKinetic());
+    shp::Quantity dynamical = (getDynamical() - peer.getDynamical());
     shp::Quantity potential = (getPotential() - peer.getPotential());
-
-    Action result("-", kinetic, potential, (coordinate - peer.coordinate), (wave - peer.wave));
+    Action result("-", dynamical, potential, (coordinate - peer.coordinate), (wave - peer.wave));
     return result;
 }
 
 shp::Quantity Action::getTotal() const {
     shp::Quantity delta = Change::getLagrangian();
-    return shp::Quantity(delta.getValue(), delta.getScaling(), delta.getUnit());
+    return shp::Quantity(delta.getMagnitude(), delta.getScaling(), delta.getUnit());
 }
 
 shp::Change Action::copy() {
-    Action fresh(name, coordinate, wave);
+    Action fresh(name, getDynamical(), getPotential(), coordinate, wave);
     return fresh;
 }
 
 void Action::clear() {
-    name = "";
+	shp::Change::clear();
+    name.clear();
     coordinate.clear();
     wave.clear();
     return;
@@ -137,7 +137,7 @@ std::string Action::print() {
 
 shp::Quantity Action::getComponent(float phase) const {
 	shp::Quantity action = getTotal();
-	return shp::Quantity((action.getValue() * cos(phase)), action.getScaling(), action.getUnit());
+	return shp::Quantity((action.getMagnitude() * cos(phase)), action.getScaling(), action.getUnit());
 }
 
 } // namespace qft

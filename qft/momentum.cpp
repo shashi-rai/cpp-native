@@ -24,11 +24,13 @@ namespace qft {
 
 const std::string Momentum::UNIT = "kg.m/s";    // System International
 
-Momentum::Momentum() : name(), mass(), velocity() {
+Momentum::Momentum()
+        : name(), mass(), velocity() {
 
 }
 
-Momentum::Momentum(std::string name) : name(name), mass(), velocity() {
+Momentum::Momentum(std::string name)
+        : name(name), mass(), velocity() {
 
 }
 
@@ -87,8 +89,8 @@ Momentum Momentum::operator/(const Momentum& peer) const {
 }
 
 shp::Quantity Momentum::getTotal() const {
-    float momentum = mass.getTotal().getValue() * velocity.getTotal().getValue();
-    short int scaling = mass.getTotal().getScaling() + velocity.getTotal().getScaling();
+    float momentum = mass.getMagnitude() * velocity.getTotal().getMagnitude();
+    short int scaling = mass.getScaling() + velocity.getTotal().getScaling();
     shp::Quantity result(momentum, scaling, UNIT);
     return result;
 }
@@ -99,7 +101,7 @@ Momentum Momentum::copy() {
 }
 
 void Momentum::clear() {
-    name = "";
+    name.clear();
     mass.clear();
     velocity.clear();
     return;
@@ -117,7 +119,7 @@ std::string Momentum::print() {
 
 shp::Quantity Momentum::getComponent(float phase) const {
 	shp::Quantity momentum = getTotal();
-	return shp::Quantity((momentum.getValue() * cos(phase)), momentum.getScaling(), momentum.getUnit());
+	return shp::Quantity((momentum.getMagnitude() * cos(phase)), momentum.getScaling(), momentum.getUnit());
 }
 
 } // namespace qft

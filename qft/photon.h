@@ -24,18 +24,18 @@
 #include <string>
 #include <vector>
 #include "energy.h"
-#include "particle.h"
+#include "boson.h"
 
 namespace qft {
 
-class Photon : public Particle {
+class Photon : public Boson {
 
 public:
     // Constructors
     Photon();
     Photon(std::string name);
-    Photon(float wavelength);
-    Photon(std::string name, float wavelength);
+    Photon(const float wavelength);
+    Photon(std::string name, const float wavelength);
     Photon(std::string name, const Energy& energy);
     Photon(std::string name, const Spin& spin, const Energy& energy);
     Photon(std::string name, const float spin, const float mass, const float charge);
@@ -57,12 +57,9 @@ public:
     // Setters
 
     // Additional methods
-    shp::Quantity getWavelength() const;
     virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();
-public:
-    static const float DEFAULT_SPIN;
 };
 
 typedef std::vector<Photon > PhotonArray;

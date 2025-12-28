@@ -18,109 +18,126 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "neutrino.h"
+#include "boson.h"
 
 namespace qft {
 
-const float Neutrino::DEFAULT_SPIN = 0.5f;    // Dirac Fermions have 1/2 spin
+const float Boson::DEFAULT_CHARGE = 0.0f;   //
+const float Boson::DEFAULT_MASS = 0.0f;     //
+const float Boson::DEFAULT_PARITY = -1.0f;  //
+const float Boson::SCALAR_SPIN = 0.0f;      // Scalar Boson has zero spin
+const float Boson::GUAGE_SPIN1 = 1.0f;      // Guage Bosons have integer spin
+const float Boson::GUAGE_SPIN2 = 2.0f;      // Guage Bosons have integer spin
 
-Neutrino::Neutrino()
-        : Particle(Spin(DEFAULT_SPIN)) {
-
-}
-
-Neutrino::Neutrino(std::string name)
-        : Particle(name, Spin(DEFAULT_SPIN)) {
-
-}
-
-Neutrino::Neutrino(const float wavelength)
-        : Particle(Spin(DEFAULT_SPIN)) {
-    this->getEnergy().setWavelength(wavelength);
-}
-
-Neutrino::Neutrino(std::string name, const float wavelength)
-        : Particle(name, Spin(DEFAULT_SPIN)) {
-    this->getEnergy().setWavelength(wavelength);
-}
-
-Neutrino::Neutrino(std::string name, const Energy& energy)
-        : Particle(name, Spin(DEFAULT_SPIN), energy) {
+Boson::Boson()
+        : Particle(GUAGE_SPIN1) {
 
 }
 
-Neutrino::Neutrino(std::string name, const Spin& spin, const Energy& energy)
+Boson::Boson(const Spin& spin)
+        : Particle(spin) {
+
+}
+
+Boson::Boson(std::string name)
+        : Particle(name, GUAGE_SPIN1) {
+
+}
+
+Boson::Boson(std::string name, const Spin& spin)
+        : Particle(name, spin) {
+
+}
+
+Boson::Boson(const float wavelength)
+        : Particle(GUAGE_SPIN1) {
+    Energy energy = getEnergy();
+    energy.setWavelength(wavelength);
+}
+
+Boson::Boson(std::string name, const float wavelength)
+        : Particle(name, GUAGE_SPIN1) {
+    Energy energy = getEnergy();
+    energy.setWavelength(wavelength);
+}
+
+Boson::Boson(std::string name, const Energy& energy)
+        : Particle(name, GUAGE_SPIN1, energy) {
+
+}
+
+Boson::Boson(std::string name, const Spin& spin, const Energy& energy)
         : Particle(name, spin, energy) {
 
 }
 
-Neutrino::Neutrino(std::string name, const float spin, const float mass, const float charge)
+Boson::Boson(std::string name, const float spin, const float mass, const float charge)
         : Particle(name, Spin(spin), Energy(Mass(mass), Charge(charge))) {
 
 }
 
-Neutrino::Neutrino(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
+Boson::Boson(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
         : Particle(name, spin, Energy(mass, charge)) {
 
 }
 
-Neutrino::~Neutrino() {
+Boson::~Boson() {
 
 }
 
-bool Neutrino::operator==(const Neutrino& peer) const {
+bool Boson::operator==(const Boson& peer) const {
     return (static_cast<const Particle&>(*this) == static_cast<const Particle&>(peer));
 }
 
-Neutrino Neutrino::operator+(const Neutrino& peer) const {
-    return Neutrino("+",
+Boson Boson::operator+(const Boson& peer) const {
+    return Boson("+",
         (this->getSpin() + peer.getSpin()),
         (this->getEnergy() + peer.getEnergy()));
 }
 
-Neutrino Neutrino::operator-(const Neutrino& peer) const {
-    return Neutrino("-",
+Boson Boson::operator-(const Boson& peer) const {
+    return Boson("-",
         (this->getSpin() - peer.getSpin()),
         (this->getEnergy() - peer.getEnergy()));
 }
 
-Neutrino Neutrino::operator*(const Neutrino& peer) const {
-    return Neutrino("*",
+Boson Boson::operator*(const Boson& peer) const {
+    return Boson("*",
         (this->getSpin() * peer.getSpin()),
         (this->getEnergy() * peer.getEnergy()));
 }
 
-Neutrino Neutrino::operator/(const Neutrino& peer) const {
-    return Neutrino("/",
+Boson Boson::operator/(const Boson& peer) const {
+    return Boson("/",
         (this->getSpin() / peer.getSpin()),
         (this->getEnergy() / peer.getEnergy()));
 }
 
-Neutrino Neutrino::operator%(const Neutrino& peer) const {
-    return Neutrino("%",
+Boson Boson::operator%(const Boson& peer) const {
+    return Boson("%",
         (this->getSpin() % peer.getSpin()),
         (this->getEnergy() % peer.getEnergy()));
 }
 
-shp::Quantity Neutrino::getWavelength() const {
+shp::Quantity Boson::getWavelength() const {
     return this->getEnergy().getWavelength().getLength();
 }
 
-shp::Point Neutrino::copy() {
-    Neutrino fresh(this->getName(), this->getEnergy());
+shp::Point Boson::copy() {
+    Boson fresh(this->getName(), this->getEnergy());
 	fresh.setAmplitude(this->getAmplitude());
 	fresh.setGradient(this->getGradient());
     return fresh;
 }
 
-void Neutrino::clear() {
+void Boson::clear() {
     Particle::clear();
     return;
 }
 
-std::string Neutrino::print() {
+std::string Boson::print() {
     std::stringstream result;
-    result << "ν:";
+    result << "b:";
 	result << Particle::print();
 	return result.str();
 }
