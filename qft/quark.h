@@ -23,13 +23,16 @@
 
 #include <string>
 #include <vector>
+#include "colour.h"
 #include "energy.h"
+#include "handed.h"
 #include "particle.h"
 
 namespace qft {
 
 class Quark : public Particle {
-
+    Colour colour;
+    Handed handed;
 public:
     // Constructors
     Quark();
@@ -54,8 +57,12 @@ public:
     Quark operator%(const Quark& peer) const;
 
     // Getters
+    Colour getColour() const { return colour; }
+    Handed getHanded() const { return handed; }
 
     // Setters
+    void setColour(const Colour& value) { colour = value; }
+    void setHanded(const Handed& value) { handed = value; }
 
     // Additional methods
     shp::Quantity getWavelength() const;

@@ -49,6 +49,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/action.o \
 		$(OBJFOLDR)/boson.o \
 		$(OBJFOLDR)/charge.o \
+		$(OBJFOLDR)/colour.o \
 		$(OBJFOLDR)/current.o \
 		$(OBJFOLDR)/density.o \
 		$(OBJFOLDR)/electric.o \
@@ -59,6 +60,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/force.o \
 		$(OBJFOLDR)/gluon.o \
 		$(OBJFOLDR)/gravity.o \
+		$(OBJFOLDR)/handed.o \
 		$(OBJFOLDR)/higgs.o \
 		$(OBJFOLDR)/magnetic.o \
 		$(OBJFOLDR)/mass.o \
@@ -81,6 +83,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/action.o \
 		$(OBJFOLDR)/boson.o \
 		$(OBJFOLDR)/charge.o \
+		$(OBJFOLDR)/colour.o \
 		$(OBJFOLDR)/current.o \
 		$(OBJFOLDR)/density.o \
 		$(OBJFOLDR)/electric.o \
@@ -91,6 +94,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/force.o \
 		$(OBJFOLDR)/gluon.o \
 		$(OBJFOLDR)/gravity.o \
+		$(OBJFOLDR)/handed.o \
 		$(OBJFOLDR)/higgs.o \
 		$(OBJFOLDR)/magnetic.o \
 		$(OBJFOLDR)/mass.o \
@@ -121,6 +125,9 @@ $(OBJFOLDR)/boson.o: boson.cpp
 $(OBJFOLDR)/charge.o: charge.cpp
 	$(CPPTOOL) -c charge.cpp -o $(OBJFOLDR)/charge.o $(CXXFLAGS)
 
+$(OBJFOLDR)/colour.o: colour.cpp
+	$(CPPTOOL) -c colour.cpp -o $(OBJFOLDR)/colour.o $(CXXFLAGS)
+
 $(OBJFOLDR)/current.o: current.cpp
 	$(CPPTOOL) -c current.cpp -o $(OBJFOLDR)/current.o $(CXXFLAGS)
 
@@ -150,6 +157,9 @@ $(OBJFOLDR)/gluon.o: gluon.cpp
 
 $(OBJFOLDR)/gravity.o: gravity.cpp
 	$(CPPTOOL) -c gravity.cpp -o $(OBJFOLDR)/gravity.o $(CXXFLAGS)
+
+$(OBJFOLDR)/handed.o: handed.cpp
+	$(CPPTOOL) -c handed.cpp -o $(OBJFOLDR)/handed.o $(CXXFLAGS)
 
 $(OBJFOLDR)/higgs.o: higgs.cpp
 	$(CPPTOOL) -c higgs.cpp -o $(OBJFOLDR)/higgs.o $(CXXFLAGS)

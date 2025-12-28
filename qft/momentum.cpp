@@ -19,10 +19,12 @@
 // THE SOFTWARE.
 
 #include "momentum.h"
+#include "field.h"
 
 namespace qft {
 
-const std::string Momentum::UNIT = "kg.m/s";    // System International
+const std::string Momentum::UNIT = "kg.m/s";            // System International
+const std::string Momentum::GRAVITY_FIELD = "Gravity";  // Gravity Field
 
 Momentum::Momentum()
         : name(), mass(), velocity() {
@@ -93,6 +95,13 @@ shp::Quantity Momentum::getTotal() const {
     short int scaling = mass.getScaling() + velocity.getTotal().getScaling();
     shp::Quantity result(momentum, scaling, UNIT);
     return result;
+}
+
+std::shared_ptr<Field> Momentum::getGravityField() const {
+    std::shared_ptr<Field> field = Field::shareable(Momentum::GRAVITY_FIELD);
+    field->setPotential(shp::Potential(mass.getMagnitude(), 0, mass.getScaling(), mass.getUnit()));
+    field->setLinear(shp::Direction(90, 0, 0));
+    return field;
 }
 
 Momentum Momentum::copy() {

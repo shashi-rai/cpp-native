@@ -27,6 +27,8 @@
 
 namespace qft {
 
+class Field;
+
 class Momentum {
     std::string name;
     qft::Mass mass;
@@ -64,12 +66,14 @@ public:
 
     // Additional methods
     shp::Quantity getTotal() const;
+    std::shared_ptr<Field> getGravityField() const;
     virtual Momentum copy();
     virtual void clear();
     virtual std::string print();
     shp::Quantity getComponent(float phase) const;
 public:
     static const std::string UNIT;
+    static const std::string GRAVITY_FIELD;
 };
 
 typedef std::vector<Momentum > MomentumArray;

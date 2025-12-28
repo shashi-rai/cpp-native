@@ -27,6 +27,8 @@
 
 namespace qft {
 
+class Field;
+
 class Current {
     std::string name;
     qft::Charge charge;
@@ -64,12 +66,16 @@ public:
 
     // Additional methods
     shp::Quantity getTotal() const;
+    std::shared_ptr<Field> getElectricField() const;
+    std::shared_ptr<Field> getMagneticField() const;
     virtual Current copy();
     virtual void clear();
     virtual std::string print();
     shp::Quantity getComponent(float phase) const;
 public:
     static const std::string UNIT;
+    static const std::string ELECTRIC_FIELD;
+    static const std::string MAGNETIC_FIELD;
     static const float ELECTRON_FLOW_RATE;
     static const short int ELECTRON_FLOW_SCALE;
 };

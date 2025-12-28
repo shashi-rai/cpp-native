@@ -19,12 +19,15 @@
 // THE SOFTWARE.
 
 #include "current.h"
+#include "field.h"
 
 namespace qft {
 
-const std::string Current::UNIT = "A";              // System International (i.e. C/s)
-const float Current::ELECTRON_FLOW_RATE = 6.24f;    // 6.24x10^18 electrons per second
-const short int Current::ELECTRON_FLOW_SCALE = 18;  // 10^18
+const std::string Current::UNIT = "A";                  // System International (i.e. C/s)
+const std::string Current::ELECTRIC_FIELD = "Electric"; // Electric Field
+const std::string Current::MAGNETIC_FIELD = "Magnetic"; // Magnetic Field
+const float Current::ELECTRON_FLOW_RATE = 6.24f;        // 6.24x10^18 electrons per second
+const short int Current::ELECTRON_FLOW_SCALE = 18;      // 10^18
 
 Current::Current()
         : name(), charge(), velocity() {
@@ -93,8 +96,21 @@ Current Current::operator/(const Current& peer) const {
 shp::Quantity Current::getTotal() const {
     float current = charge.getMagnitude() * velocity.getTotal().getMagnitude();
     short int scaling = charge.getScaling() + velocity.getTotal().getScaling();
-    shp::Quantity result(current, scaling, UNIT);
+    shp::Quantity result(current, scaling, UNIT); 
     return result;
+}
+
+std::shared_ptr<Field> Current::getElectricField() const {
+    std::shared_ptr<Field> field = Field::shareable(Current::ELECTRIC_FIELD);
+    field->setPotential(shp::Potential(charge.getMagnitude(), 0, charge.getScaling(), charge.getUnit()));
+    return field;
+}
+
+std::shared_ptr<Field> Current::getMagneticField() const {
+    std::shared_ptr<Field> field = Field::shareable(Current::MAGNETIC_FIELD);
+    field->setPotential(shp::Potential(charge.getMagnitude(), 0, charge.getScaling(), charge.getUnit()));
+    field->setLinear(shp::Direction(90, 0, 0));
+    return field;
 }
 
 Current Current::copy() {
