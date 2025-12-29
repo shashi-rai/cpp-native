@@ -29,15 +29,72 @@ Point::Point()
 
 }
 
+Point::Point(const Unit& unit)
+        : Shape(),
+        amplitude(Quantity::DEFAULT_VALUE, unit),
+        gradient(Quantity::DEFAULT_VALUE) {
+
+}
+
 Point::Point(const float gradient)
         : Shape(),
-        amplitude(0.0), gradient(gradient) {
+        amplitude(Quantity::DEFAULT_VALUE), gradient(gradient) {
 
 }
 
 Point::Point(const float amplitude, const float gradient)
         : Shape(),
         amplitude(amplitude), gradient(gradient) {
+
+}
+
+Point::Point(const float amplitude, const std::string unit)
+        : Shape(),
+        amplitude(amplitude, unit), gradient(Quantity::DEFAULT_VALUE) {
+
+}
+
+Point::Point(const float amplitude, const std::string unit, const float gradient)
+        : Shape(),
+        amplitude(amplitude, unit), gradient(gradient) {
+
+}
+
+Point::Point(const float amplitude, const Unit& unit)
+        : Shape(),
+        amplitude(amplitude, unit), gradient(Quantity::DEFAULT_VALUE) {
+
+}
+
+Point::Point(const float amplitude, const Unit& unit, const float gradient)
+        : Shape(),
+        amplitude(amplitude, unit), gradient(gradient) {
+
+}
+
+Point::Point(const float amplitude, const short int scaling, const std::string unit)
+        : Shape(),
+        amplitude(amplitude, scaling, unit), gradient(Quantity::DEFAULT_VALUE) {
+
+}
+
+Point::Point(const float amplitude, const short int scaling, const std::string unit,
+        const float gradient)
+        : Shape(),
+        amplitude(amplitude, scaling, unit), gradient(gradient) {
+
+}
+
+Point::Point(const float amplitude, const short int scaling, const Unit& unit)
+        : Shape(),
+        amplitude(amplitude, scaling, unit), gradient(Quantity::DEFAULT_VALUE) {
+
+}
+
+Point::Point(const float amplitude, const short int scaling, const Unit& unit,
+        const float gradient)
+        : Shape(),
+        amplitude(amplitude, scaling, unit), gradient(gradient) {
 
 }
 
@@ -61,6 +118,60 @@ Point::Point(std::string name, const float amplitude, const float gradient)
 
 }
 
+Point::Point(std::string name, const float amplitude, const std::string unit)
+        : Shape(name),
+        amplitude(amplitude, unit), gradient() {
+
+}
+
+Point::Point(std::string name, const float amplitude, const std::string unit,
+        const float gradient)
+        : Shape(name),
+        amplitude(amplitude, unit), gradient(gradient) {
+
+}
+
+Point::Point(std::string name, const float amplitude, const Unit& unit)
+        : Shape(name),
+        amplitude(amplitude, unit), gradient() {
+
+}
+
+Point::Point(std::string name, const float amplitude, const Unit& unit,
+        const float gradient)
+        : Shape(name),
+        amplitude(amplitude, unit), gradient(gradient) {
+
+}
+
+Point::Point(std::string name, const float amplitude, const short int scaling,
+        const std::string unit)
+        : Shape(name),
+        amplitude(amplitude, scaling, unit), gradient() {
+
+}
+
+Point::Point(std::string name, const float amplitude, const short int scaling,
+        const std::string unit, const float gradient)
+        : Shape(name),
+        amplitude(amplitude, scaling, unit), gradient(gradient) {
+
+}
+
+Point::Point(std::string name, const float amplitude, const short int scaling,
+        const Unit& unit)
+        : Shape(name),
+        amplitude(amplitude, scaling, unit), gradient() {
+
+}
+
+Point::Point(std::string name, const float amplitude, const short int scaling,
+        const Unit& unit, const float gradient)
+        : Shape(name),
+        amplitude(amplitude, scaling, unit), gradient(gradient) {
+
+}
+
 Point::~Point() {
 
 }
@@ -76,7 +187,6 @@ Point Point::operator+(const Point& peer) const {
         ap1 = self.toAzimuthalComplex(gradient),
         ap2 = other.toAzimuthalComplex(peer.gradient);
     std::complex<float> a_phasor = ap1 + ap2;
-
     return Point("+", std::abs(a_phasor), std::arg(a_phasor));
 }
 
@@ -89,6 +199,31 @@ Point Point::operator-(const Point& peer) const {
     return Point("-", std::abs(a_phasor), std::arg(a_phasor));
 }
 
+void Point::setAmplitude(const float magnitude) {
+    amplitude.setMagnitude(magnitude);
+}
+
+void Point::setAmplitude(const float magnitude, const short int scaling) {
+    amplitude.setMagnitude(magnitude);
+    amplitude.setScaling(scaling);
+}
+
+void Point::setAmplitude(const float magnitude, const short int scaling, const std::string unit) {
+    amplitude.setMagnitude(magnitude);
+    amplitude.setScaling(scaling);
+    amplitude.setUnit(unit);
+}
+
+void Point::setAmplitude(const float magnitude, const short int scaling, const Unit& unit) {
+    amplitude.setMagnitude(magnitude);
+    amplitude.setScaling(scaling);
+    amplitude.setUnit(unit);
+}
+
+void Point::setAzimuthal(const Direction& orientation) {
+    gradient = orientation.toRadians();
+}
+
 Angular Point::getOrientation() const {
     Direction azimuth(gradient);
     Angular result(Distance(Angular::DEFAULT_RADIUS), azimuth);
@@ -96,13 +231,15 @@ Angular Point::getOrientation() const {
 }
 
 Point Point::copy() {
-    Point fresh(getName(), amplitude, gradient);
+    Point fresh(getName(), amplitude.getMagnitude(),
+        amplitude.getScaling(), amplitude.getUnit(), gradient);
     return fresh;
 }
 
 void Point::clear() {
     Shape::clear();
-	amplitude = gradient = Quantity::DEFAULT_VALUE;
+	amplitude.clear();
+    gradient = Quantity::DEFAULT_VALUE;
     return;
 }
 
@@ -110,17 +247,20 @@ std::string Point::print() {
     std::stringstream result;
     result << "{p:";
 	result << Shape::print() << ",a:";
-    result << amplitude << ",𝜙:";
+    result << amplitude.print() << ",𝜙:";
 	result << gradient << "}";
 	return result.str();
 }
 
-float Point::getAmplitudeAzimuthal(float change) const {
-    return getAmplitude() * cos(gradient + change);
+Quantity Point::getAmplitudeAzimuthal(float change) const {
+    return Quantity((amplitude.getMagnitude() * cos(gradient + change)),
+        amplitude.getScaling(), amplitude.getUnit());
 }
 
 std::complex<float> Point::toAzimuthalComplex(float change) {
-    return std::complex<float>(amplitude * std::cos(change), amplitude * std::sin(change));
+    return std::complex<float>(
+        amplitude.getMagnitude() * std::cos(change),
+        amplitude.getMagnitude() * std::sin(change));
 }
 
 } // namespace shp

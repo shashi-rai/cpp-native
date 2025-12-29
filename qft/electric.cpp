@@ -120,7 +120,8 @@ bool Electric::operator==(const Electric& peer) const {
 Electric Electric::operator()(const Charge& host, const Charge& peer, const shp::Distance& sepration) const {
     shp::Potential potential_host = host.getField()->getPotential();
     shp::Potential potential_peer = peer.getField()->getPotential();
-    shp::Distance distance = (potential_host.getDifference() - potential_peer.getDifference());
+    shp::Quantity difference = (potential_host.getDifference() - potential_peer.getDifference());
+    shp::Distance distance(difference.getMagnitude(), difference.getScaling(), difference.getUnit());
     Force effect = host(peer, sepration, distance);
     shp::Quantity force = effect.getMagnitude();
     return Electric(force.getMagnitude(), effect.getDirection().toRadians(), field);

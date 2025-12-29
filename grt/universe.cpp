@@ -99,7 +99,7 @@ void Universe::set(int index, const Galaxy& object) {
 
 const shp::Distance Universe::getRadius() {
     shp::Distance lightyear = Celestial::getLightYear();
-    float radius = (Universe::RADIUS * lightyear.getLength().getMagnitude());
+    float radius = (Universe::RADIUS * lightyear.getMagnitude());
     short int scaling = (9 + lightyear.getScaling());
     return shp::Distance(radius, scaling);
 }

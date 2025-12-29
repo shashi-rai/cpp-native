@@ -93,6 +93,8 @@ public:
     Charge getCharge() const { return energy.getCharge(); }
     void setMass(const Mass& value) { energy.setMass(value); }
     void setCharge(const Charge& value) { energy.setCharge(value); }
+    shp::Quantity getFrequency() const;
+    shp::Quantity getWavelength() const;
     bool isStructured() const;
     shp::Quantity getTotal() const;
     virtual shp::Point copy();

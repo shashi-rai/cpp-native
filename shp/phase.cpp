@@ -133,6 +133,10 @@ Phase Phase::operator-(const Phase& peer) const {
     return result;
 }
 
+void Phase::setPolarization(const Direction& orientation) {
+    polarization = orientation.toRadians();
+}
+
 Angular Phase::getOrientation() const {
     Direction polarity(polarization);
     Direction azimuth(getGradient());
@@ -157,17 +161,24 @@ std::string Phase::print() {
     result << "[Φ:";
 	result << Point::print() << ",𝜃:";
     result << polarization << ",t:";
-    result << std::put_time(std::localtime(&timestamp), "[%Y-%m-%d %H:%M:%S]");
+    if (timestamp != DEFAULT_TIME) {
+        result << std::put_time(std::localtime(&timestamp), "[%Y-%m-%d %H:%M:%S]");
+    }
     result << "]:";
 	return result.str();
 }
 
-float Phase::getAmplitudePolarization(float change) const {
-    return getAmplitude() * cos(polarization + change);
+Quantity Phase::getAmplitudePolarization(float change) const {
+    Quantity amplitude = getAmplitude();
+    return Quantity((amplitude.getMagnitude() * cos(polarization + change)),
+        amplitude.getScaling(), amplitude.getUnit());
 }
 
 std::complex<float> Phase::toPolarizationComplex(float change) {
-    return std::complex<float>(getAmplitude() * std::cos(change), getAmplitude() * std::sin(change));
+    Quantity amplitude = getAmplitude();
+    return std::complex<float>(
+        amplitude.getMagnitude() * std::cos(change),
+        amplitude.getMagnitude() * std::sin(change));
 }
 
 const std::time_t Phase::getSystem() {

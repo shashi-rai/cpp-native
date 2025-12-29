@@ -65,7 +65,6 @@ public:
     void setHanded(const Handed& value) { handed = value; }
 
     // Additional methods
-    shp::Quantity getWavelength() const;
     virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();

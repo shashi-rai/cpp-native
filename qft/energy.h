@@ -33,10 +33,10 @@
 namespace qft {
 
 class Energy : public shp::Phase {
-    shp::Unit unit;
-    shp::Distance wavelength;
-    qft::Mass mass;
-    qft::Charge charge;
+    shp::Unit unit;                 // Standard Unit of Measure
+    shp::Distance wavelength;       // Kinetic Energy as Planck wave
+    qft::Mass mass;                 // Potential Energy as conserved
+    qft::Charge charge;             // Cause of Kinetic Energy
 public:
     // Constructors
     Energy();

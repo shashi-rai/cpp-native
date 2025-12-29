@@ -27,8 +27,8 @@
 
 namespace qft {
 
-class Temperature {
-    shp::Quantity quantity;
+class Temperature : public shp::Quantity {
+
 public:
     // Constructors
     Temperature();
@@ -49,12 +49,8 @@ public:
     Temperature operator%(const Temperature& peer) const;
 
     // Getters
-    shp::Unit getUnit() const { return quantity.getUnit(); }
-    shp::Quantity getQuantity() const { return quantity; }
 
     // Setters
-    void setUnit(const shp::Unit& value) { this->quantity.setUnit(value); }
-    void setQuantity(const float amount) { this->quantity = amount; }
 
     // Additional methods
     shp::Quantity getTotal() const;

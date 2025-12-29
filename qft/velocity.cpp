@@ -170,6 +170,20 @@ Velocity Velocity::operator/(const Velocity& peer) const {
 		shp::Direction(std::arg(a_phasor)));
 }
 
+void Velocity::changeSpeed(const float motion) {
+	if (motion != shp::Quantity::DEFAULT_VALUE) {
+		float speed = displacement.getMagnitude() + motion;
+		displacement.setMagnitude(speed); displacement.adjustScaling();
+	}
+}
+
+void Velocity::changeDirection(const float degree) {
+    if (degree != shp::Quantity::DEFAULT_VALUE) {
+        float rotation = direction.toRadians() + (shp::Direction::DEGREE_001 * degree);
+        direction = shp::Direction(rotation);
+    }
+}
+
 shp::Quantity Velocity::getTotal() const {
     shp::Quantity result(displacement.getMagnitude(), displacement.getScaling(), getUnit());
     return result;

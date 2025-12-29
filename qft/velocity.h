@@ -77,6 +77,8 @@ public:
     void setDirection(const shp::Direction& direction) { this->direction = direction; }
 
     // Additional methods
+    void changeSpeed(const float motion);
+    void changeDirection(const float degree);
     shp::Quantity getTotal() const;
     void adjustScaling();
     virtual Velocity copy();

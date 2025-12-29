@@ -119,10 +119,6 @@ Boson Boson::operator%(const Boson& peer) const {
         (this->getEnergy() % peer.getEnergy()));
 }
 
-shp::Quantity Boson::getWavelength() const {
-    return this->getEnergy().getWavelength().getLength();
-}
-
 shp::Point Boson::copy() {
     Boson fresh(this->getName(), this->getEnergy());
 	fresh.setAmplitude(this->getAmplitude());

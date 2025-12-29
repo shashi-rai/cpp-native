@@ -61,7 +61,6 @@ public:
     void setParity(const float value) { this->parity = value; }
 
     // Additional methods
-    shp::Quantity getWavelength() const;
     virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();

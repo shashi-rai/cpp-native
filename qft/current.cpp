@@ -24,9 +24,10 @@
 namespace qft {
 
 const std::string Current::UNIT = "A";                  // System International (i.e. C/s)
+const std::string Current::COULOMB_SECOND = "C/s";      // Coulomb per second
 const std::string Current::ELECTRIC_FIELD = "Electric"; // Electric Field
 const std::string Current::MAGNETIC_FIELD = "Magnetic"; // Magnetic Field
-const float Current::ELECTRON_FLOW_RATE = 6.24f;        // 6.24x10^18 electrons per second
+const float Current::ELECTRON_FLOW_RATE = 6.241509f;    // 6.241509x10^18 electrons per second
 const short int Current::ELECTRON_FLOW_SCALE = 18;      // 10^18
 
 Current::Current()
@@ -54,7 +55,7 @@ Current::Current(const float charge, const float velocity)
 
 }
 
-Current::Current(const qft::Charge& charge, const qft::Velocity& velocity)
+Current::Current(const qft::Charge& charge, const qft::Acceleration& velocity)
         : name(), charge(charge), velocity(velocity) {
 
 }
@@ -64,7 +65,7 @@ Current::Current(std::string name, const float charge, const float velocity)
 
 }
 
-Current::Current(std::string name, const qft::Charge& charge, const qft::Velocity& velocity)
+Current::Current(std::string name, const qft::Charge& charge, const qft::Acceleration& velocity)
         : name(name), charge(charge), velocity(velocity) {
 
 }
@@ -93,7 +94,44 @@ Current Current::operator/(const Current& peer) const {
     return Current("/", (charge / peer.charge), (velocity / peer.velocity));
 }
 
-shp::Quantity Current::getTotal() const {
+Acceleration Current::getAcceleration() const {
+    return velocity;
+}
+
+shp::Quantity Current::getElectrons() const {
+    qft::Charge electron(qft::Charge::ELECTRON);
+    float quantum = (charge.getMagnitude() / Current::getAmpereCoulombs().getMagnitude());
+    return shp::Quantity((quantum / electron.getMagnitude()),
+        (charge.getScaling() - electron.getScaling()), "e⁻");
+}
+
+void Current::setElectrons(const int count) {
+    if (count > 0) {
+        qft::Charge electron(qft::Charge::ELECTRON);
+        float total = (electron.getMagnitude() * count);
+        charge.setMagnitude(total); charge.adjustScaling();
+    }
+}
+
+void Current::changeFlowSpeed(const float motion) {
+    velocity.setChangeMagnitude(motion);
+    velocity.applyChangeMagnitude();
+}
+
+void Current::changeDirection(const float degree) {
+    velocity.setChangeDirection(degree);
+    velocity.applyChangeDirection();
+}
+
+shp::Quantity Current::getLinearTotal() const {
+    qft::Velocity invariant = velocity;     // non-accelerating component only
+    float current = charge.getMagnitude() * invariant.getTotal().getMagnitude();
+    short int scaling = charge.getScaling() + invariant.getTotal().getScaling();
+    shp::Quantity result(current, scaling, UNIT); 
+    return result;
+}
+
+shp::Quantity Current::getAngularTotal() const {    // directional acceleration
     float current = charge.getMagnitude() * velocity.getTotal().getMagnitude();
     short int scaling = charge.getScaling() + velocity.getTotal().getScaling();
     shp::Quantity result(current, scaling, UNIT); 
@@ -136,8 +174,20 @@ std::string Current::print() {
 }
 
 shp::Quantity Current::getComponent(float phase) const {
-	shp::Quantity current = getTotal();
+	shp::Quantity current = getLinearTotal();
 	return shp::Quantity((current.getMagnitude() * cos(phase)), current.getScaling(), current.getUnit());
+}
+
+const shp::Quantity Current::getAmpereCoulombs() {
+    shp::Quantity flowrate = getAmpereFlowRate();
+    qft::Charge electron_charge(-qft::Charge::ELECTRON);
+    shp::Quantity total = (flowrate * electron_charge); total.adjustScaling();
+    return total;
+}
+
+const shp::Quantity Current::getAmpereFlowRate() {
+    shp::Quantity standard(ELECTRON_FLOW_RATE, ELECTRON_FLOW_SCALE, COULOMB_SECOND);
+    return standard;
 }
 
 } // namespace qft

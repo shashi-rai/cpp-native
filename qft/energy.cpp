@@ -618,60 +618,60 @@ bool Energy::operator==(const Energy& peer) const {
 }
 
 Energy Energy::operator+(const Energy& peer) const {
-    float amplitude = (getAmplitude() + peer.getAmplitude());
+    shp::Quantity amplitude = (getAmplitude() + peer.getAmplitude());
     float gradient = (getGradient() + peer.getGradient());
     float planck_phase = (getPolarization() + peer.getPolarization());
     shp::Distance planck_wave = (wavelength + peer.wavelength);
-    shp::Quantity length = planck_wave.getLength(); length.adjustScaling();
-    Energy result("+", amplitude, gradient, length.getMagnitude(), planck_wave.getScaling(),
+    shp::Quantity length = planck_wave.getMagnitude(); length.adjustScaling();
+    Energy result("+", amplitude.getMagnitude(), gradient, length.getMagnitude(), planck_wave.getScaling(),
             (mass + peer.mass), (charge + peer.charge), unit);
     result.setPolarization(planck_phase);
     return result;
 }
 
 Energy Energy::operator-(const Energy& peer) const {
-    float amplitude = (getAmplitude() - peer.getAmplitude());
+    shp::Quantity amplitude = (getAmplitude() - peer.getAmplitude());
     float gradient = (getGradient() - peer.getGradient());
     float planck_phase = (getPolarization() - peer.getPolarization());
     shp::Distance planck_wave = (wavelength - peer.wavelength);
-    shp::Quantity length = planck_wave.getLength(); length.adjustScaling();
-    Energy result("-", amplitude, gradient, length.getMagnitude(), planck_wave.getScaling(),
+    shp::Quantity length = planck_wave.getMagnitude(); length.adjustScaling();
+    Energy result("-", amplitude.getMagnitude(), gradient, length.getMagnitude(), planck_wave.getScaling(),
             (mass - peer.mass), (charge - peer.charge), unit);
     result.setPolarization(planck_phase);
     return result;
 }
 
 Energy Energy::operator*(const Energy& peer) const {
-    float amplitude = (getAmplitude() * peer.getAmplitude());
+    shp::Quantity amplitude = (getAmplitude() * peer.getAmplitude());
     float gradient = (getGradient() * peer.getGradient());
     float planck_phase = (getPolarization() * peer.getPolarization());
     shp::Distance planck_wave = (wavelength * peer.wavelength);
-    shp::Quantity length = planck_wave.getLength(); length.adjustScaling();
-    Energy result("*", amplitude, gradient, length.getMagnitude(), planck_wave.getScaling(),
+    shp::Quantity length = planck_wave.getMagnitude(); length.adjustScaling();
+    Energy result("*", amplitude.getMagnitude(), gradient, length.getMagnitude(), planck_wave.getScaling(),
             (mass * peer.mass), (charge * peer.charge), unit);
     result.setPolarization(planck_phase);
     return result;
 }
 
 Energy Energy::operator/(const Energy& peer) const {
-    float amplitude = (getAmplitude() / peer.getAmplitude());
+    shp::Quantity amplitude = (getAmplitude() / peer.getAmplitude());
     float gradient = (getGradient() / peer.getGradient());
     float planck_phase = (getPolarization() / peer.getPolarization());
     shp::Distance planck_wave = (wavelength / peer.wavelength);
-    shp::Quantity length = planck_wave.getLength(); length.adjustScaling();
-    Energy result("/", amplitude, gradient, length.getMagnitude(), planck_wave.getScaling(),
+    shp::Quantity length = planck_wave.getMagnitude(); length.adjustScaling();
+    Energy result("/", amplitude.getMagnitude(), gradient, length.getMagnitude(), planck_wave.getScaling(),
             (mass / peer.mass), (charge / peer.charge), unit);
     result.setPolarization(planck_phase);
     return result;
 }
 
 Energy Energy::operator%(const Energy& peer) const {
-    float amplitude = fmod(getAmplitude(), peer.getAmplitude());
+    shp::Quantity amplitude = (getAmplitude() % peer.getAmplitude());
     float gradient = fmod(getGradient(), peer.getGradient());
     float planck_phase = fmod(getPolarization(), peer.getPolarization());
     shp::Distance planck_wave = (wavelength % peer.wavelength);
-    shp::Quantity length = planck_wave.getLength(); length.adjustScaling();
-    Energy result("%", amplitude, gradient, length.getMagnitude(), planck_wave.getScaling(),
+    shp::Quantity length = planck_wave.getMagnitude(); length.adjustScaling();
+    Energy result("%", amplitude.getMagnitude(), gradient, length.getMagnitude(), planck_wave.getScaling(),
             (mass % peer.mass), (charge % peer.charge), unit);
     result.setPolarization(planck_phase);
     return result;
@@ -709,7 +709,7 @@ shp::Quantity Energy::getKinetic() const {
 }
 
 shp::Quantity Energy::getFrequency() const {
-    shp::Quantity result = wavelength.getLength().getInverse();
+    shp::Quantity result = wavelength.getInverse();
     result.setScaling((0 - wavelength.getScaling()));
     result.setUnit(shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY));
     result.adjustScaling();
@@ -721,9 +721,9 @@ shp::Quantity Energy::getFrequency() const {
  * At a given point in space, no Planckian Energy exists if wavelength is zero
  */
 shp::Distance Energy::getDivergence(const float modulation) const {
-    shp::Quantity lambda(wavelength.getLength().getMagnitude(),
+    shp::Quantity lambda(wavelength.getMagnitude(),
             wavelength.getScaling(), wavelength.getUnit());
-    float coefficient = (lambda.getMagnitude() * Phase::getAmplitudeAzimuthal(modulation));
+    float coefficient = (lambda.getMagnitude() * Phase::getAmplitudeAzimuthal(modulation).getMagnitude());
     shp::Quantity delta((getPhysicalLimit().getMagnitude() / coefficient),
             (lambda.getScaling() - PLANCK_SCALE), shp::Unit::getBaseSymbol(shp::Unit::LENGTH));
     delta.adjustScaling();
@@ -732,7 +732,7 @@ shp::Distance Energy::getDivergence(const float modulation) const {
 
 qft::Time Energy::getPerpetuity(const float modulation) const {
     shp::Quantity frequency = getFrequency();
-    float coefficient = (frequency.getMagnitude() * Phase::getAmplitudePolarization(modulation));
+    float coefficient = (frequency.getMagnitude() * Phase::getAmplitudePolarization(modulation).getMagnitude());
     shp::Quantity delta((getPhysicalLimit().getMagnitude() / coefficient),
             (frequency.getScaling() - PLANCK_SCALE), shp::Unit::getBaseSymbol(shp::Unit::TIME));
     delta.adjustScaling();
@@ -765,7 +765,7 @@ const shp::Quantity Energy:: getTeraElectronvolt(const float quantum) {
 }
 
 shp::Point Energy::copy() {
-    Energy fresh(wavelength.getLength().getMagnitude(),
+    Energy fresh(wavelength.getMagnitude(),
             mass.getMagnitude(), charge.getMagnitude(), getUnit());
     return fresh;
 }

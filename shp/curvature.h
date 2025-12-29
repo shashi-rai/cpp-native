@@ -30,18 +30,19 @@ namespace shp {
 
 class Curvature : public Point {
     float polarization;
-    PhaseArray deforms;
+    PhaseArray deformations;
 public:
     // Constructors
     Curvature();
     Curvature(const float polarization);
     Curvature(const float polarization, const float azimuthal);
+    Curvature(const PhaseArray& deformations);
     Curvature(std::string name);
     Curvature(std::string name, const float polarization);
     Curvature(std::string name, const float polarization, const float azimuthal);
-    Curvature(std::string name, const PhaseArray& deforms);
-    Curvature(std::string name, const PhaseArray& deforms, const float polarization);
-    Curvature(std::string name, const PhaseArray& deforms, const float polarization, const float azimuthal);
+    Curvature(std::string name, const PhaseArray& deformations);
+    Curvature(std::string name, const PhaseArray& deformations, const float polarization);
+    Curvature(std::string name, const PhaseArray& deformations, const float polarization, const float azimuthal);
 
     // Destructors
     ~Curvature();
@@ -52,26 +53,27 @@ public:
     Curvature operator-(const Curvature& peer) const;
 
     // Access operator
-    Phase operator()(int position) { return deforms[position]; }
-    const Phase operator()(int position) const { return deforms[position]; }
+    Phase operator()(int position) { return deformations[position]; }
+    const Phase operator()(int position) const { return deformations[position]; }
 
     // Getters
     float getPolarization() const { return polarization; }
-    PhaseArray getDeforms() const { return deforms; }
+    PhaseArray getDeformations() const { return deformations; }
 
     // Setters
-    void setPolarization(float value) { this->polarization = value; }
-    void setDeforms(const PhaseArray& states) { this->deforms = states; }
+    void setPolarization(const float value) { this->polarization = value; }
+    void setDeformations(const PhaseArray& states) { this->deformations = states; }
 
     // Additional methods
     int getChangeCount() const;
     Phase get(int index) const;
     void set(int index, const Phase& object);
+    void setPolarization(const Direction& orientation);
     virtual Angular getOrientation() const;
     virtual Point copy();
     virtual void clear();
     virtual std::string print();
-    float getAmplitudePolarization(float change) const;
+    Quantity getAmplitudePolarization(float change) const;
 protected:
     std::complex<float> toPolarizationComplex(float change);
 };

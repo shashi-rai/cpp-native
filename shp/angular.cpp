@@ -185,31 +185,31 @@ Angular Angular::operator%(const Angular& peer) const {
 
 Quantity Angular::operator+(const Quantity& peer) const {
     Distance newRadius = (getRadius() + peer.getMagnitude());
-    return Quantity(newRadius.getLength().getMagnitude(),
+    return Quantity(newRadius.getMagnitude(),
         newRadius.getScaling(), getRadius().getUnit());
 }
 
 Quantity Angular::operator-(const Quantity& peer) const {
     Distance newRadius = (getRadius() - peer.getMagnitude());
-    return Quantity(newRadius.getLength().getMagnitude(),
+    return Quantity(newRadius.getMagnitude(),
         newRadius.getScaling(), getRadius().getUnit());
 }
 
 Quantity Angular::operator*(const Quantity& peer) const {
     Distance newRadius = (getRadius() * peer.getMagnitude());
-    return Quantity(newRadius.getLength().getMagnitude(),
+    return Quantity(newRadius.getMagnitude(),
         newRadius.getScaling(), getRadius().getUnit());
 }
 
 Quantity Angular::operator/(const Quantity& peer) const {
     Distance newRadius = (getRadius() / peer.getMagnitude());
-    return Quantity(newRadius.getLength().getMagnitude(),
+    return Quantity(newRadius.getMagnitude(),
         newRadius.getScaling(), getRadius().getUnit());
 }
 
 Quantity Angular::operator%(const Quantity& peer) const {
     Distance newRadius = (getRadius() % peer.getMagnitude());
-    return Quantity(newRadius.getLength().getMagnitude(),
+    return Quantity(newRadius.getMagnitude(),
         newRadius.getScaling(), getRadius().getUnit());
 }
 
@@ -260,18 +260,18 @@ Quantity Angular::operator()(const Angular& peerX, const Angular& peerY,
 }
 
 Distance Angular::getRadius() const {
-    return this->getLength();
+    return this->getMagnitude();
 }
 
 void Angular::setRadius(const Distance& distance) {
-    this->setLength(distance.getLength());
+    this->setMagnitude(distance.getMagnitude());
 }
 
 Quantity Angular::getRelative(const Distance& location, const float angle) const {
     Angular self = *this; Distance radius = self.getRadius();
     Distance distance = (radius / (radius + location)); distance.adjustNumeric();
-    Distance coefficient = (distance.getComponent(angle) * distance.getComponent(angle));
-    Quantity result((coefficient.getLength().getMagnitude()), getScaling(), getUnit());
+    Quantity coefficient = (distance.getComponent(angle) * distance.getComponent(angle));
+    Quantity result((coefficient.getMagnitude()), getScaling(), getUnit());
     result.adjustScaling();
     return result;
 }

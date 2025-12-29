@@ -25,53 +25,153 @@ namespace qft {
 const std::string Acceleration::UNIT = "m/s^2";     // System International
 
 Acceleration::Acceleration()
-        : unit(UNIT), velocity(), change() {
+        : qft::Velocity(), changeSpeed(shp::Quantity::DEFAULT_VALUE),
+        changeAngle(shp::Quantity::DEFAULT_VALUE), unit(UNIT) {
 
 }
 
-Acceleration::Acceleration(std::string name)
-        : unit(UNIT), velocity(name), change() {
-
-}
-
-Acceleration::Acceleration(const float change)
-        : unit(UNIT), velocity(), change(change) {
-
-}
-
-Acceleration::Acceleration(const float velocity, const float change)
-        : unit(UNIT), velocity(velocity), change(change) {
-
-}
-
-Acceleration::Acceleration(const qft::Velocity& velocity, const shp::Change& change)
-        : unit(UNIT), velocity(velocity), change(change) {
+Acceleration::Acceleration(const Velocity& velocity)
+        : qft::Velocity(velocity), changeSpeed(shp::Quantity::DEFAULT_VALUE),
+        changeAngle(shp::Quantity::DEFAULT_VALUE), unit(UNIT) {
 
 }
 
 Acceleration::Acceleration(const shp::Unit& unit)
-        : unit(unit), velocity(), change() {
+        : qft::Velocity(), changeSpeed(shp::Quantity::DEFAULT_VALUE),
+        changeAngle(shp::Quantity::DEFAULT_VALUE), unit(unit) {
+
+}
+
+Acceleration::Acceleration(const float changeAngle)
+        : qft::Velocity(), changeSpeed(shp::Quantity::DEFAULT_VALUE),
+        changeAngle(changeAngle), unit(UNIT) {
+
+}
+
+Acceleration::Acceleration(const float changeAngle, const std::string unit)
+        : qft::Velocity(), changeSpeed(shp::Quantity::DEFAULT_VALUE),
+        changeAngle(changeAngle), unit(unit) {
+
+}
+
+Acceleration::Acceleration(const float changeAngle, const shp::Unit& unit)
+        : qft::Velocity(), changeSpeed(shp::Quantity::DEFAULT_VALUE),
+        changeAngle(changeAngle), unit(unit) {
+
+}
+
+Acceleration::Acceleration(const float changeAngle, const float changeSpeed)
+        : qft::Velocity(), changeSpeed(changeSpeed),
+        changeAngle(changeAngle), unit(UNIT) {
+
+}
+
+Acceleration::Acceleration(const float changeAngle, const float changeSpeed,
+        const std::string unit)
+        : qft::Velocity(), changeSpeed(changeSpeed),
+        changeAngle(changeAngle), unit(unit) {
+
+}
+
+Acceleration::Acceleration(const float changeAngle, const float changeSpeed,
+        const shp::Unit& unit)
+        : qft::Velocity(), changeSpeed(changeSpeed),
+        changeAngle(changeAngle), unit(unit) {
+
+}
+
+Acceleration::Acceleration(const float changeAngle, const float changeSpeed,
+        const Velocity& velocity)
+        : qft::Velocity(velocity), changeSpeed(changeSpeed),
+        changeAngle(changeAngle), unit(UNIT) {
+
+}
+
+Acceleration::Acceleration(const float changeAngle, const float changeSpeed,
+        const Velocity& velocity, const std::string unit)
+        : qft::Velocity(velocity), changeSpeed(changeSpeed),
+        changeAngle(changeAngle), unit(unit) {
+
+}
+
+Acceleration::Acceleration(const float changeAngle, const float changeSpeed,
+        const Velocity& velocity, const shp::Unit& unit)
+        : qft::Velocity(velocity), changeSpeed(changeSpeed),
+        changeAngle(changeAngle), unit(unit) {
+
+}
+
+Acceleration::Acceleration(std::string name)
+        : qft::Velocity(name), changeSpeed(shp::Quantity::DEFAULT_VALUE),
+        changeAngle(shp::Quantity::DEFAULT_VALUE), unit(UNIT) {
 
 }
 
 Acceleration::Acceleration(std::string name, const shp::Unit& unit)
-        : unit(unit), velocity(name), change() {
+        : qft::Velocity(name), changeSpeed(shp::Quantity::DEFAULT_VALUE),
+        changeAngle(shp::Quantity::DEFAULT_VALUE), unit(unit) {
 
 }
 
-Acceleration::Acceleration(std::string name, const float change)
-        : unit(UNIT), velocity(name), change(change) {
+Acceleration::Acceleration(std::string name, const float changeAngle)
+        : qft::Velocity(name), changeSpeed(shp::Quantity::DEFAULT_VALUE),
+        changeAngle(changeAngle), unit(UNIT) {
 
 }
 
-Acceleration::Acceleration(std::string name, const float velocity, const float change)
-        : unit(UNIT), velocity(name, velocity), change(change) {
+Acceleration::Acceleration(std::string name, const float changeAngle,
+        const std::string unit)
+        : qft::Velocity(name), changeSpeed(shp::Quantity::DEFAULT_VALUE),
+        changeAngle(changeAngle), unit(unit) {
 
 }
 
-Acceleration::Acceleration(const qft::Velocity& velocity, const shp::Change& change,
+Acceleration::Acceleration(std::string name, const float changeAngle,
         const shp::Unit& unit)
-        : unit(unit), velocity(velocity), change(change) {
+        : qft::Velocity(name), changeSpeed(shp::Quantity::DEFAULT_VALUE),
+        changeAngle(changeAngle), unit(unit) {
+
+}
+
+Acceleration::Acceleration(std::string name, const float changeAngle,
+        const float changeSpeed)
+        : qft::Velocity(name), changeSpeed(changeSpeed),
+        changeAngle(changeAngle), unit(UNIT) {
+
+}
+
+Acceleration::Acceleration(std::string name, const float changeAngle,
+        const float changeSpeed, const std::string unit)
+        : qft::Velocity(name), changeSpeed(changeSpeed),
+        changeAngle(changeAngle), unit(unit) {
+
+}
+
+Acceleration::Acceleration(std::string name, const float changeAngle,
+        const float changeSpeed, const shp::Unit& unit)
+        : qft::Velocity(name), changeSpeed(changeSpeed),
+        changeAngle(changeAngle), unit(unit) {
+
+}
+
+Acceleration::Acceleration(std::string name, const float changeAngle,
+        const float changeSpeed, const qft::Velocity& velocity)
+        : qft::Velocity(velocity), changeSpeed(changeSpeed),
+        changeAngle(changeAngle), unit(UNIT) {
+
+}
+
+Acceleration::Acceleration(std::string name, const float changeAngle,
+        const float changeSpeed, const qft::Velocity& velocity, const std::string unit)
+        : qft::Velocity(velocity), changeSpeed(changeSpeed),
+        changeAngle(changeAngle), unit(unit) {
+
+}
+
+Acceleration::Acceleration(std::string name, const float changeAngle,
+        const float changeSpeed, const qft::Velocity& velocity, const shp::Unit& unit)
+        : qft::Velocity(velocity), changeSpeed(changeSpeed),
+        changeAngle(changeAngle), unit(unit) {
 
 }
 
@@ -80,59 +180,90 @@ Acceleration::~Acceleration() {
 }
 
 bool Acceleration::operator==(const Acceleration& peer) const {
-    return (velocity == peer.velocity) && (change == peer.change);
+    return (static_cast<const Velocity&>(*this) == static_cast<const Velocity&>(peer))
+        && (changeSpeed == peer.changeSpeed) && (changeAngle == peer.changeAngle)
+        && (unit == peer.unit);
 }
 
 Acceleration Acceleration::operator+(const Acceleration& peer) const {
-    return Acceleration((velocity + peer.velocity), (change + peer.change));
+    Velocity self = *this, other = peer;
+    Velocity velocity = (self + other);
+    return Acceleration((changeAngle + peer.changeAngle),
+        (changeSpeed + peer.changeSpeed), velocity, unit);
 }
 
 Acceleration Acceleration::operator-(const Acceleration& peer) const {
-    return Acceleration((velocity - peer.velocity), (change - peer.change));
+    Velocity self = *this, other = peer;
+    Velocity velocity = (self - other);
+    return Acceleration((changeAngle - peer.changeAngle),
+        (changeSpeed - peer.changeSpeed), velocity, unit);
 }
 
 Acceleration Acceleration::operator*(const Acceleration& peer) const {
-    return Acceleration((velocity * peer.velocity), (change * peer.change));
+    Velocity self = *this, other = peer;
+    Velocity velocity = (self * other);
+    return Acceleration((changeAngle * peer.changeAngle),
+        (changeSpeed * peer.changeSpeed), velocity, unit);
 }
 
 Acceleration Acceleration::operator/(const Acceleration& peer) const {
-    return Acceleration((velocity / peer.velocity), (change / peer.change));
+    Velocity self = *this, other = peer;
+    Velocity velocity = (self / other);
+    return Acceleration((changeAngle / peer.changeAngle),
+        (changeSpeed / peer.changeSpeed), velocity, unit);
+}
+
+void Acceleration::applyChangeTogether() {
+    this->applyChangeDirection();
+	this->applyChangeMagnitude();
+}
+
+void Acceleration::applyChangeDirection() {
+    Velocity::changeDirection(changeAngle);
+}
+
+void Acceleration::applyChangeMagnitude() {
+    Velocity::changeSpeed(changeSpeed);
 }
 
 shp::Quantity Acceleration::getTotal() const {
-    float acceleration = (velocity.getTotal().getMagnitude() * cos(change.toRadians()));
-    shp::Quantity result(acceleration, velocity.getDisplacement().getScaling(), getUnit());
+	qft::Velocity invariant = *this;;	// non-accelerating component only
+    shp::Quantity velocity = (invariant.getTotal() + shp::Quantity(changeSpeed,
+			getDisplacement().getScaling(), getUnit()));
+    shp::Direction change = (invariant.getDirection() + shp::Direction(changeAngle));
+    float acceleration = (velocity.getMagnitude() * cos(change.toRadians()));
+    shp::Quantity result(acceleration, getDisplacement().getScaling(), getUnit());
     return result;
 }
 
-void Acceleration::adjustScaling() {
-    velocity.adjustScaling();
-}
-
-Acceleration Acceleration::copy() {
-    Acceleration fresh(velocity, change, unit);
+Velocity Acceleration::copy() {
+    Velocity self = *this;
+    Acceleration fresh(changeAngle, changeSpeed, self, unit);
     return fresh;
 }
 
 void Acceleration::clear() {
+    Velocity::clear();
+    changeAngle = shp::Quantity::DEFAULT_VALUE;
+    changeSpeed = shp::Quantity::DEFAULT_VALUE;
     unit.clear();
-    velocity.clear();
-    change.clear();
     return;
 }
 
 std::string Acceleration::print() {
     std::stringstream result;
     result << "a";
-    result << velocity.print() << ",Δ";
-	result << change.print();
+    result << Velocity::print() << ",Δ{";
+	result << changeSpeed  << ",⌒";
+    result << shp::Direction(changeAngle).print() << "}";
     result << unit.print();
 	return result.str();
 }
 
 shp::Quantity Acceleration::getComponent(float phase) const {
 	shp::Quantity acceleration = getTotal();
-	return shp::Quantity((acceleration.getMagnitude() * cos(phase)), acceleration.getScaling(), acceleration.getUnit());
+	return shp::Quantity((acceleration.getMagnitude() * cos(phase)),
+        acceleration.getScaling(), acceleration.getUnit());
 }
 
 } // namespace qft

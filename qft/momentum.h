@@ -22,8 +22,8 @@
 #define QFT_MOMENTUM_H
 
 #include <vector>
-#include "../qft/mass.h"
-#include "../qft/velocity.h"
+#include "mass.h"
+#include "acceleration.h"
 
 namespace qft {
 
@@ -32,7 +32,7 @@ class Field;
 class Momentum {
     std::string name;
     qft::Mass mass;
-    qft::Velocity velocity;
+    qft::Acceleration velocity;
 public:
     // Constructors
     Momentum();
@@ -40,9 +40,9 @@ public:
     Momentum(const qft::Mass& mass);
     Momentum(std::string name, const qft::Mass& mass);
     Momentum(const float mass, const float velocity);
-    Momentum(const qft::Mass& mass, const qft::Velocity& velocity);
+    Momentum(const qft::Mass& mass, const qft::Acceleration& velocity);
     Momentum(std::string name, const float mass, const float velocity);
-    Momentum(std::string name, const qft::Mass& mass, const qft::Velocity& velocity);
+    Momentum(std::string name, const qft::Mass& mass, const qft::Acceleration& velocity);
 
     // Destructors
     ~Momentum();
@@ -61,11 +61,15 @@ public:
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
-    void setMass(const qft::Mass& value) { this->mass = value; }
-    void setVelocity(const qft::Velocity& value) { this->velocity = value; }
+    void setMass(const qft::Mass& object) { this->mass = object; }
+    void setVelocity(const qft::Acceleration& object) { this->velocity = object; }
 
     // Additional methods
-    shp::Quantity getTotal() const;
+    qft::Acceleration getAcceleration() const;
+    void changeFlowSpeed(const float motion);
+    void changeDirection(const float degree);
+    shp::Quantity getLinearTotal() const;
+    shp::Quantity getAngularTotal() const;
     std::shared_ptr<Field> getGravityField() const;
     virtual Momentum copy();
     virtual void clear();

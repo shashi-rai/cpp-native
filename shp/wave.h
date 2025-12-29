@@ -27,8 +27,6 @@
 namespace shp {
 
 class Wave : public Curvature {
-    long frequency;
-    float wavelength;
     CurvatureArray wavelets;
 public:
     // Constructors
@@ -38,12 +36,9 @@ public:
     Wave(std::string name);
     Wave(std::string name, const float polarization);
     Wave(std::string name, const float polarization, const float azimuthal);
-    Wave(std::string name, const long frequency, const float wavelength);
-    Wave(std::string name, const long frequency, const float wavelength, const float polarization);
-    Wave(std::string name, const long frequency, const float wavelength, const float polarization, const float azimuthal);
-    Wave(std::string name, const long frequency, const float wavelength, const CurvatureArray& wavelets);
-    Wave(std::string name, const long frequency, const float wavelength, const CurvatureArray& wavelets, const float polarization);
-    Wave(std::string name, const long frequency, const float wavelength, const CurvatureArray& wavelets, const float polarization, const float azimuthal);
+    Wave(std::string name, const CurvatureArray& wavelets);
+    Wave(std::string name, const CurvatureArray& wavelets, const float polarization);
+    Wave(std::string name, const CurvatureArray& wavelets, const float polarization, const float azimuthal);
 
     // Destructors
     ~Wave();
@@ -58,13 +53,9 @@ public:
     const Curvature operator()(int index) const { return wavelets[index]; }
 
     // Getters
-    long getFrequency() const { return frequency; }
-    float getWavelength() const { return wavelength; }
     CurvatureArray getWavelets() const { return wavelets; }
 
     // Setters
-    void setFrequency(const long value) { this->frequency = value; }
-    void setWavelength(const float value) { this->wavelength = value; }
     void setWavelets(const CurvatureArray& curves) { this->wavelets = curves; }
 
     // Additional methods

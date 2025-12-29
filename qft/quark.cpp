@@ -19,7 +19,6 @@
 // THE SOFTWARE.
 
 #include "quark.h"
-#include "energy.h"
 
 namespace qft {
 
@@ -132,10 +131,6 @@ Quark Quark::operator%(const Quark& peer) const {
     return Quark("%",
         (this->getSpin() % peer.getSpin()),
         (this->getEnergy() % peer.getEnergy()));
-}
-
-shp::Quantity Quark::getWavelength() const {
-    return this->getEnergy().getWavelength().getLength();
 }
 
 const Mass Quark::getMassLow(short int number) {

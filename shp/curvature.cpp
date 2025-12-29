@@ -23,49 +23,54 @@
 namespace shp {
 
 Curvature::Curvature()
-        : Point(), deforms(), polarization(Quantity::DEFAULT_VALUE) {
+        : Point(), deformations(), polarization(Quantity::DEFAULT_VALUE) {
 
 }
 
 Curvature::Curvature(const float polarization)
-        : Point(), deforms(), polarization(polarization) {
+        : Point(), deformations(), polarization(polarization) {
 
 }
 
 Curvature::Curvature(const float polarization, const float azimuthal)
-        : Point(azimuthal), deforms(), polarization(polarization) {
+        : Point(azimuthal), deformations(), polarization(polarization) {
+
+}
+
+Curvature::Curvature(const PhaseArray& deformations)
+        : Point(), deformations(deformations), polarization(Quantity::DEFAULT_VALUE) {
 
 }
 
 Curvature::Curvature(std::string name)
-        : Point(name), deforms(), polarization(Quantity::DEFAULT_VALUE) {
+        : Point(name), deformations(), polarization(Quantity::DEFAULT_VALUE) {
 
 }
 
 Curvature::Curvature(std::string name, const float polarization)
-        : Point(name), deforms(), polarization(polarization) {
+        : Point(name), deformations(), polarization(polarization) {
 
 }
 
 Curvature::Curvature(std::string name, const float polarization, const float azimuthal)
-        : Point(name, azimuthal), deforms(), polarization(polarization) {
+        : Point(name, azimuthal), deformations(), polarization(polarization) {
 
 }
 
-Curvature::Curvature(std::string name, const PhaseArray& deforms)
-        : Point(name), deforms(deforms), polarization(Quantity::DEFAULT_VALUE) {
+Curvature::Curvature(std::string name, const PhaseArray& deformations)
+        : Point(name), deformations(deformations), polarization(Quantity::DEFAULT_VALUE) {
 
 }
 
-Curvature::Curvature(std::string name, const PhaseArray& deforms,
+Curvature::Curvature(std::string name, const PhaseArray& deformations,
         const float polarization)
-        : Point(name), deforms(deforms), polarization(polarization) {
+        : Point(name), deformations(deformations), polarization(polarization) {
 
 }
 
-Curvature::Curvature(std::string name, const PhaseArray& deforms,
+Curvature::Curvature(std::string name, const PhaseArray& deformations,
         const float polarization, const float azimuthal)
-        : Point(name, azimuthal), deforms(deforms), polarization(polarization) {
+        : Point(name, azimuthal), deformations(deformations), polarization(polarization) {
 
 }
 
@@ -75,13 +80,13 @@ Curvature::~Curvature() {
 
 bool Curvature::operator==(const Curvature& peer) const {
     return (static_cast<const Point&>(*this) == static_cast<const Point&>(peer))
-        && (deforms == peer.deforms) && (polarization == peer.polarization);
+        && (deformations == peer.deformations) && (polarization == peer.polarization);
 }
 
 Curvature Curvature::operator+(const Curvature& peer) const {
     Curvature self = *this, other = peer;
-    PhaseArray phases(deforms);
-    phases.insert(phases.end(), peer.deforms.begin(), peer.deforms.end());
+    PhaseArray phases(deformations);
+    phases.insert(phases.end(), peer.deformations.begin(), peer.deformations.end());
     std::complex<float>
         ap1 = self.toAzimuthalComplex(self.getGradient()),
         ap2 = other.toAzimuthalComplex(peer.getGradient());
@@ -97,8 +102,8 @@ Curvature Curvature::operator+(const Curvature& peer) const {
 
 Curvature Curvature::operator-(const Curvature& peer) const {
     Curvature self = *this, other = peer;
-    PhaseArray phases(deforms);
-    for (PhaseArray::const_iterator it = peer.deforms.begin(); it != peer.deforms.end(); ++it) {
+    PhaseArray phases(deformations);
+    for (PhaseArray::const_iterator it = peer.deformations.begin(); it != peer.deformations.end(); ++it) {
         PhaseArray::iterator found = std::find(phases.begin(), phases.end(), *it);
         if (found != phases.end()) {
             phases.erase(found);
@@ -118,7 +123,7 @@ Curvature Curvature::operator-(const Curvature& peer) const {
 }
 
 int Curvature::getChangeCount() const {
-    return deforms.size();
+    return deformations.size();
 }
 
 Phase Curvature::get(int index) const {
@@ -126,27 +131,31 @@ Phase Curvature::get(int index) const {
     if (index < 0) {
         return result;
     }
-    if (index >= static_cast<int>(deforms.size())) {
+    if (index >= static_cast<int>(deformations.size())) {
         return result;
     }
-    return deforms[index];
+    return deformations[index];
 }
 
 void Curvature::set(int index, const Phase& object) {
     if (index < 0) {
         return;
     }
-    if (index < static_cast<int>(deforms.size())) {
+    if (index < static_cast<int>(deformations.size())) {
         // replace existing element
-        deforms[index] = object;
-    } else if (index == static_cast<int>(deforms.size())) {
+        deformations[index] = object;
+    } else if (index == static_cast<int>(deformations.size())) {
         // append at end
-        deforms.push_back(object);
+        deformations.push_back(object);
     } else {
         // index beyond current size: append at end
-        deforms.push_back(object);
+        deformations.push_back(object);
     }
     return;
+}
+
+void Curvature::setPolarization(const Direction& orientation) {
+    polarization = orientation.toRadians();
 }
 
 Angular Curvature::getOrientation() const {
@@ -157,14 +166,14 @@ Angular Curvature::getOrientation() const {
 }
 
 Point Curvature::copy() {
-    Curvature fresh(getName(), deforms, polarization, getGradient());
+    Curvature fresh(getName(), deformations, polarization, getGradient());
     return fresh;
 }
 
 void Curvature::clear() {
     Point::clear();
     polarization = Quantity::DEFAULT_VALUE;
-    deforms.clear();
+    deformations.clear();
     return;
 }
 
@@ -173,16 +182,21 @@ std::string Curvature::print() {
     result << "[κ:";
 	result << Point::print() << ",𝜃:";
     result << polarization << ",sz:";
-	result << deforms.size() << "]";
+	result << deformations.size() << "]";
 	return result.str();
 }
 
-float Curvature::getAmplitudePolarization(float change) const {
-    return getAmplitude() * cos(polarization + change);
+Quantity Curvature::getAmplitudePolarization(float change) const {
+    Quantity amplitude = getAmplitude();
+    return Quantity((amplitude.getMagnitude() * cos(polarization + change)),
+        amplitude.getScaling(), amplitude.getUnit());
 }
 
 std::complex<float> Curvature::toPolarizationComplex(float change) {
-    return std::complex<float>(getAmplitude() * std::cos(change), getAmplitude() * std::sin(change));
+    Quantity amplitude = getAmplitude();
+    return std::complex<float>(
+        amplitude.getMagnitude() * std::cos(change),
+        amplitude.getMagnitude() * std::sin(change));
 }
 
 } // namespace shp

@@ -189,6 +189,14 @@ shp::Quantity Particle::getTotal() const {
     return energy.getTotal();
 }
 
+shp::Quantity Particle::getFrequency() const {
+    return energy.getWavelength().getInverse();
+}
+
+shp::Quantity Particle::getWavelength() const {
+    return energy.getWavelength().getMagnitude();
+}
+
 bool Particle::isStructured() const {
     return physical != nullptr;
 }

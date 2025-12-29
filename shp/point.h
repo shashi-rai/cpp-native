@@ -31,16 +31,33 @@
 namespace shp {
 
 class Point : public Shape {
-    float amplitude;
+    Quantity amplitude;
     float gradient;
 public:
     // Constructors
     Point();
+    Point(const Unit& unit);
     Point(const float gradient);
     Point(const float amplitude, const float gradient);
+    Point(const float amplitude, const std::string unit);
+    Point(const float amplitude, const std::string unit, const float gradient);
+    Point(const float amplitude, const Unit& unit);
+    Point(const float amplitude, const Unit& unit, const float gradient);
+    Point(const float amplitude, const short int scaling, const std::string unit);
+    Point(const float amplitude, const short int scaling, const std::string unit, const float gradient);
+    Point(const float amplitude, const short int scaling, const Unit& unit);
+    Point(const float amplitude, const short int scaling, const Unit& unit, const float gradient);
     Point(std::string name);
     Point(std::string name, const float gradient);
     Point(std::string name, const float amplitude, const float gradient);
+    Point(std::string name, const float amplitude, const std::string unit);
+    Point(std::string name, const float amplitude, const std::string unit, const float gradient);
+    Point(std::string name, const float amplitude, const Unit& unit);
+    Point(std::string name, const float amplitude, const Unit& unit, const float gradient);
+    Point(std::string name, const float amplitude, const short int scaling, const std::string unit);
+    Point(std::string name, const float amplitude, const short int scaling, const std::string unit, const float gradient);
+    Point(std::string name, const float amplitude, const short int scaling, const Unit& unit);
+    Point(std::string name, const float amplitude, const short int scaling, const Unit& unit, const float gradient);
 
     // Destructors
     ~Point();
@@ -51,19 +68,24 @@ public:
     Point operator-(const Point& peer) const;
 
     // Getters
-    float getAmplitude() const { return amplitude; }
+    Quantity getAmplitude() const { return amplitude; }
     float getGradient() const { return gradient; }
 
     // Setters
-    void setAmplitude(const float value) { this->amplitude = value; }
+    void setAmplitude(const Quantity& object) { amplitude = object; }
     void setGradient(const float value) { this->gradient = value; }
 
     // Additional methods
+    void setAmplitude(const float magnitude);
+    void setAmplitude(const float magnitude, const short int scaling);
+    void setAmplitude(const float magnitude, const short int scaling, const std::string unit);
+    void setAmplitude(const float magnitude, const short int scaling, const Unit& unit);
+    void setAzimuthal(const Direction& orientation);
     virtual Angular getOrientation() const;
     virtual Point copy();
     virtual void clear();
     virtual std::string print();
-    float getAmplitudeAzimuthal(float change) const;
+    Quantity getAmplitudeAzimuthal(float change) const;
 protected:
     std::complex<float> toAzimuthalComplex(float change);
 };

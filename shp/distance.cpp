@@ -25,51 +25,47 @@ namespace shp {
 const std::string Distance::UNIT = "m";     // System International
 
 Distance::Distance()
-    : length(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
+    : Quantity(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
 Distance::Distance(const std::string unit)
-    : length(unit) {
+    : Quantity(unit) {
 
 }
 
 Distance::Distance(const Unit& unit)
-    : length(unit) {
+    : Quantity(unit) {
 
 }
 
 Distance::Distance(const float length)
-    : length(length, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
+    : Quantity(length, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
 Distance::Distance(const float length, const std::string unit)
-    : length(length, unit) {
+    : Quantity(length, unit) {
 
 }
 
 Distance::Distance(const float length, const Unit& unit)
-    : length(length, unit) {
+    : Quantity(length, unit) {
 
 }
 
 Distance::Distance(const float length, const short int scaling)
-    : length(length, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
+    : Quantity(length, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
 Distance::Distance(const float length, const short int scaling, const std::string unit)
-    : length(length, scaling, unit) {
+    : Quantity(length, scaling, unit) {
 
 }
 
 Distance::Distance(const float length, const short int scaling, const Unit& unit)
-    : length(length, scaling, unit) {
-
-}
-
-Distance::Distance(const Quantity& length) : length(length) {
+    : Quantity(length, scaling, unit) {
 
 }
 
@@ -78,67 +74,56 @@ Distance::~Distance() {
 }
 
 bool Distance::operator==(const Distance& peer) const {
-    return (length == peer.length);
+    return (static_cast<const Quantity&>(*this) == static_cast<const Quantity&>(peer));
 }
 
 Distance Distance::operator+(const Distance& peer) const {
-    Quantity distance = (length + peer.length);
+    Quantity self = *this, other = peer;
+    Quantity distance = (self + other);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit());
 }
 
 Distance Distance::operator-(const Distance& peer) const {
-    Quantity distance = (length - peer.length);
+    Quantity self = *this, other = peer;
+    Quantity distance = (self - other);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit());
 }
 
 Distance Distance::operator*(const Distance& peer) const {
-    Quantity distance = (length * peer.length);
+    Quantity self = *this, other = peer;
+    Quantity distance = (self * other);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit());
 }
 
 Distance Distance::operator/(const Distance& peer) const {
-    Quantity distance = (length / peer.length);
+    Quantity self = *this, other = peer;
+    Quantity distance = (self / other);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit());
 }
 
 Distance Distance::operator%(const Distance& peer) const {
-    Quantity distance = (length % peer.length);
+    Quantity self = *this, other = peer;
+    Quantity distance = (self % other);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit());
 }
 
 Quantity Distance::getTotal() const {
-    return Quantity(length.getMagnitude(), length.getScaling(), length.getUnit());
-}
-
-short int Distance::getScaling() const {
-    return length.getScaling();
-}
-
-std::string Distance::getUnit() const {
-    return length.getUnit().getName();
-}
-
-void Distance::adjustNumeric() {
-    length.adjustNumeric();
-}
-
-void Distance::adjustScaling() {
-    length.adjustScaling();
+    return Quantity(getMagnitude(), getScaling(), getUnit());
 }
 
 Distance Distance::copy() {
-    Distance fresh(length.getMagnitude(), length.getScaling(), length.getUnit());
+    Distance fresh(getMagnitude(), getScaling(), getUnit());
     return fresh;
 }
 
 void Distance::clear() {
-    length.clear();
+    Quantity::clear();
     return;
 }
 
 std::string Distance::print() {
     std::stringstream result;
-    result << length.print();
+    result << Quantity::print();
 	return result.str();
 }
 

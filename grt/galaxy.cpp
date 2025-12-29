@@ -99,7 +99,7 @@ void Galaxy::set(int index, const Star& object) {
 
 const shp::Distance Galaxy::getMilkywayRadius() {
     shp::Distance lightyear = Celestial::getLightYear();
-    float radius = (Galaxy::MILKYWAY_RADIUS * lightyear.getLength().getMagnitude());
+    float radius = (Galaxy::MILKYWAY_RADIUS * lightyear.getMagnitude());
     short int scaling = lightyear.getScaling();
     return shp::Distance(radius, scaling);
 }

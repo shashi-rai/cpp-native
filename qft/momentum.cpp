@@ -51,7 +51,7 @@ Momentum::Momentum(const float mass, const float velocity)
 
 }
 
-Momentum::Momentum(const qft::Mass& mass, const qft::Velocity& velocity)
+Momentum::Momentum(const qft::Mass& mass, const qft::Acceleration& velocity)
         : name(), mass(mass), velocity(velocity) {
 
 }
@@ -61,7 +61,7 @@ Momentum::Momentum(std::string name, const float mass, const float velocity)
 
 }
 
-Momentum::Momentum(std::string name, const qft::Mass& mass, const qft::Velocity& velocity)
+Momentum::Momentum(std::string name, const qft::Mass& mass, const qft::Acceleration& velocity)
         : name(name), mass(mass), velocity(velocity) {
 
 }
@@ -90,7 +90,29 @@ Momentum Momentum::operator/(const Momentum& peer) const {
     return Momentum("/", (mass / peer.mass), (velocity / peer.velocity));
 }
 
-shp::Quantity Momentum::getTotal() const {
+Acceleration Momentum::getAcceleration() const {
+    return velocity;
+}
+
+void Momentum::changeFlowSpeed(const float motion) {
+    velocity.setChangeMagnitude(motion);
+    velocity.applyChangeMagnitude();
+}
+
+void Momentum::changeDirection(const float degree) {
+    velocity.setChangeDirection(degree);
+    velocity.applyChangeDirection();
+}
+
+shp::Quantity Momentum::getLinearTotal() const {
+    qft::Velocity invariant = velocity;     // non-accelerating component only
+    float momentum = mass.getMagnitude() * invariant.getTotal().getMagnitude();
+    short int scaling = mass.getScaling() + invariant.getTotal().getScaling();
+    shp::Quantity result(momentum, scaling, UNIT);
+    return result;
+}
+
+shp::Quantity Momentum::getAngularTotal() const {   // directional acceleration
     float momentum = mass.getMagnitude() * velocity.getTotal().getMagnitude();
     short int scaling = mass.getScaling() + velocity.getTotal().getScaling();
     shp::Quantity result(momentum, scaling, UNIT);
@@ -127,8 +149,9 @@ std::string Momentum::print() {
 }
 
 shp::Quantity Momentum::getComponent(float phase) const {
-	shp::Quantity momentum = getTotal();
-	return shp::Quantity((momentum.getMagnitude() * cos(phase)), momentum.getScaling(), momentum.getUnit());
+	shp::Quantity momentum = getLinearTotal();
+	return shp::Quantity((momentum.getMagnitude() * cos(phase)),
+        momentum.getScaling(), momentum.getUnit());
 }
 
 } // namespace qft

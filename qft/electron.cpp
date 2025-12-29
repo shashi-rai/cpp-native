@@ -225,7 +225,7 @@ void Electron::clear() {
 
 std::string Electron::print() {
     std::stringstream result;
-    result << "e";
+    result << "e⁻";
 	result << Particle::print();
 	result << ",p:";
 	result << principal << ",a:";

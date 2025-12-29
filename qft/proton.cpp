@@ -136,10 +136,6 @@ Neutron Proton::operator+(const Electron& peer) const {
         (this->getEnergy() + peer.getEnergy()));
 }
 
-shp::Quantity Proton::getWavelength() const {
-    return this->getEnergy().getWavelength().getLength();
-}
-
 shp::Point Proton::copy() {
     Proton fresh(this->getName(), this->getEnergy());
 	fresh.setAmplitude(this->getAmplitude());
@@ -157,7 +153,7 @@ void Proton::clear() {
 
 std::string Proton::print() {
     std::stringstream result;
-    result << "γ:";
+    result << "p⁺:";
 	result << Particle::print() << std::endl << "\tu:";
     result << up[0].print() << std::endl << "\tu:";
     result << up[1].print() << std::endl << "\td:";

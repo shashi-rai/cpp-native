@@ -28,30 +28,30 @@ const short int Temperature::DEFAULT_SCALE = 0;                         // 10^0 
 const float Temperature::DEFAULT_VALUE = shp::Quantity::DEFAULT_VALUE;  // 0.0 K
 
 Temperature::Temperature()
-        : quantity(shp::Quantity::DEFAULT_VALUE, DEFAULT_SCALE,
+        : shp::Quantity(shp::Quantity::DEFAULT_VALUE, DEFAULT_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::TEMPERATURE)) {
 
 }
 
 Temperature::Temperature(const float quantity)
-        : quantity(quantity, DEFAULT_SCALE,
+        : shp::Quantity(quantity, DEFAULT_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::TEMPERATURE)) {
 
 }
 
 Temperature::Temperature(const float quantity, const short int scaling)
-        : quantity(quantity, scaling,
+        : shp::Quantity(quantity, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::TEMPERATURE)) {
 
 }
 
 Temperature::Temperature(const float quantity, const shp::Unit& unit)
-        : quantity(quantity, DEFAULT_SCALE, unit) {
+        : shp::Quantity(quantity, DEFAULT_SCALE, unit) {
 
 }
 
 Temperature::Temperature(const float quantity, const short int scaling, const shp::Unit& unit)
-        : quantity(quantity, scaling, unit) {
+        : shp::Quantity(quantity, scaling, unit) {
 
 }
 
@@ -60,41 +60,46 @@ Temperature::~Temperature() {
 }
 
 bool Temperature::operator==(const Temperature& peer) const {
-    return (quantity == peer.quantity);
+    return (static_cast<const shp::Quantity&>(*this) == static_cast<const shp::Quantity&>(peer));
 }
 
 Temperature Temperature::operator+(const Temperature& peer) const {
-    shp::Quantity temperature = (quantity + peer.quantity);
+    Quantity self = *this, other = peer;
+    Quantity temperature = (self + other);
     return Temperature(temperature.getMagnitude(), temperature.getScaling(), temperature.getUnit());
 }
 
 Temperature Temperature::operator-(const Temperature& peer) const {
-    shp::Quantity temperature = (quantity - peer.quantity);
+    Quantity self = *this, other = peer;
+    Quantity temperature = (self - other);
     return Temperature(temperature.getMagnitude(), temperature.getScaling(), temperature.getUnit());
 }
 
 Temperature Temperature::operator*(const Temperature& peer) const {
-    shp::Quantity temperature = (quantity * peer.quantity);
+    Quantity self = *this, other = peer;
+    Quantity temperature = (self * other);
     return Temperature(temperature.getMagnitude(), temperature.getScaling(), temperature.getUnit());
 }
 
 Temperature Temperature::operator/(const Temperature& peer) const {
-    shp::Quantity temperature = (quantity / peer.quantity);
+    Quantity self = *this, other = peer;
+    Quantity temperature = (self / other);
     return Temperature(temperature.getMagnitude(), temperature.getScaling(), temperature.getUnit());
 }
 
 Temperature Temperature::operator%(const Temperature& peer) const {
-    shp::Quantity temperature = (quantity % peer.quantity);
+    Quantity self = *this, other = peer;
+    Quantity temperature = (self % other);
     return Temperature(temperature.getMagnitude(), temperature.getScaling(), temperature.getUnit());
 }
 
 shp::Quantity Temperature::getTotal() const {
-    shp::Quantity result(quantity.getMagnitude(), quantity.getScaling(), getUnit());
+    shp::Quantity result(getMagnitude(), getScaling(), getUnit());
     return result;
 }
 
 void Temperature::fromCelsius(const float value) {
-    quantity.setMagnitude(value + BASE_VALUE);
+    setMagnitude(value + BASE_VALUE);
 }
 
 float Temperature::toCelsius() const {
@@ -103,7 +108,7 @@ float Temperature::toCelsius() const {
 
 void Temperature::fromFahrenheit(const float value) {
     float celsius = ((5.0f / 9.0f) * (value - 32));
-    quantity.setMagnitude((celsius + BASE_VALUE));
+    setMagnitude((celsius + BASE_VALUE));
 }
 
 float Temperature::toFahrenheit() const {
@@ -111,23 +116,23 @@ float Temperature::toFahrenheit() const {
 }
 
 float Temperature::toKelvin() const {
-    return quantity.getMagnitude();
+    return getMagnitude();
 }
 
 Temperature Temperature::copy() {
-    Temperature fresh(quantity.getMagnitude(), quantity.getScaling(), quantity.getUnit());
+    Temperature fresh(getMagnitude(), getScaling(), getUnit());
     return fresh;
 }
 
 void Temperature::clear() {
-    quantity.clear();
+    shp::Quantity::clear();
     return;
 }
 
 std::string Temperature::print() {
     std::stringstream result;
     result << shp::Unit::getBaseDimension(shp::Unit::TEMPERATURE) << ":";
-    result << quantity.print();
+    result << shp::Quantity::print();
 	return result.str();
 }
 

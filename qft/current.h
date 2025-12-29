@@ -22,8 +22,8 @@
 #define QFT_CURRENT_H
 
 #include <vector>
-#include "../qft/charge.h"
-#include "../qft/velocity.h"
+#include "charge.h"
+#include "acceleration.h"
 
 namespace qft {
 
@@ -32,7 +32,7 @@ class Field;
 class Current {
     std::string name;
     qft::Charge charge;
-    qft::Velocity velocity;
+    qft::Acceleration velocity;
 public:
     // Constructors
     Current();
@@ -40,9 +40,9 @@ public:
     Current(const qft::Charge& charge);
     Current(std::string name, const qft::Charge& charge);
     Current(const float charge, const float velocity);
-    Current(const qft::Charge& charge, const qft::Velocity& velocity);
+    Current(const qft::Charge& charge, const qft::Acceleration& velocity);
     Current(std::string name, const float charge, const float velocity);
-    Current(std::string name, const qft::Charge& charge, const qft::Velocity& velocity);
+    Current(std::string name, const qft::Charge& charge, const qft::Acceleration& velocity);
 
     // Destructors
     ~Current();
@@ -61,11 +61,17 @@ public:
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
-    void setCharge(const qft::Charge& value) { this->charge = value; }
-    void setVelocity(const qft::Velocity& value) { this->velocity = value; }
+    void setCharge(const qft::Charge& object) { this->charge = object; }
+    void setVelocity(const qft::Acceleration& object) { this->velocity = object; }
 
     // Additional methods
-    shp::Quantity getTotal() const;
+    qft::Acceleration getAcceleration() const;
+    shp::Quantity getElectrons() const;
+    void setElectrons(const int count);
+    void changeFlowSpeed(const float motion);
+    void changeDirection(const float degree);
+    shp::Quantity getLinearTotal() const;
+    shp::Quantity getAngularTotal() const;
     std::shared_ptr<Field> getElectricField() const;
     std::shared_ptr<Field> getMagneticField() const;
     virtual Current copy();
@@ -73,7 +79,11 @@ public:
     virtual std::string print();
     shp::Quantity getComponent(float phase) const;
 public:
+    static const shp::Quantity getAmpereCoulombs();
+    static const shp::Quantity getAmpereFlowRate();
+public:
     static const std::string UNIT;
+    static const std::string COULOMB_SECOND;
     static const std::string ELECTRIC_FIELD;
     static const std::string MAGNETIC_FIELD;
     static const float ELECTRON_FLOW_RATE;

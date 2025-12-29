@@ -28,8 +28,8 @@
 
 namespace shp {
 
-class Distance {
-    Quantity length;
+class Distance : public Quantity {
+
 public:
     // Constructors
     Distance();
@@ -41,7 +41,6 @@ public:
     Distance(const float length, const short int scaling);
     Distance(const float length, const short int scaling, const std::string unit);
     Distance(const float length, const short int scaling, const Unit& unit);
-    Distance(const Quantity& length);
 
     // Destructors
     ~Distance();
@@ -55,17 +54,11 @@ public:
     Distance operator%(const Distance& peer) const;
 
     // Getters
-    Quantity getLength() const { return length; }
 
     // Setters
-    void setLength(const Quantity& length) { this->length = length; }
 
     // Additional methods
     Quantity getTotal() const;
-    short int getScaling() const;
-    std::string getUnit() const;
-    void adjustNumeric();
-    void adjustScaling();
     virtual Distance copy();
     virtual void clear();
     virtual std::string print();

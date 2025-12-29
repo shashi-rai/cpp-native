@@ -64,11 +64,12 @@ public:
     void setTimestamp(const std::time_t value) { this->timestamp = value; }
 
     // Additional methods
+    void setPolarization(const Direction& orientation);
     virtual Angular getOrientation() const;
     virtual Point copy();
     virtual void clear();
     virtual std::string print();
-    float getAmplitudePolarization(float change) const;
+    Quantity getAmplitudePolarization(float change) const;
 protected:
     std::complex<float> toPolarizationComplex(float change);
 public:

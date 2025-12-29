@@ -40,9 +40,7 @@ Light::~Light() {
 }
 
 bool Light::operator==(const Light& peer) const {
-    return (getAmplitude() == peer.getAmplitude())
-        && (getFrequency() == peer.getFrequency())
-        && (getWavelength() == peer.getWavelength());
+    return (getAmplitude() == peer.getAmplitude());
 }
 
 shp::Point Light::copy() {
@@ -50,8 +48,6 @@ shp::Point Light::copy() {
     fresh.setAmplitude(this->getAmplitude());
 	fresh.setGradient(this->getGradient());
 	fresh.setPolarization(this->getPolarization());
-	fresh.setFrequency(this->getFrequency());
-	fresh.setWavelength(this->getWavelength());
     return fresh;
 }
 

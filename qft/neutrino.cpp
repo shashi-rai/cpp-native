@@ -102,10 +102,6 @@ Neutrino Neutrino::operator%(const Neutrino& peer) const {
         (this->getEnergy() % peer.getEnergy()));
 }
 
-shp::Quantity Neutrino::getWavelength() const {
-    return this->getEnergy().getWavelength().getLength();
-}
-
 shp::Point Neutrino::copy() {
     Neutrino fresh(this->getName(), this->getEnergy());
 	fresh.setAmplitude(this->getAmplitude());

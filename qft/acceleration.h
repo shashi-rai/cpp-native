@@ -24,27 +24,49 @@
 #include <string>
 #include <vector>
 #include "velocity.h"
-#include "../shp/change.h"
 
 namespace qft {
 
-class Acceleration {
+class Acceleration : public qft::Velocity {
     shp::Unit unit;
-    qft::Velocity velocity;
-    shp::Change change;
+    float changeAngle;
+    float changeSpeed;
 public:
     // Constructors
     Acceleration();
-    Acceleration(std::string name);
-    Acceleration(const float change);
-    Acceleration(const float velocity, const float change);
-    Acceleration(const qft::Velocity& velocity, const shp::Change& change);
+    Acceleration(const qft::Velocity& velocity);
     Acceleration(const shp::Unit& unit);
+    Acceleration(const float changeAngle);
+    Acceleration(const float changeAngle, const std::string unit);
+    Acceleration(const float changeAngle, const shp::Unit& unit);
+    Acceleration(const float changeAngle, const float changeSpeed);
+    Acceleration(const float changeAngle, const float changeSpeed,
+        const std::string unit);
+    Acceleration(const float changeAngle, const float changeSpeed,
+        const shp::Unit& unit);
+    Acceleration(const float changeAngle, const float changeSpeed,
+        const qft::Velocity& velocity);
+    Acceleration(const float changeAngle, const float changeSpeed,
+        const qft::Velocity& velocity, const std::string unit);
+    Acceleration(const float changeAngle, const float changeSpeed,
+        const qft::Velocity& velocity, const shp::Unit& unit);
+    Acceleration(std::string name);
     Acceleration(std::string name, const shp::Unit& unit);
-    Acceleration(std::string name, const float change);
-    Acceleration(std::string name, const float velocity, const float change);
-    Acceleration(const qft::Velocity& velocity, const shp::Change& change, const shp::Unit& unit);
-
+    Acceleration(std::string name, const float changeAngle);
+    Acceleration(std::string name, const float changeAngle, const std::string unit);
+    Acceleration(std::string name, const float changeAngle, const shp::Unit& unit);
+    Acceleration(std::string name, const float changeAngle, const float changeSpeed);
+    Acceleration(std::string name, const float changeAngle, const float changeSpeed,
+        const std::string unit);
+    Acceleration(std::string name, const float changeAngle, const float changeSpeed,
+        const shp::Unit& unit);
+    Acceleration(std::string name, const float changeAngle, const float changeSpeed,
+        const qft::Velocity& velocity);
+    Acceleration(std::string name, const float changeAngle, const float changeSpeed,
+        const qft::Velocity& velocity, const std::string unit);
+    Acceleration(std::string name, const float changeAngle, const float changeSpeed,
+        const qft::Velocity& velocity, const shp::Unit& unit);
+    
     // Destructors
     ~Acceleration();
 
@@ -56,21 +78,21 @@ public:
     Acceleration operator/(const Acceleration& peer) const;
 
     // Getters
-    std::string getName() const { return velocity.getName(); }
     shp::Unit getUnit() const { return unit; }
-    qft::Velocity getVelocity() const { return velocity; }
-    shp::Change getChange() const { return change; }
+    float getChangeDirection() const { return changeAngle; }
+    float getChangeMagnitude() const { return changeSpeed; }
 
     // Setters
-    void setName(const std::string& name) { this->velocity.setName(name); }
     void setUnit(const shp::Unit& value) { this->unit = value; }
-    void setVelocity(const qft::Velocity& quantity) { this->velocity = quantity; }
-    void setChange(const shp::Change& rate) { this->change = rate; }
+    void setChangeDirection(const float degree) { this->changeAngle = degree; }
+    void setChangeMagnitude(const float speed) { this->changeSpeed = speed; }
 
     // Additional methods
+    void applyChangeTogether();
+    void applyChangeDirection();
+    void applyChangeMagnitude();
     shp::Quantity getTotal() const;
-    void adjustScaling();
-    virtual Acceleration copy();
+    virtual Velocity copy();
     virtual void clear();
     virtual std::string print();
     shp::Quantity getComponent(float phase) const;
