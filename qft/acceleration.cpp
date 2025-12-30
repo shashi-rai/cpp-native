@@ -22,7 +22,7 @@
 
 namespace qft {
 
-const std::string Acceleration::UNIT = "m/s^2";     // System International
+const std::string Acceleration::UNIT = "m/s²";          // System International
 
 Acceleration::Acceleration()
         : qft::Velocity(), changeSpeed(shp::Quantity::DEFAULT_VALUE),

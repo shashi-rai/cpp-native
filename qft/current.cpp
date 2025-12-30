@@ -149,19 +149,27 @@ shp::Quantity Current::getAngularTotal() const {    // directional acceleration
     return result;
 }
 
+shp::Quantity Current::getRateOfChange() const {
+    shp::Quantity result = (getLinearTotal() - getAngularTotal());
+    result.adjustScaling();
+    return result;
+}
+
 std::shared_ptr<Field> Current::getElectricField() const {
     return charge.getOriginField();
 }
 
 std::shared_ptr<Field> Current::getMagneticField() const {
     std::shared_ptr<Field> field = Field::shareable(Current::MAGNETIC_FIELD);
-    shp::Quantity motion = getAngularTotal();
+    shp::Quantity motion = getRateOfChange();
     if (motion.checkNonZero()) {
-        field->setPotential(shp::Potential(charge.getMagnitude(),
-            shp::Quantity::DEFAULT_VALUE, charge.getScaling(), charge.getUnit()));
+        field->setPotential(shp::Potential(motion.getMagnitude(),
+            shp::Quantity::DEFAULT_VALUE, motion.getScaling(), charge.getUnit(),
+            shp::Angular(Energy::getPlanckLength())));
     } else {
         field->setPotential(shp::Potential(shp::Quantity::DEFAULT_VALUE,
-            shp::Quantity::DEFAULT_VALUE, charge.getScaling(), charge.getUnit()));
+            shp::Quantity::DEFAULT_VALUE, charge.getScaling(), charge.getUnit(),
+            shp::Angular(Energy::getPlanckLength())));
     }
     shp::Direction orientation = velocity.getDirection().getNormal();
     field->setLinear(orientation);

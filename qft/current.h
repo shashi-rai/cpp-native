@@ -75,6 +75,7 @@ public:
     void applyChangeDirection();
     shp::Quantity getLinearTotal() const;
     shp::Quantity getAngularTotal() const;
+    shp::Quantity getRateOfChange() const;
     std::shared_ptr<Field> getElectricField() const;
     std::shared_ptr<Field> getMagneticField() const;
     virtual Current copy();

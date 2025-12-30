@@ -169,7 +169,8 @@ Force Mass::getForce(const shp::Angular& coordinates) const {
 
 std::shared_ptr<Field> Mass::getOriginField() const {
     std::shared_ptr<Field> result = Field::shareable(Mass::GRAVITY_FIELD);
-    result->setPotential(shp::Potential(getMagnitude(), shp::Quantity::DEFAULT_VALUE, getScaling(), getUnit()));
+    result->setPotential(shp::Potential(getMagnitude(), shp::Quantity::DEFAULT_VALUE,
+        getScaling(), getUnit(), shp::Angular(Energy::getPlanckLength())));
     return result;
 }
 

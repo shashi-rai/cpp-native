@@ -73,6 +73,7 @@ public:
     void applyChangeDirection();
     shp::Quantity getLinearTotal() const;
     shp::Quantity getAngularTotal() const;
+    shp::Quantity getRateOfChange() const;
     std::shared_ptr<Field> getMatterField() const;
     std::shared_ptr<Field> getGravityField() const;
     virtual Momentum copy();

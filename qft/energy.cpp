@@ -24,6 +24,7 @@ namespace qft {
 
 const std::string Energy::UNIT = "J";               // System International
 const float Energy::PLANCK_CONSTANT = 6.62607015f;  // 6.62607015 x 10^-34 m^2 kg/s
+const float Energy::PLANCK_LENGTH = 1.61625518f;    // 1.616125518 x 10^-35 m
 const short int Energy::PLANCK_SCALE = -34;         // 10^-34 m^2 kg/s
 const float Energy::ELECTRON_VOLT = 1.602176634f;   // 1.602176634f J
 const short int Energy::EV_SCALE = -19;             // 10^-19 J
@@ -741,6 +742,16 @@ qft::Time Energy::getPerpetuity(const float modulation) const {
 
 const shp::Quantity Energy::getPhysicalLimit() {
     shp::Quantity result((PLANCK_CONSTANT / 2), PLANCK_SCALE, UNIT);
+    return result;
+}
+
+const shp::Quantity Energy::getPlanckConstant() {
+    shp::Quantity result(PLANCK_CONSTANT, PLANCK_SCALE, UNIT);
+    return result;
+}
+
+const shp::Distance Energy::getPlanckLength() {
+    shp::Distance result(PLANCK_LENGTH, (PLANCK_SCALE-1));
     return result;
 }
 

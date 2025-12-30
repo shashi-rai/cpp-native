@@ -168,7 +168,8 @@ Force Charge::getForce(const shp::Angular& coordinates) const {
 
 std::shared_ptr<Field> Charge::getOriginField() const {
     std::shared_ptr<Field> result = Field::shareable(Charge::ELECTRIC_FIELD);
-    result->setPotential(shp::Potential(getMagnitude(), shp::Quantity::DEFAULT_VALUE, getScaling(), getUnit()));
+    result->setPotential(shp::Potential(getMagnitude(), shp::Quantity::DEFAULT_VALUE,
+        getScaling(), getUnit(), shp::Angular(Energy::getPlanckLength())));
     return result;
 }
 

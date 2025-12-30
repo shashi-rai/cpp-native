@@ -195,6 +195,8 @@ public:
     shp::Quantity getComponent(float phase) const;
 public:
     static const shp::Quantity getPhysicalLimit();
+    static const shp::Quantity getPlanckConstant();
+    static const shp::Distance getPlanckLength();
     static const shp::Quantity getElectronvolt(const float quantum);
     static const shp::Quantity getMegaElectronvolt(const float quantum);
     static const shp::Quantity getGigaElectronvolt(const float quantum);
@@ -202,6 +204,7 @@ public:
 public:
     static const std::string UNIT;
     static const float PLANCK_CONSTANT;
+    static const float PLANCK_LENGTH;
     static const short int PLANCK_SCALE;
     static const float ELECTRON_VOLT;
     static const short int EV_SCALE;
