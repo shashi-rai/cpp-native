@@ -22,88 +22,90 @@
 
 namespace qft {
 
+const short int Weak::RANGE_SCALE = -18;      // femtometer
+
 Weak::Weak()
-        : Force() {
+        : Nuclear() {
     setField(nullptr);
 }
 
 Weak::Weak(std::string name)
-        : Force(name) {
+        : Nuclear(name) {
     setField(nullptr);
 }
 
 Weak::Weak(const std::shared_ptr<Field> field)
-        : Force() {
+        : Nuclear() {
     setField(field);
 }
 
 Weak::Weak(std::string name, const std::shared_ptr<Field> field)
-        : Force(name) {
+        : Nuclear(name) {
     setField(field);
 }
 
 Weak::Weak(const float magnitude)
-        : Force(magnitude) {
+        : Nuclear(magnitude) {
     setField(nullptr);
 }
 
 Weak::Weak(const float magnitude, const std::shared_ptr<Field> field)
-        : Force(magnitude) {
+        : Nuclear(magnitude) {
     setField(field);
 }
 
 Weak::Weak(const float magnitude, const float direction)
-        : Force(magnitude, direction) {
+        : Nuclear(magnitude, direction) {
     setField(nullptr);
 }
 
 Weak::Weak(const float magnitude, const float direction,
         const std::shared_ptr<Field> field)
-        : Force(magnitude, direction) {
+        : Nuclear(magnitude, direction) {
     setField(field);
 }
 
 Weak::Weak(const float magnitude, const float direction, const short int scaling)
-        : Force(magnitude, direction, scaling) {
+        : Nuclear(magnitude, direction, scaling) {
     setField(nullptr);
 }
 
 Weak::Weak(const float magnitude, const float direction, const short int scaling,
         const std::shared_ptr<Field> field)
-        : Force(magnitude, direction, scaling) {
+        : Nuclear(magnitude, direction, scaling) {
     setField(field);
 }
 
 Weak::Weak(std::string name, const float magnitude)
-        : Force(name, magnitude) {
+        : Nuclear(name, magnitude) {
     setField(nullptr);
 }
 
 Weak::Weak(std::string name, const float magnitude, const std::shared_ptr<Field> field)
-        : Force(name, magnitude) {
+        : Nuclear(name, magnitude) {
     setField(field);
 }
 
 Weak::Weak(std::string name, const float magnitude, const float direction)
-        : Force(name, magnitude, direction) {
+        : Nuclear(name, magnitude, direction) {
     setField(nullptr);
 }
 
 Weak::Weak(std::string name, const float magnitude, const float direction,
         const std::shared_ptr<Field> field)
-        : Force(name, magnitude, direction) {
+        : Nuclear(name, magnitude, direction) {
     setField(field);
 }
 
 Weak::Weak(std::string name, const float magnitude, const float direction,
         const short int scaling)
-        : Force(name, magnitude, direction, scaling) {
+        : Nuclear(name, magnitude, direction, scaling) {
     setField(nullptr);
 }
 
 Weak::Weak(std::string name, const float magnitude, const float direction,
         const short int scaling, const std::shared_ptr<Field> field)
-        : Force(name, magnitude, direction, scaling) {
+        : Nuclear(name, magnitude, direction, scaling) {
     setField(field);
 }
 
@@ -112,29 +114,26 @@ Weak::~Weak() {
 }
 
 bool Weak::operator==(const Weak& peer) const {
-    return (static_cast<const Force&>(*this) == static_cast<const Force&>(peer))
-        && (field == peer.field);
+    return (static_cast<const Nuclear&>(*this) == static_cast<const Nuclear&>(peer));
 }
 
-bool Weak::isOwned() const {
-    return field != nullptr;
+Weak Weak::operator()(const Particle& peerX, const Particle& peerY) const {
+    return *this;
 }
 
 Force Weak::copy() {
-    Weak fresh(getName(), field);
+    Weak fresh(getName(), getField());
     return fresh;
 }
 
 void Weak::clear() {
-    Force::clear();
-    setField(nullptr);
+    Nuclear::clear();
     return;
 }
 
 std::string Weak::print() {
     std::stringstream result;
-    result << Force::print() << ",";
-    result << (field != nullptr ? field->print() : "");
+    result << Nuclear::print();
 	return result.str();
 }
 

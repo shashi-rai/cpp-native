@@ -25,8 +25,6 @@
 #include <sstream>
 #include <vector>
 #include "angular.h"
-#include "direction.h"
-#include "unit.h"
 
 namespace shp {
 

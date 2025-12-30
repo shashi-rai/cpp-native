@@ -230,10 +230,15 @@ shp::Quantity Acceleration::getTotal() const {
 	qft::Velocity invariant = *this;;	// non-accelerating component only
     shp::Quantity velocity = (invariant.getTotal() + shp::Quantity(changeSpeed,
 			getDisplacement().getScaling(), getUnit()));
-    shp::Direction change = (invariant.getDirection() + shp::Direction(changeAngle));
+    shp::Direction change = (invariant.getDirection() + getAngularShiftRate());
     float acceleration = (velocity.getMagnitude() * cos(change.toRadians()));
     shp::Quantity result(acceleration, getDisplacement().getScaling(), getUnit());
     return result;
+}
+
+shp::Direction Acceleration::getAngularShiftRate() const {
+	shp::Direction result(changeAngle * shp::Direction::DEGREE_001);
+	return result;
 }
 
 Velocity Acceleration::copy() {
@@ -255,7 +260,7 @@ std::string Acceleration::print() {
     result << "a";
     result << Velocity::print() << ",Δ{";
 	result << changeSpeed  << ",⌒";
-    result << shp::Direction(changeAngle).print() << "}";
+    result << getAngularShiftRate().print() << "}";
     result << unit.print();
 	return result.str();
 }

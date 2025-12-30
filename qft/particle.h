@@ -23,6 +23,7 @@
 
 #include <vector>
 #include "energy.h"
+#include "isospin.h"
 #include "spin.h"
 #include "../shp/point.h"
 #include "../shp/wave.h"
@@ -39,6 +40,7 @@ class Electron;
 
 class Particle : public shp::Wave {
     shp::Shape* physical;
+    Isospin isospin;
     Spin spin;
     Energy energy;
 public:
@@ -54,6 +56,7 @@ public:
     Particle(const Spin& spin, const Energy& energy);
     Particle(std::string name, const float spin, const float energy);
     Particle(std::string name, const Spin& spin, const Energy& energy);
+    Particle(std::string name, const Isospin& isospin, const Spin& spin, const Energy& energy);
     Particle(const Mass& mass, const Charge& charge);
     Particle(std::string name, const Mass& mass, const Charge& charge);
     Particle(const Spin& spin, const Mass& mass, const Charge& charge);
@@ -63,6 +66,7 @@ public:
     Particle(std::string name, shp::Shape* wave);
     Particle(std::string name, shp::Shape* wave, const Spin& spin);
     Particle(std::string name, shp::Shape* wave, const Spin& spin, const Energy& energy);
+    Particle(std::string name, shp::Shape* wave, const Isospin& isospin, const Spin& spin, const Energy& energy);
     Particle(shp::Shape* wave, const Spin& spin, const Energy& energy);
     Particle(shp::Shape* wave, const Spin& spin, const Mass& mass, const Charge& charge);
     Particle(std::string name, shp::Shape* wave, const Spin& spin, const Mass& mass, const Charge& charge);
@@ -80,11 +84,13 @@ public:
 
     // Getters
     shp::Shape* getPhysical() const { return physical; }
+    Isospin getIsospin() const { return isospin; }
     Spin getSpin() const { return spin; }
     Energy getEnergy() const { return energy; }
 
     // Setters
     void setPhysical(shp::Shape* description) { this->physical = description; }
+    void setIsospin(const Isospin& value) { isospin = value; }
     void setSpin(const Spin& value) { spin = value; }
     void setEnergy(const Energy& value) { energy = value; }
 

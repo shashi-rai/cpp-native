@@ -94,13 +94,24 @@ Acceleration Momentum::getAcceleration() const {
     return velocity;
 }
 
+void Momentum::applyChangeTogether() {
+    applyChangeFlowSpeed();
+    applyChangeDirection();
+}
+
 void Momentum::changeFlowSpeed(const float motion) {
     velocity.setChangeMagnitude(motion);
+}
+
+void Momentum::applyChangeFlowSpeed() {
     velocity.applyChangeMagnitude();
 }
 
 void Momentum::changeDirection(const float degree) {
     velocity.setChangeDirection(degree);
+}
+
+void Momentum::applyChangeDirection() {
     velocity.applyChangeDirection();
 }
 
@@ -119,10 +130,22 @@ shp::Quantity Momentum::getAngularTotal() const {   // directional acceleration
     return result;
 }
 
+std::shared_ptr<Field> Momentum::getMatterField() const {
+    return mass.getOriginField();
+}
+
 std::shared_ptr<Field> Momentum::getGravityField() const {
     std::shared_ptr<Field> field = Field::shareable(Momentum::GRAVITY_FIELD);
-    field->setPotential(shp::Potential(mass.getMagnitude(), 0, mass.getScaling(), mass.getUnit()));
-    field->setLinear(shp::Direction(90, 0, 0));
+    shp::Quantity motion = getAngularTotal();
+    if (motion.checkNonZero()) {
+        field->setPotential(shp::Potential(mass.getMagnitude(),
+            shp::Quantity::DEFAULT_VALUE, mass.getScaling(), mass.getUnit()));
+    } else {
+        field->setPotential(shp::Potential(shp::Quantity::DEFAULT_VALUE,
+            shp::Quantity::DEFAULT_VALUE, mass.getScaling(), mass.getUnit()));
+    }
+    shp::Direction orientation = velocity.getDirection().getNormal();
+    field->setLinear(orientation);
     return field;
 }
 

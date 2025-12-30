@@ -25,6 +25,7 @@
 namespace qft {
 
 const std::string Charge::UNIT = "C";                       // System International
+const std::string Charge::ELECTRIC_FIELD = "Electric";      // Electric Field
 const short int Charge::ATOMIC_SCALE = -19;                 // 10^-19 C
 const float Charge::PROTON = 1.602f;                        // 1.602 x 10^-19 C
 const float Charge::NEUTRON = shp::Quantity::DEFAULT_VALUE; // 0.0 x 10^-19 C
@@ -163,6 +164,12 @@ Force Charge::getForce(const shp::Angular& coordinates) const {
         float quantum = shp::Quantity::DEFAULT_VALUE; shp::Direction direction(quantum);
         return Electric(quantum, direction.toRadians(), Force::COULOMB_SCALE, field);
     }
+}
+
+std::shared_ptr<Field> Charge::getOriginField() const {
+    std::shared_ptr<Field> result = Field::shareable(Charge::ELECTRIC_FIELD);
+    result->setPotential(shp::Potential(getMagnitude(), shp::Quantity::DEFAULT_VALUE, getScaling(), getUnit()));
+    return result;
 }
 
 Charge Charge::copy() {

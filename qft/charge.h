@@ -74,12 +74,14 @@ public:
     bool isOwned() const;
     Density getDensity(const shp::Volume& volume) const;
     Force getForce(const shp::Angular& coordinates) const;
+    std::shared_ptr<Field> getOriginField() const;
     virtual Charge copy();
     virtual void clear();
     virtual std::string print();
     shp::Quantity getComponent(float phase) const;
 public:
     static const std::string UNIT;
+    static const std::string ELECTRIC_FIELD;
     static const short int ATOMIC_SCALE;
     static const float PROTON;
     static const float NEUTRON;

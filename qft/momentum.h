@@ -66,10 +66,14 @@ public:
 
     // Additional methods
     qft::Acceleration getAcceleration() const;
+    void applyChangeTogether();
     void changeFlowSpeed(const float motion);
+    void applyChangeFlowSpeed();
     void changeDirection(const float degree);
+    void applyChangeDirection();
     shp::Quantity getLinearTotal() const;
     shp::Quantity getAngularTotal() const;
+    std::shared_ptr<Field> getMatterField() const;
     std::shared_ptr<Field> getGravityField() const;
     virtual Momentum copy();
     virtual void clear();

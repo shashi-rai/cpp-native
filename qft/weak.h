@@ -23,13 +23,12 @@
 
 #include <string>
 #include <vector>
-#include "field.h"
-#include "force.h"
+#include "nuclear.h"
 
 namespace qft {
 
-class Weak : public Force {
-    std::shared_ptr<Field> field;
+class Weak : public Nuclear {
+
 public:
     // Constructors
     Weak();
@@ -53,27 +52,30 @@ public:
     Weak(std::string name, const float magnitude, const float direction,
         const short int scaling, const std::shared_ptr<Field> field);
 
-    // Operator overloading
-    bool operator==(const Weak& peer) const;
-
     // Destructors
     ~Weak();
 
+    // Operator overloading
+    bool operator==(const Weak& peer) const;
+
+    // Access operator
+    Weak operator()(const Particle& peerX, const Particle& peerY) const;
+
     // Getters
-    std::shared_ptr<Field> getField() const { return field; }
 
     // Setters
-    void setField(const std::shared_ptr<Field> address) { this->field = address; }
 
     // Additional methods
-    bool isOwned() const;
     virtual Force copy();
     virtual void clear();
     virtual std::string print();
+
+public:
+    static const short int RANGE_SCALE;
 };
 
 typedef std::vector<Weak > WeakArray;
 
 } // namespace qft
 
-#endif //QFT_GRAVITY_H
+#endif //QFT_WEAK_H

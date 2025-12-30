@@ -70,6 +70,7 @@ public:
 
     // Additional methods
     Quantity getInverse() const;
+    bool checkNonZero() const;
     bool checkInfinity() const;
     short int checkScaling(float amount) const;
     void adjustNumeric();

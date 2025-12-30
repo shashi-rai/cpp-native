@@ -125,7 +125,20 @@ float Direction::toRadians() const {
     return (total * (M_PI / 180.0f));
 }
 
-Direction Direction::getRotation(const short int degree) {
+bool Direction::checkNonZero() const {
+    return ((seconds != SECONDS_MIN) || (minutes != MINUTES_MIN) || (degrees != DEGREES_MIN));
+
+}
+
+Direction Direction::getInverse() const {
+    return Direction((toRadians() + DEGREE_180));
+}
+
+Direction Direction::getNormal() const {
+    return Direction((toRadians() + DEGREE_090));
+}
+
+Direction Direction::getRotation(const short int degree) const {
     return Direction((toRadians() + (DEGREE_001 * degree)));
 }
 

@@ -113,13 +113,24 @@ void Current::setElectrons(const int count) {
     }
 }
 
+void Current::applyChangeTogether() {
+    applyChangeFlowSpeed();
+    applyChangeDirection();
+}
+
 void Current::changeFlowSpeed(const float motion) {
     velocity.setChangeMagnitude(motion);
+}
+
+void Current::applyChangeFlowSpeed() {
     velocity.applyChangeMagnitude();
 }
 
 void Current::changeDirection(const float degree) {
     velocity.setChangeDirection(degree);
+}
+
+void Current::applyChangeDirection() {
     velocity.applyChangeDirection();
 }
 
@@ -127,27 +138,33 @@ shp::Quantity Current::getLinearTotal() const {
     qft::Velocity invariant = velocity;     // non-accelerating component only
     float current = charge.getMagnitude() * invariant.getTotal().getMagnitude();
     short int scaling = charge.getScaling() + invariant.getTotal().getScaling();
-    shp::Quantity result(current, scaling, UNIT); 
+    shp::Quantity result(-current, scaling, UNIT); result.adjustScaling();
     return result;
 }
 
 shp::Quantity Current::getAngularTotal() const {    // directional acceleration
     float current = charge.getMagnitude() * velocity.getTotal().getMagnitude();
     short int scaling = charge.getScaling() + velocity.getTotal().getScaling();
-    shp::Quantity result(current, scaling, UNIT); 
+    shp::Quantity result(-current, scaling, UNIT); result.adjustScaling();
     return result;
 }
 
 std::shared_ptr<Field> Current::getElectricField() const {
-    std::shared_ptr<Field> field = Field::shareable(Current::ELECTRIC_FIELD);
-    field->setPotential(shp::Potential(charge.getMagnitude(), 0, charge.getScaling(), charge.getUnit()));
-    return field;
+    return charge.getOriginField();
 }
 
 std::shared_ptr<Field> Current::getMagneticField() const {
     std::shared_ptr<Field> field = Field::shareable(Current::MAGNETIC_FIELD);
-    field->setPotential(shp::Potential(charge.getMagnitude(), 0, charge.getScaling(), charge.getUnit()));
-    field->setLinear(shp::Direction(90, 0, 0));
+    shp::Quantity motion = getAngularTotal();
+    if (motion.checkNonZero()) {
+        field->setPotential(shp::Potential(charge.getMagnitude(),
+            shp::Quantity::DEFAULT_VALUE, charge.getScaling(), charge.getUnit()));
+    } else {
+        field->setPotential(shp::Potential(shp::Quantity::DEFAULT_VALUE,
+            shp::Quantity::DEFAULT_VALUE, charge.getScaling(), charge.getUnit()));
+    }
+    shp::Direction orientation = velocity.getDirection().getNormal();
+    field->setLinear(orientation);
     return field;
 }
 

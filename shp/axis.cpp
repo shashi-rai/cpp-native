@@ -22,7 +22,7 @@
 
 namespace shp {
 
-const float Axis::NORMAL = 1.5708f;                         // 90 degrees rotation
+const float Axis::NORMAL = 1.570796326794897000f;           // 90 degrees rotation
 const float Axis::DEFAULT_VALUE = Quantity::DEFAULT_VALUE;  // 0 degrees
 
 Axis::Axis() : name(), gradient(DEFAULT_VALUE), scaling(DEFAULT_VALUE) {
@@ -70,7 +70,7 @@ Axis Axis::copy() {
 }
 
 void Axis::clear() {
-    name = ""; gradient = scaling = DEFAULT_VALUE;
+    name.clear(); gradient = scaling = DEFAULT_VALUE;
     return;
 }
 

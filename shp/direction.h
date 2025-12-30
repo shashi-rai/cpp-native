@@ -63,7 +63,10 @@ public:
 
     // Additional methods
     float toRadians() const;
-    Direction getRotation(const short int degree);
+    bool checkNonZero() const;
+    Direction getInverse() const;
+    Direction getNormal() const;
+    Direction getRotation(const short int degree) const;
     Direction copy();
     void clear();
     std::string print();

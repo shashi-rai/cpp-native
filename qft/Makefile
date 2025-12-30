@@ -62,11 +62,13 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/gravity.o \
 		$(OBJFOLDR)/handed.o \
 		$(OBJFOLDR)/higgs.o \
+		$(OBJFOLDR)/isospin.o \
 		$(OBJFOLDR)/magnetic.o \
 		$(OBJFOLDR)/mass.o \
 		$(OBJFOLDR)/momentum.o \
 		$(OBJFOLDR)/neutrino.o \
 		$(OBJFOLDR)/neutron.o \
+		$(OBJFOLDR)/nuclear.o \
 		$(OBJFOLDR)/particle.o \
 		$(OBJFOLDR)/photon.o \
 		$(OBJFOLDR)/pressure.o \
@@ -96,11 +98,13 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/gravity.o \
 		$(OBJFOLDR)/handed.o \
 		$(OBJFOLDR)/higgs.o \
+		$(OBJFOLDR)/isospin.o \
 		$(OBJFOLDR)/magnetic.o \
 		$(OBJFOLDR)/mass.o \
 		$(OBJFOLDR)/momentum.o \
 		$(OBJFOLDR)/neutrino.o \
 		$(OBJFOLDR)/neutron.o \
+		$(OBJFOLDR)/nuclear.o \
 		$(OBJFOLDR)/particle.o \
 		$(OBJFOLDR)/photon.o \
 		$(OBJFOLDR)/pressure.o \
@@ -164,6 +168,9 @@ $(OBJFOLDR)/handed.o: handed.cpp
 $(OBJFOLDR)/higgs.o: higgs.cpp
 	$(CPPTOOL) -c higgs.cpp -o $(OBJFOLDR)/higgs.o $(CXXFLAGS)
 
+$(OBJFOLDR)/isospin.o: isospin.cpp
+	$(CPPTOOL) -c isospin.cpp -o $(OBJFOLDR)/isospin.o $(CXXFLAGS)
+
 $(OBJFOLDR)/magnetic.o: magnetic.cpp
 	$(CPPTOOL) -c magnetic.cpp -o $(OBJFOLDR)/magnetic.o $(CXXFLAGS)
 
@@ -178,6 +185,9 @@ $(OBJFOLDR)/neutrino.o: neutrino.cpp
 
 $(OBJFOLDR)/neutron.o: neutron.cpp
 	$(CPPTOOL) -c neutron.cpp -o $(OBJFOLDR)/neutron.o $(CXXFLAGS)
+
+$(OBJFOLDR)/nuclear.o: nuclear.cpp
+	$(CPPTOOL) -c nuclear.cpp -o $(OBJFOLDR)/nuclear.o $(CXXFLAGS)
 
 $(OBJFOLDR)/particle.o: particle.cpp
 	$(CPPTOOL) -c particle.cpp -o $(OBJFOLDR)/particle.o $(CXXFLAGS)

@@ -24,12 +24,13 @@
 
 namespace qft {
 
-const std::string Mass::UNIT = "kg";        // System International
-const short int Mass::ATOMIC_SCALE = -27;   // 10^-27 kg
-const float Mass::ATOMIC_UNIT = 1.6605f;    // 1.6605 x 10^-27 kg
-const float Mass::PROTON = 1.672621027f;    // 1.67 x 10^-27 kg
-const float Mass::NEUTRON = 1.67492749804f; // 1.67 x 10^-27 kg
-const float Mass::ELECTRON = 0.0009109f;    // 0.0009109 x 10^-27 kg
+const std::string Mass::UNIT = "kg";                // System International
+const std::string Mass::GRAVITY_FIELD = "Gravity";  // Gravity Field
+const short int Mass::ATOMIC_SCALE = -27;           // 10^-27 kg
+const float Mass::ATOMIC_UNIT = 1.6605f;            // 1.6605 x 10^-27 kg
+const float Mass::PROTON = 1.672621027f;            // 1.67 x 10^-27 kg
+const float Mass::NEUTRON = 1.67492749804f;         // 1.67 x 10^-27 kg
+const float Mass::ELECTRON = 0.0009109f;            // 0.0009109 x 10^-27 kg
 
 Mass::Mass()
         : shp::Quantity(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE,
@@ -164,6 +165,12 @@ Force Mass::getForce(const shp::Angular& coordinates) const {
         float quantum = shp::Quantity::DEFAULT_VALUE; shp::Direction direction(quantum);
         return Gravity(quantum, direction.toRadians(), Force::GRAVITATIONAL_SCALE, field);
     }
+}
+
+std::shared_ptr<Field> Mass::getOriginField() const {
+    std::shared_ptr<Field> result = Field::shareable(Mass::GRAVITY_FIELD);
+    result->setPotential(shp::Potential(getMagnitude(), shp::Quantity::DEFAULT_VALUE, getScaling(), getUnit()));
+    return result;
 }
 
 Mass Mass::copy() {

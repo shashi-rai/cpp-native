@@ -134,6 +134,10 @@ Quantity Quantity::getInverse() const {
     return fresh;
 }
 
+bool Quantity::checkNonZero() const {
+    return (magnitude != DEFAULT_VALUE);
+}
+
 bool Quantity::checkInfinity() const {
     return std::isinf(magnitude);
 }

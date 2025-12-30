@@ -96,6 +96,8 @@ public:
     virtual void clear();
     virtual std::string print();
     shp::Quantity getComponent(float phase) const;
+private:
+    shp::Direction getAngularShiftRate() const;
 public:
     static const std::string UNIT;
 };

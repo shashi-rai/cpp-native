@@ -68,8 +68,11 @@ public:
     qft::Acceleration getAcceleration() const;
     shp::Quantity getElectrons() const;
     void setElectrons(const int count);
+    void applyChangeTogether();
     void changeFlowSpeed(const float motion);
+    void applyChangeFlowSpeed();
     void changeDirection(const float degree);
+    void applyChangeDirection();
     shp::Quantity getLinearTotal() const;
     shp::Quantity getAngularTotal() const;
     std::shared_ptr<Field> getElectricField() const;

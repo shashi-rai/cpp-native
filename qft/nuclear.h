@@ -18,68 +18,62 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef QFT_STRONG_H
-#define QFT_STRONG_H
+#ifndef QFT_NUCLEAR_H
+#define QFT_NUCLEAR_H
 
 #include <string>
 #include <vector>
-#include "neutron.h"
-#include "nuclear.h"
-#include "proton.h"
+#include "field.h"
+#include "force.h"
 
 namespace qft {
 
-class Strong : public Nuclear {
-
+class Nuclear : public Force {
+    std::shared_ptr<Field> field;
 public:
     // Constructors
-    Strong();
-    Strong(std::string name);
-    Strong(const std::shared_ptr<Field> field);
-    Strong(std::string name, const std::shared_ptr<Field> field);
-    Strong(const float magnitude);
-    Strong(const float magnitude, const std::shared_ptr<Field> field);
-    Strong(const float magnitude, const float direction);
-    Strong(const float magnitude, const float direction, const std::shared_ptr<Field>field);
-    Strong(const float magnitude, const float direction, const short int scaling);
-    Strong(const float magnitude, const float direction, const short int scaling,
+    Nuclear();
+    Nuclear(std::string name);
+    Nuclear(const std::shared_ptr<Field> field);
+    Nuclear(std::string name, const std::shared_ptr<Field> field);
+    Nuclear(const float magnitude);
+    Nuclear(const float magnitude, const std::shared_ptr<Field> field);
+    Nuclear(const float magnitude, const float direction);
+    Nuclear(const float magnitude, const float direction, const std::shared_ptr<Field> field);
+    Nuclear(const float magnitude, const float direction, const short int scaling);
+    Nuclear(const float magnitude, const float direction, const short int scaling,
         const std::shared_ptr<Field> field);
-    Strong(std::string name, const float magnitude);
-    Strong(std::string name, const float magnitude, const std::shared_ptr<Field> field);
-    Strong(std::string name, const float magnitude, const float direction);
-    Strong(std::string name, const float magnitude, const float direction,
+    Nuclear(std::string name, const float magnitude);
+    Nuclear(std::string name, const float magnitude, const std::shared_ptr<Field> field);
+    Nuclear(std::string name, const float magnitude, const float direction);
+    Nuclear(std::string name, const float magnitude, const float direction,
         const std::shared_ptr<Field> field);
-    Strong(std::string name, const float magnitude, const float direction,
+    Nuclear(std::string name, const float magnitude, const float direction,
         const short int scaling);
-    Strong(std::string name, const float magnitude, const float direction,
+    Nuclear(std::string name, const float magnitude, const float direction,
         const short int scaling, const std::shared_ptr<Field> field);
 
     // Destructors
-    ~Strong();
+    ~Nuclear();
 
     // Operator overloading
-    bool operator==(const Strong& peer) const;
-
-    // Access operator
-    Strong operator()(const Proton& peerX, const Proton& peerY) const;
-    Strong operator()(const Neutron& peerX, const Neutron& peerY) const;
-    Strong operator()(const Proton& peerX, const Neutron& peerY) const;
+    bool operator==(const Nuclear& peer) const;
 
     // Getters
+    std::shared_ptr<Field> getField() const { return field; }
 
     // Setters
+    void setField(const std::shared_ptr<Field> address) { this->field = address; }
 
     // Additional methods
+    bool isOwned() const;
     virtual Force copy();
     virtual void clear();
     virtual std::string print();
-
-public:
-    static const short int RANGE_SCALE;
 };
 
-typedef std::vector<Strong > StrongArray;
+typedef std::vector<Nuclear > NuclearArray;
 
 } // namespace qft
 
-#endif //QFT_STRONG_H
+#endif //QFT_NUCLEAR_H
