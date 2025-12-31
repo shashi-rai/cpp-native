@@ -149,6 +149,14 @@ bool Charge::isOwned() const {
     return field != nullptr;
 }
 
+shp::Potential Charge::getPotential() const {
+    shp::Potential result;
+    if (isOwned()) {
+        result = field->getPotential();
+    }
+    return result;
+}
+
 Density Charge::getDensity(const shp::Volume& volume) const {
     return Density(getMagnitude(), volume, getUnit());
 }

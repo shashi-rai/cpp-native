@@ -28,9 +28,8 @@
 
 namespace qft {
 
-class Time {
+class Time : public shp::Quantity {
     std::string name;
-    shp::Quantity duration;
 public:
     // Constructors
     Time();
@@ -60,18 +59,13 @@ public:
 
     // Getters
     std::string getName() const { return name; }
-    shp::Quantity getDuration() const { return duration; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
-    void setDuration(const shp::Quantity& value) { this->duration = value; }
 
     // Additional methods
-    shp::Unit getUnit() const;
-    void setUnit(const shp::Unit& value);
-    short int getScaling() const;
-    void setScaling(const short int value);
     shp::Quantity getTotal() const;
+    long getSeconds() const;
     long getMilliseconds() const;
     long long getNanoseconds() const;
     virtual Time copy();

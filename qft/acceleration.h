@@ -24,6 +24,7 @@
 #include <string>
 #include <vector>
 #include "velocity.h"
+#include "time.h"
 
 namespace qft {
 
@@ -96,6 +97,7 @@ public:
     virtual void clear();
     virtual std::string print();
     shp::Quantity getComponent(float phase) const;
+    shp::Direction getAngularVelocity(const Time& interval) const;
 private:
     shp::Direction getAngularShiftRate() const;
 public:

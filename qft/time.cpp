@@ -28,67 +28,67 @@ const float Time::ATOMIC_UNIT = 2.4188843265864f;   // 2.41 x 10^-17 s
 const long Time::RADIATION_PERIODS = 9192631770;    // 9,192,631,770 fluctuations
 
 Time::Time()
-        : name(), duration(ATOMIC_SCALE, shp::Unit::getBaseSymbol(shp::Unit::TIME)) {
+        : shp::Quantity(ATOMIC_SCALE, shp::Unit::getBaseSymbol(shp::Unit::TIME)), name() {
 
 }
 
 Time::Time(std::string name)
-        : name(name), duration(ATOMIC_SCALE, shp::Unit::getBaseSymbol(shp::Unit::TIME)) {
+        : shp::Quantity(ATOMIC_SCALE, shp::Unit::getBaseSymbol(shp::Unit::TIME)), name(name) {
 
 }
 
 Time::Time(const shp::Unit& unit)
-        : name(), duration(ATOMIC_SCALE, unit) {
+        : shp::Quantity(ATOMIC_SCALE, unit), name() {
 
 }
 
 Time::Time(const float time)
-        : name(), duration(time, ATOMIC_SCALE, shp::Unit::getBaseSymbol(shp::Unit::TIME)) {
+        : shp::Quantity(time, ATOMIC_SCALE, shp::Unit::getBaseSymbol(shp::Unit::TIME)), name() {
 
 }
 
 Time::Time(const float time, const shp::Unit& unit)
-        : name(), duration(time, ATOMIC_SCALE, unit) {
+        : shp::Quantity(time, ATOMIC_SCALE, unit), name() {
 
 }
 
 Time::Time(const float time, const short int scaling)
-        : name(), duration(time, scaling, shp::Unit::getBaseSymbol(shp::Unit::TIME)) {
+        : shp::Quantity(time, scaling, shp::Unit::getBaseSymbol(shp::Unit::TIME)), name() {
 
 }
 
 Time::Time(const float time, const short int scaling, const shp::Unit& unit)
-        : name(), duration(time, scaling, unit) {
+        : shp::Quantity(time, scaling, unit), name() {
 
 }
 
 Time::Time(std::string name, const shp::Unit& unit)
-        : name(name), duration(ATOMIC_SCALE, unit) {
+        : shp::Quantity(ATOMIC_SCALE, unit), name(name) {
 
 }
 
 Time::Time(std::string name, const float time)
-        : name(name), duration(time, ATOMIC_SCALE, shp::Unit::getBaseSymbol(shp::Unit::TIME)) {
+        : shp::Quantity(time, ATOMIC_SCALE, shp::Unit::getBaseSymbol(shp::Unit::TIME)), name(name) {
 
 }
 
 Time::Time(std::string name, const float time, const shp::Unit& unit)
-        : name(name), duration(time, ATOMIC_SCALE, unit) {
+        : shp::Quantity(time, ATOMIC_SCALE, unit), name(name) {
 
 }
 
 Time::Time(std::string name, const float time, const short int scaling)
-        : name(name), duration(time, scaling, shp::Unit::getBaseSymbol(shp::Unit::TIME)) {
+        : shp::Quantity(time, scaling, shp::Unit::getBaseSymbol(shp::Unit::TIME)), name(name) {
 
 }
 
 Time::Time(std::string name, const float time, const short int scaling, const shp::Unit& unit)
-        : name(name), duration(time, scaling, unit) {
+        : shp::Quantity(time, scaling, unit), name(name) {
 
 }
 
 Time::Time(std::string name, const shp::Quantity& quantity)
-    : name(name), duration(quantity) {
+    : shp::Quantity(quantity), name(name) {
 
 }
 
@@ -97,79 +97,81 @@ Time::~Time() {
 }
 
 bool Time::operator==(const Time& peer) const {
-    return (name == peer.name) && (duration == peer.duration);
+    return (static_cast<const shp::Quantity&>(*this) == static_cast<const shp::Quantity&>(peer))
+        && (name == peer.name);
 }
 
 Time Time::operator+(const Time& peer) const {
-    return Time("+", (duration + peer.duration));
+    Quantity self = *this, other = peer;
+    Quantity duration = (self + other);
+    return Time("+", duration.getMagnitude(), duration.getScaling(), duration.getUnit());
 }
 
 Time Time::operator-(const Time& peer) const {
-    return Time("-", (duration - peer.duration));
+    Quantity self = *this, other = peer;
+    Quantity duration = (self - other);
+    return Time("-", duration.getMagnitude(), duration.getScaling(), duration.getUnit());
 }
 
 Time Time::operator*(const Time& peer) const {
-    return Time("*", (duration * peer.duration));
+    Quantity self = *this, other = peer;
+    Quantity duration = (self * other);
+    return Time("*", duration.getMagnitude(), duration.getScaling(), duration.getUnit());
 }
 
 Time Time::operator/(const Time& peer) const {
-    return Time("/", (duration / peer.duration));
+    Quantity self = *this, other = peer;
+    Quantity duration = (self / other);
+    return Time("/", duration.getMagnitude(), duration.getScaling(), duration.getUnit());
 }
 
 Time Time::operator%(const Time& peer) const {
-    return Time("%", (duration % peer.duration));
-}
-
-shp::Unit Time::getUnit() const {
-    return duration.getUnit();
-}
-
-void Time::setUnit(const shp::Unit& value) {
-    this->duration.setUnit(value);
-}
-
-short int Time::getScaling() const {
-    return duration.getScaling();
-}
-
-void Time::setScaling(const short int value) {
-    this->duration.setScaling(value);
+    Quantity self = *this, other = peer;
+    Quantity duration = (self % other);
+    return Time("%", duration.getMagnitude(), duration.getScaling(), duration.getUnit());
 }
 
 shp::Quantity Time::getTotal() const {
-    shp::Quantity result(duration.getMagnitude(), duration.getScaling(), duration.getUnit());
+    shp::Quantity result(getMagnitude(), getScaling(), getUnit());
+    return result;
+}
+
+long Time::getSeconds() const {
+    std::chrono::duration<float> period(getMagnitude());
+    std::chrono::seconds seconds = std::chrono::duration_cast<std::chrono::seconds>(period);
+    long result = seconds.count();
     return result;
 }
 
 long Time::getMilliseconds() const {
-    std::chrono::duration<float> period(duration.getMagnitude());
+    std::chrono::duration<float> period(getMagnitude());
     std::chrono::milliseconds milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(period);
     long result = milliseconds.count();
     return result;
 }
 
 long long Time::getNanoseconds() const {
-    std::chrono::duration<float> period(duration.getMagnitude());
+    std::chrono::duration<float> period(getMagnitude());
     std::chrono::nanoseconds nanoseconds = std::chrono::duration_cast<std::chrono::nanoseconds>(period);
     long long result = nanoseconds.count();
     return result;
 }
 
 Time Time::copy() {
-    Time fresh(name, duration);
+    Time fresh(name, getMagnitude(), getScaling(), getUnit());
     return fresh;
 }
 
 void Time::clear() {
+    shp::Quantity::clear();
     name.clear();
-    duration.clear();
     return;
 }
 
 std::string Time::print() {
     std::stringstream result;
     result << shp::Unit::getBaseDimension(shp::Unit::TIME) << ":";
-    result << duration.print();
+    result << shp::Quantity::print();
 	return result.str();
 }
 

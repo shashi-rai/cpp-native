@@ -134,6 +134,16 @@ void Current::applyChangeDirection() {
     velocity.applyChangeDirection();
 }
 
+shp::Quantity Current::getVoltage() const {
+    shp::Quantity result = charge.getPotential().getDifference();
+    return result;
+}
+
+shp::Quantity Current::getForce(const Time& interval) const {
+    shp::Quantity result = (getRateOfChange() / interval.getMagnitude());
+    return result;
+}
+
 shp::Quantity Current::getLinearTotal() const {
     qft::Velocity invariant = velocity;     // non-accelerating component only
     float current = charge.getMagnitude() * invariant.getTotal().getMagnitude();
@@ -142,10 +152,32 @@ shp::Quantity Current::getLinearTotal() const {
     return result;
 }
 
+shp::Quantity Current::getLinearPower() const {
+    shp::Quantity result = (getVoltage() * getLinearTotal());
+    return result;
+}
+
+shp::Quantity Current::getLinearKinetic() const {
+    shp::Quantity current = getLinearTotal();
+    shp::Quantity result = ((current * current) / (charge + charge));
+    return result;
+}
+
 shp::Quantity Current::getAngularTotal() const {    // directional acceleration
     float current = charge.getMagnitude() * velocity.getTotal().getMagnitude();
     short int scaling = charge.getScaling() + velocity.getTotal().getScaling();
     shp::Quantity result(-current, scaling, UNIT); result.adjustScaling();
+    return result;
+}
+
+shp::Quantity Current::getAngularPower() const {
+    shp::Quantity result = (getVoltage() * getAngularTotal());
+    return result;
+}
+
+shp::Quantity Current::getAngularKinetic() const {
+    shp::Quantity current = getAngularTotal();
+    shp::Quantity result = ((current * current) / (charge + charge));
     return result;
 }
 

@@ -115,6 +115,16 @@ void Momentum::applyChangeDirection() {
     velocity.applyChangeDirection();
 }
 
+shp::Quantity Momentum::getPower(const Time& interval) const {
+    shp::Quantity result = (getForce(interval) * getVelocity().getTotal());
+    return result;
+}
+
+shp::Quantity Momentum::getForce(const Time& interval) const {
+    shp::Quantity result = (getRateOfChange() / interval.getMagnitude());
+    return result;
+}
+
 shp::Quantity Momentum::getLinearTotal() const {
     qft::Velocity invariant = velocity;     // non-accelerating component only
     float momentum = mass.getMagnitude() * invariant.getTotal().getMagnitude();
@@ -123,10 +133,22 @@ shp::Quantity Momentum::getLinearTotal() const {
     return result;
 }
 
+shp::Quantity Momentum::getLinearKinetic() const {
+    shp::Quantity momentum = getLinearTotal();
+    shp::Quantity result = ((momentum * momentum) / (mass + mass));
+    return result;
+}
+
 shp::Quantity Momentum::getAngularTotal() const {   // directional acceleration
     float momentum = mass.getMagnitude() * velocity.getTotal().getMagnitude();
     short int scaling = mass.getScaling() + velocity.getTotal().getScaling();
     shp::Quantity result(momentum, scaling, UNIT);
+    return result;
+}
+
+shp::Quantity Momentum::getAngularKinetic() const {
+    shp::Quantity momentum = getAngularTotal();
+    shp::Quantity result = ((momentum * momentum) / (mass + mass));
     return result;
 }
 

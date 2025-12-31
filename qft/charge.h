@@ -27,6 +27,7 @@
 #include "density.h"
 #include "force.h"
 #include "../shp/angular.h"
+#include "../shp/potential.h"
 
 namespace qft {
 
@@ -72,6 +73,7 @@ public:
 
     // Additional methods
     bool isOwned() const;
+    shp::Potential getPotential() const;
     Density getDensity(const shp::Volume& volume) const;
     Force getForce(const shp::Angular& coordinates) const;
     std::shared_ptr<Field> getOriginField() const;

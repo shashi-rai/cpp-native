@@ -24,6 +24,7 @@
 #include <vector>
 #include "mass.h"
 #include "acceleration.h"
+#include "time.h"
 
 namespace qft {
 
@@ -71,8 +72,12 @@ public:
     void applyChangeFlowSpeed();
     void changeDirection(const float degree);
     void applyChangeDirection();
+    shp::Quantity getPower(const Time& interval) const;
+    shp::Quantity getForce(const Time& interval) const;
     shp::Quantity getLinearTotal() const;
+    shp::Quantity getLinearKinetic() const;
     shp::Quantity getAngularTotal() const;
+    shp::Quantity getAngularKinetic() const;
     shp::Quantity getRateOfChange() const;
     std::shared_ptr<Field> getMatterField() const;
     std::shared_ptr<Field> getGravityField() const;

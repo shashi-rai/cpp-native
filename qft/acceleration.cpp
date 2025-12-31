@@ -236,6 +236,13 @@ shp::Quantity Acceleration::getTotal() const {
     return result;
 }
 
+shp::Direction Acceleration::getAngularVelocity(const Time& interval) const {
+	float rate = (changeAngle / interval.getMagnitude());
+	rate = std::isinf(rate) ? 0 : rate;		// if time interval = zero
+	shp::Direction result(rate * shp::Direction::DEGREE_001);
+	return result;
+}
+
 shp::Direction Acceleration::getAngularShiftRate() const {
 	shp::Direction result(changeAngle * shp::Direction::DEGREE_001);
 	return result;
