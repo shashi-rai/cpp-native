@@ -130,7 +130,7 @@ Quantity Quantity::operator%(const Quantity& peer) const {
 }
 
 Quantity Quantity::getInverse() const {
-    Quantity fresh(magnitude != DEFAULT_VALUE ? (1 / magnitude) : DEFAULT_VALUE, scaling, unit);
+    Quantity fresh(magnitude != DEFAULT_VALUE ? (1 / magnitude) : DEFAULT_VALUE, scaling, unit.getInverse());
     return fresh;
 }
 

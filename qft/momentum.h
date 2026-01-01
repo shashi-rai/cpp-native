@@ -66,6 +66,7 @@ public:
     void setVelocity(const qft::Acceleration& object) { this->velocity = object; }
 
     // Additional methods
+    shp::Quantity getCharge();
     qft::Acceleration getAcceleration() const;
     void applyChangeTogether();
     void changeFlowSpeed(const float motion);

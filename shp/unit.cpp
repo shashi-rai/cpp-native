@@ -23,6 +23,25 @@
 namespace shp {
 
 const std::string Unit::UNKNOWN = "";
+const std::string Unit::PER_UNIT = "/";
+
+const short int Unit::PREFIX_MIN = 0;
+const short int Unit::PREFIX_MAX = 25;
+const std::string Unit::PREFIX_NAME[] = {
+    "quetta", "ronna", "yotta", "zetta", "exa", "peta", "tera", "giga", "mega", "kilo", "hecto", "deca",
+    "zero",
+    "deci", "centi", "milli", "micro", "nano", "pico", "femto", "atto", "zepto", "yocto", "ronto", "quecto",
+};
+const std::string Unit::PREFIX_SYMBOL[] = {
+    "Q", "R", "Y", "Z", "E", "P", "T", "G", "M", "k", "h", "da",
+    "",
+    "d", "c", "m", "μ", "n", "p", "f", "a", "z", "y", "r", "q",
+};
+const short int Unit::PREFIX_BASE[] = {
+    30, 27, 24, 21, 18, 15, 12, 9, 6, 3, 2, 1,
+    0,
+    -1, -2, -3, -6, -9, -12, -15, -18, -21, -24, -27, -30,
+};
 
 const short int Unit::SI_BASE_MIN = 0;
 const short int Unit::SI_BASE_MAX = 7;
@@ -79,7 +98,19 @@ bool Unit::operator==(const Unit& peer) const {
     return (name == peer.name);
 }
 
-std::string Unit::getBaseName(short int index) {
+Unit Unit::operator+(const Unit& peer) const {
+    return (name + peer.name);
+}
+
+const std::string Unit::getPrefixName(short int index) {
+    if ((index >= PREFIX_MIN) && (index < PREFIX_MAX)) {
+        return PREFIX_NAME[index];
+    } else {
+        return UNKNOWN;
+    }
+}
+
+const std::string Unit::getBaseName(short int index) {
     if ((index >= SI_BASE_MIN) && (index < SI_BASE_MAX)) {
         return BASE_NAME[index];
     } else {
@@ -87,7 +118,23 @@ std::string Unit::getBaseName(short int index) {
     }
 }
 
-std::string Unit::getBaseDimension(short int index) {
+const std::string Unit::getPrefixSymbol(short int index) {
+    if ((index >= PREFIX_MIN) && (index < PREFIX_MAX)) {
+        return PREFIX_SYMBOL[index];
+    } else {
+        return UNKNOWN;
+    }
+}
+
+const short int Unit::getPrefixBase(short int index) {
+    if ((index >= PREFIX_MIN) && (index < PREFIX_MAX)) {
+        return PREFIX_BASE[index];
+    } else {
+        return 0;
+    }
+}
+
+const std::string Unit::getBaseDimension(short int index) {
     if ((index >= SI_BASE_MIN) && (index < SI_BASE_MAX)) {
         return BASE_DIMENSION[index];
     } else {
@@ -95,7 +142,7 @@ std::string Unit::getBaseDimension(short int index) {
     }
 }
 
-std::string Unit::getBaseSymbol(short int index) {
+const std::string Unit::getBaseSymbol(short int index) {
     if ((index >= SI_BASE_MIN) && (index < SI_BASE_MAX)) {
         return BASE_SYMBOL[index];
     } else {
@@ -103,7 +150,7 @@ std::string Unit::getBaseSymbol(short int index) {
     }
 }
 
-std::string Unit::getDerivedName(short int index) {
+const std::string Unit::getDerivedName(short int index) {
     if ((index >= SI_DERIVED_MIN) && (index < SI_DERIVED_MAX)) {
         return DERIVED_NAME[index];
     } else {
@@ -111,7 +158,7 @@ std::string Unit::getDerivedName(short int index) {
     }
 }
 
-std::string Unit::getDerivedDimension(short int index) {
+const std::string Unit::getDerivedDimension(short int index) {
     if ((index >= SI_DERIVED_MIN) && (index < SI_DERIVED_MAX)) {
         return DERIVED_DIMENSION[index];
     } else {
@@ -119,12 +166,16 @@ std::string Unit::getDerivedDimension(short int index) {
     }
 }
 
-std::string Unit::getDerivedSymbol(short int index) {
+const std::string Unit::getDerivedSymbol(short int index) {
     if ((index >= SI_DERIVED_MIN) && (index < SI_DERIVED_MAX)) {
         return DERIVED_SYMBOL[index];
     } else {
         return UNKNOWN;
     }
+}
+
+std::string Unit::getInverse() const {
+    return (PER_UNIT + name);
 }
 
 Unit Unit::copy() {

@@ -94,6 +94,14 @@ Current Current::operator/(const Current& peer) const {
     return Current("/", (charge / peer.charge), (velocity / peer.velocity));
 }
 
+shp::Quantity Current::getMass() {
+    shp::Quantity difference = charge.getPotential().getDifference();
+    shp::Quantity angular = velocity.getAngular(shp::Quantity::DEFAULT_VALUE);
+    float magnitude = ((difference.getMagnitude() / angular.getMagnitude()) * charge.getMagnitude());
+    shp::Quantity result(magnitude, charge.getScaling(), shp::Unit::getBaseSymbol(shp::Unit::MASS));
+    return result;
+}
+
 Acceleration Current::getAcceleration() const {
     return velocity;
 }

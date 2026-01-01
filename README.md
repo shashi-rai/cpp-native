@@ -25,15 +25,17 @@ The following folders serve specific purpose with regard to software development
 3. [obj](/obj/) - pre-compiled object files
 4. [act](/act/) - accounting algorithms
 5. [bio](/bio/) - biological algorithms
-6. [che](/che/) - chemical algorithms
-7. [dsa](/dsa/) - data structure algorithms
-8. [fin](/fin/) - financial algorithms
-9. [gis](/gis/) - geospatial system algorithms
-10. [grt](/grt/) - general relativity algorithms
-11. [phy](/phy/) - physical algorithms
-12. [qft](/qft/) - quantum field algorithms
-13. [shp](/shp/) - geometrical shape algorithms
-14. [web](/web/) - web development system
+6. [bit](/bit/) - information theory algorithms
+7. [che](/che/) - chemical algorithms
+8. [dsa](/dsa/) - data structure algorithms
+9. [eco](/eco/) - economics algorithms
+10. [fin](/fin/) - financial algorithms
+11. [gis](/gis/) - geospatial system algorithms
+12. [grt](/grt/) - general relativity algorithms
+13. [phy](/phy/) - physical algorithms
+14. [qft](/qft/) - quantum field algorithms
+15. [shp](/shp/) - geometrical shape algorithms
+16. [web](/web/) - web development system
 
 ## Source Code Compilation
 
@@ -61,6 +63,7 @@ The micro-world phenomenon is modeled using the following libraries
 - then, compile [phy](/phy/) library that builds on [qft](/qft/) to model the Physics
 - then, compile [che](/che/) library that builds on [phy](/phy/) to model the Chemistry
 - then, compile [bio](/bio/) library that builds on [che](/che/) to model the Biology
+- then, compile [bit](/bit/) library that builds on [qft](/qft/) to model the Information
 
 The macro-world phenomenon is modeled using the following libraries
 
@@ -70,6 +73,7 @@ The macro-world phenomenon is modeled using the following libraries
 The financial system is modeled using the following libraries
 
 - the [act](/act/) library could be compiled after [shp](/shp/) library is ready
+- the [eco](/eco/) library could be compiled after [act](/act/) library is ready
 - the [fin](/fin/) library could be compiled after [act](/act/) library is ready
 
 ## Folder Cleanup

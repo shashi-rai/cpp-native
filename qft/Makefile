@@ -71,6 +71,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/nuclear.o \
 		$(OBJFOLDR)/particle.o \
 		$(OBJFOLDR)/photon.o \
+		$(OBJFOLDR)/power.o \
 		$(OBJFOLDR)/pressure.o \
 		$(OBJFOLDR)/proton.o \
 		$(OBJFOLDR)/quark.o \
@@ -107,6 +108,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/nuclear.o \
 		$(OBJFOLDR)/particle.o \
 		$(OBJFOLDR)/photon.o \
+		$(OBJFOLDR)/power.o \
 		$(OBJFOLDR)/pressure.o \
 		$(OBJFOLDR)/proton.o \
 		$(OBJFOLDR)/quark.o \
@@ -194,6 +196,9 @@ $(OBJFOLDR)/particle.o: particle.cpp
 
 $(OBJFOLDR)/photon.o: photon.cpp
 	$(CPPTOOL) -c photon.cpp -o $(OBJFOLDR)/photon.o $(CXXFLAGS)
+
+$(OBJFOLDR)/power.o: power.cpp
+	$(CPPTOOL) -c power.cpp -o $(OBJFOLDR)/power.o $(CXXFLAGS)
 
 $(OBJFOLDR)/pressure.o: pressure.cpp
 	$(CPPTOOL) -c pressure.cpp -o $(OBJFOLDR)/pressure.o $(CXXFLAGS)

@@ -75,6 +75,7 @@ public:
     Force operator-(const Force& peer) const;
     Force operator*(const Force& peer) const;
     Force operator/(const Force& peer) const;
+    Force operator%(const Force& peer) const;
 
     // Getters
     std::string getName() const { return name; }

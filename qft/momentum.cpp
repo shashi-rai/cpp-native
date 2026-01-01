@@ -90,6 +90,14 @@ Momentum Momentum::operator/(const Momentum& peer) const {
     return Momentum("/", (mass / peer.mass), (velocity / peer.velocity));
 }
 
+shp::Quantity Momentum::getCharge() {
+    shp::Quantity difference = mass.getPotential().getDifference();
+    shp::Quantity angular = velocity.getAngular(shp::Quantity::DEFAULT_VALUE);
+    float magnitude = (((mass.getMagnitude() * angular.getMagnitude()) / difference.getMagnitude()));
+    shp::Quantity result(magnitude, mass.getScaling(), shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_CHARGE));
+    return result;
+}
+
 Acceleration Momentum::getAcceleration() const {
     return velocity;
 }

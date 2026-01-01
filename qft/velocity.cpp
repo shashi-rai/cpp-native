@@ -70,7 +70,7 @@ Velocity::Velocity(const float displacement, const float direction,
 
 }
 
-Velocity::Velocity(const shp::Quantity& displacement, const shp::Direction& direction)
+Velocity::Velocity(const shp::Distance& displacement, const shp::Direction& direction)
         : name(), displacement(displacement), direction(direction) {
 
 }
@@ -113,7 +113,7 @@ Velocity::Velocity(std::string name, const float displacement, const float direc
 
 }
 
-Velocity::Velocity(std::string name, const shp::Quantity& displacement, const shp::Direction& direction)
+Velocity::Velocity(std::string name, const shp::Distance& displacement, const shp::Direction& direction)
         : name(name), displacement(displacement), direction(direction) {
 
 }
@@ -133,7 +133,7 @@ Velocity Velocity::operator+(const Velocity& peer) const {
         ap2 = other.toComplex((other.displacement.getMagnitude() / std::pow(shp::Quantity::DECIMAL_SCALE, (displacement.getScaling() - other.displacement.getScaling()))),
 			other.direction.toRadians());
     std::complex<float> a_phasor = ap1 + ap2;
-    return Velocity("+", shp::Quantity(std::abs(a_phasor), displacement.getScaling(), getUnit()),
+    return Velocity("+", shp::Distance(std::abs(a_phasor), displacement.getScaling(), getUnit()),
 		shp::Direction(std::arg(a_phasor)));
 }
 
@@ -144,7 +144,7 @@ Velocity Velocity::operator-(const Velocity& peer) const {
         ap2 = other.toComplex((other.displacement.getMagnitude() / std::pow(shp::Quantity::DECIMAL_SCALE, (displacement.getScaling() - other.displacement.getScaling()))),
 			other.direction.toRadians());
     std::complex<float> a_phasor = ap1 - ap2;
-    return Velocity("-", shp::Quantity(std::abs(a_phasor), displacement.getScaling(), getUnit()),
+    return Velocity("-", shp::Distance(std::abs(a_phasor), displacement.getScaling(), getUnit()),
 		shp::Direction(std::arg(a_phasor)));
 }
 
@@ -154,7 +154,7 @@ Velocity Velocity::operator*(const Velocity& peer) const {
 		ap1 = self.toComplex(self.displacement.getMagnitude(), direction.toRadians()),
         ap2 = other.toComplex(other.displacement.getMagnitude(), other.direction.toRadians());
     std::complex<float> a_phasor = ap1 * ap2;
-    return Velocity("*", shp::Quantity(std::abs(a_phasor),
+    return Velocity("*", shp::Distance(std::abs(a_phasor),
 			(displacement.getScaling() + peer.displacement.getScaling()), getUnit()),
 		shp::Direction(std::arg(a_phasor)));
 }
@@ -165,7 +165,7 @@ Velocity Velocity::operator/(const Velocity& peer) const {
 		ap1 = self.toComplex(self.displacement.getMagnitude(), direction.toRadians()),
         ap2 = other.toComplex(other.displacement.getMagnitude(), other.direction.toRadians());
     std::complex<float> a_phasor = ap1 / ap2;
-    return Velocity("/", shp::Quantity(std::abs(a_phasor),
+    return Velocity("/", shp::Distance(std::abs(a_phasor),
 			(displacement.getScaling() - peer.displacement.getScaling()), getUnit()),
 		shp::Direction(std::arg(a_phasor)));
 }
@@ -186,6 +186,20 @@ void Velocity::changeDirection(const float degree) {
 
 shp::Quantity Velocity::getTotal() const {
     shp::Quantity result(displacement.getMagnitude(), displacement.getScaling(), getUnit());
+    return result;
+}
+
+shp::Quantity Velocity::getLinear(const Time& slice) {
+	shp::Quantity frequency = slice.getFrequency();
+	float magnitude = (displacement.getMagnitude() * frequency.getMagnitude());
+	short int scaling = (displacement.getScaling() + frequency.getScaling());
+    shp::Quantity result(magnitude, scaling, UNIT); result.adjustScaling();
+    return result;
+}
+
+shp::Quantity Velocity::getAngular(const Time& theta) {
+	shp::Quantity rotation = theta.getAngular();
+    shp::Quantity result(rotation.getMagnitude(), rotation.getScaling(), rotation.getUnit());
     return result;
 }
 

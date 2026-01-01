@@ -23,6 +23,7 @@
 namespace qft {
 
 const std::string Time::UNIT = "s";                 // System International
+const float Time::CYCLIC_RANGE = 360.0f;            // 360 degrees per cycle
 const short int Time::ATOMIC_SCALE = -17;           // 10^-17 s
 const float Time::ATOMIC_UNIT = 2.4188843265864f;   // 2.41 x 10^-17 s
 const long Time::RADIATION_PERIODS = 9192631770;    // 9,192,631,770 fluctuations
@@ -133,6 +134,18 @@ Time Time::operator%(const Time& peer) const {
 
 shp::Quantity Time::getTotal() const {
     shp::Quantity result(getMagnitude(), getScaling(), getUnit());
+    return result;
+}
+
+shp::Quantity Time::getAngular() const {
+    shp::Quantity result((getMagnitude() / CYCLIC_RANGE), getScaling(), getUnit().getInverse());
+    return result;
+}
+
+shp::Quantity Time::getFrequency() const {
+    shp::Quantity frequency = getInverse();
+    shp::Quantity result(frequency.getMagnitude(), frequency.getScaling(),
+        shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY));
     return result;
 }
 

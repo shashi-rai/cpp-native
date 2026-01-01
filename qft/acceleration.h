@@ -93,6 +93,8 @@ public:
     void applyChangeDirection();
     void applyChangeMagnitude();
     shp::Quantity getTotal() const;
+    virtual shp::Quantity getLinear(const Time& slice);
+    virtual shp::Quantity getAngular(const Time& theta);
     virtual Velocity copy();
     virtual void clear();
     virtual std::string print();

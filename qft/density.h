@@ -23,7 +23,6 @@
 
 #include <string>
 #include <vector>
-#include "../shp/quantity.h"
 #include "../shp/volume.h"
 
 namespace qft {

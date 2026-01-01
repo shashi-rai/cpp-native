@@ -67,6 +67,7 @@ public:
     void setVelocity(const qft::Acceleration& object) { this->velocity = object; }
 
     // Additional methods
+    shp::Quantity getMass();
     qft::Acceleration getAcceleration() const;
     shp::Quantity getElectrons() const;
     void setElectrons(const int count);

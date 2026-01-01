@@ -39,6 +39,7 @@ public:
 
     // Operator overloading
     bool operator==(const Unit& peer) const;
+    Unit operator+(const Unit& peer) const;
 
     // Getters
     std::string getName() const { return name; }
@@ -47,20 +48,35 @@ public:
     void setName(const std::string& name) { this->name = name; }
 
     // Additional methods
+    std::string getInverse() const;
     virtual Unit copy();
     virtual void clear();
     virtual std::string print();
 
 public:
-    static std::string getBaseName(short int index);
-    static std::string getBaseDimension(short int index);
-    static std::string getBaseSymbol(short int index);
-    static std::string getDerivedName(short int index);
-    static std::string getDerivedDimension(short int index);
-    static std::string getDerivedSymbol(short int index);
+    static const std::string getPrefixName(short int index);
+    static const std::string getPrefixSymbol(short int index);
+    static const short int getPrefixBase(short int index);
+    static const std::string getBaseName(short int index);
+    static const std::string getBaseDimension(short int index);
+    static const std::string getBaseSymbol(short int index);
+    static const std::string getDerivedName(short int index);
+    static const std::string getDerivedDimension(short int index);
+    static const std::string getDerivedSymbol(short int index);
 
 public:
     static const std::string UNKNOWN;
+    static const short int PREFIX_MIN;
+    static const short int PREFIX_MAX;
+    static const std::string PER_UNIT;
+    enum PREFIX {
+        QUETTA, RONNA, YOTTA, ZETTA, EXA, PETA, TERA, GIGA, MEGA, KILO, HECTO, DECA,
+        ZERO,
+        DECI, CENTI, MILLI, MICRO, NANO, PICO, FEMTO, ATTO, ZEPTO, YOCTO, RONTO, QUECTO,
+    };
+    static const std::string PREFIX_NAME[];
+    static const std::string PREFIX_SYMBOL[];
+    static const short int PREFIX_BASE[];
     enum BASE {
         TIME, LENGTH, MASS, CURRENT, TEMPERATURE, SUBSTANCE, LUMINOUSITY
     };

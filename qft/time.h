@@ -65,6 +65,8 @@ public:
 
     // Additional methods
     shp::Quantity getTotal() const;
+    shp::Quantity getAngular() const;
+    shp::Quantity getFrequency() const;
     long getSeconds() const;
     long getMilliseconds() const;
     long long getNanoseconds() const;
@@ -74,6 +76,7 @@ public:
 
 public:
     static const std::string UNIT;
+    static const float CYCLIC_RANGE;
     static const short int ATOMIC_SCALE;
     static const float ATOMIC_UNIT;
     static const long RADIATION_PERIODS;

@@ -188,6 +188,18 @@ Force Force::operator/(const Force& peer) const {
 		shp::Direction(std::arg(a_phasor)));
 }
 
+Force Force::operator%(const Force& peer) const {
+    Force self = *this, other = peer;
+    float real_part = std::fmod(std::real((self.magnitude.getMagnitude() * cos(direction.toRadians()))),
+		std::real((other.magnitude.getMagnitude() * cos(other.direction.toRadians()))));
+    float imag_part = std::fmod(std::imag((self.magnitude.getMagnitude() * sin(direction.toRadians()))),
+		std::imag((other.magnitude.getMagnitude() * sin(other.direction.toRadians()))));
+	std::complex<float> a_phasor = std::complex<float>(real_part, imag_part);
+    return Force("%", shp::Quantity(std::abs(a_phasor),
+			(magnitude.getScaling() - peer.magnitude.getScaling()), getUnit()),
+		shp::Direction(std::arg(a_phasor)));
+}
+
 Acceleration Force::getAcceleration(const Mass& mass) const {
 	shp::Quantity quantum = (magnitude / mass.getMagnitude());
 	Acceleration result(quantum.getMagnitude(), quantum.getScaling(), quantum.getUnit());

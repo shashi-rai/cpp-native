@@ -18,61 +18,60 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef QFT_PRESSURE_H
-#define QFT_PRESSURE_H
+#ifndef QFT_POWER_H
+#define QFT_POWER_H
 
 #include <string>
 #include <vector>
-#include "density.h"
-#include "force.h"
-#include "../shp/area.h"
+#include "time.h"
 
 namespace qft {
 
-class Pressure {
+class Power {
     std::string name;
     shp::Unit unit;
-    qft::Force force;
-    shp::Area area;
+    shp::Quantity energy;
+    qft::Time interval;
 public:
     // Constructors
-    Pressure();
-    Pressure(std::string name);
-    Pressure(const float force);
-    Pressure(const float force, const float length, const float breadth);
-    Pressure(const qft::Force& force, const shp::Area& area);
-    Pressure(std::string name, const shp::Unit& unit);
-    Pressure(std::string name, const float force, const float length, const float breadth);
-    Pressure(std::string name, const qft::Force& force, const shp::Area& area);
-    Pressure(std::string name, const qft::Force& force, const shp::Area& area, const shp::Unit& unit);
+    Power();
+    Power(std::string name);
+    Power(const float energy);
+    Power(const float energy, const float interval);
+    Power(const shp::Quantity& energy, const Time& interval);
+    Power(const shp::Quantity& energy, const Time& interval, const shp::Unit& unit);
+    Power(std::string name, const shp::Unit& unit);
+    Power(std::string name, const float energy, const float interval);
+    Power(std::string name, const float energy, const float interval, const std::string unit);
+    Power(std::string name, const shp::Quantity& energy, const qft::Time& interval);
+    Power(std::string name, const shp::Quantity& energy, const qft::Time& interval, const shp::Unit& unit);
 
     // Destructors
-    ~Pressure();
+    ~Power();
 
     // Operator overloading
-    bool operator==(const Pressure& peer) const;
-    Pressure operator+(const Pressure& peer) const;
-    Pressure operator-(const Pressure& peer) const;
-    Pressure operator*(const Pressure& peer) const;
-    Pressure operator/(const Pressure& peer) const;
-    Pressure operator%(const Pressure& peer) const;
+    bool operator==(const Power& peer) const;
+    Power operator+(const Power& peer) const;
+    Power operator-(const Power& peer) const;
+    Power operator*(const Power& peer) const;
+    Power operator/(const Power& peer) const;
+    Power operator%(const Power& peer) const;
 
     // Getters
     std::string getName() const { return name; }
     shp::Unit getUnit() const { return unit; }
-    qft::Force getForce() const { return force; }
-    shp::Area getArea() const { return area; }
+    shp::Quantity getEnergy() const { return energy; }
+    qft::Time getInterval() const { return interval; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
     void setUnit(const shp::Unit& value) { this->unit = value; }
-    void setForce(const qft::Force& magnitude) { this->force = magnitude; }
-    void setArea(const shp::Area& amount) { this->area = amount; }
+    void setEnergy(const shp::Quantity& magnitude) { this->energy = magnitude; }
+    void setInterval(const qft::Time& delta) { this->interval = delta; }
 
     // Additional methods
     shp::Quantity getTotal() const;
-    Density getDensity(const shp::Volume& volume) const;
-    virtual Pressure copy();
+    virtual Power copy();
     virtual void clear();
     virtual std::string print();
     shp::Quantity getComponent(float phase) const;
@@ -80,8 +79,8 @@ public:
     static const std::string UNIT;
 };
 
-typedef std::vector<Pressure > PressureArray;
+typedef std::vector<Power > PowerArray;
 
 } // namespace qft
 
-#endif //QFT_PRESSURE_H
+#endif //QFT_POWER_H

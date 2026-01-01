@@ -227,12 +227,30 @@ void Acceleration::applyChangeMagnitude() {
 }
 
 shp::Quantity Acceleration::getTotal() const {
-	qft::Velocity invariant = *this;;	// non-accelerating component only
+	qft::Velocity invariant = *this;		// non-accelerating component only
     shp::Quantity velocity = (invariant.getTotal() + shp::Quantity(changeSpeed,
 			getDisplacement().getScaling(), getUnit()));
     shp::Direction change = (invariant.getDirection() + getAngularShiftRate());
     float acceleration = (velocity.getMagnitude() * cos(change.toRadians()));
     shp::Quantity result(acceleration, getDisplacement().getScaling(), getUnit());
+    return result;
+}
+
+shp::Quantity Acceleration::getLinear(const Time& slice) {
+	qft::Velocity invariant = *this;		// non-accelerating component only
+	shp::Quantity frequency = slice.getFrequency();
+    shp::Quantity velocity = (invariant.getTotal() + shp::Quantity(changeSpeed,
+			getDisplacement().getScaling(), getUnit()));
+	float magnitude = (velocity.getMagnitude() * frequency.getMagnitude());
+	short int scaling = (velocity.getScaling() + frequency.getScaling());
+    shp::Quantity result(magnitude, scaling, UNIT); result.adjustScaling();
+    return result;
+}
+
+shp::Quantity Acceleration::getAngular(const Time& theta) {
+	qft::Velocity invariant = *this;		// non-accelerating component only
+	shp::Quantity rotation = invariant.getAngular((changeAngle + theta.getMagnitude()));
+    shp::Quantity result(rotation.getMagnitude(), rotation.getScaling(), rotation.getUnit());
     return result;
 }
 
