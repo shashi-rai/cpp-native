@@ -50,6 +50,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/axis.o \
 		$(OBJFOLDR)/cellular.o \
 		$(OBJFOLDR)/change.o \
+		$(OBJFOLDR)/confinement.o \
 		$(OBJFOLDR)/coordinate.o \
 		$(OBJFOLDR)/curvature.o \
 		$(OBJFOLDR)/direction.o \
@@ -73,6 +74,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/axis.o \
 		$(OBJFOLDR)/cellular.o \
 		$(OBJFOLDR)/change.o \
+		$(OBJFOLDR)/confinement.o \
 		$(OBJFOLDR)/coordinate.o \
 		$(OBJFOLDR)/curvature.o \
 		$(OBJFOLDR)/direction.o \
@@ -105,6 +107,9 @@ $(OBJFOLDR)/cellular.o: cellular.cpp
 
 $(OBJFOLDR)/change.o: change.cpp
 	$(CPPTOOL) -c change.cpp -o $(OBJFOLDR)/change.o $(CXXFLAGS)
+
+$(OBJFOLDR)/confinement.o: confinement.cpp
+	$(CPPTOOL) -c confinement.cpp -o $(OBJFOLDR)/confinement.o $(CXXFLAGS)
 
 $(OBJFOLDR)/coordinate.o: coordinate.cpp
 	$(CPPTOOL) -c coordinate.cpp -o $(OBJFOLDR)/coordinate.o $(CXXFLAGS)

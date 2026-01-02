@@ -1,19 +1,20 @@
 # Bhojpur C++ - Native Collections
 
-This repository is meant for software developers. It comprises of a collection
-of commonly used __algorithms__ written in **C++** __programming language__. A
-set of native libraries located in specific folders can be compiled by software
-developers to include the same in their own applications.
+This source code repository is designed to be used by software developers. It
+comprises of a collection of commonly used software __algorithms__ written in
+**C++** __programming language__. A set of native (e.g., macOS, Linux, UNIX)
+environment C++ libraries located in specific folders could be compiled by the
+software developers to include the same in their own industry applications.
 
 ## Basic Requirements
 
-Prior using this repository, a POSIX compliant software development environment
-would be required. Ideally, you could have 
+Prior to using this source code repository, a POSIX compliant software
+development environment would be required. Ideally, you could have 
 
 1. __macOS__ or __Linux__ operating system
 2. __git__ - version control system for maintaining the source code
-3. __make__ - software build tool to compile C++ programs
-4. GNU __C++__ Compiler - free &amp; opern soure software
+3. __make__ - software build tool to compile all C++ programs
+4. GNU __C++__ Compiler - free &amp; open source software
 5. Microsoft Visual Studio Code IDE for editing the source code
 
 ## Folder Hierarchy
@@ -23,54 +24,60 @@ The following folders serve specific purpose with regard to software development
 1. [inc](/inc/) - include header files
 2. [lib](/lib/) - pre-compiled library files
 3. [obj](/obj/) - pre-compiled object files
-4. [act](/act/) - accounting algorithms
+4. [act](/act/) - financial accounting algorithms
 5. [bio](/bio/) - biological algorithms
 6. [bit](/bit/) - information theory algorithms
 7. [che](/che/) - chemical algorithms
 8. [dsa](/dsa/) - data structure algorithms
-9. [eco](/eco/) - economics algorithms
+9. [eco](/eco/) - economic model algorithms
 10. [fin](/fin/) - financial algorithms
 11. [gis](/gis/) - geospatial system algorithms
 12. [grt](/grt/) - general relativity algorithms
-13. [phy](/phy/) - physical algorithms
-14. [qft](/qft/) - quantum field algorithms
-15. [shp](/shp/) - geometrical shape algorithms
-16. [web](/web/) - web development system
+13. [img](/img/) - digital imaging algorithms
+14. [phy](/phy/) - physical algorithms
+15. [qft](/qft/) - quantum field algorithms
+16. [shp](/shp/) - geometrical shape algorithms
+17. [web](/web/) - web development system
 
 ## Source Code Compilation
 
-Besides using te following command in the main folder, you could compile each
-domain-specific folder independently
+Besides using the following command in the main folder, you could compile each
+domain-specific folder independently. The following command would build all the
+sub-folders as well. It will add native libraries into [lib](/lib/) folder.
 
 ```bash
 $ make all
 ```
 
-Once all the libraries are built in respective sub-directories, you could compile
-the application alone by simply using the following command
+Once all the vative libraries are built in respective sub-directories, you could
+compile a custom software application alone by simply using the following command
 
 ```bash
 $ make app
 ```
 
+For example, the [bhojpur.app](bhojpur.app) is a custom application built from
+[main.cpp](main.cpp) in the root folder.
+
 ### Understanding Dependencies
 
-The micro-world phenomenon is modeled using the following libraries
+The microscropic realm phenomenon is modeled using the following native C++ libraries
 
 - firstly, the [dsa](/dsa/) library must be compiled to use available data containers
 - then, compile [shp](/shp/) library which forms the base for several other libraries
+- then, compile [img](/img/) library which forms the base for image processing libraries
 - then, compile [qft](/qft/) library that models core concepts of the physical reality
 - then, compile [phy](/phy/) library that builds on [qft](/qft/) to model the Physics
 - then, compile [che](/che/) library that builds on [phy](/phy/) to model the Chemistry
 - then, compile [bio](/bio/) library that builds on [che](/che/) to model the Biology
 - then, compile [bit](/bit/) library that builds on [qft](/qft/) to model the Information
 
-The macro-world phenomenon is modeled using the following libraries
+The macro-world phenomenon is modeled using the following native C++ libraries
 
 - the [gis](/gis/) library could be compiled after [shp](/shp/) library is ready
 - the [grt](/grt/) library could be compiled after [gis](/gis/) library is ready
 
-The financial system is modeled using the following libraries
+The financial system is modeled using the following native C++ libraries
 
 - the [act](/act/) library could be compiled after [shp](/shp/) library is ready
 - the [eco](/eco/) library could be compiled after [act](/act/) library is ready
@@ -78,25 +85,28 @@ The financial system is modeled using the following libraries
 
 ## Folder Cleanup
 
-To clean all temporary file folders (e.g., obj, lib)
+To clean up all the temporary files and folders (e.g., obj, lib)
 
 ```bash
 $ make clean
 ```
 
-To clean only pre-compiled object files folder
+However, to clean up pre-compiled C++ object files containing folder alone,
+you can issue the following command
 
 ```bash
 $ make clean-objs
 ```
 
-To clean only pre-compiled library folder
+Also, to clean up pre-compiled C++ library files containing folder alone,
+you can issue the following command 
 
 ```bash
 $ make clean-libs
 ```
 
-To clean only pre-compiled application files
+And, to clean up only pre-compiled custom application files, you can issue
+the following command
 
 ```bash
 $ make clean-apps
@@ -104,15 +114,15 @@ $ make clean-apps
 
 ## Source Code Repository
 
-The source code of [cpp-native](https://github.com/shashi-rai/cpp-native) is fully
+The entire source code of [cpp-native](https://github.com/shashi-rai/cpp-native) is
 maintained at [GitHub](https://github.com). You could push modified source code to
-the repository using the following command
+this repository by using the following command
 
 ```bash
 $ make repo
 ```
 
-However, use the changed commands first. For example
+However, update changed files by issueing the following commands first. For example
 
 ### Add Source File/Folder
 
@@ -132,17 +142,27 @@ $ git rm a.cpp
 
 ## Executing Sample Application
 
-To run [bhojpur.app](bhojpur.app) (i.e., sample program) built using libraries
-compiled after calling __make__ command, you can issue the following in your
-command shell
+To run [bhojpur.app](bhojpur.app) (i.e., a custom application program) built
+using native C++ libraries compiled after calling __make__ command, you could
+issue the following command in your shell environment
 
 ```bash
 $ ./bhojpur.app -v
 ```
 
-It would simply print a copyright message. Perhaps, you could customise this
-[main.cpp](main.cpp) file further and recompile to test your ideas.
+It would simply print a copyright message. Perhaps, you could customize this
+[main.cpp](main.cpp) source code file and recompile it to test your new ideas
+further.
 
-## Software Developer
+## Software Developers
 
-- Shashi Bhushan Rai, [Bhojpur Consulting Private Limited](https://www.bhojpur-consulting.com), India
+- Shashi Bhushan Rai, [Bhojpur Consulting](https://www.bhojpur-consulting.com), India
+- Bimla Pandey, [Bhojpur Consulting](https://www.bhojpur-consulting.com), India
+- Divya Rai, [Bhojpur Consulting](https://www.bhojpur-consulting.com), India
+- Anushka Rai, [Bhojpur Consulting](https://www.bhojpur-consulting.com), India
+
+## Copyright Owner
+
+This software is originally created and distributed by
+
+- [Bhojpur Consulting Private Limited](https://www.bhojpur-consulting.com), India

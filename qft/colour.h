@@ -24,16 +24,38 @@
 #include <cmath>
 #include <sstream>
 #include <vector>
-#include "../shp/quantity.h"
+#include "charge.h"
+#include "../img/rgb.h"
 
 namespace qft {
 
-class Colour {
-    float charge;
+class Colour : public Charge {
+    img::RGB colour;
 public:
     // Constructors
     Colour();
-    Colour(const float charge);
+    Colour(const std::shared_ptr<Field> field);
+    Colour(const img::RGB& colour);
+    Colour(const img::RGB& colour, const std::shared_ptr<Field> field);
+    Colour(std::string unit);
+    Colour(const shp::Unit& unit);
+    Colour(const img::RGB& colour, const shp::Unit& unit);
+    Colour(const img::RGB& colour, const shp::Unit& unit, const std::shared_ptr<Field> field);
+    Colour(const float magnitude);
+    Colour(const float magnitude, std::string unit);
+    Colour(const float magnitude, const shp::Unit& unit);
+    Colour(const img::RGB& colour, const float magnitude, const shp::Unit& unit);
+    Colour(const float magnitude, const shp::Unit& unit, const std::shared_ptr<Field> field);
+    Colour(const img::RGB& colour, const float magnitude, const shp::Unit& unit, const std::shared_ptr<Field> field);
+    Colour(const float magnitude, const short int scaling);
+    Colour(const img::RGB& colour, const float magnitude, const short int scaling);
+    Colour(const float magnitude, const short int scaling, const std::shared_ptr<Field> field);
+    Colour(const img::RGB& colour, const float magnitude, const short int scaling, const std::shared_ptr<Field> field);
+    Colour(const float magnitude, const short int scaling, std::string unit);
+    Colour(const float magnitude, const short int scaling, const shp::Unit& unit);
+    Colour(const img::RGB& colour, const float magnitude, const short int scaling, const shp::Unit& unit);
+    Colour(const float magnitude, const short int scaling, const shp::Unit& unit, const std::shared_ptr<Field> field);
+    Colour(const img::RGB& colour, const float magnitude, const short int scaling, const shp::Unit& unit, const std::shared_ptr<Field> field);
 
     // Destructors
     ~Colour();
@@ -47,14 +69,20 @@ public:
     Colour operator%(const Colour& peer) const;
 
     // Getters
-    float getCharge() const { return charge; }
+    img::RGB getColour() const { return colour; }
 
     // Setters
-    void setCharge(const float amount) { this->charge = amount; }
+    void setColour(const img::RGB& object) { this->colour = object; }
 
     // Additional methods
     bool hasNoColour() const;
-    virtual Colour copy();
+    float getRed() const;
+    void setRed(const float value);
+    float getGreen() const;
+    void setGreen(const float value);
+    float getBlue() const;
+    void setBlue(const float value);
+    virtual Charge copy();
     virtual void clear();
     virtual std::string print();
 

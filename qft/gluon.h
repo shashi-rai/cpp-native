@@ -25,11 +25,12 @@
 #include <vector>
 #include "energy.h"
 #include "boson.h"
+#include "colour.h"
 
 namespace qft {
 
 class Gluon : public Boson {
-
+    Colour charge;
 public:
     // Constructors
     Gluon();
@@ -53,8 +54,10 @@ public:
     Gluon operator%(const Gluon& peer) const;
 
     // Getters
+    Colour getCharge() const { return charge; }
 
     // Setters
+    void setCharge(const Colour& object) { this->charge = object; }
 
     // Additional methods
     virtual shp::Point copy();

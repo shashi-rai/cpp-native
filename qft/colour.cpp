@@ -24,11 +24,120 @@ namespace qft {
 
 const float Colour::DEFAULT_VALUE = shp::Quantity::DEFAULT_VALUE;   // e.g., 0.0f 
 
-Colour::Colour() : charge(DEFAULT_VALUE) {
+Colour::Colour()
+        : Charge(), colour() {
 
 }
 
-Colour::Colour(const float charge) : charge(charge) {
+Colour::Colour(const std::shared_ptr<Field> field)
+        : Charge(field), colour() {
+
+}
+
+Colour::Colour(const img::RGB& colour)
+        : Charge(), colour(colour) {
+
+}
+
+Colour::Colour(const img::RGB& colour, const std::shared_ptr<Field> field)
+        : Charge(field), colour(colour) {
+
+}
+
+Colour::Colour(std::string unit)
+        : Charge(unit), colour() {
+
+}
+
+Colour::Colour(const shp::Unit& unit)
+        : Charge(unit), colour() {
+
+}
+
+Colour::Colour(const img::RGB& colour, const shp::Unit& unit)
+        : Charge(unit), colour(colour) {
+
+}
+
+Colour::Colour(const img::RGB& colour, const shp::Unit& unit, const std::shared_ptr<Field> field)
+        : Charge(unit, field), colour(colour) {
+
+}
+
+Colour::Colour(const float magnitude)
+        : Charge(magnitude), colour() {
+
+}
+
+Colour::Colour(const float magnitude, std::string unit)
+        : Charge(magnitude, unit), colour() {
+
+}
+
+Colour::Colour(const float magnitude, const shp::Unit& unit)
+        : Charge(magnitude, unit), colour() {
+
+}
+
+Colour::Colour(const img::RGB& colour,const float magnitude, const shp::Unit& unit)
+        : Charge(magnitude, unit), colour(colour) {
+
+}
+
+Colour::Colour(const float magnitude, const shp::Unit& unit, const std::shared_ptr<Field> field)
+        : Charge(magnitude, unit, field), colour() {
+
+}
+
+Colour::Colour(const img::RGB& colour, const float magnitude, const shp::Unit& unit, const std::shared_ptr<Field> field)
+        : Charge(magnitude, unit, field), colour(colour) {
+
+}
+
+Colour::Colour(const float magnitude, const short int scaling)
+        : Charge(magnitude, scaling), colour() {
+
+}
+
+Colour::Colour(const img::RGB& colour, const float magnitude, const short int scaling)
+        : Charge(magnitude, scaling), colour(colour) {
+
+}
+
+Colour::Colour(const float magnitude, const short int scaling, const std::shared_ptr<Field> field)
+        : Charge(magnitude, scaling, field), colour() {
+
+}
+
+Colour::Colour(const img::RGB& colour, const float magnitude, const short int scaling, const std::shared_ptr<Field> field)
+        : Charge(magnitude, scaling, field), colour(colour) {
+
+}
+
+Colour::Colour(const float magnitude, const short int scaling, std::string unit)
+        : Charge(magnitude, scaling, shp::Unit(unit)), colour() {
+
+}
+
+Colour::Colour(const float magnitude, const short int scaling, const shp::Unit& unit)
+        : Charge(magnitude, scaling, unit), colour() {
+
+}
+
+Colour::Colour(const img::RGB& colour, const float magnitude, const short int scaling, const shp::Unit& unit)
+        : Charge(magnitude, scaling, unit), colour(colour) {
+
+}
+
+Colour::Colour(const float magnitude, const short int scaling, const shp::Unit& unit,
+        const std::shared_ptr<Field> field)
+        : Charge(magnitude, scaling, unit, field), colour() {
+
+}
+
+Colour::Colour(const img::RGB& colour, const float magnitude, const short int scaling, const shp::Unit& unit,
+        const std::shared_ptr<Field> field)
+        : Charge(magnitude, scaling, unit, field), colour(colour) {
 
 }
 
@@ -37,41 +146,81 @@ Colour::~Colour() {
 }
 
 bool Colour::operator==(const Colour& peer) const {
-    return (charge == peer.charge);
+    return (static_cast<const Charge&>(*this) == static_cast<const Charge&>(peer))
+        && (colour == peer.colour);
 }
 
 Colour Colour::operator+(const Colour& peer) const {
-    return Colour((charge + peer.charge));
+    Charge self = *this, other = peer;
+    Charge result = (self + other);
+    return Colour((colour + peer.colour),
+        result.getMagnitude(), result.getScaling(), result.getUnit(), result.getField());
 }
 
 Colour Colour::operator-(const Colour& peer) const {
-    return Colour((charge - peer.charge));
+    Charge self = *this, other = peer;
+    Charge result = (self - other);
+    return Colour((colour - peer.colour),
+        result.getMagnitude(), result.getScaling(), result.getUnit(), result.getField());
 }
 
 Colour Colour::operator*(const Colour& peer) const {
-    return Colour((charge * peer.charge));
+    Charge self = *this, other = peer;
+    Charge result = (self * other);
+    return Colour((colour * peer.colour),
+        result.getMagnitude(), result.getScaling(), result.getUnit(), result.getField());
 }
 
 Colour Colour::operator/(const Colour& peer) const {
-    return Colour((charge / peer.charge));
+    Charge self = *this, other = peer;
+    Charge result = (self / other);
+    return Colour((colour / peer.colour),
+        result.getMagnitude(), result.getScaling(), result.getUnit(), result.getField());
 }
 
 Colour Colour::operator%(const Colour& peer) const {
-    float result = fmod(charge, peer.charge);
-    return Colour((result));
+    Charge self = *this, other = peer;
+    Charge result = (self % other);
+    return Colour((colour % peer.colour),
+        result.getMagnitude(), result.getScaling(), result.getUnit(), result.getField());
 }
 
 bool Colour::hasNoColour() const {
-    return charge == DEFAULT_VALUE;
+    return colour == colour.getWhiteColour();
 }
 
-Colour Colour::copy() {
-    Colour fresh(charge);
+float Colour::getRed() const {
+    return colour.getRed();
+}
+
+void Colour::setRed(const float value) {
+	colour.setRed(value);
+}
+
+float Colour::getGreen() const {
+	return colour.getGreen();
+}
+
+void Colour::setGreen(const float value) {
+	colour.setGreen(value);
+}
+
+float Colour::getBlue() const {
+	return colour.getBlue();
+}
+
+void Colour::setBlue(const float value) {
+	colour.setBlue(value);
+}
+
+Charge Colour::copy() {
+    Colour fresh(colour, getMagnitude(), getScaling(), getUnit(), getField());
     return fresh;
 }
 
 void Colour::clear() {
-    charge = DEFAULT_VALUE;
+    Charge::clear();
+    colour.clear();
     return;
 }
 
@@ -81,7 +230,7 @@ std::string Colour::print() {
     if (hasNoColour())
         result << "Ψ";
     else
-        result << (charge);
+        result << (colour.toHex());
     result << "⟩";
 	return result.str();
 }

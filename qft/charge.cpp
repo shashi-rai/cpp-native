@@ -53,6 +53,11 @@ Charge::Charge(const shp::Unit& unit)
     setField(nullptr);
 }
 
+Charge::Charge(const shp::Unit& unit, const std::shared_ptr<Field> field)
+        : shp::Quantity(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, unit) {
+    setField(field);
+}
+
 Charge::Charge(const float magnitude)
         : shp::Quantity(magnitude, ATOMIC_SCALE,
             shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_CHARGE)) {
@@ -69,10 +74,21 @@ Charge::Charge(const float magnitude, const shp::Unit& unit)
     setField(nullptr);
 }
 
+Charge::Charge(const float magnitude, const shp::Unit& unit, const std::shared_ptr<Field> field)
+        : shp::Quantity(magnitude, ATOMIC_SCALE, unit) {
+    setField(field);
+}
+
 Charge::Charge(const float magnitude, const short int scaling)
         : shp::Quantity(magnitude, scaling,
             shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_CHARGE)) {
     setField(nullptr);
+}
+
+Charge::Charge(const float magnitude, const short int scaling, const std::shared_ptr<Field> field)
+        : shp::Quantity(magnitude, scaling,
+            shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_CHARGE)) {
+    setField(field);
 }
 
 Charge::Charge(const float magnitude, const short int scaling, std::string unit)

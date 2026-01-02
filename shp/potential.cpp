@@ -52,30 +52,30 @@ Potential::Potential(const float high, const float low, const Angular& origin)
 }
 
 Potential::Potential(const std::string unit)
-    : Quantity(unit), low(), origin() {
+        : Quantity(unit), low(), origin() {
 
 }
 
 Potential::Potential(const Unit& unit)
-    : Quantity(unit), low(), origin() {
+        : Quantity(unit), low(), origin() {
 }
 
 Potential::Potential(const Unit& unit, const Angular& origin)
-    : Quantity(unit), low(), origin(origin) {
+        : Quantity(unit), low(), origin(origin) {
 }
 
 Potential::Potential(const short int scaling, const std::string unit)
-    : Quantity(scaling, unit), low(), origin() {
+        : Quantity(scaling, unit), low(), origin() {
 
 }
 
 Potential::Potential(const short int scaling, const Unit& unit)
-    : Quantity(scaling, unit), low(), origin() {
+        : Quantity(scaling, unit), low(), origin() {
 
 }
 
 Potential::Potential(const short int scaling, const Unit& unit, const Angular& origin)
-    : Quantity(scaling, unit), low(), origin(origin) {
+        : Quantity(scaling, unit), low(), origin(origin) {
 
 }
 
