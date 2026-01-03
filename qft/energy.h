@@ -40,7 +40,9 @@ class Energy : public shp::Phase {
 public:
     // Constructors
     Energy();
+    Energy(const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Energy(std::string name);
+    Energy(std::string name, const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Energy(const float gradient);
     Energy(std::string name, const float gradient);
     Energy(const float amplitude, const float gradient);
@@ -182,6 +184,12 @@ public:
     void setCharge(const qft::Charge& quantum) { charge = quantum; }
 
     // Additional methods
+    shp::Distance getRadius() const;
+    void setRadius(const shp::Distance& length);
+    std::shared_ptr<Field> getMassField() const;
+    void setMassField(const std::shared_ptr<Field> field);
+    std::shared_ptr<Field> getChargeField() const;
+    void setChargeField(const std::shared_ptr<Field> field);
     shp::Quantity getTotal() const;
     Density getDensity(const shp::Volume& volume) const;
     shp::Quantity getPotential() const;

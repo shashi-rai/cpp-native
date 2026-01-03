@@ -36,14 +36,23 @@ class Quark : public Particle {
 public:
     // Constructors
     Quark();
+    Quark(const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Quark(std::string name);
+    Quark(std::string name,
+        const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Quark(const float wavelength);
+    Quark(const float wavelength,
+        const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Quark(std::string name, const float wavelength);
+    Quark(std::string name, const float wavelength,
+        const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Quark(std::string name, const Energy& energy);
     Quark(std::string name, const Spin& spin, const Energy& energy);
     Quark(std::string name, const Mass& mass, const Charge& charge);
+    Quark(std::string name, const shp::Distance& wavelength, const Mass& mass, const Charge& charge);
     Quark(std::string name, const float spin, const float mass, const float charge);
     Quark(std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
+    Quark(std::string name, const shp::Distance& wavelength, const Spin& spin, const Mass& mass, const Charge& charge);
 
     // Destructors
     ~Quark();
@@ -68,10 +77,13 @@ public:
     virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();
+private:
+    void initialize();
 public:
-    static const Mass getMassLow(short int number);
-    static const Mass getMassHigh(short int number);
-    static const Charge getElectricCharge(short int number);
+    static const Mass getMassLow(short int number, const std::shared_ptr<Field> field);
+    static const Mass getMassHigh(short int number, const std::shared_ptr<Field> field);
+    static const Charge getElectricCharge(short int number, const std::shared_ptr<Field> field);
+    static const shp::Distance getComptonWavelength(short int number);
 public:
     enum TYPE {
         UP, DOWN,           // First Generation
@@ -85,9 +97,13 @@ public:
     static const short int COLOUR_MAX;
     static const short int GENERATION_MAX;
     static const float MASS_LOWER[];
-     static const float MASS_HIGHER[];
+    static const float MASS_HIGHER[];
     static const float ELECTRIC_CHARGE[];
     static const float DEFAULT_SPIN;
+    static const float RADIUS;
+    static const short int RADIUS_SCALE;
+    static const float COMPTON_WAVELENGTH[];
+    static const short int WAVELENGTH_SCALE;
 };
 
 typedef std::vector<Quark > QuarkArray;

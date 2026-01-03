@@ -30,12 +30,16 @@
 
 namespace qft {
 
+// To enable compiler resolve forward declarations
+class Field;
+
 class Neutron : public Particle {
     Quark up;
     Quark down[2];
 public:
     // Constructors
     Neutron();
+    Neutron(const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Neutron(std::string name);
     Neutron(const float wavelength);
     Neutron(std::string name, const float wavelength);
@@ -74,6 +78,10 @@ public:
     static const short int DOWN_MIN;
     static const short int DOWN_MAX;
     static const float DEFAULT_SPIN;
+    static const float RADIUS;
+    static const short int RADIUS_SCALE;
+    static const float COMPTON_WAVELENGTH;
+    static const short int WAVELENGTH_SCALE;
 };
 
 typedef std::vector<Neutron > NeutronArray;

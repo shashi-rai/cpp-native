@@ -245,6 +245,14 @@ bool Field::isStructured() const {
     return physical != nullptr;
 }
 
+shp::Distance Field::getRadius() const {
+    return orientation.getRadius().getMagnitude();
+}
+
+void Field::setRadius(const shp::Distance& length) {
+    orientation.setRadius(length);
+}
+
 void Field::changePoint(const Action& action) {
     int x = action.getCoordinate().getX();
     int y = action.getCoordinate().getY();
@@ -292,9 +300,9 @@ void Field::clear() {
 std::string Field::print() {
     std::stringstream result;
     result << "∇";
-    result << Cellular::print() << ",";
     result << potential.print() << ",";
-    result << orientation.print();
+    result << orientation.print() << ",";
+    result << Cellular::print();
 	return result.str();
 }
 

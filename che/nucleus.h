@@ -29,6 +29,9 @@
 
 namespace che {
 
+// To enable compiler resolve forward declarations
+class Field;
+
 class Nucleus {
     std::string symbol;
     short int proton;
@@ -37,18 +40,18 @@ class Nucleus {
 public:
     // Constructors
     Nucleus();
-    Nucleus(short int proton);
-    Nucleus(short int proton, short int neutron);
+    Nucleus(const short int proton);
+    Nucleus(const short int proton, const short int neutron);
     Nucleus(std::string symbol);
-    Nucleus(std::string symbol, short int proton);
-    Nucleus(std::string symbol, short int proton, short int neutron);
-    Nucleus(std::string symbol, short int proton, short int neutron,
+    Nucleus(std::string symbol, const short int proton);
+    Nucleus(std::string symbol, const short int proton, const short int neutron);
+    Nucleus(std::string symbol, const short int proton, const short int neutron,
         qft::Mass& mass);
-    Nucleus(std::string symbol, short int proton, short int neutron,
+    Nucleus(std::string symbol, const short int proton, const short int neutron,
         qft::Charge& charge);
-    Nucleus(std::string symbol, short int proton, short int neutron,
+    Nucleus(std::string symbol, const short int proton, const short int neutron,
         qft::Mass& mass, qft::Charge& charge);
-    Nucleus(std::string symbol, short int proton, short int neutron,
+    Nucleus(std::string symbol, const short int proton, const short int neutron,
         qft::Energy& energy);
 
     // Destructors
@@ -69,17 +72,23 @@ public:
 
     // Setters
     void setSymbol(const std::string& name) { this->symbol = name; }
-    void setProton(short int number) { this->proton = number; }
-    void setNeutron(short int number) { this->neutron = number; }
+    void setProton(const short int number) { this->proton = number; }
+    void setNeutron(const short int number) { this->neutron = number; }
     void setMass(const qft::Mass& amount) { this->energy.setMass(amount); }
     void setCharge(const qft::Charge& amount) { this->energy.setCharge(amount); }
     void setEnergy(const qft::Energy& amount) { this->energy = amount; }
 
     // Additional methods
     std::string getElementName() const;
+    std::shared_ptr<qft::Field> getElectric() const;
+    void setElectric(std::shared_ptr<qft::Field> address);
+    std::shared_ptr<qft::Field> getGravity() const;
+    void setGravity(std::shared_ptr<qft::Field> address);
     virtual Nucleus copy();
     virtual void clear();
     virtual std::string print();
+private:
+    void initialize();
 public:
     static const std::string getSymbol(short int number);
     static const std::string getName(short int number);

@@ -124,7 +124,7 @@ std::string Cellular::print() {
     std::stringstream result;
     result << "{ce";
 	result << Point::print() << ",sz:";
-	result << shells.size() << "}\n{";
+	result << shells.size() << "}{";
     for (int i = 0; i < shells.size(); i++) {
         result << "\t" << shells[i].print() << std::endl;
     }

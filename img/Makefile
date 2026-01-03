@@ -46,13 +46,18 @@ clean-libs: clean-custom
 
 $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/cmy.o \
+		$(OBJFOLDR)/raster.o \
 		$(OBJFOLDR)/rgb.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
 		$(OBJFOLDR)/cmy.o \
+		$(OBJFOLDR)/raster.o \
 		$(OBJFOLDR)/rgb.o
 
 $(OBJFOLDR)/cmy.o: cmy.cpp
 	$(CPPTOOL) -c cmy.cpp -o $(OBJFOLDR)/cmy.o $(CXXFLAGS)
+
+$(OBJFOLDR)/raster.o: raster.cpp
+	$(CPPTOOL) -c raster.cpp -o $(OBJFOLDR)/raster.o $(CXXFLAGS)
 
 $(OBJFOLDR)/rgb.o: rgb.cpp
 	$(CPPTOOL) -c rgb.cpp -o $(OBJFOLDR)/rgb.o $(CXXFLAGS)

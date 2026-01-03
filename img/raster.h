@@ -18,64 +18,63 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef DSA_TENSOR_H
-#define DSA_TENSOR_H
+#ifndef IMG_RASTER_H
+#define IMG_RASTER_H
 
-#include <ctime>
-#include <iostream>
-#include <random>
+#include <climits>
 #include <sstream>
+#include <string>
 #include <vector>
-#include "matrix.h"
+#include "rgb.h"
 
-namespace dsa {
+namespace img {
 
-class Tensor {
-    MatrixArray matrices;
+class Raster {
+    std::string layer;
+    std::vector<std::vector<RGB> > pixels;
 public:
     // Constructors
-    Tensor();
-    Tensor(const int dims);
-    Tensor(const int dims, const int rows, const int cols);
+    Raster();
+    Raster(const int dim);
+    Raster(const int rows, const int cols);
+    Raster(const int rows, const int cols, const RGB& value);
+    Raster(std::string layer);
+    Raster(std::string layer, const int dim);
+    Raster(std::string layer, const int rows, const int cols);
+    Raster(std::string layer, const int rows, const int cols, const RGB& value);
 
     // Destructors
-    ~Tensor();
+    ~Raster();
 
     // Access operator
-    Matrix& operator()(const int index) { return matrices[index]; }
-    const Matrix& operator()(const int index) const { return matrices[index]; }
+    RGB operator()(const int row, const int col) { return pixels[row][col]; }
+    const RGB operator()(const int row, const int col) const { return pixels[row][col]; }
 
-    double& operator()(const int dim, const int row, const int col) { return matrices[dim](row, col); }
-	const double& operator()(const int dim, const int row, const int col) const { return matrices[dim](row, col); }
+    // Getters
+    std::string getLayer() const { return layer; }
+
+    // Setters
+    void setLayer(const std::string& layer) { this->layer = layer; }
 
     // Additional methods
-    void set(const double value);
-    void set(const int index, const double value);
-    void set(const int index, const Matrix& value);
-    Matrix get(const int index) const;
-    int getDims() const;
+    void set(const RGB& value);
+    void set(const int row, const int col, const RGB& value);
+    RGB get(const int row, const int col) const;
     int getRows() const;
     int getCols() const;
-    Tensor copy() const;
+    void resize(const int rows, const int cols);
+    Raster copy() const;
     void clear();
-    void rand(const float min, const float max);
-    void randnorm(const float mean, const float stddev);
     std::string print();
-    std::string print(const int index);
-private:
-    void resize(const int dims, const int rows, const int cols);
 public:
-    static const double DEFAULT_VALUE;
-    static const int DIMS_MIN;
-    static const int DIMS_MAX;
     static const int ROWS_MIN;
     static const int ROWS_MAX;
     static const int COLS_MIN;
     static const int COLS_MAX;
 };
 
-typedef std::vector<Tensor > TensorArray;
+typedef std::vector<Raster > RasterArray;
 
-} // namespace dsa
+} // namespace img
 
-#endif //DSA_TENSOR_H
+#endif //IMG_RASTER_H

@@ -38,6 +38,7 @@ class Electron : public Particle {
 public:
     // Constructors
     Electron();
+    Electron(const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Electron(const float polarization);
     Electron(const float polarization, const float azimuthal);
     Electron(std::string name);
@@ -95,10 +96,15 @@ public:
     virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();
-
+private:
+    void initialize();
 public:
     static const short int DEFAULT_VALUE;
     static const float DEFAULT_SPIN;
+    static const float RADIUS;
+    static const short int RADIUS_SCALE;
+    static const float COMPTON_WAVELENGTH;
+    static const short int WAVELENGTH_SCALE;
 };
 
 typedef std::vector<Electron > ElectronArray;

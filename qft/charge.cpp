@@ -64,6 +64,12 @@ Charge::Charge(const float magnitude)
     setField(nullptr);
 }
 
+Charge::Charge(const float magnitude, const std::shared_ptr<Field> field)
+        : shp::Quantity(magnitude, ATOMIC_SCALE,
+            shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_CHARGE)) {
+    setField(field);
+}
+
 Charge::Charge(const float magnitude, std::string unit)
         : shp::Quantity(magnitude, ATOMIC_SCALE, shp::Unit(unit)) {
     setField(nullptr);
@@ -163,6 +169,20 @@ Force Charge::operator()(const Charge& peer, const shp::Distance sepration,
 
 bool Charge::isOwned() const {
     return field != nullptr;
+}
+
+shp::Distance Charge::getRadius() const {
+    shp::Distance result;
+    if (isOwned()) {
+        result = field->getRadius();
+    }
+    return result;
+}
+
+void Charge::setRadius(const shp::Distance& length) {
+    if (isOwned()) {
+        field->setRadius(length);
+    }
 }
 
 shp::Potential Charge::getPotential() const {

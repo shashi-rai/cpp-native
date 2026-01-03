@@ -217,6 +217,30 @@ bool Particle::isStructured() const {
     return physical != nullptr;
 }
 
+shp::Distance Particle::getRadius() const {
+    return energy.getRadius().getMagnitude();
+}
+
+void Particle::setRadius(const shp::Distance& length) {
+    energy.setRadius(length);
+}
+
+std::shared_ptr<Field> Particle::getMassField() const {
+    return energy.getMassField();
+}
+
+void Particle::setMassField(const std::shared_ptr<Field> field) {
+    energy.setMassField(field);
+}
+
+std::shared_ptr<Field> Particle::getChargeField() const {
+    return energy.getChargeField();
+}
+
+void Particle::setChargeField(const std::shared_ptr<Field> field) {
+    energy.setChargeField(field);
+}
+
 shp::Point Particle::copy() {
     Particle fresh(getName(), physical, isospin, spin, energy);
     return fresh;

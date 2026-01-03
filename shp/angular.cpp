@@ -265,6 +265,7 @@ Distance Angular::getRadius() const {
 
 void Angular::setRadius(const Distance& distance) {
     this->setMagnitude(distance.getMagnitude());
+    this->setScaling(distance.getScaling());
 }
 
 Quantity Angular::getRelative(const Distance& location, const float angle) const {

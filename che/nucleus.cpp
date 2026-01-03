@@ -19,6 +19,7 @@
 // THE SOFTWARE.
 
 #include "nucleus.h"
+#include "../qft/field.h"
 
 namespace che {
 
@@ -63,60 +64,61 @@ const std::string Nucleus::ELEMENT_NAME[] = {
 
 Nucleus::Nucleus()
         : symbol(""), proton(0), neutron(0), energy() {
-
+	initialize();
 }
 
 Nucleus::Nucleus(std::string symbol)
         : symbol(symbol), proton(0), neutron(0), energy() {
-
+	initialize();
 }
 
-Nucleus::Nucleus(short int proton)
+Nucleus::Nucleus(const short int proton)
         : symbol(getSymbol(proton)), proton(proton), neutron(proton), energy() {
-
+	initialize();
 }
 
-Nucleus::Nucleus(short int proton, short int neutron)
+Nucleus::Nucleus(const short int proton, const short int neutron)
         : symbol(getSymbol(proton)), proton(proton), neutron(neutron), energy() {
-
+	initialize();
 }
 
-Nucleus::Nucleus(std::string symbol, short int proton)
+Nucleus::Nucleus(std::string symbol, const short int proton)
         : symbol(symbol), proton(proton), neutron(proton), energy() {
-
+	initialize();
 }
 
-Nucleus::Nucleus(std::string symbol, short int proton, short int neutron)
+Nucleus::Nucleus(std::string symbol, const short int proton, const short int neutron)
         : symbol(symbol), proton(proton), neutron(neutron), energy() {
-
+	initialize();
 }
 
-Nucleus::Nucleus(std::string symbol, short int proton, short int neutron,
+Nucleus::Nucleus(std::string symbol, const short int proton, const short int neutron,
         qft::Mass& mass)
         : symbol(symbol), proton(proton), neutron(neutron), energy(mass) {
-
+	initialize();
 }
 
-Nucleus::Nucleus(std::string symbol, short int proton, short int neutron,
+Nucleus::Nucleus(std::string symbol, const short int proton, const short int neutron,
         qft::Charge& charge)
         : symbol(symbol), proton(proton), neutron(neutron), energy(charge) {
-
+	initialize();
 }
 
-Nucleus::Nucleus(std::string symbol, short int proton, short int neutron,
+Nucleus::Nucleus(std::string symbol, const short int proton, const short int neutron,
         qft::Mass& mass, qft::Charge& charge)
         : symbol(symbol), proton(proton), neutron(neutron), energy(mass, charge) {
-
+	initialize();
 }
 
-Nucleus::Nucleus(std::string symbol, short int proton, short int neutron,
+Nucleus::Nucleus(std::string symbol, const short int proton, const short int neutron,
         qft::Energy& energy)
         : symbol(symbol), proton(proton), neutron(neutron), energy(energy) {
-
+	initialize();
 }
 
 Nucleus::~Nucleus() {
-
+	setElectric(nullptr);
+	setGravity(nullptr);
 }
 
 bool Nucleus::operator==(const Nucleus& peer) const {
@@ -150,13 +152,29 @@ std::string Nucleus::getElementName() const {
 	return (proton > 0 && proton <= PROTON_MAX_LIMIT) ? ELEMENT_NAME[proton-1] : UNKNOWN;
 }
 
+std::shared_ptr<qft::Field> Nucleus::getElectric() const {
+	return energy.getChargeField();
+}
+
+void Nucleus::setElectric(std::shared_ptr<qft::Field> address) {
+	energy.setChargeField(address);
+}
+
+std::shared_ptr<qft::Field> Nucleus::getGravity() const {
+	return energy.getMassField();
+}
+
+void Nucleus::setGravity(std::shared_ptr<qft::Field> address) {
+	energy.setMassField(address);
+}
+
 Nucleus Nucleus::copy() {
     Nucleus fresh(getSymbol(), proton, neutron, energy);
 	return fresh;
 }
 
 void Nucleus::clear() {
-	symbol = "";
+	symbol.clear();
 	proton = neutron = 0;
 	energy.clear();
     return;
@@ -169,6 +187,17 @@ std::string Nucleus::print() {
 	result << neutron << ",";
 	result << energy.print();
 	return result.str();
+}
+
+void Nucleus::initialize() {
+    setGravity(qft::Field::shareable("G"));
+	std::shared_ptr<qft::Field> mfield = getGravity();
+	float nuclear_mass = ((qft::Mass::PROTON * proton) + (qft::Mass::NEUTRON * neutron));
+    mfield->setAmplitude(nuclear_mass, qft::Mass::ATOMIC_SCALE);
+
+    setElectric(qft::Field::shareable("E"));
+	std::shared_ptr<qft::Field> efield = getElectric();
+    efield->setAmplitude((qft::Charge::PROTON * proton), qft::Charge::ATOMIC_SCALE);
 }
 
 } // namespace che

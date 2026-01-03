@@ -102,6 +102,12 @@ public:
     shp::Quantity getFrequency() const;
     shp::Quantity getWavelength() const;
     bool isStructured() const;
+    shp::Distance getRadius() const;
+    void setRadius(const shp::Distance& length);
+    std::shared_ptr<Field> getMassField() const;
+    void setMassField(const std::shared_ptr<Field> field);
+    std::shared_ptr<Field> getChargeField() const;
+    void setChargeField(const std::shared_ptr<Field> field);
     shp::Quantity getTotal() const;
     virtual shp::Point copy();
     virtual void clear();

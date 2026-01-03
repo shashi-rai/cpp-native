@@ -21,6 +21,7 @@
 #ifndef DSA_MATRIX_H
 #define DSA_MATRIX_H
 
+#include <climits>
 #include <ctime>
 #include <iostream>
 #include <random>
@@ -34,28 +35,34 @@ class Matrix {
 public:
     // Constructors
     Matrix();
-    Matrix(int dim);
-    Matrix(int rows, int cols);
+    Matrix(const int dim);
+    Matrix(const int rows, const int cols);
 
     // Destructors
     ~Matrix();
 
     // Access operator
-    double& operator()(int row, int col) { return data[row][col]; }
-    const double& operator()(int row, int col) const { return data[row][col]; }
+    double& operator()(const int row, const int col) { return data[row][col]; }
+    const double& operator()(const int row, const int col) const { return data[row][col]; }
 
     // Additional methods
-    void set(double value);
-    void set(int row, int col, double value);
-    double get(int row, int col) const;
+    void set(const double value);
+    void set(const int row, const int col, const double value);
+    double get(const int row, const int col) const;
     int getRows() const;
     int getCols() const;
-    void resize(int rows, int cols);
-    Matrix copy();
+    void resize(const int rows, const int cols);
+    Matrix copy() const;
     void clear();
-    void rand(float min, float max);
-    void randnorm(float mean, float stddev);
+    void rand(const float min, const float max);
+    void randnorm(const float mean, const float stddev);
     std::string print();
+public:
+    static const double DEFAULT_VALUE;
+    static const int ROWS_MIN;
+    static const int ROWS_MAX;
+    static const int COLS_MIN;
+    static const int COLS_MAX;
 };
 
 typedef std::vector<Matrix > MatrixArray;

@@ -38,7 +38,7 @@ Mass::Mass()
     setField(nullptr);
 }
 
-Mass::Mass(const std::shared_ptr<Field>)
+Mass::Mass(const std::shared_ptr<Field> field)
         : shp::Quantity(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::MASS)) {
     setField(field);
@@ -54,10 +54,21 @@ Mass::Mass(const shp::Unit& unit)
     setField(nullptr);
 }
 
+Mass::Mass(const shp::Unit& unit, const std::shared_ptr<Field> field)
+        : shp::Quantity(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, unit) {
+    setField(field);
+}
+
 Mass::Mass(const float magnitude)
         : shp::Quantity(magnitude, ATOMIC_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::MASS)) {
     setField(nullptr);
+}
+
+Mass::Mass(const float magnitude, const std::shared_ptr<Field> field)
+        : shp::Quantity(magnitude, ATOMIC_SCALE,
+            shp::Unit::getBaseSymbol(shp::Unit::MASS)) {
+    setField(field);
 }
 
 Mass::Mass(const float magnitude, std::string unit)
@@ -68,6 +79,11 @@ Mass::Mass(const float magnitude, std::string unit)
 Mass::Mass(const float magnitude, const shp::Unit& unit)
         : shp::Quantity(magnitude, ATOMIC_SCALE, unit) {
     setField(nullptr);
+}
+
+Mass::Mass(const float magnitude, const shp::Unit& unit, const std::shared_ptr<Field> field)
+        : shp::Quantity(magnitude, ATOMIC_SCALE, unit) {
+    setField(field);
 }
 
 Mass::Mass(const float magnitude, const short int scaling)
@@ -148,6 +164,20 @@ Force Mass::operator()(const Mass& peer, const shp::Distance sepration,
 
 bool Mass::isOwned() const {
     return field != nullptr;
+}
+
+shp::Distance Mass::getRadius() const {
+    shp::Distance result;
+    if (isOwned()) {
+        result = field->getRadius();
+    }
+    return result;
+}
+
+void Mass::setRadius(const shp::Distance& length) {
+    if (isOwned()) {
+        field->setRadius(length);
+    }
 }
 
 shp::Potential Mass::getPotential() const {

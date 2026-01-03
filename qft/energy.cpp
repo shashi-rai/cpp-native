@@ -43,11 +43,31 @@ Energy::Energy() : Phase(),
 
 }
 
+Energy::Energy(const std::shared_ptr<Field> mfield, const std::shared_ptr<Field> cfield)
+        : Phase(),
+		wavelength(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE,
+            shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+		mass(shp::Quantity::DEFAULT_VALUE, mfield),
+        charge(shp::Quantity::DEFAULT_VALUE, cfield),
+        unit(shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)) {
+
+}
+
 Energy::Energy(std::string name) : Phase(name),
 		wavelength(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
 		mass(shp::Quantity::DEFAULT_VALUE),
         charge(shp::Quantity::DEFAULT_VALUE),
+        unit(shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)) {
+
+}
+
+Energy::Energy(std::string name, const std::shared_ptr<Field> mfield, const std::shared_ptr<Field> cfield)
+        : Phase(name),
+		wavelength(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE,
+            shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+		mass(shp::Quantity::DEFAULT_VALUE, mfield),
+        charge(shp::Quantity::DEFAULT_VALUE, cfield),
         unit(shp::Unit::getDerivedSymbol(shp::Unit::ENERGY)) {
 
 }
@@ -676,6 +696,31 @@ Energy Energy::operator%(const Energy& peer) const {
             (mass % peer.mass), (charge % peer.charge), unit);
     result.setPolarization(planck_phase);
     return result;
+}
+
+shp::Distance Energy::getRadius() const {
+    return mass.getRadius().getMagnitude();
+}
+
+void Energy::setRadius(const shp::Distance& length) {
+    mass.setRadius(length);
+    charge.setRadius(length);
+}
+
+std::shared_ptr<Field> Energy::getMassField() const {
+    return mass.getField();
+}
+
+void Energy::setMassField(const std::shared_ptr<Field> field) {
+    mass.setField(field);
+}
+
+std::shared_ptr<Field> Energy::getChargeField() const {
+    return charge.getField();
+}
+
+void Energy::setChargeField(const std::shared_ptr<Field> field) {
+    charge.setField(field);
 }
 
 shp::Quantity Energy::getTotal() const {

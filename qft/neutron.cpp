@@ -20,33 +20,48 @@
 
 #include "neutron.h"
 #include "proton.h"
+#include "field.h"
 
 namespace qft {
 
 const short int Neutron::DOWN_MIN = 0;
 const short int Neutron::DOWN_MAX = 2;
-const float Neutron::DEFAULT_SPIN = 0.5f;    // Dirac Fermions have 1/2 spin
+const float Neutron::DEFAULT_SPIN = 0.5f;               // Dirac Fermions have 1/2 spin
+const float Neutron::RADIUS = 0.8418467f;               // Muonic Hydrogen
+const short int Neutron::RADIUS_SCALE = -15;            // 10^-15 m
+const float Neutron::COMPTON_WAVELENGTH = 1.31959f;     // Compton Wavelegth
+const short int Neutron::WAVELENGTH_SCALE = -15;        // 10^-15 m
 
 Neutron::Neutron()
-        : Particle(Spin(DEFAULT_SPIN), Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)), up(), down() {
+        : Particle(Spin(DEFAULT_SPIN), Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)),
+        up(), down() {
+    initialize();
+}
+
+Neutron::Neutron(const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
+        : Particle(Spin(DEFAULT_SPIN), Mass(Mass::NEUTRON, mass), Charge(Charge::NEUTRON, charge)),
+        up(), down() {
     initialize();
 }
 
 Neutron::Neutron(std::string name)
-        : Particle(name, Spin(DEFAULT_SPIN), Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)), up(), down() {
+        : Particle(name, Spin(DEFAULT_SPIN), Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)),
+        up(), down() {
     initialize();
 }
 
 Neutron::Neutron(const float wavelength)
-        : Particle(Spin(DEFAULT_SPIN), Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)), up(), down() {
-    this->getEnergy().setWavelength(wavelength);
+        : Particle(Spin(DEFAULT_SPIN), Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)),
+        up(), down() {
     initialize();
+    Energy self = getEnergy(); self.setWavelength(wavelength);
 }
 
 Neutron::Neutron(std::string name, const float wavelength)
-        : Particle(name, Spin(DEFAULT_SPIN), Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)), up(), down() {
-    this->getEnergy().setWavelength(wavelength);
+        : Particle(name, Spin(DEFAULT_SPIN), Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)),
+        up(), down() {
     initialize();
+    Energy self = getEnergy(); self.setWavelength(wavelength);
 }
 
 Neutron::Neutron(std::string name, const Energy& energy)
@@ -161,9 +176,22 @@ std::string Neutron::print() {
 }
 
 void Neutron::initialize() {
-    up = Quark("u", Quark::getMassLow(Quark::UP), Quark::getElectricCharge(Quark::UP));
-    down[0] = Quark("d", Quark::getMassLow(Quark::DOWN), Quark::getElectricCharge(Quark::DOWN));
-    down[1] = Quark("d", Quark::getMassLow(Quark::DOWN), Quark::getElectricCharge(Quark::DOWN));
+    Energy self = getEnergy();
+    self.setRadius(shp::Distance(RADIUS, RADIUS_SCALE));
+    self.setWavelength(shp::Distance(COMPTON_WAVELENGTH, WAVELENGTH_SCALE));
+
+    std::shared_ptr<qft::Field> mfield = Field::shareable("G");
+    mfield->setAmplitude(Mass::PROTON, Mass::ATOMIC_SCALE);
+
+    std::shared_ptr<qft::Field> efield = Field::shareable("E");
+    efield->setAmplitude(Charge::PROTON, Charge::ATOMIC_SCALE);
+
+    up = Quark("u", Quark::getComptonWavelength(Quark::UP),
+        Quark::getMassLow(Quark::UP, mfield), Quark::getElectricCharge(Quark::UP, efield));
+    down[0] = Quark("d", Quark::getComptonWavelength(Quark::DOWN),
+        Quark::getMassLow(Quark::DOWN, mfield), Quark::getElectricCharge(Quark::DOWN, efield));
+    down[1] = Quark("d", Quark::getComptonWavelength(Quark::DOWN),
+        Quark::getMassLow(Quark::DOWN, mfield), Quark::getElectricCharge(Quark::DOWN, efield));
 }
 
 } // namespace qft

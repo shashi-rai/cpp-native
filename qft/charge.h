@@ -44,6 +44,7 @@ public:
     Charge(const shp::Unit& unit);
     Charge(const shp::Unit& unit, const std::shared_ptr<Field> field);
     Charge(const float magnitude);
+    Charge(const float magnitude, const std::shared_ptr<Field> field);
     Charge(const float magnitude, std::string unit);
     Charge(const float magnitude, const shp::Unit& unit);
     Charge(const float magnitude, const shp::Unit& unit, const std::shared_ptr<Field> field);
@@ -76,6 +77,8 @@ public:
 
     // Additional methods
     bool isOwned() const;
+    shp::Distance getRadius() const;
+    void setRadius(const shp::Distance& length);
     shp::Potential getPotential() const;
     Density getDensity(const shp::Volume& volume) const;
     Force getForce(const shp::Angular& coordinates) const;

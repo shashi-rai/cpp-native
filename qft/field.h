@@ -28,7 +28,6 @@
 #include "particle.h"
 #include "../shp/cellular.h"
 #include "../shp/potential.h"
-#include "../shp/shape.h"
 
 namespace qft {
 
@@ -106,6 +105,8 @@ public:
 
     // Additional methods
     bool isStructured() const;
+    shp::Distance getRadius() const;
+    void setRadius(const shp::Distance& length);
     void changePoint(const Action& action);
     std::shared_ptr<Particle> getDivergence(const Action& action) const;
     std::shared_ptr<Particle> getConvergence(const Action& action) const;

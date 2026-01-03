@@ -18,116 +18,114 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "matrix.h"
+#include "raster.h"
 
-namespace dsa {
+namespace img {
 
-const double Matrix::DEFAULT_VALUE = 0.0;
-const int Matrix::ROWS_MIN = 0;
-const int Matrix::ROWS_MAX = INT_MAX;
-const int Matrix::COLS_MIN = 0;
-const int Matrix::COLS_MAX = INT_MAX;
+const int Raster::ROWS_MIN = 0;
+const int Raster::ROWS_MAX = INT_MAX;
+const int Raster::COLS_MIN = 0;
+const int Raster::COLS_MAX = INT_MAX;
 
-Matrix::Matrix()
-		: data(ROWS_MIN, std::vector<double>(COLS_MIN, DEFAULT_VALUE)) {
-
-}
-
-Matrix::Matrix(const int dim)
-		: data(dim, std::vector<double>(dim, DEFAULT_VALUE)) {
+Raster::Raster()
+        : layer(), pixels(ROWS_MIN, std::vector<RGB>(COLS_MIN, RGB())) {
 
 }
 
-Matrix::Matrix(const int rows, const int cols)
-		: data(rows, std::vector<double>(cols, DEFAULT_VALUE)) {
+Raster::Raster(const int dim)
+        : layer(), pixels(dim, std::vector<RGB>(dim, RGB())) {
 
 }
 
-Matrix::~Matrix() {
+Raster::Raster(const int rows, const int cols)
+        : layer(), pixels(rows, std::vector<RGB>(cols, RGB())) {
 
 }
 
-void Matrix::set(const double value) {
+Raster::Raster(const int rows, const int cols, const RGB& value)
+        : layer(), pixels(rows, std::vector<RGB>(cols, value)) {
+
+}
+
+Raster::Raster(std::string layer)
+        : layer(), pixels(ROWS_MIN, std::vector<RGB>(COLS_MIN, RGB())) {
+
+}
+
+Raster::Raster(std::string layer, const int dim)
+        : layer(layer), pixels(dim, std::vector<RGB>(dim, RGB())) {
+
+}
+
+Raster::Raster(std::string layer, const int rows, const int cols)
+        : layer(layer), pixels(rows, std::vector<RGB>(cols, RGB())) {
+
+}
+
+Raster::Raster(std::string layer, const int rows, const int cols, const RGB& value)
+        : layer(layer), pixels(rows, std::vector<RGB>(cols, value)) {
+
+}
+
+Raster::~Raster() {
+
+}
+
+void Raster::set(const RGB& value) {
     int rows = getRows();
     int cols = getCols();
 
     for (int i = ROWS_MIN; i < rows; i++)
 		for (int j = COLS_MIN; j < cols; j++)
-			data[i][j] = value;	
+			pixels[i][j] = value;	
 	return;
 }
 
-void Matrix::set(const int row, const int col, const double value) {
-    data[row][col] = value;
+void Raster::set(const int row, const int col, const RGB& value) {
+    pixels[row][col] = value;
 }
 
-double Matrix::get(const int row, const int col) const {
-    return data[row][col];
+RGB Raster::get(const int row, const int col) const {
+    return pixels[row][col];
 }
 
-int Matrix::getRows() const {
-    return data.size();
+int Raster::getRows() const {
+    return pixels.size();
 }
 
-int Matrix::getCols() const {
-    return data[ROWS_MIN].size();
+int Raster::getCols() const {
+    return pixels[ROWS_MIN].size();
 }
 
-void Matrix::resize(const int rows, const int cols) {
-	data.resize(rows);
+void Raster::resize(const int rows, const int cols) {
+	pixels.resize(rows);
 	for (int i = ROWS_MIN; i < rows; i++)
-		data[i].resize(cols);				
+		pixels[i].resize(cols);				
 	return;	
 }
 
-Matrix Matrix::copy() const {
+Raster Raster::copy() const {
     int rows = getRows();
     int cols = getCols();
-    Matrix fresh(rows, cols);
+    Raster fresh(rows, cols);
 		
 	for (int i = ROWS_MIN; i < rows; i++)
 		for (int j = COLS_MIN; j < cols; j++)
-			fresh(i, j) = data[i][j];	
+			fresh(i, j) = pixels[i][j];	
 	return fresh;
 }
 
-void Matrix::clear() {			
+void Raster::clear() {			
     int rows = getRows();
     int cols = getCols();
 
     for (int i = ROWS_MIN; i < rows; i++)
 		for (int j = COLS_MIN; j < cols; j++)
-			data[i][j] = DEFAULT_VALUE;		
+			pixels[i][j] = RGB();		
 	return;	
 }
 
-void Matrix::rand(const float min, const float max) {
-    int rows = getRows();
-    int cols = getCols();
-	std::default_random_engine generator;
-	std::uniform_real_distribution<double> distribution(min, max);
-
-	generator.seed(time(0));
-	for (int i = ROWS_MIN; i < rows; i++)
-		for (int j = COLS_MIN; j < cols; j++)
-			data[i][j] = distribution(generator);
-	return;
-}
-
-void Matrix::randnorm(const float mean, const float stddev) {
-    int rows = getRows();
-    int cols = getCols();
-	std::default_random_engine generator;
-	std::normal_distribution<double> distribution(mean, stddev);
-
-	generator.seed(time(0));
-	for (int i = ROWS_MIN; i < rows; i++)
-		for (int j = COLS_MIN; j < cols; j++)
-			data[i][j] = distribution(generator);
-	return;
-}
-
-std::string Matrix::print() {
+std::string Raster::print() {
     std::stringstream result;
     int rows = getRows();
     int cols = getCols();
@@ -137,11 +135,11 @@ std::string Matrix::print() {
 	for (int i = ROWS_MIN; i < rows; i ++) {			
 		result << "[ ";
 		for (int j = COLS_MIN; j < cols; j++) {			
-			result << data[i][j] << " ";		
+			result << pixels[i][j].print() << " ";		
 		}
 		result << "]" << std::endl;		
 	}
 	return result.str();
 }
 
-} // namespace dsa
+} // namespace img
