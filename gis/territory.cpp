@@ -22,16 +22,23 @@
 
 namespace gis {
 
-Territory::Territory() : Point(), address() {
+Territory::Territory()
+        : Point(), address() {
 
 }
 
-Territory::Territory(std::string name) : Point(name), address() {
+Territory::Territory(const Address& address)
+        : Point(), address(address) {
 
 }
 
-Territory::Territory(std::string name, Address& address)
-    : Point(name), address(address) {
+Territory::Territory(std::string name)
+        : Point(name), address() {
+
+}
+
+Territory::Territory(std::string name, const Address& address)
+        : Point(name), address(address) {
 
 }
 
@@ -42,6 +49,26 @@ Territory::~Territory() {
 bool Territory::operator==(const Territory& peer) const {
     return (static_cast<const Point&>(*this) == static_cast<const Point&>(peer))
         && (address == peer.address);
+}
+
+Territory Territory::operator+(const Territory& peer) const {
+    return Territory("+", address);
+}
+
+Territory Territory::operator-(const Territory& peer) const {
+    return Territory("-", address);
+}
+
+Territory Territory::operator*(const Territory& peer) const {
+    return Territory("*", address);
+}
+
+Territory Territory::operator/(const Territory& peer) const {
+    return Territory("/", address);
+}
+
+Territory Territory::operator%(const Territory& peer) const {
+    return Territory("%", address);
 }
 
 shp::Point Territory::copy() {

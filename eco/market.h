@@ -24,15 +24,35 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "demand.h"
+#include "supply.h"
+#include "population.h"
 
 namespace eco {
 
 class Market {
     std::string name;
+    Demand demand;
+    Supply supply;
+    Population population;
 public:
     // Constructors
     Market();
+    Market(const Demand& demand);
+    Market(const Supply& supply);
+    Market(const Population& population);
+    Market(const Demand& demand, const Supply& supply);
+    Market(const Demand& demand, const Population& population);
+    Market(const Supply& supply, const Population& population);
+    Market(const Demand& demand, const Supply& supply, const Population& population);
     Market(std::string name);
+    Market(std::string name, const Demand& demand);
+    Market(std::string name, const Supply& supply);
+    Market(std::string name, const Population& population);
+    Market(std::string name, const Demand& demand, const Supply& supply);
+    Market(std::string name, const Demand& demand, const Population& population);
+    Market(std::string name, const Supply& supply, const Population& population);
+    Market(std::string name, const Demand& demand, const Supply& supply, const Population& population);
 
     // Destructors
     ~Market();
@@ -42,9 +62,15 @@ public:
 
     // Getters
     std::string getName() const { return name; }
+    Demand getDemand() const { return demand; }
+    Supply getSupply() const { return supply; }
+    Population getPopulation() const { return population; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
+    void setDemand(const Demand& object) { this->demand = object; }
+    void setSupply(const Supply& object) { this->supply = object; }
+    void setPopulation(const Population& object) { this->population = object; }
 
     // Additional methods
     virtual Market copy();

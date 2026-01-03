@@ -24,15 +24,31 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "market.h"
+#include "../act/currency.h"
 
 namespace eco {
 
-class Economy {
-    std::string name;
+class Economy : public Market {
+    act::Currency currency;
 public:
     // Constructors
     Economy();
+    Economy(const Demand& demand);
+    Economy(const Supply& supply);
+    Economy(const Population& population);
+    Economy(const Demand& demand, const Supply& supply);
+    Economy(const Demand& demand, const Population& population);
+    Economy(const Supply& supply, const Population& population);
+    Economy(const Demand& demand, const Supply& supply, const Population& population);
     Economy(std::string name);
+    Economy(std::string name, const Demand& demand);
+    Economy(std::string name, const Supply& supply);
+    Economy(std::string name, const Population& population);
+    Economy(std::string name, const Demand& demand, const Supply& supply);
+    Economy(std::string name, const Demand& demand, const Population& population);
+    Economy(std::string name, const Supply& supply, const Population& population);
+    Economy(std::string name, const Demand& demand, const Supply& supply, const Population& population);
 
     // Destructors
     ~Economy();
@@ -41,13 +57,13 @@ public:
     bool operator==(const Economy& peer) const;
 
     // Getters
-    std::string getName() const { return name; }
+    act::Currency getCurrency() const { return currency; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setCurrency(const act::Currency& object) { this->currency = object; }
 
     // Additional methods
-    virtual Economy copy();
+    virtual Market copy();
     virtual void clear();
     virtual std::string print();
 };

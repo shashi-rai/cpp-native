@@ -22,11 +22,83 @@
 
 namespace eco {
 
-Market::Market() : name() {
+Market::Market()
+        : name(), demand(), supply(), population() {
 
 }
 
-Market::Market(std::string name) : name(name) {
+Market::Market(const Demand& demand)
+        : name(), demand(demand), supply(), population() {
+
+}
+
+Market::Market(const Supply& supply)
+        : name(), demand(), supply(supply), population() {
+
+}
+
+Market::Market(const Population& population)
+        : name(), demand(), supply(), population(population) {
+
+}
+
+Market::Market(const Demand& demand, const Supply& supply)
+        : name(), demand(demand), supply(supply), population() {
+
+}
+
+Market::Market(const Demand& demand, const Population& population)
+        : name(), demand(demand), supply(), population(population) {
+
+}
+
+Market::Market(const Supply& supply, const Population& population)
+        : name(), demand(), supply(supply), population(population) {
+
+}
+
+Market::Market(const Demand& demand, const Supply& supply, const Population& population)
+        : name(), demand(demand), supply(supply), population(population) {
+
+}
+
+Market::Market(std::string name)
+        : name(name), demand(), supply(), population() {
+
+}
+
+Market::Market(std::string name, const Demand& demand)
+        : name(name), demand(demand), supply(), population() {
+
+}
+
+Market::Market(std::string name, const Supply& supply)
+        : name(name), demand(), supply(supply), population() {
+
+}
+
+Market::Market(std::string name, const Population& population)
+        : name(name), demand(), supply(), population(population) {
+
+}
+
+Market::Market(std::string name, const Demand& demand, const Supply& supply)
+        : name(name), demand(demand), supply(supply), population() {
+
+}
+
+Market::Market(std::string name, const Demand& demand, const Population& population)
+        : name(name), demand(demand), supply(), population(population) {
+
+}
+
+Market::Market(std::string name, const Supply& supply, const Population& population)
+        : name(name), demand(), supply(supply), population(population) {
+
+}
+
+Market::Market(std::string name, const Demand& demand, const Supply& supply, const Population& population)
+        : name(name), demand(demand), supply(supply), population(population) {
 
 }
 
@@ -35,22 +107,31 @@ Market::~Market() {
 }
 
 bool Market::operator==(const Market& peer) const {
-    return (name == peer.name);
+    return (name == peer.name)
+        && (demand == peer.demand)
+        && (supply == peer.supply)
+        && (population == peer.population);
 }
 
 Market Market::copy() {
-    Market fresh(name);
+    Market fresh(name, demand, supply, population);
     return fresh;
 }
 
 void Market::clear() {
     name.clear();
+    demand.clear();
+    supply.clear();
+    population.clear();
     return;
 }
 
 std::string Market::print() {
     std::stringstream result;
-    result << name;
+    result << name << ",";
+    result << demand.print() << ",";
+    result << supply.print() << ",";
+    result << population.print();
 	return result.str();
 }
 

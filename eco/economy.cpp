@@ -22,35 +22,107 @@
 
 namespace eco {
 
-Economy::Economy() : name() {
+Economy::Economy()
+        : Market(), currency() {
 
 }
 
-Economy::Economy(std::string name) : name(name) {
+Economy::Economy(const Demand& demand)
+        : Market(demand), currency() {
 
 }
 
-Economy::~Economy() {
+Economy::Economy(const Supply& supply)
+        : Market(supply), currency() {
+
+}
+
+Economy::Economy(const Population& population)
+        : Market(population), currency() {
+
+}
+
+Economy::Economy(const Demand& demand, const Supply& supply)
+        : Market(demand, supply), currency() {
+
+}
+
+Economy::Economy(const Demand& demand, const Population& population)
+        : Market(demand, population), currency() {
+
+}
+
+Economy::Economy(const Supply& supply, const Population& population)
+        : Market(supply, population), currency() {
+
+}
+
+Economy::Economy(const Demand& demand, const Supply& supply, const Population& population)
+        : Market(demand, supply, population), currency() {
+
+}
+
+Economy::Economy(std::string name)
+        : Market(name), currency() {
+
+}
+
+Economy::Economy(std::string name, const Demand& demand)
+        : Market(name, demand), currency() {
+
+}
+
+Economy::Economy(std::string name, const Supply& supply)
+        : Market(name, supply), currency() {
+
+}
+
+Economy::Economy(std::string name, const Population& population)
+        : Market(name, population), currency() {
+
+}
+
+Economy::Economy(std::string name, const Demand& demand, const Supply& supply)
+        : Market(name, demand, supply), currency() {
+
+}
+
+Economy::Economy(std::string name, const Demand& demand, const Population& population)
+        : Market(name, demand, population), currency() {
+
+}
+
+Economy::Economy(std::string name, const Supply& supply, const Population& population)
+        : Market(name, supply, population), currency() {
+
+}
+
+Economy::Economy(std::string name, const Demand& demand, const Supply& supply, const Population& population)
+        : Market(name, demand, supply, population), currency() {
 
 }
 
 bool Economy::operator==(const Economy& peer) const {
-    return (name == peer.name);
+    return (static_cast<const Market&>(*this) == static_cast<const Market&>(peer))
+        && (currency == peer.currency);
 }
 
-Economy Economy::copy() {
-    Economy fresh(name);
+Market Economy::copy() {
+    Economy fresh(getName(), getDemand(), getSupply(), getPopulation());
+    fresh.setCurrency(currency);
     return fresh;
 }
 
 void Economy::clear() {
-    name.clear();
+    Market::clear();
+    currency.clear();
     return;
 }
 
 std::string Economy::print() {
     std::stringstream result;
-    result << name;
+    result << Market::print() << ",";
+	result << currency.print();
 	return result.str();
 }
 

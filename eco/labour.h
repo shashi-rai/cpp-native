@@ -18,51 +18,55 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef GIS_TERRITORY_H
-#define GIS_TERRITORY_H
+#ifndef ECO_LABOUR_H
+#define ECO_LABOUR_H
 
+#include <sstream>
 #include <string>
 #include <vector>
-#include "address.h"
-#include "location.h"
-#include "../shp/point.h"
+#include "market.h"
 
-namespace gis {
+namespace eco {
 
-class Territory : public shp::Point {
-    Address address;
+class Labour : public Market {
+
 public:
     // Constructors
-    Territory();
-    Territory(const Address& address);
-    Territory(std::string name);
-    Territory(std::string name, const Address& address);
+    Labour();
+    Labour(const Demand& demand);
+    Labour(const Supply& supply);
+    Labour(const Population& population);
+    Labour(const Demand& demand, const Supply& supply);
+    Labour(const Demand& demand, const Population& population);
+    Labour(const Supply& supply, const Population& population);
+    Labour(const Demand& demand, const Supply& supply, const Population& population);
+    Labour(std::string name);
+    Labour(std::string name, const Demand& demand);
+    Labour(std::string name, const Supply& supply);
+    Labour(std::string name, const Population& population);
+    Labour(std::string name, const Demand& demand, const Supply& supply);
+    Labour(std::string name, const Demand& demand, const Population& population);
+    Labour(std::string name, const Supply& supply, const Population& population);
+    Labour(std::string name, const Demand& demand, const Supply& supply, const Population& population);
 
     // Destructors
-    ~Territory();
+    ~Labour();
 
     // Operator overloading
-    bool operator==(const Territory& peer) const;
-    Territory operator+(const Territory& peer) const;
-    Territory operator-(const Territory& peer) const;
-    Territory operator*(const Territory& peer) const;
-    Territory operator/(const Territory& peer) const;
-    Territory operator%(const Territory& peer) const;
+    bool operator==(const Labour& peer) const;
 
     // Getters
-    Address getAddress() const { return address; }
 
     // Setters
-    void setAddress(const Address& place) { address = place; }
 
     // Additional methods
-    virtual Point copy();
+    virtual Market copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Territory > TerritoryArray;
+typedef std::vector<Labour > LabourArray;
 
-} // namespace gis
+} // namespace eco
 
-#endif //GIS_TERRITORY_H
+#endif //ECO_LABOUR_H

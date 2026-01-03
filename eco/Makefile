@@ -45,14 +45,54 @@ clean-libs: clean-custom
 	${RMCLEAN} $(LIBFILES)
 
 $(LIBFOLDR)/$(LIBNAME): \
+		$(OBJFOLDR)/demand.o \
 		$(OBJFOLDR)/economy.o \
-		$(OBJFOLDR)/market.o
+		$(OBJFOLDR)/freight.o \
+		$(OBJFOLDR)/growth.o \
+		$(OBJFOLDR)/industry.o \
+		$(OBJFOLDR)/labour.o \
+		$(OBJFOLDR)/market.o \
+		$(OBJFOLDR)/material.o \
+		$(OBJFOLDR)/population.o \
+		$(OBJFOLDR)/supply.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
+		$(OBJFOLDR)/demand.o \
 		$(OBJFOLDR)/economy.o \
-		$(OBJFOLDR)/market.o
+		$(OBJFOLDR)/freight.o \
+		$(OBJFOLDR)/growth.o \
+		$(OBJFOLDR)/industry.o \
+		$(OBJFOLDR)/labour.o \
+		$(OBJFOLDR)/market.o \
+		$(OBJFOLDR)/material.o \
+		$(OBJFOLDR)/population.o \
+		$(OBJFOLDR)/supply.o
+
+$(OBJFOLDR)/demand.o: demand.cpp
+	$(CPPTOOL) -c demand.cpp -o $(OBJFOLDR)/demand.o $(CXXFLAGS)
 
 $(OBJFOLDR)/economy.o: economy.cpp
 	$(CPPTOOL) -c economy.cpp -o $(OBJFOLDR)/economy.o $(CXXFLAGS)
 
+$(OBJFOLDR)/freight.o: freight.cpp
+	$(CPPTOOL) -c freight.cpp -o $(OBJFOLDR)/freight.o $(CXXFLAGS)
+
+$(OBJFOLDR)/growth.o: growth.cpp
+	$(CPPTOOL) -c growth.cpp -o $(OBJFOLDR)/growth.o $(CXXFLAGS)
+
+$(OBJFOLDR)/industry.o: industry.cpp
+	$(CPPTOOL) -c industry.cpp -o $(OBJFOLDR)/industry.o $(CXXFLAGS)
+
+$(OBJFOLDR)/labour.o: labour.cpp
+	$(CPPTOOL) -c labour.cpp -o $(OBJFOLDR)/labour.o $(CXXFLAGS)
+
 $(OBJFOLDR)/market.o: market.cpp
 	$(CPPTOOL) -c market.cpp -o $(OBJFOLDR)/market.o $(CXXFLAGS)
+
+$(OBJFOLDR)/material.o: material.cpp
+	$(CPPTOOL) -c material.cpp -o $(OBJFOLDR)/material.o $(CXXFLAGS)
+
+$(OBJFOLDR)/population.o: population.cpp
+	$(CPPTOOL) -c population.cpp -o $(OBJFOLDR)/population.o $(CXXFLAGS)
+
+$(OBJFOLDR)/supply.o: supply.cpp
+	$(CPPTOOL) -c supply.cpp -o $(OBJFOLDR)/supply.o $(CXXFLAGS)
