@@ -60,7 +60,7 @@ public:
     bool operator==(const Gravity& peer) const;
 
     // Access operator
-    Gravity operator()(const Mass& host, const Mass& peer, const shp::Distance& sepration) const;
+    Gravity operator()(const Mass& host, const Mass& peer, const shp::Distance& separation) const;
 
     // Getters
     std::shared_ptr<Field> getField() const { return field; }

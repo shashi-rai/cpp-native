@@ -66,7 +66,7 @@ public:
     Charge operator%(const Charge& peer) const;
 
     // Access operator
-    Force operator()(const Charge& peer, const shp::Distance sepration,
+    Force operator()(const Charge& peer, const shp::Distance separation,
         const shp::Distance distance) const;
 
     // Getters

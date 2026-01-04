@@ -60,7 +60,7 @@ public:
     bool operator==(const Electric& peer) const;
 
     // Access operator
-    Electric operator()(const Charge& host, const Charge& peer, const shp::Distance& sepration) const;
+    Electric operator()(const Charge& host, const Charge& peer, const shp::Distance& separation) const;
 
     // Getters
     std::shared_ptr<Field> getField() const { return field; }

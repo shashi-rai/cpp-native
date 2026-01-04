@@ -116,12 +116,12 @@ bool Gravity::operator==(const Gravity& peer) const {
         && (field == peer.field);
 }
 
-Gravity Gravity::operator()(const Mass& host, const Mass& peer, const shp::Distance& sepration) const {
+Gravity Gravity::operator()(const Mass& host, const Mass& peer, const shp::Distance& separation) const {
     shp::Potential potential_host = host.getField()->getPotential();
     shp::Potential potential_peer = peer.getField()->getPotential();
     shp::Quantity difference = (potential_host.getDifference() - potential_peer.getDifference());
     shp::Distance distance(difference.getMagnitude(), difference.getScaling(), difference.getUnit());
-    Force effect = host(peer, sepration, distance);
+    Force effect = host(peer, separation, distance);
     shp::Quantity force = effect.getMagnitude();
     return Gravity(force.getMagnitude(), effect.getDirection().toRadians(), field);
 }

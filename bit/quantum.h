@@ -23,20 +23,31 @@
 
 #include <cmath>
 #include <complex>
+#include <limits>
 #include <sstream>
 #include <string>
 #include <vector>
 
 namespace bit {
 
-typedef std::vector<std::complex<double> > QuStates;
+/*
+ * A quantum state vector is represended by two probability amplitudes (between 0 and 1)
+ * The real part specifies probability amplitude of being in a zero state.
+ * The imaginary part specifies probability amplitude of being in a one state.
+ */
+typedef std::complex<double> QVector;
+
+/*
+ * A quantum bit could exist in multiple states at the same moment
+ */
+typedef std::vector<QVector> QStates;
 
 class Quantum {
-    QuStates states;
+    QStates states;         // list of states (e.g., |0> or |1>)
 public:
     // Constructors
     Quantum();
-    Quantum(const QuStates& states);
+    Quantum(const QStates& states);
 
     // Destructors
     ~Quantum();
@@ -47,37 +58,43 @@ public:
     Quantum operator-(const Quantum& peer) const;
 
     // Access operator
-    std::complex<double> operator()(const int x) { return states[x]; }
-    const std::complex<double> operator()(const int x) const { return states[x]; }
+    QVector operator()(const int x) { return states[x]; }
+    const QVector operator()(const int x) const { return states[x]; }
 
     // Getters
-    QuStates getStates() const { return states; }
+    QStates getStates() const { return states; }
 
     // Setters
-    void setStates(const QuStates& value) { this->states = value; }
+    void setStates(const QStates& value) { this->states = value; }
 
     // Additional methods
     int getStateCount() const;
-    std::complex<double> get(const int index) const;
-    void set(const int index, const std::complex<double> object);
+    QVector get(const int index) const;
+    void set(const int index, const QVector object);
+    double getSumAlphaAmplitude() const;
+    double getSumBetaAmplitude() const;
+    bool checkStateValidity();
     void applyHadamard();
     int measure();
     Quantum copy();
     void clear();
     std::string print();
-
-private:
     void initialize();
 public:
-    static const std::complex<double> addition(std::complex<double> a, std::complex<double> b);
-    static const std::complex<double> subtraction(std::complex<double> a, std::complex<double> b);
-    static const std::complex<double> multiplication(std::complex<double> a, std::complex<double> b);
-    static const std::complex<double> division(std::complex<double> a, std::complex<double> b);
-    static const std::complex<double> modulus(std::complex<double> a, std::complex<double> b);
+    static const std::string toString(QVector);
+    static const bool checkBasisState(QVector state);
+    static const QVector inverse(QVector state);
+    static const bool equals(QVector a, QVector b);
+    static const QVector addition(QVector a, QVector b);
+    static const QVector subtraction(QVector a, QVector b);
+    static const QVector multiplication(QVector a, QVector b);
+    static const QVector division(QVector a, QVector b);
+    static const QVector modulus(QVector a, QVector b);
 public:
-    static const float DEFAULT_VALUE;
-    static const float STATE_ZERO;
-    static const float STATE_ONE;
+    static const double DEFAULT_VALUE;
+    static const double PROBABILITY_MIN;
+    static const double PROBABILITY_MAX;
+    static const double SQUARE_ROOT_TWO;
 };
 
 typedef std::vector<Quantum > QuantumArray;

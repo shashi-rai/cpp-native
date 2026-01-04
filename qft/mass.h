@@ -65,7 +65,7 @@ public:
     Mass operator%(const Mass& peer) const;
 
     // Access operator
-    Force operator()(const Mass& peer, const shp::Distance sepration,
+    Force operator()(const Mass& peer, const shp::Distance separation,
         const shp::Distance& distance) const;
 
     // Getters

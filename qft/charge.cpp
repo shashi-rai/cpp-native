@@ -151,12 +151,12 @@ Charge Charge::operator%(const Charge& peer) const {
     return Charge(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
 }
 
-Force Charge::operator()(const Charge& peer, const shp::Distance sepration,
+Force Charge::operator()(const Charge& peer, const shp::Distance separation,
         const shp::Distance distance) const {
     if (isOwned()) {
         shp::Potential self = field->getPotential();
         shp::Potential other = peer.field->getPotential();
-        shp::Quantity factor = self(other, sepration, distance);
+        shp::Quantity factor = self(other, separation, distance);
         shp::Quantity force = (factor * (*this));
         Electric result(force.getMagnitude(), self.getAzimuthal().toRadians(), force.getScaling(), field);
         result.adjustScaling();

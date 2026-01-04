@@ -23,7 +23,7 @@
 namespace shp {
 
 const std::string Area::UNIT = "m";         // System International
-const short int Area::SCALING_FACTOR = 2;   // Mathematical Opertor
+const short int Area::SCALING_FACTOR = 2;   // Mathematical Operator
 
 Area::Area()
         : length(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),

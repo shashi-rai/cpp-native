@@ -23,7 +23,7 @@
 namespace shp {
 
 const std::string Volume::UNIT = "m";			// System International
-const short int Volume::SCALING_FACTOR = 2;		// Mathematical Opertor
+const short int Volume::SCALING_FACTOR = 2;		// Mathematical Operator
 
 Volume::Volume()
 		: surface(), depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
