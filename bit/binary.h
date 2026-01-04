@@ -18,57 +18,52 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef BIT_REGISTER_H
-#define BIT_REGISTER_H
+#ifndef BIT_BINARY_H
+#define BIT_BINARY_H
 
 #include <sstream>
 #include <string>
 #include <vector>
-#include "quantum.h"
 
 namespace bit {
 
-class Register {
-    std::string name;
-    QuantumArray qubits;
+class Binary {
+    uint8_t data;
 public:
     // Constructors
-    Register();
-    Register(const QuantumArray& qubits);
-    Register(std::string name);
-    Register(std::string name, const QuantumArray& qubits);
+    Binary();
+    Binary(const uint8_t data);
 
     // Destructors
-    ~Register();
+    ~Binary();
 
     // Operator overloading
-    bool operator==(const Register& peer) const;
-    Register operator+(const Register& peer) const;
-    Register operator-(const Register& peer) const;
-
-    // Access operator
-    Quantum operator()(const int x) { return qubits[x]; }
-    const Quantum operator()(const int x) const { return qubits[x]; }
+    bool operator==(const Binary& peer) const;
+    Binary operator+(const Binary& peer) const;
+    Binary operator-(const Binary& peer) const;
+    Binary operator*(const Binary& peer) const;
+    Binary operator/(const Binary& peer) const;
+    Binary operator%(const Binary& peer) const;
 
     // Getters
-    std::string getName() const { return name; }
-    QuantumArray getQubits() const { return qubits; }
+    uint8_t getData() const { return data; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
-    void setQubits(const QuantumArray& objects) { this->qubits = objects; }
+    void setData(const uint8_t value) { this->data = value; }
 
     // Additional methods
-    int getQubitCount() const;
-    Quantum get(const int index) const;
-    void set(const int index, const Quantum& object);
-    Register copy();
+    Binary copy();
     void clear();
     std::string print();
+
+private:
+    void initialize();
+public:
+    static const uint8_t DEFAULT_VALUE;
 };
 
-typedef std::vector<Register > RegisterArray;
+typedef std::vector<Binary > BinaryArray;
 
 } // namespace bit
 
-#endif //BIT_REGISTER_H
+#endif //BIT_BINARY_H

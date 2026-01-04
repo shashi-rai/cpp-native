@@ -22,11 +22,23 @@
 
 namespace bit {
 
-Register::Register() : name() {
+Register::Register()
+        : name(), qubits() {
 
 }
 
-Register::Register(std::string name) : name(name) {
+Register::Register(const QuantumArray& qubits)
+        : name(), qubits(qubits) {
+
+}
+
+Register::Register(std::string name)
+        : name(name), qubits() {
+
+}
+
+Register::Register(std::string name, const QuantumArray& qubits)
+        : name(name), qubits(qubits) {
 
 }
 
@@ -35,22 +47,78 @@ Register::~Register() {
 }
 
 bool Register::operator==(const Register& peer) const {
-    return (name == peer.name);
+    return (name == peer.name) && (qubits == peer.qubits);
+}
+
+Register Register::operator+(const Register& peer) const {
+    QuantumArray result(qubits);
+    result.insert(result.end(), peer.qubits.begin(), peer.qubits.end());
+    return Register("+", result);
+}
+
+Register Register::operator-(const Register& peer) const {
+    QuantumArray result(qubits);
+    for (QuantumArray::const_iterator it = peer.qubits.begin(); it != peer.qubits.end(); ++it) {
+        QuantumArray::iterator found = std::find(result.begin(), result.end(), *it);
+        if (found != result.end()) {
+            result.erase(found);
+        }
+    }
+    return Register("-", result);
+}
+
+int Register::getQubitCount() const {
+    return qubits.size();
+}
+
+Quantum Register::get(const int index) const {
+    Quantum result;
+    if (index < 0) {
+        return result;
+    }
+    if (index >= static_cast<int>(qubits.size())) {
+        return result;
+    }
+    return qubits[index];
+}
+
+void Register::set(const int index, const Quantum& object) {
+    if (index < 0) {
+        return;
+    }
+    if (index < static_cast<int>(qubits.size())) {
+        // replace existing element
+        qubits[index] = object;
+    } else if (index == static_cast<int>(qubits.size())) {
+        // append at end
+        qubits.push_back(object);
+    } else {
+        // index beyond current size: append at end
+        qubits.push_back(object);
+    }
+    return;
 }
 
 Register Register::copy() {
-    Register fresh(name);
+    Register fresh(getName(), qubits);
     return fresh;
 }
 
 void Register::clear() {
     name.clear();
+    qubits.clear();
     return;
 }
 
 std::string Register::print() {
     std::stringstream result;
-    result << name;
+    result << "[r:";
+	result << name << ",sz:";
+	result << qubits.size() << "}[";
+    for (int i = 0; i < qubits.size(); i++) {
+        result << "," << qubits[i].print() << std::endl;
+    }
+    result << "]";
 	return result.str();
 }
 

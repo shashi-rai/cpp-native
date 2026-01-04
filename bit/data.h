@@ -24,29 +24,44 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "binary.h"
 
 namespace bit {
 
 class Data {
     std::string name;
+    BinaryArray bytes;
 public:
     // Constructors
     Data();
+    Data(const BinaryArray& bytes);
     Data(std::string name);
+    Data(std::string name, const BinaryArray& bytes);
 
     // Destructors
     ~Data();
 
     // Operator overloading
     bool operator==(const Data& peer) const;
+    Data operator+(const Data& peer) const;
+    Data operator-(const Data& peer) const;
+
+    // Access operator
+    Binary operator()(const int x) { return bytes[x]; }
+    const Binary operator()(const int x) const { return bytes[x]; }
 
     // Getters
     std::string getName() const { return name; }
+    BinaryArray getBytes() const { return bytes; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
+    void setBytes(const BinaryArray& data) { this->bytes = data; }
 
     // Additional methods
+    int getByteCount() const;
+    Binary get(const int index) const;
+    void set(const int index, const Binary& object);
     virtual Data copy();
     virtual void clear();
     virtual std::string print();

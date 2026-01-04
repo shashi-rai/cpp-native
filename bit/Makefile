@@ -45,14 +45,24 @@ clean-libs: clean-custom
 	${RMCLEAN} $(LIBFILES)
 
 $(LIBFOLDR)/$(LIBNAME): \
+		$(OBJFOLDR)/binary.o \
 		$(OBJFOLDR)/data.o \
+		$(OBJFOLDR)/quantum.o \
 		$(OBJFOLDR)/register.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
+		$(OBJFOLDR)/binary.o \
 		$(OBJFOLDR)/data.o \
+		$(OBJFOLDR)/quantum.o \
 		$(OBJFOLDR)/register.o
+
+$(OBJFOLDR)/binary.o: binary.cpp
+	$(CPPTOOL) -c binary.cpp -o $(OBJFOLDR)/binary.o $(CXXFLAGS)
 
 $(OBJFOLDR)/data.o: data.cpp
 	$(CPPTOOL) -c data.cpp -o $(OBJFOLDR)/data.o $(CXXFLAGS)
+
+$(OBJFOLDR)/quantum.o: quantum.cpp
+	$(CPPTOOL) -c quantum.cpp -o $(OBJFOLDR)/quantum.o $(CXXFLAGS)
 
 $(OBJFOLDR)/register.o: register.cpp
 	$(CPPTOOL) -c register.cpp -o $(OBJFOLDR)/register.o $(CXXFLAGS)
