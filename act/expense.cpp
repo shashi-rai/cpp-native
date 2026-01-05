@@ -36,12 +36,12 @@ Expense::Expense(std::string name)
 
 }
 
-Expense::Expense(const Document& receipt)
+Expense::Expense(const doc::Document& receipt)
         : Amount(), name(), receipt(receipt) {
 
 }
 
-Expense::Expense(std::string name, const Document& receipt)
+Expense::Expense(std::string name, const doc::Document& receipt)
         : Amount(), name(name), receipt(receipt) {
 
 }

@@ -18,68 +18,60 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "document.h"
+#include "resistance.h"
 
-namespace act {
+namespace ecn {
 
-Document::Document() : name(), created(), expired() {
-
-}
-
-Document::Document(std::string name)
-        : name(name), created(), expired() {
+Resistance::Resistance() : threshold() {
 
 }
 
-Document::Document(const DateTime& expired)
-        : name(), created(), expired(expired) {
+Resistance::Resistance(const shp::Potential& threshold) : threshold(threshold) {
 
 }
 
-Document::Document(std::string name, const DateTime& expired)
-        : name(name), created(), expired(expired) {
-
+Resistance::~Resistance() {
+    threshold.clear();
 }
 
-Document::Document(const DateTime& created, const DateTime& expired)
-        : name(), created(created), expired(expired) {
-
+bool Resistance::operator==(const Resistance& peer) const {
+    return (threshold == peer.threshold);
 }
 
-Document::Document(std::string name, const DateTime& created, const DateTime& expired)
-        : name(name), created(created), expired(expired) {
-
+Resistance Resistance::operator+(const Resistance& peer) const {
+    return Resistance(threshold + peer.threshold);
 }
 
-Document::~Document() {
-
+Resistance Resistance::operator-(const Resistance& peer) const {
+    return Resistance(threshold - peer.threshold);
 }
 
-bool Document::operator==(const Document& peer) const {
-    return (name == peer.name)
-        && (created == peer.created)
-        && (expired == peer.expired);
+Resistance Resistance::operator*(const Resistance& peer) const {
+    return Resistance(threshold * peer.threshold);
 }
 
-Document Document::copy() {
-    Document fresh(name, created, expired);
+Resistance Resistance::operator/(const Resistance& peer) const {
+    return Resistance(threshold / peer.threshold);
+}
+
+Resistance Resistance::operator%(const Resistance& peer) const {
+    return Resistance(threshold % peer.threshold);
+}
+
+Resistance Resistance::copy() {
+    Resistance fresh(threshold);
     return fresh;
 }
 
-void Document::clear() {
-    name.clear();
-    created.clear();
-    expired.clear();
+void Resistance::clear() {
+    threshold.clear();
     return;
 }
 
-std::string Document::print() {
+std::string Resistance::print() {
     std::stringstream result;
-	result << "D(";
-    result << name << ",c:";
-    result << created.print() << ",x:";
-    result << expired.print() << ")";
+    result << threshold.print();
 	return result.str();
 }
 
-} // namespace act
+} // namespace ecn

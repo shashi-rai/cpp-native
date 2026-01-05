@@ -24,13 +24,12 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "document.h"
 #include "warehouse.h"
 
 namespace act {
 
 class Store : public Warehouse {
-    Document taxation;
+    doc::Document taxation;
 public:
     // Constructors
     Store();
@@ -49,10 +48,10 @@ public:
     bool operator==(const Store& peer) const;
 
     // Getters
-    Document getTaxation() const { return taxation; }
+    doc::Document getTaxation() const { return taxation; }
 
     // Setters
-    void setTaxation(const Document& certificate) { this->taxation = certificate; }
+    void setTaxation(const doc::Document& certificate) { this->taxation = certificate; }
 
     // Additional methods
     virtual Branch copy();

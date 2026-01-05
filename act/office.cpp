@@ -31,12 +31,12 @@ Office::Office(std::string name)
 
 }
 
-Office::Office(const Document& registration)
+Office::Office(const doc::Document& registration)
         : Branch(), registration(registration) {
 
 }
 
-Office::Office(std::string name, const Document& registration)
+Office::Office(std::string name, const doc::Document& registration)
         : Branch(name), registration(registration) {
 
 }
@@ -46,7 +46,7 @@ Office::Office(const gis::Address& address)
 
 }
 
-Office::Office(const Document& registration, const gis::Address& address)
+Office::Office(const doc::Document& registration, const gis::Address& address)
         : Branch(address), registration(registration) {
 
 }
@@ -56,7 +56,7 @@ Office::Office(std::string name, const gis::Address& address)
 
 }
 
-Office::Office(std::string name, const Document& registration, const gis::Address& address)
+Office::Office(std::string name, const doc::Document& registration, const gis::Address& address)
         : Branch(name, address), registration(registration) {
 
 }

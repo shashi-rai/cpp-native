@@ -80,7 +80,7 @@ public:
     Equity getEquity(int index) const;
     void setEquity(int index, const Equity& object);
     Amount getEquityTotal() const;
-    virtual Document copy();
+    virtual doc::Document copy();
     virtual void clear();
     virtual std::string print();
 };

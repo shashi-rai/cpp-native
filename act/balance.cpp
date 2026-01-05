@@ -235,7 +235,7 @@ Amount Balance::getEquityTotal() const {
     return result;
 }
 
-Document Balance::copy() {
+doc::Document Balance::copy() {
     Balance fresh(getName(), assets, liabilities, equities);
     return fresh;
 }

@@ -18,53 +18,48 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef ACT_DOCUMENT_H
-#define ACT_DOCUMENT_H
+#ifndef DOC_CLAUSE_H
+#define DOC_CLAUSE_H
 
 #include <sstream>
 #include <string>
 #include <vector>
-#include "datetime.h"
 
-namespace act {
+namespace doc {
 
-class Document {
-    std::string name;
-    DateTime created;
-    DateTime expired;
+class Clause {
+    std::string number;
+    std::string sentence;
 public:
     // Constructors
-    Document();
-    Document(std::string name);
-    Document(const DateTime& expired);
-    Document(std::string name, const DateTime& expired);
-    Document(const DateTime& created, const DateTime& expired);
-    Document(std::string name, const DateTime& created, const DateTime& expired);
+    Clause();
+    Clause(std::string number);
+    Clause(std::string number, std::string sentence);
 
     // Destructors
-    ~Document();
+    ~Clause();
 
     // Operator overloading
-    bool operator==(const Document& peer) const;
+    bool operator==(const Clause& peer) const;
+    Clause operator+(const Clause& peer) const;
+    Clause operator-(const Clause& peer) const;
 
     // Getters
-    std::string getName() const { return name; }
-    DateTime getCreated() const { return created; }
-    DateTime getExpired() const { return expired; }
+    std::string getNumber() const { return number; }
+    std::string getSentence() const { return sentence; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
-    void setCreated(const DateTime& timestamp) { this->created = timestamp; }
-    void setExpired(const DateTime& timestamp) { this->expired = timestamp; }
+    void setNumber(const std::string& number) { this->number = number; }
+    void setSentence(const std::string& text) { this->sentence = text; }
 
     // Additional methods
-    virtual Document copy();
+    virtual Clause copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Document > DocumentArray;
+typedef std::vector<Clause > ClauseArray;
 
-} // namespace act
+} // namespace doc
 
-#endif //ACT_DOCUMENT_H
+#endif //DOC_CLAUSE_H

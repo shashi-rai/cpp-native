@@ -34,7 +34,7 @@ LIBFILES = $(LIBFOLDR)/*.a
 
 .PHONY: all all-before all-after clean clean-custom
 
-SUBDIRS = dsa web shp img qft phy che bio bit gis grt act eco fin
+SUBDIRS = dsa web shp img qft phy che bio bit ecn gis grt doc law act eco fin
 
 all: all-before subdirs $(APPPROG) all-after
 

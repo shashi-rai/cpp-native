@@ -26,21 +26,21 @@
 #include <vector>
 #include "amount.h"
 #include "depreciation.h"
-#include "document.h"
+#include "../doc/document.h"
 
 namespace act {
 
 class Asset : public Amount {
     std::string name;
-    Document registration;
+    doc::Document registration;
     Depreciation depreciation;
 public:
     // Constructors
     Asset();
     Asset(const float value);
     Asset(std::string name);
-    Asset(const Document& registration);
-    Asset(std::string name, const Document& registration);
+    Asset(const doc::Document& registration);
+    Asset(std::string name, const doc::Document& registration);
     Asset(std::string name, const float value);
     Asset(std::string name, std::string remarks);
     Asset(std::string name, const Currency& currency, std::string remarks);
@@ -60,12 +60,12 @@ public:
 
     // Getters
     std::string getName() const { return name; }
-    Document getRegistration() const { return registration; }
+    doc::Document getRegistration() const { return registration; }
     Depreciation getDepreciation() const { return depreciation; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
-    void setRegistration(const Document& document) { this->registration = document; }
+    void setRegistration(const doc::Document& document) { this->registration = document; }
     void setDepreciation(const Depreciation& valued) { this->depreciation = valued; }
 
     // Additional methods

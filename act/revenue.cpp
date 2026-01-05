@@ -36,12 +36,12 @@ Revenue::Revenue(std::string name)
 
 }
 
-Revenue::Revenue(const Document& receipt)
+Revenue::Revenue(const doc::Document& receipt)
         : Amount(), name(), receipt(receipt) {
 
 }
 
-Revenue::Revenue(std::string name, const Document& receipt)
+Revenue::Revenue(std::string name, const doc::Document& receipt)
         : Amount(), name(name), receipt(receipt) {
 
 }

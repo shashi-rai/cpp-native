@@ -36,12 +36,12 @@ Branch::Branch(const gis::Address& address)
 
 }
 
-Branch::Branch(const Document& certificate)
+Branch::Branch(const doc::Document& certificate)
         : name(), address(), certificate(certificate) {
 
 }
 
-Branch::Branch(const gis::Address& address, const Document& certificate)
+Branch::Branch(const gis::Address& address, const doc::Document& certificate)
         : name(), address(address), certificate(certificate) {
 
 }
@@ -51,12 +51,12 @@ Branch::Branch(std::string name, const gis::Address& address)
 
 }
 
-Branch::Branch(std::string name, const Document& certificate)
+Branch::Branch(std::string name, const doc::Document& certificate)
         : name(name), address(), certificate(certificate) {
 
 }
 
-Branch::Branch(std::string name, const gis::Address& address, const Document& certificate)
+Branch::Branch(std::string name, const gis::Address& address, const doc::Document& certificate)
         : name(name), address(address), certificate(certificate) {
 
 }

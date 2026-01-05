@@ -72,7 +72,6 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/discount.o \
 		$(OBJFOLDR)/distributor.o \
 		$(OBJFOLDR)/dividend.o \
-		$(OBJFOLDR)/document.o \
 		$(OBJFOLDR)/employee.o \
 		$(OBJFOLDR)/equity.o \
 		$(OBJFOLDR)/expense.o \
@@ -147,7 +146,6 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/discount.o \
 		$(OBJFOLDR)/distributor.o \
 		$(OBJFOLDR)/dividend.o \
-		$(OBJFOLDR)/document.o \
 		$(OBJFOLDR)/employee.o \
 		$(OBJFOLDR)/equity.o \
 		$(OBJFOLDR)/expense.o \
@@ -275,9 +273,6 @@ $(OBJFOLDR)/distributor.o: distributor.cpp
 
 $(OBJFOLDR)/dividend.o: dividend.cpp
 	$(CPPTOOL) -c dividend.cpp -o $(OBJFOLDR)/dividend.o $(CXXFLAGS)
-
-$(OBJFOLDR)/document.o: document.cpp
-	$(CPPTOOL) -c document.cpp -o $(OBJFOLDR)/document.o $(CXXFLAGS)
 
 $(OBJFOLDR)/employee.o: employee.cpp
 	$(CPPTOOL) -c employee.cpp -o $(OBJFOLDR)/employee.o $(CXXFLAGS)

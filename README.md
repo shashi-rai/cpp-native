@@ -1,6 +1,6 @@
 # Bhojpur C++ - Native Collections
 
-This source code repository is designed to be used by software developers. It
+This source code repository is designed to be used by Software Developers. It
 comprises of a collection of commonly used software __algorithms__ written in
 **C++** __programming language__. A set of native (e.g., macOS, Linux, UNIX)
 environment C++ libraries located in specific folders could be compiled by the
@@ -28,16 +28,19 @@ The following folders serve specific purpose with regard to software development
 5. [bio](/bio/) - biological algorithms
 6. [bit](/bit/) - information theory algorithms
 7. [che](/che/) - chemical algorithms
-8. [dsa](/dsa/) - data structure algorithms
-9. [eco](/eco/) - economic model algorithms
-10. [fin](/fin/) - financial algorithms
-11. [gis](/gis/) - geospatial system algorithms
-12. [grt](/grt/) - general relativity algorithms
-13. [img](/img/) - digital imaging algorithms
-14. [phy](/phy/) - physical algorithms
-15. [qft](/qft/) - quantum field algorithms
-16. [shp](/shp/) - geometrical shape algorithms
-17. [web](/web/) - web development system
+8. [doc](/doc/) - document assembly algorithms
+9. [dsa](/dsa/) - data structure algorithms
+10. [ecn](/ecn/) - electronic circuit algorithms
+11. [eco](/eco/) - economic model algorithms
+12. [fin](/fin/) - financial algorithms
+13. [gis](/gis/) - geospatial system algorithms
+14. [grt](/grt/) - general relativity algorithms
+15. [img](/img/) - digital imaging algorithms
+16. [law](/law/) - legal matter algorithms
+17. [phy](/phy/) - physical algorithms
+18. [qft](/qft/) - quantum field algorithms
+19. [shp](/shp/) - geometrical shape algorithms
+20. [web](/web/) - web development system
 
 ## Source Code Compilation
 
@@ -70,12 +73,18 @@ The microscropic realm phenomenon is modeled using the following native C++ libr
 - then, compile [phy](/phy/) library that builds on [qft](/qft/) to model the Physics
 - then, compile [che](/che/) library that builds on [phy](/phy/) to model the Chemistry
 - then, compile [bio](/bio/) library that builds on [che](/che/) to model the Biology
+- then, compile [ecn](/ecn/) library that builds on [qft](/qft/) to model the Circuits
 - then, compile [bit](/bit/) library that builds on [qft](/qft/) to model the Information
 
 The macro-world phenomenon is modeled using the following native C++ libraries
 
 - the [gis](/gis/) library could be compiled after [shp](/shp/) library is ready
 - the [grt](/grt/) library could be compiled after [gis](/gis/) library is ready
+
+The legal system is modeled using the following native C++ libraries
+
+- the [doc](/doc/) library could be compiled after [act](/act/) library is ready
+- the [law](/law/) library could be compiled after [doc](/doc/) library is ready
 
 The financial system is modeled using the following native C++ libraries
 
@@ -156,13 +165,13 @@ further.
 
 ## Software Developers
 
-- Shashi Bhushan Rai, [Bhojpur Consulting](https://www.bhojpur-consulting.com), India
-- Bimla Pandey, [Bhojpur Consulting](https://www.bhojpur-consulting.com), India
-- Divya Rai, [Bhojpur Consulting](https://www.bhojpur-consulting.com), India
-- Anushka Rai, [Bhojpur Consulting](https://www.bhojpur-consulting.com), India
+- Mr. [Shashi Bhushan Rai](https://github.com/shashi-rai/), [Bhojpur Consulting](https://github.com/bhojpur/), Arrah, Bihar
+- Mrs. [Bimla Pandey]((https://github.com/bimla-pandey/)), [Bhojpur Consulting](https://github.com/bhojpur/), Arrah, Bihar
+- Ms. [Divya Rai](https://github.com/dvya-rai/), [Bhojpur Consulting](https://github.com/bhojpur/), Arrah, Bihar
+- Ms. Anushka Rai, [Bhojpur Consulting](https://github.com/bhojpur/), Arrah, Bihar
 
 ## Copyright Owner
 
-This software is originally created and distributed by
+This software is created and distributed originally by
 
 - [Bhojpur Consulting Private Limited](https://www.bhojpur-consulting.com), India

@@ -36,12 +36,12 @@ Equity::Equity(std::string name)
 
 }
 
-Equity::Equity(const Document& registration)
+Equity::Equity(const doc::Document& registration)
         : Amount(), name(), registration(registration), dividend() {
 
 }
 
-Equity::Equity(std::string name, const Document& registration)
+Equity::Equity(std::string name, const doc::Document& registration)
         : Amount(), name(name), registration(registration), dividend() {
 
 }

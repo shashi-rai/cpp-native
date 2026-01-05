@@ -22,22 +22,22 @@
 
 namespace act {
 
-Report::Report() : Document(), owner() {
+Report::Report() : doc::Document(), owner() {
 
 }
 
 Report::Report(std::string name)
-        : Document(name), owner() {
+        : doc::Document(name), owner() {
 
 }
 
 Report::Report(const Staff& owner)
-        : Document(), owner(owner) {
+        : doc::Document(), owner(owner) {
 
 }
 
 Report::Report(std::string name, const Staff& owner)
-        : Document(name), owner(owner) {
+        : doc::Document(name), owner(owner) {
 
 }
 
@@ -46,17 +46,17 @@ Report::~Report() {
 }
 
 bool Report::operator==(const Report& peer) const {
-    return (static_cast<const Document&>(*this) == static_cast<const Document&>(peer))
+    return (static_cast<const doc::Document&>(*this) == static_cast<const doc::Document&>(peer))
         && (owner == peer.owner);
 }
 
-Document Report::copy() {
+doc::Document Report::copy() {
     Report fresh(getName(), owner);
     return fresh;
 }
 
 void Report::clear() {
-    Document::clear();
+    doc::Document::clear();
     owner.clear();
     return;
 }
@@ -64,7 +64,7 @@ void Report::clear() {
 std::string Report::print() {
     std::stringstream result;
     result << "{";
-    result << Document::print() << ",O:";
+    result << doc::Document::print() << ",O:";
     result << owner.print() << "}";
 	return result.str();
 }

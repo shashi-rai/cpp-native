@@ -25,20 +25,20 @@
 #include <string>
 #include <vector>
 #include "amount.h"
-#include "document.h"
+#include "../doc/document.h"
 
 namespace act {
 
 class Expense : public Amount {
     std::string name;
-    Document receipt;
+    doc::Document receipt;
 public:
     // Constructors
     Expense();
     Expense(const float value);
     Expense(std::string name);
-    Expense(const Document& receipt);
-    Expense(std::string name, const Document& receipt);
+    Expense(const doc::Document& receipt);
+    Expense(std::string name, const doc::Document& receipt);
     Expense(std::string name, const float value);
     Expense(std::string name, std::string remarks);
     Expense(std::string name, const Currency& currency, std::string remarks);
@@ -58,11 +58,11 @@ public:
 
     // Getters
     std::string getName() const { return name; }
-    Document getReceipt() const { return receipt; }
+    doc::Document getReceipt() const { return receipt; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
-    void setReceipt(const Document& document) { this->receipt = document; }
+    void setReceipt(const doc::Document& document) { this->receipt = document; }
 
     // Additional methods
     virtual Amount copy();

@@ -36,12 +36,12 @@ Asset::Asset(std::string name)
 
 }
 
-Asset::Asset(const Document& registration)
+Asset::Asset(const doc::Document& registration)
         : Amount(), name(), registration(registration), depreciation() {
 
 }
 
-Asset::Asset(std::string name, const Document& registration)
+Asset::Asset(std::string name, const doc::Document& registration)
         : Amount(), name(name), registration(registration), depreciation() {
 
 }

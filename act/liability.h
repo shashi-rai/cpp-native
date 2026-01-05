@@ -25,22 +25,22 @@
 #include <string>
 #include <vector>
 #include "amount.h"
-#include "document.h"
 #include "interest.h"
+#include "../doc/document.h"
 
 namespace act {
 
 class Liability : public Amount {
     std::string name;
-    Document registration;
+    doc::Document registration;
     Interest interest;
 public:
     // Constructors
     Liability();
     Liability(const float value);
     Liability(std::string name);
-    Liability(const Document& registration);
-    Liability(std::string name, const Document& registration);
+    Liability(const doc::Document& registration);
+    Liability(std::string name, const doc::Document& registration);
     Liability(std::string name, const float value);
     Liability(std::string name, std::string remarks);
     Liability(std::string name, const Currency& currency, std::string remarks);
@@ -60,12 +60,12 @@ public:
 
     // Getters
     std::string getName() const { return name; }
-    Document getRegistration() const { return registration; }
+    doc::Document getRegistration() const { return registration; }
     Interest getInterest() const { return interest; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
-    void setRegistration(const Document& document) { this->registration = document; }
+    void setRegistration(const doc::Document& document) { this->registration = document; }
     void setInterest(const Interest& payable) { this->interest = payable; }
 
     // Additional methods

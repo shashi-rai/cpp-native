@@ -36,12 +36,12 @@ Liability::Liability(std::string name)
 
 }
 
-Liability::Liability(const Document& registration)
+Liability::Liability(const doc::Document& registration)
         : Amount(), name(), registration(registration), interest() {
 
 }
 
-Liability::Liability(std::string name, const Document& registration)
+Liability::Liability(std::string name, const doc::Document& registration)
         : Amount(), name(name), registration(registration), interest() {
 
 }

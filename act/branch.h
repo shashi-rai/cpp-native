@@ -24,7 +24,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "document.h"
+#include "../doc/document.h"
 #include "../gis/address.h"
 
 namespace act {
@@ -32,17 +32,17 @@ namespace act {
 class Branch {
     std::string name;
     gis::Address address;
-    Document certificate;
+    doc::Document certificate;
 public:
     // Constructors
     Branch();
     Branch(std::string name);
     Branch(const gis::Address& address);
-    Branch(const Document& certificate);
-    Branch(const gis::Address& address, const Document& certificate);
+    Branch(const doc::Document& certificate);
+    Branch(const gis::Address& address, const doc::Document& certificate);
     Branch(std::string name, const gis::Address& address);
-    Branch(std::string name, const Document& certificate);
-    Branch(std::string name, const gis::Address& address, const Document& certificate);
+    Branch(std::string name, const doc::Document& certificate);
+    Branch(std::string name, const gis::Address& address, const doc::Document& certificate);
 
     // Destructors
     ~Branch();
@@ -53,12 +53,12 @@ public:
     // Getters
     std::string getName() const { return name; }
     gis::Address getAddress() const { return address; }
-    Document getCertificate() const { return certificate; }
+    doc::Document getCertificate() const { return certificate; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
     void setAddress(const gis::Address& object) { this->address = object; }
-    void setCertificate(const Document& factory) { this->certificate = factory; }
+    void setCertificate(const doc::Document& factory) { this->certificate = factory; }
 
     // Additional methods
     virtual Branch copy();

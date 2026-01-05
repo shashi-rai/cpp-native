@@ -27,21 +27,21 @@
 #include "amount.h"
 #include "currency.h"
 #include "dividend.h"
-#include "document.h"
+#include "../doc/document.h"
 
 namespace act {
 
 class Equity : public Amount {
     std::string name;
-    Document registration;
+    doc::Document registration;
     Dividend dividend;
 public:
     // Constructors
     Equity();
     Equity(const float value);
     Equity(std::string name);
-    Equity(const Document& registration);
-    Equity(std::string name, const Document& registration);
+    Equity(const doc::Document& registration);
+    Equity(std::string name, const doc::Document& registration);
     Equity(std::string name, const float value);
     Equity(std::string name, std::string remarks);
     Equity(std::string name, const Currency& currency, std::string remarks);
@@ -61,12 +61,12 @@ public:
 
     // Getters
     std::string getName() const { return name; }
-    Document getRegistration() const { return registration; }
+    doc::Document getRegistration() const { return registration; }
     Dividend getDividend() const { return dividend; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
-    void setRegistration(const Document& document) { this->registration = document; }
+    void setRegistration(const doc::Document& document) { this->registration = document; }
     void setDividend(const Dividend& offered) { this->dividend = offered; }
 
     // Additional methods

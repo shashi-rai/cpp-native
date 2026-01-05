@@ -25,22 +25,21 @@
 #include <string>
 #include <vector>
 #include "branch.h"
-#include "document.h"
 
 namespace act {
 
 class Office : public Branch {
-    Document registration;
+    doc::Document registration;
 public:
     // Constructors
     Office();
     Office(std::string name);
-    Office(const Document& registration);
-    Office(std::string name, const Document& registration);
+    Office(const doc::Document& registration);
+    Office(std::string name, const doc::Document& registration);
     Office(const gis::Address& address);
-    Office(const Document& registration, const gis::Address& address);
+    Office(const doc::Document& registration, const gis::Address& address);
     Office(std::string name, const gis::Address& address);
-    Office(std::string name, const Document& registration, const gis::Address& address);
+    Office(std::string name, const doc::Document& registration, const gis::Address& address);
 
     // Destructors
     ~Office();
@@ -49,10 +48,10 @@ public:
     bool operator==(const Office& peer) const;
 
     // Getters
-    Document getRegistration() const { return registration; }
+    doc::Document getRegistration() const { return registration; }
 
     // Setters
-    void setRegistration(const Document& document) { this->registration = document; }
+    void setRegistration(const doc::Document& document) { this->registration = document; }
 
     // Additional methods
     virtual Branch copy();

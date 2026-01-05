@@ -24,7 +24,6 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "document.h"
 #include "warehouse.h"
 
 namespace act {
@@ -32,7 +31,7 @@ namespace act {
 class Depot : public Warehouse {
     Inventory exports;
     Inventory imports;
-    Document license;
+    doc::Document license;
 public:
     // Constructors
     Depot();
@@ -57,12 +56,12 @@ public:
     // Getters
     Inventory getExports() const { return exports; }
     Inventory getImports() const { return imports; }
-    Document getLicense() const { return license; }
+    doc::Document getLicense() const { return license; }
 
     // Setters
     void setMaterial(const Inventory& items) { this->exports = items; }
     void setWorking(const Inventory& items) { this->imports = items; }
-    void setLicense(const Document& certificate) { this->license = certificate; }
+    void setLicense(const doc::Document& certificate) { this->license = certificate; }
 
     // Additional methods
     virtual Branch copy();

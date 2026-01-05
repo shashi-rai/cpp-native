@@ -24,12 +24,12 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "document.h"
 #include "staff.h"
+#include "../doc/document.h"
 
 namespace act {
 
-class Report : public Document {
+class Report : public doc::Document {
     Staff owner;
 public:
     // Constructors
@@ -51,7 +51,7 @@ public:
     void setOwner(const Staff& issuer) { this->owner = issuer; }
 
     // Additional methods
-    virtual Document copy();
+    virtual doc::Document copy();
     virtual void clear();
     virtual std::string print();
 };
