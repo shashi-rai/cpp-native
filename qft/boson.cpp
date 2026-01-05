@@ -30,54 +30,91 @@ const float Boson::GUAGE_SPIN1 = 1.0f;      // Guage Bosons have integer spin
 const float Boson::GUAGE_SPIN2 = 2.0f;      // Guage Bosons have integer spin
 
 Boson::Boson()
-        : Particle(GUAGE_SPIN1) {
+        : Particle(GUAGE_SPIN1), handed() {
+
+}
+
+Boson::Boson(const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
+        : Particle(GUAGE_SPIN1, mass, charge), handed() {
 
 }
 
 Boson::Boson(const Spin& spin)
-        : Particle(spin) {
+        : Particle(spin), handed() {
+
+}
+
+Boson::Boson(const Spin& spin,
+        const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
+        : Particle(spin, mass, charge), handed() {
 
 }
 
 Boson::Boson(std::string name)
-        : Particle(name, GUAGE_SPIN1) {
+        : Particle(name, GUAGE_SPIN1), handed() {
+
+}
+
+Boson::Boson(std::string name,
+        const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
+        : Particle(name, GUAGE_SPIN1, mass, charge), handed() {
 
 }
 
 Boson::Boson(std::string name, const Spin& spin)
-        : Particle(name, spin) {
+        : Particle(name, spin), handed() {
+
+}
+
+Boson::Boson(std::string name,
+        const Spin& spin, const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
+        : Particle(name, spin, mass, charge), handed() {
 
 }
 
 Boson::Boson(const float wavelength)
-        : Particle(GUAGE_SPIN1) {
+        : Particle(GUAGE_SPIN1), handed() {
+    Energy energy = getEnergy();
+    energy.setWavelength(wavelength);
+}
+
+Boson::Boson(const float wavelength,
+        const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
+        : Particle(GUAGE_SPIN1, mass, charge), handed() {
     Energy energy = getEnergy();
     energy.setWavelength(wavelength);
 }
 
 Boson::Boson(std::string name, const float wavelength)
-        : Particle(name, GUAGE_SPIN1) {
+        : Particle(name, GUAGE_SPIN1), handed() {
+    Energy energy = getEnergy();
+    energy.setWavelength(wavelength);
+}
+
+Boson::Boson(std::string name, const float wavelength,
+        const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
+        : Particle(name, GUAGE_SPIN1, mass, charge), handed() {
     Energy energy = getEnergy();
     energy.setWavelength(wavelength);
 }
 
 Boson::Boson(std::string name, const Energy& energy)
-        : Particle(name, GUAGE_SPIN1, energy) {
+        : Particle(name, GUAGE_SPIN1, energy), handed() {
 
 }
 
 Boson::Boson(std::string name, const Spin& spin, const Energy& energy)
-        : Particle(name, spin, energy) {
+        : Particle(name, spin, energy), handed() {
 
 }
 
 Boson::Boson(std::string name, const float spin, const float mass, const float charge)
-        : Particle(name, Spin(spin), Energy(Mass(mass), Charge(charge))) {
+        : Particle(name, Spin(spin), Energy(Mass(mass), Charge(charge))), handed() {
 
 }
 
 Boson::Boson(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
-        : Particle(name, spin, Energy(mass, charge)) {
+        : Particle(name, spin, Energy(mass, charge)), handed() {
 
 }
 
@@ -86,7 +123,8 @@ Boson::~Boson() {
 }
 
 bool Boson::operator==(const Boson& peer) const {
-    return (static_cast<const Particle&>(*this) == static_cast<const Particle&>(peer));
+    return (static_cast<const Particle&>(*this) == static_cast<const Particle&>(peer))
+        && (handed == peer.handed);
 }
 
 Boson Boson::operator+(const Boson& peer) const {
@@ -121,6 +159,7 @@ Boson Boson::operator%(const Boson& peer) const {
 
 shp::Point Boson::copy() {
     Boson fresh(this->getName(), this->getEnergy());
+    fresh.setHanded(handed);
 	fresh.setAmplitude(this->getAmplitude());
 	fresh.setGradient(this->getGradient());
     return fresh;
@@ -128,13 +167,15 @@ shp::Point Boson::copy() {
 
 void Boson::clear() {
     Particle::clear();
+    handed.clear();
     return;
 }
 
 std::string Boson::print() {
     std::stringstream result;
     result << "b:";
-	result << Particle::print();
+	result << Particle::print() << ",";
+    result << handed.print();
 	return result.str();
 }
 

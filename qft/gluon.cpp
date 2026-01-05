@@ -22,41 +22,63 @@
 
 namespace qft {
 
-Gluon::Gluon() : Boson() {
+Gluon::Gluon() : Boson(), colour() {
+
+}
+
+Gluon::Gluon(const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
+        : Boson(mass, charge), colour() {
 
 }
 
 Gluon::Gluon(std::string name)
-        : Boson(name) {
+        : Boson(name), colour() {
 
 }
 
+Gluon::Gluon(std::string name,
+        const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
+        : Boson(name, mass, charge), colour() {
+
+}
+ 
 Gluon::Gluon(const float wavelength)
-        : Boson(wavelength) {
+        : Boson(wavelength), colour() {
+}
+
+Gluon::Gluon(const float wavelength,
+        const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
+        : Boson(wavelength, mass, charge), colour() {
 }
 
 Gluon::Gluon(std::string name, const float wavelength)
-        : Boson(name, wavelength) {
+        : Boson(name, wavelength), colour() {
+
+}
+
+Gluon::Gluon(std::string name, const float wavelength,
+        const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
+        : Boson(name, wavelength, mass, charge), colour() {
 
 }
 
 Gluon::Gluon(std::string name, const Energy& energy)
-        : Boson(name, energy) {
+        : Boson(name, energy), colour() {
 
 }
 
 Gluon::Gluon(std::string name, const Spin& spin, const Energy& energy)
-        : Boson(name, spin, energy) {
+        : Boson(name, spin, energy), colour() {
 
 }
 
 Gluon::Gluon(std::string name, const float spin, const float mass, const float charge)
-        : Boson(name, Spin(spin), Energy(Mass(mass), Charge(charge))) {
+        : Boson(name, Spin(spin), Energy(Mass(mass), Charge(charge))), colour() {
 
 }
 
 Gluon::Gluon(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
-        : Boson(name, spin, Energy(mass, charge)) {
+        : Boson(name, spin, Energy(mass, charge)), colour() {
 
 }
 
@@ -65,7 +87,8 @@ Gluon::~Gluon() {
 }
 
 bool Gluon::operator==(const Gluon& peer) const {
-    return (static_cast<const Boson&>(*this) == static_cast<const Boson&>(peer));
+    return (static_cast<const Boson&>(*this) == static_cast<const Boson&>(peer))
+        && (colour == peer.colour);
 }
 
 Gluon Gluon::operator+(const Gluon& peer) const {
@@ -100,6 +123,7 @@ Gluon Gluon::operator%(const Gluon& peer) const {
 
 shp::Point Gluon::copy() {
     Gluon fresh(this->getName(), this->getEnergy());
+    fresh.setColour(colour);
 	fresh.setAmplitude(this->getAmplitude());
 	fresh.setGradient(this->getGradient());
     return fresh;
@@ -107,13 +131,15 @@ shp::Point Gluon::copy() {
 
 void Gluon::clear() {
     Boson::clear();
+    colour.clear();
     return;
 }
 
 std::string Gluon::print() {
     std::stringstream result;
-    result << "g:";
-	result << Boson::print();
+    result << "g";
+	result << Boson::print() << ",";
+    result << colour.print();
 	return result.str();
 }
 

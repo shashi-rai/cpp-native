@@ -75,6 +75,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/pressure.o \
 		$(OBJFOLDR)/proton.o \
 		$(OBJFOLDR)/quark.o \
+		$(OBJFOLDR)/reality.o \
 		$(OBJFOLDR)/spin.o \
 		$(OBJFOLDR)/strong.o \
 		$(OBJFOLDR)/temperature.o \
@@ -112,6 +113,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/pressure.o \
 		$(OBJFOLDR)/proton.o \
 		$(OBJFOLDR)/quark.o \
+		$(OBJFOLDR)/reality.o \
 		$(OBJFOLDR)/spin.o \
 		$(OBJFOLDR)/strong.o \
 		$(OBJFOLDR)/temperature.o \
@@ -208,6 +210,9 @@ $(OBJFOLDR)/proton.o: proton.cpp
 
 $(OBJFOLDR)/quark.o: quark.cpp
 	$(CPPTOOL) -c quark.cpp -o $(OBJFOLDR)/quark.o $(CXXFLAGS)
+
+$(OBJFOLDR)/reality.o: reality.cpp
+	$(CPPTOOL) -c reality.cpp -o $(OBJFOLDR)/reality.o $(CXXFLAGS)
 
 $(OBJFOLDR)/spin.o: spin.cpp
 	$(CPPTOOL) -c spin.cpp -o $(OBJFOLDR)/spin.o $(CXXFLAGS)

@@ -24,20 +24,32 @@
 #include <string>
 #include <vector>
 #include "energy.h"
+#include "handed.h"
 #include "particle.h"
 
 namespace qft {
 
 class Boson : public Particle {
-    float parity;
+    Handed handed;
 public:
     // Constructors
     Boson();
+    Boson(const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Boson(const Spin& spin);
+    Boson(const Spin& spin,
+        const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Boson(std::string name);
+    Boson(std::string name,
+        const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Boson(std::string name, const Spin& spin);
+    Boson(std::string name, const Spin& spin,
+        const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Boson(const float wavelength);
+    Boson(const float wavelength,
+        const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Boson(std::string name, const float wavelength);
+    Boson(std::string name, const float wavelength,
+        const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Boson(std::string name, const Energy& energy);
     Boson(std::string name, const Spin& spin, const Energy& energy);
     Boson(std::string name, const float spin, const float mass, const float charge);
@@ -55,10 +67,10 @@ public:
     Boson operator%(const Boson& peer) const;
 
     // Getters
-    float getParity() const { return parity; }
+    Handed getHanded() const { return handed; }
 
     // Setters
-    void setParity(const float value) { this->parity = value; }
+    void setHanded(const Handed& orientation) { this->handed = orientation; }
 
     // Additional methods
     virtual shp::Point copy();

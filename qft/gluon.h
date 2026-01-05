@@ -30,13 +30,17 @@
 namespace qft {
 
 class Gluon : public Boson {
-    Colour charge;
+    Colour colour;
 public:
     // Constructors
     Gluon();
+    Gluon(const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Gluon(std::string name);
+    Gluon(std::string name, const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Gluon(const float wavelength);
+    Gluon(const float wavelength, const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Gluon(std::string name, const float wavelength);
+    Gluon(std::string name, const float wavelength, const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Gluon(std::string name, const Energy& energy);
     Gluon(std::string name, const Spin& spin, const Energy& energy);
     Gluon(std::string name, const float spin, const float mass, const float charge);
@@ -54,10 +58,10 @@ public:
     Gluon operator%(const Gluon& peer) const;
 
     // Getters
-    Colour getCharge() const { return charge; }
+    Colour getColour() const { return colour; }
 
     // Setters
-    void setCharge(const Colour& object) { this->charge = object; }
+    void setColour(const Colour& charge) { this->colour = charge; }
 
     // Additional methods
     virtual shp::Point copy();

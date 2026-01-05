@@ -48,8 +48,25 @@ Electron::Electron(const float polarization)
 	initialize();
 }
 
+Electron::Electron(const float polarization,
+		const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
+		: Particle(Mass(Mass::ELECTRON, mass), Charge(Charge::ELECTRON, charge)),
+		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
+	setPolarization(polarization);
+	initialize();
+}
+
 Electron::Electron(const float polarization, const float azimuthal)
 		: Particle(Mass(Mass::ELECTRON), Charge(Charge::ELECTRON)),
+		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
+	setPolarization(polarization);
+	setGradient(azimuthal);
+	initialize();
+}
+
+Electron::Electron(const float polarization, const float azimuthal,
+		const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
+		: Particle(Mass(Mass::ELECTRON, mass), Charge(Charge::ELECTRON, charge)),
 		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
 	setPolarization(polarization);
 	setGradient(azimuthal);
@@ -62,6 +79,13 @@ Electron::Electron(std::string name)
 	initialize();
 }
 
+Electron::Electron(std::string name,
+		const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
+		: Particle(name, Mass(Mass::ELECTRON, mass), Charge(Charge::ELECTRON, charge)),
+		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
+	initialize();
+}
+
 Electron::Electron(std::string name, const float polarization)
 	: Particle(name, Mass(Mass::ELECTRON), Charge(Charge::ELECTRON)),
 		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
@@ -69,8 +93,25 @@ Electron::Electron(std::string name, const float polarization)
 	initialize();
 }
 
+Electron::Electron(std::string name, const float polarization,
+	const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
+	: Particle(name, Mass(Mass::ELECTRON, mass), Charge(Charge::ELECTRON, charge)),
+		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
+	setPolarization(polarization);
+	initialize();
+}
+
 Electron::Electron(std::string name, const float polarization, const float azimuthal)
         : Particle(name, Mass(Mass::ELECTRON), Charge(Charge::ELECTRON)),
+		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
+	setPolarization(polarization);
+	setGradient(azimuthal);
+	initialize();
+}
+
+Electron::Electron(std::string name, const float polarization, const float azimuthal,
+		const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
+        : Particle(name, Mass(Mass::ELECTRON, mass), Charge(Charge::ELECTRON, charge)),
 		principal(DEFAULT_VALUE), azimuthal(DEFAULT_VALUE), magnetic(DEFAULT_VALUE) {
 	setPolarization(polarization);
 	setGradient(azimuthal);

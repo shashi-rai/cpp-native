@@ -46,13 +46,20 @@ public:
     Quark(std::string name, const float wavelength);
     Quark(std::string name, const float wavelength,
         const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
-    Quark(std::string name, const Energy& energy);
-    Quark(std::string name, const Spin& spin, const Energy& energy);
-    Quark(std::string name, const Mass& mass, const Charge& charge);
-    Quark(std::string name, const shp::Distance& wavelength, const Mass& mass, const Charge& charge);
-    Quark(std::string name, const float spin, const float mass, const float charge);
-    Quark(std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
-    Quark(std::string name, const shp::Distance& wavelength, const Spin& spin, const Mass& mass, const Charge& charge);
+    Quark(std::string name,
+        const Energy& energy);
+    Quark(std::string name,
+        const Spin& spin, const Energy& energy);
+    Quark(std::string name,
+        const Mass& mass, const Charge& charge);
+    Quark(std::string name,
+        const shp::Distance& wavelength, const Mass& mass, const Charge& charge);
+    Quark(std::string name,
+        const float spin, const float mass, const float charge);
+    Quark(std::string name,
+        const Spin& spin, const Mass& mass, const Charge& charge);
+    Quark(std::string name, const shp::Distance& wavelength,
+        const Spin& spin, const Mass& mass, const Charge& charge);
 
     // Destructors
     ~Quark();

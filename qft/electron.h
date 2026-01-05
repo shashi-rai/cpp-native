@@ -40,10 +40,20 @@ public:
     Electron();
     Electron(const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Electron(const float polarization);
+    Electron(const float polarization,
+        const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Electron(const float polarization, const float azimuthal);
+    Electron(const float polarization, const float azimuthal,
+        const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Electron(std::string name);
+    Electron(std::string name,
+        const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Electron(std::string name, const float polarization);
+    Electron(std::string name, const float polarization,
+        const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Electron(std::string name, const float polarization, const float azimuthal);
+    Electron(std::string name, const float polarization, const float azimuthal,
+        const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Electron(const Energy& energy);
     Electron(std::string name, const Energy& energy);
     Electron(std::string name, const Spin& spin, const Energy& energy);
@@ -76,6 +86,7 @@ public:
     Electron operator*(const Electron& peer) const;
     Electron operator/(const Electron& peer) const;
     Electron operator%(const Electron& peer) const;
+
     Electron operator+(const Photon& peer) const;
     Electron operator-(const Photon& peer) const;
     Electron operator*(const Photon& peer) const;

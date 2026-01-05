@@ -166,7 +166,7 @@ further.
 ## Software Developers
 
 - Mr. [Shashi Bhushan Rai](https://github.com/shashi-rai/), [Bhojpur Consulting](https://github.com/bhojpur/), Arrah, Bihar
-- Mrs. [Bimla Pandey]((https://github.com/bimla-pandey/)), [Bhojpur Consulting](https://github.com/bhojpur/), Arrah, Bihar
+- Mrs. [Bimla Pandey](https://github.com/bimla-pandey/), [Bhojpur Consulting](https://github.com/bhojpur/), Arrah, Bihar
 - Ms. [Divya Rai](https://github.com/dvya-rai/), [Bhojpur Consulting](https://github.com/bhojpur/), Arrah, Bihar
 - Ms. Anushka Rai, [Bhojpur Consulting](https://github.com/bhojpur/), Arrah, Bihar
 

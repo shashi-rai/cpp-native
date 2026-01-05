@@ -56,32 +56,37 @@ const short int Quark::WAVELENGTH_SCALE = -15;  // 10^-15 m
 
 Quark::Quark()
         : Particle(Spin(DEFAULT_SPIN),
-        getMassLow(Quark::UP, nullptr), getElectricCharge(Quark::UP, nullptr)) {
+        getMassLow(Quark::UP, nullptr), getElectricCharge(Quark::UP, nullptr)),
+        colour(), handed() {
     initialize();
 }
 
 Quark::Quark(const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
         : Particle(Spin(DEFAULT_SPIN),
-        getMassLow(Quark::UP, mass), getElectricCharge(Quark::UP, charge)) {
+        getMassLow(Quark::UP, mass), getElectricCharge(Quark::UP, charge)),
+        colour(), handed() {
     initialize();
 }
 
 Quark::Quark(std::string name)
         : Particle(name, Spin(DEFAULT_SPIN),
-        getMassLow(Quark::UP, nullptr), getElectricCharge(Quark::UP, nullptr)) {
+        getMassLow(Quark::UP, nullptr), getElectricCharge(Quark::UP, nullptr)),
+        colour(), handed() {
     initialize();
 }
 
 Quark::Quark(std::string name,
         const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
         : Particle(name, Spin(DEFAULT_SPIN),
-        getMassLow(Quark::UP, mass), getElectricCharge(Quark::UP, charge)) {
+        getMassLow(Quark::UP, mass), getElectricCharge(Quark::UP, charge)),
+        colour(), handed() {
     initialize();
 }
 
 Quark::Quark(float wavelength)
         : Particle(Spin(DEFAULT_SPIN),
-        getMassLow(Quark::UP, nullptr), getElectricCharge(Quark::UP, nullptr)) {
+        getMassLow(Quark::UP, nullptr), getElectricCharge(Quark::UP, nullptr)),
+        colour(), handed() {
     initialize();
     Energy self = getEnergy(); self.setWavelength(wavelength);
 }
@@ -89,14 +94,16 @@ Quark::Quark(float wavelength)
 Quark::Quark(float wavelength,
         const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
         : Particle(Spin(DEFAULT_SPIN),
-        getMassLow(Quark::UP, mass), getElectricCharge(Quark::UP, charge)) {
+        getMassLow(Quark::UP, mass), getElectricCharge(Quark::UP, charge)),
+        colour(), handed() {
     initialize();
     Energy self = getEnergy(); self.setWavelength(wavelength);
 }
 
 Quark::Quark(std::string name, float wavelength)
         : Particle(name, Spin(DEFAULT_SPIN),
-        getMassLow(Quark::UP, nullptr), getElectricCharge(Quark::UP, nullptr)) {
+        getMassLow(Quark::UP, nullptr), getElectricCharge(Quark::UP, nullptr)),
+        colour(), handed() {
     initialize();
     Energy self = getEnergy(); self.setWavelength(wavelength);
 }
@@ -104,47 +111,48 @@ Quark::Quark(std::string name, float wavelength)
 Quark::Quark(std::string name, float wavelength,
         const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
         : Particle(name, Spin(DEFAULT_SPIN),
-        getMassLow(Quark::UP, nullptr), getElectricCharge(Quark::UP, nullptr)) {
+        getMassLow(Quark::UP, nullptr), getElectricCharge(Quark::UP, nullptr)),
+        colour(), handed() {
     initialize();
     Energy self = getEnergy(); self.setWavelength(wavelength);
 }
 
 Quark::Quark(std::string name, const Energy& energy)
-        : Particle(name, Spin(DEFAULT_SPIN), energy) {
+        : Particle(name, Spin(DEFAULT_SPIN), energy), colour(), handed() {
     initialize();
 }
 
 Quark::Quark(std::string name, const Mass& mass, const Charge& charge)
-        : Particle(name, Spin(DEFAULT_SPIN), Energy(mass, charge)) {
+        : Particle(name, Spin(DEFAULT_SPIN), Energy(mass, charge)), colour(), handed() {
     initialize();
 }
 
 Quark::Quark(std::string name, const shp::Distance& wavelength,
         const Mass& mass, const Charge& charge)
-        : Particle(name, Spin(DEFAULT_SPIN), Energy(mass, charge)) {
+        : Particle(name, Spin(DEFAULT_SPIN), Energy(mass, charge)), colour(), handed() {
     initialize();
     Energy self = getEnergy(); self.setWavelength(wavelength);
 
 }
 
 Quark::Quark(std::string name, const Spin& spin, const Energy& energy)
-        : Particle(name, spin, energy) {
+        : Particle(name, spin, energy), colour(), handed() {
     initialize();
 }
 
 Quark::Quark(std::string name, const float spin, const float mass, const float charge)
-        : Particle(name, Spin(spin), Energy(Mass(mass), Charge(charge))) {
+        : Particle(name, Spin(spin), Energy(Mass(mass), Charge(charge))), colour(), handed() {
     initialize();
 }
 
 Quark::Quark(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
-        : Particle(name, spin, Energy(mass, charge)) {
+        : Particle(name, spin, Energy(mass, charge)), colour(), handed() {
     initialize();
 }
 
 Quark::Quark(std::string name, const shp::Distance& wavelength, const Spin& spin,
         const Mass& mass, const Charge& charge)
-        : Particle(name, spin, Energy(mass, charge)) {
+        : Particle(name, spin, Energy(mass, charge)), colour(), handed() {
     initialize();
     Energy self = getEnergy(); self.setWavelength(wavelength);
 }
@@ -154,7 +162,8 @@ Quark::~Quark() {
 }
 
 bool Quark::operator==(const Quark& peer) const {
-    return (static_cast<const Particle&>(*this) == static_cast<const Particle&>(peer));
+    return (static_cast<const Particle&>(*this) == static_cast<const Particle&>(peer))
+        && (colour == peer.colour) && (handed == peer.handed);
 }
 
 Quark Quark::operator+(const Quark& peer) const {
@@ -229,6 +238,8 @@ const shp::Distance Quark::getComptonWavelength(short int number) {
 
 shp::Point Quark::copy() {
     Quark fresh(this->getName(), this->getEnergy());
+    fresh.setColour(colour);
+    fresh.setHanded(handed);
 	fresh.setAmplitude(this->getAmplitude());
 	fresh.setGradient(this->getGradient());
     return fresh;
@@ -236,12 +247,16 @@ shp::Point Quark::copy() {
 
 void Quark::clear() {
     Particle::clear();
+    colour.clear();
+    handed.clear();
     return;
 }
 
 std::string Quark::print() {
     std::stringstream result;
-	result << Particle::print();
+	result << Particle::print() << ",";
+    result << colour.print() << ",";
+    result << handed.print();
 	return result.str();
 }
 
