@@ -24,27 +24,15 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "capacitance.h"
-#include "inductance.h"
-#include "resistance.h"
 
 namespace ecn {
 
 class Element {
     std::string name;
-    Resistance resistance;
-    Capacitance capacitance;
-    Inductance inductance;
 public:
     // Constructors
     Element();
-    Element(const Resistance& resistance);
-    Element(const Resistance& resistance, const Capacitance& capacitance);
-    Element(const Resistance& resistance, const Capacitance& capacitance, const Inductance& inductance);
     Element(std::string name);
-    Element(std::string name, const Resistance& resistance);
-    Element(std::string name, const Resistance& resistance, const Capacitance& capacitance);
-    Element(std::string name, const Resistance& resistance, const Capacitance& capacitance, const Inductance& inductance);
 
     // Destructors
     ~Element();
@@ -59,15 +47,9 @@ public:
 
     // Getters
     std::string getName() const { return name; }
-    Resistance getResistance() const { return resistance; }
-    Capacitance getCapacitance() const { return capacitance; }
-    Inductance getInductance() const { return inductance; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
-    void setResistance(const Resistance& range) { this->resistance = range; }
-    void setCapacitance(const Capacitance& range) { this->capacitance = range; }
-    void setInductance(const Inductance& range) { this->inductance = range; }
 
     // Additional methods
     Element copy();

@@ -24,17 +24,19 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "element.h"
+#include "conductor.h"
 
 namespace ecn {
 
 class Diode : public Element {
-
+    Conductor positive;
+    Conductor negative;
 public:
     // Constructors
     Diode();
+    Diode(const Conductor& positive, const Conductor& negative);
     Diode(std::string name);
-    Diode(std::string name, const Resistance& resistance, const Capacitance& capacitance, const Inductance& inductance);
+    Diode(std::string name, const Conductor& positive, const Conductor& negative);
 
     // Destructors
     ~Diode();
@@ -48,10 +50,15 @@ public:
     Diode operator%(const Diode& peer) const;
 
     // Getters
+    Conductor getPositive() const { return positive; }
+    Conductor getNegative() const { return negative; }
 
     // Setters
+    void setPositive(const Conductor& potential) { this->positive = potential; }
+    void setNegative(const Conductor& potential) { this->negative = potential; }
 
     // Additional methods
+    shp::Potential getPotential() const;
     virtual Diode copy();
     virtual void clear();
     virtual std::string print();

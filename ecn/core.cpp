@@ -18,74 +18,74 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "inductor.h"
+#include "core.h"
 
 namespace ecn {
 
-Inductor::Inductor()
-        : Element(), inductance() {
+Core::Core()
+        : Element(), reluctance() {
 
 }
 
-Inductor::Inductor(const Inductance& inductance)
-        : Element(), inductance(inductance) {
+Core::Core(const Reluctance& reluctance)
+        : Element(), reluctance(reluctance) {
 
 }
 
-Inductor::Inductor(const std::string name)
-        : Element(name), inductance() {
+Core::Core(std::string name)
+        : Element(name), reluctance() {
 
 }
 
-Inductor::Inductor(std::string name, const Inductance& inductance)
-        : Element(name), inductance(inductance) {
+Core::Core(std::string name, const Reluctance& reluctance)
+        : Element(name), reluctance(reluctance) {
 
 }
 
-Inductor::~Inductor() {
+Core::~Core() {
 
 }
 
-bool Inductor::operator==(const Inductor& peer) const {
+bool Core::operator==(const Core& peer) const {
     return (static_cast<const Element&>(*this) == static_cast<const Element&>(peer))
-        && (inductance == peer.inductance);
+        && (reluctance == peer.reluctance);
 }
 
-Inductor Inductor::operator+(const Inductor& peer) const {
-    return Inductor("+", (inductance + peer.inductance));
+Core Core::operator+(const Core& peer) const {
+    return Core("+", (reluctance + peer.reluctance));
 }
 
-Inductor Inductor::operator-(const Inductor& peer) const {
-    return Inductor("-", (inductance - peer.inductance));
+Core Core::operator-(const Core& peer) const {
+    return Core("-", (reluctance - peer.reluctance));
 }
 
-Inductor Inductor::operator*(const Inductor& peer) const {
-    return Inductor("*", (inductance * peer.inductance));
+Core Core::operator*(const Core& peer) const {
+    return Core("*", (reluctance * peer.reluctance));
 }
 
-Inductor Inductor::operator/(const Inductor& peer) const {
-    return Inductor("/", (inductance / peer.inductance));
+Core Core::operator/(const Core& peer) const {
+    return Core("/", (reluctance / peer.reluctance));
 }
 
-Inductor Inductor::operator%(const Inductor& peer) const {
-    return Inductor("%", (inductance % peer.inductance));
+Core Core::operator%(const Core& peer) const {
+    return Core("%", (reluctance % peer.reluctance));
 }
 
-Inductor Inductor::copy() {
-    Inductor fresh(getName(), inductance);
+Core Core::copy() {
+    Core fresh(getName(), reluctance);
     return fresh;
 }
 
-void Inductor::clear() {
+void Core::clear() {
     Element::clear();
-    inductance.clear();
+    reluctance.clear();
     return;
 }
 
-std::string Inductor::print() {
+std::string Core::print() {
     std::stringstream result;
-    result << Element::print() << ",";
-    result << inductance.print();
+	result << Element::print() << ",";
+    result << reluctance.print();
 	return result.str();
 }
 

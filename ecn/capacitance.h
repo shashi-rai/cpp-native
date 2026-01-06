@@ -24,16 +24,31 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "conductor.h"
 #include "../shp/potential.h"
 
 namespace ecn {
 
-class Capacitance {
-    shp::Potential threshold;
+class Capacitance : public shp::Quantity {
+    Conductor positive;
+    Conductor negative;
 public:
     // Constructors
     Capacitance();
-    Capacitance(const shp::Potential& threshold);
+    Capacitance(const Conductor& positive, const Conductor& negative);
+    Capacitance(const float magnitude);
+    Capacitance(const short int scaling);
+    Capacitance(const std::string unit);
+    Capacitance(const short int scaling, const std::string unit);
+    Capacitance(const shp::Unit& unit);
+    Capacitance(const short int scaling, const shp::Unit& unit);
+    Capacitance(const float magnitude, const std::string unit);
+    Capacitance(const float magnitude, const shp::Unit& unit);
+    Capacitance(const float magnitude, const short int scaling);
+    Capacitance(const float magnitude, const short int scaling, const std::string unit);
+    Capacitance(const float magnitude, const short int scaling, const shp::Unit& unit);
+    Capacitance(const float magnitude, const short int scaling, const shp::Unit& unit,
+        const Conductor& positive, const Conductor& negative);
 
     // Destructors
     ~Capacitance();
@@ -47,15 +62,20 @@ public:
     Capacitance operator%(const Capacitance& peer) const;
 
     // Getters
-    shp::Potential getThreshold() const { return threshold; }
+    Conductor getPositive() const { return positive; }
+    Conductor getNegative() const { return negative; }
 
     // Setters
-    void setThreshold(const shp::Potential& range) { this->threshold = range; }
+    void setPositive(const Conductor& potential) { this->positive = potential; }
+    void setNegative(const Conductor& potential) { this->negative = potential; }
 
     // Additional methods
+    shp::Potential getThreshold() const;
     Capacitance copy();
     virtual void clear();
     virtual std::string print();
+public:
+    static const std::string UNIT;
 };
 
 typedef std::vector<Capacitance > CapacitanceArray;

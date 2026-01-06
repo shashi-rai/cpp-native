@@ -23,18 +23,22 @@
 namespace ecn {
 
 Resistor::Resistor()
-        : Element() {
+        : Element(), resistance() {
+
+}
+
+Resistor::Resistor(const Resistance& resistance)
+        : Element(), resistance(resistance) {
 
 }
 
 Resistor::Resistor(const std::string name)
-        : Element(name) {
+        : Element(name), resistance() {
 
 }
 
-Resistor::Resistor(std::string name, const Resistance& resistance, const Capacitance& capacitance,
-        const Inductance& inductance)
-        : Element(name, resistance, capacitance, inductance) {
+Resistor::Resistor(std::string name, const Resistance& resistance)
+        : Element(name), resistance(resistance) {
 
 }
 
@@ -43,52 +47,45 @@ Resistor::~Resistor() {
 }
 
 bool Resistor::operator==(const Resistor& peer) const {
-    return (static_cast<const Element&>(*this) == static_cast<const Element&>(peer));
+    return (static_cast<const Element&>(*this) == static_cast<const Element&>(peer))
+        && (resistance == peer.resistance);
 }
 
 Resistor Resistor::operator+(const Resistor& peer) const {
-    Element self = *this, other = peer;
-    Element result = (self + other);
-    return Resistor("+", result.getResistance(), result.getCapacitance(), result.getInductance());
+    return Resistor("+", (resistance + peer.resistance));
 }
 
 Resistor Resistor::operator-(const Resistor& peer) const {
-    Element self = *this, other = peer;
-    Element result = (self - other);
-    return Resistor("-", result.getResistance(), result.getCapacitance(), result.getInductance());
+    return Resistor("-", (resistance - peer.resistance));
 }
 
 Resistor Resistor::operator*(const Resistor& peer) const {
-    Element self = *this, other = peer;
-    Element result = (self * other);
-    return Resistor("*", result.getResistance(), result.getCapacitance(), result.getInductance());
+    return Resistor("*", (resistance * peer.resistance));
 }
 
 Resistor Resistor::operator/(const Resistor& peer) const {
-    Element self = *this, other = peer;
-    Element result = (self / other);
-    return Resistor("/", result.getResistance(), result.getCapacitance(), result.getInductance());
+    return Resistor("/", (resistance / peer.resistance));
 }
 
 Resistor Resistor::operator%(const Resistor& peer) const {
-    Element self = *this, other = peer;
-    Element result = (self % other);
-    return Resistor("%", result.getResistance(), result.getCapacitance(), result.getInductance());
+    return Resistor("%", (resistance % peer.resistance));
 }
 
 Resistor Resistor::copy() {
-    Resistor fresh(getName(), getResistance(), getCapacitance(), getInductance());
+    Resistor fresh(getName(), resistance);
     return fresh;
 }
 
 void Resistor::clear() {
     Element::clear();
+    resistance.clear();
     return;
 }
 
 std::string Resistor::print() {
     std::stringstream result;
-    result << Element::print();
+    result << Element::print() << ",";
+    result << resistance.print();
 	return result.str();
 }
 

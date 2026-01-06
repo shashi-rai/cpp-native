@@ -28,12 +28,24 @@
 
 namespace ecn {
 
-class Inductance {
+class Inductance : public shp::Quantity {
     shp::Potential threshold;
 public:
     // Constructors
     Inductance();
     Inductance(const shp::Potential& threshold);
+    Inductance(const float magnitude);
+    Inductance(const short int scaling);
+    Inductance(const std::string unit);
+    Inductance(const short int scaling, const std::string unit);
+    Inductance(const shp::Unit& unit);
+    Inductance(const short int scaling, const shp::Unit& unit);
+    Inductance(const float magnitude, const std::string unit);
+    Inductance(const float magnitude, const shp::Unit& unit);
+    Inductance(const float magnitude, const short int scaling);
+    Inductance(const float magnitude, const short int scaling, const std::string unit);
+    Inductance(const float magnitude, const short int scaling, const shp::Unit& unit);
+    Inductance(const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Potential& threshold);
 
     // Destructors
     ~Inductance();
@@ -56,6 +68,8 @@ public:
     Inductance copy();
     virtual void clear();
     virtual std::string print();
+public:
+    static const std::string UNIT;
 };
 
 typedef std::vector<Inductance > InductanceArray;

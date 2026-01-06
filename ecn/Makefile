@@ -48,23 +48,37 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/capacitance.o \
 		$(OBJFOLDR)/capacitor.o \
 		$(OBJFOLDR)/circuit.o \
+		$(OBJFOLDR)/coil.o \
+		$(OBJFOLDR)/conductor.o \
+		$(OBJFOLDR)/core.o \
 		$(OBJFOLDR)/diode.o \
 		$(OBJFOLDR)/element.o \
 		$(OBJFOLDR)/inductance.o \
 		$(OBJFOLDR)/inductor.o \
+		$(OBJFOLDR)/parallel.o \
+		$(OBJFOLDR)/reluctance.o \
 		$(OBJFOLDR)/resistance.o \
 		$(OBJFOLDR)/resistor.o \
+		$(OBJFOLDR)/series.o \
+		$(OBJFOLDR)/source.o \
 		$(OBJFOLDR)/transistor.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
 		$(OBJFOLDR)/capacitance.o \
 		$(OBJFOLDR)/capacitor.o \
 		$(OBJFOLDR)/circuit.o \
+		$(OBJFOLDR)/coil.o \
+		$(OBJFOLDR)/conductor.o \
+		$(OBJFOLDR)/core.o \
 		$(OBJFOLDR)/diode.o \
 		$(OBJFOLDR)/element.o \
 		$(OBJFOLDR)/inductance.o \
 		$(OBJFOLDR)/inductor.o \
+		$(OBJFOLDR)/parallel.o \
+		$(OBJFOLDR)/reluctance.o \
 		$(OBJFOLDR)/resistance.o \
 		$(OBJFOLDR)/resistor.o \
+		$(OBJFOLDR)/series.o \
+		$(OBJFOLDR)/source.o \
 		$(OBJFOLDR)/transistor.o
 
 $(OBJFOLDR)/capacitance.o: capacitance.cpp
@@ -75,6 +89,15 @@ $(OBJFOLDR)/capacitor.o: capacitor.cpp
 
 $(OBJFOLDR)/circuit.o: circuit.cpp
 	$(CPPTOOL) -c circuit.cpp -o $(OBJFOLDR)/circuit.o $(CXXFLAGS)
+
+$(OBJFOLDR)/coil.o: coil.cpp
+	$(CPPTOOL) -c coil.cpp -o $(OBJFOLDR)/coil.o $(CXXFLAGS)
+
+$(OBJFOLDR)/core.o: core.cpp
+	$(CPPTOOL) -c core.cpp -o $(OBJFOLDR)/core.o $(CXXFLAGS)
+
+$(OBJFOLDR)/conductor.o: conductor.cpp
+	$(CPPTOOL) -c conductor.cpp -o $(OBJFOLDR)/conductor.o $(CXXFLAGS)
 
 $(OBJFOLDR)/diode.o: diode.cpp
 	$(CPPTOOL) -c diode.cpp -o $(OBJFOLDR)/diode.o $(CXXFLAGS)
@@ -88,11 +111,23 @@ $(OBJFOLDR)/inductance.o: inductance.cpp
 $(OBJFOLDR)/inductor.o: inductor.cpp
 	$(CPPTOOL) -c inductor.cpp -o $(OBJFOLDR)/inductor.o $(CXXFLAGS)
 
+$(OBJFOLDR)/parallel.o: parallel.cpp
+	$(CPPTOOL) -c parallel.cpp -o $(OBJFOLDR)/parallel.o $(CXXFLAGS)
+
+$(OBJFOLDR)/reluctance.o: reluctance.cpp
+	$(CPPTOOL) -c reluctance.cpp -o $(OBJFOLDR)/reluctance.o $(CXXFLAGS)
+
 $(OBJFOLDR)/resistance.o: resistance.cpp
 	$(CPPTOOL) -c resistance.cpp -o $(OBJFOLDR)/resistance.o $(CXXFLAGS)
 
 $(OBJFOLDR)/resistor.o: resistor.cpp
 	$(CPPTOOL) -c resistor.cpp -o $(OBJFOLDR)/resistor.o $(CXXFLAGS)
+
+$(OBJFOLDR)/series.o: series.cpp
+	$(CPPTOOL) -c series.cpp -o $(OBJFOLDR)/series.o $(CXXFLAGS)
+
+$(OBJFOLDR)/source.o: source.cpp
+	$(CPPTOOL) -c source.cpp -o $(OBJFOLDR)/source.o $(CXXFLAGS)
 
 $(OBJFOLDR)/transistor.o: transistor.cpp
 	$(CPPTOOL) -c transistor.cpp -o $(OBJFOLDR)/transistor.o $(CXXFLAGS)

@@ -22,105 +22,56 @@
 
 namespace ecn {
 
-Element::Element()
-        : name(), resistance(), capacitance(), inductance() {
+Element::Element() : name() {
 
 }
 
-Element::Element(const Resistance& resistance)
-        : name(), resistance(resistance), capacitance(), inductance() {
+Element::Element(std::string name) : name(name) {
 
 }
 
-Element::Element(const Resistance& resistance, const Capacitance& capacitance)
-        : name(), resistance(resistance), capacitance(capacitance), inductance() {
-
-}
-
-Element::Element(const Resistance& resistance, const Capacitance& capacitance,
-		const Inductance& inductance)
-        : name(), resistance(resistance), capacitance(capacitance), inductance(inductance) {
-
-}
-
-Element::Element(std::string name)
-        : name(name), resistance(), capacitance(), inductance() {
-
-}
-
-Element::Element(std::string name, const Resistance& resistance)
-        : name(name), resistance(resistance), capacitance(), inductance() {
-
-}
-
-Element::Element(std::string name, const Resistance& resistance, const Capacitance& capacitance)
-        : name(name), resistance(resistance), capacitance(capacitance), inductance() {
-
-}
-
-Element::Element(std::string name, const Resistance& resistance, const Capacitance& capacitance,
-        const Inductance& inductance)
-        : name(name), resistance(resistance), capacitance(capacitance), inductance(inductance) {
-
-}
 
 Element::~Element() {
 
 }
 
 bool Element::operator==(const Element& peer) const {
-    return (name == peer.name)
-        && (resistance == peer.resistance)
-        && (capacitance == peer.capacitance)
-        && (inductance == peer.inductance);
+    return (name == peer.name);
 }
 
 Element Element::operator+(const Element& peer) const {
-    return Element("+", (resistance + peer.resistance),
-            (capacitance + peer.capacitance), (inductance + peer.inductance));
+    return Element("+");
 }
 
 Element Element::operator-(const Element& peer) const {
-    return Element("-", (resistance - peer.resistance),
-            (capacitance - peer.capacitance), (inductance - peer.inductance));
+    return Element("-");
 }
 
 Element Element::operator*(const Element& peer) const {
-    return Element("*", (resistance * peer.resistance),
-            (capacitance * peer.capacitance), (inductance * peer.inductance));
+    return Element("*");
 }
 
 Element Element::operator/(const Element& peer) const {
-    return Element("/", (resistance / peer.resistance),
-            (capacitance / peer.capacitance), (inductance / peer.inductance));
+    return Element("/");
 }
 
 Element Element::operator%(const Element& peer) const {
-    return Element("%", (resistance % peer.resistance),
-            (capacitance % peer.capacitance), (inductance % peer.inductance));
+    return Element("%");
 }
 
 Element Element::copy() {
-    Element fresh(name, resistance, capacitance, inductance);
+    Element fresh(name);
     return fresh;
 }
 
 void Element::clear() {
     name.clear();
-    resistance.clear();
-    capacitance.clear();
-    inductance.clear();
     return;
 }
 
 std::string Element::print() {
     std::stringstream result;
-    result << "(";
-	result << name << ",";
-    result << resistance.print() << ",";
-    result << capacitance.print() << ",";
-    result << inductance.print();
-    result << ")";
+	result << name;
 	return result.str();
 }
 

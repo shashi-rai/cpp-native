@@ -25,16 +25,18 @@
 #include <string>
 #include <vector>
 #include "element.h"
+#include "resistance.h"
 
 namespace ecn {
 
 class Resistor : public Element {
-
+    Resistance resistance;
 public:
     // Constructors
     Resistor();
+    Resistor(const Resistance& resistance);
     Resistor(std::string name);
-    Resistor(std::string name, const Resistance& resistance, const Capacitance& capacitance, const Inductance& inductance);
+    Resistor(std::string name, const Resistance& resistance);
 
     // Destructors
     ~Resistor();
@@ -48,8 +50,10 @@ public:
     Resistor operator%(const Resistor& peer) const;
 
     // Getters
+    Resistance getResistance() const { return resistance; }
 
     // Setters
+    void setResistance(const Resistance& property) { this->resistance = property; }
 
     // Additional methods
     virtual Resistor copy();

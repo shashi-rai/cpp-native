@@ -18,50 +18,55 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef ECN_CAPACITOR_H
-#define ECN_CAPACITOR_H
+#ifndef ECN_SOURCE_H
+#define ECN_SOURCE_H
 
 #include <sstream>
 #include <string>
 #include <vector>
-#include "capacitance.h"
+#include "conductor.h"
+#include "../shp/potential.h"
 
 namespace ecn {
 
-class Capacitor : public Element {
-    Capacitance capacitance;
+class Source : public Element {
+    Conductor positive;
+    Conductor negative;
 public:
     // Constructors
-    Capacitor();
-    Capacitor(const Capacitance& capacitance);
-    Capacitor(std::string name);
-    Capacitor(std::string name, const Capacitance& capacitance);
+    Source();
+    Source(const Conductor& positive, const Conductor& negative);
+    Source(std::string name);
+    Source(std::string name, const Conductor& positive, const Conductor& negative);
 
     // Destructors
-    ~Capacitor();
+    ~Source();
 
     // Operator overloading
-    bool operator==(const Capacitor& peer) const;
-    Capacitor operator+(const Capacitor& peer) const;
-    Capacitor operator-(const Capacitor& peer) const;
-    Capacitor operator*(const Capacitor& peer) const;
-    Capacitor operator/(const Capacitor& peer) const;
-    Capacitor operator%(const Capacitor& peer) const;
+    bool operator==(const Source& peer) const;
+    Source operator+(const Source& peer) const;
+    Source operator-(const Source& peer) const;
+    Source operator*(const Source& peer) const;
+    Source operator/(const Source& peer) const;
+    Source operator%(const Source& peer) const;
 
     // Getters
-    Capacitance getCapacitance() const { return capacitance; }
+    Conductor getPositive() const { return positive; }
+    Conductor getNegative() const { return negative; }
 
     // Setters
-    void setCapacitance(const Capacitance& property) { this->capacitance = property; }
+    void setPositive(const Conductor& potential) { this->positive = potential; }
+    void setNegative(const Conductor& potential) { this->negative = potential; }
 
     // Additional methods
-    virtual Capacitor copy();
+    shp::Potential getPotential() const;
+    Source copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Capacitor > CapacitorArray;
+typedef std::vector<Source > SourceArray;
 
 } // namespace ecn
 
-#endif //ECN_CAPACITOR_H
+#endif //ECN_SOURCE_H

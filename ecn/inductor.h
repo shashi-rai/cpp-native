@@ -25,16 +25,18 @@
 #include <string>
 #include <vector>
 #include "element.h"
+#include "inductance.h"
 
 namespace ecn {
 
 class Inductor : public Element {
-
+    Inductance inductance;
 public:
     // Constructors
     Inductor();
+    Inductor(const Inductance& inductance);
     Inductor(std::string name);
-    Inductor(std::string name, const Resistance& resistance, const Capacitance& capacitance, const Inductance& inductance);
+    Inductor(std::string name, const Inductance& inductance);
 
     // Destructors
     ~Inductor();
@@ -48,8 +50,10 @@ public:
     Inductor operator%(const Inductor& peer) const;
 
     // Getters
+    Inductance getInductance() const { return inductance; }
 
     // Setters
+    void setInductance(const Inductance& property) { this->inductance = property; }
 
     // Additional methods
     virtual Inductor copy();

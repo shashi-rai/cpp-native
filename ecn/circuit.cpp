@@ -23,62 +23,22 @@
 namespace ecn {
 
 Circuit::Circuit()
-        : Element(), elements() {
+        : Element(), positive(), negative() {
 
 }
 
-Circuit::Circuit(const ElementArray& elements)
-        : Element(), elements() {
-
-}
-
-Circuit::Circuit(const Resistance& resistance, const ElementArray& elements)
-        : Element(resistance), elements() {
-
-}
-
-Circuit::Circuit(const Resistance& resistance, const Capacitance& capacitance,
-        const ElementArray& elements)
-        : Element(resistance, capacitance), elements() {
-
-}
-
-Circuit::Circuit(const Resistance& resistance, const Capacitance& capacitance,
-        const Inductance& inductance, const ElementArray& elements)
-        : Element(resistance, capacitance, inductance), elements() {
+Circuit::Circuit(const Conductor& positive, const Conductor& negative)
+        : Element(), positive(positive), negative(negative) {
 
 }
 
 Circuit::Circuit(const std::string name)
-        : Element(name), elements() {
+        : Element(name), positive(), negative() {
 
 }
 
-Circuit::Circuit(std::string name, const Resistance& resistance, const Capacitance& capacitance,
-        const Inductance& inductance)
-        : Element(name, resistance, capacitance, inductance), elements() {
-
-}
-
-Circuit::Circuit(const std::string name, const ElementArray& elements)
-        : Element(name), elements() {
-
-}
-
-Circuit::Circuit(const std::string name, const Resistance& resistance, const ElementArray& elements)
-        : Element(name, resistance), elements() {
-
-}
-
-Circuit::Circuit(const std::string name, const Resistance& resistance, const Capacitance& capacitance,
-        const ElementArray& elements)
-        : Element(name, resistance, capacitance), elements() {
-
-}
-
-Circuit::Circuit(const std::string name, const Resistance& resistance, const Capacitance& capacitance,
-        const Inductance& inductance, const ElementArray& elements)
-        : Element(name, resistance, capacitance, inductance), elements() {
+Circuit::Circuit(const std::string name, const Conductor& positive, const Conductor& negative)
+        : Element(name), positive(positive), negative(negative) {
 
 }
 
@@ -88,81 +48,44 @@ Circuit::~Circuit() {
 
 bool Circuit::operator==(const Circuit& peer) const {
     return (static_cast<const Element&>(*this) == static_cast<const Element&>(peer))
-        && (elements == peer.elements);
+        && (positive == peer.positive) && (negative == peer.negative);
 }
 
 Circuit Circuit::operator+(const Circuit& peer) const {
     Element self = *this, other = peer;
     Element base = (self + other);
-    ElementArray result(elements);
-    result.insert(result.end(), peer.elements.begin(), peer.elements.end());
-    return Circuit("+", base.getResistance(), base.getCapacitance(), base.getInductance(), result);
+    return Circuit("+", (positive + peer.positive), (negative + peer.negative));
 }
 
 Circuit Circuit::operator-(const Circuit& peer) const {
     Element self = *this, other = peer;
     Element base = (self - other);
-    ElementArray result(elements);
-    for (ElementArray::const_iterator it = peer.elements.begin(); it != peer.elements.end(); ++it) {
-        ElementArray::iterator found = std::find(result.begin(), result.end(), *it);
-        if (found != result.end()) {
-            result.erase(found);
-        }
-    }
-    return Circuit("-", base.getResistance(), base.getCapacitance(), base.getInductance(), result);
+    return Circuit("-", (positive - peer.positive), (negative - peer.negative));
 }
 
-int Circuit::getElementCount() const {
-    return elements.size();
-}
-
-Element Circuit::get(const int index) const {
-    Element result;
-    if (index < 0) {
-        return result;
-    }
-    if (index >= static_cast<int>(elements.size())) {
-        return result;
-    }
-    return elements[index];
-}
-
-void Circuit::set(const int index, const Element& object) {
-    if (index < 0) {
-        return;
-    }
-    if (index < static_cast<int>(elements.size())) {
-        // replace existing element
-        elements[index] = object;
-    } else if (index == static_cast<int>(elements.size())) {
-        // append at end
-        elements.push_back(object);
-    } else {
-        // index beyond current size: append at end
-        elements.push_back(object);
-    }
-    return;
+shp::Potential Circuit::getPotential() const {
+    shp::Potential fresh(positive.getCharge().getMagnitude(),
+                        negative.getCharge().getMagnitude());
+    return fresh;
 }
 
 Circuit Circuit::copy() {
-    Circuit fresh(getName(), getResistance(), getCapacitance(), getInductance(), elements);
+    Circuit fresh(getName(), positive, negative);
     return fresh;
 }
 
 void Circuit::clear() {
     Element::clear();
-    elements.clear();
+    positive.clear();
+    negative.clear();
     return;
 }
 
 std::string Circuit::print() {
     std::stringstream result;
     result << Element::print() << ",";
-	result << elements.size() << "[";
-    for (int i = 0; i < elements.size(); i++) {
-        result << "," << elements[i].print() << std::endl;
-    }
-    result << "]";
+    result << positive.print() << ",";
+    result << negative.print();
     return result.str();
 }
 

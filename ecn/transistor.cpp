@@ -23,18 +23,24 @@
 namespace ecn {
 
 Transistor::Transistor()
-        : Element() {
+        : Element(), emitter(), base(), collector() {
+
+}
+
+Transistor::Transistor(const Conductor& emitter,
+        const Conductor& base, const Conductor& collector)
+        : Element(), emitter(emitter), base(base), collector(collector) {
 
 }
 
 Transistor::Transistor(const std::string name)
-        : Element(name) {
+        : Element(name), emitter(), base(), collector() {
 
 }
 
-Transistor::Transistor(std::string name, const Resistance& resistance, const Capacitance& capacitance,
-        const Inductance& inductance)
-        : Element(name, resistance, capacitance, inductance) {
+Transistor::Transistor(std::string name, const Conductor& emitter,
+        const Conductor& base, const Conductor& collector)
+        : Element(name), emitter(emitter), base(base), collector(collector) {
 
 }
 
@@ -43,52 +49,59 @@ Transistor::~Transistor() {
 }
 
 bool Transistor::operator==(const Transistor& peer) const {
-    return (static_cast<const Element&>(*this) == static_cast<const Element&>(peer));
+    return (static_cast<const Element&>(*this) == static_cast<const Element&>(peer))
+        && (emitter == peer.emitter) && (base == peer.base) && (collector == peer.collector);
 }
 
 Transistor Transistor::operator+(const Transistor& peer) const {
     Element self = *this, other = peer;
     Element result = (self + other);
-    return Transistor("+", result.getResistance(), result.getCapacitance(), result.getInductance());
+    return Transistor("+", (emitter + peer.emitter), (base + peer.base), (collector + peer.collector));
 }
 
 Transistor Transistor::operator-(const Transistor& peer) const {
     Element self = *this, other = peer;
     Element result = (self - other);
-    return Transistor("-", result.getResistance(), result.getCapacitance(), result.getInductance());
+    return Transistor("-", (emitter - peer.emitter), (base - peer.base), (collector - peer.collector));
 }
 
 Transistor Transistor::operator*(const Transistor& peer) const {
     Element self = *this, other = peer;
     Element result = (self * other);
-    return Transistor("*", result.getResistance(), result.getCapacitance(), result.getInductance());
+    return Transistor("*", (emitter * peer.emitter), (base * peer.base), (collector * peer.collector));
 }
 
 Transistor Transistor::operator/(const Transistor& peer) const {
     Element self = *this, other = peer;
     Element result = (self / other);
-    return Transistor("/", result.getResistance(), result.getCapacitance(), result.getInductance());
+    return Transistor("/", (emitter / peer.emitter), (base / peer.base), (collector / peer.collector));
 }
 
 Transistor Transistor::operator%(const Transistor& peer) const {
     Element self = *this, other = peer;
     Element result = (self % other);
-    return Transistor("%", result.getResistance(), result.getCapacitance(), result.getInductance());
+    return Transistor("%", (emitter % peer.emitter), (base % peer.base), (collector % peer.collector));
 }
 
 Transistor Transistor::copy() {
-    Transistor fresh(getName(), getResistance(), getCapacitance(), getInductance());
+    Transistor fresh(getName(), emitter, base, collector);
     return fresh;
 }
 
 void Transistor::clear() {
     Element::clear();
+    emitter.clear();
+    base.clear();
+    collector.clear();
     return;
 }
 
 std::string Transistor::print() {
     std::stringstream result;
-    result << Element::print();
+    result << Element::print() << ",";
+    result << emitter.print() << ",";
+    result << base.print() << ",";
+    result << collector.print();
 	return result.str();
 }
 

@@ -18,88 +18,78 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "diode.h"
+#include "source.h"
 
-namespace ecn { 
+namespace ecn {
 
-Diode::Diode()
+Source::Source()
         : Element(), positive(), negative() {
 
 }
 
-Diode::Diode(const Conductor& positive, const Conductor& negative)
+Source::Source(const Conductor& positive, const Conductor& negative)
         : Element(), positive(positive), negative(negative) {
 
 }
 
-Diode::Diode(std::string name)
+Source::Source(std::string name)
         : Element(name), positive(), negative() {
 
 }
 
-Diode::Diode(std::string name, const Conductor& positive, const Conductor& negative)
+Source::Source(std::string name, const Conductor& positive, const Conductor& negative)
         : Element(name), positive(positive), negative(negative) {
 
 }
 
-Diode::~Diode() {
+Source::~Source() {
 
 }
 
-bool Diode::operator==(const Diode& peer) const {
+bool Source::operator==(const Source& peer) const {
     return (static_cast<const Element&>(*this) == static_cast<const Element&>(peer))
         && (positive == peer.positive) && (negative == peer.negative);
 }
 
-Diode Diode::operator+(const Diode& peer) const {
-    Element self = *this, other = peer;
-    Element result = (self + other);
-    return Diode("+", (positive + peer.positive), (negative + peer.negative));
+Source Source::operator+(const Source& peer) const {
+    return Source("+", (positive + peer.positive), (negative + peer.negative));
 }
 
-Diode Diode::operator-(const Diode& peer) const {
-    Element self = *this, other = peer;
-    Element result = (self - other);
-    return Diode("-", (positive - peer.positive), (negative - peer.negative));
+Source Source::operator-(const Source& peer) const {
+    return Source("-", (positive - peer.positive), (negative - peer.negative));
 }
 
-Diode Diode::operator*(const Diode& peer) const {
-    Element self = *this, other = peer;
-    Element result = (self * other);
-    return Diode("*", (positive * peer.positive), (negative * peer.negative));
+Source Source::operator*(const Source& peer) const {
+    return Source("*", (positive * peer.positive), (negative * peer.negative));
 }
 
-Diode Diode::operator/(const Diode& peer) const {
-    Element self = *this, other = peer;
-    Element result = (self / other);
-    return Diode("/", (positive / peer.positive), (negative / peer.negative));
+Source Source::operator/(const Source& peer) const {
+    return Source("/", (positive / peer.positive), (negative / peer.negative));
 }
 
-Diode Diode::operator%(const Diode& peer) const {
-    Element self = *this, other = peer;
-    Element result = (self % other);
-    return Diode("%", (positive % peer.positive), (negative % peer.negative));
+Source Source::operator%(const Source& peer) const {
+    return Source("%", (positive % peer.positive), (negative % peer.negative));
 }
 
-shp::Potential Diode::getPotential() const {
+shp::Potential Source::getPotential() const {
     shp::Potential fresh(positive.getCharge().getMagnitude(),
                         negative.getCharge().getMagnitude());
     return fresh;
 }
 
-Diode Diode::copy() {
-    Diode fresh(getName(), positive, negative);
+Source Source::copy() {
+    Source fresh(getName(), positive, negative);
     return fresh;
 }
 
-void Diode::clear() {
+void Source::clear() {
     Element::clear();
     positive.clear();
     negative.clear();
     return;
 }
 
-std::string Diode::print() {
+std::string Source::print() {
     std::stringstream result;
     result << Element::print() << ",";
     result << positive.print() << ",";

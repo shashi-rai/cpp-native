@@ -18,50 +18,59 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef ECN_CAPACITOR_H
-#define ECN_CAPACITOR_H
+#ifndef ECN_PARALLEL_H
+#define ECN_PARALLEL_H
 
 #include <sstream>
 #include <string>
 #include <vector>
-#include "capacitance.h"
+#include "circuit.h"
 
 namespace ecn {
 
-class Capacitor : public Element {
-    Capacitance capacitance;
+class Parallel : public Circuit {
+    CircuitArray elements;
 public:
     // Constructors
-    Capacitor();
-    Capacitor(const Capacitance& capacitance);
-    Capacitor(std::string name);
-    Capacitor(std::string name, const Capacitance& capacitance);
+    Parallel();
+    Parallel(const CircuitArray& elements);
+    Parallel(const Conductor& positive, const Conductor& negative);
+    Parallel(const Conductor& positive, const Conductor& negative, const CircuitArray& elements);
+    Parallel(std::string name);
+    Parallel(std::string name, const CircuitArray& elements);
+    Parallel(std::string name, const Conductor& positive, const Conductor& negative);
+    Parallel(std::string name, const Conductor& positive, const Conductor& negative, const CircuitArray& elements);
 
     // Destructors
-    ~Capacitor();
+    ~Parallel();
 
     // Operator overloading
-    bool operator==(const Capacitor& peer) const;
-    Capacitor operator+(const Capacitor& peer) const;
-    Capacitor operator-(const Capacitor& peer) const;
-    Capacitor operator*(const Capacitor& peer) const;
-    Capacitor operator/(const Capacitor& peer) const;
-    Capacitor operator%(const Capacitor& peer) const;
+    bool operator==(const Parallel& peer) const;
+    Parallel operator+(const Parallel& peer) const;
+    Parallel operator-(const Parallel& peer) const;
+
+    // Access operator
+    Circuit operator()(const int x) { return elements[x]; }
+    const Circuit operator()(const int x) const { return elements[x]; }
 
     // Getters
-    Capacitance getCapacitance() const { return capacitance; }
+    CircuitArray getElements() const { return elements; }
 
     // Setters
-    void setCapacitance(const Capacitance& property) { this->capacitance = property; }
+    void setElements(const CircuitArray& components) { this->elements = components; }
 
     // Additional methods
-    virtual Capacitor copy();
+    shp::Potential getPotential() const;
+    int getElementCount() const;
+    Circuit get(const int index) const;
+    void set(const int index, const Circuit& object);
+    virtual Circuit copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Capacitor > CapacitorArray;
+typedef std::vector<Parallel > ParallelArray;
 
 } // namespace ecn
 
-#endif //ECN_CAPACITOR_H
+#endif //ECN_PARALLEL_H

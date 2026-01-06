@@ -18,50 +18,51 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef ECN_CAPACITOR_H
-#define ECN_CAPACITOR_H
+#ifndef ECN_CORE_H
+#define ECN_CORE_H
 
 #include <sstream>
 #include <string>
 #include <vector>
-#include "capacitance.h"
+#include "element.h"
+#include "reluctance.h"
 
 namespace ecn {
 
-class Capacitor : public Element {
-    Capacitance capacitance;
+class Core : public Element {
+    Reluctance reluctance;
 public:
     // Constructors
-    Capacitor();
-    Capacitor(const Capacitance& capacitance);
-    Capacitor(std::string name);
-    Capacitor(std::string name, const Capacitance& capacitance);
+    Core();
+    Core(const Reluctance& reluctance);
+    Core(std::string name);
+    Core(std::string name, const Reluctance& reluctance);
 
     // Destructors
-    ~Capacitor();
+    ~Core();
 
     // Operator overloading
-    bool operator==(const Capacitor& peer) const;
-    Capacitor operator+(const Capacitor& peer) const;
-    Capacitor operator-(const Capacitor& peer) const;
-    Capacitor operator*(const Capacitor& peer) const;
-    Capacitor operator/(const Capacitor& peer) const;
-    Capacitor operator%(const Capacitor& peer) const;
+    bool operator==(const Core& peer) const;
+    Core operator+(const Core& peer) const;
+    Core operator-(const Core& peer) const;
+    Core operator*(const Core& peer) const;
+    Core operator/(const Core& peer) const;
+    Core operator%(const Core& peer) const;
 
     // Getters
-    Capacitance getCapacitance() const { return capacitance; }
+    Reluctance getReluctance() const { return reluctance; }
 
     // Setters
-    void setCapacitance(const Capacitance& property) { this->capacitance = property; }
+    void setReluctance(const Reluctance& range) { this->reluctance = range; }
 
     // Additional methods
-    virtual Capacitor copy();
+    Core copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Capacitor > CapacitorArray;
+typedef std::vector<Core > CoreArray;
 
 } // namespace ecn
 
-#endif //ECN_CAPACITOR_H
+#endif //ECN_CORE_H

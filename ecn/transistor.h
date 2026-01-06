@@ -24,17 +24,20 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "element.h"
+#include "conductor.h"
 
 namespace ecn {
 
 class Transistor : public Element {
-
+    Conductor emitter;
+    Conductor base;
+    Conductor collector;
 public:
     // Constructors
     Transistor();
+    Transistor(const Conductor& emitter, const Conductor& base, const Conductor& collector);
     Transistor(std::string name);
-    Transistor(std::string name, const Resistance& resistance, const Capacitance& capacitance, const Inductance& inductance);
+    Transistor(std::string name, const Conductor& emitter, const Conductor& base, const Conductor& collector);
 
     // Destructors
     ~Transistor();
@@ -48,8 +51,14 @@ public:
     Transistor operator%(const Transistor& peer) const;
 
     // Getters
+    Conductor getEmitter() const { return emitter; }
+    Conductor getBase() const { return base; }
+    Conductor getCollector() const { return collector; }
 
     // Setters
+    void setEmitter(const Conductor& potential) { this->emitter = potential; }
+    void setBase(const Conductor& potential) { this->base = potential; }
+    void setCollector(const Conductor& potential) { this->collector = potential; }
 
     // Additional methods
     virtual Transistor copy();

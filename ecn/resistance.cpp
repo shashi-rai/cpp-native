@@ -22,11 +22,76 @@
 
 namespace ecn {
 
-Resistance::Resistance() : threshold() {
+const std::string Resistance::UNIT = "Ω";
+
+Resistance::Resistance()
+        : shp::Quantity(UNIT), threshold() {
 
 }
 
-Resistance::Resistance(const shp::Potential& threshold) : threshold(threshold) {
+Resistance::Resistance(const shp::Potential& threshold)
+        : shp::Quantity(UNIT), threshold(threshold) {
+
+}
+
+Resistance::Resistance(const float magnitude)
+        : shp::Quantity(magnitude, UNIT), threshold() {
+
+}
+
+Resistance::Resistance(const short int scaling)
+        : shp::Quantity(scaling, UNIT), threshold() {
+
+}
+
+Resistance::Resistance(const std::string unit)
+        : shp::Quantity(unit), threshold() {
+
+}
+
+Resistance::Resistance(const short int scaling, const std::string unit)
+        : shp::Quantity(scaling, unit), threshold() {
+
+}
+
+Resistance::Resistance(const shp::Unit& unit)
+        : shp::Quantity(unit), threshold() {
+
+}
+
+Resistance::Resistance(const short int scaling, const shp::Unit& unit)
+        : shp::Quantity(scaling, unit), threshold() {
+
+}
+
+Resistance::Resistance(const float magnitude, const std::string unit)
+        : shp::Quantity(magnitude, unit), threshold() {
+
+}
+
+Resistance::Resistance(const float magnitude, const shp::Unit& unit)
+        : shp::Quantity(magnitude, unit), threshold() {
+
+}
+
+Resistance::Resistance(const float magnitude, const short int scaling)
+        : shp::Quantity(magnitude, scaling, UNIT), threshold() {
+
+}
+
+Resistance::Resistance(const float magnitude, const short int scaling, const std::string unit)
+        : shp::Quantity(magnitude, scaling, unit), threshold() {
+
+}
+
+Resistance::Resistance(const float magnitude, const short int scaling, const shp::Unit& unit)
+        : shp::Quantity(magnitude, scaling, unit), threshold() {
+
+}
+
+Resistance::Resistance(const float magnitude, const short int scaling, const shp::Unit& unit,
+        const shp::Potential& threshold)
+        : shp::Quantity(magnitude, scaling, unit), threshold(threshold) {
 
 }
 
@@ -35,41 +100,59 @@ Resistance::~Resistance() {
 }
 
 bool Resistance::operator==(const Resistance& peer) const {
-    return (threshold == peer.threshold);
+    return (static_cast<const shp::Quantity&>(*this) == static_cast<const shp::Quantity&>(peer))
+        && (threshold == peer.threshold);
 }
 
 Resistance Resistance::operator+(const Resistance& peer) const {
-    return Resistance(threshold + peer.threshold);
+    shp::Quantity self = *this, other = peer;
+    shp::Quantity resistance = (self + other);
+    return Resistance(resistance.getMagnitude(), resistance.getScaling(), resistance.getUnit(),
+        (threshold + peer.threshold));
 }
 
 Resistance Resistance::operator-(const Resistance& peer) const {
-    return Resistance(threshold - peer.threshold);
+    shp::Quantity self = *this, other = peer;
+    shp::Quantity resistance = (self - other);
+    return Resistance(resistance.getMagnitude(), resistance.getScaling(), resistance.getUnit(),
+        (threshold - peer.threshold));
 }
 
 Resistance Resistance::operator*(const Resistance& peer) const {
-    return Resistance(threshold * peer.threshold);
+    shp::Quantity self = *this, other = peer;
+    shp::Quantity resistance = (self * other);
+    return Resistance(resistance.getMagnitude(), resistance.getScaling(), resistance.getUnit(),
+        (threshold * peer.threshold));
 }
 
 Resistance Resistance::operator/(const Resistance& peer) const {
-    return Resistance(threshold / peer.threshold);
+    shp::Quantity self = *this, other = peer;
+    shp::Quantity resistance = (self / other);
+    return Resistance(resistance.getMagnitude(), resistance.getScaling(), resistance.getUnit(),
+        (threshold / peer.threshold));
 }
 
 Resistance Resistance::operator%(const Resistance& peer) const {
-    return Resistance(threshold % peer.threshold);
+    shp::Quantity self = *this, other = peer;
+    shp::Quantity resistance = (self % other);
+    return Resistance(resistance.getMagnitude(), resistance.getScaling(), resistance.getUnit(),
+        (threshold % peer.threshold));
 }
 
 Resistance Resistance::copy() {
-    Resistance fresh(threshold);
+    Resistance fresh(getMagnitude(), getScaling(), getUnit(), threshold);
     return fresh;
 }
 
 void Resistance::clear() {
+    shp::Quantity::clear();
     threshold.clear();
     return;
 }
 
 std::string Resistance::print() {
     std::stringstream result;
+    result << shp::Quantity::print() << ",";
     result << threshold.print();
 	return result.str();
 }

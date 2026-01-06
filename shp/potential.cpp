@@ -19,6 +19,7 @@
 // THE SOFTWARE.
 
 #include "potential.h"
+#include "quantity.h"
 
 namespace shp {
 
@@ -178,6 +179,22 @@ Quantity Potential::operator()(const Potential& peerX, const Potential& peerY,
     Quantity coefficient = (origin(peerX.getOrigin(), peerY.getOrigin(), separationX, separationY) * distribution);
     Quantity result(coefficient.getMagnitude(), getScaling(), getUnit()); result.adjustScaling();
     return result;
+}
+
+short int Potential::getScaling() const {
+	return Quantity::getScaling();
+}
+
+void Potential::setScaling(const short int factor) {
+	Quantity::setScaling(factor);
+}
+
+Unit Potential::getUnit() const {
+	return Quantity::getUnit();
+}
+
+void Potential::setUnit(const Unit& object) {
+	Quantity::setUnit(object);
 }
 
 Direction Potential::getPolar() const {

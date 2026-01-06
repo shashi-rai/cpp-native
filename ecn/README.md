@@ -1,4 +1,4 @@
-# Bhojpur C++ - Electronic Network Algorithms
+# Bhojpur C++ - Electronic Circuit Network Algorithms
 
 In this folder, we maintain a collection of different algorithms applied in
 various electronic component network applications.

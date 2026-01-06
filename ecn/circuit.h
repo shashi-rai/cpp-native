@@ -24,30 +24,19 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "element.h"
+#include "conductor.h"
 
 namespace ecn {
 
 class Circuit : public Element {
-    ElementArray elements;
+    Conductor positive;
+    Conductor negative;
 public:
     // Constructors
     Circuit();
-    Circuit(const ElementArray& elements);
-    Circuit(const Resistance& resistance, const ElementArray& elements);
-    Circuit(const Resistance& resistance, const Capacitance& capacitance,
-        const ElementArray& elements);
-    Circuit(const Resistance& resistance, const Capacitance& capacitance,
-        const Inductance& inductance, const ElementArray& elements);
+    Circuit(const Conductor& positive, const Conductor& negative);
     Circuit(std::string name);
-    Circuit(std::string name, const Resistance& resistance, const Capacitance& capacitance,
-        const Inductance& inductance);
-    Circuit(std::string name, const ElementArray& elements);
-    Circuit(std::string name, const Resistance& resistance, const ElementArray& elements);
-    Circuit(std::string name, const Resistance& resistance, const Capacitance& capacitance,
-        const ElementArray& elements);
-    Circuit(std::string name, const Resistance& resistance, const Capacitance& capacitance,
-        const Inductance& inductance, const ElementArray& elements);
+    Circuit(std::string name, const Conductor& positive, const Conductor& negative);
 
     // Destructors
     ~Circuit();
@@ -57,20 +46,16 @@ public:
     Circuit operator+(const Circuit& peer) const;
     Circuit operator-(const Circuit& peer) const;
 
-    // Access operator
-    Element operator()(const int x) { return elements[x]; }
-    const Element operator()(const int x) const { return elements[x]; }
-
     // Getters
-    ElementArray getElements() const { return elements; }
+    Conductor getPositive() const { return positive; }
+    Conductor getNegative() const { return negative; }
 
     // Setters
-    void setElements(const ElementArray& components) { this->elements = components; }
+    void setPositive(const Conductor& potential) { this->positive = potential; }
+    void setNegative(const Conductor& potential) { this->negative = potential; }
 
     // Additional methods
-    int getElementCount() const;
-    Element get(const int index) const;
-    void set(const int index, const Element& object);
+    shp::Potential getPotential() const;
     virtual Circuit copy();
     virtual void clear();
     virtual std::string print();

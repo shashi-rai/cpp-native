@@ -18,8 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef ECN_RESISTANCE_H
-#define ECN_RESISTANCE_H
+#ifndef ECN_RELUCTANCE_H
+#define ECN_RELUCTANCE_H
 
 #include <sstream>
 #include <string>
@@ -28,35 +28,35 @@
 
 namespace ecn {
 
-class Resistance : public shp::Quantity {
+class Reluctance : public shp::Quantity {
     shp::Potential threshold;
 public:
     // Constructors
-    Resistance();
-    Resistance(const shp::Potential& threshold);
-    Resistance(const float magnitude);
-    Resistance(const short int scaling);
-    Resistance(const std::string unit);
-    Resistance(const short int scaling, const std::string unit);
-    Resistance(const shp::Unit& unit);
-    Resistance(const short int scaling, const shp::Unit& unit);
-    Resistance(const float magnitude, const std::string unit);
-    Resistance(const float magnitude, const shp::Unit& unit);
-    Resistance(const float magnitude, const short int scaling);
-    Resistance(const float magnitude, const short int scaling, const std::string unit);
-    Resistance(const float magnitude, const short int scaling, const shp::Unit& unit);
-    Resistance(const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Potential& threshold);
+    Reluctance();
+    Reluctance(const shp::Potential& threshold);
+    Reluctance(const float magnitude);
+    Reluctance(const short int scaling);
+    Reluctance(const std::string unit);
+    Reluctance(const short int scaling, const std::string unit);
+    Reluctance(const shp::Unit& unit);
+    Reluctance(const short int scaling, const shp::Unit& unit);
+    Reluctance(const float magnitude, const std::string unit);
+    Reluctance(const float magnitude, const shp::Unit& unit);
+    Reluctance(const float magnitude, const short int scaling);
+    Reluctance(const float magnitude, const short int scaling, const std::string unit);
+    Reluctance(const float magnitude, const short int scaling, const shp::Unit& unit);
+    Reluctance(const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Potential& threshold);
 
     // Destructors
-    ~Resistance();
+    ~Reluctance();
 
     // Operator overloading
-    bool operator==(const Resistance& peer) const;
-    Resistance operator+(const Resistance& peer) const;
-    Resistance operator-(const Resistance& peer) const;
-    Resistance operator*(const Resistance& peer) const;
-    Resistance operator/(const Resistance& peer) const;
-    Resistance operator%(const Resistance& peer) const;
+    bool operator==(const Reluctance& peer) const;
+    Reluctance operator+(const Reluctance& peer) const;
+    Reluctance operator-(const Reluctance& peer) const;
+    Reluctance operator*(const Reluctance& peer) const;
+    Reluctance operator/(const Reluctance& peer) const;
+    Reluctance operator%(const Reluctance& peer) const;
 
     // Getters
     shp::Potential getThreshold() const { return threshold; }
@@ -65,15 +65,15 @@ public:
     void setThreshold(const shp::Potential& range) { this->threshold = range; }
 
     // Additional methods
-    Resistance copy();
+    Reluctance copy();
     virtual void clear();
     virtual std::string print();
 public:
     static const std::string UNIT;
 };
 
-typedef std::vector<Resistance > ResistanceArray;
+typedef std::vector<Reluctance > ReluctanceArray;
 
 } // namespace ecn
 
-#endif //ECN_RESISTANCE_H
+#endif //ECN_RELUCTANCE_H

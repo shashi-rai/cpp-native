@@ -18,141 +18,141 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "inductance.h"
+#include "reluctance.h"
 
 namespace ecn {
 
-const std::string Inductance::UNIT = "H";
+const std::string Reluctance::UNIT = "At/Wb";
 
-Inductance::Inductance()
+Reluctance::Reluctance()
         : shp::Quantity(UNIT), threshold() {
 
 }
 
-Inductance::Inductance(const shp::Potential& threshold)
+Reluctance::Reluctance(const shp::Potential& threshold)
         : shp::Quantity(UNIT), threshold(threshold) {
 
 }
 
-Inductance::Inductance(const float magnitude)
+Reluctance::Reluctance(const float magnitude)
         : shp::Quantity(magnitude, UNIT), threshold() {
 
 }
 
-Inductance::Inductance(const short int scaling)
+Reluctance::Reluctance(const short int scaling)
         : shp::Quantity(scaling, UNIT), threshold() {
 
 }
 
-Inductance::Inductance(const std::string unit)
+Reluctance::Reluctance(const std::string unit)
         : shp::Quantity(unit), threshold() {
 
 }
 
-Inductance::Inductance(const short int scaling, const std::string unit)
+Reluctance::Reluctance(const short int scaling, const std::string unit)
         : shp::Quantity(scaling, unit), threshold() {
 
 }
 
-Inductance::Inductance(const shp::Unit& unit)
+Reluctance::Reluctance(const shp::Unit& unit)
         : shp::Quantity(unit), threshold() {
 
 }
 
-Inductance::Inductance(const short int scaling, const shp::Unit& unit)
+Reluctance::Reluctance(const short int scaling, const shp::Unit& unit)
         : shp::Quantity(scaling, unit), threshold() {
 
 }
 
-Inductance::Inductance(const float magnitude, const std::string unit)
+Reluctance::Reluctance(const float magnitude, const std::string unit)
         : shp::Quantity(magnitude, unit), threshold() {
 
 }
 
-Inductance::Inductance(const float magnitude, const shp::Unit& unit)
+Reluctance::Reluctance(const float magnitude, const shp::Unit& unit)
         : shp::Quantity(magnitude, unit), threshold() {
 
 }
 
-Inductance::Inductance(const float magnitude, const short int scaling)
+Reluctance::Reluctance(const float magnitude, const short int scaling)
         : shp::Quantity(magnitude, scaling, UNIT), threshold() {
 
 }
 
-Inductance::Inductance(const float magnitude, const short int scaling, const std::string unit)
+Reluctance::Reluctance(const float magnitude, const short int scaling, const std::string unit)
         : shp::Quantity(magnitude, scaling, unit), threshold() {
 
 }
 
-Inductance::Inductance(const float magnitude, const short int scaling, const shp::Unit& unit)
+Reluctance::Reluctance(const float magnitude, const short int scaling, const shp::Unit& unit)
         : shp::Quantity(magnitude, scaling, unit), threshold() {
 
 }
 
-Inductance::Inductance(const float magnitude, const short int scaling, const shp::Unit& unit,
+Reluctance::Reluctance(const float magnitude, const short int scaling, const shp::Unit& unit,
         const shp::Potential& threshold)
         : shp::Quantity(magnitude, scaling, unit), threshold(threshold) {
 
 }
 
-Inductance::~Inductance() {
+Reluctance::~Reluctance() {
     threshold.clear();
 }
 
-bool Inductance::operator==(const Inductance& peer) const {
+bool Reluctance::operator==(const Reluctance& peer) const {
     return (static_cast<const shp::Quantity&>(*this) == static_cast<const shp::Quantity&>(peer))
-		&& (threshold == peer.threshold);
+        && (threshold == peer.threshold);
 }
 
-Inductance Inductance::operator+(const Inductance& peer) const {
+Reluctance Reluctance::operator+(const Reluctance& peer) const {
     shp::Quantity self = *this, other = peer;
-    shp::Quantity inductance = (self + other);
-    return Inductance(inductance.getMagnitude(), inductance.getScaling(), inductance.getUnit(),
+    shp::Quantity reluctance = (self + other);
+    return Reluctance(reluctance.getMagnitude(), reluctance.getScaling(), reluctance.getUnit(),
         (threshold + peer.threshold));
 }
 
-Inductance Inductance::operator-(const Inductance& peer) const {
+Reluctance Reluctance::operator-(const Reluctance& peer) const {
     shp::Quantity self = *this, other = peer;
-    shp::Quantity inductance = (self - other);
-    return Inductance(inductance.getMagnitude(), inductance.getScaling(), inductance.getUnit(),
+    shp::Quantity reluctance = (self - other);
+    return Reluctance(reluctance.getMagnitude(), reluctance.getScaling(), reluctance.getUnit(),
         (threshold - peer.threshold));
 }
 
-Inductance Inductance::operator*(const Inductance& peer) const {
+Reluctance Reluctance::operator*(const Reluctance& peer) const {
     shp::Quantity self = *this, other = peer;
-    shp::Quantity inductance = (self * other);
-    return Inductance(inductance.getMagnitude(), inductance.getScaling(), inductance.getUnit(),
+    shp::Quantity reluctance = (self * other);
+    return Reluctance(reluctance.getMagnitude(), reluctance.getScaling(), reluctance.getUnit(),
         (threshold * peer.threshold));
 }
 
-Inductance Inductance::operator/(const Inductance& peer) const {
+Reluctance Reluctance::operator/(const Reluctance& peer) const {
     shp::Quantity self = *this, other = peer;
-    shp::Quantity inductance = (self / other);
-    return Inductance(inductance.getMagnitude(), inductance.getScaling(), inductance.getUnit(),
+    shp::Quantity reluctance = (self / other);
+    return Reluctance(reluctance.getMagnitude(), reluctance.getScaling(), reluctance.getUnit(),
         (threshold / peer.threshold));
 }
 
-Inductance Inductance::operator%(const Inductance& peer) const {
+Reluctance Reluctance::operator%(const Reluctance& peer) const {
     shp::Quantity self = *this, other = peer;
-    shp::Quantity inductance = (self % other);
-    return Inductance(inductance.getMagnitude(), inductance.getScaling(), inductance.getUnit(),
+    shp::Quantity reluctance = (self % other);
+    return Reluctance(reluctance.getMagnitude(), reluctance.getScaling(), reluctance.getUnit(),
         (threshold % peer.threshold));
 }
 
-Inductance Inductance::copy() {
-    Inductance fresh(getMagnitude(), getScaling(), getUnit(), threshold);
+Reluctance Reluctance::copy() {
+    Reluctance fresh(getMagnitude(), getScaling(), getUnit(), threshold);
     return fresh;
 }
 
-void Inductance::clear() {
-	shp::Quantity::clear();
+void Reluctance::clear() {
+    shp::Quantity::clear();
     threshold.clear();
     return;
 }
 
-std::string Inductance::print() {
+std::string Reluctance::print() {
     std::stringstream result;
-	result << shp::Quantity::print() << ",";
+    result << shp::Quantity::print() << ",";
     result << threshold.print();
 	return result.str();
 }

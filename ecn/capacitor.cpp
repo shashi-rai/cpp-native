@@ -23,18 +23,22 @@
 namespace ecn {
 
 Capacitor::Capacitor()
-        : Element() {
+        : Element(), capacitance() {
+
+}
+
+Capacitor::Capacitor(const Capacitance& capacitance)
+        : Element(), capacitance(capacitance) {
 
 }
 
 Capacitor::Capacitor(const std::string name)
-        : Element(name) {
+        : Element(name), capacitance() {
 
 }
 
-Capacitor::Capacitor(std::string name, const Resistance& resistance, const Capacitance& capacitance,
-        const Inductance& inductance)
-        : Element(name, resistance, capacitance, inductance) {
+Capacitor::Capacitor(const std::string name, const Capacitance& capacitance)
+        : Element(name), capacitance(capacitance) {
 
 }
 
@@ -43,52 +47,45 @@ Capacitor::~Capacitor() {
 }
 
 bool Capacitor::operator==(const Capacitor& peer) const {
-    return (static_cast<const Element&>(*this) == static_cast<const Element&>(peer));
+    return (static_cast<const Element&>(*this) == static_cast<const Element&>(peer))
+        && (capacitance == peer.capacitance);
 }
 
 Capacitor Capacitor::operator+(const Capacitor& peer) const {
-    Element self = *this, other = peer;
-    Element result = (self + other);
-    return Capacitor("+", result.getResistance(), result.getCapacitance(), result.getInductance());
+    return Capacitor("+", (capacitance + peer.capacitance));
 }
 
 Capacitor Capacitor::operator-(const Capacitor& peer) const {
-    Element self = *this, other = peer;
-    Element result = (self - other);
-    return Capacitor("-", result.getResistance(), result.getCapacitance(), result.getInductance());
+    return Capacitor("-", (capacitance - peer.capacitance));
 }
 
 Capacitor Capacitor::operator*(const Capacitor& peer) const {
-    Element self = *this, other = peer;
-    Element result = (self * other);
-    return Capacitor("*", result.getResistance(), result.getCapacitance(), result.getInductance());
+    return Capacitor("*", (capacitance * peer.capacitance));
 }
 
 Capacitor Capacitor::operator/(const Capacitor& peer) const {
-    Element self = *this, other = peer;
-    Element result = (self / other);
-    return Capacitor("/", result.getResistance(), result.getCapacitance(), result.getInductance());
+    return Capacitor("/", (capacitance / peer.capacitance));
 }
 
 Capacitor Capacitor::operator%(const Capacitor& peer) const {
-    Element self = *this, other = peer;
-    Element result = (self % other);
-    return Capacitor("%", result.getResistance(), result.getCapacitance(), result.getInductance());
+    return Capacitor("%", (capacitance % peer.capacitance));
 }
 
 Capacitor Capacitor::copy() {
-    Capacitor fresh(getName(), getResistance(), getCapacitance(), getInductance());
+    Capacitor fresh(getName(), capacitance);
     return fresh;
 }
 
 void Capacitor::clear() {
     Element::clear();
+    capacitance.clear();
     return;
 }
 
 std::string Capacitor::print() {
     std::stringstream result;
-    result << Element::print();
+    result << Element::print() << ",";
+    result << capacitance.print();
 	return result.str();
 }
 

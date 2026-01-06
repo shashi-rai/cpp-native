@@ -83,6 +83,10 @@ public:
     void setOrigin(const Angular& position) { this->origin = position; }
 
     // Additional methods
+    short int getScaling() const;
+    void setScaling(const short int factor);
+    Unit getUnit() const;
+    void setUnit(const Unit& object);
     Direction getPolar() const;
     void setPolar(const Direction& angle);
     Direction getAzimuthal() const;
