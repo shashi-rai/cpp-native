@@ -71,6 +71,10 @@ Capacitor Capacitor::operator%(const Capacitor& peer) const {
     return Capacitor("%", (capacitance % peer.capacitance));
 }
 
+shp::Potential Capacitor::getVoltage() const {
+    return capacitance.getThreshold();
+}
+
 Capacitor Capacitor::copy() {
     Capacitor fresh(getName(), capacitance);
     return fresh;

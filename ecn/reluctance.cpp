@@ -152,7 +152,7 @@ void Reluctance::clear() {
 
 std::string Reluctance::print() {
     std::stringstream result;
-    result << shp::Quantity::print() << ",";
+    result << shp::Quantity::print() << ",t:";
     result << threshold.print();
 	return result.str();
 }

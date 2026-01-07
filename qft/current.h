@@ -39,8 +39,20 @@ public:
     // Constructors
     Current();
     Current(std::string name);
+    Current(const float charge);
+    Current(const float charge, std::string unit);
+    Current(const float charge, const shp::Unit& unit);
     Current(const qft::Charge& charge);
+    Current(const float charge, const short int scaling);
+    Current(const float charge, const short int scaling, std::string unit);
+    Current(const float charge, const short int scaling, const shp::Unit& unit);
+    Current(std::string name, const float charge);
+    Current(std::string name, const float charge, std::string unit);
+    Current(std::string name, const float charge, const shp::Unit& unit);
     Current(std::string name, const qft::Charge& charge);
+    Current(std::string name, const float charge, const short int scaling);
+    Current(std::string name, const float charge, const short int scaling, std::string unit);
+    Current(std::string name, const float charge, const short int scaling, const shp::Unit& unit);
     Current(const float charge, const float velocity);
     Current(const qft::Charge& charge, const qft::Acceleration& velocity);
     Current(std::string name, const float charge, const float velocity);
@@ -55,6 +67,7 @@ public:
     Current operator-(const Current& peer) const;
     Current operator*(const Current& peer) const;
     Current operator/(const Current& peer) const;
+    Current operator%(const Current& peer) const;
 
     // Getters
     std::string getName() const { return name; }
@@ -87,11 +100,13 @@ public:
     shp::Quantity getRateOfChange() const;
     std::shared_ptr<Field> getElectricField() const;
     std::shared_ptr<Field> getMagneticField() const;
-    virtual Current copy();
+    bool checkNonZero() const;
+    virtual Current copy() const;
     virtual void clear();
     virtual std::string print();
     shp::Quantity getComponent(float phase) const;
 public:
+    static const Current getLooping(const Current& unitary, const float multiplier);
     static const shp::Quantity getAmpereCoulombs();
     static const shp::Quantity getAmpereFlowRate();
 public:

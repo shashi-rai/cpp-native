@@ -77,6 +77,7 @@ public:
     Acceleration operator-(const Acceleration& peer) const;
     Acceleration operator*(const Acceleration& peer) const;
     Acceleration operator/(const Acceleration& peer) const;
+    Acceleration operator%(const Acceleration& peer) const;
 
     // Getters
     shp::Unit getUnit() const { return unit; }
@@ -95,6 +96,7 @@ public:
     shp::Quantity getTotal() const;
     virtual shp::Quantity getLinear(const Time& slice);
     virtual shp::Quantity getAngular(const Time& theta);
+    bool checkNonZero() const;
     virtual Velocity copy();
     virtual void clear();
     virtual std::string print();

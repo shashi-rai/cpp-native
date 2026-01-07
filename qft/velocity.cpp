@@ -170,6 +170,24 @@ Velocity Velocity::operator/(const Velocity& peer) const {
 		shp::Direction(std::arg(a_phasor)));
 }
 
+Velocity Velocity::operator%(const Velocity& peer) const {
+    Velocity self = *this, other = peer;
+    std::complex<float>
+		ap1 = self.toComplex(self.displacement.getMagnitude(), direction.toRadians()),
+        ap2 = other.toComplex(other.displacement.getMagnitude(), other.direction.toRadians());
+	std::complex<float> a_phasor;
+	if (ap2 == std::complex<float>(shp::Quantity::DEFAULT_VALUE, shp::Quantity::DEFAULT_VALUE)) {
+		a_phasor = std::complex<float>(NAN, NAN);
+	} else {
+		std::complex<float> quotient = (ap1 / ap2);
+    	std::complex<float> cycles(std::trunc(quotient.real()), std::trunc(quotient.imag()));
+    	a_phasor = (ap1 - (cycles * ap2));
+	}
+    return Velocity("%", shp::Distance(std::abs(a_phasor),
+			(displacement.getScaling() - peer.displacement.getScaling()), getUnit()),
+		shp::Direction(std::arg(a_phasor)));
+}
+
 void Velocity::changeSpeed(const float motion) {
 	if (motion != shp::Quantity::DEFAULT_VALUE) {
 		float speed = displacement.getMagnitude() + motion;
@@ -205,6 +223,10 @@ shp::Quantity Velocity::getAngular(const Time& theta) {
 
 void Velocity::adjustScaling() {
     displacement.adjustScaling();
+}
+
+bool Velocity::checkNonZero() const {
+	return displacement.checkNonZero();
 }
 
 Velocity Velocity::copy() {

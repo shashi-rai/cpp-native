@@ -83,6 +83,24 @@ Transistor Transistor::operator%(const Transistor& peer) const {
     return Transistor("%", (emitter % peer.emitter), (base % peer.base), (collector % peer.collector));
 }
 
+shp::Potential Transistor::getVoltageEB() const {
+    Conductor base = getBase();
+    shp::Quantity charge = (emitter.getCharge() - base.getCharge());
+    short int scaling = charge.getScaling();
+    shp::Potential fresh(emitter.getCharge().getMagnitude(), base.getCharge().getMagnitude(),
+        scaling, shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_POTENTIAL));
+    return fresh;
+}
+
+shp::Potential Transistor::getVoltageCB() const {
+    Conductor base = getBase();
+    shp::Quantity charge = (collector.getCharge() - base.getCharge());
+    short int scaling = charge.getScaling();
+    shp::Potential fresh(collector.getCharge().getMagnitude(), base.getCharge().getMagnitude(),
+        scaling, shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_POTENTIAL));
+    return fresh;
+}
+
 Transistor Transistor::copy() {
     Transistor fresh(getName(), emitter, base, collector);
     return fresh;
@@ -98,9 +116,9 @@ void Transistor::clear() {
 
 std::string Transistor::print() {
     std::stringstream result;
-    result << Element::print() << ",";
-    result << emitter.print() << ",";
-    result << base.print() << ",";
+    result << Element::print() << ",e:";
+    result << emitter.print() << ",b:";
+    result << base.print() << ",c:";
     result << collector.print();
 	return result.str();
 }

@@ -206,6 +206,13 @@ Acceleration Acceleration::operator*(const Acceleration& peer) const {
         (changeSpeed * peer.changeSpeed), velocity, unit);
 }
 
+Acceleration Acceleration::operator%(const Acceleration& peer) const {
+    Velocity self = *this, other = peer;
+    Velocity velocity = (self % other);
+    return Acceleration((fmod(changeAngle, peer.changeAngle)),
+        fmod(changeSpeed, peer.changeSpeed), velocity, unit);
+}
+
 Acceleration Acceleration::operator/(const Acceleration& peer) const {
     Velocity self = *this, other = peer;
     Velocity velocity = (self / other);
@@ -264,6 +271,12 @@ shp::Direction Acceleration::getAngularVelocity(const Time& interval) const {
 shp::Direction Acceleration::getAngularShiftRate() const {
 	shp::Direction result(changeAngle * shp::Direction::DEGREE_001);
 	return result;
+}
+
+bool Acceleration::checkNonZero() const {
+	return Velocity::checkNonZero()
+		&& (changeSpeed != shp::Quantity::DEFAULT_VALUE)
+		&& (changeAngle != shp::Quantity::DEFAULT_VALUE);
 }
 
 Velocity Acceleration::copy() {

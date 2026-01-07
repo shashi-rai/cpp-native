@@ -38,8 +38,20 @@ public:
     // Constructors
     Momentum();
     Momentum(std::string name);
+    Momentum(const float mass);
+    Momentum(const float mass, std::string unit);
+    Momentum(const float mass, const shp::Unit& unit);
     Momentum(const qft::Mass& mass);
+    Momentum(const float mass, const short int scaling);
+    Momentum(const float mass, const short int scaling, std::string unit);
+    Momentum(const float mass, const short int scaling, const shp::Unit& unit);
+    Momentum(std::string name, const float mass);
+    Momentum(std::string name, const float mass, std::string unit);
+    Momentum(std::string name, const float mass, const shp::Unit& unit);
     Momentum(std::string name, const qft::Mass& mass);
+    Momentum(std::string name, const float mass, const short int scaling);
+    Momentum(std::string name, const float mass, const short int scaling, std::string unit);
+    Momentum(std::string name, const float mass, const short int scaling, const shp::Unit& unit);
     Momentum(const float mass, const float velocity);
     Momentum(const qft::Mass& mass, const qft::Acceleration& velocity);
     Momentum(std::string name, const float mass, const float velocity);
@@ -54,6 +66,7 @@ public:
     Momentum operator-(const Momentum& peer) const;
     Momentum operator*(const Momentum& peer) const;
     Momentum operator/(const Momentum& peer) const;
+    Momentum operator%(const Momentum& peer) const;
 
     // Getters
     std::string getName() const { return name; }
@@ -82,6 +95,7 @@ public:
     shp::Quantity getRateOfChange() const;
     std::shared_ptr<Field> getMatterField() const;
     std::shared_ptr<Field> getGravityField() const;
+    bool checkNonZero() const;
     virtual Momentum copy();
     virtual void clear();
     virtual std::string print();

@@ -18,59 +18,54 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef ECN_PARALLEL_H
-#define ECN_PARALLEL_H
+#ifndef ECN_NEUTRAL_H
+#define ECN_NEUTRAL_H
 
 #include <sstream>
 #include <string>
 #include <vector>
-#include "circuit.h"
+#include "conductor.h"
 
 namespace ecn {
 
-class Parallel : public Circuit {
-    CircuitArray elements;
+class Neutral : public Element {
+    Conductor line;       // Green or Black colour
 public:
     // Constructors
-    Parallel();
-    Parallel(const CircuitArray& elements);
-    Parallel(const Conductor& positive, const Conductor& negative);
-    Parallel(const Conductor& positive, const Conductor& negative, const CircuitArray& elements);
-    Parallel(std::string name);
-    Parallel(std::string name, const CircuitArray& elements);
-    Parallel(std::string name, const Conductor& positive, const Conductor& negative);
-    Parallel(std::string name, const Conductor& positive, const Conductor& negative, const CircuitArray& elements);
+    Neutral();
+    Neutral(const Conductor& ground);
+    Neutral(std::string name);
+    Neutral(std::string name, const Conductor& ground);
 
     // Destructors
-    ~Parallel();
+    ~Neutral();
 
     // Operator overloading
-    bool operator==(const Parallel& peer) const;
-    Parallel operator+(const Parallel& peer) const;
-    Parallel operator-(const Parallel& peer) const;
-
-    // Access operator
-    Circuit operator()(const int x) { return elements[x]; }
-    const Circuit operator()(const int x) const { return elements[x]; }
+    bool operator==(const Neutral& peer) const;
+    Neutral operator+(const Neutral& peer) const;
+    Neutral operator-(const Neutral& peer) const;
+    Neutral operator*(const Neutral& peer) const;
+    Neutral operator/(const Neutral& peer) const;
+    Neutral operator%(const Neutral& peer) const;
 
     // Getters
-    CircuitArray getElements() const { return elements; }
+    Conductor getLine() const { return line; }
 
     // Setters
-    void setElements(const CircuitArray& components) { this->elements = components; }
+    void setLine(const Conductor& ground) { this->line = ground; }
 
     // Additional methods
-    shp::Potential getVoltage() const;
-    int getElementCount() const;
-    Circuit get(const int index) const;
-    void set(const int index, const Circuit& object);
-    virtual Circuit copy();
+    bool isCharged() const;
+    qft::Charge getCharge() const;
+    void setCharge(const qft::Charge& electric);
+    shp::Quantity getVoltage() const;
+    Neutral copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Parallel > ParallelArray;
+typedef std::vector<Neutral > NeutralArray;
 
 } // namespace ecn
 
-#endif //ECN_PARALLEL_H
+#endif //ECN_NEUTRAL_H

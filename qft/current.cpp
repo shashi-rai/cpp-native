@@ -40,13 +40,73 @@ Current::Current(std::string name)
 
 }
 
+Current::Current(const float charge)
+        : name(), charge(charge), velocity() {
+
+}
+
+Current::Current(const float charge, std::string unit)
+        : name(), charge(charge, unit), velocity() {
+
+}
+
+Current::Current(const float charge,const shp::Unit& unit)
+        : name(), charge(charge, unit), velocity() {
+
+}
+
 Current::Current(const qft::Charge& charge)
         : name(), charge(charge), velocity() {
 
 }
 
+Current::Current(const float charge, const short int scaling)
+        : name(), charge(charge, scaling), velocity() {
+
+}
+
+Current::Current(const float charge, const short int scaling, std::string unit)
+        : name(), charge(charge, scaling, unit), velocity() {
+
+}
+
+Current::Current(const float charge, const short int scaling, const shp::Unit& unit)
+        : name(), charge(charge, scaling, unit), velocity() {
+
+}
+
+Current::Current(std::string name, const float charge)
+        : name(name), charge(charge), velocity() {
+
+}
+
+Current::Current(std::string name, const float charge, std::string unit)
+        : name(name), charge(charge, unit), velocity() {
+
+}
+
+Current::Current(std::string name, const float charge, const shp::Unit& unit)
+        : name(name), charge(charge, unit), velocity() {
+
+}
+
 Current::Current(std::string name, const qft::Charge& charge)
         : name(name), charge(charge), velocity() {
+
+}
+
+Current::Current(std::string name, const float charge, const short int scaling)
+        : name(name), charge(charge, scaling), velocity() {
+
+}
+
+Current::Current(std::string name, const float charge, const short int scaling, std::string unit)
+        : name(name), charge(charge, scaling, unit), velocity() {
+
+}
+
+Current::Current(std::string name, const float charge, const short int scaling, const shp::Unit& unit)
+        : name(name), charge(charge, scaling, unit), velocity() {
 
 }
 
@@ -92,6 +152,10 @@ Current Current::operator*(const Current& peer) const {
 
 Current Current::operator/(const Current& peer) const {
     return Current("/", (charge / peer.charge), (velocity / peer.velocity));
+}
+
+Current Current::operator%(const Current& peer) const {
+    return Current("%", (charge % peer.charge), (velocity % peer.velocity));
 }
 
 shp::Quantity Current::getMass() {
@@ -216,7 +280,20 @@ std::shared_ptr<Field> Current::getMagneticField() const {
     return field;
 }
 
-Current Current::copy() {
+bool Current::checkNonZero() const {
+    return (charge.checkNonZero() && velocity.checkNonZero());
+}
+
+const Current Current::getLooping(const Current& unitary, const float multiplier) {
+    if (multiplier > 0) {
+        Current fresh = unitary.copy();
+        fresh.setElectrons(multiplier);
+        return fresh;
+    }
+    return unitary;
+}
+
+Current Current::copy() const {
     Current fresh(name, charge, velocity);
     return fresh;
 }

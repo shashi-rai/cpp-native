@@ -24,19 +24,20 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "conductor.h"
+#include "neutral.h"
 #include "../shp/potential.h"
 
 namespace ecn {
 
-class Source : public Element {
+class Source : protected Neutral {
     Conductor positive;
-    Conductor negative;
 public:
     // Constructors
     Source();
+    Source(const Conductor& positive);
     Source(const Conductor& positive, const Conductor& negative);
     Source(std::string name);
+    Source(std::string name, const Conductor& positive);
     Source(std::string name, const Conductor& positive, const Conductor& negative);
 
     // Destructors
@@ -52,14 +53,14 @@ public:
 
     // Getters
     Conductor getPositive() const { return positive; }
-    Conductor getNegative() const { return negative; }
 
     // Setters
     void setPositive(const Conductor& potential) { this->positive = potential; }
-    void setNegative(const Conductor& potential) { this->negative = potential; }
 
     // Additional methods
-    shp::Potential getPotential() const;
+    Conductor getNegative() const;
+    void setNegative(const Conductor& line);
+    shp::Potential getVoltage() const;
     Source copy();
     virtual void clear();
     virtual std::string print();

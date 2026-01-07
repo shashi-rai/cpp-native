@@ -23,22 +23,32 @@
 namespace ecn {
 
 Source::Source()
-        : Element(), positive(), negative() {
+        : Neutral(), positive() {
+
+}
+
+Source::Source(const Conductor& positive)
+        : Neutral(), positive(positive) {
 
 }
 
 Source::Source(const Conductor& positive, const Conductor& negative)
-        : Element(), positive(positive), negative(negative) {
+        : Neutral(negative), positive(positive) {
 
 }
 
 Source::Source(std::string name)
-        : Element(name), positive(), negative() {
+        : Neutral(name), positive() {
+
+}
+
+Source::Source(std::string name, const Conductor& positive)
+        : Neutral(name), positive(positive) {
 
 }
 
 Source::Source(std::string name, const Conductor& positive, const Conductor& negative)
-        : Element(name), positive(positive), negative(negative) {
+        : Neutral(name, negative), positive(positive) {
 
 }
 
@@ -47,53 +57,72 @@ Source::~Source() {
 }
 
 bool Source::operator==(const Source& peer) const {
-    return (static_cast<const Element&>(*this) == static_cast<const Element&>(peer))
-        && (positive == peer.positive) && (negative == peer.negative);
+    return (static_cast<const Neutral&>(*this) == static_cast<const Neutral&>(peer))
+        && (positive == peer.positive);
 }
 
 Source Source::operator+(const Source& peer) const {
-    return Source("+", (positive + peer.positive), (negative + peer.negative));
+    Neutral self = *this, other = peer;
+    Neutral negative = (self + other);
+    return Source("+", (positive + peer.positive), negative.getLine());
 }
 
 Source Source::operator-(const Source& peer) const {
-    return Source("-", (positive - peer.positive), (negative - peer.negative));
+    Neutral self = *this, other = peer;
+    Neutral negative = (self - other);
+    return Source("-", (positive - peer.positive), negative.getLine());
 }
 
 Source Source::operator*(const Source& peer) const {
-    return Source("*", (positive * peer.positive), (negative * peer.negative));
+    Neutral self = *this, other = peer;
+    Neutral negative = (self * other);
+    return Source("*", (positive * peer.positive), negative.getLine());
 }
 
 Source Source::operator/(const Source& peer) const {
-    return Source("/", (positive / peer.positive), (negative / peer.negative));
+    Neutral self = *this, other = peer;
+    Neutral negative = (self / other);
+    return Source("/", (positive / peer.positive), negative.getLine());
 }
 
 Source Source::operator%(const Source& peer) const {
-    return Source("%", (positive % peer.positive), (negative % peer.negative));
+    Neutral self = *this, other = peer;
+    Neutral negative = (self % other);
+    return Source("%", (positive % peer.positive), negative.getLine());
 }
 
-shp::Potential Source::getPotential() const {
-    shp::Potential fresh(positive.getCharge().getMagnitude(),
-                        negative.getCharge().getMagnitude());
+Conductor Source::getNegative() const {
+    return Neutral::getLine();
+}
+
+void Source::setNegative(const Conductor& line) {
+    Neutral::setLine(line);
+}
+
+shp::Potential Source::getVoltage() const {
+    Conductor negative = getNegative();
+    shp::Quantity charge = (positive.getCharge() - negative.getCharge());
+    short int scaling = charge.getScaling();
+    shp::Potential fresh(positive.getCharge().getMagnitude(), negative.getCharge().getMagnitude(),
+        scaling, shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_POTENTIAL));
     return fresh;
 }
 
 Source Source::copy() {
-    Source fresh(getName(), positive, negative);
+    Source fresh(getName(), positive, getNegative());
     return fresh;
 }
 
 void Source::clear() {
-    Element::clear();
+    Neutral::clear();
     positive.clear();
-    negative.clear();
     return;
 }
 
 std::string Source::print() {
     std::stringstream result;
-    result << Element::print() << ",";
-    result << positive.print() << ",";
-    result << negative.print();
+    result << Neutral::print() << ",+:";
+    result << positive.print();
 	return result.str();
 }
 

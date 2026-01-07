@@ -54,6 +54,9 @@ public:
     bool operator==(const Phase& peer) const;
     Phase operator+(const Phase& peer) const;
     Phase operator-(const Phase& peer) const;
+    Phase operator*(const Phase& peer) const;
+    Phase operator/(const Phase& peer) const;
+    Phase operator%(const Phase& peer) const;
 
     // Getters
     float getPolarization() const { return polarization; }

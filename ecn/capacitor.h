@@ -55,6 +55,7 @@ public:
     void setCapacitance(const Capacitance& property) { this->capacitance = property; }
 
     // Additional methods
+    shp::Potential getVoltage() const;
     virtual Capacitor copy();
     virtual void clear();
     virtual std::string print();

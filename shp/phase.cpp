@@ -133,6 +133,65 @@ Phase Phase::operator-(const Phase& peer) const {
     return result;
 }
 
+Phase Phase::operator*(const Phase& peer) const {
+    Phase self = *this, other = peer;
+    std::complex<float>
+        ap1 = self.toAzimuthalComplex(self.getGradient()),
+        ap2 = other.toAzimuthalComplex(peer.getGradient());
+    std::complex<float> a_phasor = ap1 * ap2;
+    std::complex<float>
+        pp1 = self.toPolarizationComplex(self.polarization),
+        pp2 = other.toPolarizationComplex(peer.polarization);
+    std::complex<float> p_phasor = pp1 * pp2;
+    Phase result = Phase("*", std::arg(p_phasor), std::arg(a_phasor), (timestamp * peer.timestamp));
+    result.setAmplitude(std::abs(p_phasor));
+    return result;
+}
+
+Phase Phase::operator/(const Phase& peer) const {
+    Phase self = *this, other = peer;
+    std::complex<float>
+        ap1 = self.toAzimuthalComplex(self.getGradient()),
+        ap2 = other.toAzimuthalComplex(peer.getGradient());
+    std::complex<float> a_phasor = ap1 / ap2;
+    std::complex<float>
+        pp1 = self.toPolarizationComplex(self.polarization),
+        pp2 = other.toPolarizationComplex(peer.polarization);
+    std::complex<float> p_phasor = pp1 / pp2;
+    Phase result = Phase("/", std::arg(p_phasor), std::arg(a_phasor), (timestamp / peer.timestamp));
+    result.setAmplitude(std::abs(p_phasor));
+    return result;
+}
+
+Phase Phase::operator%(const Phase& peer) const {
+    Phase self = *this, other = peer;
+    std::complex<float>
+        ap1 = self.toAzimuthalComplex(self.getGradient()),
+        ap2 = other.toAzimuthalComplex(peer.getGradient());
+    std::complex<float> a_phasor;
+	if (ap2 == std::complex<float>(shp::Quantity::DEFAULT_VALUE, shp::Quantity::DEFAULT_VALUE)) {
+		a_phasor = std::complex<float>(NAN, NAN);
+	} else {
+		std::complex<float> quotient = (ap1 / ap2);
+    	std::complex<float> cycles(std::trunc(quotient.real()), std::trunc(quotient.imag()));
+    	a_phasor = (ap1 - (cycles * ap2));
+	}
+    std::complex<float>
+        pp1 = self.toPolarizationComplex(self.polarization),
+        pp2 = other.toPolarizationComplex(peer.polarization);
+    std::complex<float> p_phasor;
+	if (pp2 == std::complex<float>(shp::Quantity::DEFAULT_VALUE, shp::Quantity::DEFAULT_VALUE)) {
+		p_phasor = std::complex<float>(NAN, NAN);
+	} else {
+		std::complex<float> quotient = (pp1 / pp2);
+    	std::complex<float> cycles(std::trunc(quotient.real()), std::trunc(quotient.imag()));
+    	p_phasor = (pp1 - (cycles * pp2));
+	}
+    Phase result = Phase("%", std::arg(p_phasor), std::arg(a_phasor), (timestamp % peer.timestamp));
+    result.setAmplitude(std::abs(p_phasor));
+    return result;
+}
+
 void Phase::setPolarization(const Direction& orientation) {
     polarization = orientation.toRadians();
 }

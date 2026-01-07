@@ -84,7 +84,7 @@ void Inductor::clear() {
 
 std::string Inductor::print() {
     std::stringstream result;
-    result << Element::print() << ",";
+    result << Element::print() << ",L:";
     result << inductance.print();
 	return result.str();
 }

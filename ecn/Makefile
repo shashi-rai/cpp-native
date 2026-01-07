@@ -45,6 +45,7 @@ clean-libs: clean-custom
 	${RMCLEAN} $(LIBFILES)
 
 $(LIBFOLDR)/$(LIBNAME): \
+		$(OBJFOLDR)/alternating.o \
 		$(OBJFOLDR)/capacitance.o \
 		$(OBJFOLDR)/capacitor.o \
 		$(OBJFOLDR)/circuit.o \
@@ -52,17 +53,23 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/conductor.o \
 		$(OBJFOLDR)/core.o \
 		$(OBJFOLDR)/diode.o \
+		$(OBJFOLDR)/direct.o \
 		$(OBJFOLDR)/element.o \
 		$(OBJFOLDR)/inductance.o \
 		$(OBJFOLDR)/inductor.o \
+		$(OBJFOLDR)/motor.o \
+		$(OBJFOLDR)/neutral.o \
 		$(OBJFOLDR)/parallel.o \
 		$(OBJFOLDR)/reluctance.o \
 		$(OBJFOLDR)/resistance.o \
 		$(OBJFOLDR)/resistor.o \
 		$(OBJFOLDR)/series.o \
 		$(OBJFOLDR)/source.o \
+		$(OBJFOLDR)/switch.o \
+		$(OBJFOLDR)/transformer.o \
 		$(OBJFOLDR)/transistor.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
+		$(OBJFOLDR)/alternating.o \
 		$(OBJFOLDR)/capacitance.o \
 		$(OBJFOLDR)/capacitor.o \
 		$(OBJFOLDR)/circuit.o \
@@ -70,16 +77,24 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/conductor.o \
 		$(OBJFOLDR)/core.o \
 		$(OBJFOLDR)/diode.o \
+		$(OBJFOLDR)/direct.o \
 		$(OBJFOLDR)/element.o \
 		$(OBJFOLDR)/inductance.o \
 		$(OBJFOLDR)/inductor.o \
+		$(OBJFOLDR)/motor.o \
+		$(OBJFOLDR)/neutral.o \
 		$(OBJFOLDR)/parallel.o \
 		$(OBJFOLDR)/reluctance.o \
 		$(OBJFOLDR)/resistance.o \
 		$(OBJFOLDR)/resistor.o \
 		$(OBJFOLDR)/series.o \
 		$(OBJFOLDR)/source.o \
+		$(OBJFOLDR)/switch.o \
+		$(OBJFOLDR)/transformer.o \
 		$(OBJFOLDR)/transistor.o
+
+$(OBJFOLDR)/alternating.o: alternating.cpp
+	$(CPPTOOL) -c alternating.cpp -o $(OBJFOLDR)/alternating.o $(CXXFLAGS)
 
 $(OBJFOLDR)/capacitance.o: capacitance.cpp
 	$(CPPTOOL) -c capacitance.cpp -o $(OBJFOLDR)/capacitance.o $(CXXFLAGS)
@@ -102,6 +117,9 @@ $(OBJFOLDR)/conductor.o: conductor.cpp
 $(OBJFOLDR)/diode.o: diode.cpp
 	$(CPPTOOL) -c diode.cpp -o $(OBJFOLDR)/diode.o $(CXXFLAGS)
 
+$(OBJFOLDR)/direct.o: direct.cpp
+	$(CPPTOOL) -c direct.cpp -o $(OBJFOLDR)/direct.o $(CXXFLAGS)
+
 $(OBJFOLDR)/element.o: element.cpp
 	$(CPPTOOL) -c element.cpp -o $(OBJFOLDR)/element.o $(CXXFLAGS)
 
@@ -110,6 +128,12 @@ $(OBJFOLDR)/inductance.o: inductance.cpp
 
 $(OBJFOLDR)/inductor.o: inductor.cpp
 	$(CPPTOOL) -c inductor.cpp -o $(OBJFOLDR)/inductor.o $(CXXFLAGS)
+
+$(OBJFOLDR)/motor.o: motor.cpp
+	$(CPPTOOL) -c motor.cpp -o $(OBJFOLDR)/motor.o $(CXXFLAGS)
+
+$(OBJFOLDR)/neutral.o: neutral.cpp
+	$(CPPTOOL) -c neutral.cpp -o $(OBJFOLDR)/neutral.o $(CXXFLAGS)
 
 $(OBJFOLDR)/parallel.o: parallel.cpp
 	$(CPPTOOL) -c parallel.cpp -o $(OBJFOLDR)/parallel.o $(CXXFLAGS)
@@ -128,6 +152,12 @@ $(OBJFOLDR)/series.o: series.cpp
 
 $(OBJFOLDR)/source.o: source.cpp
 	$(CPPTOOL) -c source.cpp -o $(OBJFOLDR)/source.o $(CXXFLAGS)
+
+$(OBJFOLDR)/switch.o: switch.cpp
+	$(CPPTOOL) -c switch.cpp -o $(OBJFOLDR)/switch.o $(CXXFLAGS)
+
+$(OBJFOLDR)/transformer.o: transformer.cpp
+	$(CPPTOOL) -c transformer.cpp -o $(OBJFOLDR)/transformer.o $(CXXFLAGS)
 
 $(OBJFOLDR)/transistor.o: transistor.cpp
 	$(CPPTOOL) -c transistor.cpp -o $(OBJFOLDR)/transistor.o $(CXXFLAGS)

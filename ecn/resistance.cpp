@@ -152,7 +152,7 @@ void Resistance::clear() {
 
 std::string Resistance::print() {
     std::stringstream result;
-    result << shp::Quantity::print() << ",";
+    result << shp::Quantity::print() << ",t:";
     result << threshold.print();
 	return result.str();
 }

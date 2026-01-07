@@ -64,6 +64,7 @@ public:
     Velocity operator-(const Velocity& peer) const;
     Velocity operator*(const Velocity& peer) const;
     Velocity operator/(const Velocity& peer) const;
+    Velocity operator%(const Velocity& peer) const;
 
     // Getters
     std::string getName() const { return name; }
@@ -84,6 +85,7 @@ public:
     virtual shp::Quantity getLinear(const Time& slice);
     virtual shp::Quantity getAngular(const Time& theta);
     void adjustScaling();
+    bool checkNonZero() const;
     virtual Velocity copy();
     virtual void clear();
     virtual std::string print();

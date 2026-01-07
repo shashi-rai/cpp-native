@@ -24,19 +24,34 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "conductor.h"
+#include "switch.h"
 
 namespace ecn {
 
-class Diode : public Element {
-    Conductor positive;
-    Conductor negative;
+class Diode : public Switch {
+    shp::Potential threshold;
 public:
     // Constructors
     Diode();
+    Diode(const bool status);
+    Diode(const shp::Potential& threshold);
     Diode(const Conductor& positive, const Conductor& negative);
+    Diode(const Conductor& positive, const Conductor& negative,
+        const shp::Potential& threshold);
+    Diode(const bool status, const shp::Potential& threshold);
+    Diode(const bool status, const Conductor& positive, const Conductor& negative);
+    Diode(const bool status, const Conductor& positive, const Conductor& negative,
+        const shp::Potential& threshold);
     Diode(std::string name);
+    Diode(std::string name, const bool status);
+    Diode(std::string name, const shp::Potential& threshold);
     Diode(std::string name, const Conductor& positive, const Conductor& negative);
+    Diode(std::string name, const Conductor& positive, const Conductor& negative,
+        const shp::Potential& threshold);
+    Diode(std::string name, const bool status, const shp::Potential& threshold);
+    Diode(std::string name, const bool status, const Conductor& positive, const Conductor& negative);
+    Diode(std::string name, const bool status, const Conductor& positive, const Conductor& negative,
+        const shp::Potential& threshold);
 
     // Destructors
     ~Diode();
@@ -50,16 +65,13 @@ public:
     Diode operator%(const Diode& peer) const;
 
     // Getters
-    Conductor getPositive() const { return positive; }
-    Conductor getNegative() const { return negative; }
+    shp::Potential getThreshold() const { return threshold; }
 
     // Setters
-    void setPositive(const Conductor& potential) { this->positive = potential; }
-    void setNegative(const Conductor& potential) { this->negative = potential; }
+    void setThreshold(const shp::Potential& potential) { this->threshold = potential; }
 
     // Additional methods
-    shp::Potential getPotential() const;
-    virtual Diode copy();
+    virtual Circuit copy();
     virtual void clear();
     virtual std::string print();
 };

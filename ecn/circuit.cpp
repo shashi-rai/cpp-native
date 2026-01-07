@@ -63,9 +63,29 @@ Circuit Circuit::operator-(const Circuit& peer) const {
     return Circuit("-", (positive - peer.positive), (negative - peer.negative));
 }
 
-shp::Potential Circuit::getPotential() const {
-    shp::Potential fresh(positive.getCharge().getMagnitude(),
-                        negative.getCharge().getMagnitude());
+Circuit Circuit::operator*(const Circuit& peer) const {
+    Element self = *this, other = peer;
+    Element base = (self * other);
+    return Circuit("*", (positive * peer.positive), (negative * peer.negative));
+}
+
+Circuit Circuit::operator/(const Circuit& peer) const {
+    Element self = *this, other = peer;
+    Element base = (self / other);
+    return Circuit("/", (positive / peer.positive), (negative / peer.negative));
+}
+
+Circuit Circuit::operator%(const Circuit& peer) const {
+    Element self = *this, other = peer;
+    Element base = (self % other);
+    return Circuit("%", (positive % peer.positive), (negative % peer.negative));
+}
+
+shp::Potential Circuit::getVoltage() const {
+    shp::Quantity charge = (positive.getCharge() - negative.getCharge());
+    short int scaling = charge.getScaling();
+    shp::Potential fresh(positive.getCharge().getMagnitude(), negative.getCharge().getMagnitude(),
+        scaling, shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_POTENTIAL));
     return fresh;
 }
 
@@ -83,8 +103,8 @@ void Circuit::clear() {
 
 std::string Circuit::print() {
     std::stringstream result;
-    result << Element::print() << ",";
-    result << positive.print() << ",";
+    result << Element::print() << ",+:";
+    result << positive.print() << ",-:";
     result << negative.print();
     return result.str();
 }

@@ -140,7 +140,10 @@ Capacitance Capacitance::operator%(const Capacitance& peer) const {
 }
 
 shp::Potential Capacitance::getThreshold() const {
-    shp::Potential fresh(positive.getCharge().getMagnitude(), negative.getCharge().getMagnitude());
+	shp::Quantity charge = (positive.getCharge() - negative.getCharge());
+	short int scaling = charge.getScaling();
+    shp::Potential fresh(positive.getCharge().getMagnitude(), negative.getCharge().getMagnitude(),
+		scaling, shp::Unit::getDerivedSymbol(shp::Unit::CAPACITANCE));
     return fresh;
 }
 
@@ -158,8 +161,8 @@ void Capacitance::clear() {
 
 std::string Capacitance::print() {
     std::stringstream result;
-    result << shp::Quantity::print() << ",";
-    result << positive.print() << ",";
+    result << shp::Quantity::print() << ",+:";
+    result << positive.print() << ",-:";
     result << negative.print();
 	return result.str();
 }

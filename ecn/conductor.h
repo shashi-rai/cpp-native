@@ -1,6 +1,6 @@
 // Copyright (c) 2018 Bhojpur Consulting Private Limited, India. All rights reserved.
 
-// Permission is hereby granted, free of charge, to any person obtaining a copy
+// Permission is hereby granted, free of current, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
@@ -26,30 +26,31 @@
 #include <vector>
 #include "core.h"
 #include "resistance.h"
+#include "../qft/current.h"
 
 namespace ecn {
 
 class Conductor : public Core {
-    shp::Quantity charge;
+    qft::Current current;
     Resistance resistance;
 public:
     // Constructors
     Conductor();
     Conductor(const float charge, const short int scaling);
     Conductor(const Resistance& resistance);
-    Conductor(const shp::Quantity& charge, const Resistance& resistance);
+    Conductor(const qft::Current& current, const Resistance& resistance);
     Conductor(const Reluctance& reluctance);
-    Conductor(const shp::Quantity& charge, const Reluctance& reluctance);
+    Conductor(const qft::Current& current, const Reluctance& reluctance);
     Conductor(const Reluctance& reluctance, const Resistance& resistance);
-    Conductor(const shp::Quantity& charge, const Reluctance& reluctance, const Resistance& resistance);
+    Conductor(const qft::Current& current, const Reluctance& reluctance, const Resistance& resistance);
     Conductor(std::string name);
-    Conductor(std::string name, const shp::Quantity& charge);
+    Conductor(std::string name, const qft::Current& current);
     Conductor(std::string name, const Resistance& resistance);
-    Conductor(std::string name, const shp::Quantity& charge, const Resistance& resistance);
+    Conductor(std::string name, const qft::Current& current, const Resistance& resistance);
     Conductor(std::string name, const Reluctance& reluctance);
-    Conductor(std::string name, const shp::Quantity& charge, const Reluctance& reluctance);
+    Conductor(std::string name, const qft::Current& current, const Reluctance& reluctance);
     Conductor(std::string name, const Reluctance& reluctance, const Resistance& resistance);
-    Conductor(std::string name, const shp::Quantity& charge, const Reluctance& reluctance, const Resistance& resistance);
+    Conductor(std::string name, const qft::Current& current, const Reluctance& reluctance, const Resistance& resistance);
 
     // Destructors
     ~Conductor();
@@ -63,15 +64,18 @@ public:
     Conductor operator%(const Conductor& peer) const;
 
     // Getters
-    shp::Quantity getCharge() const { return charge; }
+    qft::Current getCurrent() const { return current; }
     Resistance getResistance() const { return resistance; }
 
     // Setters
-    void setCharge(const shp::Quantity& potential) { this->charge = potential; }
+    void setCurrent(const qft::Current& potential) { this->current = potential; }
     void setResistance(const Resistance& range) { this->resistance = range; }
 
     // Additional methods
     bool isCharged() const;
+    qft::Charge getCharge() const;
+    void setCharge(const qft::Charge& electric);
+    shp::Quantity getVoltage() const;
     Conductor copy();
     virtual void clear();
     virtual std::string print();

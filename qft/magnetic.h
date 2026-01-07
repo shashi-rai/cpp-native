@@ -23,6 +23,7 @@
 
 #include <string>
 #include <vector>
+#include "current.h"
 #include "field.h"
 #include "force.h"
 
@@ -30,12 +31,17 @@ namespace qft {
 
 class Magnetic : public Force {
     std::shared_ptr<Field> field;
+    Current current;
 public:
     // Constructors
     Magnetic();
+    Magnetic(const Current& current);
     Magnetic(std::string name);
+    Magnetic(std::string name, const Current& current);
     Magnetic(const std::shared_ptr<Field> field);
+    Magnetic(const Current& current, const std::shared_ptr<Field> field);
     Magnetic(std::string name, const std::shared_ptr<Field> field);
+    Magnetic(std::string name, const Current& current, const std::shared_ptr<Field> field);
     Magnetic(const float magnitude);
     Magnetic(const float magnitude, const std::shared_ptr<Field> field);
     Magnetic(const float magnitude, const float direction);
@@ -61,15 +67,19 @@ public:
 
     // Getters
     std::shared_ptr<Field> getField() const { return field; }
+    Current getCurrent() const { return current; }
 
     // Setters
     void setField(const std::shared_ptr<Field> address) { this->field = address; }
+    void setCurrent(const Current& electric) { this->current = electric; }
 
     // Additional methods
     bool isOwned() const;
-    virtual Force copy();
+    virtual Force copy() const;
     virtual void clear();
     virtual std::string print();
+public:
+    static const Magnetic getForce(const Magnetic& force, const float multiplier);
 };
 
 typedef std::vector<Magnetic > MagneticArray;

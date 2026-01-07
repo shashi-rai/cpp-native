@@ -125,10 +125,10 @@ void Parallel::set(const int index, const Circuit& object) {
     return;
 }
 
-shp::Potential Parallel::getPotential() const {
+shp::Potential Parallel::getVoltage() const {
     shp::Potential result;
     for (int i = 0; i < elements.size(); i++) {
-        result = (result + elements[i].getPotential());
+        result = (result + elements[i].getVoltage());
     }
     shp::Potential fresh(result.getHigh(), result.getLow(), result.getScaling(), result.getUnit());
     return fresh;
@@ -147,7 +147,7 @@ void Parallel::clear() {
 
 std::string Parallel::print() {
     std::stringstream result;
-    result << Circuit::print() << ",";
+    result << Circuit::print() << ",∥";
 	result << elements.size() << "[";
     for (int i = 0; i < elements.size(); i++) {
         result << "," << elements[i].print() << std::endl;

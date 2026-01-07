@@ -22,10 +22,8 @@
 
 namespace ecn {
 
-const float Coil::DEFAULT_TURNS = 0.0f;
-
 Coil::Coil()
-        : Conductor(), loopcount(DEFAULT_TURNS), inductance() {
+        : Conductor(), loopcount(shp::Quantity::DEFAULT_VALUE), inductance() {
 
 }
 
@@ -35,7 +33,7 @@ Coil::Coil(const float turns)
 }
 
 Coil::Coil(const Inductance& inductance)
-        : Conductor(), loopcount(DEFAULT_TURNS), inductance(inductance) {
+        : Conductor(), loopcount(shp::Quantity::DEFAULT_VALUE), inductance(inductance) {
 
 }
 
@@ -45,7 +43,7 @@ Coil::Coil(const float turns, const Inductance& inductance)
 }
 
 Coil::Coil(const Resistance& resistance)
-        : Conductor(resistance), loopcount(DEFAULT_TURNS), inductance() {
+        : Conductor(resistance), loopcount(shp::Quantity::DEFAULT_VALUE), inductance() {
 
 }
 
@@ -55,7 +53,7 @@ Coil::Coil(const float turns, const Resistance& resistance)
 }
 
 Coil::Coil(const Reluctance& reluctance)
-        : Conductor(reluctance), loopcount(DEFAULT_TURNS), inductance() {
+        : Conductor(reluctance), loopcount(shp::Quantity::DEFAULT_VALUE), inductance() {
 
 }
 
@@ -65,7 +63,7 @@ Coil::Coil(const float turns, const Reluctance& reluctance)
 }
 
 Coil::Coil(const Inductance& inductance, const Resistance& resistance)
-        : Conductor(resistance), loopcount(DEFAULT_TURNS), inductance(inductance) {
+        : Conductor(resistance), loopcount(shp::Quantity::DEFAULT_VALUE), inductance(inductance) {
 
 }
 
@@ -75,7 +73,7 @@ Coil::Coil(const float turns, const Inductance& inductance, const Resistance& re
 }
 
 Coil::Coil(const Inductance& inductance, const Reluctance& reluctance)
-        : Conductor(reluctance), loopcount(DEFAULT_TURNS), inductance(inductance) {
+        : Conductor(reluctance), loopcount(shp::Quantity::DEFAULT_VALUE), inductance(inductance) {
 
 }
 
@@ -86,7 +84,7 @@ Coil::Coil(const float turns, const Inductance& inductance, const Reluctance& re
 
 Coil::Coil(const Inductance& inductance, const Reluctance& reluctance,
         const Resistance& resistance)
-        : Conductor(reluctance, resistance), loopcount(DEFAULT_TURNS), inductance(inductance) {
+        : Conductor(reluctance, resistance), loopcount(shp::Quantity::DEFAULT_VALUE), inductance(inductance) {
 
 }
 
@@ -97,7 +95,7 @@ Coil::Coil(const float turns, const Inductance& inductance, const Reluctance& re
 }
 
 Coil::Coil(std::string name)
-        : Conductor(name), loopcount(DEFAULT_TURNS), inductance() {
+        : Conductor(name), loopcount(shp::Quantity::DEFAULT_VALUE), inductance() {
 
 }
 
@@ -107,7 +105,7 @@ Coil::Coil(std::string name, const float turns)
 }
 
 Coil::Coil(std::string name, const Inductance& inductance)
-        : Conductor(name), loopcount(DEFAULT_TURNS), inductance(inductance) {
+        : Conductor(name), loopcount(shp::Quantity::DEFAULT_VALUE), inductance(inductance) {
 
 }
 
@@ -117,7 +115,7 @@ Coil::Coil(std::string name, const float turns, const Inductance& inductance)
 }
 
 Coil::Coil(std::string name, const Resistance& resistance)
-        : Conductor(name, resistance), loopcount(DEFAULT_TURNS), inductance() {
+        : Conductor(name, resistance), loopcount(shp::Quantity::DEFAULT_VALUE), inductance() {
 
 }
 
@@ -127,7 +125,7 @@ Coil::Coil(std::string name, const float turns, const Resistance& resistance)
 }
 
 Coil::Coil(std::string name, const Reluctance& reluctance)
-        : Conductor(name, reluctance), loopcount(DEFAULT_TURNS), inductance() {
+        : Conductor(name, reluctance), loopcount(shp::Quantity::DEFAULT_VALUE), inductance() {
 
 }
 
@@ -137,7 +135,7 @@ Coil::Coil(std::string name, const float turns, const Reluctance& reluctance)
 }
 
 Coil::Coil(std::string name, const Inductance& inductance, const Resistance& resistance)
-        : Conductor(name, resistance), loopcount(DEFAULT_TURNS), inductance(inductance) {
+        : Conductor(name, resistance), loopcount(shp::Quantity::DEFAULT_VALUE), inductance(inductance) {
 
 }
 
@@ -147,7 +145,7 @@ Coil::Coil(std::string name, const float turns, const Inductance& inductance, co
 }
 
 Coil::Coil(std::string name, const Inductance& inductance, const Reluctance& reluctance)
-        : Conductor(name, reluctance), loopcount(DEFAULT_TURNS), inductance(inductance) {
+        : Conductor(name, reluctance), loopcount(shp::Quantity::DEFAULT_VALUE), inductance(inductance) {
 
 }
 
@@ -158,7 +156,7 @@ Coil::Coil(std::string name, const float turns, const Inductance& inductance, co
 
 Coil::Coil(std::string name, const Inductance& inductance, const Reluctance& reluctance,
         const Resistance& resistance)
-        : Conductor(name, reluctance, resistance), loopcount(DEFAULT_TURNS), inductance(inductance) {
+        : Conductor(name, reluctance, resistance), loopcount(shp::Quantity::DEFAULT_VALUE), inductance(inductance) {
 
 }
 
@@ -181,35 +179,54 @@ Coil Coil::operator+(const Coil& peer) const {
     Conductor self = *this, other = peer;
     Conductor conductor = (self + other);
     float turns = (loopcount + peer.loopcount);
-    return Coil("+", turns, (inductance + peer.inductance), conductor.getReluctance(), conductor.getResistance());
+    return Coil("+", turns, (inductance + peer.inductance),
+		conductor.getReluctance(), conductor.getResistance());
 }
 
 Coil Coil::operator-(const Coil& peer) const {
     Conductor self = *this, other = peer;
     Conductor conductor = (self - other);
     float turns = (loopcount - peer.loopcount);
-    return Coil("-", turns, (inductance - peer.inductance), conductor.getReluctance(), conductor.getResistance());
+    return Coil("-", turns, (inductance - peer.inductance),
+		conductor.getReluctance(), conductor.getResistance());
 }
 
 Coil Coil::operator*(const Coil& peer) const {
     Conductor self = *this, other = peer;
     Conductor conductor = (self * other);
     float turns = (loopcount * peer.loopcount);
-    return Coil("*", turns, (inductance * peer.inductance), conductor.getReluctance(), conductor.getResistance());
+    return Coil("*", turns, (inductance * peer.inductance),
+		conductor.getReluctance(), conductor.getResistance());
 }
 
 Coil Coil::operator/(const Coil& peer) const {
     Conductor self = *this, other = peer;
     Conductor conductor = (self / other);
     float turns = (loopcount / peer.loopcount);
-    return Coil("/", turns, (inductance / peer.inductance), conductor.getReluctance(), conductor.getResistance());
+    return Coil("/", turns, (inductance / peer.inductance),
+		conductor.getReluctance(), conductor.getResistance());
 }
 
 Coil Coil::operator%(const Coil& peer) const {
     Conductor self = *this, other = peer;
     Conductor conductor = (self % other);
     float turns = fmod(loopcount, peer.loopcount);
-    return Coil("%", turns, (inductance % peer.inductance), conductor.getReluctance(), conductor.getResistance());
+    return Coil("%", turns, (inductance % peer.inductance),
+		conductor.getReluctance(), conductor.getResistance());
+}
+
+shp::Potential Coil::getVoltage() const {
+	shp::Quantity current = getCurrent().getAngularTotal();
+    float total = (loopcount * current.getMagnitude());
+    short int scaling = current.getScaling();
+    shp::Potential fresh(total, shp::Quantity::DEFAULT_VALUE,
+        scaling, shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_POTENTIAL));
+    return fresh;
+}
+
+qft::Magnetic Coil::getForce() const {
+	qft::Magnetic unitary(getCurrent());
+	return qft::Magnetic::getForce(unitary, loopcount);
 }
 
 Coil Coil::copy() {
@@ -219,7 +236,7 @@ Coil Coil::copy() {
 
 void Coil::clear() {
     Conductor::clear();
-    loopcount = DEFAULT_TURNS;
+    loopcount = shp::Quantity::DEFAULT_VALUE;
     inductance.clear();
     return;
 }
@@ -228,7 +245,7 @@ std::string Coil::print() {
     std::stringstream result;
     result << "(";
 	result << Conductor::print() << ",t:";
-	result << loopcount << ",";
+	result << loopcount << ",Φ:";
     result << inductance.print();
     result << ")";
 	return result.str();

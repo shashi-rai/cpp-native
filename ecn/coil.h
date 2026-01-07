@@ -26,6 +26,7 @@
 #include <vector>
 #include "conductor.h"
 #include "inductance.h"
+#include "../qft/magnetic.h"
 
 namespace ecn {
 
@@ -83,11 +84,11 @@ public:
     void setInductance(const Inductance& range) { this->inductance = range; }
 
     // Additional methods
+    shp::Potential getVoltage() const;
+    qft::Magnetic getForce() const;
     Coil copy();
     virtual void clear();
     virtual std::string print();
-public:
-    static const float DEFAULT_TURNS;
 };
 
 typedef std::vector<Coil > CoilArray;

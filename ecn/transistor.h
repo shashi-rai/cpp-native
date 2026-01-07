@@ -61,6 +61,8 @@ public:
     void setCollector(const Conductor& potential) { this->collector = potential; }
 
     // Additional methods
+    shp::Potential getVoltageEB() const;
+    shp::Potential getVoltageCB() const;
     virtual Transistor copy();
     virtual void clear();
     virtual std::string print();

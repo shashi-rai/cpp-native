@@ -84,7 +84,7 @@ void Core::clear() {
 
 std::string Core::print() {
     std::stringstream result;
-	result << Element::print() << ",";
+	result << Element::print() << ",ℜ:";
     result << reluctance.print();
 	return result.str();
 }

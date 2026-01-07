@@ -18,59 +18,59 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef ECN_PARALLEL_H
-#define ECN_PARALLEL_H
+#ifndef ECN_TRANSFORMER_H
+#define ECN_TRANSFORMER_H
 
 #include <sstream>
 #include <string>
 #include <vector>
-#include "circuit.h"
+#include "coil.h"
 
 namespace ecn {
 
-class Parallel : public Circuit {
-    CircuitArray elements;
+class Transformer : public Element {
+    Coil primary;
+    Coil secondary;
 public:
     // Constructors
-    Parallel();
-    Parallel(const CircuitArray& elements);
-    Parallel(const Conductor& positive, const Conductor& negative);
-    Parallel(const Conductor& positive, const Conductor& negative, const CircuitArray& elements);
-    Parallel(std::string name);
-    Parallel(std::string name, const CircuitArray& elements);
-    Parallel(std::string name, const Conductor& positive, const Conductor& negative);
-    Parallel(std::string name, const Conductor& positive, const Conductor& negative, const CircuitArray& elements);
+    Transformer();
+    Transformer(const Coil& primary);
+    Transformer(const Coil& primary, const Coil& secondary);
+    Transformer(std::string name);
+    Transformer(std::string name, const Coil& primary);
+    Transformer(std::string name, const Coil& primary, const Coil& secondary);
 
     // Destructors
-    ~Parallel();
+    ~Transformer();
 
     // Operator overloading
-    bool operator==(const Parallel& peer) const;
-    Parallel operator+(const Parallel& peer) const;
-    Parallel operator-(const Parallel& peer) const;
-
-    // Access operator
-    Circuit operator()(const int x) { return elements[x]; }
-    const Circuit operator()(const int x) const { return elements[x]; }
+    bool operator==(const Transformer& peer) const;
+    Transformer operator+(const Transformer& peer) const;
+    Transformer operator-(const Transformer& peer) const;
+    Transformer operator*(const Transformer& peer) const;
+    Transformer operator/(const Transformer& peer) const;
+    Transformer operator%(const Transformer& peer) const;
 
     // Getters
-    CircuitArray getElements() const { return elements; }
+    Coil getPrimary() const { return primary; }
+    Coil getSecondary() const { return secondary; }
 
     // Setters
-    void setElements(const CircuitArray& components) { this->elements = components; }
+    void setPrimary(const Coil& coil) { this->primary = coil; }
+    void setSecondary(const Coil& coil) { this->secondary = coil; }
 
     // Additional methods
-    shp::Potential getVoltage() const;
-    int getElementCount() const;
-    Circuit get(const int index) const;
-    void set(const int index, const Circuit& object);
-    virtual Circuit copy();
+    float getTurnsRatio() const;
+    float getHighVoltageRatio() const;
+    float getLowVoltageRatio() const;
+    shp::Potential getSecondaryVoltage() const;
+    virtual Transformer copy();
     virtual void clear();
     virtual std::string print();
 };
 
-typedef std::vector<Parallel > ParallelArray;
+typedef std::vector<Transformer > TransformerArray;
 
 } // namespace ecn
 
-#endif //ECN_PARALLEL_H
+#endif //ECN_TRANSFORMER_H

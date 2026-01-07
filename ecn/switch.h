@@ -18,8 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef ECN_PARALLEL_H
-#define ECN_PARALLEL_H
+#ifndef ECN_SWITCH_H
+#define ECN_SWITCH_H
 
 #include <sstream>
 #include <string>
@@ -28,49 +28,46 @@
 
 namespace ecn {
 
-class Parallel : public Circuit {
-    CircuitArray elements;
+class Switch : public Circuit {
+    bool status;
 public:
     // Constructors
-    Parallel();
-    Parallel(const CircuitArray& elements);
-    Parallel(const Conductor& positive, const Conductor& negative);
-    Parallel(const Conductor& positive, const Conductor& negative, const CircuitArray& elements);
-    Parallel(std::string name);
-    Parallel(std::string name, const CircuitArray& elements);
-    Parallel(std::string name, const Conductor& positive, const Conductor& negative);
-    Parallel(std::string name, const Conductor& positive, const Conductor& negative, const CircuitArray& elements);
+    Switch();
+    Switch(const bool status);
+    Switch(const Conductor& positive, const Conductor& negative);
+    Switch(const bool status, const Conductor& positive, const Conductor& negative);
+    Switch(std::string name);
+    Switch(std::string name, const bool status);
+    Switch(std::string name, const Conductor& positive, const Conductor& negative);
+    Switch(std::string name, const bool status, const Conductor& positive, const Conductor& negative);
 
     // Destructors
-    ~Parallel();
+    ~Switch();
 
     // Operator overloading
-    bool operator==(const Parallel& peer) const;
-    Parallel operator+(const Parallel& peer) const;
-    Parallel operator-(const Parallel& peer) const;
-
-    // Access operator
-    Circuit operator()(const int x) { return elements[x]; }
-    const Circuit operator()(const int x) const { return elements[x]; }
+    bool operator==(const Switch& peer) const;
+    Switch operator+(const Switch& peer) const;
+    Switch operator-(const Switch& peer) const;
+    Switch operator*(const Switch& peer) const;
+    Switch operator/(const Switch& peer) const;
+    Switch operator%(const Switch& peer) const;
 
     // Getters
-    CircuitArray getElements() const { return elements; }
+    bool getStatus() const { return status; }
 
     // Setters
-    void setElements(const CircuitArray& components) { this->elements = components; }
+    void setStatus(const bool flag) { this->status = flag; }
 
     // Additional methods
-    shp::Potential getVoltage() const;
-    int getElementCount() const;
-    Circuit get(const int index) const;
-    void set(const int index, const Circuit& object);
     virtual Circuit copy();
     virtual void clear();
     virtual std::string print();
+public:
+    static const bool DEFAULT_FLAG;
 };
 
-typedef std::vector<Parallel > ParallelArray;
+typedef std::vector<Switch > SwitchArray;
 
 } // namespace ecn
 
-#endif //ECN_PARALLEL_H
+#endif //ECN_SWITCH_H

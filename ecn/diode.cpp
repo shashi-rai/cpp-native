@@ -23,22 +23,86 @@
 namespace ecn { 
 
 Diode::Diode()
-        : Element(), positive(), negative() {
+        : Switch(), threshold() {
+
+}
+
+Diode::Diode(const bool status)
+        : Switch(status), threshold() {
+
+}
+
+Diode::Diode(const shp::Potential& threshold)
+        : Switch(), threshold(threshold) {
 
 }
 
 Diode::Diode(const Conductor& positive, const Conductor& negative)
-        : Element(), positive(positive), negative(negative) {
+        : Switch(positive, negative), threshold() {
+
+}
+
+Diode::Diode(const Conductor& positive, const Conductor& negative,
+        const shp::Potential& threshold)
+        : Switch(positive, negative), threshold(threshold) {
+
+}
+
+Diode::Diode(const bool status, const shp::Potential& threshold)
+        : Switch(status), threshold(threshold) {
+
+}
+
+Diode::Diode(const bool status, const Conductor& positive, const Conductor& negative)
+        : Switch(status, positive, negative), threshold() {
+
+}
+
+Diode::Diode(const bool status, const Conductor& positive, const Conductor& negative,
+        const shp::Potential& threshold)
+        : Switch(status, positive, negative), threshold(threshold) {
 
 }
 
 Diode::Diode(std::string name)
-        : Element(name), positive(), negative() {
+        : Switch(name), threshold() {
+
+}
+
+Diode::Diode(std::string name, const bool status)
+        : Switch(name, status), threshold() {
+
+}
+
+Diode::Diode(std::string name, const shp::Potential& threshold)
+        : Switch(name), threshold(threshold) {
 
 }
 
 Diode::Diode(std::string name, const Conductor& positive, const Conductor& negative)
-        : Element(name), positive(positive), negative(negative) {
+        : Switch(name, positive, negative), threshold() {
+
+}
+
+Diode::Diode(std::string name, const Conductor& positive, const Conductor& negative,
+        const shp::Potential& threshold)
+        : Switch(name, positive, negative), threshold(threshold) {
+
+}
+
+Diode::Diode(std::string name, const bool status, const shp::Potential& threshold)
+        : Switch(name, status), threshold(threshold) {
+
+}
+
+Diode::Diode(std::string name, const bool status, const Conductor& positive, const Conductor& negative)
+        : Switch(name, status, positive, negative), threshold() {
+
+}
+
+Diode::Diode(std::string name, const bool status, const Conductor& positive, const Conductor& negative,
+        const shp::Potential& threshold)
+        : Switch(name, status, positive, negative), threshold(threshold) {
 
 }
 
@@ -47,63 +111,60 @@ Diode::~Diode() {
 }
 
 bool Diode::operator==(const Diode& peer) const {
-    return (static_cast<const Element&>(*this) == static_cast<const Element&>(peer))
-        && (positive == peer.positive) && (negative == peer.negative);
+    return (static_cast<const Switch&>(*this) == static_cast<const Switch&>(peer))
+        && (threshold == peer.threshold);
 }
 
 Diode Diode::operator+(const Diode& peer) const {
-    Element self = *this, other = peer;
-    Element result = (self + other);
-    return Diode("+", (positive + peer.positive), (negative + peer.negative));
+    Switch self = *this, other = peer;
+    Switch result = (self + other);
+    return Diode("+", result.getStatus(), result.getPositive(), result.getNegative(),
+        (threshold + peer.threshold));
 }
 
 Diode Diode::operator-(const Diode& peer) const {
-    Element self = *this, other = peer;
-    Element result = (self - other);
-    return Diode("-", (positive - peer.positive), (negative - peer.negative));
+    Switch self = *this, other = peer;
+    Switch result = (self - other);
+    return Diode("-", result.getStatus(), result.getPositive(), result.getNegative(),
+        (threshold - peer.threshold));
 }
 
 Diode Diode::operator*(const Diode& peer) const {
-    Element self = *this, other = peer;
-    Element result = (self * other);
-    return Diode("*", (positive * peer.positive), (negative * peer.negative));
+    Switch self = *this, other = peer;
+    Switch result = (self * other);
+    return Diode("*", result.getStatus(), result.getPositive(), result.getNegative(),
+        (threshold * peer.threshold));
 }
 
 Diode Diode::operator/(const Diode& peer) const {
-    Element self = *this, other = peer;
-    Element result = (self / other);
-    return Diode("/", (positive / peer.positive), (negative / peer.negative));
+    Switch self = *this, other = peer;
+    Switch result = (self / other);
+    return Diode("/", result.getStatus(), result.getPositive(), result.getNegative(),
+        (threshold / peer.threshold));
 }
 
 Diode Diode::operator%(const Diode& peer) const {
-    Element self = *this, other = peer;
-    Element result = (self % other);
-    return Diode("%", (positive % peer.positive), (negative % peer.negative));
+    Switch self = *this, other = peer;
+    Switch result = (self % other);
+    return Diode("%", result.getStatus(), result.getPositive(), result.getNegative(),
+        (threshold % peer.threshold));
 }
 
-shp::Potential Diode::getPotential() const {
-    shp::Potential fresh(positive.getCharge().getMagnitude(),
-                        negative.getCharge().getMagnitude());
-    return fresh;
-}
-
-Diode Diode::copy() {
-    Diode fresh(getName(), positive, negative);
+Circuit Diode::copy() {
+    Diode fresh(getName(), getStatus(), getPositive(), getNegative(), threshold);
     return fresh;
 }
 
 void Diode::clear() {
-    Element::clear();
-    positive.clear();
-    negative.clear();
+    Switch::clear();
+    threshold.clear();
     return;
 }
 
 std::string Diode::print() {
     std::stringstream result;
-    result << Element::print() << ",";
-    result << positive.print() << ",";
-    result << negative.print();
+    result << Switch::print() << ",t:";
+    result << threshold.print();
 	return result.str();
 }
 

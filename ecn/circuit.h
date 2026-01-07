@@ -45,6 +45,9 @@ public:
     bool operator==(const Circuit& peer) const;
     Circuit operator+(const Circuit& peer) const;
     Circuit operator-(const Circuit& peer) const;
+    Circuit operator*(const Circuit& peer) const;
+    Circuit operator/(const Circuit& peer) const;
+    Circuit operator%(const Circuit& peer) const;
 
     // Getters
     Conductor getPositive() const { return positive; }
@@ -55,7 +58,7 @@ public:
     void setNegative(const Conductor& potential) { this->negative = potential; }
 
     // Additional methods
-    shp::Potential getPotential() const;
+    shp::Potential getVoltage() const;
     virtual Circuit copy();
     virtual void clear();
     virtual std::string print();

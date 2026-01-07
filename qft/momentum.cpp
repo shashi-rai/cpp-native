@@ -36,13 +36,73 @@ Momentum::Momentum(std::string name)
 
 }
 
+Momentum::Momentum(const float mass)
+        : name(), mass(mass), velocity() {
+
+}
+
+Momentum::Momentum(const float mass, std::string unit)
+        : name(), mass(mass, unit), velocity() {
+
+}
+
+Momentum::Momentum(const float mass, const shp::Unit& unit)
+        : name(), mass(mass, unit), velocity() {
+
+}
+
 Momentum::Momentum(const qft::Mass& mass)
         : name(), mass(mass), velocity() {
 
 }
 
+Momentum::Momentum(const float mass, const short int scaling)
+        : name(), mass(mass, scaling), velocity() {
+
+}
+
+Momentum::Momentum(const float mass, const short int scaling, std::string unit)
+        : name(), mass(mass, scaling, unit), velocity() {
+
+}
+
+Momentum::Momentum(const float mass, const short int scaling, const shp::Unit& unit)
+        : name(), mass(mass, scaling, unit), velocity() {
+
+}
+
+Momentum::Momentum(std::string name, const float mass)
+        : name(name), mass(mass), velocity() {
+
+}
+
+Momentum::Momentum(std::string name, const float mass, std::string unit)
+        : name(name), mass(mass, unit), velocity() {
+
+}
+
+Momentum::Momentum(std::string name, const float mass, const shp::Unit& unit)
+        : name(name), mass(mass, unit), velocity() {
+
+}
+
 Momentum::Momentum(std::string name, const qft::Mass& mass)
         : name(name), mass(mass), velocity() {
+
+}
+
+Momentum::Momentum(std::string name, const float mass, const short int scaling)
+        : name(name), mass(mass, scaling), velocity() {
+
+}
+
+Momentum::Momentum(std::string name, const float mass, const short int scaling, std::string unit)
+        : name(name), mass(mass, scaling, unit), velocity() {
+
+}
+
+Momentum::Momentum(std::string name, const float mass, const short int scaling, const shp::Unit& unit)
+        : name(name), mass(mass, scaling, unit), velocity() {
 
 }
 
@@ -88,6 +148,10 @@ Momentum Momentum::operator*(const Momentum& peer) const {
 
 Momentum Momentum::operator/(const Momentum& peer) const {
     return Momentum("/", (mass / peer.mass), (velocity / peer.velocity));
+}
+
+Momentum Momentum::operator%(const Momentum& peer) const {
+    return Momentum("%", (mass % peer.mass), (velocity % peer.velocity));
 }
 
 shp::Quantity Momentum::getCharge() {
@@ -185,6 +249,10 @@ std::shared_ptr<Field> Momentum::getGravityField() const {
     shp::Direction orientation = velocity.getDirection().getNormal();
     field->setLinear(orientation);
     return field;
+}
+
+bool Momentum::checkNonZero() const {
+    return (mass.checkNonZero() && velocity.checkNonZero());
 }
 
 Momentum Momentum::copy() {
