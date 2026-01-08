@@ -216,7 +216,7 @@ shp::Quantity Velocity::getLinear(const Time& slice) {
 }
 
 shp::Quantity Velocity::getAngular(const Time& theta) {
-	shp::Quantity rotation = theta.getAngular();
+	shp::Quantity rotation = theta.getPhaseShift();
     shp::Quantity result(rotation.getMagnitude(), rotation.getScaling(), rotation.getUnit());
     return result;
 }

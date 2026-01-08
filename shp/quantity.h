@@ -38,8 +38,8 @@ public:
     Quantity(const float magnitude);
     Quantity(const short int scaling);
     Quantity(const std::string unit);
-    Quantity(const short int scaling, const std::string unit);
     Quantity(const Unit& unit);
+    Quantity(const short int scaling, const std::string unit);
     Quantity(const short int scaling, const Unit& unit);
     Quantity(const float magnitude, const std::string unit);
     Quantity(const float magnitude, const Unit& unit);
@@ -61,7 +61,7 @@ public:
     // Getters
     float getMagnitude() const { return magnitude; }
     short int getScaling() const { return scaling; }
-    Unit getUnit()const { return unit; }
+    Unit getUnit() const { return unit; }
 
     // Setters
     void setMagnitude(const float amount) { this->magnitude = amount; }

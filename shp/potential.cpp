@@ -19,7 +19,6 @@
 // THE SOFTWARE.
 
 #include "potential.h"
-#include "quantity.h"
 
 namespace shp {
 

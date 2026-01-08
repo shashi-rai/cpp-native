@@ -62,9 +62,11 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/point.o \
 		$(OBJFOLDR)/polygon.o \
 		$(OBJFOLDR)/potential.o \
+		$(OBJFOLDR)/proportion.o \
 		$(OBJFOLDR)/quantity.o \
 		$(OBJFOLDR)/shape.o \
 		$(OBJFOLDR)/shell.o \
+		$(OBJFOLDR)/temporal.o \
 		$(OBJFOLDR)/unit.o \
 		$(OBJFOLDR)/volume.o \
 		$(OBJFOLDR)/wave.o
@@ -86,9 +88,11 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/point.o \
 		$(OBJFOLDR)/polygon.o \
 		$(OBJFOLDR)/potential.o \
+		$(OBJFOLDR)/proportion.o \
 		$(OBJFOLDR)/quantity.o \
 		$(OBJFOLDR)/shape.o \
 		$(OBJFOLDR)/shell.o \
+		$(OBJFOLDR)/temporal.o \
 		$(OBJFOLDR)/unit.o \
 		$(OBJFOLDR)/volume.o \
 		$(OBJFOLDR)/wave.o
@@ -144,6 +148,9 @@ $(OBJFOLDR)/polygon.o: polygon.cpp
 $(OBJFOLDR)/potential.o: potential.cpp
 	$(CPPTOOL) -c potential.cpp -o $(OBJFOLDR)/potential.o $(CXXFLAGS)
 
+$(OBJFOLDR)/proportion.o: proportion.cpp
+	$(CPPTOOL) -c proportion.cpp -o $(OBJFOLDR)/proportion.o $(CXXFLAGS)
+
 $(OBJFOLDR)/quantity.o: quantity.cpp
 	$(CPPTOOL) -c quantity.cpp -o $(OBJFOLDR)/quantity.o $(CXXFLAGS)
 
@@ -152,6 +159,9 @@ $(OBJFOLDR)/shape.o: shape.cpp
 
 $(OBJFOLDR)/shell.o: shell.cpp
 	$(CPPTOOL) -c shell.cpp -o $(OBJFOLDR)/shell.o $(CXXFLAGS)
+
+$(OBJFOLDR)/temporal.o: temporal.cpp
+	$(CPPTOOL) -c temporal.cpp -o $(OBJFOLDR)/temporal.o $(CXXFLAGS)
 
 $(OBJFOLDR)/unit.o: unit.cpp
 	$(CPPTOOL) -c unit.cpp -o $(OBJFOLDR)/unit.o $(CXXFLAGS)

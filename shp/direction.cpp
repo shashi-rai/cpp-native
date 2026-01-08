@@ -22,6 +22,7 @@
 
 namespace shp {
 
+const float Direction::DEFAULT_RADIANS = 0.000000000000000000f;
 const short int Direction::DEGREES_MIN = 0;
 const short int Direction::DEGREES_MAX = 360;
 const short int Direction::MINUTES_MIN = 0;
@@ -116,6 +117,14 @@ Direction Direction::operator%(const Direction& peer) const {
     return Direction(getIndexDegrees(degrees % peer.degrees),
             getIndexMinutes(minutes % peer.minutes),
             getIndexSeconds(seconds % peer.seconds));
+}
+
+float Direction::getCyclingRate() const {
+    return (toRadians() / (2 * M_PI));
+}
+
+float Direction::getTimePerCycle() const {
+    return ((2 * M_PI) / toRadians());
 }
 
 float Direction::toRadians() const {

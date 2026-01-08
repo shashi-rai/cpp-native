@@ -62,6 +62,8 @@ public:
     void setSeconds(const short int value) { this->seconds = getIndexSeconds(value); }
 
     // Additional methods
+    float getCyclingRate() const;
+    float getTimePerCycle() const;
     float toRadians() const;
     bool checkNonZero() const;
     Direction getInverse() const;
@@ -77,6 +79,7 @@ private:
     short int getIndexSeconds(const short int value) const;
 
 public:
+    static const float DEFAULT_RADIANS;
     static const short int DEGREES_MIN;
     static const short int DEGREES_MAX;
     static const short int MINUTES_MIN;

@@ -24,27 +24,40 @@
 #include <chrono>
 #include <string>
 #include <vector>
-#include "../shp/quantity.h"
+#include "../shp/temporal.h"
 
 namespace qft {
 
-class Time : public shp::Quantity {
+class Time : public shp::Temporal {
     std::string name;
 public:
     // Constructors
     Time();
     Time(std::string name);
     Time(const shp::Unit& unit);
+    Time(std::string name, const shp::Unit& unit);
     Time(const float duration);
+    Time(const float duration, const std::string unit);
     Time(const float duration, const shp::Unit& unit);
-    Time(const float duration, const short int scaling);
+    Time(const float duration, const short int scaling, const std::string unit);
     Time(const float duration, const short int scaling, const shp::Unit& unit);
-    Time(std::string duration, const shp::Unit& unit);
+    Time(const float change, const float duration);
+    Time(const float change, const float duration, const short int scaling);
+    Time(const float change, const float duration, const short int scaling, const std::string unit);
+    Time(const float change, const float duration, const short int scaling, const shp::Unit& unit);
+    Time(const shp::Direction& change, const float duration, const short int scaling, const std::string unit);
+    Time(const shp::Direction& change, const float duration, const short int scaling, const shp::Unit& unit);
     Time(std::string name, const float duration);
+    Time(std::string name, const float duration, const std::string unit);
     Time(std::string name, const float duration, const shp::Unit& unit);
-    Time(std::string name, const float duration, const short int scaling);
+    Time(std::string name, const float duration, const short int scaling, const std::string unit);
     Time(std::string name, const float duration, const short int scaling, const shp::Unit& unit);
-    Time(std::string name, const shp::Quantity& duration);
+    Time(std::string name, const float change, const float duration);
+    Time(std::string name, const float change, const float duration, const short int scaling);
+    Time(std::string name, const float change, const float duration, const short int scaling, const std::string unit);
+    Time(std::string name, const float change, const float duration, const short int scaling, const shp::Unit& unit);
+    Time(std::string name, const shp::Direction& change, const float duration, const short int scaling, const std::string unit);
+    Time(std::string name, const shp::Direction& change, const float duration, const short int scaling, const shp::Unit& unit);
 
     // Destructors
     ~Time();
@@ -65,18 +78,15 @@ public:
 
     // Additional methods
     shp::Quantity getTotal() const;
-    shp::Quantity getAngular() const;
-    shp::Quantity getFrequency() const;
     long getSeconds() const;
     long getMilliseconds() const;
     long long getNanoseconds() const;
-    virtual Time copy();
+    virtual shp::Temporal copy();
     virtual void clear();
     virtual std::string print();
 
 public:
     static const std::string UNIT;
-    static const float CYCLIC_RANGE;
     static const short int ATOMIC_SCALE;
     static const float ATOMIC_UNIT;
     static const long RADIATION_PERIODS;

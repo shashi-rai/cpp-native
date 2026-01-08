@@ -46,13 +46,13 @@ Quantity::Quantity(const std::string unit)
 
 }
 
-Quantity::Quantity(const short int scaling, const std::string unit)
-        : magnitude(), scaling(scaling), unit(unit) {
+Quantity::Quantity(const Unit& unit)
+        : magnitude(), scaling(DEFAULT_SCALE), unit(unit) {
 
 }
 
-Quantity::Quantity(const Unit& unit)
-        : magnitude(), scaling(DEFAULT_SCALE), unit(unit) {
+Quantity::Quantity(const short int scaling, const std::string unit)
+        : magnitude(), scaling(scaling), unit(unit) {
 
 }
 
