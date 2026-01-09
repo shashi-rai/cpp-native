@@ -49,6 +49,11 @@ public:
 
     // Additional methods
     std::string getInverse() const;
+    std::string getPercent() const;
+    std::string getSquare() const;
+    std::string getSquareRoot() const;
+    std::string getCube() const;
+    std::string getCubeRoot() const;
     virtual Unit copy();
     virtual void clear();
     virtual std::string print();

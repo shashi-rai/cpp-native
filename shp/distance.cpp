@@ -25,47 +25,103 @@ namespace shp {
 const std::string Distance::UNIT = "m";     // System International
 
 Distance::Distance()
-    : Quantity(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
+        : Quantity(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+        change(shp::Direction::DEFAULT_RADIANS) {
 
 }
 
 Distance::Distance(const std::string unit)
-    : Quantity(unit) {
+        : Quantity(unit),
+        change(shp::Direction::DEFAULT_RADIANS) {
 
 }
 
 Distance::Distance(const Unit& unit)
-    : Quantity(unit) {
+        : Quantity(unit),
+        change(shp::Direction::DEFAULT_RADIANS) {
 
 }
 
 Distance::Distance(const float length)
-    : Quantity(length, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
+        : Quantity(length, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+        change(shp::Direction::DEFAULT_RADIANS) {
 
 }
 
 Distance::Distance(const float length, const std::string unit)
-    : Quantity(length, unit) {
+        : Quantity(length, unit),
+        change(shp::Direction::DEFAULT_RADIANS) {
 
 }
 
 Distance::Distance(const float length, const Unit& unit)
-    : Quantity(length, unit) {
+        : Quantity(length, unit),
+        change(shp::Direction::DEFAULT_RADIANS) {
 
 }
 
 Distance::Distance(const float length, const short int scaling)
-    : Quantity(length, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
+        : Quantity(length, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+        change(shp::Direction::DEFAULT_RADIANS) {
 
 }
 
 Distance::Distance(const float length, const short int scaling, const std::string unit)
-    : Quantity(length, scaling, unit) {
+        : Quantity(length, scaling, unit),
+        change(shp::Direction::DEFAULT_RADIANS) {
 
 }
 
 Distance::Distance(const float length, const short int scaling, const Unit& unit)
-    : Quantity(length, scaling, unit) {
+        : Quantity(length, scaling, unit),
+        change(shp::Direction::DEFAULT_RADIANS) {
+
+}
+
+Distance::Distance(const Direction& change)
+        : Quantity(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)), change(change) {
+
+}
+
+Distance::Distance(const std::string unit, const Direction& change)
+        : Quantity(unit), change(change) {
+
+}
+
+Distance::Distance(const Unit& unit, const Direction& change)
+        : Quantity(unit), change(change) {
+
+}
+
+Distance::Distance(const float length, const Direction& change)
+        : Quantity(length, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)), change(change) {
+
+}
+
+Distance::Distance(const float length, const std::string unit, const Direction& change)
+        : Quantity(length, unit), change(change) {
+
+}
+
+Distance::Distance(const float length, const Unit& unit, const Direction& change)
+        : Quantity(length, unit), change(change) {
+
+}
+
+Distance::Distance(const float length, const short int scaling, const Direction& change)
+        : Quantity(length, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)), change(change) {
+
+}
+
+Distance::Distance(const float length, const short int scaling, const std::string unit,
+        const Direction& change)
+        : Quantity(length, scaling, unit), change(change) {
+
+}
+
+Distance::Distance(const float length, const short int scaling, const Unit& unit,
+        const Direction& change)
+        : Quantity(length, scaling, unit), change(change) {
 
 }
 
@@ -74,62 +130,145 @@ Distance::~Distance() {
 }
 
 bool Distance::operator==(const Distance& peer) const {
-    return (static_cast<const Quantity&>(*this) == static_cast<const Quantity&>(peer));
+    return (static_cast<const Quantity&>(*this) == static_cast<const Quantity&>(peer))
+        && (change == peer.change);
 }
 
 Distance Distance::operator+(const Distance& peer) const {
     Quantity self = *this, other = peer;
     Quantity distance = (self + other);
-    return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit());
+    return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(), change);
 }
 
 Distance Distance::operator-(const Distance& peer) const {
     Quantity self = *this, other = peer;
     Quantity distance = (self - other);
-    return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit());
+    return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(), change);
 }
 
 Distance Distance::operator*(const Distance& peer) const {
     Quantity self = *this, other = peer;
     Quantity distance = (self * other);
-    return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit());
+    return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(), change);
 }
 
 Distance Distance::operator/(const Distance& peer) const {
     Quantity self = *this, other = peer;
     Quantity distance = (self / other);
-    return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit());
+    return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(), change);
 }
 
 Distance Distance::operator%(const Distance& peer) const {
     Quantity self = *this, other = peer;
     Quantity distance = (self % other);
-    return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit());
+    return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(), change);
+}
+
+Distance Distance::operator+(const Direction& rotation) const {
+    Distance self = *this;
+    Direction orientation = (self.change + rotation);
+    return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(), orientation);
+}
+
+Distance Distance::operator-(const Direction& rotation) const {
+    Distance self = *this;
+    Direction orientation = (self.change - rotation);
+    return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(), orientation);
+}
+
+Distance Distance::operator*(const Direction& rotation) const {
+    Distance self = *this;
+    Direction orientation = (self.change * rotation);
+    return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(), orientation);
+}
+
+Distance Distance::operator/(const Direction& rotation) const {
+    Distance self = *this;
+    Direction orientation = (self.change / rotation);
+    return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(), orientation);
+}
+
+Distance Distance::operator%(const Direction& rotation) const {
+    Distance self = *this;
+    Direction orientation = (self.change % rotation);
+    return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(), orientation);
+}
+
+Distance Distance::operator()(const Distance& peer) const {
+    Distance self = *this;
+    Quantity radial = (self.getRadial() + peer.getRadial());
+    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(), change);
+    result.adjustScaling();
+    return result;
+}
+
+Distance Distance::getFactorX(const Distance& peer) const {
+    Distance self = *this;
+    Quantity radial = (self.getRadialX() + peer.getRadialX());
+    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(), change);
+    result.adjustScaling();
+    return result;
+}
+
+Distance Distance::getFactorY(const Distance& peer) const {
+    Distance self = *this;
+    Quantity radial = (self.getRadialY() + peer.getRadialY());
+    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(), change);
+    result.adjustScaling();
+    return result;
 }
 
 Quantity Distance::getTotal() const {
-    return Quantity(getMagnitude(), getScaling(), getUnit());
+    Quantity self = *this;
+    return Distance(self.getMagnitude(), self.getScaling(), self.getUnit());
+}
+
+Quantity Distance::getRadial() const {
+    Distance self = *this;
+    Quantity radial = (self.getSquareX() + self.getSquareY()).getSquareRoot();
+    Quantity result(radial.getMagnitude(), radial.getScaling(), self.getUnit());
+    return result;
+}
+
+Quantity Distance::getRadialX() const {
+    Quantity length = getRadial().getCosComponent(change.toRadians());
+    return Quantity(length.getMagnitude(), length.getScaling(), length.getUnit());
+}
+
+Quantity Distance::getRadialY() const {
+    Quantity length = getRadial().getSinComponent(change.toRadians());
+    return Quantity(length.getMagnitude(), length.getScaling(), length.getUnit());
+}
+
+Quantity Distance::getSquareX() const {
+    Distance self = *this; float angle = change.toRadians();
+    Quantity result = (self.getCosComponent(angle) * self.getCosComponent(angle));
+    return result;
+}
+
+Quantity Distance::getSquareY() const {
+    Distance self = *this; float angle = change.toRadians();
+    Quantity result = (self.getSinComponent(angle) * self.getSinComponent(angle));
+    return result;
 }
 
 Distance Distance::copy() {
-    Distance fresh(getMagnitude(), getScaling(), getUnit());
+    Distance self = *this;
+    Distance fresh(self.getMagnitude(), self.getScaling(), self.getUnit(), self.change);
     return fresh;
 }
 
 void Distance::clear() {
     Quantity::clear();
+    change.clear();
     return;
 }
 
 std::string Distance::print() {
     std::stringstream result;
-    result << Quantity::print();
+    result << Quantity::print() << "!Δ";
+    result << change.print();
 	return result.str();
-}
-
-Quantity Distance::getComponent(float phase) const {
-    Quantity length = getTotal();
-    return Quantity((length.getMagnitude() * cos(phase)), length.getScaling(), length.getUnit());
 }
 
 } // namespace shp

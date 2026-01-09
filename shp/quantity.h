@@ -69,16 +69,24 @@ public:
     void setUnit(const Unit& object) { this->unit = object; }
 
     // Additional methods
+    Quantity getAbsolute() const;
     Quantity getInverse() const;
+    Quantity getSquare() const;
+    Quantity getSquareRoot() const;
+    Quantity getCube() const;
+    Quantity getCubeRoot() const;
+    bool isConvergent() const;
+    bool isDivergent() const;
     bool checkNonZero() const;
     bool checkInfinity() const;
-    short int checkScaling(float amount) const;
+    short int checkScaling(const float amount) const;
     void adjustNumeric();
     void adjustScaling();
-    Quantity copy();
+    Quantity copy() const;
     void clear();
     std::string print();
-    float getComponent(float phase) const;
+    float getCosComponent(const float phase) const;
+    float getSinComponent(const float phase) const;
 public:
     static const float DEFAULT_VALUE;
     static const float DECIMAL_SCALE;

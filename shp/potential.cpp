@@ -135,48 +135,53 @@ bool Potential::operator==(const Potential& peer) const {
 }
 
 Potential Potential::operator+(const Potential& peer) const {
-    float newhigh = (getHigh() + (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (getScaling() - peer.getScaling()))));
-    float newlow = (getLow() + (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (getScaling() - peer.getScaling()))));
-    return Potential(newhigh, newlow, getScaling(), getUnit());
+	Potential self = *this;
+    float newhigh = (self.getHigh() + (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    float newlow = (self.getLow() + (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    return Potential(newhigh, newlow, self.getScaling(), self.getUnit());
 }
 
 Potential Potential::operator-(const Potential& peer) const {
-    float newhigh = (getHigh() - (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (getScaling() - peer.getScaling()))));
-    float newlow = (getLow() - (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (getScaling() - peer.getScaling()))));
-    return Potential(newhigh, newlow, getScaling(), getUnit());
+	Potential self = *this;
+    float newhigh = (self.getHigh() - (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    float newlow = (self.getLow() - (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    return Potential(newhigh, newlow, self.getScaling(), self.getUnit());
 }
 
 Potential Potential::operator*(const Potential& peer) const {
-    float newhigh = (getHigh() * peer.getHigh());
-    float newlow = (getLow() * peer.getLow());
-    return Potential(newhigh, newlow, (getScaling() + peer.getScaling()), getUnit());
+	Potential self = *this;
+    float newhigh = (self.getHigh() * peer.getHigh());
+    float newlow = (self.getLow() * peer.getLow());
+    return Potential(newhigh, newlow, (self.getScaling() + peer.getScaling()), self.getUnit());
 }
 
 Potential Potential::operator/(const Potential& peer) const {
-    float newhigh = (getHigh() / peer.getHigh());
-    float newlow = (getLow() / peer.getLow());
-    return Potential(newhigh, newlow, (getScaling() - peer.getScaling()), getUnit());
+	Potential self = *this;
+    float newhigh = (self.getHigh() / peer.getHigh());
+    float newlow = (self.getLow() / peer.getLow());
+    return Potential(newhigh, newlow, (self.getScaling() - peer.getScaling()), self.getUnit());
 }
 
 Potential Potential::operator%(const Potential& peer) const {
-    float newhigh = fmod(getHigh(), (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (getScaling() - peer.getScaling()))));
-    float newlow = fmod(getLow(), (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (getScaling() - peer.getScaling()))));
-    return Potential(newhigh, newlow, getScaling(), getUnit());
+	Potential self = *this;
+    float newhigh = fmod(self.getHigh(), (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    float newlow = fmod(self.getLow(), (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    return Potential(newhigh, newlow, self.getScaling(), self.getUnit());
 }
 
 Quantity Potential::operator()(const Potential& peer,
         const Distance& separation, const Distance& position) const {
-    Potential self = *this; float distribution = (getHigh() - getLow());
+    Potential self = *this; float distribution = self.getDifference().getMagnitude();
     Quantity coefficient = (origin(peer.origin, separation, position) * distribution);
-    Quantity result(coefficient.getMagnitude(), getScaling(), getUnit()); result.adjustScaling();
+    Quantity result(coefficient.getMagnitude(), coefficient.getScaling(), self.getUnit()); result.adjustScaling();
     return result;
 }
 
 Quantity Potential::operator()(const Potential& peerX, const Potential& peerY,
         const Distance& separationX, const Distance& separationY) const {
-    float distribution = (getHigh() - getLow());
+	Potential self = *this; float distribution = self.getDifference().getMagnitude();
     Quantity coefficient = (origin(peerX.getOrigin(), peerY.getOrigin(), separationX, separationY) * distribution);
-    Quantity result(coefficient.getMagnitude(), getScaling(), getUnit()); result.adjustScaling();
+    Quantity result(coefficient.getMagnitude(), coefficient.getScaling(), self.getUnit()); result.adjustScaling();
     return result;
 }
 
@@ -196,24 +201,25 @@ void Potential::setUnit(const Unit& object) {
 	Quantity::setUnit(object);
 }
 
-Direction Potential::getPolar() const {
+Polar Potential::getPolar() const {
     return origin.getPolar();
 }
 
-void Potential::setPolar(const Direction& angle) {
+void Potential::setPolar(const Polar& angle) {
     this->origin.setPolar(angle);
 }
 
-Direction Potential::getAzimuthal() const {
-    return origin.getAzimuthal();
+Azimuth Potential::getAzimuth() const {
+    return origin.getAzimuth();
 }
 
-void Potential::setAzimuthal(const Direction& angle) {
-    this->origin.setAzimuthal(angle);
+void Potential::setAzimuth(const Azimuth& angle) {
+    this->origin.setAzimuth(angle);
 }
 
 Quantity Potential::getDifference() const {
-    Quantity result((getHigh() - getLow()), getScaling(), getUnit());
+	Potential self = *this;
+    Quantity result((self.getHigh() - self.getLow()), self.getScaling(), self.getUnit());
     return result;
 }
 
@@ -225,15 +231,18 @@ Quantity Potential::getRelative(const Distance& location, const float angle) con
 }
 
 Quantity Potential::getPolarComponent(const Distance& location) const {
-    return getRelative(location, origin.getPolar().toRadians());
+    Potential self = *this;
+    return getRelative(location, self.origin.getPolar().toRadians());
 }
 
-Quantity Potential::getAzimuthalComponent(const Distance& location) const {
-    return getRelative(location, origin.getAzimuthal().toRadians());
+Quantity Potential::getAzimuthComponent(const Distance& location) const {
+	Potential self = *this;
+    return getRelative(location, self.origin.getAzimuth().toRadians());
 }
 
-Potential Potential::copy() {
-    Potential fresh(getHigh(), getLow(), getScaling(), getUnit());
+Potential Potential::copy() const {
+	Potential self = *this;
+    Potential fresh(self.getHigh(), self.getLow(), self.getScaling(), self.getUnit());
     return fresh;
 }
 
@@ -246,7 +255,7 @@ void Potential::clear() {
 
 std::string Potential::print() {
     std::stringstream result;
-    result << origin.print() << ",(";
+    result << origin.print() << ",∇(";
     result << getHigh() << "~";
     result << getLow() << ")x10^";
     result << getScaling();

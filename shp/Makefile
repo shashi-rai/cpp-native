@@ -48,6 +48,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/angular.o \
 		$(OBJFOLDR)/area.o \
 		$(OBJFOLDR)/axis.o \
+		$(OBJFOLDR)/azimuth.o \
 		$(OBJFOLDR)/cellular.o \
 		$(OBJFOLDR)/change.o \
 		$(OBJFOLDR)/confinement.o \
@@ -60,6 +61,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/phase.o \
 		$(OBJFOLDR)/planar.o \
 		$(OBJFOLDR)/point.o \
+		$(OBJFOLDR)/polar.o \
 		$(OBJFOLDR)/polygon.o \
 		$(OBJFOLDR)/potential.o \
 		$(OBJFOLDR)/proportion.o \
@@ -74,6 +76,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/angular.o \
 		$(OBJFOLDR)/area.o \
 		$(OBJFOLDR)/axis.o \
+		$(OBJFOLDR)/azimuth.o \
 		$(OBJFOLDR)/cellular.o \
 		$(OBJFOLDR)/change.o \
 		$(OBJFOLDR)/confinement.o \
@@ -86,6 +89,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/phase.o \
 		$(OBJFOLDR)/planar.o \
 		$(OBJFOLDR)/point.o \
+		$(OBJFOLDR)/polar.o \
 		$(OBJFOLDR)/polygon.o \
 		$(OBJFOLDR)/potential.o \
 		$(OBJFOLDR)/proportion.o \
@@ -105,6 +109,9 @@ $(OBJFOLDR)/area.o: area.cpp
 
 $(OBJFOLDR)/axis.o: axis.cpp
 	$(CPPTOOL) -c axis.cpp -o $(OBJFOLDR)/axis.o $(CXXFLAGS)
+
+$(OBJFOLDR)/azimuth.o: azimuth.cpp
+	$(CPPTOOL) -c azimuth.cpp -o $(OBJFOLDR)/azimuth.o $(CXXFLAGS)
 
 $(OBJFOLDR)/cellular.o: cellular.cpp
 	$(CPPTOOL) -c cellular.cpp -o $(OBJFOLDR)/cellular.o $(CXXFLAGS)
@@ -141,6 +148,9 @@ $(OBJFOLDR)/planar.o: planar.cpp
 
 $(OBJFOLDR)/point.o: point.cpp
 	$(CPPTOOL) -c point.cpp -o $(OBJFOLDR)/point.o $(CXXFLAGS)
+
+$(OBJFOLDR)/polar.o: polar.cpp
+	$(CPPTOOL) -c polar.cpp -o $(OBJFOLDR)/polar.o $(CXXFLAGS)
 
 $(OBJFOLDR)/polygon.o: polygon.cpp
 	$(CPPTOOL) -c polygon.cpp -o $(OBJFOLDR)/polygon.o $(CXXFLAGS)

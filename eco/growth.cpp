@@ -23,105 +23,105 @@
 namespace eco {
 
 Growth::Growth()
-        : Potential() {
+        : shp::Potential() {
 
 }
 
 Growth::Growth(const shp::Angular& closure)
-        : Potential(closure) {
+        : shp::Potential(closure) {
 
 }
 
 Growth::Growth(const float high)
-        : Potential(Quantity::DEFAULT_VALUE, high) {
+        : shp::Potential(shp::Quantity::DEFAULT_VALUE, high) {
 
 }
 
 Growth::Growth(const float high, const shp::Angular& closure)
-        : Potential(Quantity::DEFAULT_VALUE, high, closure) {
+        : shp::Potential(shp::Quantity::DEFAULT_VALUE, high, closure) {
 }
 
 Growth::Growth(const float high, const float low)
-        : Potential(low, high) {
+        : shp::Potential(low, high) {
 
 }
 
 Growth::Growth(const float high, const float low, const shp::Angular& closure)
-        : Potential(low, high, closure) {
+        : shp::Potential(low, high, closure) {
 
 }
 
 Growth::Growth(const std::string unit)
-        : Potential(unit) {
+        : shp::Potential(unit) {
 
 }
 
 Growth::Growth(const shp::Unit& unit)
-        : Potential(unit) {
+        : shp::Potential(unit) {
 }
 
 Growth::Growth(const shp::Unit& unit, const shp::Angular& closure)
-        : Potential(unit, closure) {
+        : shp::Potential(unit, closure) {
 }
 
 Growth::Growth(const short int scaling, const std::string unit)
-        : Potential(scaling, unit) {
+        : shp::Potential(scaling, unit) {
 
 }
 
 Growth::Growth(const short int scaling, const shp::Unit& unit)
-        : Potential(scaling, unit) {
+        : shp::Potential(scaling, unit) {
 
 }
 
 Growth::Growth(const short int scaling, const shp::Unit& unit, const shp::Angular& closure)
-        : Potential(scaling, unit, closure) {
+        : shp::Potential(scaling, unit, closure) {
 
 }
 
 Growth::Growth(const float high, const std::string unit, const shp::Angular& closure)
-        : Potential(Quantity::DEFAULT_VALUE, high, unit, closure) {
+        : shp::Potential(shp::Quantity::DEFAULT_VALUE, high, unit, closure) {
 
 }
 
 Growth::Growth(const float high, const float low, const std::string unit)
-        : Potential(low, high, unit) {
+        : shp::Potential(low, high, unit) {
 
 }
 
 Growth::Growth(const float high, const float low, const std::string unit, const shp::Angular& closure)
-        : Potential(low, high, unit, closure) {
+        : shp::Potential(low, high, unit, closure) {
 
 }
 
 Growth::Growth(const float high, const float low, const shp::Unit& unit)
-        : Potential(low, high, unit) {
+        : shp::Potential(low, high, unit) {
 
 }
 
 Growth::Growth(const float high, const float low, const shp::Unit& unit, const shp::Angular& closure)
-        : Potential(low, high, unit, closure) {
+        : shp::Potential(low, high, unit, closure) {
 
 }
 
 Growth::Growth(const float high, const float low, const short int scaling)
-        : Potential(low, high, scaling) {
+        : shp::Potential(low, high, scaling) {
 
 }
 
 Growth::Growth(const float high, const float low, const short int scaling, const std::string unit)
-        : Potential(low, high, scaling, unit) {
+        : shp::Potential(low, high, scaling, unit) {
 
 }
 
 Growth::Growth(const float high, const float low, const short int scaling, const shp::Unit& unit)
-        : Potential(low, high, scaling, unit) {
+        : shp::Potential(low, high, scaling, unit) {
 
 }
 
 Growth::Growth(const float high, const float low, const short int scaling, const shp::Unit& unit,
         const shp::Angular& closure)
-        : Potential(low, high, scaling, unit, closure) {
+        : shp::Potential(low, high, scaling, unit, closure) {
 
 }
 
@@ -130,109 +130,143 @@ Growth::~Growth() {
 }
 
 bool Growth::operator==(const Growth& peer) const {
-    return (static_cast<const Potential&>(*this) == static_cast<const Potential&>(peer));
+    return (static_cast<const shp::Potential&>(*this) == static_cast<const shp::Potential&>(peer));
 }
 
 Growth Growth::operator+(const Growth& peer) const {
-    float newhigh = (getHigh() + (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (getScaling() - peer.getScaling()))));
-    float newlow = (getLow() + (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (getScaling() - peer.getScaling()))));
-    return Growth(newlow, newhigh, getScaling(), getUnit());
+	shp::Potential self = *this;
+    float newhigh = (self.getHigh() + (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    float newlow = (self.getLow() + (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    return Growth(newlow, newhigh, self.getScaling(), self.getUnit());
 }
 
 Growth Growth::operator-(const Growth& peer) const {
-    float newhigh = (getHigh() - (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (getScaling() - peer.getScaling()))));
-    float newlow = (getLow() - (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (getScaling() - peer.getScaling()))));
-    return Growth(newlow, newhigh, getScaling(), getUnit());
+	shp::Potential self = *this;
+    float newhigh = (self.getHigh() - (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    float newlow = (self.getLow() - (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    return Growth(newlow, newhigh, self.getScaling(), self.getUnit());
 }
 
 Growth Growth::operator*(const Growth& peer) const {
-    float newhigh = (getHigh() * peer.getHigh());
-    float newlow = (getLow() * peer.getLow());
-    return Growth(newlow, newhigh, (getScaling() + peer.getScaling()), getUnit());
+	shp::Potential self = *this;
+    float newhigh = (self.getHigh() * peer.getHigh());
+    float newlow = (self.getLow() * peer.getLow());
+    return Growth(newlow, newhigh, (self.getScaling() + peer.getScaling()), self.getUnit());
 }
 
 Growth Growth::operator/(const Growth& peer) const {
-    float newhigh = (getHigh() / peer.getHigh());
-    float newlow = (getLow() / peer.getLow());
-    return Growth(newlow, newhigh, (getScaling() - peer.getScaling()), getUnit());
+	shp::Potential self = *this;
+    float newhigh = (self.getHigh() / peer.getHigh());
+    float newlow = (self.getLow() / peer.getLow());
+    return Growth(newlow, newhigh, (self.getScaling() - peer.getScaling()), self.getUnit());
 }
 
 Growth Growth::operator%(const Growth& peer) const {
-    float newhigh = fmod(getHigh(), (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (getScaling() - peer.getScaling()))));
-    float newlow = fmod(getLow(), (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (getScaling() - peer.getScaling()))));
-    return Growth(newlow, newhigh, getScaling(), getUnit());
+	shp::Potential self = *this;
+    float newhigh = fmod(self.getHigh(), (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    float newlow = fmod(self.getLow(), (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    return Growth(newlow, newhigh, self.getScaling(), self.getUnit());
 }
 
 shp::Quantity Growth::operator()(const Growth& peer,
         const shp::Distance& separation, const shp::Distance& position) const {
-    Growth self = *this; float distribution = (getHigh() - getLow());
-    shp::Angular closure = self.getClosure();
+    shp::Potential self = *this; float distribution = self.getDifference().getMagnitude();
+    shp::Angular closure = self.getOrigin();
     Quantity coefficient = (closure(peer.getClosure(), separation, position) * distribution);
-    Quantity result(coefficient.getMagnitude(), getScaling(), getUnit()); result.adjustScaling();
+    Quantity result(coefficient.getMagnitude(), coefficient.getScaling(), self.getUnit()); result.adjustScaling();
     return result;
 }
 
 shp::Quantity Growth::operator()(const Growth& peerX, const Growth& peerY,
         const shp::Distance& separationX, const shp::Distance& separationY) const {
-    Growth self = *this; float distribution = (getHigh() - getLow());
-    shp::Angular closure = self.getClosure();
+    shp::Potential self = *this; float distribution = self.getDifference().getMagnitude();
+    shp::Angular closure = self.getOrigin();
     Quantity coefficient = (closure(peerX.getClosure(), peerY.getClosure(), separationX, separationY) * distribution);
-    Quantity result(coefficient.getMagnitude(), getScaling(), getUnit()); result.adjustScaling();
+    Quantity result(coefficient.getMagnitude(), coefficient.getScaling(), self.getUnit()); result.adjustScaling();
     return result;
 }
 
-shp::Direction Growth::getPolar() const {
-    return this->getOrigin().getPolar();
+float Growth::getHigh() const {
+    return shp::Potential::getHigh();
 }
 
-void Growth::setPolar(const shp::Direction& angle) {
-    this->getOrigin().setPolar(angle);
+void Growth::setHigh(const float value) {
+	shp::Potential::setHigh(value); 
 }
 
-shp::Direction Growth::getAzimuthal() const {
-    return this->getOrigin().getAzimuthal();
+float Growth::getLow() const {
+	return shp::Potential::getLow();
 }
 
-void Growth::setAzimuthal(const shp::Direction& angle) {
-    this->getOrigin().setAzimuthal(angle);
+void Growth::setLow(const float value) {
+	shp::Potential::setLow(value);
+}
+
+shp::Angular Growth::getClosure() const {
+	return shp::Potential::getOrigin();
+}
+
+void Growth::setClosure(const shp::Angular& position) {
+	shp::Potential::setOrigin(position);
+}
+
+shp::Polar Growth::getPolar() const {
+	shp::Potential self = *this;
+    return self.getOrigin().getPolar();
+}
+
+void Growth::setPolar(const shp::Polar& angle) {
+	shp::Potential self = *this;
+	shp::Angular origin = self.getOrigin();
+	origin.setPolar(angle);
+}
+
+shp::Azimuth Growth::getAzimuth() const {
+	shp::Potential self = *this;
+    return self.getOrigin().getAzimuth();
+}
+
+void Growth::setAzimuth(const shp::Azimuth& angle) {
+	Potential self = *this;
+	shp::Angular origin = self.getOrigin();
+    origin.setAzimuth(angle);
 }
 
 shp::Quantity Growth::getDifference() const {
-    Quantity result((getHigh() - getLow()), getScaling(), getUnit());
-    return result;
+    return shp::Potential::getDifference();
 }
 
 shp::Quantity Growth::getRelative(const shp::Distance& location, const float angle) const {
-    Growth self = *this; float distribution = (getHigh() - getLow());
-    shp::Angular closure = this->getClosure();
-    Quantity coefficient = (closure.getRelative(location, angle) * distribution);
-    Quantity result(coefficient.getMagnitude(), getScaling(), getUnit()); result.adjustScaling();
-    return result;
+	return shp::Potential::getRelative(location, angle);
 }
 
 shp::Quantity Growth::getPolarComponent(const shp::Distance& location) const {
-    shp::Angular closure = this->getClosure();
-    return getRelative(location, closure.getPolar().toRadians());
+    shp::Potential self = *this;
+	shp::Angular closure = self.getOrigin();
+    return self.getRelative(location, closure.getPolar().toRadians());
 }
 
-shp::Quantity Growth::getAzimuthalComponent(const shp::Distance& location) const {
-    shp::Angular closure = this->getClosure();
-    return getRelative(location, closure.getAzimuthal().toRadians());
+shp::Quantity Growth::getAzimuthComponent(const shp::Distance& location) const {
+    shp::Potential self = *this;
+	shp::Angular closure = self.getOrigin();
+    return self.getRelative(location, closure.getAzimuth().toRadians());
 }
 
-Growth Growth::copy() {
-    Growth fresh(getHigh(), getLow(), getScaling(), getUnit());
+shp::Potential Growth::copy() const {
+	shp::Potential self = *this;
+    Growth fresh(self.getHigh(), self.getLow(), self.getScaling(), self.getUnit());
     return fresh;
 }
 
 void Growth::clear() {
-    Potential::clear();
+    shp::Potential::clear();
     return;
 }
 
 std::string Growth::print() {
     std::stringstream result;
-    result << Potential::print();
+	result << "↑";
+    result << shp::Potential::print();
 	return result.str();
 }
 

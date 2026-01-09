@@ -67,7 +67,7 @@ public:
 
     // Access operator
     Force operator()(const Charge& peer, const shp::Distance separation,
-        const shp::Distance distance) const;
+        const shp::Distance position) const;
 
     // Getters
     std::shared_ptr<Field> getField() const { return field; }
@@ -83,10 +83,10 @@ public:
     Density getDensity(const shp::Volume& volume) const;
     Force getForce(const shp::Angular& coordinates) const;
     std::shared_ptr<Field> getOriginField() const;
-    virtual Charge copy();
+    virtual Charge copy() const;
     virtual void clear();
     virtual std::string print();
-    shp::Quantity getComponent(float phase) const;
+    shp::Quantity getFluctuation(const float phase) const;
 public:
     static const std::string UNIT;
     static const std::string ELECTRIC_FIELD;

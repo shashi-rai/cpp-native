@@ -24,12 +24,13 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "direction.h"
 #include "quantity.h"
 
 namespace shp {
 
 class Distance : public Quantity {
-
+    Direction change;
 public:
     // Constructors
     Distance();
@@ -41,6 +42,15 @@ public:
     Distance(const float length, const short int scaling);
     Distance(const float length, const short int scaling, const std::string unit);
     Distance(const float length, const short int scaling, const Unit& unit);
+    Distance(const Direction& change);
+    Distance(const std::string unit, const Direction& change);
+    Distance(const Unit& unit, const Direction& change);
+    Distance(const float length, const Direction& change);
+    Distance(const float length, const std::string unit, const Direction& change);
+    Distance(const float length, const Unit& unit, const Direction& change);
+    Distance(const float length, const short int scaling, const Direction& change);
+    Distance(const float length, const short int scaling, const std::string unit, const Direction& change);
+    Distance(const float length, const short int scaling, const Unit& unit, const Direction& change);
 
     // Destructors
     ~Distance();
@@ -53,16 +63,34 @@ public:
     Distance operator/(const Distance& peer) const;
     Distance operator%(const Distance& peer) const;
 
+    // Direction operator
+    Distance operator+(const Direction& rotation) const;
+    Distance operator-(const Direction& rotation) const;
+    Distance operator*(const Direction& rotation) const;
+    Distance operator/(const Direction& rotation) const;
+    Distance operator%(const Direction& rotation) const;
+
+    // Access operator
+    Distance operator()(const Distance& peer) const;
+
     // Getters
+    Direction getChange() const { return change; }
 
     // Setters
+    void setChange(const Direction& orientation) { this->change = orientation; }
 
     // Additional methods
+    Distance getFactorX(const Distance& peer) const;
+    Distance getFactorY(const Distance& peer) const;
     Quantity getTotal() const;
+    Quantity getRadial() const;
+    Quantity getRadialX() const;
+    Quantity getRadialY() const;
+    Quantity getSquareX() const;
+    Quantity getSquareY() const;
     virtual Distance copy();
     virtual void clear();
     virtual std::string print();
-    Quantity getComponent(float phase) const;
 public:
     static const std::string UNIT;
 };

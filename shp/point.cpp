@@ -225,14 +225,17 @@ void Point::setAzimuthal(const Direction& orientation) {
 }
 
 Angular Point::getOrientation() const {
-    Direction azimuth(gradient);
-    Angular result(Distance(Angular::DEFAULT_RADIUS), azimuth);
+	Point self = *this;
+	Quantity radius = self.getAmplitude();
+    Azimuth azimuth(self.gradient);
+    Angular result(Distance(radius.getMagnitude(), radius.getScaling()), azimuth);
     return result;
 }
 
-Point Point::copy() {
-    Point fresh(getName(), amplitude.getMagnitude(),
-        amplitude.getScaling(), amplitude.getUnit(), gradient);
+Point Point::copy() const {
+	Point self = *this;
+    Point fresh(self.getName(), self.amplitude.getMagnitude(),
+        self.amplitude.getScaling(), self.amplitude.getUnit(), self.gradient);
     return fresh;
 }
 
@@ -252,15 +255,15 @@ std::string Point::print() {
 	return result.str();
 }
 
-Quantity Point::getAmplitudeAzimuthal(float change) const {
-    return Quantity((amplitude.getMagnitude() * cos(gradient + change)),
+Quantity Point::getAmplitudeAzimuthal(const float change) const {
+    return Quantity(amplitude.getCosComponent(gradient + change),
         amplitude.getScaling(), amplitude.getUnit());
 }
 
-std::complex<float> Point::toAzimuthalComplex(float change) {
+std::complex<float> Point::toAzimuthalComplex(const float change) {
     return std::complex<float>(
-        amplitude.getMagnitude() * std::cos(change),
-        amplitude.getMagnitude() * std::sin(change));
+        amplitude.getCosComponent(change),
+        amplitude.getSinComponent(change));
 }
 
 } // namespace shp

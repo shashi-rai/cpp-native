@@ -30,7 +30,7 @@
 namespace shp {
 
 class Phase : public Point {
-    float polarization;
+    float polarization;     // orthogonal change in amplitude relative to azimuth
     std::time_t timestamp;
 public:
     // Constructors
@@ -69,12 +69,12 @@ public:
     // Additional methods
     void setPolarization(const Direction& orientation);
     virtual Angular getOrientation() const;
-    virtual Point copy();
+    virtual Point copy() const;
     virtual void clear();
     virtual std::string print();
-    Quantity getAmplitudePolarization(float change) const;
+    Quantity getAmplitudePolarization(const float change) const;
 protected:
-    std::complex<float> toPolarizationComplex(float change);
+    std::complex<float> toPolarizationComplex(const float change);
 public:
     static const std::time_t getSystem();
 public:

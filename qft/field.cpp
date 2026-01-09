@@ -53,25 +53,47 @@ Field::Field(shp::Potential potential,
     setPhysical(physical);
 }
 
-Field::Field(const float direction)
-        : Cellular(), potential(), orientation(direction) {
+Field::Field(const float azimuth)
+        : Cellular(), potential(), orientation(azimuth) {
     setPhysical(nullptr);
 }
 
-Field::Field(const float direction,
+Field::Field(const float azimuth,
         const std::shared_ptr<shp::Shape> physical)
-        : Cellular(), potential(), orientation(direction) {
+        : Cellular(), potential(), orientation(azimuth) {
     setPhysical(physical);
 }
 
-Field::Field(const shp::Direction& direction)
-        : Cellular(), potential(), orientation(direction) {
+Field::Field(const shp::Azimuth& azimuth)
+        : Cellular(), potential(), orientation(azimuth) {
     setPhysical(nullptr);
 }
 
-Field::Field(const shp::Direction& direction,
+Field::Field(const shp::Azimuth& azimuth,
         const std::shared_ptr<shp::Shape> physical)
-        : Cellular(), potential(), orientation(direction) {
+        : Cellular(), potential(), orientation(azimuth) {
+    setPhysical(physical);
+}
+
+Field::Field(const shp::Polar& polar)
+        : Cellular(), potential(), orientation(polar) {
+    setPhysical(nullptr);
+}
+
+Field::Field(const shp::Polar& polar,
+        const std::shared_ptr<shp::Shape> physical)
+        : Cellular(), potential(), orientation(polar) {
+    setPhysical(physical);
+}
+
+Field::Field(const shp::Polar& polar, const shp::Azimuth& azimuth)
+        : Cellular(), potential(), orientation(polar, azimuth) {
+    setPhysical(nullptr);
+}
+
+Field::Field(const shp::Polar& polar, const shp::Azimuth& azimuth,
+        const std::shared_ptr<shp::Shape> physical)
+        : Cellular(), potential(), orientation(polar, azimuth) {
     setPhysical(physical);
 }
 
@@ -86,25 +108,47 @@ Field::Field(const shp::Angular& orientation,
     setPhysical(physical);
 }
 
-Field::Field(const float potential, const float direction)
-        : Cellular(), potential(potential), orientation(direction) {
+Field::Field(const float potential, const float azimuth)
+        : Cellular(), potential(potential), orientation(azimuth) {
     setPhysical(nullptr);
 }
 
-Field::Field(const float potential, const float direction,
+Field::Field(const float potential, const float azimuth,
         const std::shared_ptr<shp::Shape> physical)
-        : Cellular(), potential(potential), orientation(direction) {
+        : Cellular(), potential(potential), orientation(azimuth) {
     setPhysical(physical);
 }
 
-Field::Field(const shp::Potential& potential, const shp::Direction& direction)
-        : Cellular(), potential(potential), orientation(direction) {
+Field::Field(const shp::Potential& potential, const shp::Azimuth& azimuth)
+        : Cellular(), potential(potential), orientation(azimuth) {
     setPhysical(nullptr);
 }
 
-Field::Field(const shp::Potential& potential, const shp::Direction& direction,
+Field::Field(const shp::Potential& potential, const shp::Azimuth& azimuth,
         const std::shared_ptr<shp::Shape> physical)
-        : Cellular(), potential(potential), orientation(direction) {
+        : Cellular(), potential(potential), orientation(azimuth) {
+    setPhysical(physical);
+}
+
+Field::Field(const shp::Potential& potential, const shp::Polar& polar)
+        : Cellular(), potential(potential), orientation(polar) {
+    setPhysical(nullptr);
+}
+
+Field::Field(const shp::Potential& potential, const shp::Polar& polar,
+        const std::shared_ptr<shp::Shape> physical)
+        : Cellular(), potential(potential), orientation(polar) {
+    setPhysical(physical);
+}
+
+Field::Field(const shp::Potential& potential, const shp::Polar& polar, const shp::Azimuth& azimuth)
+        : Cellular(), potential(potential), orientation(polar, azimuth) {
+    setPhysical(nullptr);
+}
+
+Field::Field(const shp::Potential& potential, const shp::Polar& polar, const shp::Azimuth& azimuth,
+        const std::shared_ptr<shp::Shape> physical)
+        : Cellular(), potential(potential), orientation(polar, azimuth) {
     setPhysical(physical);
 }
 
@@ -130,47 +174,94 @@ Field::Field(std::string name, shp::Potential potential,
     setPhysical(physical);
 }
 
-Field::Field(std::string name, const float direction)
-        : Cellular(name), potential(), orientation(direction) {
+Field::Field(std::string name, const float azimuth)
+        : Cellular(name), potential(), orientation(azimuth) {
     setPhysical(nullptr);
 }
 
-Field::Field(std::string name, const shp::Direction& direction)
-        : Cellular(name), potential(), orientation(direction) {
+Field::Field(std::string name, const shp::Azimuth& azimuth)
+        : Cellular(name), potential(), orientation(azimuth) {
     setPhysical(nullptr);
 }
 
-Field::Field(std::string name, const float direction,
+Field::Field(std::string name, const shp::Polar& polar)
+        : Cellular(name), potential(), orientation(polar) {
+    setPhysical(nullptr);
+}
+
+Field::Field(std::string name, const shp::Polar& polar, const shp::Azimuth& azimuth)
+        : Cellular(name), potential(), orientation(polar, azimuth) {
+    setPhysical(nullptr);
+}
+
+Field::Field(std::string name, const float azimuth,
         const std::shared_ptr<shp::Shape> physical)
-        : Cellular(name), potential(), orientation(direction) {
+        : Cellular(name), potential(), orientation(azimuth) {
     setPhysical(physical);
 }
 
-Field::Field(std::string name, const shp::Direction& direction,
+Field::Field(std::string name, const shp::Azimuth& azimuth,
         const std::shared_ptr<shp::Shape> physical)
-        : Cellular(name), potential(), orientation(direction) {
+        : Cellular(name), potential(), orientation(azimuth) {
     setPhysical(physical);
 }
 
-Field::Field(std::string name, const float potential, const float direction)
-        : Cellular(name), potential(potential), orientation(direction) {
-    setPhysical(nullptr);
-}
-
-Field::Field(std::string name, const shp::Potential& potential, const shp::Direction& direction)
-        : Cellular(name), potential(potential), orientation(direction) {
-    setPhysical(nullptr);
-}
-
-Field::Field(std::string name, const float potential, const float direction,
+Field::Field(std::string name, const shp::Polar& polar,
         const std::shared_ptr<shp::Shape> physical)
-        : Cellular(name), potential(potential), orientation(direction) {
+        : Cellular(name), potential(), orientation(polar) {
+    setPhysical(physical);
+}
+
+Field::Field(std::string name, const shp::Polar& polar, const shp::Azimuth& azimuth,
+        const std::shared_ptr<shp::Shape> physical)
+        : Cellular(name), potential(), orientation(polar, azimuth) {
+    setPhysical(physical);
+}
+
+Field::Field(std::string name, const float potential, const float azimuth)
+        : Cellular(name), potential(potential), orientation(azimuth) {
+    setPhysical(nullptr);
+}
+
+Field::Field(std::string name, const shp::Potential& potential,
+        const shp::Azimuth& azimuth)
+        : Cellular(name), potential(potential), orientation(azimuth) {
+    setPhysical(nullptr);
+}
+
+Field::Field(std::string name, const shp::Potential& potential,
+        const shp::Polar& polar)
+        : Cellular(name), potential(potential), orientation(polar) {
+    setPhysical(nullptr);
+}
+
+Field::Field(std::string name, const shp::Potential& potential,
+        const shp::Polar& polar, const shp::Azimuth& azimuth)
+        : Cellular(name), potential(potential), orientation(polar, azimuth) {
+    setPhysical(nullptr);
+}
+
+Field::Field(std::string name, const float potential, const float azimuth,
+        const std::shared_ptr<shp::Shape> physical)
+        : Cellular(name), potential(potential), orientation(azimuth) {
     setPhysical(physical);
 }
 
 Field::Field(std::string name, const shp::Potential& potential,
-        const shp::Direction& direction, const std::shared_ptr<shp::Shape> physical)
-        : Cellular(name), potential(potential), orientation(direction) {
+        const shp::Azimuth& azimuth, const std::shared_ptr<shp::Shape> physical)
+        : Cellular(name), potential(potential), orientation(azimuth) {
+    setPhysical(physical);
+}
+
+Field::Field(std::string name, const shp::Potential& potential,
+        const shp::Polar& polar, const std::shared_ptr<shp::Shape> physical)
+        : Cellular(name), potential(potential), orientation(polar) {
+    setPhysical(physical);
+}
+
+Field::Field(std::string name, const shp::Potential& potential,
+        const shp::Polar& polar, const shp::Azimuth& azimuth, const std::shared_ptr<shp::Shape> physical)
+        : Cellular(name), potential(potential), orientation(polar, azimuth) {
     setPhysical(physical);
 }
 
@@ -253,6 +344,22 @@ void Field::setRadius(const shp::Distance& length) {
     orientation.setRadius(length);
 }
 
+shp::Direction Field::getLinear() const {
+    return orientation.getAzimuth();
+}
+
+void Field::setLinear(const shp::Direction& azimuth) {
+    this->orientation.setAzimuth(azimuth);
+}
+
+shp::Direction Field::getCircular() const {
+    return orientation.getPolar();
+}
+
+void Field::setCircular(const shp::Direction& azimuth) {
+    this->orientation.setPolar(azimuth);
+}
+
 void Field::changePoint(const Action& action) {
     int x = action.getCoordinate().getX();
     int y = action.getCoordinate().getY();
@@ -285,7 +392,7 @@ shp::Quantity Field::getTotal() const {
     return result;
 }
 
-shp::Point Field::copy() {
+shp::Point Field::copy() const {
     Field fresh(getName(), potential, orientation, physical);
     return fresh;
 }
@@ -306,9 +413,9 @@ std::string Field::print() {
 	return result.str();
 }
 
-shp::Quantity Field::getComponent(float phase) const {
+shp::Quantity Field::getFluctuation(const float phase) const {
 	shp::Quantity intensity = getTotal();
-	return shp::Quantity((intensity.getMagnitude() * cos(phase)), intensity.getScaling(), intensity.getUnit());
+	return shp::Quantity(intensity.getCosComponent(phase), intensity.getScaling(), intensity.getUnit());
 }
 
 std::shared_ptr<qft::Field> Field::shareable(std::string name) {

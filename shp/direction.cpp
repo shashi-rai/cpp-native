@@ -151,7 +151,7 @@ Direction Direction::getRotation(const short int degree) const {
     return Direction((toRadians() + (DEGREE_001 * degree)));
 }
 
-Direction Direction::copy() {
+Direction Direction::copy() const {
     Direction fresh(degrees, minutes, seconds);
     return fresh;
 }

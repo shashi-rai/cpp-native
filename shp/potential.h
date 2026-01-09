@@ -28,6 +28,9 @@
 
 namespace shp {
 
+/*
+ * Divergent fields could be represented with Potential
+ */
 class Potential : protected Quantity {
     float low;
     Angular origin;
@@ -87,17 +90,17 @@ public:
     void setScaling(const short int factor);
     Unit getUnit() const;
     void setUnit(const Unit& object);
-    Direction getPolar() const;
-    void setPolar(const Direction& angle);
-    Direction getAzimuthal() const;
-    void setAzimuthal(const Direction& angle);
+    Polar getPolar() const;
+    void setPolar(const Polar& angle);
+    Azimuth getAzimuth() const;
+    void setAzimuth(const Azimuth& angle);
     Quantity getDifference() const;
     Quantity getRelative(const Distance& location, const float angle) const;
     Quantity getPolarComponent(const Distance& location) const;
-    Quantity getAzimuthalComponent(const Distance& location) const;
-    Potential copy();
-    void clear();
-    std::string print();
+    Quantity getAzimuthComponent(const Distance& location) const;
+    virtual Potential copy() const;
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Potential > PotentialArray;

@@ -69,9 +69,9 @@ public:
     Direction getInverse() const;
     Direction getNormal() const;
     Direction getRotation(const short int degree) const;
-    Direction copy();
-    void clear();
-    std::string print();
+    virtual Direction copy() const;
+    virtual void clear();
+    virtual std::string print();
 
 private:
     short int getIndexDegrees(const short int value) const;

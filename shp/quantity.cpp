@@ -129,9 +129,50 @@ Quantity Quantity::operator%(const Quantity& peer) const {
     return result;
 }
 
+Quantity Quantity::getAbsolute() const {
+    Quantity fresh(std::abs(magnitude), scaling, getUnit());
+    return fresh;
+}
+
 Quantity Quantity::getInverse() const {
     Quantity fresh(magnitude != DEFAULT_VALUE ? (1 / magnitude) : DEFAULT_VALUE, scaling, unit.getInverse());
     return fresh;
+}
+
+Quantity Quantity::getSquare() const {
+    float newMagnitude = (magnitude * magnitude);
+    short int newScaling = (scaling + scaling);
+    Quantity fresh(newMagnitude, newScaling, unit.getSquare());
+    return fresh;
+}
+
+Quantity Quantity::getSquareRoot() const {
+    float newMagnitude = std::sqrt(magnitude);
+    short int newScaling = (scaling - scaling);
+    Quantity fresh(newMagnitude, newScaling, unit.getSquareRoot());
+    return fresh;
+}
+
+Quantity Quantity::getCube() const {
+    float newMagnitude = (magnitude * magnitude * magnitude);
+    short int newScaling = (scaling + scaling + scaling);
+    Quantity fresh(newMagnitude, newScaling, unit.getCube());
+    return fresh;
+}
+
+Quantity Quantity::getCubeRoot() const {
+    float newMagnitude = std::cbrt(magnitude);
+    short int newScaling = (scaling - scaling - scaling);
+    Quantity fresh(newMagnitude, newScaling, unit.getCubeRoot());
+    return fresh;
+}
+
+bool Quantity::isConvergent() const {
+    return (magnitude < DEFAULT_VALUE);
+}
+
+bool Quantity::isDivergent() const {
+    return (magnitude > DEFAULT_VALUE);
 }
 
 bool Quantity::checkNonZero() const {
@@ -142,7 +183,7 @@ bool Quantity::checkInfinity() const {
     return std::isinf(magnitude);
 }
 
-short int Quantity::checkScaling(float amount) const {
+short int Quantity::checkScaling(const float amount) const {
     return log10(amount);
 }
 
@@ -164,7 +205,7 @@ void Quantity::adjustScaling() {
     return;
 }
 
-Quantity Quantity::copy() {
+Quantity Quantity::copy() const {
     Quantity fresh(magnitude, scaling, unit);
     return fresh;
 }
@@ -184,8 +225,12 @@ std::string Quantity::print() {
 	return result.str();
 }
 
-float Quantity::getComponent(float phase) const {
+float Quantity::getCosComponent(const float phase) const {
     return getMagnitude() * cos(phase);
+}
+
+float Quantity::getSinComponent(const float phase) const {
+    return getMagnitude() * sin(phase);
 }
 
 } // namespace shp

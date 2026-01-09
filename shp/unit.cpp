@@ -178,6 +178,26 @@ std::string Unit::getInverse() const {
     return (PER_UNIT + name);
 }
 
+std::string Unit::getPercent() const {
+    return (name + "%");
+}
+
+std::string Unit::getSquare() const {
+    return (name + "²");
+}
+
+std::string Unit::getSquareRoot() const {
+    return ("√" + name);
+}
+
+std::string Unit::getCube() const {
+    return (name + "³");
+}
+
+std::string Unit::getCubeRoot() const {
+    return ("∛" + name);
+}
+
 Unit Unit::copy() {
     Unit fresh(name);
     return fresh;

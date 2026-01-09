@@ -113,7 +113,8 @@ Mass::~Mass() {
 }
 
 bool Mass::operator==(const Mass& peer) const {
-    return (static_cast<const shp::Quantity&>(*this) == static_cast<const shp::Quantity&>(peer));
+    return (static_cast<const shp::Quantity&>(*this) == static_cast<const shp::Quantity&>(peer))
+        && (field == peer.field);
 }
 
 Mass Mass::operator+(const Mass& peer) const {
@@ -147,13 +148,13 @@ Mass Mass::operator%(const Mass& peer) const {
 }
 
 Force Mass::operator()(const Mass& peer, const shp::Distance separation,
-        const shp::Distance& distance) const {
+        const shp::Distance& position) const {
     if (isOwned()) {
         shp::Potential self = field->getPotential();
         shp::Potential other = peer.field->getPotential();
-        shp::Quantity factor = self(other, separation, distance);
+        shp::Quantity factor = self(other, separation, position);
         shp::Quantity force = (factor * (*this));
-        Gravity result(force.getMagnitude(), self.getAzimuthal().toRadians(), force.getScaling(), field);
+        Gravity result(force.getMagnitude(), self.getAzimuth().toRadians(), force.getScaling(), field);
         result.adjustScaling();
         return result;
     } else {
@@ -212,8 +213,9 @@ std::shared_ptr<Field> Mass::getOriginField() const {
     return result;
 }
 
-Mass Mass::copy() {
-    Mass fresh(getMagnitude(), getScaling(), getUnit(), field);
+Mass Mass::copy() const {
+    shp::Quantity self = *this;
+    Mass fresh(self.getMagnitude(), self.getScaling(), self.getUnit(), field);
     return fresh;
 }
 
@@ -231,8 +233,9 @@ std::string Mass::print() {
 	return result.str();
 }
 
-shp::Quantity Mass::getComponent(float phase) const {
-	return shp::Quantity((getMagnitude() * cos(phase)), getScaling(), getUnit());
+shp::Quantity Mass::getFluctuation(const float phase) const {
+    shp::Quantity self = *this;
+	return shp::Quantity(self.getCosComponent(phase), self.getScaling(), self.getUnit());
 }
 
 } // namespace qft

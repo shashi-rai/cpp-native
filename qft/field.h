@@ -47,28 +47,44 @@ public:
     Field(std::string name, const std::shared_ptr<shp::Shape> physical);
     Field(shp::Potential potential);
     Field(shp::Potential potential, const std::shared_ptr<shp::Shape> physical);
-    Field(const float direction);
-    Field(const float direction, const std::shared_ptr<shp::Shape> physical);
-    Field(const shp::Direction& direction);
-    Field(const shp::Direction& direction, const std::shared_ptr<shp::Shape> physical);
+    Field(const float azimuth);
+    Field(const float azimuth, const std::shared_ptr<shp::Shape> physical);
+    Field(const shp::Azimuth& azimuth);
+    Field(const shp::Azimuth& azimuth, const std::shared_ptr<shp::Shape> physical);
+    Field(const shp::Polar& azimuth);
+    Field(const shp::Polar& azimuth, const std::shared_ptr<shp::Shape> physical);
+    Field(const shp::Polar& polar, const shp::Azimuth& azimuth);
+    Field(const shp::Polar& polar, const shp::Azimuth& azimuth, const std::shared_ptr<shp::Shape> physical);
     Field(const shp::Angular& orientation);
     Field(const shp::Angular& orientation, const std::shared_ptr<shp::Shape> physical);
-    Field(const float potential, const float direction);
-    Field(const float potential, const float direction, const std::shared_ptr<shp::Shape> physical);
-    Field(const shp::Potential& potential, const shp::Direction& direction);
-    Field(const shp::Potential& potential, const shp::Direction& direction, const std::shared_ptr<shp::Shape> physical);
+    Field(const float potential, const float azimuth);
+    Field(const float potential, const float azimuth, const std::shared_ptr<shp::Shape> physical);
+    Field(const shp::Potential& potential, const shp::Azimuth& azimuth);
+    Field(const shp::Potential& potential, const shp::Azimuth& azimuth, const std::shared_ptr<shp::Shape> physical);
+    Field(const shp::Potential& potential, const shp::Polar& polar);
+    Field(const shp::Potential& potential, const shp::Polar& polar, const std::shared_ptr<shp::Shape> physical);
+    Field(const shp::Potential& potential, const shp::Polar& polar, const shp::Azimuth& azimuth);
+    Field(const shp::Potential& potential, const shp::Polar& polar, const shp::Azimuth& azimuth, const std::shared_ptr<shp::Shape> physical);
     Field(const shp::Potential& potential, const shp::Angular& orientation);
     Field(const shp::Potential& potential, const shp::Angular& orientation, const std::shared_ptr<shp::Shape> physical);
     Field(std::string name, shp::Potential potential);
     Field(std::string name, shp::Potential potential, const std::shared_ptr<shp::Shape> physical);
-    Field(std::string name, const float direction);
-    Field(std::string name, const shp::Direction& direction);
-    Field(std::string name, const float direction, const std::shared_ptr<shp::Shape> physical);
-    Field(std::string name, const shp::Direction& direction, const std::shared_ptr<shp::Shape> physical);
-    Field(std::string name, const float potential, const float direction);
-    Field(std::string name, const float potential, const float direction, const std::shared_ptr<shp::Shape> physical);
-    Field(std::string name, const shp::Potential& potential, const shp::Direction& direction);
-    Field(std::string name, const shp::Potential& potential, const shp::Direction& direction, const std::shared_ptr<shp::Shape> physical);
+    Field(std::string name, const float azimuth);
+    Field(std::string name, const shp::Azimuth& azimuth);
+    Field(std::string name, const shp::Polar& polar);
+    Field(std::string name, const shp::Polar& polar, const shp::Azimuth& azimuth);
+    Field(std::string name, const float azimuth, const std::shared_ptr<shp::Shape> physical);
+    Field(std::string name, const shp::Azimuth& azimuth, const std::shared_ptr<shp::Shape> physical);
+    Field(std::string name, const shp::Polar& polar, const std::shared_ptr<shp::Shape> physical);
+    Field(std::string name, const shp::Polar& polar, const shp::Azimuth& azimuth, const std::shared_ptr<shp::Shape> physical);
+    Field(std::string name, const float potential, const float azimuth);
+    Field(std::string name, const float potential, const float azimuth, const std::shared_ptr<shp::Shape> physical);
+    Field(std::string name, const shp::Potential& potential, const shp::Azimuth& azimuth);
+    Field(std::string name, const shp::Potential& potential, const shp::Azimuth& azimuth, const std::shared_ptr<shp::Shape> physical);
+    Field(std::string name, const shp::Potential& potential, const shp::Polar& polar);
+    Field(std::string name, const shp::Potential& potential, const shp::Polar& polar, const std::shared_ptr<shp::Shape> physical);
+    Field(std::string name, const shp::Potential& potential, const shp::Polar& polar, const shp::Azimuth& azimuth);
+    Field(std::string name, const shp::Potential& potential, const shp::Polar& polar, const shp::Azimuth& azimuth, const std::shared_ptr<shp::Shape> physical);
     Field(std::string name, const shp::Potential& potential, const shp::Angular& orientation);
     Field(std::string name, const shp::Potential& potential, const shp::Angular& orientation, const std::shared_ptr<shp::Shape> physical);
 
@@ -94,27 +110,29 @@ public:
     // Getters
     std::shared_ptr<shp::Shape> getPhysical() const { return physical; }
     shp::Potential getPotential() const { return potential; }
-    shp::Direction getLinear() const { return orientation.getAzimuthal(); }
-    shp::Direction getCircular() const { return orientation.getPolar(); }
+    shp::Angular getOrientation() const { return orientation; }
 
     // Setters
     void setPhysical(const std::shared_ptr<shp::Shape> structure) { this->physical = structure; }
     void setPotential(const shp::Potential& difference) { this->potential = difference; }
-    void setLinear(const shp::Direction& direction) { this->orientation.setAzimuthal(direction); }
-    void setCircular(const shp::Direction& direction) { this->orientation.setPolar(direction); }
+    void setOrientation(const shp::Angular& azimuth) { this->orientation = azimuth; }
 
     // Additional methods
     bool isStructured() const;
     shp::Distance getRadius() const;
     void setRadius(const shp::Distance& length);
+    shp::Direction getLinear() const;
+    void setLinear(const shp::Direction& azimuth);
+    shp::Direction getCircular() const;
+    void setCircular(const shp::Direction& azimuth);
     void changePoint(const Action& action);
     std::shared_ptr<Particle> getDivergence(const Action& action) const;
     std::shared_ptr<Particle> getConvergence(const Action& action) const;
     shp::Quantity getTotal() const;
-    virtual shp::Point copy();
+    virtual shp::Point copy() const;
     virtual void clear();
     virtual std::string print();
-    shp::Quantity getComponent(float phase) const;
+    shp::Quantity getFluctuation(const float phase) const;
 public:
     static std::shared_ptr<qft::Field> shareable(std::string name);
 };

@@ -67,31 +67,31 @@ public:
     Growth operator%(const Growth& peer) const;
 
     // Access operator
-    Quantity operator()(const Growth& peer,
+    shp::Quantity operator()(const Growth& peer,
         const shp::Distance& separation, const shp::Distance& position) const;
-    Quantity operator()(const Growth& peerX, const Growth& peerY,
+    shp::Quantity operator()(const Growth& peerX, const Growth& peerY,
         const shp::Distance& separationX, const shp::Distance& separationY) const;
 
     // Getters
-    float getHigh() const { return this->getHigh(); }
-    float getLow() const { return this->getLow(); }
-    shp::Angular getClosure() const { return this->getOrigin(); }
 
     // Setters
-    void setHigh(const float value) { this->setHigh(value); }
-    void setLow(const float value) { this->setLow(value); }
-    void setClosure(const shp::Angular& position) { this->setOrigin(position); }
 
     // Additional methods
-    shp::Direction getPolar() const;
-    void setPolar(const shp::Direction& angle);
-    shp::Direction getAzimuthal() const;
-    void setAzimuthal(const shp::Direction& angle);
-    Quantity getDifference() const;
-    Quantity getRelative(const shp::Distance& location, const float angle) const;
-    Quantity getPolarComponent(const shp::Distance& location) const;
-    Quantity getAzimuthalComponent(const shp::Distance& location) const;
-    Growth copy();
+    float getHigh() const;
+    void setHigh(const float value);
+    float getLow() const;
+    void setLow(const float value);
+    shp::Angular getClosure() const;
+    void setClosure(const shp::Angular& position);
+    shp::Polar getPolar() const;
+    void setPolar(const shp::Polar& angle);
+    shp::Azimuth getAzimuth() const;
+    void setAzimuth(const shp::Azimuth& angle);
+    shp::Quantity getDifference() const;
+    shp::Quantity getRelative(const shp::Distance& location, const float angle) const;
+    shp::Quantity getPolarComponent(const shp::Distance& location) const;
+    shp::Quantity getAzimuthComponent(const shp::Distance& location) const;
+    shp::Potential copy() const;
     void clear();
     std::string print();
 };

@@ -33,21 +33,21 @@ Confinement::Confinement(const Angular& closure)
 }
 
 Confinement::Confinement(const float high)
-        : Potential(Quantity::DEFAULT_VALUE, high) {
+        : Potential(high, Quantity::DEFAULT_VALUE) {
 
 }
 
 Confinement::Confinement(const float high, const Angular& closure)
-        : Potential(Quantity::DEFAULT_VALUE, high, closure) {
+        : Potential(high, Quantity::DEFAULT_VALUE, closure) {
 }
 
 Confinement::Confinement(const float high, const float low)
-        : Potential(low, high) {
+        : Potential(high, low) {
 
 }
 
 Confinement::Confinement(const float high, const float low, const Angular& closure)
-        : Potential(low, high, closure) {
+        : Potential(high, low, closure) {
 
 }
 
@@ -80,48 +80,48 @@ Confinement::Confinement(const short int scaling, const Unit& unit, const Angula
 }
 
 Confinement::Confinement(const float high, const std::string unit, const Angular& closure)
-        : Potential(Quantity::DEFAULT_VALUE, high, unit, closure) {
+        : Potential(high, Quantity::DEFAULT_VALUE, unit, closure) {
 
 }
 
 Confinement::Confinement(const float high, const float low, const std::string unit)
-        : Potential(low, high, unit) {
+        : Potential(high, low, unit) {
 
 }
 
 Confinement::Confinement(const float high, const float low, const std::string unit, const Angular& closure)
-        : Potential(low, high, unit, closure) {
+        : Potential(high, low, unit, closure) {
 
 }
 
 Confinement::Confinement(const float high, const float low, const Unit& unit)
-        : Potential(low, high, unit) {
+        : Potential(high, low, unit) {
 
 }
 
 Confinement::Confinement(const float high, const float low, const Unit& unit, const Angular& closure)
-        : Potential(low, high, unit, closure) {
+        : Potential(high, low, unit, closure) {
 
 }
 
 Confinement::Confinement(const float high, const float low, const short int scaling)
-        : Potential(low, high, scaling) {
+        : Potential(high, low, scaling) {
 
 }
 
 Confinement::Confinement(const float high, const float low, const short int scaling, const std::string unit)
-        : Potential(low, high, scaling, unit) {
+        : Potential(high, low, scaling, unit) {
 
 }
 
 Confinement::Confinement(const float high, const float low, const short int scaling, const Unit& unit)
-        : Potential(low, high, scaling, unit) {
+        : Potential(high, low, scaling, unit) {
 
 }
 
 Confinement::Confinement(const float high, const float low, const short int scaling, const Unit& unit,
         const Angular& closure)
-        : Potential(low, high, scaling, unit, closure) {
+        : Potential(high, low, scaling, unit, closure) {
 
 }
 
@@ -134,94 +134,129 @@ bool Confinement::operator==(const Confinement& peer) const {
 }
 
 Confinement Confinement::operator+(const Confinement& peer) const {
-    float newhigh = (getHigh() + (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (getScaling() - peer.getScaling()))));
-    float newlow = (getLow() + (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (getScaling() - peer.getScaling()))));
-    return Confinement(newlow, newhigh, getScaling(), getUnit());
+	Potential self = *this;
+    float newhigh = (self.getHigh() + (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    float newlow = (self.getLow() + (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    return Confinement(newlow, newhigh, self.getScaling(), self.getUnit());
 }
 
 Confinement Confinement::operator-(const Confinement& peer) const {
-    float newhigh = (getHigh() - (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (getScaling() - peer.getScaling()))));
-    float newlow = (getLow() - (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (getScaling() - peer.getScaling()))));
-    return Confinement(newlow, newhigh, getScaling(), getUnit());
+	Potential self = *this;
+    float newhigh = (self.getHigh() - (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    float newlow = (self.getLow() - (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    return Confinement(newlow, newhigh, self.getScaling(), self.getUnit());
 }
 
 Confinement Confinement::operator*(const Confinement& peer) const {
-    float newhigh = (getHigh() * peer.getHigh());
-    float newlow = (getLow() * peer.getLow());
-    return Confinement(newlow, newhigh, (getScaling() + peer.getScaling()), getUnit());
+	Potential self = *this;
+    float newhigh = (self.getHigh() * peer.getHigh());
+    float newlow = (self.getLow() * peer.getLow());
+    return Confinement(newlow, newhigh, (self.getScaling() + peer.getScaling()), self.getUnit());
 }
 
 Confinement Confinement::operator/(const Confinement& peer) const {
-    float newhigh = (getHigh() / peer.getHigh());
-    float newlow = (getLow() / peer.getLow());
-    return Confinement(newlow, newhigh, (getScaling() - peer.getScaling()), getUnit());
+	Potential self = *this;
+    float newhigh = (self.getHigh() / peer.getHigh());
+    float newlow = (self.getLow() / peer.getLow());
+    return Confinement(newlow, newhigh, (self.getScaling() - peer.getScaling()), self.getUnit());
 }
 
 Confinement Confinement::operator%(const Confinement& peer) const {
-    float newhigh = fmod(getHigh(), (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (getScaling() - peer.getScaling()))));
-    float newlow = fmod(getLow(), (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (getScaling() - peer.getScaling()))));
-    return Confinement(newlow, newhigh, getScaling(), getUnit());
+	Potential self = *this;
+    float newhigh = fmod(self.getHigh(), (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    float newlow = fmod(self.getLow(), (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    return Confinement(newlow, newhigh, self.getScaling(), self.getUnit());
 }
 
 Quantity Confinement::operator()(const Confinement& peer,
         const Distance& separation, const Distance& position) const {
-    Confinement self = *this; float distribution = (getHigh() - getLow());
-    shp::Angular closure = self.getClosure();
-    Quantity coefficient = (closure(peer.getClosure(), separation, position) * distribution);
-    Quantity result(coefficient.getMagnitude(), getScaling(), getUnit()); result.adjustScaling();
+    Potential self = *this; float distribution = self.getDifference().getMagnitude();
+    shp::Angular closure = self.getOrigin();
+	Quantity coefficient = (closure(peer.getClosure(), separation, position) * distribution);
+	Quantity inverted = coefficient.getInverse();
+    Quantity result(inverted.getMagnitude(), inverted.getScaling(), self.getUnit()); result.adjustScaling();
     return result;
 }
 
 Quantity Confinement::operator()(const Confinement& peerX, const Confinement& peerY,
         const Distance& separationX, const Distance& separationY) const {
-    Confinement self = *this; float distribution = (getHigh() - getLow());
-    shp::Angular closure = self.getClosure();
+    Potential self = *this; float distribution = self.getDifference().getMagnitude();
+    shp::Angular closure = self.getOrigin();
     Quantity coefficient = (closure(peerX.getClosure(), peerY.getClosure(), separationX, separationY) * distribution);
-    Quantity result(coefficient.getMagnitude(), getScaling(), getUnit()); result.adjustScaling();
+    Quantity inverted = coefficient.getInverse();
+    Quantity result(inverted.getMagnitude(), inverted.getScaling(), self.getUnit()); result.adjustScaling();
     return result;
 }
 
-Direction Confinement::getPolar() const {
-    return this->getOrigin().getPolar();
+float Confinement::getHigh() const {
+    return Potential::getHigh();
 }
 
-void Confinement::setPolar(const Direction& angle) {
-    this->getOrigin().setPolar(angle);
+void Confinement::setHigh(const float value) {
+	Potential::setHigh(value); 
 }
 
-Direction Confinement::getAzimuthal() const {
-    return this->getOrigin().getAzimuthal();
+float Confinement::getLow() const {
+	return Potential::getLow();
 }
 
-void Confinement::setAzimuthal(const Direction& angle) {
-    this->getOrigin().setAzimuthal(angle);
+void Confinement::setLow(const float value) {
+	Potential::setLow(value);
+}
+
+Angular Confinement::getClosure() const {
+	return Potential::getOrigin();
+}
+
+void Confinement::setClosure(const Angular& position) {
+	Potential::setOrigin(position);
+}
+
+Polar Confinement::getPolar() const {
+	Potential self = *this;
+    return self.getOrigin().getPolar();
+}
+
+void Confinement::setPolar(const Polar& angle) {
+	Potential self = *this;
+	Angular origin = self.getOrigin();
+	origin.setPolar(angle);
+}
+
+Azimuth Confinement::getAzimuth() const {
+	Potential self = *this;
+    return self.getOrigin().getAzimuth();
+}
+
+void Confinement::setAzimuth(const Azimuth& angle) {
+	Potential self = *this;
+	Angular origin = self.getOrigin();
+    origin.setAzimuth(angle);
 }
 
 Quantity Confinement::getDifference() const {
-    Quantity result((getHigh() - getLow()), getScaling(), getUnit());
-    return result;
+    return Potential::getDifference();
 }
 
 Quantity Confinement::getRelative(const Distance& location, const float angle) const {
-    Confinement self = *this; float distribution = (getHigh() - getLow());
-    shp::Angular closure = this->getClosure();
-    Quantity coefficient = (closure.getRelative(location, angle) * distribution);
-    Quantity result(coefficient.getMagnitude(), getScaling(), getUnit()); result.adjustScaling();
-    return result;
+	return Potential::getRelative(location, angle);
 }
 
 Quantity Confinement::getPolarComponent(const Distance& location) const {
-    shp::Angular closure = this->getClosure();
-    return getRelative(location, closure.getPolar().toRadians());
+    Potential self = *this;
+	Angular closure = self.getOrigin();
+    return self.getRelative(location, closure.getPolar().toRadians());
 }
 
-Quantity Confinement::getAzimuthalComponent(const Distance& location) const {
-    shp::Angular closure = this->getClosure();
-    return getRelative(location, closure.getAzimuthal().toRadians());
+Quantity Confinement::getAzimuthComponent(const Distance& location) const {
+    Potential self = *this;
+	Angular closure = self.getOrigin();
+    return self.getRelative(location, closure.getAzimuth().toRadians());
 }
 
-Confinement Confinement::copy() {
-    Confinement fresh(getHigh(), getLow(), getScaling(), getUnit());
+Potential Confinement::copy() const {
+	Potential self = *this;
+    Confinement fresh(self.getHigh(), self.getLow(), self.getScaling(), self.getUnit());
     return fresh;
 }
 
@@ -232,6 +267,7 @@ void Confinement::clear() {
 
 std::string Confinement::print() {
     std::stringstream result;
+	result << "⊙";
     result << Potential::print();
 	return result.str();
 }

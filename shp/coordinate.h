@@ -21,6 +21,7 @@
 #ifndef SHP_COORDINATE_H
 #define SHP_COORDINATE_H
 
+#include <cmath>
 #include <iostream>
 #include <sstream>
 #include <vector>
@@ -28,15 +29,15 @@
 namespace shp {
 
 class Coordinate {
-    int x;
-    int y;
-    int z;
+    float x;
+    float y;
+    float z;
 public:
     // Constructors
     Coordinate();
-    Coordinate(const int x);
-    Coordinate(const int x, const int y);
-    Coordinate(const int x, const int y, const int z);
+    Coordinate(const float x);
+    Coordinate(const float x, const float y);
+    Coordinate(const float x, const float y, const float z);
 
     // Destructors
     ~Coordinate();
@@ -50,25 +51,31 @@ public:
     Coordinate operator%(const Coordinate& peer) const;
 
     // Getters
-    int getX() const { return x; }
-    int getY() const { return y; }
-    int getZ() const { return z; }
+    float getX() const { return x; }
+    float getY() const { return y; }
+    float getZ() const { return z; }
 
     // Setters
-    void setX(const int value) { this->x = value; }
-    void setY(const int value) { this->y = value; }
-    void setZ(const int value) { this->z = value; }
+    void setX(const float value) { this->x = value; }
+    void setY(const float value) { this->y = value; }
+    void setZ(const float value) { this->z = value; }
 
     // Additional methods
-    Coordinate shiftX(const int step) const;
-    Coordinate shiftY(const int step) const;
-    Coordinate shiftZ(const int step) const;
+    float getMagnitude() const;
+    Coordinate getNormalize() const;
+    Coordinate getField(const float intensity, const float conservable,
+        const Coordinate& source, const Coordinate& target) const;
+    Coordinate shiftX(const float step) const;
+    Coordinate shiftY(const float step) const;
+    Coordinate shiftZ(const float step) const;
     Coordinate copy();
     void clear();
     std::string print();
 
 public:
-    static const int ORIGIN;
+    static const float ORIGIN;
+    static const float DEFAULT_VALUE;
+    static const float UNIT_MAGNITUDE;
 };
 
 typedef std::vector<Coordinate > CoordinateArray;

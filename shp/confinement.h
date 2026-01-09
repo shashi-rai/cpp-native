@@ -24,10 +24,14 @@
 #include <cmath>
 #include <sstream>
 #include <vector>
+#include "angular.h"
 #include "potential.h"
 
 namespace shp {
 
+/*
+ * Convergent fields could be represented with Confinement
+ */
 class Confinement : protected Potential {
 
 public:
@@ -72,27 +76,27 @@ public:
         const Distance& separationX, const Distance& separationY) const;
 
     // Getters
-    float getHigh() const { return this->getHigh(); }
-    float getLow() const { return this->getLow(); }
-    Angular getClosure() const { return this->getOrigin(); }
 
     // Setters
-    void setHigh(const float value) { this->setHigh(value); }
-    void setLow(const float value) { this->setLow(value); }
-    void setClosure(const Angular& position) { this->setOrigin(position); }
 
     // Additional methods
-    Direction getPolar() const;
-    void setPolar(const Direction& angle);
-    Direction getAzimuthal() const;
-    void setAzimuthal(const Direction& angle);
+    float getHigh() const;
+    void setHigh(const float value);
+    float getLow() const;
+    void setLow(const float value);
+    Angular getClosure() const;
+    void setClosure(const Angular& position);
+    Polar getPolar() const;
+    void setPolar(const Polar& angle);
+    Azimuth getAzimuth() const;
+    void setAzimuth(const Azimuth& angle);
     Quantity getDifference() const;
     Quantity getRelative(const Distance& location, const float angle) const;
     Quantity getPolarComponent(const Distance& location) const;
-    Quantity getAzimuthalComponent(const Distance& location) const;
-    Confinement copy();
-    void clear();
-    std::string print();
+    Quantity getAzimuthComponent(const Distance& location) const;
+    virtual Potential copy() const;
+    virtual void clear();
+    virtual std::string print();
 };
 
 typedef std::vector<Confinement > ConfinementArray;

@@ -24,117 +24,133 @@ namespace shp {
 
 const float Angular::DEFAULT_RADIUS = Quantity::DEFAULT_VALUE;
 const float Angular::DEFAULT_POLARITY = Quantity::DEFAULT_VALUE;
-const float Angular::DEFAULT_AZIMUTH = Quantity::DEFAULT_VALUE;
+const float Angular::DEFAULT_AZIMUTHAL = Quantity::DEFAULT_VALUE;
 
 Angular::Angular()
-        : Distance(), polar(), azimuthal() {
+        : Distance(DEFAULT_RADIUS), polar(DEFAULT_POLARITY), azimuth(DEFAULT_AZIMUTHAL) {
 
 }
 
-Angular::Angular(float radius)
-        : Distance(radius), polar(), azimuthal() {
+Angular::Angular(const float radius)
+        : Distance(radius), polar(DEFAULT_POLARITY), azimuth(DEFAULT_AZIMUTHAL) {
 
 }
 
-Angular::Angular(float radius, short int scaling)
-        : Distance(radius, scaling), polar(), azimuthal() {
+Angular::Angular(const float radius, const short int scaling)
+        : Distance(radius, scaling), polar(DEFAULT_POLARITY), azimuth(DEFAULT_AZIMUTHAL) {
 
 }
 
 Angular::Angular(float radius, short int scaling, std::string unit)
-        : Distance(radius, scaling, unit), polar(), azimuthal() {
+        : Distance(radius, scaling, unit), polar(DEFAULT_POLARITY), azimuth(DEFAULT_AZIMUTHAL) {
 
 }
 
-Angular::Angular(float radius, short int scaling, const Unit& unit)
-        : Distance(radius, scaling, unit), polar(), azimuthal() {
+Angular::Angular(const float radius, const short int scaling, const Unit& unit)
+        : Distance(radius, scaling, unit), polar(DEFAULT_POLARITY), azimuth(DEFAULT_AZIMUTHAL) {
 
 }
 
 Angular::Angular(const Distance& radius)
-        : Distance(radius), polar(), azimuthal() {
+        : Distance(radius), polar(DEFAULT_POLARITY), azimuth(DEFAULT_AZIMUTHAL) {
 
 }
 
-Angular::Angular(float radius, float azimuthal)
-		: Distance(radius), polar(), azimuthal(azimuthal) {
+Angular::Angular(const float radius, const float azimuth)
+		: Distance(radius), polar(DEFAULT_POLARITY), azimuth(azimuth) {
 
 }
 
-Angular::Angular(float radius, short int scaling, float azimuthal)
-		: Distance(radius, scaling), polar(), azimuthal(azimuthal) {
+Angular::Angular(const float radius, const short int scaling, const float azimuth)
+		: Distance(radius, scaling), polar(DEFAULT_POLARITY), azimuth(azimuth) {
 
 }
 
-Angular::Angular(float radius, short int scaling, std::string unit, float azimuthal)
-		: Distance(radius, scaling, unit), polar(), azimuthal(azimuthal) {
+Angular::Angular(const float radius, const short int scaling, std::string unit, const float azimuth)
+		: Distance(radius, scaling, unit), polar(DEFAULT_POLARITY), azimuth(azimuth) {
 
 }
 
-Angular::Angular(float radius, short int scaling, const Unit& unit, float azimuthal)
-		: Distance(radius, scaling, unit), polar(), azimuthal(azimuthal) {
+Angular::Angular(const float radius, const short int scaling, const Unit& unit, const float azimuth)
+		: Distance(radius, scaling, unit), polar(DEFAULT_POLARITY), azimuth(azimuth) {
 
 }
 
-Angular::Angular(float radius, short int scaling, const Unit& unit,
-        const Direction& azimuthal)
-		: Distance(radius, scaling, unit), polar(), azimuthal(azimuthal) {
+Angular::Angular(const float radius, const short int scaling, const Unit& unit,
+        const Azimuth& azimuth)
+		: Distance(radius, scaling, unit), polar(DEFAULT_POLARITY), azimuth(azimuth) {
 
 }
 
-Angular::Angular(const Distance& radius, const Direction& azimuthal)
-		: Distance(radius), polar(), azimuthal(azimuthal) {
+Angular::Angular(const float radius, const short int scaling, const Unit& unit,
+        const Polar& polar)
+		: Distance(radius, scaling, unit), polar(polar), azimuth(DEFAULT_AZIMUTHAL) {
 
 }
 
-Angular::Angular(float radius, float polar, float azimuthal)
-		: Distance(radius), polar(polar), azimuthal(azimuthal) {
+Angular::Angular(const Distance& radius, const Azimuth& azimuth)
+		: Distance(radius), polar(DEFAULT_POLARITY), azimuth(azimuth) {
 
 }
 
-Angular::Angular(float radius, std::string unit, float polar, float azimuthal)
-		: Distance(radius, unit), polar(polar), azimuthal(azimuthal) {
+Angular::Angular(const Distance& radius, const Polar& polar)
+		: Distance(radius), polar(polar), azimuth(DEFAULT_AZIMUTHAL) {
 
 }
 
-Angular::Angular(float radius, const Unit& unit, float polar, float azimuthal)
-		: Distance(radius, unit), polar(polar), azimuthal(azimuthal) {
+Angular::Angular(const float radius, const float polar, const float azimuth)
+		: Distance(radius), polar(polar), azimuth(azimuth) {
 
 }
 
-Angular::Angular(float radius, short int scaling, float polar, float azimuthal)
-		: Distance(radius, scaling), polar(polar), azimuthal(azimuthal) {
+Angular::Angular(const float radius, std::string unit, const float polar, const float azimuth)
+		: Distance(radius, unit), polar(polar), azimuth(azimuth) {
 
 }
 
-Angular::Angular(float radius, short int scaling, std::string unit, float polar, float azimuthal)
-		: Distance(radius, scaling, unit), polar(polar), azimuthal(azimuthal) {
+Angular::Angular(const float radius, const Unit& unit, const float polar, const float azimuth)
+		: Distance(radius, unit), polar(polar), azimuth(azimuth) {
 
 }
 
-Angular::Angular(float radius, short int scaling, const Unit& unit, float polar, float azimuthal)
-		: Distance(radius, scaling, unit), polar(polar), azimuthal(azimuthal) {
+Angular::Angular(const float radius, const short int scaling, const float polar, const float azimuth)
+		: Distance(radius, scaling), polar(polar), azimuth(azimuth) {
 
 }
 
-Angular::Angular(float radius, short int scaling, const Unit& unit,
-        const Direction& polar, const Direction& azimuthal)
-		: Distance(radius, scaling, unit), polar(polar), azimuthal(azimuthal) {
+Angular::Angular(const float radius, const short int scaling, std::string unit, const float polar, const float azimuth)
+		: Distance(radius, scaling, unit), polar(polar), azimuth(azimuth) {
 
 }
 
-Angular::Angular(const Direction& azimuthal)
-		: Distance(), polar(), azimuthal(azimuthal) {
+Angular::Angular(const float radius, const short int scaling, const Unit& unit, const float polar, const float azimuth)
+		: Distance(radius, scaling, unit), polar(polar), azimuth(azimuth) {
 
 }
 
-Angular::Angular(const Direction& polar, const Direction& azimuthal)
-		: Distance(), polar(polar), azimuthal(azimuthal) {
+Angular::Angular(const float radius, const short int scaling, const Unit& unit,
+        const Polar& polar, const Azimuth& azimuth)
+		: Distance(radius, scaling, unit), polar(polar), azimuth(azimuth) {
 
 }
 
-Angular::Angular(const Distance& radius, const Direction& polar, const Direction& azimuthal)
-		: Distance(radius), polar(polar), azimuthal(azimuthal) {
+Angular::Angular(const Azimuth& azimuth)
+		: Distance(DEFAULT_RADIUS), polar(DEFAULT_POLARITY), azimuth(azimuth) {
+
+}
+
+Angular::Angular(const Polar& polar)
+		: Distance(DEFAULT_RADIUS), polar(polar), azimuth(DEFAULT_AZIMUTHAL) {
+
+}
+
+Angular::Angular(const Polar& polar, const Azimuth& azimuth)
+		: Distance(DEFAULT_RADIUS), polar(polar), azimuth(azimuth) {
+
+}
+
+Angular::Angular(const Distance& radius, const Polar& polar, const Azimuth& azimuth)
+		: Distance(radius), polar(polar), azimuth(azimuth) {
 
 }
 
@@ -145,113 +161,158 @@ Angular::~Angular() {
 bool Angular::operator==(const Angular& peer) const {
     return (static_cast<const Distance&>(*this) == static_cast<const Distance&>(peer))
             && (polar == peer.polar)
-            && (azimuthal == peer.azimuthal);
+            && (azimuth == peer.azimuth);
 }
 
 Angular Angular::operator+(const Angular& peer) const {
-    Distance newRadius = (getRadius() + peer.getRadius());
-    Direction newPolar = (polar + peer.polar);
-    Direction newAzimuthal = (azimuthal + peer.azimuthal);
-    return Angular(newRadius, newPolar, newAzimuthal);
+    Angular self = *this, other = peer;
+    Distance newRadius = (self.getRadius() + other.getRadius());
+    Polar newPolar = (self.polar + other.polar);
+    Azimuth newAzimuth = (self.azimuth + other.azimuth);
+    return Angular(newRadius, newPolar, newAzimuth);
 }
 
 Angular Angular::operator-(const Angular& peer) const {
-    Distance newRadius = (getRadius() - peer.getRadius());
-    Direction newPolar = (polar - peer.polar);
-    Direction newAzimuthal = (azimuthal - peer.azimuthal);
-    return Angular(newRadius, newPolar, newAzimuthal);
+    Angular self = *this, other = peer;
+    Distance newRadius = (self.getRadius() - other.getRadius());
+    Polar newPolar = (polar - other.polar);
+    Azimuth newAzimuth = (azimuth - other.azimuth);
+    return Angular(newRadius, newPolar, newAzimuth);
 }
 
 Angular Angular::operator*(const Angular& peer) const {
-    Distance newRadius = (getRadius() * peer.getRadius());
-    Direction newPolar = (polar * peer.polar);
-    Direction newAzimuthal = (azimuthal * peer.azimuthal);
-    return Angular(newRadius, newPolar, newAzimuthal);
+    Angular self = *this, other = peer;
+    Distance newRadius = (self.getRadius() * other.getRadius());
+    Polar newPolar = (self.polar * other.polar);
+    Azimuth newAzimuth = (azimuth * other.azimuth);
+    return Angular(newRadius, newPolar, newAzimuth);
 }
 
 Angular Angular::operator/(const Angular& peer) const {
-    Distance newRadius = (getRadius() / peer.getRadius());
-    Direction newPolar = (polar / peer.polar);
-    Direction newAzimuthal = (azimuthal / peer.azimuthal);
-    return Angular(newRadius, newPolar, newAzimuthal);
+    Angular self = *this, other = peer;
+    Distance newRadius = (self.getRadius() / other.getRadius());
+    Polar newPolar = (polar / other.polar);
+    Azimuth newAzimuth = (self.azimuth / other.azimuth);
+    return Angular(newRadius, newPolar, newAzimuth);
 }
 
 Angular Angular::operator%(const Angular& peer) const {
-    Distance newRadius = (getRadius() % peer.getRadius());
-    Direction newPolar = (polar % peer.polar);
-    Direction newAzimuthal = (azimuthal % peer.azimuthal);
-    return Angular(newRadius, newPolar, newAzimuthal);
+    Angular self = *this, other = peer;
+    Distance newRadius = (self.getRadius() % other.getRadius());
+    Polar newPolar = (self.polar % other.polar);
+    Azimuth newAzimuth = (self.azimuth % other.azimuth);
+    return Angular(newRadius, newPolar, newAzimuth);
 }
 
-Quantity Angular::operator+(const Quantity& peer) const {
-    Distance newRadius = (getRadius() + peer.getMagnitude());
-    return Quantity(newRadius.getMagnitude(),
-        newRadius.getScaling(), getRadius().getUnit());
+Distance Angular::operator+(const Distance& separation) const {
+    Angular self = *this;
+    Distance newRadius = (self.getRadius() + separation);
+    return Distance(newRadius.getMagnitude(),
+        newRadius.getScaling(), self.getRadius().getUnit());
 }
 
-Quantity Angular::operator-(const Quantity& peer) const {
-    Distance newRadius = (getRadius() - peer.getMagnitude());
-    return Quantity(newRadius.getMagnitude(),
-        newRadius.getScaling(), getRadius().getUnit());
+Distance Angular::operator-(const Distance& separation) const {
+    Angular self = *this;
+    Distance newRadius = (self.getRadius() - separation);
+    return Distance(newRadius.getMagnitude(),
+        newRadius.getScaling(), self.getRadius().getUnit());
 }
 
-Quantity Angular::operator*(const Quantity& peer) const {
-    Distance newRadius = (getRadius() * peer.getMagnitude());
-    return Quantity(newRadius.getMagnitude(),
-        newRadius.getScaling(), getRadius().getUnit());
+Distance Angular::operator*(const Distance& separation) const {
+    Angular self = *this;
+    Distance newRadius = (self.getRadius() * separation);
+    return Distance(newRadius.getMagnitude(),
+        newRadius.getScaling(), self.getRadius().getUnit());
 }
 
-Quantity Angular::operator/(const Quantity& peer) const {
-    Distance newRadius = (getRadius() / peer.getMagnitude());
-    return Quantity(newRadius.getMagnitude(),
-        newRadius.getScaling(), getRadius().getUnit());
+Distance Angular::operator/(const Distance& separation) const {
+    Angular self = *this;
+    Distance newRadius = (self.getRadius() / separation);
+    return Distance(newRadius.getMagnitude(),
+        newRadius.getScaling(), self.getRadius().getUnit());
 }
 
-Quantity Angular::operator%(const Quantity& peer) const {
-    Distance newRadius = (getRadius() % peer.getMagnitude());
-    return Quantity(newRadius.getMagnitude(),
-        newRadius.getScaling(), getRadius().getUnit());
+Distance Angular::operator%(const Distance& separation) const {
+    Angular self = *this;
+    Distance newRadius = (self.getRadius() % separation);
+    return Distance(newRadius.getMagnitude(),
+        newRadius.getScaling(), self.getRadius().getUnit());
 }
 
-Angular Angular::operator+(const Direction& peer) const {
-    Direction newAzimuthal = (azimuthal + peer);
-    return Angular(getRadius(), polar, newAzimuthal);
+Angular Angular::operator+(const Azimuth& rotation) const {
+    Angular self = *this;
+    Azimuth newAzimuth = (self.azimuth + rotation);
+    return Angular(self.getRadius(), self.polar, newAzimuth);
 }
 
-Angular Angular::operator-(const Direction& peer) const {
-    Direction newAzimuthal = (azimuthal - peer);
-    return Angular(getRadius(), polar, newAzimuthal);
+Angular Angular::operator-(const Azimuth& rotation) const {
+    Angular self = *this;
+    Azimuth newAzimuth = (self.azimuth - rotation);
+    return Angular(self.getRadius(), self.polar, newAzimuth);
 }
 
-Angular Angular::operator*(const Direction& peer) const {
-    Direction newAzimuthal = (azimuthal * peer);
-    return Angular(getRadius(), polar, newAzimuthal);
+Angular Angular::operator*(const Azimuth& rotation) const {
+    Angular self = *this;
+    Azimuth newAzimuth = (self.azimuth * rotation);
+    return Angular(self.getRadius(), self.polar, newAzimuth);
 }
 
-Angular Angular::operator/(const Direction& peer) const {
-    Direction newAzimuthal = (azimuthal / peer);
-    return Angular(getRadius(), polar, newAzimuthal);
+Angular Angular::operator/(const Azimuth& rotation) const {
+    Angular self = *this;
+    Azimuth newAzimuth = (self.azimuth / rotation);
+    return Angular(self.getRadius(), self.polar, newAzimuth);
 }
 
-Angular Angular::operator%(const Direction& peer) const {
-    Direction newAzimuthal = (azimuthal % peer);
-    return Angular(getRadius(), polar, newAzimuthal);
+Angular Angular::operator%(const Azimuth& rotation) const {
+    Angular self = *this;
+    Azimuth newAzimuth = (self.azimuth % rotation);
+    return Angular(self.getRadius(), self.polar, newAzimuth);
+}
+
+Angular Angular::operator+(const Polar& rotation) const {
+    Angular self = *this;
+    Polar newPolar = (self.polar + rotation);
+    return Angular(self.getRadius(), newPolar, self.azimuth);
+}
+
+Angular Angular::operator-(const Polar& rotation) const {
+    Angular self = *this;
+    Polar newPolar = (self.polar - rotation);
+    return Angular(self.getRadius(), newPolar, self.azimuth);
+}
+
+Angular Angular::operator*(const Polar& rotation) const {
+    Angular self = *this;
+    Polar newPolar = (self.polar * rotation);
+    return Angular(self.getRadius(), newPolar, self.azimuth);
+}
+
+Angular Angular::operator/(const Polar& rotation) const {
+    Angular self = *this;
+    Polar newPolar = (self.polar / rotation);
+    return Angular(self.getRadius(), newPolar, self.azimuth);
+}
+
+Angular Angular::operator%(const Polar& rotation) const {
+    Angular self = *this;
+    Polar newPolar = (self.polar % rotation);
+    return Angular(self.getRadius(), newPolar, self.azimuth);
 }
 
 Quantity Angular::operator()(const Angular& peer,
         const Distance& separation, const Distance& position) const {
     Angular self = *this;
-    Distance rx = position, ry = (separation - position);
-    Quantity ax = self.getAzimuthalComponent(rx), ay = peer.getAzimuthalComponent(ry);
-    Quantity result = (ax - ay); result.adjustScaling();
+    Quantity ax = self.getRelativeX(position, peer.polar.toRadians()),
+            bx = peer.getRelativeX((separation - position), peer.polar.toRadians());
+    Quantity result = (ax - bx); result.adjustScaling();
     return result;
 }
 
 Quantity Angular::operator()(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const {
     Angular self = *this; float end = Quantity::DEFAULT_VALUE;
-    Quantity azimX = (self(peerX, separationX, end) * cos(peerX.polar.toRadians()));
-    Quantity azimY = (self(peerY, separationY, end) * cos(peerY.polar.toRadians()));
+    Quantity azimX = self(peerX, separationX, end).getCosComponent(peerX.polar.toRadians());
+    Quantity azimY = self(peerY, separationY, end).getCosComponent(peerY.polar.toRadians());
     std::complex<float> radial(azimX.getMagnitude(), azimY.getMagnitude());
     std::complex<float> polarized = std::sqrt(radial);
     shp::Quantity result((std::abs(polarized) * cos(self.polar.toRadians())),
@@ -263,46 +324,64 @@ Distance Angular::getRadius() const {
     return this->getMagnitude();
 }
 
-void Angular::setRadius(const Distance& distance) {
-    this->setMagnitude(distance.getMagnitude());
-    this->setScaling(distance.getScaling());
+void Angular::setRadius(const Distance& length) {
+    this->setMagnitude(length.getMagnitude());
+    this->setScaling(length.getScaling());
 }
 
-Quantity Angular::getRelative(const Distance& location, const float angle) const {
+Quantity Angular::getRelative(const Distance& position, const float angle) const {
     Angular self = *this; Distance radius = self.getRadius();
-    Distance distance = (radius / (radius + location)); distance.adjustNumeric();
-    Quantity coefficient = (distance.getComponent(angle) * distance.getComponent(angle));
-    Quantity result((coefficient.getMagnitude()), getScaling(), getUnit());
+    Quantity coefficient  = radius(position);   // radial, X & Y both combined
+    Quantity result(coefficient.getMagnitude(), coefficient.getScaling(), self.getUnit());
     result.adjustScaling();
     return result;
 }
 
-Quantity Angular::getPolarComponent(const Distance& location) const {
-    return getRelative(location, this->polar.toRadians());
+Quantity Angular::getRelativeX(const Distance& position, const float angle) const {
+    Angular self = *this; Distance radius = self.getRadius();
+    Quantity coefficient  = radius.getFactorX(position);    // X component only
+    Quantity result(coefficient.getMagnitude(), coefficient.getScaling(), self.getUnit());
+    result.adjustScaling();
+    return result;
 }
 
-Quantity Angular::getAzimuthalComponent(const Distance& location) const {
-    return getRelative(location, this->azimuthal.toRadians());
+Quantity Angular::getRelativeY(const Distance& position, const float angle) const {
+    Angular self = *this; Distance radius = self.getRadius();
+    Quantity coefficient  = radius.getFactorY(position);    // Y component only
+    Quantity result(coefficient.getMagnitude(), coefficient.getScaling(), self.getUnit());
+    result.adjustScaling();
+    return result;
 }
 
-Distance Angular::copy() {
-    Angular fresh(getRadius(), polar, azimuthal);
+Quantity Angular::getPolarComponent(const Distance& position) const {
+    Angular self = *this;
+    return getRelativeY(position, self.polar.toRadians());
+}
+
+Quantity Angular::getAzimuthComponent(const Distance& position) const {
+    Angular self = *this;
+    return getRelativeX(position, self.azimuth.toRadians());
+}
+
+Distance Angular::copy() const {
+    Angular self = *this;
+    Angular fresh(self.getRadius(), self.polar, self.azimuth);
     return fresh;
 }
 
 void Angular::clear() {
     Distance::clear();
     polar.clear();
-    azimuthal.clear();
+    azimuth.clear();
     return;
 }
 
 std::string Angular::print() {
     std::stringstream result;
     result << "{r:";
-    result << Distance::print() << ",𝜃:";
-    result << polar.print() << ",𝜙:";
-    result << azimuthal.print() << "}";
+    result << Distance::print() << ",";
+    result << polar.print() << ",";
+    result << azimuth.print() << "}";
 	return result.str();
 }
 

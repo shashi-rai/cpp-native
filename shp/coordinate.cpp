@@ -22,24 +22,26 @@
 
 namespace shp {
 
-const int Coordinate::ORIGIN = 0;
+const float Coordinate::ORIGIN = 0.0f;
+const float Coordinate::DEFAULT_VALUE = 0.0f;
+const float Coordinate::UNIT_MAGNITUDE = 1e-9;
 
 Coordinate::Coordinate()
         : x(ORIGIN), y(ORIGIN), z(ORIGIN) {
 
 }
 
-Coordinate::Coordinate(const int x)
+Coordinate::Coordinate(const float x)
         : x(x), y(ORIGIN), z(ORIGIN) {
 
 }
 
-Coordinate::Coordinate(const int x, const int y)
+Coordinate::Coordinate(const float x, const float y)
         : x(x), y(y), z(ORIGIN) {
 
 }
 
-Coordinate::Coordinate(const int x, const int y, const int z)
+Coordinate::Coordinate(const float x, const float y, const float z)
         : x(x), y(y), z(z) {
 
 }
@@ -69,18 +71,47 @@ Coordinate Coordinate::operator/(const Coordinate& peer) const {
 }
 
 Coordinate Coordinate::operator%(const Coordinate& peer) const {
-    return Coordinate((x % peer.x), (y % peer.y), (z % peer.z));
+    return Coordinate(fmod(x, peer.x), fmod(y, peer.y), fmod(z, peer.z));
 }
 
-Coordinate Coordinate::shiftX(const int step) const {
+float Coordinate::getMagnitude() const {
+    return std::sqrt(((x * x) + (y * y) + (z * z)));
+}
+
+Coordinate Coordinate::getNormalize() const {
+    float magnitude = getMagnitude();
+    if (magnitude < UNIT_MAGNITUDE) {
+        return Coordinate((x / magnitude), (y / magnitude), (z / magnitude));
+    }
+    return Coordinate(ORIGIN, ORIGIN, ORIGIN);;
+}
+
+Coordinate Coordinate::getField(const float intensity, const float conservable,
+        const Coordinate& origin, const Coordinate& poi) const {
+    Coordinate radial_vector = (origin - poi);
+    float distance = radial_vector.getMagnitude();
+    if (distance < UNIT_MAGNITUDE) {
+        return Coordinate(ORIGIN, ORIGIN, ORIGIN);
+    }
+    float field_magnitude = (intensity * (std::abs(conservable) / (distance * distance)));
+    Coordinate unit_vector = radial_vector.getNormalize();
+    if (conservable < DEFAULT_VALUE) {
+        field_magnitude *= -1; // sign reversal
+    }
+    Coordinate result = Coordinate((field_magnitude * unit_vector.x),
+        (field_magnitude * unit_vector.y), (field_magnitude * unit_vector.z));
+    return result;
+}
+
+Coordinate Coordinate::shiftX(const float step) const {
     return Coordinate((x + step), y, z);
 }
 
-Coordinate Coordinate::shiftY(const int step) const {
+Coordinate Coordinate::shiftY(const float step) const {
     return Coordinate(x, (y + step), z);
 }
 
-Coordinate Coordinate::shiftZ(const int step) const {
+Coordinate Coordinate::shiftZ(const float step) const {
     return Coordinate(x, y, (z + step));
 }
 

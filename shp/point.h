@@ -32,7 +32,7 @@ namespace shp {
 
 class Point : public Shape {
     Quantity amplitude;
-    float gradient;
+    float gradient;         // azimuthal change in amplitude
 public:
     // Constructors
     Point();
@@ -82,12 +82,12 @@ public:
     void setAmplitude(const float magnitude, const short int scaling, const Unit& unit);
     void setAzimuthal(const Direction& orientation);
     virtual Angular getOrientation() const;
-    virtual Point copy();
+    virtual Point copy() const;
     virtual void clear();
     virtual std::string print();
-    Quantity getAmplitudeAzimuthal(float change) const;
+    Quantity getAmplitudeAzimuthal(const float change) const;
 protected:
-    std::complex<float> toAzimuthalComplex(float change);
+    std::complex<float> toAzimuthalComplex(const float change);
 };
 
 typedef std::vector<Point > PointArray;

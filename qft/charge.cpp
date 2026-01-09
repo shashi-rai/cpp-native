@@ -118,7 +118,8 @@ Charge::~Charge() {
 }
 
 bool Charge::operator==(const Charge& peer) const {
-    return (static_cast<const shp::Quantity&>(*this) == static_cast<const shp::Quantity&>(peer));
+    return (static_cast<const shp::Quantity&>(*this) == static_cast<const shp::Quantity&>(peer))
+        && (field == peer.field);
 }
 
 Charge Charge::operator+(const Charge& peer) const {
@@ -152,13 +153,13 @@ Charge Charge::operator%(const Charge& peer) const {
 }
 
 Force Charge::operator()(const Charge& peer, const shp::Distance separation,
-        const shp::Distance distance) const {
+        const shp::Distance position) const {
     if (isOwned()) {
         shp::Potential self = field->getPotential();
         shp::Potential other = peer.field->getPotential();
-        shp::Quantity factor = self(other, separation, distance);
+        shp::Quantity factor = self(other, separation, position);
         shp::Quantity force = (factor * (*this));
-        Electric result(force.getMagnitude(), self.getAzimuthal().toRadians(), force.getScaling(), field);
+        Electric result(force.getMagnitude(), self.getAzimuth().toRadians(), force.getScaling(), field);
         result.adjustScaling();
         return result;
     } else {
@@ -217,8 +218,9 @@ std::shared_ptr<Field> Charge::getOriginField() const {
     return result;
 }
 
-Charge Charge::copy() {
-    Charge fresh(getMagnitude(), getScaling(), getUnit(), field);
+Charge Charge::copy() const {
+    shp::Quantity self = *this;
+    Charge fresh(self.getMagnitude(), self.getScaling(), self.getUnit(), field);
     return fresh;
 }
 
@@ -236,8 +238,9 @@ std::string Charge::print() {
 	return result.str();
 }
 
-shp::Quantity Charge::getComponent(float phase) const {
-	return shp::Quantity((getMagnitude() * cos(phase)), getScaling(), getUnit());
+shp::Quantity Charge::getFluctuation(const float phase) const {
+    shp::Quantity self = *this;
+	return shp::Quantity(self.getCosComponent(phase), self.getScaling(), self.getUnit());
 }
 
 } // namespace qft
