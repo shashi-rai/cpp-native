@@ -90,7 +90,7 @@ public:
     void setPolar(const Polar& angle);
     Azimuth getAzimuth() const;
     void setAzimuth(const Azimuth& angle);
-    Quantity getDifference() const;
+    Quantity getConvergence() const;
     Quantity getRelative(const Distance& location, const float angle) const;
     Quantity getPolarComponent(const Distance& location) const;
     Quantity getAzimuthComponent(const Distance& location) const;

@@ -174,6 +174,10 @@ const std::string Unit::getDerivedSymbol(short int index) {
     }
 }
 
+std::string Unit::getModulus() const {
+    return ("|" + name + "|");
+}
+
 std::string Unit::getInverse() const {
     return (PER_UNIT + name);
 }

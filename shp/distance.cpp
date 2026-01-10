@@ -231,24 +231,30 @@ Quantity Distance::getRadial() const {
 }
 
 Quantity Distance::getRadialX() const {
-    Quantity length = getRadial().getCosComponent(change.toRadians());
-    return Quantity(length.getMagnitude(), length.getScaling(), length.getUnit());
+    Distance self = *this; Quantity radial = self.getRadial();
+    float length = radial.getCosComponent(change.toRadians());
+    return Quantity(length, radial.getScaling(), radial.getUnit());
 }
 
 Quantity Distance::getRadialY() const {
-    Quantity length = getRadial().getSinComponent(change.toRadians());
-    return Quantity(length.getMagnitude(), length.getScaling(), length.getUnit());
+    Distance self = *this; Quantity radial = self.getRadial();
+    float length = radial.getSinComponent(change.toRadians());
+    return Quantity(length, radial.getScaling(), radial.getUnit());
 }
 
 Quantity Distance::getSquareX() const {
     Distance self = *this; float angle = change.toRadians();
-    Quantity result = (self.getCosComponent(angle) * self.getCosComponent(angle));
+    float length = (self.getCosComponent(angle) * self.getCosComponent(angle));
+    short int scaling = (self.getScaling() + self.getScaling());
+    Quantity result(length, scaling, self.getUnit());
     return result;
 }
 
 Quantity Distance::getSquareY() const {
     Distance self = *this; float angle = change.toRadians();
-    Quantity result = (self.getSinComponent(angle) * self.getSinComponent(angle));
+    float length = (self.getSinComponent(angle) * self.getSinComponent(angle));
+    short int scaling = (self.getScaling() + self.getScaling());
+    Quantity result(length, scaling, self.getUnit());
     return result;
 }
 

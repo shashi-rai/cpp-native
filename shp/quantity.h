@@ -22,6 +22,7 @@
 #define SHP_QUANTITY_H
 
 #include <cmath>
+#include <complex>
 #include <sstream>
 #include <vector>
 #include "unit.h"
@@ -69,8 +70,10 @@ public:
     void setUnit(const Unit& object) { this->unit = object; }
 
     // Additional methods
+    std::complex<float> getComplex(const float imaginary) const;
     Quantity getAbsolute() const;
     Quantity getInverse() const;
+    Quantity getPercent() const;
     Quantity getSquare() const;
     Quantity getSquareRoot() const;
     Quantity getCube() const;

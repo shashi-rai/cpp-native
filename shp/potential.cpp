@@ -171,17 +171,21 @@ Potential Potential::operator%(const Potential& peer) const {
 
 Quantity Potential::operator()(const Potential& peer,
         const Distance& separation, const Distance& position) const {
-    Potential self = *this; float distribution = self.getDifference().getMagnitude();
-    Quantity coefficient = (origin(peer.origin, separation, position) * distribution);
-    Quantity result(coefficient.getMagnitude(), coefficient.getScaling(), self.getUnit()); result.adjustScaling();
+    Potential self = *this; Quantity distribution = self.getDivergence();
+    Quantity coefficient = (self.origin(peer.origin, separation, position) * distribution.getMagnitude());
+    Quantity result(coefficient.getMagnitude(),
+		(coefficient.getScaling() + distribution.getScaling()), self.getUnit());
+	result.adjustScaling();
     return result;
 }
 
 Quantity Potential::operator()(const Potential& peerX, const Potential& peerY,
         const Distance& separationX, const Distance& separationY) const {
-	Potential self = *this; float distribution = self.getDifference().getMagnitude();
-    Quantity coefficient = (origin(peerX.getOrigin(), peerY.getOrigin(), separationX, separationY) * distribution);
-    Quantity result(coefficient.getMagnitude(), coefficient.getScaling(), self.getUnit()); result.adjustScaling();
+	Potential self = *this; Quantity distribution = self.getDivergence();
+    Quantity coefficient = (self.origin(peerX.getOrigin(), peerY.getOrigin(), separationX, separationY) * distribution.getMagnitude());
+    Quantity result(coefficient.getMagnitude(),
+		(coefficient.getScaling() + distribution.getScaling()), self.getUnit());
+	result.adjustScaling();
     return result;
 }
 
@@ -223,10 +227,16 @@ Quantity Potential::getDifference() const {
     return result;
 }
 
+Quantity Potential::getDivergence() const {
+    return Potential::getDifference();
+}
+
 Quantity Potential::getRelative(const Distance& location, const float angle) const {
-    Potential self = *this; float distribution = (getHigh() - getLow());
-    Quantity coefficient = (origin.getRelative(location, angle) * distribution);
-    Quantity result(coefficient.getMagnitude(), getScaling(), getUnit()); result.adjustScaling();
+    Potential self = *this; Quantity distribution = self.getDivergence();
+    Quantity coefficient = (origin.getRelative(location, angle) * distribution.getMagnitude());
+    Quantity result(coefficient.getMagnitude(),
+		(coefficient.getScaling() + distribution.getScaling()), self.getUnit());
+	result.adjustScaling();
     return result;
 }
 

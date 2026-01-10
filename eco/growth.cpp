@@ -170,19 +170,23 @@ Growth Growth::operator%(const Growth& peer) const {
 
 shp::Quantity Growth::operator()(const Growth& peer,
         const shp::Distance& separation, const shp::Distance& position) const {
-    shp::Potential self = *this; float distribution = self.getDifference().getMagnitude();
+    shp::Potential self = *this; shp::Quantity distribution = getConvergence().getInverse();
     shp::Angular closure = self.getOrigin();
-    Quantity coefficient = (closure(peer.getClosure(), separation, position) * distribution);
-    Quantity result(coefficient.getMagnitude(), coefficient.getScaling(), self.getUnit()); result.adjustScaling();
+    Quantity coefficient = (closure(peer.getClosure(), separation, position) * distribution.getMagnitude());
+    Quantity result(coefficient.getMagnitude(),
+		(coefficient.getScaling() + distribution.getScaling()), self.getUnit());
+	result.adjustScaling();
     return result;
 }
 
 shp::Quantity Growth::operator()(const Growth& peerX, const Growth& peerY,
         const shp::Distance& separationX, const shp::Distance& separationY) const {
-    shp::Potential self = *this; float distribution = self.getDifference().getMagnitude();
+    shp::Potential self = *this; shp::Quantity distribution = getConvergence().getInverse();
     shp::Angular closure = self.getOrigin();
-    Quantity coefficient = (closure(peerX.getClosure(), peerY.getClosure(), separationX, separationY) * distribution);
-    Quantity result(coefficient.getMagnitude(), coefficient.getScaling(), self.getUnit()); result.adjustScaling();
+    Quantity coefficient = (closure(peerX.getClosure(), peerY.getClosure(), separationX, separationY) * distribution.getMagnitude());
+    Quantity result(coefficient.getMagnitude(),
+		(coefficient.getScaling() + distribution.getScaling()), self.getUnit());
+	result.adjustScaling();
     return result;
 }
 
@@ -232,8 +236,10 @@ void Growth::setAzimuth(const shp::Azimuth& angle) {
     origin.setAzimuth(angle);
 }
 
-shp::Quantity Growth::getDifference() const {
-    return shp::Potential::getDifference();
+shp::Quantity Growth::getConvergence() const {
+	shp::Potential self = *this;
+    shp::Quantity result((self.getLow() - self.getHigh()), self.getScaling(), self.getUnit());
+    return result;
 }
 
 shp::Quantity Growth::getRelative(const shp::Distance& location, const float angle) const {

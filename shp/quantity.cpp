@@ -129,50 +129,69 @@ Quantity Quantity::operator%(const Quantity& peer) const {
     return result;
 }
 
+std::complex<float> Quantity::getComplex(const float imaginary) const {
+    std::complex<float> result(magnitude, imaginary);
+    return result;
+}
+
 Quantity Quantity::getAbsolute() const {
-    Quantity fresh(std::abs(magnitude), scaling, getUnit());
+    Quantity fresh(std::abs(magnitude), scaling, unit.getModulus());
     return fresh;
 }
 
 Quantity Quantity::getInverse() const {
-    Quantity fresh(magnitude != DEFAULT_VALUE ? (1 / magnitude) : DEFAULT_VALUE, scaling, unit.getInverse());
+    Quantity fresh(magnitude != DEFAULT_VALUE
+        ? (1 / magnitude) : DEFAULT_VALUE, -scaling, unit.getInverse());
+    fresh.adjustScaling();
+    return fresh;
+}
+
+Quantity Quantity::getPercent() const {
+    Quantity fresh(magnitude, scaling, unit.getPercent());
     return fresh;
 }
 
 Quantity Quantity::getSquare() const {
-    float newMagnitude = (magnitude * magnitude);
-    short int newScaling = (scaling + scaling);
-    Quantity fresh(newMagnitude, newScaling, unit.getSquare());
+    double mantissa = magnitude;
+    double newMagnitude = (mantissa * mantissa);
+    Quantity fresh(static_cast<float>(newMagnitude), (scaling * 2), unit.getSquare());
+    fresh.adjustScaling();
     return fresh;
 }
 
-Quantity Quantity::getSquareRoot() const {
-    float newMagnitude = std::sqrt(magnitude);
-    short int newScaling = (scaling - scaling);
-    Quantity fresh(newMagnitude, newScaling, unit.getSquareRoot());
+Quantity Quantity::getSquareRoot() const {  // handle negative magnitude
+    double mantissa = (magnitude * std::pow(DECIMAL_SCALE, scaling));
+    std::complex<double> result = std::sqrt(mantissa);
+    double newMagnitude = std::real(result);
+    newMagnitude = (newMagnitude / std::pow(DECIMAL_SCALE, scaling));
+    Quantity fresh(static_cast<float>(newMagnitude), scaling, unit.getSquareRoot());
+    fresh.adjustScaling();
     return fresh;
 }
 
 Quantity Quantity::getCube() const {
-    float newMagnitude = (magnitude * magnitude * magnitude);
-    short int newScaling = (scaling + scaling + scaling);
-    Quantity fresh(newMagnitude, newScaling, unit.getCube());
+    double mantissa = magnitude;
+    double newMagnitude = (mantissa * mantissa * mantissa);
+    Quantity fresh(static_cast<float>(newMagnitude), (scaling * 3), unit.getCube());
+    fresh.adjustScaling();
     return fresh;
 }
 
 Quantity Quantity::getCubeRoot() const {
-    float newMagnitude = std::cbrt(magnitude);
-    short int newScaling = (scaling - scaling - scaling);
-    Quantity fresh(newMagnitude, newScaling, unit.getCubeRoot());
+    double mantissa = (magnitude * std::pow(DECIMAL_SCALE, scaling));
+    double newMagnitude = std::cbrt(mantissa);
+    newMagnitude = (newMagnitude / std::pow(DECIMAL_SCALE, scaling));
+    Quantity fresh(static_cast<float>(newMagnitude), scaling, unit.getCubeRoot());
+    fresh.adjustScaling();
     return fresh;
 }
 
 bool Quantity::isConvergent() const {
-    return (magnitude < DEFAULT_VALUE);
+    return (magnitude > DEFAULT_VALUE);
 }
 
 bool Quantity::isDivergent() const {
-    return (magnitude > DEFAULT_VALUE);
+    return (magnitude < DEFAULT_VALUE);
 }
 
 bool Quantity::checkNonZero() const {

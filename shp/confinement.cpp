@@ -170,21 +170,23 @@ Confinement Confinement::operator%(const Confinement& peer) const {
 
 Quantity Confinement::operator()(const Confinement& peer,
         const Distance& separation, const Distance& position) const {
-    Potential self = *this; float distribution = self.getDifference().getMagnitude();
+    Potential self = *this; Quantity distribution = getConvergence().getInverse();
     shp::Angular closure = self.getOrigin();
-	Quantity coefficient = (closure(peer.getClosure(), separation, position) * distribution);
-	Quantity inverted = coefficient.getInverse();
-    Quantity result(inverted.getMagnitude(), inverted.getScaling(), self.getUnit()); result.adjustScaling();
+	Quantity coefficient = (closure(peer.getClosure(), separation, position) * distribution.getMagnitude());
+    Quantity result(coefficient.getMagnitude(),
+        (coefficient.getScaling() + distribution.getScaling()), self.getUnit());
+    result.adjustScaling();
     return result;
 }
 
 Quantity Confinement::operator()(const Confinement& peerX, const Confinement& peerY,
         const Distance& separationX, const Distance& separationY) const {
-    Potential self = *this; float distribution = self.getDifference().getMagnitude();
+    Potential self = *this; Quantity distribution = getConvergence().getInverse();
     shp::Angular closure = self.getOrigin();
-    Quantity coefficient = (closure(peerX.getClosure(), peerY.getClosure(), separationX, separationY) * distribution);
-    Quantity inverted = coefficient.getInverse();
-    Quantity result(inverted.getMagnitude(), inverted.getScaling(), self.getUnit()); result.adjustScaling();
+    Quantity coefficient = (closure(peerX.getClosure(), peerY.getClosure(), separationX, separationY) * distribution.getMagnitude());
+    Quantity result(coefficient.getMagnitude(),
+        (coefficient.getScaling() + distribution.getScaling()), self.getUnit());
+    result.adjustScaling();
     return result;
 }
 
@@ -234,8 +236,10 @@ void Confinement::setAzimuth(const Azimuth& angle) {
     origin.setAzimuth(angle);
 }
 
-Quantity Confinement::getDifference() const {
-    return Potential::getDifference();
+Quantity Confinement::getConvergence() const {
+	Potential self = *this;
+    Quantity result((self.getLow() - self.getHigh()), self.getScaling(), self.getUnit());
+    return result;
 }
 
 Quantity Confinement::getRelative(const Distance& location, const float angle) const {

@@ -48,6 +48,7 @@ public:
     void setName(const std::string& name) { this->name = name; }
 
     // Additional methods
+    std::string getModulus() const;
     std::string getInverse() const;
     std::string getPercent() const;
     std::string getSquare() const;

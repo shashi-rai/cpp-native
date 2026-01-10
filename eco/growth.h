@@ -87,7 +87,7 @@ public:
     void setPolar(const shp::Polar& angle);
     shp::Azimuth getAzimuth() const;
     void setAzimuth(const shp::Azimuth& angle);
-    shp::Quantity getDifference() const;
+    shp::Quantity getConvergence() const;
     shp::Quantity getRelative(const shp::Distance& location, const float angle) const;
     shp::Quantity getPolarComponent(const shp::Distance& location) const;
     shp::Quantity getAzimuthComponent(const shp::Distance& location) const;
