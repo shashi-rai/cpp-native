@@ -24,45 +24,135 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "colour.h"
+#include "current.h"
 #include "field.h"
+#include "momentum.h"
 
 namespace qft {
 
 class Reality {
+    // Generic Fields
     std::shared_ptr<qft::Field> gravity;
-    std::shared_ptr<qft::Field> gluonic;
     std::shared_ptr<qft::Field> electric;
     std::shared_ptr<qft::Field> magnetic;
+
+    // Quark Fields
+    std::shared_ptr<qft::Field> up;
+    std::shared_ptr<qft::Field> down;
+    std::shared_ptr<qft::Field> charm;
+    std::shared_ptr<qft::Field> strange;
+    std::shared_ptr<qft::Field> top;
+    std::shared_ptr<qft::Field> bottom;
+
+    // Lepton Fields
+    std::shared_ptr<qft::Field> electron;
+    std::shared_ptr<qft::Field> electronNeutrino;
+    std::shared_ptr<qft::Field> muon;
+    std::shared_ptr<qft::Field> muonNeutrino;
+    std::shared_ptr<qft::Field> tau;
+    std::shared_ptr<qft::Field> tauNeutrino;
+
+    // Guage Boson Fields
+    std::shared_ptr<qft::Field> photon;
+    std::shared_ptr<qft::Field> gluon;
+    std::shared_ptr<qft::Field> strong;
+    std::shared_ptr<qft::Field> weak;
+
+    // Higgs Boson Field
+    std::shared_ptr<qft::Field> higgs;
 public:
     // Constructors
     Reality();
-    Reality(const float mass, const float colour, const float charge);
+    Reality(const Mass& mass);
+    Reality(const Charge& charge);
+    Reality(const Colour& colour);
+    Reality(const Mass& mass, const Charge& charge);
+    Reality(const Charge& charge, const Colour& colour);
+    Reality(const Mass& mass, const Colour& colour);
+    Reality(const Mass& mass, const Charge& charge, const Colour& colour);
 
     // Destructors
     ~Reality();
 
     // Operator overloading
     bool operator==(const Reality& peer) const;
+    std::shared_ptr<qft::Field> operator()(const Charge& cause);
+    std::shared_ptr<qft::Field> operator()(const Current& cause);
+    std::shared_ptr<qft::Field> operator()(const Colour& cause);
+    std::shared_ptr<qft::Field> operator()(const Mass& cause);
+    std::shared_ptr<qft::Field> operator()(const Momentum& cause);
 
     // Getters
     std::shared_ptr<qft::Field> getGravity() const { return gravity; }
-    std::shared_ptr<qft::Field> getGluonic() const { return gluonic; }
     std::shared_ptr<qft::Field> getElectric() const { return electric; }
     std::shared_ptr<qft::Field> getMagnetic() const { return magnetic; }
+    std::shared_ptr<qft::Field> getUp() const { return up; }
+    std::shared_ptr<qft::Field> getDown() const { return down; }
+    std::shared_ptr<qft::Field> getCharm() const { return charm; }
+    std::shared_ptr<qft::Field> getStrange() const { return strange; }
+    std::shared_ptr<qft::Field> getTop() const { return top; }
+    std::shared_ptr<qft::Field> getBottom() const { return bottom; }
+    std::shared_ptr<qft::Field> getElectron() const { return electron; }
+    std::shared_ptr<qft::Field> getElectronNeutrino() const { return electronNeutrino; }
+    std::shared_ptr<qft::Field> getMuon() const { return muon; }
+    std::shared_ptr<qft::Field> getMuonNeutrino() const { return muonNeutrino; }
+    std::shared_ptr<qft::Field> getTau() const { return tau; }
+    std::shared_ptr<qft::Field> getTauNeutrino() const { return tauNeutrino; }
+    std::shared_ptr<qft::Field> getPhoton() const { return photon; }
+    std::shared_ptr<qft::Field> getGluon() const { return gluon; }
+    std::shared_ptr<qft::Field> getStrong() const { return strong; }
+    std::shared_ptr<qft::Field> getWeak() const { return weak; }
+    std::shared_ptr<qft::Field> getHiggs() const { return higgs; }
 
     // Setters
     void setGravity(const std::shared_ptr<qft::Field> field) { this->gravity = field; }
-    void setGluonic(const std::shared_ptr<qft::Field> field) { this->gluonic = field; }
     void setElectric(const std::shared_ptr<qft::Field> field) { this->electric = field; }
     void setMagnetic(const std::shared_ptr<qft::Field> field) { this->magnetic = field; }
+    void setUp(const std::shared_ptr<qft::Field> field) { this->up = field; }
+    void setDown(const std::shared_ptr<qft::Field> field) { this->bottom = field; }
+    void setCharm(const std::shared_ptr<qft::Field> field) { this->charm = field; }
+    void setStrange(const std::shared_ptr<qft::Field> field) { this->strange = field; }
+    void setTop(const std::shared_ptr<qft::Field> field) { this->top = field; }
+    void setBottom(const std::shared_ptr<qft::Field> field) { this->bottom = field; }
+    void setElectron(const std::shared_ptr<qft::Field> field) { this->electron = field; }
+    void setElectronNeutrino(const std::shared_ptr<qft::Field> field) { this->electronNeutrino = field; }
+    void setMuon(const std::shared_ptr<qft::Field> field) { this->muon = field; }
+    void setMuonNeutrino(const std::shared_ptr<qft::Field> field) { this->muonNeutrino = field; }
+    void setTau(const std::shared_ptr<qft::Field> field) { this->tau = field; }
+    void setTauNeutrino(const std::shared_ptr<qft::Field> field) { this->tauNeutrino = field; }
+    void setPhoton(const std::shared_ptr<qft::Field> field) { this->photon = field; }
+    void setGluon(const std::shared_ptr<qft::Field> field) { this->gluon = field; }
+    void setStrong(const std::shared_ptr<qft::Field> field) { this->strong = field; }
+    void setWeak(const std::shared_ptr<qft::Field> field) { this->weak = field; }
+    void setHiggs(const std::shared_ptr<qft::Field> field) { this->higgs = field; }
 
     // Additional methods
-    virtual Reality copy();
+    virtual Reality copy() const;
     virtual void clear();
     virtual std::string print();
 
 private:
-    void initialize(const float mass, const float colour, const float charge);
+    void initializeGravityField(const Mass& mass);
+    void initializeElectricField(const Charge& charge);
+    void initializeMagneticField(const Charge& charge);
+    void initializeUpField(const Colour& colour);
+    void initializeDownField(const Colour& colour);
+    void initializeCharmField(const Colour& colour);
+    void initializeStrangeField(const Colour& colour);
+    void initializeTopField(const Colour& colour);
+    void initializeBottomField(const Colour& colour);
+    void initializeElectronField(const Charge& charge);
+    void initializeElectronNeutrinoField(const Charge& charge);
+    void initializeMuonField(const Charge& charge);
+    void initializeMuonNeutrinoField(const Charge& charge);
+    void initializeTauField(const Charge& charge);
+    void initializeTauNeutrinoField(const Charge& charge);
+    void initializePhotonField(const Mass& mass, const Charge& charge);
+    void initializeGluonField(const Colour& colour);
+    void initializeStrongField(const Charge& charge);
+    void initializeWeakField(const Charge& charge);
+    void initializeHiggsField(const Mass& mass);
 public:
     static const float DEFAULT_VALUE;
     static const float DEFAULT_FIELD;
