@@ -32,84 +32,84 @@ const float Charge::NEUTRON = shp::Quantity::DEFAULT_VALUE; // 0.0 x 10^-19 C
 const float Charge::ELECTRON = -1.6021766341019f;           // 1.602 x 10^-19 C
 
 Charge::Charge()
-        : shp::Quantity(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE,
+        : shp::Temporal(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE,
             shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_CHARGE)) {
     setField(nullptr);
 }
 
 Charge::Charge(const std::shared_ptr<Field> field)
-        : shp::Quantity(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE,
+        : shp::Temporal(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE,
             shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_CHARGE)) {
     setField(field);
 }
 
 Charge::Charge(std::string unit)
-        : shp::Quantity(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, std::string(unit)) {
+        : shp::Temporal(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, std::string(unit)) {
     setField(nullptr);
 }
 
 Charge::Charge(const shp::Unit& unit)
-        : shp::Quantity(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, unit) {
+        : shp::Temporal(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, unit) {
     setField(nullptr);
 }
 
 Charge::Charge(const shp::Unit& unit, const std::shared_ptr<Field> field)
-        : shp::Quantity(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, unit) {
+        : shp::Temporal(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, unit) {
     setField(field);
 }
 
 Charge::Charge(const float magnitude)
-        : shp::Quantity(magnitude, ATOMIC_SCALE,
+        : shp::Temporal(magnitude, ATOMIC_SCALE,
             shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_CHARGE)) {
     setField(nullptr);
 }
 
 Charge::Charge(const float magnitude, const std::shared_ptr<Field> field)
-        : shp::Quantity(magnitude, ATOMIC_SCALE,
+        : shp::Temporal(magnitude, ATOMIC_SCALE,
             shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_CHARGE)) {
     setField(field);
 }
 
 Charge::Charge(const float magnitude, std::string unit)
-        : shp::Quantity(magnitude, ATOMIC_SCALE, shp::Unit(unit)) {
+        : shp::Temporal(magnitude, ATOMIC_SCALE, shp::Unit(unit)) {
     setField(nullptr);
 }
 
 Charge::Charge(const float magnitude, const shp::Unit& unit)
-        : shp::Quantity(magnitude, ATOMIC_SCALE, unit) {
+        : shp::Temporal(magnitude, ATOMIC_SCALE, unit) {
     setField(nullptr);
 }
 
 Charge::Charge(const float magnitude, const shp::Unit& unit, const std::shared_ptr<Field> field)
-        : shp::Quantity(magnitude, ATOMIC_SCALE, unit) {
+        : shp::Temporal(magnitude, ATOMIC_SCALE, unit) {
     setField(field);
 }
 
 Charge::Charge(const float magnitude, const short int scaling)
-        : shp::Quantity(magnitude, scaling,
+        : shp::Temporal(magnitude, scaling,
             shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_CHARGE)) {
     setField(nullptr);
 }
 
 Charge::Charge(const float magnitude, const short int scaling, const std::shared_ptr<Field> field)
-        : shp::Quantity(magnitude, scaling,
+        : shp::Temporal(magnitude, scaling,
             shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_CHARGE)) {
     setField(field);
 }
 
 Charge::Charge(const float magnitude, const short int scaling, std::string unit)
-        : shp::Quantity(magnitude, scaling, shp::Unit(unit)) {
+        : shp::Temporal(magnitude, scaling, shp::Unit(unit)) {
     setField(nullptr);
 }
 
 Charge::Charge(const float magnitude, const short int scaling, const shp::Unit& unit)
-        : shp::Quantity(magnitude, scaling, unit) {
+        : shp::Temporal(magnitude, scaling, unit) {
     setField(nullptr);
 }
 
 Charge::Charge(const float magnitude, const short int scaling, const shp::Unit& unit,
         const std::shared_ptr<Field> field)
-        : shp::Quantity(magnitude, scaling, unit) {
+        : shp::Temporal(magnitude, scaling, unit) {
     setField(field);
 }
 
@@ -118,37 +118,37 @@ Charge::~Charge() {
 }
 
 bool Charge::operator==(const Charge& peer) const {
-    return (static_cast<const shp::Quantity&>(*this) == static_cast<const shp::Quantity&>(peer))
+    return (static_cast<const shp::Temporal&>(*this) == static_cast<const shp::Temporal&>(peer))
         && (field == peer.field);
 }
 
 Charge Charge::operator+(const Charge& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity result = (self + other);
+    shp::Temporal self = *this, other = peer;
+    shp::Temporal result = (self + other);
     return Charge(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
 }
 
 Charge Charge::operator-(const Charge& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity result = (self - other);
+    shp::Temporal self = *this, other = peer;
+    shp::Temporal result = (self - other);
     return Charge(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
 }
 
 Charge Charge::operator*(const Charge& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity result = (self * other);
+    shp::Temporal self = *this, other = peer;
+    shp::Temporal result = (self * other);
     return Charge(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
 }
 
 Charge Charge::operator/(const Charge& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity result = (self / other);
+    shp::Temporal self = *this, other = peer;
+    shp::Temporal result = (self / other);
     return Charge(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
 }
 
 Charge Charge::operator%(const Charge& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity result = (self % other);
+    shp::Temporal self = *this, other = peer;
+    shp::Temporal result = (self % other);
     return Charge(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
 }
 
@@ -158,7 +158,7 @@ Force Charge::operator()(const Charge& peer, const shp::Distance separation,
         shp::Potential self = field->getPotential();
         shp::Potential other = peer.field->getPotential();
         shp::Quantity factor = self(other, separation, position);
-        shp::Quantity force = (factor * (*this));
+        shp::Quantity force(factor * (*this).getMagnitude());
         Electric result(force.getMagnitude(), self.getAzimuth().toRadians(), force.getScaling(), field);
         result.adjustScaling();
         return result;
@@ -200,7 +200,7 @@ Density Charge::getDensity(const shp::Volume& volume) const {
 
 Force Charge::getForce(const shp::Angular& coordinates) const {
     if (isOwned()) {
-        shp::Quantity force = (field->getTotal() * (*this));
+        shp::Temporal force = (field->getTotal() * (*this));
         shp::Direction direction = field->getLinear();
         Electric result(force.getMagnitude(), direction.toRadians(), force.getScaling(), field);
         result.adjustScaling();
@@ -218,14 +218,14 @@ std::shared_ptr<Field> Charge::getOriginField() const {
     return result;
 }
 
-Charge Charge::copy() const {
-    shp::Quantity self = *this;
+Charge Charge::copy() {
+    shp::Temporal self = *this;
     Charge fresh(self.getMagnitude(), self.getScaling(), self.getUnit(), field);
     return fresh;
 }
 
 void Charge::clear() {
-    shp::Quantity::clear();
+    shp::Temporal::clear();
     setField(nullptr);
     return;
 }
@@ -233,14 +233,16 @@ void Charge::clear() {
 std::string Charge::print() {
     std::stringstream result;
     result << "q:";
-    result << shp::Quantity::print() << ",";
+    result << shp::Temporal::print() << ",";
     result << (field != nullptr ? field->print() : "");
 	return result.str();
 }
 
-shp::Quantity Charge::getFluctuation(const float phase) const {
-    shp::Quantity self = *this;
-	return shp::Quantity(self.getCosComponent(phase), self.getScaling(), self.getUnit());
+shp::Temporal Charge::getFluctuation(const float phase) const {
+    shp::Temporal self = *this;
+    shp::Temporal intensity = self.getMagnitude();
+    intensity.setPhase(phase);
+	return shp::Temporal(intensity.getMagnitude(), intensity.getScaling(), intensity.getUnit());
 }
 
 } // namespace qft

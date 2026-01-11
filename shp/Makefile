@@ -57,6 +57,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/direction.o \
 		$(OBJFOLDR)/distance.o \
 		$(OBJFOLDR)/frame.o \
+		$(OBJFOLDR)/frequency.o \
 		$(OBJFOLDR)/linear.o \
 		$(OBJFOLDR)/phase.o \
 		$(OBJFOLDR)/planar.o \
@@ -68,6 +69,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/quantity.o \
 		$(OBJFOLDR)/shape.o \
 		$(OBJFOLDR)/shell.o \
+		$(OBJFOLDR)/signal.o \
 		$(OBJFOLDR)/temporal.o \
 		$(OBJFOLDR)/unit.o \
 		$(OBJFOLDR)/volume.o \
@@ -85,6 +87,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/direction.o \
 		$(OBJFOLDR)/distance.o \
 		$(OBJFOLDR)/frame.o \
+		$(OBJFOLDR)/frequency.o \
 		$(OBJFOLDR)/linear.o \
 		$(OBJFOLDR)/phase.o \
 		$(OBJFOLDR)/planar.o \
@@ -96,6 +99,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/quantity.o \
 		$(OBJFOLDR)/shape.o \
 		$(OBJFOLDR)/shell.o \
+		$(OBJFOLDR)/signal.o \
 		$(OBJFOLDR)/temporal.o \
 		$(OBJFOLDR)/unit.o \
 		$(OBJFOLDR)/volume.o \
@@ -137,6 +141,9 @@ $(OBJFOLDR)/distance.o: distance.cpp
 $(OBJFOLDR)/frame.o: frame.cpp
 	$(CPPTOOL) -c frame.cpp -o $(OBJFOLDR)/frame.o $(CXXFLAGS)
 
+$(OBJFOLDR)/frequency.o: frequency.cpp
+	$(CPPTOOL) -c frequency.cpp -o $(OBJFOLDR)/frequency.o $(CXXFLAGS)
+
 $(OBJFOLDR)/linear.o: linear.cpp
 	$(CPPTOOL) -c linear.cpp -o $(OBJFOLDR)/linear.o $(CXXFLAGS)
 
@@ -169,6 +176,9 @@ $(OBJFOLDR)/shape.o: shape.cpp
 
 $(OBJFOLDR)/shell.o: shell.cpp
 	$(CPPTOOL) -c shell.cpp -o $(OBJFOLDR)/shell.o $(CXXFLAGS)
+
+$(OBJFOLDR)/signal.o: signal.cpp
+	$(CPPTOOL) -c signal.cpp -o $(OBJFOLDR)/signal.o $(CXXFLAGS)
 
 $(OBJFOLDR)/temporal.o: temporal.cpp
 	$(CPPTOOL) -c temporal.cpp -o $(OBJFOLDR)/temporal.o $(CXXFLAGS)

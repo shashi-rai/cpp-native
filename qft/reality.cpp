@@ -267,75 +267,75 @@ void Reality::initializeGravityField(const Mass& mass) {
 }
 
 void Reality::initializeElectricField(const Charge& charge) {
-    electric = qft::Field::shareable("Electric"); electric->setAmplitude(charge);
+    electric = qft::Field::shareable("Electric"); electric->setAmplitude(charge.getMagnitude());
 }
 
 void Reality::initializeMagneticField(const Charge& charge) {
-    magnetic = qft::Field::shareable("Magnetic"); magnetic->setAmplitude(charge);
+    magnetic = qft::Field::shareable("Magnetic"); magnetic->setAmplitude(charge.getMagnitude());
 }
 
 void Reality::initializeUpField(const Colour& colour) {
-    up = qft::Field::shareable("Up"); up->setAmplitude(colour);
+    up = qft::Field::shareable("Up"); up->setAmplitude(colour.getMagnitude());
 }
 
 void Reality::initializeDownField(const Colour& colour) {
-    down = qft::Field::shareable("Down"); down->setAmplitude(colour);
+    down = qft::Field::shareable("Down"); down->setAmplitude(colour.getMagnitude());
 }
 
 void Reality::initializeCharmField(const Colour& colour) {
-    charm = qft::Field::shareable("Charm"); charm->setAmplitude(colour);
+    charm = qft::Field::shareable("Charm"); charm->setAmplitude(colour.getMagnitude());
 }
 
 void Reality::initializeStrangeField(const Colour& colour) {
-    strange = qft::Field::shareable("Strange"); strange->setAmplitude(colour);
+    strange = qft::Field::shareable("Strange"); strange->setAmplitude(colour.getMagnitude());
 }
 
 void Reality::initializeTopField(const Colour& colour) {
-    top = qft::Field::shareable("Top"); top->setAmplitude(colour);
+    top = qft::Field::shareable("Top"); top->setAmplitude(colour.getMagnitude());
 }
 
 void Reality::initializeBottomField(const Colour& colour) {
-    bottom = qft::Field::shareable("Bottom"); bottom->setAmplitude(colour);
+    bottom = qft::Field::shareable("Bottom"); bottom->setAmplitude(colour.getMagnitude());
 }
 
 void Reality::initializeElectronField(const Charge& charge) {
-    electron = qft::Field::shareable("Electron"); electron->setAmplitude(charge);
+    electron = qft::Field::shareable("Electron"); electron->setAmplitude(charge.getMagnitude());
 }
 
 void Reality::initializeElectronNeutrinoField(const Charge& charge) {
-    electronNeutrino = qft::Field::shareable("Electron Neutrino"); electronNeutrino->setAmplitude(charge);
+    electronNeutrino = qft::Field::shareable("Electron Neutrino"); electronNeutrino->setAmplitude(charge.getMagnitude());
 }
 
 void Reality::initializeMuonField(const Charge& charge) {
-    muon = qft::Field::shareable("Muon"); muon->setAmplitude(charge);
+    muon = qft::Field::shareable("Muon"); muon->setAmplitude(charge.getMagnitude());
 }
 
 void Reality::initializeMuonNeutrinoField(const Charge& charge) {
-    muonNeutrino = qft::Field::shareable("Muon Neutrino"); muonNeutrino->setAmplitude(charge);
+    muonNeutrino = qft::Field::shareable("Muon Neutrino"); muonNeutrino->setAmplitude(charge.getMagnitude());
 }
 
 void Reality::initializeTauField(const Charge& charge) {
-    tau = qft::Field::shareable("Tau"); tau->setAmplitude(charge);
+    tau = qft::Field::shareable("Tau"); tau->setAmplitude(charge.getMagnitude());
 }
 
 void Reality::initializeTauNeutrinoField(const Charge& charge) {
-    tauNeutrino = qft::Field::shareable("Tau Neutrino"); tauNeutrino->setAmplitude(charge);
+    tauNeutrino = qft::Field::shareable("Tau Neutrino"); tauNeutrino->setAmplitude(charge.getMagnitude());
 }
 
 void Reality::initializePhotonField(const Mass& mass, const Charge& charge) {
-    photon = qft::Field::shareable("Photon"); photon->setAmplitude(charge);
+    photon = qft::Field::shareable("Photon"); photon->setAmplitude(charge.getMagnitude());
 }
 
 void Reality::initializeGluonField(const Colour& colour) {
-    gluon = qft::Field::shareable("Gluon"); gluon->setAmplitude(colour);
+    gluon = qft::Field::shareable("Gluon"); gluon->setAmplitude(colour.getMagnitude());
 }
 
 void Reality::initializeStrongField(const Charge& charge) {
-    strong = qft::Field::shareable("Strong"); strong->setAmplitude(charge);
+    strong = qft::Field::shareable("Strong"); strong->setAmplitude(charge.getMagnitude());
 }
 
 void Reality::initializeWeakField(const Charge& charge) {
-    weak = qft::Field::shareable("Weak"); weak->setAmplitude(charge);
+    weak = qft::Field::shareable("Weak"); weak->setAmplitude(charge.getMagnitude());
 }
 
 void Reality::initializeHiggsField(const Mass& mass) {

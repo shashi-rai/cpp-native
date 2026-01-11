@@ -22,6 +22,7 @@
 
 namespace shp {
 
+const float Quantity::EULER_NUMBER = 2.7182818284590452353602874713526624977572470936999f;
 const float Quantity::DEFAULT_VALUE = 0.0f;     // 0.0f
 const float Quantity::DECIMAL_SCALE = 10.0f;    // 10.0f
 const short int Quantity::DEFAULT_SCALE = 0;    // 10^0
@@ -238,7 +239,7 @@ void Quantity::clear() {
 
 std::string Quantity::print() {
     std::stringstream result;
-    result << magnitude << "x10^";
+    result << magnitude << "ₑ";     // "₁₀" base 10
     result << scaling;
     result << unit.print();
 	return result.str();

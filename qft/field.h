@@ -128,11 +128,11 @@ public:
     void changePoint(const Action& action);
     std::shared_ptr<Particle> getDivergence(const Action& action) const;
     std::shared_ptr<Particle> getConvergence(const Action& action) const;
-    shp::Quantity getTotal() const;
+    shp::Temporal getTotal() const;
     virtual shp::Point copy() const;
     virtual void clear();
     virtual std::string print();
-    shp::Quantity getFluctuation(const float phase) const;
+    shp::Temporal getFluctuation(const float phase) const;
 public:
     static std::shared_ptr<qft::Field> shareable(std::string name);
 };

@@ -208,7 +208,7 @@ shp::Quantity Velocity::getTotal() const {
 }
 
 shp::Quantity Velocity::getLinear(const Time& slice) {
-	shp::Quantity frequency = slice.getFrequency();
+	shp::Frequency frequency = slice.getFrequency();
 	float magnitude = (displacement.getMagnitude() * frequency.getMagnitude());
 	short int scaling = (displacement.getScaling() + frequency.getScaling());
     shp::Quantity result(magnitude, scaling, UNIT); result.adjustScaling();

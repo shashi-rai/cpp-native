@@ -29,14 +29,16 @@ const long Time::RADIATION_PERIODS = 9192631770;    // 9,192,631,770 fluctuation
 
 Time::Time()
         : shp::Temporal(shp::Direction::DEFAULT_RADIANS,
-            shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, shp::Unit::getBaseSymbol(shp::Unit::TIME)),
+            shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE,
+            shp::Unit::getBaseSymbol(shp::Unit::TIME)),
         name() {
 
 }
 
 Time::Time(std::string name)
         : shp::Temporal(shp::Direction::DEFAULT_RADIANS,
-            shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, shp::Unit::getBaseSymbol(shp::Unit::TIME)),
+            shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE,
+            shp::Unit::getBaseSymbol(shp::Unit::TIME)),
         name(name) {
 
 }
@@ -83,39 +85,45 @@ Time::Time(const float duration, const short int scaling, const shp::Unit& unit)
 
 }
 
-Time::Time(const float change, const float duration)
-        : shp::Temporal(change,
+Time::Time(const float entropy, const float duration)
+        : shp::Temporal(entropy,
             duration, ATOMIC_SCALE, shp::Unit::getBaseSymbol(shp::Unit::TIME)), name() {
 
 }
 
-Time::Time(const float change, const float duration, const short int scaling)
-        : shp::Temporal(change,
+Time::Time(const float entropy, const float duration, const short int scaling)
+        : shp::Temporal(entropy,
             duration, scaling, shp::Unit::getBaseSymbol(shp::Unit::TIME)), name() {
 
 }
 
-Time::Time(const float change, const float duration, const short int scaling, const std::string unit)
-        : shp::Temporal(change,
+Time::Time(const float entropy, const float duration, const short int scaling, const std::string unit)
+        : shp::Temporal(entropy,
             duration, scaling, unit), name() {
 
 }
 
-Time::Time(const float change, const float duration, const short int scaling, const shp::Unit& unit)
-        : shp::Temporal(change,
+Time::Time(const float entropy, const float duration, const short int scaling, const shp::Unit& unit)
+        : shp::Temporal(entropy,
             duration, scaling, unit), name() {
 
 }
 
-Time::Time(const shp::Direction& change, const float duration, const short int scaling,
+Time::Time(const shp::Polar& entropy, const float duration, const short int scaling,
         const std::string unit)
-        : shp::Temporal(change, duration, scaling, unit), name() {
+        : shp::Temporal(entropy, duration, scaling, unit), name() {
 
 }
 
-Time::Time(const shp::Direction& change, const float duration, const short int scaling,
+Time::Time(const shp::Polar& entropy, const float duration, const short int scaling,
         const shp::Unit& unit)
-        : shp::Temporal(change, duration, scaling, unit), name() {
+        : shp::Temporal(entropy, duration, scaling, unit), name() {
+
+}
+
+Time::Time(const shp::Polar& entropy, const shp::Azimuth& dilation, const float duration,
+        const short int scaling, const shp::Unit& unit)
+        : shp::Temporal(entropy, dilation, duration, scaling, unit), name() {
 
 }
 
@@ -149,39 +157,45 @@ Time::Time(std::string name, const float duration, const short int scaling, cons
 
 }
 
-Time::Time(std::string name, const float change, const float duration)
-        : shp::Temporal(change,
+Time::Time(std::string name, const float entropy, const float duration)
+        : shp::Temporal(entropy,
             duration, ATOMIC_SCALE, shp::Unit::getBaseSymbol(shp::Unit::TIME)), name(name) {
 
 }
 
-Time::Time(std::string name, const float change, const float duration, const short int scaling)
-        : shp::Temporal(change,
+Time::Time(std::string name, const float entropy, const float duration, const short int scaling)
+        : shp::Temporal(entropy,
             duration, scaling, shp::Unit::getBaseSymbol(shp::Unit::TIME)), name(name) {
 
 }
 
-Time::Time(std::string name, const float change, const float duration, const short int scaling,
+Time::Time(std::string name, const float entropy, const float duration, const short int scaling,
         const std::string unit)
-        : shp::Temporal(change, duration, scaling, unit), name(name) {
+        : shp::Temporal(entropy, duration, scaling, unit), name(name) {
 
 }
 
-Time::Time(std::string name, const float change, const float duration, const short int scaling,
+Time::Time(std::string name, const float entropy, const float duration, const short int scaling,
         const shp::Unit& unit)
-        : shp::Temporal(change, duration, scaling, unit), name(name) {
+        : shp::Temporal(entropy, duration, scaling, unit), name(name) {
 
 }
 
-Time::Time(std::string name, const shp::Direction& change,
+Time::Time(std::string name, const shp::Polar& entropy,
         const float duration, const short int scaling, const std::string unit)
-        : shp::Temporal(change, duration, scaling, unit), name(name) {
+        : shp::Temporal(entropy, duration, scaling, unit), name(name) {
 
 }
 
-Time::Time(std::string name, const shp::Direction& change,
+Time::Time(std::string name, const shp::Polar& entropy,
         const float duration, const short int scaling, const shp::Unit& unit)
-        : shp::Temporal(change, duration, scaling, unit), name(name) {
+        : shp::Temporal(entropy, duration, scaling, unit), name(name) {
+
+}
+
+Time::Time(std::string name, const shp::Polar& entropy, const shp::Azimuth& dilation,
+        const float duration, const short int scaling, const shp::Unit& unit)
+        : shp::Temporal(entropy, dilation, duration, scaling, unit), name(name) {
 
 }
 
@@ -197,66 +211,73 @@ bool Time::operator==(const Time& peer) const {
 Time Time::operator+(const Time& peer) const {
     Temporal self = *this, other = peer;
     Temporal duration = (self + other);
-    return Time("+", duration.getChange(),
+    return Time("+", duration.getEntropy(), duration.getPhase(),
         duration.getMagnitude(), duration.getScaling(), duration.getUnit());
 }
 
 Time Time::operator-(const Time& peer) const {
     Temporal self = *this, other = peer;
     Temporal duration = (self - other);
-    return Time("-", duration.getChange(),
+    return Time("-", duration.getEntropy(), duration.getPhase(),
         duration.getMagnitude(), duration.getScaling(), duration.getUnit());
 }
 
 Time Time::operator*(const Time& peer) const {
     Temporal self = *this, other = peer;
     Temporal duration = (self * other);
-    return Time("*", duration.getChange(),
+    return Time("*", duration.getEntropy(), duration.getPhase(),
         duration.getMagnitude(), duration.getScaling(), duration.getUnit());
 }
 
 Time Time::operator/(const Time& peer) const {
     Temporal self = *this, other = peer;
     Temporal duration = (self / other);
-    return Time("/", duration.getChange(),
+    return Time("/", duration.getEntropy(), duration.getPhase(),
         duration.getMagnitude(), duration.getScaling(), duration.getUnit());
 }
 
 Time Time::operator%(const Time& peer) const {
     Temporal self = *this, other = peer;
     Temporal duration = (self % other);
-    return Time("%", duration.getChange(),
+    return Time("%", duration.getEntropy(), duration.getPhase(),
         duration.getMagnitude(), duration.getScaling(), duration.getUnit());
 }
 
-shp::Quantity Time::getTotal() const {
-    shp::Temporal result(getChange(), getMagnitude(), getScaling(), getUnit());
+shp::Temporal Time::getTotal() const {
+    Temporal self = *this;
+    shp::Temporal result(self.getEntropy(), self.getPhase(),
+        self.getMagnitude(), self.getScaling(), self.getUnit());
     return result;
 }
 
 long Time::getSeconds() const {
-    std::chrono::duration<float> period(getMagnitude());
+    Temporal self = *this;
+    std::chrono::duration<float> period(self.getMagnitude());
     std::chrono::seconds seconds = std::chrono::duration_cast<std::chrono::seconds>(period);
     long result = seconds.count();
     return result;
 }
 
 long Time::getMilliseconds() const {
-    std::chrono::duration<float> period(getMagnitude());
+    Temporal self = *this;
+    std::chrono::duration<float> period(self.getMagnitude());
     std::chrono::milliseconds milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(period);
     long result = milliseconds.count();
     return result;
 }
 
 long long Time::getNanoseconds() const {
-    std::chrono::duration<float> period(getMagnitude());
+    Temporal self = *this;
+    std::chrono::duration<float> period(self.getMagnitude());
     std::chrono::nanoseconds nanoseconds = std::chrono::duration_cast<std::chrono::nanoseconds>(period);
     long long result = nanoseconds.count();
     return result;
 }
 
-shp::Temporal Time::copy() {
-    Time fresh(name, getChange(), getMagnitude(), getScaling(), getUnit());
+Time Time::copy() {
+    Temporal self = *this;
+    Time fresh(name, self.getEntropy(), self.getPhase(),
+        self.getMagnitude(), self.getScaling(), self.getUnit());
     return fresh;
 }
 

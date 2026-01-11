@@ -386,9 +386,9 @@ std::shared_ptr<Particle> Field::getConvergence(const Action& action) const {
     return result;
 }
 
-shp::Quantity Field::getTotal() const {
+shp::Temporal Field::getTotal() const {
     shp::Quantity difference = potential.getDifference();
-    shp::Quantity result(difference.getMagnitude(), difference.getScaling(), difference.getUnit());
+    shp::Temporal result(difference.getMagnitude(), difference.getScaling(), difference.getUnit());
     return result;
 }
 
@@ -413,9 +413,10 @@ std::string Field::print() {
 	return result.str();
 }
 
-shp::Quantity Field::getFluctuation(const float phase) const {
-	shp::Quantity intensity = getTotal();
-	return shp::Quantity(intensity.getCosComponent(phase), intensity.getScaling(), intensity.getUnit());
+shp::Temporal Field::getFluctuation(const float phase) const {
+	shp::Temporal intensity = getTotal();
+    intensity.setPhase(phase);
+	return shp::Temporal(intensity.getMagnitude(), intensity.getScaling(), intensity.getUnit());
 }
 
 std::shared_ptr<qft::Field> Field::shareable(std::string name) {

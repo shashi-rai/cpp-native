@@ -231,7 +231,8 @@ shp::Quantity Current::getLinearPower() const {
 
 shp::Quantity Current::getLinearKinetic() const {
     shp::Quantity current = getLinearTotal();
-    shp::Quantity result = ((current * current) / (charge + charge));
+    shp::Temporal total = (charge + charge);
+    shp::Quantity result = ((current * current) / total.getMagnitude());
     return result;
 }
 
@@ -249,7 +250,8 @@ shp::Quantity Current::getAngularPower() const {
 
 shp::Quantity Current::getAngularKinetic() const {
     shp::Quantity current = getAngularTotal();
-    shp::Quantity result = ((current * current) / (charge + charge));
+    shp::Temporal total = (charge + charge);
+    shp::Quantity result = ((current * current) / total.getMagnitude());
     return result;
 }
 
@@ -323,7 +325,7 @@ shp::Quantity Current::getComponent(float phase) const {
 const shp::Quantity Current::getAmpereCoulombs() {
     shp::Quantity flowrate = getAmpereFlowRate();
     qft::Charge electron_charge(-qft::Charge::ELECTRON);
-    shp::Quantity total = (flowrate * electron_charge); total.adjustScaling();
+    shp::Quantity total = (flowrate * electron_charge.getMagnitude()); total.adjustScaling();
     return total;
 }
 

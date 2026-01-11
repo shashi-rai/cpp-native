@@ -245,7 +245,7 @@ shp::Quantity Acceleration::getTotal() const {
 
 shp::Quantity Acceleration::getLinear(const Time& slice) {
 	qft::Velocity invariant = *this;		// non-accelerating component only
-	shp::Quantity frequency = slice.getFrequency();
+	shp::Frequency frequency = slice.getFrequency();
     shp::Quantity velocity = (invariant.getTotal() + shp::Quantity(changeSpeed,
 			getDisplacement().getScaling(), getUnit()));
 	float magnitude = (velocity.getMagnitude() * frequency.getMagnitude());

@@ -24,6 +24,7 @@
 #include <chrono>
 #include <string>
 #include <vector>
+#include "../shp/frequency.h"
 #include "../shp/temporal.h"
 
 namespace qft {
@@ -41,23 +42,25 @@ public:
     Time(const float duration, const shp::Unit& unit);
     Time(const float duration, const short int scaling, const std::string unit);
     Time(const float duration, const short int scaling, const shp::Unit& unit);
-    Time(const float change, const float duration);
-    Time(const float change, const float duration, const short int scaling);
-    Time(const float change, const float duration, const short int scaling, const std::string unit);
-    Time(const float change, const float duration, const short int scaling, const shp::Unit& unit);
-    Time(const shp::Direction& change, const float duration, const short int scaling, const std::string unit);
-    Time(const shp::Direction& change, const float duration, const short int scaling, const shp::Unit& unit);
+    Time(const float entropy, const float duration);
+    Time(const float entropy, const float duration, const short int scaling);
+    Time(const float entropy, const float duration, const short int scaling, const std::string unit);
+    Time(const float entropy, const float duration, const short int scaling, const shp::Unit& unit);
+    Time(const shp::Polar& entropy, const float duration, const short int scaling, const std::string unit);
+    Time(const shp::Polar& entropy, const float duration, const short int scaling, const shp::Unit& unit);
+    Time(const shp::Polar& entropy, const shp::Azimuth& dilation, const float duration, const short int scaling, const shp::Unit& unit);
     Time(std::string name, const float duration);
     Time(std::string name, const float duration, const std::string unit);
     Time(std::string name, const float duration, const shp::Unit& unit);
     Time(std::string name, const float duration, const short int scaling, const std::string unit);
     Time(std::string name, const float duration, const short int scaling, const shp::Unit& unit);
-    Time(std::string name, const float change, const float duration);
-    Time(std::string name, const float change, const float duration, const short int scaling);
-    Time(std::string name, const float change, const float duration, const short int scaling, const std::string unit);
-    Time(std::string name, const float change, const float duration, const short int scaling, const shp::Unit& unit);
-    Time(std::string name, const shp::Direction& change, const float duration, const short int scaling, const std::string unit);
-    Time(std::string name, const shp::Direction& change, const float duration, const short int scaling, const shp::Unit& unit);
+    Time(std::string name, const float entropy, const float duration);
+    Time(std::string name, const float entropy, const float duration, const short int scaling);
+    Time(std::string name, const float entropy, const float duration, const short int scaling, const std::string unit);
+    Time(std::string name, const float entropy, const float duration, const short int scaling, const shp::Unit& unit);
+    Time(std::string name, const shp::Polar& entropy, const float duration, const short int scaling, const std::string unit);
+    Time(std::string name, const shp::Polar& entropy, const float duration, const short int scaling, const shp::Unit& unit);
+    Time(std::string name, const shp::Polar& entropy, const shp::Azimuth& dilation, const float duration, const short int scaling, const shp::Unit& unit);
 
     // Destructors
     ~Time();
@@ -77,11 +80,11 @@ public:
     void setName(const std::string& name) { this->name = name; }
 
     // Additional methods
-    shp::Quantity getTotal() const;
+    shp::Temporal getTotal() const;
     long getSeconds() const;
     long getMilliseconds() const;
     long long getNanoseconds() const;
-    virtual shp::Temporal copy();
+    virtual Time copy();
     virtual void clear();
     virtual std::string print();
 

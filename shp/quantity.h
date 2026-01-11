@@ -91,6 +91,7 @@ public:
     float getCosComponent(const float phase) const;
     float getSinComponent(const float phase) const;
 public:
+    static const float EULER_NUMBER;
     static const float DEFAULT_VALUE;
     static const float DECIMAL_SCALE;
     static const short int DEFAULT_SCALE;

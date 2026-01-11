@@ -24,36 +24,54 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "direction.h"
-#include "quantity.h"
+#include "azimuth.h"
+#include "polar.h"
+#include "signal.h"
 
 namespace shp {
 
-class Temporal : public Quantity {
-    Direction change;
+// To enable compiler resolve forward declarations
+class Frequency;
+
+class Temporal : private Signal {
+    Direction entropy;
 public:
     // Constructors
     Temporal();
     Temporal(const std::string unit);
     Temporal(const shp::Unit& unit);
-    Temporal(const float timeslice);
-    Temporal(const float timeslice, const std::string unit);
-    Temporal(const float timeslice, const shp::Unit& unit);
-    Temporal(const float timeslice, const short int scaling);
-    Temporal(const float timeslice, const short int scaling, const std::string unit);
-    Temporal(const float timeslice, const short int scaling, const shp::Unit& unit);
-    Temporal(const Direction& change);
-    Temporal(const Direction& change, const Quantity& timeslice);
-    Temporal(const float change, const float timeslice);
-    Temporal(const float change, const float timeslice, const std::string unit);
-    Temporal(const float change, const float timeslice, const shp::Unit& unit);
-    Temporal(const Direction& change, const float timeslice);
-    Temporal(const float change, const float timeslice, short int scaling);
-    Temporal(const Direction& change, const float timeslice, short int scaling);
-    Temporal(const float change, const float timeslice, short int scaling, std::string unit);
-    Temporal(const Direction& change, const float timeslice, short int scaling, std::string unit);
-    Temporal(const float change, const float timeslice, short int scaling, const Unit& unit);
-    Temporal(const Direction& change, const float timeslice, short int scaling, const Unit& unit);
+    Temporal(const float magnitude);
+    Temporal(const float magnitude, const std::string unit);
+    Temporal(const float magnitude, const shp::Unit& unit);
+    Temporal(const float magnitude, const short int scaling);
+    Temporal(const float magnitude, const short int scaling, const std::string unit);
+    Temporal(const float magnitude, const short int scaling, const shp::Unit& unit);
+    Temporal(const Polar& entropy);
+    Temporal(const Polar& entropy, const shp::Quantity& magnitude);
+    Temporal(const Polar& entropy, const Azimuth& phase, const shp::Quantity& magnitude);
+    Temporal(const float entropy, const float magnitude);
+    Temporal(const float entropy, const float phase, const float magnitude);
+    Temporal(const float entropy, const float magnitude, const std::string unit);
+    Temporal(const float entropy, const float phase, const float magnitude, const std::string unit);
+    Temporal(const float entropy, const float magnitude, const shp::Unit& unit);
+    Temporal(const float entropy, const float phase, const float magnitude, const shp::Unit& unit);
+    Temporal(const Polar& entropy, const float magnitude);
+    Temporal(const Polar& entropy, const Azimuth& phase, const float magnitude);
+    Temporal(const float entropy, const float magnitude, short int scaling);
+    Temporal(const float entropy, const float phase, const float magnitude, short int scaling);
+    Temporal(const Polar& entropy, const float magnitude, short int scaling);
+    Temporal(const Polar& entropy, const float phase, const float magnitude, short int scaling);
+    Temporal(const Polar& entropy, const Azimuth& phase, const float magnitude, short int scaling);
+    Temporal(const float entropy, const float magnitude, short int scaling, std::string unit);
+    Temporal(const float entropy, const float phase, const float magnitude, short int scaling, std::string unit);
+    Temporal(const Polar& entropy, const float magnitude, short int scaling, std::string unit);
+    Temporal(const Polar& entropy, const float phase, const float magnitude, short int scaling, std::string unit);
+    Temporal(const Polar& entropy, const Azimuth& phase, const float magnitude, short int scaling, std::string unit);
+    Temporal(const float entropy, const float magnitude, short int scaling, const Unit& unit);
+    Temporal(const float entropy, const float phase, const float magnitude, short int scaling, const Unit& unit);
+    Temporal(const Polar& entropy, const float magnitude, short int scaling, const Unit& unit);
+    Temporal(const Polar& entropy, const float phase, const float magnitude, short int scaling, const Unit& unit);
+    Temporal(const Polar& entropy, const Azimuth& phase, const float magnitude, short int scaling, const Unit& unit);
 
     // Destructors
     ~Temporal();
@@ -67,16 +85,29 @@ public:
     Temporal operator%(const Temporal& peer) const;
 
     // Getters
-    Direction getChange() const { return change; }
+    Polar getEntropy() const { return entropy; }
 
     // Setters
-    void setChange(const Direction& orientation) { this->change = orientation; }
+    void setEntropy(const Polar& orientation) { this->entropy = orientation; }
 
     // Additional methods
-    virtual Quantity getPhaseShift() const;
-    virtual Quantity getTimePeriod() const;
-    virtual Quantity getFrequency() const;
-    virtual Temporal copy();
+    float getMagnitude() const;
+    void setMagnitude(const float value);
+    float getPhase() const;
+    void setPhase(const float value);
+    short int getScaling() const;
+    void setScaling(const short int factor);
+    Unit getUnit() const;
+    void setUnit(const Unit& object);
+    void adjustNumeric();
+    void adjustScaling();
+    bool checkNonZero() const;
+    bool checkInfinity() const;
+    short int checkScaling(const float amount) const;
+    virtual shp::Quantity getPhaseShift() const;
+    virtual shp::Quantity getTimePeriod() const;
+    virtual shp::Frequency getFrequency() const;
+    Temporal copy();
     virtual void clear();
     virtual std::string print();
 };
