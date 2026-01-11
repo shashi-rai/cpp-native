@@ -108,15 +108,17 @@ Direction Direction::operator*(const Direction& peer) const {
 }
 
 Direction Direction::operator/(const Direction& peer) const {
-    return Direction(getIndexDegrees(degrees / peer.degrees),
-            getIndexMinutes(minutes / peer.minutes),
-            getIndexSeconds(seconds / peer.seconds));
+    Direction result(this->toRadians() / peer.toRadians());
+    return Direction(getIndexDegrees(result.degrees),
+            getIndexMinutes(result.minutes),
+            getIndexSeconds(result.seconds));
 }
 
 Direction Direction::operator%(const Direction& peer) const {
-    return Direction(getIndexDegrees(degrees % peer.degrees),
-            getIndexMinutes(minutes % peer.minutes),
-            getIndexSeconds(seconds % peer.seconds));
+    Direction result(fmod(this->toRadians(), peer.toRadians()));
+    return Direction(getIndexDegrees(result.degrees),
+            getIndexMinutes(result.minutes),
+            getIndexSeconds(result.seconds));
 }
 
 float Direction::getCyclingRate() const {

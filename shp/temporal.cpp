@@ -88,6 +88,11 @@ Temporal::Temporal(const Polar& entropy, const shp::Quantity& magnitude)
 
 }
 
+Temporal::Temporal(const Polar& entropy, const Azimuth& phase)
+        : Signal(phase), entropy(entropy) {
+
+}
+
 Temporal::Temporal(const Polar& entropy, const Azimuth& phase, const shp::Quantity& magnitude)
         : Signal(phase, magnitude), entropy(entropy) {
 

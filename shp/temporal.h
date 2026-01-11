@@ -48,6 +48,7 @@ public:
     Temporal(const float magnitude, const short int scaling, const shp::Unit& unit);
     Temporal(const Polar& entropy);
     Temporal(const Polar& entropy, const shp::Quantity& magnitude);
+    Temporal(const Polar& entropy, const Azimuth& phase);
     Temporal(const Polar& entropy, const Azimuth& phase, const shp::Quantity& magnitude);
     Temporal(const float entropy, const float magnitude);
     Temporal(const float entropy, const float phase, const float magnitude);

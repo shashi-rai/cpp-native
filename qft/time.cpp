@@ -109,6 +109,31 @@ Time::Time(const float entropy, const float duration, const short int scaling, c
 
 }
 
+Time::Time(const shp::Polar& entropy)
+        : shp::Temporal(entropy), name() {
+
+}
+
+Time::Time(const shp::Polar& entropy, const std::string unit)
+        : shp::Temporal(entropy, unit), name() {
+
+}
+
+Time::Time(const shp::Polar& entropy, const shp::Unit& unit)
+        : shp::Temporal(entropy, unit), name() {
+
+}
+
+Time::Time(const shp::Polar& entropy, const float duration, const std::string unit)
+        : shp::Temporal(entropy, duration, unit), name() {
+
+}
+
+Time::Time(const shp::Polar& entropy, const float duration, const shp::Unit& unit)
+        : shp::Temporal(entropy, duration, unit), name() {
+
+}
+
 Time::Time(const shp::Polar& entropy, const float duration, const short int scaling,
         const std::string unit)
         : shp::Temporal(entropy, duration, scaling, unit), name() {
@@ -118,6 +143,65 @@ Time::Time(const shp::Polar& entropy, const float duration, const short int scal
 Time::Time(const shp::Polar& entropy, const float duration, const short int scaling,
         const shp::Unit& unit)
         : shp::Temporal(entropy, duration, scaling, unit), name() {
+
+}
+
+Time::Time(const shp::Azimuth& dilation)
+        : shp::Temporal(dilation), name() {
+
+}
+
+Time::Time(const shp::Azimuth& dilation, const std::string unit)
+        : shp::Temporal(dilation, unit), name() {
+
+}
+
+Time::Time(const shp::Azimuth& dilation, const shp::Unit& unit)
+        : shp::Temporal(dilation, unit), name() {
+
+}
+
+Time::Time(const shp::Azimuth& dilation, const float duration, const std::string unit)
+        : shp::Temporal(dilation, duration, unit), name() {
+
+}
+
+Time::Time(const shp::Azimuth& dilation, const float duration, const shp::Unit& unit)
+        : shp::Temporal(dilation, duration, unit), name() {
+
+}
+
+Time::Time(const shp::Azimuth& dilation, const float duration,
+        const short int scaling, const std::string unit)
+        : shp::Temporal(dilation, duration, scaling, unit), name() {
+
+}
+
+Time::Time(const shp::Azimuth& dilation, const float duration,
+        const short int scaling, const shp::Unit& unit)
+        : shp::Temporal(dilation, duration, scaling, unit), name() {
+
+}
+
+Time::Time(const shp::Polar& entropy, const shp::Azimuth& dilation)
+        : shp::Temporal(entropy, dilation), name() {
+
+}
+
+Time::Time(const shp::Polar& entropy, const shp::Azimuth& dilation, const float duration)
+        : shp::Temporal(entropy, dilation, duration), name() {
+
+}
+
+Time::Time(const shp::Polar& entropy, const shp::Azimuth& dilation, const float duration,
+        const short int scaling)
+        : shp::Temporal(entropy, dilation, duration, scaling), name() {
+
+}
+
+Time::Time(const shp::Polar& entropy, const shp::Azimuth& dilation, const float duration,
+        const short int scaling, const std::string unit)
+        : shp::Temporal(entropy, dilation, duration, scaling, unit), name() {
 
 }
 
@@ -181,6 +265,68 @@ Time::Time(std::string name, const float entropy, const float duration, const sh
 
 }
 
+Time::Time(std::string name, const shp::Azimuth& dilation)
+        : shp::Temporal(dilation), name(name) {
+
+}
+
+Time::Time(std::string name, const shp::Azimuth& dilation, const std::string unit)
+        : shp::Temporal(dilation, unit), name(name) {
+
+}
+
+Time::Time(std::string name, const shp::Azimuth& dilation, const shp::Unit& unit)
+        : shp::Temporal(dilation, unit), name(name) {
+
+}
+
+Time::Time(std::string name, const shp::Azimuth& dilation, const float duration, const std::string unit)
+        : shp::Temporal(dilation, duration, unit), name(name) {
+
+}
+
+Time::Time(std::string name, const shp::Azimuth& dilation, const float duration, const shp::Unit& unit)
+        : shp::Temporal(dilation, duration, unit), name(name) {
+
+}
+
+Time::Time(std::string name, const shp::Azimuth& dilation,
+        const float duration, const short int scaling, const std::string unit)
+        : shp::Temporal(dilation, duration, scaling, unit), name(name) {
+
+}
+
+Time::Time(std::string name, const shp::Azimuth& dilation,
+        const float duration, const short int scaling, const shp::Unit& unit)
+        : shp::Temporal(dilation, duration, scaling, unit), name(name) {
+
+}
+
+Time::Time(std::string name, const shp::Polar& entropy)
+        : shp::Temporal(entropy), name(name) {
+
+}
+
+Time::Time(std::string name, const shp::Polar& entropy, const std::string unit)
+        : shp::Temporal(entropy, unit), name(name) {
+
+}
+
+Time::Time(std::string name, const shp::Polar& entropy, const shp::Unit& unit)
+        : shp::Temporal(entropy, unit), name(name) {
+
+}
+
+Time::Time(std::string name, const shp::Polar& entropy, const float duration, const std::string unit)
+        : shp::Temporal(entropy, duration, unit), name(name) {
+
+}
+
+Time::Time(std::string name, const shp::Polar& entropy, const float duration, const shp::Unit& unit)
+        : shp::Temporal(entropy, duration, unit), name(name) {
+
+}
+
 Time::Time(std::string name, const shp::Polar& entropy,
         const float duration, const short int scaling, const std::string unit)
         : shp::Temporal(entropy, duration, scaling, unit), name(name) {
@@ -190,6 +336,29 @@ Time::Time(std::string name, const shp::Polar& entropy,
 Time::Time(std::string name, const shp::Polar& entropy,
         const float duration, const short int scaling, const shp::Unit& unit)
         : shp::Temporal(entropy, duration, scaling, unit), name(name) {
+
+}
+
+Time::Time(std::string name, const shp::Polar& entropy, const shp::Azimuth& dilation)
+        : shp::Temporal(entropy, dilation), name(name) {
+
+}
+
+Time::Time(std::string name, const shp::Polar& entropy, const shp::Azimuth& dilation,
+        const float duration)
+        : shp::Temporal(entropy, dilation, duration), name(name) {
+
+}
+
+Time::Time(std::string name, const shp::Polar& entropy, const shp::Azimuth& dilation,
+        const float duration, const short int scaling)
+        : shp::Temporal(entropy, dilation, duration, scaling), name(name) {
+
+}
+
+Time::Time(std::string name, const shp::Polar& entropy, const shp::Azimuth& dilation,
+        const float duration, const short int scaling, const std::string unit)
+        : shp::Temporal(entropy, dilation, duration, scaling, unit), name(name) {
 
 }
 
