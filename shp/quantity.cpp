@@ -98,40 +98,40 @@ bool Quantity::operator==(const Quantity& peer) const {
 }
 
 Quantity Quantity::operator+(const Quantity& peer) const {
-    short int exponent = (scaling - peer.scaling);
-    float mantissa = (magnitude + (peer.magnitude / std::pow(DECIMAL_SCALE, exponent)));
-    Quantity result(mantissa, scaling, getUnit());
+    Quantity self = *this;
+    short int exponent = (self.scaling - peer.scaling);
+    float mantissa = (self.magnitude + (peer.magnitude / std::pow(DECIMAL_SCALE, exponent)));
+    Quantity result(mantissa, self.scaling, self.getUnit());
     return result;
 }
 
 Quantity Quantity::operator-(const Quantity& peer) const {
-    short int exponent = (scaling - peer.scaling);
-    float mantissa = (magnitude - (peer.magnitude / std::pow(DECIMAL_SCALE, exponent)));
-    Quantity result(mantissa, scaling, getUnit());
+    Quantity self = *this;
+    short int exponent = (self.scaling - peer.scaling);
+    float mantissa = (self.magnitude - (peer.magnitude / std::pow(DECIMAL_SCALE, exponent)));
+    Quantity result(mantissa, self.scaling, self.getUnit());
     return result;
 }
 
 Quantity Quantity::operator*(const Quantity& peer) const {
-    float mantissa = (magnitude * peer.magnitude);
-    Quantity result(mantissa, (scaling + peer.scaling), getUnit());
+    Quantity self = *this;
+    float mantissa = (self.magnitude * peer.magnitude);
+    Quantity result(mantissa, (self.scaling + peer.scaling), self.getUnit());
     return result;
 }
 
 Quantity Quantity::operator/(const Quantity& peer) const {
-    float mantissa = (magnitude / peer.magnitude);
-    Quantity result(mantissa, (scaling - peer.scaling), getUnit());
+    Quantity self = *this;
+    float mantissa = (self.magnitude / peer.magnitude);
+    Quantity result(mantissa, (self.scaling - peer.scaling), self.getUnit());
     return result;
 }
 
 Quantity Quantity::operator%(const Quantity& peer) const {
-    short int exponent = (scaling - peer.scaling);
-    float mantissa = fmod(magnitude, (peer.magnitude / std::pow(DECIMAL_SCALE, exponent)));
-    Quantity result(mantissa, scaling, getUnit());
-    return result;
-}
-
-std::complex<float> Quantity::getComplex(const float imaginary) const {
-    std::complex<float> result(magnitude, imaginary);
+    Quantity self = *this;
+    short int exponent = (self.scaling - peer.scaling);
+    float mantissa = fmod(self.magnitude, (peer.magnitude / std::pow(DECIMAL_SCALE, exponent)));
+    Quantity result(mantissa, self.scaling, self.getUnit());
     return result;
 }
 
@@ -208,8 +208,11 @@ short int Quantity::checkScaling(const float amount) const {
 }
 
 void Quantity::adjustNumeric() {
-    if (std::isnan(magnitude)) {
+    if (checkInfinity()) {
+        scaling = Quantity::DEFAULT_SCALE;
+    } else if (std::isnan(magnitude)) {
         magnitude = Quantity::DEFAULT_VALUE;
+        scaling = Quantity::DEFAULT_SCALE;
     }
 }
 
@@ -251,6 +254,11 @@ float Quantity::getCosComponent(const float phase) const {
 
 float Quantity::getSinComponent(const float phase) const {
     return getMagnitude() * sin(phase);
+}
+
+const std::complex<float> Quantity::getComplex(const float value, const float direction) {
+    std::complex<float> result(value, direction);
+    return result;
 }
 
 } // namespace shp

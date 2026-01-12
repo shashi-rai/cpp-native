@@ -25,214 +25,263 @@ namespace shp {
 
 Temporal::Temporal()
         : Signal(shp::Unit::getBaseSymbol(shp::Unit::TIME)),
-		entropy(shp::Direction::DEFAULT_RADIANS) {
+		modulation(shp::Unit::getBaseSymbol(shp::Unit::TIME)) {
 
 }
 
 Temporal::Temporal(const std::string unit)
-        : Signal(unit),
-		entropy(shp::Direction::DEFAULT_RADIANS) {
+        : Signal(unit), modulation(unit) {
 
 }
 
 Temporal::Temporal(const Unit& unit)
-        : Signal(unit),
-		entropy(shp::Direction::DEFAULT_RADIANS) {
+        : Signal(unit), modulation(unit) {
 
 }
 
 Temporal::Temporal(const float magnitude)
 		: Signal(magnitude, shp::Unit::getBaseSymbol(shp::Unit::TIME)),
-		entropy(shp::Direction::DEFAULT_RADIANS) {
+		modulation(shp::Unit::getBaseSymbol(shp::Unit::TIME)) {
 
 }
 
-Temporal::Temporal(const float magnitude, std::string unit)
-		: Signal(magnitude, unit),
-		entropy(shp::Direction::DEFAULT_RADIANS) {
+Temporal::Temporal(const float magnitude, const std::string unit)
+		: Signal(magnitude, unit), modulation(unit) {
 
 }
 
 Temporal::Temporal(const float magnitude, const Unit& unit)
-		: Signal(magnitude, unit),
-		entropy(shp::Direction::DEFAULT_RADIANS) {
+		: Signal(magnitude, unit), modulation(unit) {
 
 }
 
-Temporal::Temporal(const float magnitude, short int scaling)
+Temporal::Temporal(const float magnitude, const short int scaling)
 		: Signal(magnitude, scaling, shp::Unit::getBaseSymbol(shp::Unit::TIME)),
-		entropy(shp::Direction::DEFAULT_RADIANS) {
+		modulation(shp::Unit::getBaseSymbol(shp::Unit::TIME)) {
 
 }
 
-Temporal::Temporal(const float magnitude, short int scaling, const std::string unit)
-		: Signal(magnitude, scaling, unit),
-		entropy(shp::Direction::DEFAULT_RADIANS) {
+Temporal::Temporal(const float magnitude, const short int scaling, const std::string unit)
+		: Signal(magnitude, scaling, unit), modulation(unit) {
 
 }
 
-Temporal::Temporal(const float magnitude, short int scaling, const Unit& unit)
-		: Signal(magnitude, scaling, unit),
-		entropy(shp::Direction::DEFAULT_RADIANS) {
+Temporal::Temporal(const float magnitude, const short int scaling, const Unit& unit)
+		: Signal(magnitude, scaling, unit), modulation(unit) {
 
 }
 
-Temporal::Temporal(const Polar& entropy)
-        : Signal(shp::Unit::getBaseSymbol(shp::Unit::TIME)),
-		entropy(entropy) {
+Temporal::Temporal(const Azimuth& phase)
+        : Signal(phase), modulation(shp::Unit::getBaseSymbol(shp::Unit::TIME)) {
 
 }
 
-Temporal::Temporal(const Polar& entropy, const shp::Quantity& magnitude)
-        : Signal(magnitude), entropy(entropy) {
+Temporal::Temporal(const Azimuth& phase, const std::string unit)
+        : Signal(phase, unit), modulation(unit) {
 
 }
 
-Temporal::Temporal(const Polar& entropy, const Azimuth& phase)
-        : Signal(phase), entropy(entropy) {
+Temporal::Temporal(const Azimuth& phase, const Unit& unit)
+        : Signal(phase, unit), modulation(unit) {
 
 }
 
-Temporal::Temporal(const Polar& entropy, const Azimuth& phase, const shp::Quantity& magnitude)
-        : Signal(phase, magnitude), entropy(entropy) {
+Temporal::Temporal(const Azimuth& phase, const float magnitude)
+        : Signal(phase, magnitude), modulation(shp::Unit::getBaseSymbol(shp::Unit::TIME)) {
 
 }
 
-Temporal::Temporal(const float entropy, const float magnitude)
-        : Signal(magnitude, shp::Unit::getBaseSymbol(shp::Unit::TIME)),
-		entropy(entropy) {
+Temporal::Temporal(const Azimuth& phase, const float magnitude, const std::string unit)
+        : Signal(phase, magnitude, unit), modulation(unit) {
 
 }
 
-Temporal::Temporal(const float entropy, const float phase, const float magnitude)
-        : Signal(phase, magnitude, shp::Unit::getBaseSymbol(shp::Unit::TIME)),
-		entropy(entropy) {
+Temporal::Temporal(const Azimuth& phase, const float magnitude, const Unit& unit)
+        : Signal(phase, magnitude, unit), modulation(unit) {
 
 }
 
-Temporal::Temporal(const float entropy, const float magnitude, const std::string unit)
-        : Signal(magnitude, unit), entropy(entropy) {
+Temporal::Temporal(const Azimuth& phase, const float magnitude, const short int scaling)
+        : Signal(phase, magnitude, scaling), modulation(shp::Unit::getBaseSymbol(shp::Unit::TIME)) {
 
 }
 
-Temporal::Temporal(const float entropy, const float phase, const float magnitude,
+Temporal::Temporal(const Azimuth& phase, const float magnitude, const short int scaling,
         const std::string unit)
-        : Signal(phase, magnitude, unit), entropy(entropy) {
+        : Signal(phase, magnitude, scaling, unit), modulation(unit) {
 
 }
 
-Temporal::Temporal(const float entropy, const float magnitude, const Unit& unit)
-        : Signal(magnitude, unit), entropy(entropy) {
+Temporal::Temporal(const Azimuth& phase, const float magnitude, const short int scaling,
+        const Unit& unit)
+        : Signal(phase, magnitude, scaling, unit), modulation(unit) {
 
 }
 
-Temporal::Temporal(const float entropy, const float phase, const float magnitude, const Unit& unit)
-        : Signal(phase, magnitude, unit), entropy(entropy) {
+Temporal::Temporal(const Signal& modulation)
+        : Signal(modulation.getUnit()), modulation(modulation) {
 
 }
 
-Temporal::Temporal(const Polar& entropy, const float magnitude)
+Temporal::Temporal(const Signal& modulation, const shp::Quantity& magnitude)
+        : Signal(magnitude), modulation(modulation) {
+
+}
+
+Temporal::Temporal(const Signal& modulation, const Azimuth& phase)
+        : Signal(phase, modulation.getUnit()), modulation(modulation) {
+
+}
+
+Temporal::Temporal(const Signal& modulation, const Azimuth& phase, const shp::Quantity& magnitude)
+        : Signal(phase, magnitude), modulation(modulation) {
+
+}
+
+Temporal::Temporal(const float modulation, const float magnitude)
         : Signal(magnitude, shp::Unit::getBaseSymbol(shp::Unit::TIME)),
-		entropy(entropy) {
+		modulation(modulation, shp::Unit::getBaseSymbol(shp::Unit::TIME)) {
 
 }
 
-Temporal::Temporal(const Polar& entropy, const Azimuth& phase, const float magnitude)
+Temporal::Temporal(const float modulation, const float phase, const float magnitude)
         : Signal(phase, magnitude, shp::Unit::getBaseSymbol(shp::Unit::TIME)),
-		entropy(entropy) {
+		modulation(modulation, shp::Unit::getBaseSymbol(shp::Unit::TIME)) {
 
 }
 
-Temporal::Temporal(const float entropy, const float magnitude, short int scaling)
+Temporal::Temporal(const float modulation, const float magnitude, const std::string unit)
+        : Signal(magnitude, unit), modulation(modulation, unit) {
+
+}
+
+Temporal::Temporal(const float modulation, const float phase, const float magnitude,
+        const std::string unit)
+        : Signal(phase, magnitude, unit), modulation(modulation, unit) {
+
+}
+
+Temporal::Temporal(const float modulation, const float magnitude, const Unit& unit)
+        : Signal(magnitude, unit), modulation(modulation, unit) {
+
+}
+
+Temporal::Temporal(const float modulation, const float phase, const float magnitude,
+        const Unit& unit)
+        : Signal(phase, magnitude, unit), modulation(modulation, unit) {
+
+}
+
+Temporal::Temporal(const Signal& modulation, const float magnitude)
+        : Signal(magnitude, modulation.getUnit()), modulation(modulation) {
+
+}
+
+Temporal::Temporal(const Signal& modulation, const Azimuth& phase, const float magnitude)
+        : Signal(phase, magnitude, modulation.getUnit()),
+		modulation(modulation) {
+
+}
+
+Temporal::Temporal(const Signal& modulation, const Azimuth& phase, const float magnitude,
+        const std::string unit)
+        : Signal(phase, magnitude, unit), modulation(modulation) {
+
+}
+
+Temporal::Temporal(const Signal& modulation, const Azimuth& phase, const float magnitude,
+        const Unit& unit)
+        : Signal(phase, magnitude, unit), modulation(modulation) {
+
+}
+
+Temporal::Temporal(const float modulation, const float magnitude, const short int scaling)
         : Signal(magnitude, scaling, shp::Unit::getBaseSymbol(shp::Unit::TIME)),
-		entropy(entropy) {
+		modulation(modulation, shp::Unit::getBaseSymbol(shp::Unit::TIME)) {
 
 }
 
-Temporal::Temporal(const float entropy, const float phase, const float magnitude,
-        short int scaling)
+Temporal::Temporal(const float modulation, const float phase, const float magnitude,
+        const short int scaling)
         : Signal(phase, magnitude, scaling, shp::Unit::getBaseSymbol(shp::Unit::TIME)),
-		entropy(entropy) {
+		modulation(modulation, shp::Unit::getBaseSymbol(shp::Unit::TIME)) {
 
 }
 
-Temporal::Temporal(const Polar& entropy, const float magnitude, short int scaling)
-        : Signal(magnitude, scaling, shp::Unit::getBaseSymbol(shp::Unit::TIME)),
-		entropy(entropy) {
+Temporal::Temporal(const Signal& modulation, const float magnitude, const short int scaling)
+        : Signal(magnitude, scaling, modulation.getUnit()), modulation(modulation) {
 
 }
 
-Temporal::Temporal(const Polar& entropy, const float phase, const float magnitude,
-        short int scaling)
-        : Signal(phase, magnitude, scaling, shp::Unit::getBaseSymbol(shp::Unit::TIME)),
-		entropy(entropy) {
+Temporal::Temporal(const Signal& modulation, const float phase, const float magnitude,
+        const short int scaling)
+        : Signal(phase, magnitude, scaling, modulation.getUnit()), modulation(modulation) {
 
 }
 
-Temporal::Temporal(const Polar& entropy, const Azimuth& phase, const float magnitude,
-        short int scaling)
-        : Signal(phase, magnitude, scaling, shp::Unit::getBaseSymbol(shp::Unit::TIME)),
-		entropy(entropy) {
+Temporal::Temporal(const Signal& modulation, const Azimuth& phase, const float magnitude,
+        const short int scaling)
+        : Signal(phase, magnitude, scaling, modulation.getUnit()), modulation(modulation) {
 
 }
 
-Temporal::Temporal(const float entropy, const float magnitude, short int scaling,
-		std::string unit)
-        : Signal(magnitude, scaling, unit), entropy(entropy) {
+Temporal::Temporal(const float modulation, const float magnitude, const short int scaling,
+		const std::string unit)
+        : Signal(magnitude, scaling, unit), modulation(modulation, unit) {
 
 }
 
-Temporal::Temporal(const float entropy, const float phase, const float magnitude,
-        short int scaling, std::string unit)
-        : Signal(phase, magnitude, scaling, unit), entropy(entropy) {
+Temporal::Temporal(const float modulation, const float phase, const float magnitude,
+        const short int scaling, const std::string unit)
+        : Signal(phase, magnitude, scaling, unit), modulation(modulation, unit) {
 
 }
 
-Temporal::Temporal(const Polar& entropy, const float magnitude, short int scaling,
-		std::string unit)
-        : Signal(magnitude, scaling, unit), entropy(entropy) {
+Temporal::Temporal(const Signal& modulation, const float magnitude, const short int scaling,
+		const std::string unit)
+        : Signal(magnitude, scaling, unit), modulation(modulation) {
 
 }
 
-Temporal::Temporal(const Polar& entropy, const float phase, const float magnitude,
-        short int scaling, std::string unit)
-        : Signal(phase, magnitude, scaling, unit), entropy(entropy) {
+Temporal::Temporal(const Signal& modulation, const float phase, const float magnitude,
+        const short int scaling, const std::string unit)
+        : Signal(phase, magnitude, scaling, unit), modulation(modulation) {
 
 }
 
-Temporal::Temporal(const Polar& entropy, const Azimuth& phase, const float magnitude,
-        short int scaling, std::string unit)
-        : Signal(phase, magnitude, scaling, unit), entropy(entropy) {
+Temporal::Temporal(const Signal& modulation, const Azimuth& phase, const float magnitude,
+        const short int scaling, const std::string unit)
+        : Signal(phase, magnitude, scaling, unit), modulation(modulation) {
 
 }
 
-Temporal::Temporal(const float entropy, const float magnitude, short int scaling,
+Temporal::Temporal(const float modulation, const float magnitude, const short int scaling,
 		const Unit& unit)
-        : Signal(magnitude, scaling, unit), entropy(entropy) {
+        : Signal(magnitude, scaling, unit), modulation(modulation, unit) {
 
 }
 
-Temporal::Temporal(const float entropy, const float phase, const float magnitude,
-        short int scaling, const Unit& unit)
-        : Signal(phase, magnitude, scaling, unit), entropy(entropy) {
+Temporal::Temporal(const float modulation, const float phase, const float magnitude,
+        const short int scaling, const Unit& unit)
+        : Signal(phase, magnitude, scaling, unit), modulation(modulation, unit) {
 
 }
 
-Temporal::Temporal(const Polar& entropy, const float magnitude, short int scaling,
+Temporal::Temporal(const Signal& modulation, const float magnitude, const short int scaling,
 		const Unit& unit)
-        : Signal(magnitude, scaling, unit), entropy(entropy) {
+        : Signal(magnitude, scaling, unit), modulation(modulation) {
 
 }
 
-Temporal::Temporal(const Polar& entropy, const float phase, const float magnitude,
-        short int scaling, const Unit& unit)
-        : Signal(phase, magnitude, scaling, unit), entropy(entropy) {
+Temporal::Temporal(const Signal& modulation, const float phase, const float magnitude,
+        const short int scaling, const Unit& unit)
+        : Signal(phase, magnitude, scaling, unit), modulation(modulation) {
 
 }
 
-Temporal::Temporal(const Polar& entropy, const Azimuth& phase, const float magnitude,
-        short int scaling, const Unit& unit)
-        : Signal(phase, magnitude, scaling, unit), entropy(entropy) {
+Temporal::Temporal(const Signal& modulation, const Azimuth& phase, const float magnitude,
+        const short int scaling, const Unit& unit)
+        : Signal(phase, magnitude, scaling, unit), modulation(modulation) {
 
 }
 
@@ -242,50 +291,54 @@ Temporal::~Temporal() {
 
 bool Temporal::operator==(const Temporal& peer) const {
     return (static_cast<const Signal&>(*this) == static_cast<const Signal&>(peer))
-        && (entropy == peer.entropy);
+        && (modulation == peer.modulation);
 }
 
 Temporal Temporal::operator+(const Temporal& peer) const {
     Signal self = *this, other = peer;
     Signal signal = (self + other);
-    return Temporal((entropy + peer.entropy), signal.getOrientation(),
+    return Temporal((modulation + peer.modulation), signal.getOrientation(),
         signal.getAmplitude(), signal.getScaling(), signal.getUnit());
 }
 
 Temporal Temporal::operator-(const Temporal& peer) const {
     Signal self = *this, other = peer;
     Signal signal = (self - other);
-    return Temporal((entropy - peer.entropy), signal.getOrientation(),
+    return Temporal((modulation - peer.modulation), signal.getOrientation(),
         signal.getAmplitude(), signal.getScaling(), signal.getUnit());
 }
 
 Temporal Temporal::operator*(const Temporal& peer) const {
     Signal self = *this, other = peer;
     Signal signal = (self * other);
-    return Temporal((entropy * peer.entropy), signal.getOrientation(),
+    return Temporal((modulation * peer.modulation), signal.getOrientation(),
         signal.getAmplitude(), signal.getScaling(), signal.getUnit());
 }
 
 Temporal Temporal::operator/(const Temporal& peer) const {
     Signal self = *this, other = peer;
     Signal signal = (self / other);
-    return Temporal((entropy / peer.entropy), signal.getOrientation(),
+    return Temporal((modulation / peer.modulation), signal.getOrientation(),
         signal.getAmplitude(), signal.getScaling(), signal.getUnit());
 }
 
 Temporal Temporal::operator%(const Temporal& peer) const {
     Signal self = *this, other = peer;
     Signal signal = (self % other);
-    return Temporal((entropy % peer.entropy), signal.getOrientation(),
+    return Temporal((modulation % peer.modulation), signal.getOrientation(),
         signal.getAmplitude(), signal.getScaling(), signal.getUnit());
 }
 
 float Temporal::getMagnitude() const {
-    return Signal::getAmplitude();
+    return Signal::getMagnitude();
 }
 
 void Temporal::setMagnitude(const float value) {
-    Signal::setAmplitude(value);
+    Signal::setMagnitude(value);
+}
+
+float Temporal::getAmplitude() const {
+    return Signal::getAmplitude();
 }
 
 float Temporal::getPhase() const {
@@ -333,17 +386,19 @@ void Temporal::adjustScaling() {
 }
 
 Quantity Temporal::getPhaseShift() const {
-    Signal self = *this; shp::Frequency frequency = Signal::getFrequency();
-    float phase = (entropy.getCyclingRate() / frequency.getMagnitude());
+    Signal self = *this; Frequency frequency = Signal::getFrequency();
+    float phase = (modulation.getCyclingRate() / frequency.getMagnitude());
     shp::Quantity periodicity(phase, frequency.getScaling(), frequency.getUnit());
 	periodicity.adjustScaling(); periodicity.adjustNumeric();
-    return shp::Quantity(periodicity.getMagnitude(), periodicity.getScaling(), periodicity.getUnit());
+    return shp::Quantity(periodicity.getMagnitude(), periodicity.getScaling(),
+		shp::Unit::getDerivedSymbol(shp::Unit::PLANE_ANGLE));
 }
 
-Quantity Temporal::getTimePeriod() const {
+Quantity Temporal::getPerpetuity() const {
 	Signal self = *this;
-    float periodicity = (entropy.getTimePerCycle() * self.getAmplitude());
-    shp::Quantity result(periodicity, self.getScaling(), self.getUnit());
+    float periodicity = (modulation.getTimePerCycle() * self.getAmplitude());
+    shp::Quantity result(periodicity, self.getScaling(),
+		shp::Unit::getBaseSymbol(shp::Unit::TIME));
 	result.adjustScaling(); result.adjustNumeric();
     return result;
 }
@@ -352,23 +407,23 @@ Frequency Temporal::getFrequency() const {
     return Signal::getFrequency();
 }
 
-Temporal Temporal::copy() {
+Signal Temporal::copy() const {
     Signal self = *this;
-    Temporal fresh(entropy, self.getOrientation(),
+    Temporal fresh(modulation, self.getOrientation(),
         self.getAmplitude(), self.getScaling(), self.getUnit());
     return fresh;
 }
 
 void Temporal::clear() {
     Signal::clear();
-    entropy.clear();
+    modulation.clear();
     return;
 }
 
 std::string Temporal::print() {
     std::stringstream result;
-    result << Signal::print() << "?";
-    result << entropy.print();
+    result << Signal::print() << "δ";
+    result << modulation.print();
 	return result.str();
 }
 

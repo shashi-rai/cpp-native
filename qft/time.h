@@ -42,57 +42,97 @@ public:
     Time(const float duration, const shp::Unit& unit);
     Time(const float duration, const short int scaling, const std::string unit);
     Time(const float duration, const short int scaling, const shp::Unit& unit);
-    Time(const float entropy, const float duration);
-    Time(const float entropy, const float duration, const short int scaling);
-    Time(const float entropy, const float duration, const short int scaling, const std::string unit);
-    Time(const float entropy, const float duration, const short int scaling, const shp::Unit& unit);
-    Time(const shp::Polar& entropy);
-    Time(const shp::Polar& entropy, const std::string unit);
-    Time(const shp::Polar& entropy, const shp::Unit& unit);
-    Time(const shp::Polar& entropy, const float duration, const std::string unit);
-    Time(const shp::Polar& entropy, const float duration, const shp::Unit& unit);
-    Time(const shp::Polar& entropy, const float duration, const short int scaling, const std::string unit);
-    Time(const shp::Polar& entropy, const float duration, const short int scaling, const shp::Unit& unit);
+    Time(const float modulation, const float duration);
+    Time(const float modulation, const float duration,
+        const short int scaling);
+    Time(const float modulation, const float duration,
+        const short int scaling, const std::string unit);
+    Time(const float modulation, const float duration,
+        const short int scaling, const shp::Unit& unit);
+    Time(const shp::Signal& modulation);
+    Time(const shp::Signal& modulation, const std::string unit);
+    Time(const shp::Signal& modulation, const shp::Unit& unit);
+    Time(const shp::Signal& modulation, const float duration);
+    Time(const shp::Signal& modulation, const float duration,
+        const std::string unit);
+    Time(const shp::Signal& modulation, const float duration,
+        const shp::Unit& unit);
+    Time(const shp::Signal& modulation, const float duration,
+        const short int scaling, const std::string unit);
+    Time(const shp::Signal& modulation, const float duration,
+        const short int scaling, const shp::Unit& unit);
     Time(const shp::Azimuth& dilation);
     Time(const shp::Azimuth& dilation, const std::string unit);
     Time(const shp::Azimuth& dilation, const shp::Unit& unit);
-    Time(const shp::Azimuth& dilation, const float duration, const std::string unit);
-    Time(const shp::Azimuth& dilation, const float duration, const shp::Unit& unit);
-    Time(const shp::Azimuth& dilation, const float duration, const short int scaling, const std::string unit);
-    Time(const shp::Azimuth& dilation, const float duration, const short int scaling, const shp::Unit& unit);
-    Time(const shp::Polar& entropy, const shp::Azimuth& dilation);
-    Time(const shp::Polar& entropy, const shp::Azimuth& dilation, const float duration);
-    Time(const shp::Polar& entropy, const shp::Azimuth& dilation, const float duration, const short int scaling);
-    Time(const shp::Polar& entropy, const shp::Azimuth& dilation, const float duration, const short int scaling, const std::string unit);
-    Time(const shp::Polar& entropy, const shp::Azimuth& dilation, const float duration, const short int scaling, const shp::Unit& unit);
+    Time(const shp::Azimuth& dilation, const float duration);
+    Time(const shp::Azimuth& dilation, const float duration,
+        const std::string unit);
+    Time(const shp::Azimuth& dilation, const float duration,
+        const shp::Unit& unit);
+    Time(const shp::Azimuth& dilation, const float duration,
+        const short int scaling);  
+    Time(const shp::Azimuth& dilation, const float duration,
+        const short int scaling, const std::string unit);
+    Time(const shp::Azimuth& dilation, const float duration,
+        const short int scaling, const shp::Unit& unit);
+    Time(const shp::Signal& modulation, const shp::Azimuth& dilation);
+    Time(const shp::Signal& modulation, const shp::Azimuth& dilation,
+        const float duration);
+    Time(const shp::Signal& modulation, const shp::Azimuth& dilation,
+        const float duration, const short int scaling);
+    Time(const shp::Signal& modulation, const shp::Azimuth& dilation,
+        const float duration, const short int scaling, const std::string unit);
+    Time(const shp::Signal& modulation, const shp::Azimuth& dilation,
+        const float duration, const short int scaling, const shp::Unit& unit);
     Time(std::string name, const float duration);
     Time(std::string name, const float duration, const std::string unit);
     Time(std::string name, const float duration, const shp::Unit& unit);
-    Time(std::string name, const float duration, const short int scaling, const std::string unit);
-    Time(std::string name, const float duration, const short int scaling, const shp::Unit& unit);
-    Time(std::string name, const float entropy, const float duration);
-    Time(std::string name, const float entropy, const float duration, const short int scaling);
-    Time(std::string name, const float entropy, const float duration, const short int scaling, const std::string unit);
-    Time(std::string name, const float entropy, const float duration, const short int scaling, const shp::Unit& unit);
+    Time(std::string name, const float duration, const short int scaling,
+        const std::string unit);
+    Time(std::string name, const float duration, const short int scaling,
+        const shp::Unit& unit);
+    Time(std::string name, const float modulation, const float duration);
+    Time(std::string name, const float modulation, const float duration,
+        const short int scaling);
+    Time(std::string name, const float modulation, const float duration,
+        const short int scaling, const std::string unit);
+    Time(std::string name, const float modulation, const float duration,
+        const short int scaling, const shp::Unit& unit);
     Time(std::string name, const shp::Azimuth& dilation);
     Time(std::string name, const shp::Azimuth& dilation, const std::string unit);
     Time(std::string name, const shp::Azimuth& dilation, const shp::Unit& unit);
-    Time(std::string name, const shp::Azimuth& dilation, const float duration, const std::string unit);
-    Time(std::string name, const shp::Azimuth& dilation, const float duration, const shp::Unit& unit);
-    Time(std::string name, const shp::Azimuth& dilation, const float duration, const short int scaling, const std::string unit);
-    Time(std::string name, const shp::Azimuth& dilation, const float duration, const short int scaling, const shp::Unit& unit);
-    Time(std::string name, const shp::Polar& entropy);
-    Time(std::string name, const shp::Polar& entropy, const std::string unit);
-    Time(std::string name, const shp::Polar& entropy, const shp::Unit& unit);
-    Time(std::string name, const shp::Polar& entropy, const float duration, const std::string unit);
-    Time(std::string name, const shp::Polar& entropy, const float duration, const shp::Unit& unit);
-    Time(std::string name, const shp::Polar& entropy, const float duration, const short int scaling, const std::string unit);
-    Time(std::string name, const shp::Polar& entropy, const float duration, const short int scaling, const shp::Unit& unit);
-    Time(std::string name, const shp::Polar& entropy, const shp::Azimuth& dilation);
-    Time(std::string name, const shp::Polar& entropy, const shp::Azimuth& dilation, const float duration);
-    Time(std::string name, const shp::Polar& entropy, const shp::Azimuth& dilation, const float duration, const short int scaling);
-    Time(std::string name, const shp::Polar& entropy, const shp::Azimuth& dilation, const float duration, const short int scaling, const std::string unit);
-    Time(std::string name, const shp::Polar& entropy, const shp::Azimuth& dilation, const float duration, const short int scaling, const shp::Unit& unit);
+    Time(std::string name, const shp::Azimuth& dilation, const float duration);
+    Time(std::string name, const shp::Azimuth& dilation, const float duration,
+        const std::string unit);
+    Time(std::string name, const shp::Azimuth& dilation, const float duration,
+        const shp::Unit& unit);
+    Time(std::string name, const shp::Azimuth& dilation, const float duration,
+        const short int scaling);
+    Time(std::string name, const shp::Azimuth& dilation, const float duration,
+        const short int scaling, const std::string unit);
+    Time(std::string name, const shp::Azimuth& dilation, const float duration,
+        const short int scaling, const shp::Unit& unit);
+    Time(std::string name, const shp::Signal& modulation);
+    Time(std::string name, const shp::Signal& modulation, const std::string unit);
+    Time(std::string name, const shp::Signal& modulation, const shp::Unit& unit);
+    Time(std::string name, const shp::Signal& modulation, const float duration);
+    Time(std::string name, const shp::Signal& modulation, const float duration,
+        const std::string unit);
+    Time(std::string name, const shp::Signal& modulation, const float duration,
+        const shp::Unit& unit);
+    Time(std::string name, const shp::Signal& modulation, const float duration,
+        const short int scaling, const std::string unit);
+    Time(std::string name, const shp::Signal& modulation, const float duration,
+        const short int scaling, const shp::Unit& unit);
+    Time(std::string name, const shp::Signal& modulation, const shp::Azimuth& dilation);
+    Time(std::string name, const shp::Signal& modulation, const shp::Azimuth& dilation,
+        const float duration);
+    Time(std::string name, const shp::Signal& modulation, const shp::Azimuth& dilation,
+        const float duration, const short int scaling);
+    Time(std::string name, const shp::Signal& modulation, const shp::Azimuth& dilation,
+        const float duration, const short int scaling, const std::string unit);
+    Time(std::string name, const shp::Signal& modulation, const shp::Azimuth& dilation,
+        const float duration, const short int scaling, const shp::Unit& unit);
 
     // Destructors
     ~Time();

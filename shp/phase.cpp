@@ -154,8 +154,8 @@ Phase Phase::operator/(const Phase& peer) const {
         ap1 = self.toAzimuthalComplex(self.getGradient()),
         ap2 = other.toAzimuthalComplex(peer.getGradient());
     std::complex<float> a_phasor;
-	if (ap1 == std::complex<float>(shp::Quantity::DEFAULT_VALUE, shp::Quantity::DEFAULT_VALUE)) {
-		a_phasor = std::complex<float>(NAN, NAN);
+	if (ap2 == std::complex<float>(shp::Quantity::DEFAULT_VALUE, shp::Quantity::DEFAULT_VALUE)) {
+		a_phasor = std::complex<float>(shp::Quantity::DEFAULT_VALUE, shp::Quantity::DEFAULT_VALUE);
 	} else {
 		a_phasor = (ap1 / ap2);
 	}
@@ -163,8 +163,8 @@ Phase Phase::operator/(const Phase& peer) const {
         pp1 = self.toPolarizationComplex(self.polarization),
         pp2 = other.toPolarizationComplex(peer.polarization);
     std::complex<float> p_phasor;
-	if (pp1 == std::complex<float>(shp::Quantity::DEFAULT_VALUE, shp::Quantity::DEFAULT_VALUE)) {
-		p_phasor = std::complex<float>(NAN, NAN);
+	if (pp2 == std::complex<float>(shp::Quantity::DEFAULT_VALUE, shp::Quantity::DEFAULT_VALUE)) {
+		p_phasor = std::complex<float>(shp::Quantity::DEFAULT_VALUE, shp::Quantity::DEFAULT_VALUE);
 	} else {
 		p_phasor = (pp1 / pp2);
 	}
@@ -180,7 +180,7 @@ Phase Phase::operator%(const Phase& peer) const {
         ap2 = other.toAzimuthalComplex(peer.getGradient());
     std::complex<float> a_phasor;
 	if (ap2 == std::complex<float>(shp::Quantity::DEFAULT_VALUE, shp::Quantity::DEFAULT_VALUE)) {
-		a_phasor = std::complex<float>(NAN, NAN);
+		a_phasor = std::complex<float>(shp::Quantity::DEFAULT_VALUE, shp::Quantity::DEFAULT_VALUE);
 	} else {
 		std::complex<float> quotient = (ap1 / ap2);
     	std::complex<float> cycles(std::trunc(quotient.real()), std::trunc(quotient.imag()));
@@ -191,7 +191,7 @@ Phase Phase::operator%(const Phase& peer) const {
         pp2 = other.toPolarizationComplex(peer.polarization);
     std::complex<float> p_phasor;
 	if (pp2 == std::complex<float>(shp::Quantity::DEFAULT_VALUE, shp::Quantity::DEFAULT_VALUE)) {
-		p_phasor = std::complex<float>(NAN, NAN);
+		p_phasor = std::complex<float>(shp::Quantity::DEFAULT_VALUE, shp::Quantity::DEFAULT_VALUE);
 	} else {
 		std::complex<float> quotient = (pp1 / pp2);
     	std::complex<float> cycles(std::trunc(quotient.real()), std::trunc(quotient.imag()));

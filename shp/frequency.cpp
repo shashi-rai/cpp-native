@@ -24,208 +24,260 @@ namespace shp {
 
 Frequency::Frequency()
         : Signal(shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY)),
-		modulation(shp::Direction::DEFAULT_RADIANS) {
+		modulation(shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY)) {
 
 }
 
 Frequency::Frequency(const std::string unit)
-        : Signal(unit),
-		modulation(shp::Direction::DEFAULT_RADIANS) {
+        : Signal(unit), modulation(unit) {
 
 }
 
 Frequency::Frequency(const Unit& unit)
-        : Signal(unit),
-		modulation(shp::Direction::DEFAULT_RADIANS) {
+        : Signal(unit), modulation(unit) {
 
 }
 
 Frequency::Frequency(const float magnitude)
 		: Signal(magnitude, shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY)),
-		modulation(shp::Direction::DEFAULT_RADIANS) {
+		modulation(shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY)) {
 
 }
 
-Frequency::Frequency(const float magnitude, std::string unit)
-		: Signal(magnitude, unit),
-		modulation(shp::Direction::DEFAULT_RADIANS) {
+Frequency::Frequency(const float magnitude, const std::string unit)
+		: Signal(magnitude, unit), modulation(unit) {
 
 }
 
 Frequency::Frequency(const float magnitude, const Unit& unit)
-		: Signal(magnitude, unit),
-		modulation(shp::Direction::DEFAULT_RADIANS) {
+		: Signal(magnitude, unit), modulation(unit) {
 
 }
 
-Frequency::Frequency(const float magnitude, short int scaling)
+Frequency::Frequency(const float magnitude, const short int scaling)
 		: Signal(magnitude, scaling, shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY)),
-		modulation(shp::Direction::DEFAULT_RADIANS) {
+		modulation(shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY)) {
 
 }
 
-Frequency::Frequency(const float magnitude, short int scaling, const std::string unit)
-		: Signal(magnitude, scaling, unit),
-		modulation(shp::Direction::DEFAULT_RADIANS) {
+Frequency::Frequency(const float magnitude, const short int scaling, const std::string unit)
+		: Signal(magnitude, scaling, unit), modulation(unit) {
 
 }
 
-Frequency::Frequency(const float magnitude, short int scaling, const Unit& unit)
-		: Signal(magnitude, scaling, unit),
-		modulation(shp::Direction::DEFAULT_RADIANS) {
+Frequency::Frequency(const float magnitude, const short int scaling, const Unit& unit)
+		: Signal(magnitude, scaling, unit), modulation(unit) {
 
 }
 
-Frequency::Frequency(const Polar& modulation)
-        : Signal(shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY)),
-		modulation(modulation) {
+Frequency::Frequency(const Azimuth& phase)
+        : Signal(phase), modulation(shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY)) {
 
 }
 
-Frequency::Frequency(const Polar& modulation, const shp::Quantity& magnitude)
+Frequency::Frequency(const Azimuth& phase, const std::string unit)
+        : Signal(phase, unit), modulation(unit) {
+
+}
+
+Frequency::Frequency(const Azimuth& phase, const Unit& unit)
+        : Signal(phase, unit), modulation(unit) {
+
+}
+
+Frequency::Frequency(const Azimuth& phase, const float magnitude)
+        : Signal(phase, magnitude), modulation(shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY)) {
+
+}
+
+Frequency::Frequency(const Azimuth& phase, const float magnitude, const std::string unit)
+        : Signal(phase, magnitude, unit), modulation(unit) {
+
+}
+
+Frequency::Frequency(const Azimuth& phase, const float magnitude, const Unit& unit)
+        : Signal(phase, magnitude, unit), modulation(unit) {
+
+}
+
+Frequency::Frequency(const Azimuth& phase, const float magnitude, const short int scaling)
+        : Signal(phase, magnitude, scaling), modulation() {
+
+}
+
+Frequency::Frequency(const Azimuth& phase, const float magnitude, const short int scaling,
+        const std::string unit)
+        : Signal(phase, magnitude, scaling, unit), modulation(unit) {
+
+}
+
+Frequency::Frequency(const Azimuth& phase, const float magnitude, const short int scaling,
+        const Unit& unit)
+        : Signal(phase, magnitude, scaling, unit), modulation(unit) {
+
+}
+
+Frequency::Frequency(const Signal& modulation)
+        : Signal(modulation.getUnit()), modulation(modulation) {
+
+}
+
+Frequency::Frequency(const Signal& modulation, const shp::Quantity& magnitude)
         : Signal(magnitude), modulation(modulation) {
 
 }
 
-Frequency::Frequency(const Polar& modulation, const Azimuth& phase, const shp::Quantity& magnitude)
+Frequency::Frequency(const Signal& modulation, const Azimuth& phase)
+        : Signal(phase), modulation(modulation) {
+
+}
+
+Frequency::Frequency(const Signal& modulation, const Azimuth& phase, const shp::Quantity& magnitude)
         : Signal(phase, magnitude), modulation(modulation) {
 
 }
 
 Frequency::Frequency(const float modulation, const float magnitude)
         : Signal(magnitude, shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY)),
-		modulation(modulation) {
+		modulation(modulation, shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY)) {
 
 }
 
 Frequency::Frequency(const float modulation, const float phase, const float magnitude)
         : Signal(phase, magnitude, shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY)),
-		modulation(modulation) {
+		modulation(modulation, shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY)) {
 
 }
 
 Frequency::Frequency(const float modulation, const float magnitude, const std::string unit)
-        : Signal(magnitude, unit), modulation(modulation) {
+        : Signal(magnitude, unit), modulation(modulation, unit) {
 
 }
 
 Frequency::Frequency(const float modulation, const float phase, const float magnitude,
         const std::string unit)
-        : Signal(phase, magnitude, unit), modulation(modulation) {
+        : Signal(phase, magnitude, unit), modulation(modulation, unit) {
 
 }
 
 Frequency::Frequency(const float modulation, const float magnitude, const Unit& unit)
-        : Signal(magnitude, unit), modulation(modulation) {
+        : Signal(magnitude, unit), modulation(modulation, unit) {
 
 }
 
 Frequency::Frequency(const float modulation, const float phase, const float magnitude, const Unit& unit)
+        : Signal(phase, magnitude, unit), modulation(modulation, unit) {
+
+}
+
+Frequency::Frequency(const Signal& modulation, const float magnitude)
+        : Signal(magnitude, modulation.getUnit()), modulation(modulation) {
+
+}
+
+Frequency::Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude)
+        : Signal(phase, magnitude, modulation.getUnit()), modulation(modulation) {
+
+}
+
+Frequency::Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude,
+        const std::string unit)
         : Signal(phase, magnitude, unit), modulation(modulation) {
 
 }
 
-Frequency::Frequency(const Polar& modulation, const float magnitude)
-        : Signal(magnitude, shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY)),
-		modulation(modulation) {
+Frequency::Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude,
+        const Unit& unit)
+        : Signal(phase, magnitude, unit), modulation(modulation) {
 
 }
 
-Frequency::Frequency(const Polar& modulation, const Azimuth& phase, const float magnitude)
-        : Signal(phase, magnitude, shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY)),
-		modulation(modulation) {
-
-}
-
-Frequency::Frequency(const float modulation, const float magnitude, short int scaling)
+Frequency::Frequency(const float modulation, const float magnitude, const short int scaling)
         : Signal(magnitude, scaling, shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY)),
 		modulation(modulation) {
 
 }
 
 Frequency::Frequency(const float modulation, const float phase, const float magnitude,
-        short int scaling)
+        const short int scaling)
         : Signal(phase, magnitude, scaling, shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY)),
-		modulation(modulation) {
+		modulation(modulation, shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY)) {
 
 }
 
-Frequency::Frequency(const Polar& modulation, const float magnitude, short int scaling)
-        : Signal(magnitude, scaling, shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY)),
-		modulation(modulation) {
+Frequency::Frequency(const Signal& modulation, const float magnitude, const short int scaling)
+        : Signal(magnitude, scaling, modulation.getUnit()), modulation(modulation) {
 
 }
 
-Frequency::Frequency(const Polar& modulation, const float phase, const float magnitude,
-        short int scaling)
-        : Signal(phase, magnitude, scaling, shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY)),
-		modulation(modulation) {
+Frequency::Frequency(const Signal& modulation, const float phase, const float magnitude,
+        const short int scaling)
+        : Signal(phase, magnitude, scaling, modulation.getUnit()), modulation(modulation) {
 
 }
 
-Frequency::Frequency(const Polar& modulation, const Azimuth& phase, const float magnitude,
-        short int scaling)
-        : Signal(phase, magnitude, scaling, shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY)),
-		modulation(modulation) {
+Frequency::Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude,
+        const short int scaling)
+        : Signal(phase, magnitude, scaling, modulation.getUnit()), modulation(modulation) {
 
 }
 
-Frequency::Frequency(const float modulation, const float magnitude, short int scaling,
-		std::string unit)
-        : Signal(magnitude, scaling, unit), modulation(modulation) {
+Frequency::Frequency(const float modulation, const float magnitude, const short int scaling,
+		const std::string unit)
+        : Signal(magnitude, scaling, unit), modulation(modulation, unit) {
 
 }
 
 Frequency::Frequency(const float modulation, const float phase, const float magnitude,
-        short int scaling, std::string unit)
-        : Signal(phase, magnitude, scaling, unit), modulation(modulation) {
+        const short int scaling, const std::string unit)
+        : Signal(phase, magnitude, scaling, unit), modulation(modulation, unit) {
 
 }
 
-Frequency::Frequency(const Polar& modulation, const float magnitude, short int scaling,
-		std::string unit)
+Frequency::Frequency(const Signal& modulation, const float magnitude, const short int scaling,
+		const std::string unit)
         : Signal(magnitude, scaling, unit), modulation(modulation) {
 
 }
 
-Frequency::Frequency(const Polar& modulation, const float phase, const float magnitude,
-        short int scaling, std::string unit)
+Frequency::Frequency(const Signal& modulation, const float phase, const float magnitude,
+        const short int scaling, const std::string unit)
         : Signal(phase, magnitude, scaling, unit), modulation(modulation) {
 
 }
 
-Frequency::Frequency(const Polar& modulation, const Azimuth& phase, const float magnitude,
-        short int scaling, std::string unit)
+Frequency::Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude,
+        const short int scaling, const std::string unit)
         : Signal(phase, magnitude, scaling, unit), modulation(modulation) {
 
 }
 
-Frequency::Frequency(const float modulation, const float magnitude, short int scaling,
+Frequency::Frequency(const float modulation, const float magnitude, const short int scaling,
+		const Unit& unit)
+        : Signal(magnitude, scaling, unit), modulation(modulation, unit) {
+
+}
+
+Frequency::Frequency(const float modulation, const float phase, const float magnitude,
+        const short int scaling, const Unit& unit)
+        : Signal(phase, magnitude, scaling, unit), modulation(modulation) {
+
+}
+
+Frequency::Frequency(const Signal& modulation, const float magnitude, const short int scaling,
 		const Unit& unit)
         : Signal(magnitude, scaling, unit), modulation(modulation) {
 
 }
 
-Frequency::Frequency(const float modulation, const float phase, const float magnitude,
-        short int scaling, const Unit& unit)
+Frequency::Frequency(const Signal& modulation, const float phase, const float magnitude,
+        const short int scaling, const Unit& unit)
         : Signal(phase, magnitude, scaling, unit), modulation(modulation) {
 
 }
 
-Frequency::Frequency(const Polar& modulation, const float magnitude, short int scaling,
-		const Unit& unit)
-        : Signal(magnitude, scaling, unit), modulation(modulation) {
-
-}
-
-Frequency::Frequency(const Polar& modulation, const float phase, const float magnitude,
-        short int scaling, const Unit& unit)
-        : Signal(phase, magnitude, scaling, unit), modulation(modulation) {
-
-}
-
-Frequency::Frequency(const Polar& modulation, const Azimuth& phase, const float magnitude,
-        short int scaling, const Unit& unit)
+Frequency::Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude,
+        const short int scaling, const Unit& unit)
         : Signal(phase, magnitude, scaling, unit), modulation(modulation) {
 
 }
@@ -275,11 +327,15 @@ Frequency Frequency::operator%(const Frequency& peer) const {
 }
 
 float Frequency::getMagnitude() const {
-    return Signal::getAmplitude();
+    return Signal::getMagnitude();
 }
 
 void Frequency::setMagnitude(const float value) {
-    Signal::setAmplitude(value);
+    Signal::setMagnitude(value);
+}
+
+float Frequency::getAmplitude() const {
+    return Signal::getAmplitude();
 }
 
 float Frequency::getPhase() const {
@@ -306,18 +362,40 @@ void Frequency::setUnit(const Unit& object) {
     Signal::setUnit(object);
 }
 
+bool Frequency::checkNonZero() const {
+    return Signal::checkNonZero();
+}
+
+bool Frequency::checkInfinity() const {
+    return Signal::checkInfinity();
+}
+
+short int Frequency::checkScaling(const float amount) const {
+    return Signal::checkScaling(amount);
+}
+
+void Frequency::adjustNumeric() {
+    return Signal::adjustNumeric();
+}
+
+void Frequency::adjustScaling() {
+    Signal::adjustScaling();
+}
+
 Quantity Frequency::getPhaseShift() const {
     Signal self = *this; Frequency frequency = Signal::getFrequency();
     float phase = (modulation.getCyclingRate() / frequency.getMagnitude());
     shp::Quantity periodicity(phase, frequency.getScaling(), frequency.getUnit());
 	periodicity.adjustScaling(); periodicity.adjustNumeric();
-    return shp::Quantity(periodicity.getMagnitude(), periodicity.getScaling(), periodicity.getUnit());
+    return shp::Quantity(periodicity.getMagnitude(), periodicity.getScaling(),
+		shp::Unit::getDerivedSymbol(shp::Unit::PLANE_ANGLE));
 }
 
-Quantity Frequency::getWavelength() const {
+Quantity Frequency::getPerpetuity() const {
 	Signal self = *this;
     float periodicity = (modulation.getTimePerCycle() * self.getAmplitude());
-    shp::Quantity result(periodicity, self.getScaling(), self.getUnit());
+    shp::Quantity result(periodicity, self.getScaling(),
+		shp::Unit::getBaseSymbol(shp::Unit::TIME));
 	result.adjustScaling(); result.adjustNumeric();
     return result;
 }
@@ -337,7 +415,7 @@ void Frequency::clear() {
 
 std::string Frequency::print() {
     std::stringstream result;
-    result << Signal::print() << "?";
+    result << Signal::print() << "δ";
     result << modulation.print();
 	return result.str();
 }

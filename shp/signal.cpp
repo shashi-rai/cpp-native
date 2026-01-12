@@ -43,7 +43,7 @@ Signal::Signal(const float quantity)
 
 }
 
-Signal::Signal(const float quantity, std::string unit)
+Signal::Signal(const float quantity, const std::string unit)
 		: Quantity(quantity, unit), orientation(shp::Direction::DEFAULT_RADIANS) {
 
 }
@@ -53,17 +53,17 @@ Signal::Signal(const float quantity, const Unit& unit)
 
 }
 
-Signal::Signal(const float quantity, short int scaling)
+Signal::Signal(const float quantity, const short int scaling)
 		: Quantity(quantity, scaling), orientation(shp::Direction::DEFAULT_RADIANS) {
 
 }
 
-Signal::Signal(const float quantity, short int scaling, const std::string unit)
+Signal::Signal(const float quantity, const short int scaling, const std::string unit)
 		: Quantity(quantity, scaling, unit), orientation(shp::Direction::DEFAULT_RADIANS) {
 
 }
 
-Signal::Signal(const float quantity, short int scaling, const Unit& unit)
+Signal::Signal(const float quantity, const short int scaling, const Unit& unit)
 		: Quantity(quantity, scaling, unit), orientation(shp::Direction::DEFAULT_RADIANS) {
 
 }
@@ -110,35 +110,40 @@ Signal::Signal(const Azimuth& orientation, const float quantity, const std::stri
 
 }
 
-Signal::Signal(const float orientation, const float quantity, short int scaling)
+Signal::Signal(const Azimuth& orientation, const float quantity, const Unit& unit)
+        : Quantity(quantity, unit), orientation(orientation.toRadians()) {
+
+}
+
+Signal::Signal(const float orientation, const float quantity, const short int scaling)
         : Quantity(quantity, scaling), orientation(orientation) {
 
 }
 
-Signal::Signal(const Azimuth& orientation, const float quantity, short int scaling)
+Signal::Signal(const Azimuth& orientation, const float quantity, const short int scaling)
         : Quantity(quantity, scaling), orientation(orientation.toRadians()) {
 
 }
 
-Signal::Signal(const float orientation, const float quantity, short int scaling,
-		std::string unit)
+Signal::Signal(const float orientation, const float quantity, const short int scaling,
+		const std::string unit)
         : Quantity(quantity, scaling, unit), orientation(orientation) {
 
 }
 
-Signal::Signal(const Azimuth& orientation, const float quantity, short int scaling,
-		std::string unit)
+Signal::Signal(const Azimuth& orientation, const float quantity, const short int scaling,
+		const std::string unit)
         : Quantity(quantity, scaling, unit), orientation(orientation.toRadians()) {
 
 }
 
-Signal::Signal(const float orientation, const float quantity, short int scaling,
+Signal::Signal(const float orientation, const float quantity, const short int scaling,
 		const Unit& unit)
         : Quantity(quantity, scaling, unit), orientation(orientation) {
 
 }
 
-Signal::Signal(const Azimuth& orientation, const float quantity, short int scaling,
+Signal::Signal(const Azimuth& orientation, const float quantity, const short int scaling,
 		const Unit& unit)
         : Quantity(quantity, scaling, unit), orientation(orientation.toRadians()) {
 
@@ -154,54 +159,71 @@ bool Signal::operator==(const Signal& peer) const {
 }
 
 Signal Signal::operator+(const Signal& peer) const {
-    Quantity self = *this, other = peer; Quantity quantity = (self + other);
-    std::complex<float> a = self.getComplex(this->orientation);
-    std::complex<float> b = other.getComplex(peer.orientation);
+    Quantity self = *this, other = peer;
+    short int exponent = (self.getScaling() - other.getScaling());
+    float mantissa_x = self.getMagnitude();
+    float mantissa_y = (other.getMagnitude() / std::pow(DECIMAL_SCALE, exponent));
+    std::complex<float> a = self.getComplex(mantissa_x, this->orientation);
+    std::complex<float> b = other.getComplex(mantissa_y, peer.orientation);
     std::complex<float> result = (a + b);
-    return Signal(result.imag(), result.real(), quantity.getScaling(), quantity.getUnit());
+    return Signal(result.imag(), result.real(), self.getScaling(), self.getUnit());
 }
 
 Signal Signal::operator-(const Signal& peer) const {
-    Quantity self = *this, other = peer; Quantity quantity = (self - other);
-    std::complex<float> a = self.getComplex(this->orientation);
-    std::complex<float> b = other.getComplex(peer.orientation);
+    Quantity self = *this, other = peer;
+    short int exponent = (self.getScaling() - other.getScaling());
+    float mantissa_x = self.getMagnitude();
+    float mantissa_y = (other.getMagnitude() / std::pow(DECIMAL_SCALE, exponent));
+    std::complex<float> a = self.getComplex(mantissa_x, this->orientation);
+    std::complex<float> b = other.getComplex(mantissa_y, peer.orientation);
     std::complex<float> result = (a - b);
-    return Signal(result.imag(), result.real(), quantity.getScaling(), quantity.getUnit());
+    return Signal(result.imag(), result.real(), self.getScaling(), self.getUnit());
 }
 
 Signal Signal::operator*(const Signal& peer) const {
-    Quantity self = *this, other = peer; Quantity quantity = (self * other);
-    std::complex<float> a = self.getComplex(this->orientation);
-    std::complex<float> b = other.getComplex(peer.orientation);
+    Quantity self = *this, other = peer;
+    short int exponent = (self.getScaling() + other.getScaling());
+    float mantissa_x = self.getMagnitude();
+    float mantissa_y = other.getMagnitude();
+    std::complex<float> a = self.getComplex(mantissa_x, this->orientation);
+    std::complex<float> b = other.getComplex(mantissa_y, peer.orientation);
     std::complex<float> result = (a * b);
-    return Signal(result.imag(), result.real(), quantity.getScaling(), quantity.getUnit());
+    return Signal(result.imag(), result.real(), exponent, self.getUnit());
 }
 
 Signal Signal::operator/(const Signal& peer) const {
-    Quantity self = *this, other = peer; Quantity quantity = (self / other);
-    std::complex<float> a = self.getComplex(this->orientation);
-    std::complex<float> b = other.getComplex(peer.orientation);
+    Quantity self = *this, other = peer;
+    short int exponent = (self.getScaling() - other.getScaling());
+    float mantissa_x = self.getMagnitude();
+    float mantissa_y = other.getMagnitude();
+    std::complex<float> a = self.getComplex(mantissa_x, this->orientation);
+    std::complex<float> b = other.getComplex(mantissa_y, peer.orientation);
     std::complex<float> result;
-	if (a == std::complex<float>(shp::Quantity::DEFAULT_VALUE, shp::Quantity::DEFAULT_VALUE)) {
-		result = std::complex<float>(NAN, NAN);
+	if (b == std::complex<float>(shp::Quantity::DEFAULT_VALUE, shp::Quantity::DEFAULT_VALUE)) {
+		result = std::complex<float>(shp::Quantity::DEFAULT_VALUE, shp::Quantity::DEFAULT_VALUE);
 	} else {
-		result = (a / b);
+		result = (a / b); 
 	}
-    return Signal(result.imag(), result.real(), quantity.getScaling(), quantity.getUnit());
+    return Signal(result.imag(), result.real(), exponent, self.getUnit());
 }
 
 Signal Signal::operator%(const Signal& peer) const {
-    Quantity self = *this, other = peer; Quantity quantity = (self % other);
-    std::complex<float> a = self.getComplex(this->orientation), b = other.getComplex(peer.orientation);
+    Quantity self = *this, other = peer;
+    short int exponent = (self.getScaling() - other.getScaling());
+    float mantissa_x = self.getMagnitude();
+    float mantissa_y = (other.getMagnitude() / std::pow(DECIMAL_SCALE, exponent));
+    std::complex<float>
+        a = self.getComplex(mantissa_x, this->orientation),
+        b = other.getComplex(mantissa_y, peer.orientation);
     std::complex<float> result;
-	if (a == std::complex<float>(shp::Quantity::DEFAULT_VALUE, shp::Quantity::DEFAULT_VALUE)) {
-		result = std::complex<float>(NAN, NAN);
+	if (b == std::complex<float>(shp::Quantity::DEFAULT_VALUE, shp::Quantity::DEFAULT_VALUE)) {
+		result = std::complex<float>(shp::Quantity::DEFAULT_VALUE, shp::Quantity::DEFAULT_VALUE);
 	} else {
 		std::complex<float> quotient = (a / b);
     	std::complex<float> cycles(std::trunc(quotient.real()), std::trunc(quotient.imag()));
     	result = (a - (cycles * b));
 	}
-    return Signal(result.imag(), result.real(), quantity.getScaling(), quantity.getUnit());
+    return Signal(result.imag(), result.real(), self.getScaling(), self.getUnit());
 }
 
 Frequency Signal::getFrequency() const {
@@ -211,12 +233,24 @@ Frequency Signal::getFrequency() const {
     return result;
 }
 
-float Signal::getAmplitude() const {
-    return Quantity::getCosComponent(orientation);
+float Signal::getCyclingRate() const {
+    return Direction(orientation).getCyclingRate();
 }
 
-void Signal::setAmplitude(const float value) {
+float Signal::getTimePerCycle() const {
+    return Direction(orientation).getTimePerCycle();
+}
+
+float Signal::getMagnitude() const {
+    return Quantity::getMagnitude();
+}
+
+void Signal::setMagnitude(const float value) {
     Quantity::setMagnitude(value);
+}
+
+float Signal::getAmplitude() const {
+    return Quantity::getCosComponent(orientation);
 }
 
 Direction Signal::getPhase() const {
@@ -244,14 +278,14 @@ void Signal::setUnit(const Unit& object) {
 }
 
 Quantity Signal::getAbsolute() const {
-    Quantity self = *this;
-    std::complex<float> result = Quantity::getComplex(this->orientation);
+    Signal self = *this;
+    std::complex<float> result = Quantity::getComplex(Quantity::getMagnitude(), self.orientation);
     return Quantity(std::abs(result), self.getScaling(), self.getUnit());
 }
 
 Signal Signal::getInverse() const {
     Signal self = *this;
-    std::complex<float> result = Quantity::getComplex(-this->orientation);
+    std::complex<float> result = Quantity::getComplex(Quantity::getMagnitude(), -self.orientation);
     return Signal(std::imag(result), -std::real(result), self.getScaling(), self.getUnit());
 }
 

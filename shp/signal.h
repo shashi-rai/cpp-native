@@ -43,22 +43,35 @@ public:
     Signal(const float quantity, const std::string unit);
     Signal(const float quantity, const shp::Unit& unit);
     Signal(const float quantity, const short int scaling);
-    Signal(const float quantity, const short int scaling, const std::string unit);
-    Signal(const float quantity, const short int scaling, const shp::Unit& unit);
+    Signal(const float quantity, const short int scaling,
+        const std::string unit);
+    Signal(const float quantity, const short int scaling,
+        const shp::Unit& unit);
     Signal(const Quantity& quantity);
     Signal(const Azimuth& orientation);
     Signal(const Azimuth& orientation, const Quantity& quantity);
     Signal(const float orientation, const float quantity);
-    Signal(const float orientation, const float quantity, const std::string unit);
-    Signal(const float orientation, const float quantity, const shp::Unit& unit);
+    Signal(const float orientation, const float quantity,
+        const std::string unit);
+    Signal(const float orientation, const float quantity,
+        const shp::Unit& unit);
     Signal(const Azimuth& orientation, const float quantity);
-    Signal(const Azimuth& orientation, const float quantity, std::string unit);
-    Signal(const float orientation, const float quantity, short int scaling);
-    Signal(const Azimuth& orientation, const float quantity, short int scaling);
-    Signal(const float orientation, const float quantity, short int scaling, std::string unit);
-    Signal(const Azimuth& orientation, const float quantity, short int scaling, std::string unit);
-    Signal(const float orientation, const float quantity, short int scaling, const Unit& unit);
-    Signal(const Azimuth& orientation, const float quantity, short int scaling, const Unit& unit);
+    Signal(const Azimuth& orientation, const float quantity,
+        const std::string unit);
+    Signal(const Azimuth& orientation, const float quantity,
+        const Unit& unit);
+    Signal(const float orientation, const float quantity,
+        const short int scaling);
+    Signal(const Azimuth& orientation, const float quantity,
+        const short int scaling);
+    Signal(const float orientation, const float quantity,
+        const short int scaling, const std::string unit);
+    Signal(const Azimuth& orientation, const float quantity,
+        const short int scaling, const std::string unit);
+    Signal(const float orientation, const float quantity,
+        const short int scaling, const Unit& unit);
+    Signal(const Azimuth& orientation, const float quantity,
+        const short int scaling, const Unit& unit);
 
     // Destructors
     ~Signal();
@@ -79,8 +92,11 @@ public:
 
     // Additional methods
     Frequency getFrequency() const;
+    float getCyclingRate() const;
+    float getTimePerCycle() const;
+    float getMagnitude() const;
+    void setMagnitude(const float value);
     float getAmplitude() const;
-    void setAmplitude(const float value);
     Direction getPhase() const;
     void setPhase(const Direction& direction);
     short int getScaling() const;

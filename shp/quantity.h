@@ -70,7 +70,6 @@ public:
     void setUnit(const Unit& object) { this->unit = object; }
 
     // Additional methods
-    std::complex<float> getComplex(const float imaginary) const;
     Quantity getAbsolute() const;
     Quantity getInverse() const;
     Quantity getPercent() const;
@@ -90,6 +89,8 @@ public:
     std::string print();
     float getCosComponent(const float phase) const;
     float getSinComponent(const float phase) const;
+protected:
+    static const std::complex<float> getComplex(const float value, const float direction);
 public:
     static const float EULER_NUMBER;
     static const float DEFAULT_VALUE;

@@ -24,14 +24,12 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "azimuth.h"
-#include "polar.h"
 #include "signal.h"
 
 namespace shp {
 
 class Frequency : private Signal {
-    Direction modulation;
+    Signal modulation;
 public:
     // Constructors
     Frequency();
@@ -41,34 +39,75 @@ public:
     Frequency(const float magnitude, const std::string unit);
     Frequency(const float magnitude, const shp::Unit& unit);
     Frequency(const float magnitude, const short int scaling);
-    Frequency(const float magnitude, const short int scaling, const std::string unit);
-    Frequency(const float magnitude, const short int scaling, const shp::Unit& unit);
-    Frequency(const Polar& modulation);
-    Frequency(const Polar& modulation, const shp::Quantity& magnitude);
-    Frequency(const Polar& modulation, const Azimuth& phase, const shp::Quantity& magnitude);
+    Frequency(const float magnitude, const short int scaling,
+        const std::string unit);
+    Frequency(const float magnitude, const short int scaling,
+        const shp::Unit& unit);
+    Frequency(const Azimuth& phase);
+    Frequency(const Azimuth& phase, const std::string unit);
+    Frequency(const Azimuth& phase, const shp::Unit& unit);
+    Frequency(const Azimuth& phase, const float magnitude);
+    Frequency(const Azimuth& phase, const float magnitude,
+        const std::string unit);
+    Frequency(const Azimuth& phase, const float magnitude,
+        const shp::Unit& unit);
+    Frequency(const Azimuth& phase, const float magnitude,
+        const short int scaling);
+    Frequency(const Azimuth& phase, const float magnitude,
+        const short int scaling, const std::string unit);
+    Frequency(const Azimuth& phase, const float magnitude,
+        const short int scaling, const shp::Unit& unit);
+    Frequency(const Signal& modulation);
+    Frequency(const Signal& modulation, const shp::Quantity& magnitude);
+    Frequency(const Signal& modulation, const Azimuth& phase);
+    Frequency(const Signal& modulation, const Azimuth& phase,
+        const shp::Quantity& magnitude);
     Frequency(const float modulation, const float magnitude);
     Frequency(const float modulation, const float phase, const float magnitude);
-    Frequency(const float modulation, const float magnitude, const std::string unit);
-    Frequency(const float modulation, const float phase, const float magnitude, const std::string unit);
-    Frequency(const float modulation, const float magnitude, const shp::Unit& unit);
-    Frequency(const float modulation, const float phase, const float magnitude, const shp::Unit& unit);
-    Frequency(const Polar& modulation, const float magnitude);
-    Frequency(const Polar& modulation, const Azimuth& phase, const float magnitude);
-    Frequency(const float modulation, const float magnitude, short int scaling);
-    Frequency(const float modulation, const float phase, const float magnitude, short int scaling);
-    Frequency(const Polar& modulation, const float magnitude, short int scaling);
-    Frequency(const Polar& modulation, const float phase, const float magnitude, short int scaling);
-    Frequency(const Polar& modulation, const Azimuth& phase, const float magnitude, short int scaling);
-    Frequency(const float modulation, const float magnitude, short int scaling, std::string unit);
-    Frequency(const float modulation, const float phase, const float magnitude, short int scaling, std::string unit);
-    Frequency(const Polar& modulation, const float magnitude, short int scaling, std::string unit);
-    Frequency(const Polar& modulation, const float phase, const float magnitude, short int scaling, std::string unit);
-    Frequency(const Polar& modulation, const Azimuth& phase, const float magnitude, short int scaling, std::string unit);
-    Frequency(const float modulation, const float magnitude, short int scaling, const Unit& unit);
-    Frequency(const float modulation, const float phase, const float magnitude, short int scaling, const Unit& unit);
-    Frequency(const Polar& modulation, const float magnitude, short int scaling, const Unit& unit);
-    Frequency(const Polar& modulation, const float phase, const float magnitude, short int scaling, const Unit& unit);
-    Frequency(const Polar& modulation, const Azimuth& phase, const float magnitude, short int scaling, const Unit& unit);
+    Frequency(const float modulation, const float magnitude,
+        const std::string unit);
+    Frequency(const float modulation, const float phase, const float magnitude,
+        const std::string unit);
+    Frequency(const float modulation, const float magnitude,
+        const shp::Unit& unit);
+    Frequency(const float modulation, const float phase, const float magnitude,
+        const shp::Unit& unit);
+    Frequency(const Signal& modulation, const float magnitude);
+    Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude);
+    Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude,
+        const std::string unit);
+    Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude,
+        const Unit& unit);
+    Frequency(const float modulation, const float magnitude,
+        const short int scaling);
+    Frequency(const float modulation, const float phase, const float magnitude,
+        const short int scaling);
+    Frequency(const Signal& modulation, const float magnitude,
+        const short int scaling);
+    Frequency(const Signal& modulation, const float phase, const float magnitude,
+        const short int scaling);
+    Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude,
+        const short int scaling);
+    Frequency(const float modulation, const float magnitude,
+        const short int scaling, const std::string unit);
+    Frequency(const float modulation, const float phase, const float magnitude,
+        const short int scaling, const std::string unit);
+    Frequency(const Signal& modulation, const float magnitude,
+        const short int scaling, const std::string unit);
+    Frequency(const Signal& modulation, const float phase, const float magnitude,
+        const short int scaling, const std::string unit);
+    Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude,
+        const short int scaling, const std::string unit);
+    Frequency(const float modulation, const float magnitude,
+        const short int scaling, const Unit& unit);
+    Frequency(const float modulation, const float phase, const float magnitude,
+        const short int scaling, const Unit& unit);
+    Frequency(const Signal& modulation, const float magnitude,
+        const short int scaling, const Unit& unit);
+    Frequency(const Signal& modulation, const float phase, const float magnitude,
+        const short int scaling, const Unit& unit);
+    Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude,
+        const short int scaling, const Unit& unit);
 
     // Destructors
     ~Frequency();
@@ -82,22 +121,28 @@ public:
     Frequency operator%(const Frequency& peer) const;
 
     // Getters
-    Direction getModulation() const { return modulation; }
+    Signal getModulation() const { return modulation; }
 
     // Setters
-    void setModulation(const Direction& shift) { this->modulation = shift; }
+    void setModulation(const Signal& shift) { this->modulation = shift; }
 
     // Additional methods
     float getMagnitude() const;
     void setMagnitude(const float value);
+    float getAmplitude() const;
     float getPhase() const;
     void setPhase(const float value);
     short int getScaling() const;
     void setScaling(const short int factor);
     Unit getUnit() const;
     void setUnit(const Unit& object);
+    void adjustNumeric();
+    void adjustScaling();
+    bool checkNonZero() const;
+    bool checkInfinity() const;
+    short int checkScaling(const float amount) const;
     virtual shp::Quantity getPhaseShift() const;
-    virtual shp::Quantity getWavelength() const;
+    virtual shp::Quantity getPerpetuity() const;
     virtual Signal copy() const;
     virtual void clear();
     virtual std::string print();
