@@ -28,13 +28,14 @@
 #include "force.h"
 #include "../shp/angular.h"
 #include "../shp/potential.h"
+#include "../shp/frequency.h"
 
 namespace qft {
 
 // To enable compiler resolve forward declarations
 class Field;
 
-class Mass : public shp::Quantity {
+class Mass : public shp::Frequency {
     std::shared_ptr<Field> field;
 public:
     // Constructors
@@ -82,10 +83,10 @@ public:
     Density getDensity(const shp::Volume& volume) const;
     Force getForce(const shp::Angular& coordinates) const;
     std::shared_ptr<Field> getOriginField() const;
-    virtual Mass copy() const;
+    virtual Mass copy();
     virtual void clear();
     virtual std::string print();
-    shp::Quantity getFluctuation(const float phase) const;
+    shp::Frequency getFluctuation(const float phase) const;
 public:
     static const std::string UNIT;
     static const std::string GRAVITY_FIELD;

@@ -296,37 +296,107 @@ bool Temporal::operator==(const Temporal& peer) const {
 
 Temporal Temporal::operator+(const Temporal& peer) const {
     Signal self = *this, other = peer;
-    Signal signal = (self + other);
+    Signal signal = (self + other); signal.adjustScaling();
     return Temporal((modulation + peer.modulation), signal.getOrientation(),
         signal.getAmplitude(), signal.getScaling(), signal.getUnit());
 }
 
 Temporal Temporal::operator-(const Temporal& peer) const {
     Signal self = *this, other = peer;
-    Signal signal = (self - other);
+    Signal signal = (self - other); signal.adjustScaling();
     return Temporal((modulation - peer.modulation), signal.getOrientation(),
         signal.getAmplitude(), signal.getScaling(), signal.getUnit());
 }
 
 Temporal Temporal::operator*(const Temporal& peer) const {
     Signal self = *this, other = peer;
-    Signal signal = (self * other);
+    Signal signal = (self * other); signal.adjustScaling();
     return Temporal((modulation * peer.modulation), signal.getOrientation(),
         signal.getAmplitude(), signal.getScaling(), signal.getUnit());
 }
 
 Temporal Temporal::operator/(const Temporal& peer) const {
     Signal self = *this, other = peer;
-    Signal signal = (self / other);
+    Signal signal = (self / other); signal.adjustScaling();
     return Temporal((modulation / peer.modulation), signal.getOrientation(),
         signal.getAmplitude(), signal.getScaling(), signal.getUnit());
 }
 
 Temporal Temporal::operator%(const Temporal& peer) const {
     Signal self = *this, other = peer;
-    Signal signal = (self % other);
+    Signal signal = (self % other); signal.adjustScaling();
     return Temporal((modulation % peer.modulation), signal.getOrientation(),
         signal.getAmplitude(), signal.getScaling(), signal.getUnit());
+}
+
+Temporal Temporal::getCarrierScalar(const float coefficient) const {
+    Signal self = *this; Signal carrier = self(coefficient);
+    return Temporal(this->modulation, carrier.getOrientation(),
+		carrier.getMagnitude(), carrier.getScaling(), self.getUnit());
+}
+
+Temporal Temporal::getOverlayScalar(const float coefficient) const {
+    Signal self = *this; Signal overlay = modulation(coefficient);
+    return Temporal(overlay, self.getOrientation(),
+		self.getMagnitude(), self.getScaling(), self.getUnit());
+}
+
+Temporal Temporal::getCarrierRotation(const short int degree) const {
+    Signal self = *this; Azimuth carrier(self.getOrientation());
+    Azimuth phase = carrier.getRotation(degree);
+    return Temporal(this->modulation, phase,
+		self.getMagnitude(), self.getScaling(), self.getUnit());
+}
+
+Temporal Temporal::getOverlayRotation(const short int degree) const {
+    Signal self = *this; Azimuth overlay(modulation.getOrientation());
+    Azimuth phase = overlay.getRotation(degree);
+    return Temporal(phase, self.getOrientation(),
+		self.getMagnitude(), self.getScaling(), self.getUnit());
+}
+
+Temporal Temporal::getDotProduct(const Temporal& peer) const {
+	Signal self = *this, other = peer;
+    Signal carrier = self.getDotProduct(other);
+	Signal overlay = this->modulation.getDotProduct(peer.getModulation());
+    return Temporal(overlay, carrier.getOrientation(),
+        carrier.getAmplitude(), carrier.getScaling(), carrier.getUnit());
+}
+
+Temporal Temporal::getCarrierDotProduct(const Temporal& peer) const {
+	Signal self = *this, other = peer;
+    Signal carrier = self.getDotProduct(other);
+    return Temporal(this->modulation, carrier.getOrientation(),
+        carrier.getAmplitude(), carrier.getScaling(), carrier.getUnit());
+}
+
+Temporal Temporal::getOverlayDotProduct(const Temporal& peer) const {
+	Signal self = *this, other = peer;
+	Signal overlay = this->modulation.getDotProduct(peer.getModulation());
+    return Temporal(overlay, self.getOrientation(),
+        self.getAmplitude(), self.getScaling(), self.getUnit());
+}
+
+Temporal Temporal::getCrossProduct(const Temporal& peer) const {
+	Signal self = *this, other = peer;
+    Signal carrier = self.getCrossProduct(other);
+	Signal overlay = this->modulation.getCrossProduct(peer.getModulation());
+    return Temporal(overlay, carrier.getOrientation(),
+        carrier.getAmplitude(), carrier.getScaling(), carrier.getUnit());
+}
+
+Temporal Temporal::getCarrierCrossProduct(const Temporal& peer) const {
+	Signal self = *this, other = peer;
+    Signal carrier = self.getCrossProduct(other);
+    return Temporal(this->modulation, carrier.getOrientation(),
+        carrier.getAmplitude(), carrier.getScaling(), carrier.getUnit());
+}
+
+Temporal Temporal::getOverlayCrossProduct(const Temporal& peer) const {
+	Signal self = *this, other = peer;
+	Signal overlay = this->modulation.getCrossProduct(peer.getModulation());
+    return Temporal(overlay, self.getOrientation(),
+        self.getAmplitude(), self.getScaling(), self.getUnit());
 }
 
 float Temporal::getMagnitude() const {
@@ -386,19 +456,18 @@ void Temporal::adjustScaling() {
 }
 
 Quantity Temporal::getPhaseShift() const {
-    Signal self = *this; Frequency frequency = Signal::getFrequency();
-    float phase = (modulation.getCyclingRate() / frequency.getMagnitude());
-    shp::Quantity periodicity(phase, frequency.getScaling(), frequency.getUnit());
-	periodicity.adjustScaling(); periodicity.adjustNumeric();
-    return shp::Quantity(periodicity.getMagnitude(), periodicity.getScaling(),
-		shp::Unit::getDerivedSymbol(shp::Unit::PLANE_ANGLE));
+    Signal self = *this;
+    float phase = modulation.getCyclingRate();
+    shp::Quantity result(phase, shp::Quantity::DEFAULT_SCALE,
+        shp::Unit::getDerivedSymbol(shp::Unit::PLANE_ANGLE));
+	result.adjustScaling(); result.adjustNumeric();
+    return result;
 }
 
-Quantity Temporal::getPerpetuity() const {
-	Signal self = *this;
-    float periodicity = (modulation.getTimePerCycle() * self.getAmplitude());
-    shp::Quantity result(periodicity, self.getScaling(),
-		shp::Unit::getBaseSymbol(shp::Unit::TIME));
+Quantity Temporal::getTraversal() const {
+    Signal self = *this; Signal current = self.getScalarInverse();
+    float propagation = (modulation.getCyclingRate() * current.getAmplitude());
+    shp::Quantity result(propagation, current.getScaling(), self.getUnit());
 	result.adjustScaling(); result.adjustNumeric();
     return result;
 }

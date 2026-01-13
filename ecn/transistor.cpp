@@ -85,7 +85,7 @@ Transistor Transistor::operator%(const Transistor& peer) const {
 
 shp::Potential Transistor::getVoltageEB() const {
     Conductor base = getBase();
-    shp::Quantity charge = (emitter.getCharge() - base.getCharge());
+    shp::Temporal charge = (emitter.getCharge() - base.getCharge());
     short int scaling = charge.getScaling();
     shp::Potential fresh(emitter.getCharge().getMagnitude(), base.getCharge().getMagnitude(),
         scaling, shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_POTENTIAL));
@@ -94,7 +94,7 @@ shp::Potential Transistor::getVoltageEB() const {
 
 shp::Potential Transistor::getVoltageCB() const {
     Conductor base = getBase();
-    shp::Quantity charge = (collector.getCharge() - base.getCharge());
+    shp::Temporal charge = (collector.getCharge() - base.getCharge());
     short int scaling = charge.getScaling();
     shp::Potential fresh(collector.getCharge().getMagnitude(), base.getCharge().getMagnitude(),
         scaling, shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_POTENTIAL));

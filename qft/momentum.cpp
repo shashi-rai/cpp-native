@@ -207,7 +207,8 @@ shp::Quantity Momentum::getLinearTotal() const {
 
 shp::Quantity Momentum::getLinearKinetic() const {
     shp::Quantity momentum = getLinearTotal();
-    shp::Quantity result = ((momentum * momentum) / (mass + mass));
+    shp::Frequency total = (mass + mass);
+    shp::Quantity result = ((momentum * momentum) / total.getMagnitude());
     return result;
 }
 
@@ -220,7 +221,8 @@ shp::Quantity Momentum::getAngularTotal() const {   // directional acceleration
 
 shp::Quantity Momentum::getAngularKinetic() const {
     shp::Quantity momentum = getAngularTotal();
-    shp::Quantity result = ((momentum * momentum) / (mass + mass));
+    shp::Frequency total = (mass + mass);
+    shp::Quantity result = ((momentum * momentum) / total.getMagnitude());
     return result;
 }
 

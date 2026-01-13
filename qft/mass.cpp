@@ -33,78 +33,78 @@ const float Mass::NEUTRON = 1.67492749804f;         // 1.67 x 10^-27 kg
 const float Mass::ELECTRON = 0.0009109f;            // 0.0009109 x 10^-27 kg
 
 Mass::Mass()
-        : shp::Quantity(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE,
+        : shp::Frequency(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::MASS)) {
     setField(nullptr);
 }
 
 Mass::Mass(const std::shared_ptr<Field> field)
-        : shp::Quantity(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE,
+        : shp::Frequency(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::MASS)) {
     setField(field);
 }
 
 Mass::Mass(std::string unit)
-        : shp::Quantity(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, shp::Unit(unit)) {
+        : shp::Frequency(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, shp::Unit(unit)) {
     setField(nullptr);
 }
 
 Mass::Mass(const shp::Unit& unit)
-        : shp::Quantity(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, unit) {
+        : shp::Frequency(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, unit) {
     setField(nullptr);
 }
 
 Mass::Mass(const shp::Unit& unit, const std::shared_ptr<Field> field)
-        : shp::Quantity(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, unit) {
+        : shp::Frequency(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, unit) {
     setField(field);
 }
 
 Mass::Mass(const float magnitude)
-        : shp::Quantity(magnitude, ATOMIC_SCALE,
+        : shp::Frequency(magnitude, ATOMIC_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::MASS)) {
     setField(nullptr);
 }
 
 Mass::Mass(const float magnitude, const std::shared_ptr<Field> field)
-        : shp::Quantity(magnitude, ATOMIC_SCALE,
+        : shp::Frequency(magnitude, ATOMIC_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::MASS)) {
     setField(field);
 }
 
 Mass::Mass(const float magnitude, std::string unit)
-        : shp::Quantity(magnitude, ATOMIC_SCALE, shp::Unit(unit)) {
+        : shp::Frequency(magnitude, ATOMIC_SCALE, shp::Unit(unit)) {
     setField(nullptr);
 }
 
 Mass::Mass(const float magnitude, const shp::Unit& unit)
-        : shp::Quantity(magnitude, ATOMIC_SCALE, unit) {
+        : shp::Frequency(magnitude, ATOMIC_SCALE, unit) {
     setField(nullptr);
 }
 
 Mass::Mass(const float magnitude, const shp::Unit& unit, const std::shared_ptr<Field> field)
-        : shp::Quantity(magnitude, ATOMIC_SCALE, unit) {
+        : shp::Frequency(magnitude, ATOMIC_SCALE, unit) {
     setField(field);
 }
 
 Mass::Mass(const float magnitude, const short int scaling)
-        : shp::Quantity(magnitude, scaling,
+        : shp::Frequency(magnitude, scaling,
             shp::Unit::getBaseSymbol(shp::Unit::MASS)) {
     setField(nullptr);
 }
 
 Mass::Mass(const float magnitude, const short int scaling, std::string unit)
-        : shp::Quantity(magnitude, scaling, shp::Unit(unit)) {
+        : shp::Frequency(magnitude, scaling, shp::Unit(unit)) {
     setField(nullptr);
 }
 
 Mass::Mass(const float magnitude, const short int scaling, const shp::Unit& unit)
-        : shp::Quantity(magnitude, scaling, unit) {
+        : shp::Frequency(magnitude, scaling, unit) {
     setField(nullptr);
 }
 
 Mass::Mass(const float magnitude, const short int scaling, const shp::Unit& unit,
         std::shared_ptr<Field> field)
-        : shp::Quantity(magnitude, scaling, unit) {
+        : shp::Frequency(magnitude, scaling, unit) {
     setField(field);
 }
 
@@ -113,37 +113,37 @@ Mass::~Mass() {
 }
 
 bool Mass::operator==(const Mass& peer) const {
-    return (static_cast<const shp::Quantity&>(*this) == static_cast<const shp::Quantity&>(peer))
+    return (static_cast<const shp::Frequency&>(*this) == static_cast<const shp::Frequency&>(peer))
         && (field == peer.field);
 }
 
 Mass Mass::operator+(const Mass& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity result = (self + other);
+    shp::Frequency self = *this, other = peer;
+    shp::Frequency result = (self + other);
     return Mass(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
 }
 
 Mass Mass::operator-(const Mass& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity result = (self - other);
+    shp::Frequency self = *this, other = peer;
+    shp::Frequency result = (self - other);
     return Mass(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
 }
 
 Mass Mass::operator*(const Mass& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity result = (self * other);
+    shp::Frequency self = *this, other = peer;
+    shp::Frequency result = (self * other);
     return Mass(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
 }
 
 Mass Mass::operator/(const Mass& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity result = (self / other);
+    shp::Frequency self = *this, other = peer;
+    shp::Frequency result = (self / other);
     return Mass(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
 }
 
 Mass Mass::operator%(const Mass& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity result = (self % other);
+    shp::Frequency self = *this, other = peer;
+    shp::Frequency result = (self % other);
     return Mass(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
 }
 
@@ -153,7 +153,7 @@ Force Mass::operator()(const Mass& peer, const shp::Distance separation,
         shp::Potential self = field->getPotential();
         shp::Potential other = peer.field->getPotential();
         shp::Quantity factor = self(other, separation, position);
-        shp::Quantity force = (factor * (*this));
+        shp::Quantity force = (factor * (*this).getMagnitude());
         Gravity result(force.getMagnitude(), self.getAzimuth().toRadians(), force.getScaling(), field);
         result.adjustScaling();
         return result;
@@ -195,7 +195,7 @@ Density Mass::getDensity(const shp::Volume& volume) const {
 
 Force Mass::getForce(const shp::Angular& coordinates) const {
     if (isOwned()) {
-        shp::Temporal force(field->getTotal().getMagnitude() * (*this).getMagnitude());
+        shp::Frequency force(field->getTotal().getMagnitude() * (*this).getMagnitude());
         shp::Direction direction = field->getLinear();
         Gravity result(force.getMagnitude(), direction.toRadians(), force.getScaling(), field);
         result.adjustScaling();
@@ -213,14 +213,14 @@ std::shared_ptr<Field> Mass::getOriginField() const {
     return result;
 }
 
-Mass Mass::copy() const {
-    shp::Quantity self = *this;
+Mass Mass::copy() {
+    shp::Frequency self = *this;
     Mass fresh(self.getMagnitude(), self.getScaling(), self.getUnit(), field);
     return fresh;
 }
 
 void Mass::clear() {
-    shp::Quantity::clear();
+    shp::Frequency::clear();
     setField(nullptr);
     return;
 }
@@ -228,14 +228,16 @@ void Mass::clear() {
 std::string Mass::print() {
     std::stringstream result;
     result << shp::Unit::getBaseDimension(shp::Unit::MASS) << ":";
-    result << shp::Quantity::print() << ",";
-    result << (field != nullptr ? field->print() : "");
+    result << shp::Frequency::print() << ",";
+    result << (isOwned() ? field->print() : "");
 	return result.str();
 }
 
-shp::Quantity Mass::getFluctuation(const float phase) const {
-    shp::Quantity self = *this;
-	return shp::Quantity(self.getCosComponent(phase), self.getScaling(), self.getUnit());
+shp::Frequency Mass::getFluctuation(const float phase) const {
+    shp::Frequency self = *this;
+    shp::Frequency intensity = self.getMagnitude();
+    intensity.setPhase(phase);
+	return shp::Frequency(intensity.getMagnitude(), intensity.getScaling(), intensity.getUnit());
 }
 
 } // namespace qft

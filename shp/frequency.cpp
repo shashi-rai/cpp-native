@@ -293,7 +293,7 @@ bool Frequency::operator==(const Frequency& peer) const {
 
 Frequency Frequency::operator+(const Frequency& peer) const {
     Signal self = *this, other = peer;
-    Signal signal = (self + other);
+    Signal signal = (self + other); signal.adjustScaling();
     return Frequency((modulation + peer.modulation), signal.getOrientation(),
         signal.getAmplitude(), signal.getScaling(), signal.getUnit());
 }
@@ -307,23 +307,93 @@ Frequency Frequency::operator-(const Frequency& peer) const {
 
 Frequency Frequency::operator*(const Frequency& peer) const {
     Signal self = *this, other = peer;
-    Signal signal = (self * other);
+    Signal signal = (self * other); signal.adjustScaling();
     return Frequency((modulation * peer.modulation), signal.getOrientation(),
         signal.getAmplitude(), signal.getScaling(), signal.getUnit());
 }
 
 Frequency Frequency::operator/(const Frequency& peer) const {
     Signal self = *this, other = peer;
-    Signal signal = (self / other);
+    Signal signal = (self / other); signal.adjustScaling();
     return Frequency((modulation / peer.modulation), signal.getOrientation(),
         signal.getAmplitude(), signal.getScaling(), signal.getUnit());
 }
 
 Frequency Frequency::operator%(const Frequency& peer) const {
     Signal self = *this, other = peer;
-    Signal signal = (self % other);
+    Signal signal = (self % other); signal.adjustScaling();
     return Frequency((modulation % peer.modulation), signal.getOrientation(),
         signal.getAmplitude(), signal.getScaling(), signal.getUnit());
+}
+
+Frequency Frequency::getCarrierScalar(const float coefficient) const {
+    Signal self = *this; Signal carrier = self(coefficient);
+    return Frequency(this->modulation, carrier.getOrientation(),
+		carrier.getMagnitude(), carrier.getScaling(), self.getUnit());
+}
+
+Frequency Frequency::getOverlayScalar(const float coefficient) const {
+    Signal self = *this; Signal overlay = modulation(coefficient);
+    return Frequency(overlay, self.getOrientation(),
+		self.getMagnitude(), self.getScaling(), self.getUnit());
+}
+
+Frequency Frequency::getCarrierRotation(const short int degree) const {
+    Signal self = *this; Azimuth carrier(self.getOrientation());
+    Azimuth phase = carrier.getRotation(degree);
+    return Frequency(this->modulation, phase,
+		self.getMagnitude(), self.getScaling(), self.getUnit());
+}
+
+Frequency Frequency::getOverlayRotation(const short int degree) const {
+    Signal self = *this; Azimuth overlay(modulation.getOrientation());
+    Azimuth phase = overlay.getRotation(degree);
+    return Frequency(phase, self.getOrientation(),
+		self.getMagnitude(), self.getScaling(), self.getUnit());
+}
+
+Frequency Frequency::getDotProduct(const Frequency& peer) const {
+	Signal self = *this, other = peer;
+    Signal carrier = self.getDotProduct(other);
+	Signal overlay = this->modulation.getDotProduct(peer.getModulation());
+    return Frequency(overlay, carrier.getOrientation(),
+        carrier.getAmplitude(), carrier.getScaling(), carrier.getUnit());
+}
+
+Frequency Frequency::getCarrierDotProduct(const Frequency& peer) const {
+	Signal self = *this, other = peer;
+    Signal carrier = self.getDotProduct(other);
+    return Frequency(this->modulation, carrier.getOrientation(),
+        carrier.getAmplitude(), carrier.getScaling(), carrier.getUnit());
+}
+
+Frequency Frequency::getOverlayDotProduct(const Frequency& peer) const {
+	Signal self = *this, other = peer;
+	Signal overlay = this->modulation.getDotProduct(peer.getModulation());
+    return Frequency(overlay, self.getOrientation(),
+        self.getAmplitude(), self.getScaling(), self.getUnit());
+}
+
+Frequency Frequency::getCrossProduct(const Frequency& peer) const {
+	Signal self = *this, other = peer;
+    Signal carrier = self.getCrossProduct(other);
+	Signal overlay = this->modulation.getCrossProduct(peer.getModulation());
+    return Frequency(overlay, carrier.getOrientation(),
+        carrier.getAmplitude(), carrier.getScaling(), carrier.getUnit());
+}
+
+Frequency Frequency::getCarrierCrossProduct(const Frequency& peer) const {
+	Signal self = *this, other = peer;
+    Signal carrier = self.getCrossProduct(other);
+    return Frequency(this->modulation, carrier.getOrientation(),
+        carrier.getAmplitude(), carrier.getScaling(), carrier.getUnit());
+}
+
+Frequency Frequency::getOverlayCrossProduct(const Frequency& peer) const {
+	Signal self = *this, other = peer;
+	Signal overlay = this->modulation.getCrossProduct(peer.getModulation());
+    return Frequency(overlay, self.getOrientation(),
+        self.getAmplitude(), self.getScaling(), self.getUnit());
 }
 
 float Frequency::getMagnitude() const {
@@ -382,19 +452,19 @@ void Frequency::adjustScaling() {
     Signal::adjustScaling();
 }
 
-Quantity Frequency::getPhaseShift() const {
-    Signal self = *this; Frequency frequency = Signal::getFrequency();
-    float phase = (modulation.getCyclingRate() / frequency.getMagnitude());
-    shp::Quantity periodicity(phase, frequency.getScaling(), frequency.getUnit());
-	periodicity.adjustScaling(); periodicity.adjustNumeric();
-    return shp::Quantity(periodicity.getMagnitude(), periodicity.getScaling(),
-		shp::Unit::getDerivedSymbol(shp::Unit::PLANE_ANGLE));
+Quantity Frequency::getTraversal() const { 
+    Signal self = *this; Signal time = self.getScalarInverse();
+	std::string unit = self.getUnit().getName() + "/" + shp::Unit::getBaseSymbol(shp::Unit::TIME);
+    float propagation = (time.getCyclingRate() * modulation.getAmplitude());
+    shp::Quantity result(propagation, modulation.getScaling(), unit);
+	result.adjustScaling(); result.adjustNumeric();
+    return result;
 }
 
-Quantity Frequency::getPerpetuity() const {
-	Signal self = *this;
-    float periodicity = (modulation.getTimePerCycle() * self.getAmplitude());
-    shp::Quantity result(periodicity, self.getScaling(),
+Quantity Frequency::getLifespan() const {
+	Signal self = *this; Signal time = self.getScalarInverse();
+    float lifetime = (modulation.getTimePerCycle() * time.getAmplitude());
+    shp::Quantity result(lifetime, (modulation.getScaling() + time.getScaling()),
 		shp::Unit::getBaseSymbol(shp::Unit::TIME));
 	result.adjustScaling(); result.adjustNumeric();
     return result;

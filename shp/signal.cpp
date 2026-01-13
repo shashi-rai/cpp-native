@@ -226,6 +226,33 @@ Signal Signal::operator%(const Signal& peer) const {
     return Signal(result.imag(), result.real(), self.getScaling(), self.getUnit());
 }
 
+Signal Signal::operator()(const float scaleup) const {
+    Quantity self = *this;
+    Quantity product = self.getMultiple(scaleup);
+    return Signal(this->orientation, product.getMagnitude(), product.getScaling(), self.getUnit());
+}
+
+Signal Signal::getRotation(const short int degree) const {
+    Quantity self = *this; Azimuth direction(orientation);
+    Azimuth phase = direction.getRotation(degree);
+    return Signal(phase, self.getMagnitude(), self.getScaling(), self.getUnit());
+}
+
+Signal Signal::getDotProduct(const Signal& peer) const {
+    Quantity self = *this, other = peer;
+    Quantity product = (self * other); product.adjustScaling();
+    return Signal(this->orientation, product.getMagnitude(), product.getScaling(), self.getUnit());
+}
+
+Signal Signal::getCrossProduct(const Signal& peer) const {
+    Signal self = *this, other = peer; Azimuth direction(orientation);
+    float a = (self.getMagnitude() * peer.orientation);
+    float b = (self.orientation * other.getMagnitude());
+    float cross = (a - b);
+    Azimuth phase = direction.getNormal();
+    return Signal(phase, cross, self.getScaling(), self.getUnit());
+}
+
 Frequency Signal::getFrequency() const {
     Quantity wave = Quantity::getInverse();
     Frequency result(Direction::DEFAULT_RADIANS, orientation, std::abs(wave.getMagnitude()),
@@ -277,36 +304,79 @@ void Signal::setUnit(const Unit& object) {
     Quantity::setUnit(object);
 }
 
-Quantity Signal::getAbsolute() const {
-    Signal self = *this;
-    std::complex<float> result = Quantity::getComplex(Quantity::getMagnitude(), self.orientation);
-    return Quantity(std::abs(result), self.getScaling(), self.getUnit());
+Signal Signal::getScalarAbsolute() const {
+    Quantity self = *this;
+    return Signal(this->orientation, std::abs(self.getMagnitude()), self.getScaling(), self.getUnit());
 }
 
-Signal Signal::getInverse() const {
+Signal Signal::getVectorAbsolute() const {
+    Signal self = *this;
+    std::complex<float> result = Quantity::getComplex(Quantity::getMagnitude(), self.orientation);
+    return Signal(std::imag(result), std::abs(result), self.getScaling(), self.getUnit());
+}
+
+Signal Signal::getScalarInverse() const {
+    Quantity self = *this; Quantity inverse = self.getInverse();
+    std::complex<float> result = Quantity::getComplex(inverse.getMagnitude(), this->orientation);
+    return Signal(std::imag(result), std::real(result), inverse.getScaling(), inverse.getUnit());
+}
+
+Signal Signal::getVectorInverse() const {
     Signal self = *this;
     std::complex<float> result = Quantity::getComplex(Quantity::getMagnitude(), -self.orientation);
     return Signal(std::imag(result), -std::real(result), self.getScaling(), self.getUnit());
 }
 
-Quantity Signal::getPercent() const {
-    return Quantity::getPercent();
+Signal Signal::getScalarPercent() const {
+    Quantity self = *this, percent = Quantity::getPercent();
+    Signal result(this->orientation, percent.getMagnitude(), percent.getScaling(), percent.getUnit());
+    return result;
 }
 
-Quantity Signal::getSquare() const {
-    return Quantity::getSquare();
+Signal Signal::getVectorPercent() const {
+    Signal self = *this;
+    Signal result(self.orientation, self.getAmplitude(), self.getScaling(), self.getUnit().getPercent()); 
+    return result;
 }
 
-Quantity Signal::getSquareRoot() const {
-    return Quantity::getSquareRoot();
+Signal Signal::getDotProductSquare() const {
+    Quantity self = *this, square = Quantity::getSquare();
+    Signal result(this->orientation, square.getMagnitude(), square.getScaling(), square.getUnit());
+    return result;
 }
 
-Quantity Signal::getCube() const {
-    return Quantity::getCube();
+Signal Signal::getCrossProductSquare() const {
+    Signal self = *this;
+    std::complex<float> component = Quantity::getComplex(Quantity::getMagnitude(), self.orientation);
+    std::complex<float> total = (component * component);
+    Signal result(total.imag(), total.real(), (self.getScaling() * 2), self.getUnit().getSquare()); 
+    return result;
 }
 
-Quantity Signal::getCubeRoot() const {
-    return Quantity::getCubeRoot();
+Signal Signal::getDotProductSquareRoot() const {
+    Quantity self = *this, root = Quantity::getSquareRoot();
+    Signal result(this->orientation, root.getMagnitude(), root.getScaling(), root.getUnit());
+    return result;
+}
+
+Signal Signal::getDotProductCube() const {
+    Quantity self = *this, cube = Quantity::getCube();
+    Signal result(this->orientation, cube.getMagnitude(), cube.getScaling(), cube.getUnit());
+    return result;
+}
+
+Signal Signal::getCrossProductCube() const {
+    Signal self = *this;
+    std::complex<float> factor = Quantity::getComplex(Quantity::getMagnitude(), self.orientation);
+    std::complex<float> total = ((factor * factor) * factor);
+    Signal result(total.imag(), total.real(), (self.getScaling() * 3), self.getUnit().getCube()); 
+    return result;
+}
+
+Signal Signal::getDotProductCubeRoot() const {
+    Quantity self = *this, root = Quantity::getCubeRoot();
+    Signal result(this->orientation, root.getMagnitude(), root.getScaling(), root.getUnit());
+    return result;
 }
 
 bool Signal::isConvergent() const {

@@ -153,6 +153,19 @@ Direction Direction::getRotation(const short int degree) const {
     return Direction((toRadians() + (DEGREE_001 * degree)));
 }
 
+Direction Direction::getMultiple(const float coefficient) const {
+    float result = (toRadians() * coefficient);
+    return Direction(result);
+}
+
+Direction Direction::getDivision(const float coefficient) const {
+    float result = 0.0f;
+    if (coefficient != 0.0f) {
+        result = (toRadians() / coefficient);
+    }
+    return Direction(result);
+}
+
 Direction Direction::copy() const {
     Direction fresh(degrees, minutes, seconds);
     return fresh;

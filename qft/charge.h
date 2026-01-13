@@ -84,7 +84,7 @@ public:
     Density getDensity(const shp::Volume& volume) const;
     Force getForce(const shp::Angular& coordinates) const;
     std::shared_ptr<Field> getOriginField() const;
-    Charge copy();
+    virtual Charge copy();
     virtual void clear();
     virtual std::string print();
     shp::Temporal getFluctuation(const float phase) const;

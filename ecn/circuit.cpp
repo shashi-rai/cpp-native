@@ -82,7 +82,7 @@ Circuit Circuit::operator%(const Circuit& peer) const {
 }
 
 shp::Potential Circuit::getVoltage() const {
-    shp::Quantity charge = (positive.getCharge() - negative.getCharge());
+    shp::Temporal charge = (positive.getCharge() - negative.getCharge());
     short int scaling = charge.getScaling();
     shp::Potential fresh(positive.getCharge().getMagnitude(), negative.getCharge().getMagnitude(),
         scaling, shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_POTENTIAL));

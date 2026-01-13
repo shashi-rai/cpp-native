@@ -140,7 +140,7 @@ Capacitance Capacitance::operator%(const Capacitance& peer) const {
 }
 
 shp::Potential Capacitance::getThreshold() const {
-	shp::Quantity charge = (positive.getCharge() - negative.getCharge());
+	shp::Temporal charge = (positive.getCharge() - negative.getCharge());
 	short int scaling = charge.getScaling();
     shp::Potential fresh(positive.getCharge().getMagnitude(), negative.getCharge().getMagnitude(),
 		scaling, shp::Unit::getDerivedSymbol(shp::Unit::CAPACITANCE));

@@ -234,7 +234,7 @@ std::string Charge::print() {
     std::stringstream result;
     result << "q:";
     result << shp::Temporal::print() << ",";
-    result << (field != nullptr ? field->print() : "");
+    result << (isOwned() ? field->print() : "");
 	return result.str();
 }
 

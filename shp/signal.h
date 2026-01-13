@@ -84,6 +84,9 @@ public:
     Signal operator/(const Signal& peer) const;
     Signal operator%(const Signal& peer) const;
 
+    // Multiple operator
+    Signal operator()(const float scaleup) const;
+
     // Getters
     float getOrientation() const { return orientation; }
 
@@ -91,6 +94,9 @@ public:
     void setOrientation(const float direction) { this->orientation = direction; }
 
     // Additional methods
+    Signal getRotation(const short int degree) const;
+    Signal getDotProduct(const Signal& peer) const;
+    Signal getCrossProduct(const Signal& peer) const;
     Frequency getFrequency() const;
     float getCyclingRate() const;
     float getTimePerCycle() const;
@@ -103,13 +109,18 @@ public:
     void setScaling(const short int factor);
     Unit getUnit() const;
     void setUnit(const Unit& object);
-    Quantity getAbsolute() const;
-    Signal getInverse() const;
-    Quantity getPercent() const;
-    Quantity getSquare() const;
-    Quantity getSquareRoot() const;
-    Quantity getCube() const;
-    Quantity getCubeRoot() const;
+    Signal getScalarAbsolute() const;
+    Signal getVectorAbsolute() const;
+    Signal getScalarInverse() const;
+    Signal getVectorInverse() const;
+    Signal getScalarPercent() const;
+    Signal getVectorPercent() const;
+    Signal getDotProductSquare() const;
+    Signal getCrossProductSquare() const;
+    Signal getDotProductSquareRoot() const;
+    Signal getDotProductCube() const;
+    Signal getCrossProductCube() const;
+    Signal getDotProductCubeRoot() const;
     bool isConvergent() const;
     bool isDivergent() const;
     bool checkNonZero() const;

@@ -187,6 +187,22 @@ Quantity Quantity::getCubeRoot() const {
     return fresh;
 }
 
+Quantity Quantity::getMultiple(const float coefficient) const {
+    Quantity self = *this;
+    float mantissa = (self.magnitude * coefficient);
+    Quantity result(mantissa, self.scaling, self.getUnit());
+    return result;
+}
+
+Quantity Quantity::getDivision(const float coefficient) const {
+    Quantity self = *this; float mantissa = Quantity::DEFAULT_VALUE;
+    if (coefficient != Quantity::DEFAULT_VALUE) {
+        mantissa = (self.magnitude / coefficient);
+    }
+    Quantity result(mantissa, self.scaling, self.getUnit());
+    return result;
+}
+
 bool Quantity::isConvergent() const {
     return (magnitude > DEFAULT_VALUE);
 }

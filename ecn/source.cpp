@@ -101,7 +101,7 @@ void Source::setNegative(const Conductor& line) {
 
 shp::Potential Source::getVoltage() const {
     Conductor negative = getNegative();
-    shp::Quantity charge = (positive.getCharge() - negative.getCharge());
+    shp::Temporal charge = (positive.getCharge() - negative.getCharge());
     short int scaling = charge.getScaling();
     shp::Potential fresh(positive.getCharge().getMagnitude(), negative.getCharge().getMagnitude(),
         scaling, shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_POTENTIAL));

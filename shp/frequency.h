@@ -127,6 +127,16 @@ public:
     void setModulation(const Signal& shift) { this->modulation = shift; }
 
     // Additional methods
+    Frequency getCarrierScalar(const float coefficient) const;
+    Frequency getOverlayScalar(const float coefficient) const;
+    Frequency getCarrierRotation(const short int degree) const;
+    Frequency getOverlayRotation(const short int degree) const;
+    Frequency getDotProduct(const Frequency& peer) const;
+    Frequency getCarrierDotProduct(const Frequency& peer) const;
+    Frequency getOverlayDotProduct(const Frequency& peer) const;
+    Frequency getCrossProduct(const Frequency& peer) const;
+    Frequency getCarrierCrossProduct(const Frequency& peer) const;
+    Frequency getOverlayCrossProduct(const Frequency& peer) const;
     float getMagnitude() const;
     void setMagnitude(const float value);
     float getAmplitude() const;
@@ -141,8 +151,8 @@ public:
     bool checkNonZero() const;
     bool checkInfinity() const;
     short int checkScaling(const float amount) const;
-    virtual shp::Quantity getPhaseShift() const;
-    virtual shp::Quantity getPerpetuity() const;
+    virtual shp::Quantity getTraversal() const;
+    virtual shp::Quantity getLifespan() const;
     virtual Signal copy() const;
     virtual void clear();
     virtual std::string print();

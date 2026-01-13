@@ -77,6 +77,8 @@ public:
     Quantity getSquareRoot() const;
     Quantity getCube() const;
     Quantity getCubeRoot() const;
+    Quantity getMultiple(const float coefficient) const;
+    Quantity getDivision(const float coefficient) const;
     bool isConvergent() const;
     bool isDivergent() const;
     bool checkNonZero() const;

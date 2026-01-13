@@ -263,7 +263,7 @@ std::string Reality::print() {
 }
 
 void Reality::initializeGravityField(const Mass& mass) {
-    gravity = qft::Field::shareable("Gravity"); gravity->setAmplitude(mass);
+    gravity = qft::Field::shareable("Gravity"); gravity->setAmplitude(mass.getMagnitude());
 }
 
 void Reality::initializeElectricField(const Charge& charge) {
@@ -339,7 +339,7 @@ void Reality::initializeWeakField(const Charge& charge) {
 }
 
 void Reality::initializeHiggsField(const Mass& mass) {
-    higgs = qft::Field::shareable("Higgs"); higgs->setAmplitude(mass);
+    higgs = qft::Field::shareable("Higgs"); higgs->setAmplitude(mass.getMagnitude());
 }
 
 } // namespace qft

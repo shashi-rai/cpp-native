@@ -132,7 +132,7 @@ void Alternating::setNeutral(const Conductor& line) {
 
 shp::Potential Alternating::getVoltageL1() const {
     Conductor neutral = getNeutral();
-    shp::Quantity charge = (line1.getCharge() - neutral.getCharge());
+    shp::Temporal charge = (line1.getCharge() - neutral.getCharge());
     short int scaling = charge.getScaling();
     shp::Potential fresh(line1.getCharge().getMagnitude(), neutral.getCharge().getMagnitude(),
         scaling, shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_POTENTIAL));
@@ -141,7 +141,7 @@ shp::Potential Alternating::getVoltageL1() const {
 
 shp::Potential Alternating::getVoltageL2() const {
     Conductor neutral = getNeutral();
-    shp::Quantity charge = (line2.getCharge() - neutral.getCharge());
+    shp::Temporal charge = (line2.getCharge() - neutral.getCharge());
     short int scaling = charge.getScaling();
     shp::Potential fresh(line2.getCharge().getMagnitude(), neutral.getCharge().getMagnitude(),
         scaling, shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_POTENTIAL));
@@ -150,7 +150,7 @@ shp::Potential Alternating::getVoltageL2() const {
 
 shp::Potential Alternating::getVoltageL3() const {
     Conductor neutral = getNeutral();
-    shp::Quantity charge = (line3.getCharge() - neutral.getCharge());
+    shp::Temporal charge = (line3.getCharge() - neutral.getCharge());
     short int scaling = charge.getScaling();
     shp::Potential fresh(line3.getCharge().getMagnitude(), neutral.getCharge().getMagnitude(),
         scaling, shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_POTENTIAL));
