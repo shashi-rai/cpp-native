@@ -404,6 +404,10 @@ void Frequency::setMagnitude(const float value) {
     Signal::setMagnitude(value);
 }
 
+void Frequency::setMagnitude(const float value, const short int scale) {
+    Signal::setMagnitude(value, scale);
+}
+
 float Frequency::getAmplitude() const {
     return Signal::getAmplitude();
 }

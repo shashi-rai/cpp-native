@@ -22,7 +22,7 @@
 
 namespace shp {
 
-const float Direction::DEFAULT_RADIANS = 0.000000000000000000f;
+const float Direction::DEFAULT_RADIANS = 0.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f;
 const short int Direction::DEGREES_MIN = 0;
 const short int Direction::DEGREES_MAX = 360;
 const short int Direction::MINUTES_MIN = 0;
@@ -30,16 +30,16 @@ const short int Direction::MINUTES_MAX = 60;
 const short int Direction::SECONDS_MIN = 0;
 const short int Direction::SECONDS_MAX = 3600;
 
-const float Direction::DEGREE_001 = 0.017453292519943295f;
-const float Direction::DEGREE_005 = 0.087266462599716000f;
-const float Direction::DEGREE_010 = 0.174532925199432950f;
-const float Direction::DEGREE_030 = 0.523598775598299000f;
-const float Direction::DEGREE_045 = 0.785398163397448000f;
-const float Direction::DEGREE_060 = 1.047197551196598000f;
-const float Direction::DEGREE_090 = 1.570796326794897000f;
-const float Direction::DEGREE_180 = 3.141592653589793000f;
-const float Direction::DEGREE_270 = 4.712388980384690000f;
-const float Direction::DEGREE_360 = 6.283185307179586000f;
+const float Direction::DEGREE_001 = 0.01745329251994329576923690768488612713442871888541725456097191440171009114603449443682241569634509482000f;
+const float Direction::DEGREE_005 = 0.08726646259971647000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f;
+const float Direction::DEGREE_010 = 0.17453292519943295769236907684886127134428718885417254560971914401710091146034494436822415696345094820000f;
+const float Direction::DEGREE_030 = 0.52359877559829887307710723054658381403286156656251763682915743205130273438103483310467247089035284460000f;
+const float Direction::DEGREE_045 = 0.78539816339744830961566084581987572104929234984381014855260173666687445771661358586419309459800262624510f;
+const float Direction::DEGREE_060 = 1.04719755119659770533265448951472838719685872395833333333333333333333333333333333333333333333333333333333f;
+const float Direction::DEGREE_090 = 1.57079632679489655799898173427209258079528808593750000000000000000000000000000000000000000000000000000000f;
+const float Direction::DEGREE_180 = 3.14159265358979323846264338327950288419716939937510582097494000000000000000000000000000000000000000000000f;
+const float Direction::DEGREE_270 = 4.71238898038469000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f;
+const float Direction::DEGREE_360 = 6.28318530717958647692528676655900576839433879875021164194988918461563281257241799725606965068423413600000f;
 
 Direction::Direction()
         : degrees(DEGREES_MIN), minutes(MINUTES_MIN), seconds(SECONDS_MIN) {
@@ -183,6 +183,56 @@ std::string Direction::print() {
     result << minutes << ",";
     result << seconds << "]";
 	return result.str();
+}
+
+const float Direction::getHalfPiAngle(const float radians) {
+    return fmod(radians, Direction::DEGREE_090);
+}
+
+const float Direction::getFullPiAngle(const float radians) {
+    return fmod(radians, Direction::DEGREE_180);
+}
+
+const float Direction::getTwoPiAngle(const float radians) {
+    return fmod(radians, Direction::DEGREE_360);
+}
+
+const Direction Direction::getDifference(const float x_radians, const float y_radians) {
+    float left = getHalfPiAngle(x_radians), right = getHalfPiAngle(y_radians);
+    float difference = DEFAULT_RADIANS;
+    if (y_radians > x_radians) {
+        float quadrant = (y_radians / DEGREE_090);
+        if (quadrant >= 3) {
+            difference = (DEGREE_090 - (right - left));
+        } else if (quadrant >= 2) {
+            difference = (right - left);
+        } else if (quadrant >= 1) {
+            difference = (DEGREE_090 - (right - left));
+        } else {
+            difference = (right - left);
+        }
+    } else if (x_radians > y_radians) {
+        float quadrant = (x_radians / DEGREE_090);
+        if (quadrant >= 3) {
+            difference = (DEGREE_090 - (left - right));
+        } else if (quadrant >= 2) {
+            difference = (left - right);
+        } else if (quadrant >= 1) {
+            difference = (DEGREE_090 - (left - right));
+        } else {
+            difference = (left - right);
+        }
+    }
+    return Direction(difference);
+}
+
+const Direction Direction::getDifference(const Direction& x, const Direction& y) {
+    return getDifference(x.toRadians(), y.toRadians());
+}
+
+const Direction Direction::getNormal(const Direction& x, const Direction& y) {
+    Direction difference = getDifference(x.toRadians(), y.toRadians());
+    return difference.getNormal();
 }
 
 /*

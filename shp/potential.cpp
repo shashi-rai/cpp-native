@@ -157,15 +157,25 @@ Potential Potential::operator*(const Potential& peer) const {
 
 Potential Potential::operator/(const Potential& peer) const {
 	Potential self = *this;
-    float newhigh = (self.getHigh() / peer.getHigh());
-    float newlow = (self.getLow() / peer.getLow());
+	float newhigh = Quantity::DEFAULT_VALUE, newlow = Quantity::DEFAULT_VALUE;
+	if (peer.getHigh() != Quantity::DEFAULT_VALUE) {
+		newhigh = (self.getHigh() / peer.getHigh());
+	}
+	if (peer.getLow() != Quantity::DEFAULT_VALUE) {
+		newlow = (self.getLow() / peer.getLow());
+	}
     return Potential(newhigh, newlow, (self.getScaling() - peer.getScaling()), self.getUnit());
 }
 
 Potential Potential::operator%(const Potential& peer) const {
 	Potential self = *this;
-    float newhigh = fmod(self.getHigh(), (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
-    float newlow = fmod(self.getLow(), (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+	float newhigh = Quantity::DEFAULT_VALUE, newlow = Quantity::DEFAULT_VALUE;
+	if (peer.getHigh() != Quantity::DEFAULT_VALUE) {
+    	newhigh = fmod(self.getHigh(), (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+	}
+	if (peer.getLow() != Quantity::DEFAULT_VALUE) {
+		newlow = fmod(self.getLow(), (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+	}
     return Potential(newhigh, newlow, self.getScaling(), self.getUnit());
 }
 
@@ -265,9 +275,9 @@ void Potential::clear() {
 
 std::string Potential::print() {
     std::stringstream result;
-    result << origin.print() << ",∇(";
+    result << origin.print() << ",‖";
     result << getHigh() << "~";
-    result << getLow() << ")x10^";
+    result << getLow() << "ₑ";
     result << getScaling();
     result << getUnit().print();
 	return result.str();

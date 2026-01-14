@@ -156,15 +156,25 @@ Confinement Confinement::operator*(const Confinement& peer) const {
 
 Confinement Confinement::operator/(const Confinement& peer) const {
 	Potential self = *this;
-    float newhigh = (self.getHigh() / peer.getHigh());
-    float newlow = (self.getLow() / peer.getLow());
+    float newhigh = Quantity::DEFAULT_VALUE, newlow = Quantity::DEFAULT_VALUE;
+	if (peer.getHigh() != Quantity::DEFAULT_VALUE) {
+		newhigh = (self.getHigh() / peer.getHigh());
+	}
+	if (peer.getLow() != Quantity::DEFAULT_VALUE) {
+		newlow = (self.getLow() / peer.getLow());
+	}
     return Confinement(newlow, newhigh, (self.getScaling() - peer.getScaling()), self.getUnit());
 }
 
 Confinement Confinement::operator%(const Confinement& peer) const {
 	Potential self = *this;
-    float newhigh = fmod(self.getHigh(), (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
-    float newlow = fmod(self.getLow(), (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    float newhigh = Quantity::DEFAULT_VALUE, newlow = Quantity::DEFAULT_VALUE;
+	if (peer.getHigh() != Quantity::DEFAULT_VALUE) {
+    	newhigh = fmod(self.getHigh(), (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+	}
+	if (peer.getLow() != Quantity::DEFAULT_VALUE) {
+		newlow = fmod(self.getLow(), (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+	}
     return Confinement(newlow, newhigh, self.getScaling(), self.getUnit());
 }
 

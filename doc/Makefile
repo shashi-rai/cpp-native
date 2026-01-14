@@ -49,12 +49,14 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/clause.o \
 		$(OBJFOLDR)/document.o \
 		$(OBJFOLDR)/page.o \
+		$(OBJFOLDR)/promise.o \
 		$(OBJFOLDR)/section.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
 		$(OBJFOLDR)/chapter.o \
 		$(OBJFOLDR)/clause.o \
 		$(OBJFOLDR)/document.o \
 		$(OBJFOLDR)/page.o \
+		$(OBJFOLDR)/promise.o \
 		$(OBJFOLDR)/section.o
 
 $(OBJFOLDR)/chapter.o: chapter.cpp
@@ -68,6 +70,9 @@ $(OBJFOLDR)/document.o: document.cpp
 
 $(OBJFOLDR)/page.o: page.cpp
 	$(CPPTOOL) -c page.cpp -o $(OBJFOLDR)/page.o $(CXXFLAGS)
+
+$(OBJFOLDR)/promise.o: promise.cpp
+	$(CPPTOOL) -c promise.cpp -o $(OBJFOLDR)/promise.o $(CXXFLAGS)
 
 $(OBJFOLDR)/section.o: section.cpp
 	$(CPPTOOL) -c section.cpp -o $(OBJFOLDR)/section.o $(CXXFLAGS)

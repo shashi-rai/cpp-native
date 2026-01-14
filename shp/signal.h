@@ -102,6 +102,7 @@ public:
     float getTimePerCycle() const;
     float getMagnitude() const;
     void setMagnitude(const float value);
+    void setMagnitude(const float value, const short int scale);
     float getAmplitude() const;
     Direction getPhase() const;
     void setPhase(const Direction& direction);

@@ -79,7 +79,13 @@ private:
     short int getIndexDegrees(const short int value) const;
     short int getIndexMinutes(const short int value) const;
     short int getIndexSeconds(const short int value) const;
-
+public:
+    static const float getHalfPiAngle(const float radians);
+    static const float getFullPiAngle(const float radians);
+    static const float getTwoPiAngle(const float radians);
+    static const Direction getDifference(const float x, const float y);
+    static const Direction getDifference(const Direction& x, const Direction& y);
+    static const Direction getNormal(const Direction& x, const Direction& y);
 public:
     static const float DEFAULT_RADIANS;
     static const short int DEGREES_MIN;

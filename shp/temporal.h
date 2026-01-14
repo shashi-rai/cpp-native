@@ -141,6 +141,7 @@ public:
     Temporal getOverlayCrossProduct(const Temporal& peer) const;
     float getMagnitude() const;
     void setMagnitude(const float value);
+    void setMagnitude(const float value, const short int scale);
     float getAmplitude() const;
     float getPhase() const;
     void setPhase(const float value);
@@ -154,8 +155,9 @@ public:
     bool checkInfinity() const;
     short int checkScaling(const float amount) const;
     virtual shp::Quantity getPhaseShift() const;
-    virtual shp::Quantity getTraversal() const;
-    virtual shp::Frequency getFrequency() const;
+    virtual shp::Quantity getCyclicTraversal() const;
+    virtual Signal getLinearTraversal() const;
+    virtual Frequency getFrequency() const;
     virtual Signal copy() const;
     virtual void clear();
     virtual std::string print();

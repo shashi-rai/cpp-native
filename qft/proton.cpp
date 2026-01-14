@@ -181,10 +181,10 @@ void Proton::initialize() {
     self.setWavelength(shp::Distance(COMPTON_WAVELENGTH, WAVELENGTH_SCALE));
 
     std::shared_ptr<qft::Field> mfield = Field::shareable("G");
-    mfield->setAmplitude(Mass::PROTON, Mass::ATOMIC_SCALE);
+    mfield->setMagnitude(Mass::PROTON, Mass::ATOMIC_SCALE);
 
     std::shared_ptr<qft::Field> efield = Field::shareable("E");
-    efield->setAmplitude(Charge::PROTON, Charge::ATOMIC_SCALE);
+    efield->setMagnitude(Charge::PROTON, Charge::ATOMIC_SCALE);
 
     up[0] = Quark("u", Quark::getComptonWavelength(Quark::UP),
         Quark::getMassLow(Quark::UP, mfield), Quark::getElectricCharge(Quark::UP, efield));

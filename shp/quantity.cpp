@@ -121,18 +121,28 @@ Quantity Quantity::operator*(const Quantity& peer) const {
 }
 
 Quantity Quantity::operator/(const Quantity& peer) const {
-    Quantity self = *this;
-    float mantissa = (self.magnitude / peer.magnitude);
+    Quantity self = *this; float mantissa = DEFAULT_VALUE;
+    if (peer.magnitude != DEFAULT_VALUE) {
+        mantissa = (self.magnitude / peer.magnitude);
+    }
     Quantity result(mantissa, (self.scaling - peer.scaling), self.getUnit());
     return result;
 }
 
 Quantity Quantity::operator%(const Quantity& peer) const {
-    Quantity self = *this;
+    Quantity self = *this; float mantissa = DEFAULT_VALUE;
     short int exponent = (self.scaling - peer.scaling);
-    float mantissa = fmod(self.magnitude, (peer.magnitude / std::pow(DECIMAL_SCALE, exponent)));
+    if (peer.magnitude != DEFAULT_VALUE) {
+        mantissa = fmod(self.magnitude, (peer.magnitude / std::pow(DECIMAL_SCALE, exponent)));
+
+    }
     Quantity result(mantissa, self.scaling, self.getUnit());
     return result;
+}
+
+void Quantity::setMagnitude(const float value, const short int scale) {
+    this->magnitude = value;
+    this->scaling = scale;
 }
 
 Quantity Quantity::getAbsolute() const {
@@ -258,7 +268,7 @@ void Quantity::clear() {
 
 std::string Quantity::print() {
     std::stringstream result;
-    result << magnitude << "ₑ";     // "₁₀" base 10
+    result << magnitude << "ₑ";
     result << scaling;
     result << unit.print();
 	return result.str();

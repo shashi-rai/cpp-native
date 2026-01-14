@@ -156,15 +156,25 @@ Growth Growth::operator*(const Growth& peer) const {
 
 Growth Growth::operator/(const Growth& peer) const {
 	shp::Potential self = *this;
-    float newhigh = (self.getHigh() / peer.getHigh());
-    float newlow = (self.getLow() / peer.getLow());
+    float newhigh = shp::Quantity::DEFAULT_VALUE, newlow = shp::Quantity::DEFAULT_VALUE;
+	if (peer.getHigh() != shp::Quantity::DEFAULT_VALUE) {
+		newhigh = (self.getHigh() / peer.getHigh());
+	}
+	if (peer.getLow() != shp::Quantity::DEFAULT_VALUE) {
+		newlow = (self.getLow() / peer.getLow());
+	}
     return Growth(newlow, newhigh, (self.getScaling() - peer.getScaling()), self.getUnit());
 }
 
 Growth Growth::operator%(const Growth& peer) const {
 	shp::Potential self = *this;
-    float newhigh = fmod(self.getHigh(), (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
-    float newlow = fmod(self.getLow(), (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    float newhigh = shp::Quantity::DEFAULT_VALUE, newlow = shp::Quantity::DEFAULT_VALUE;
+	if (peer.getHigh() != shp::Quantity::DEFAULT_VALUE) {
+    	newhigh = fmod(self.getHigh(), (peer.getHigh() / std::pow(shp::Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+	}
+	if (peer.getLow() != shp::Quantity::DEFAULT_VALUE) {
+		newlow = fmod(self.getLow(), (peer.getLow() / std::pow(shp::Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+	}
     return Growth(newlow, newhigh, self.getScaling(), self.getUnit());
 }
 

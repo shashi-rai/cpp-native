@@ -403,8 +403,8 @@ float Temporal::getMagnitude() const {
     return Signal::getMagnitude();
 }
 
-void Temporal::setMagnitude(const float value) {
-    Signal::setMagnitude(value);
+void Temporal::setMagnitude(const float value, const short int scale) {
+    Signal::setMagnitude(value, scale);
 }
 
 float Temporal::getAmplitude() const {
@@ -464,11 +464,19 @@ Quantity Temporal::getPhaseShift() const {
     return result;
 }
 
-Quantity Temporal::getTraversal() const {
-    Signal self = *this; Signal current = self.getScalarInverse();
-    float propagation = (modulation.getCyclingRate() * current.getAmplitude());
-    shp::Quantity result(propagation, current.getScaling(), self.getUnit());
+Quantity Temporal::getCyclicTraversal() const {
+    Signal self = *this;
+    float propagation = (modulation.getCyclingRate() * self.getAmplitude());
+    shp::Quantity result(propagation, self.getScaling(), self.getUnit());
 	result.adjustScaling(); result.adjustNumeric();
+    return result;
+}
+
+Signal Temporal::getLinearTraversal() const {
+    Signal self = *this; Signal propagation = self.getCrossProduct(modulation);
+    Signal result(propagation.getOrientation(), propagation.getMagnitude(),
+        propagation.getScaling(), self.getUnit());
+	//result.adjustScaling();
     return result;
 }
 

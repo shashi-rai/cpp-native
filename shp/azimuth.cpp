@@ -127,7 +127,7 @@ void Azimuth::clear() {
 std::string Azimuth::print() {
     std::stringstream result;
     result << "𝜙";
-    result << Direction::print() << "!Δ";
+    result << Direction::print() << "δ";
 	result << change.print();
 	return result.str();
 }

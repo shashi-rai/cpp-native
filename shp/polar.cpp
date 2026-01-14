@@ -127,7 +127,7 @@ void Polar::clear() {
 std::string Polar::print() {
     std::stringstream result;
     result << "𝜃";
-    result << Direction::print() << "!Δ";
+    result << Direction::print() << "δ";
 	result << change.print();
 	return result.str();
 }

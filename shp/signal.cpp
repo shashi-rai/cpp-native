@@ -245,12 +245,17 @@ Signal Signal::getDotProduct(const Signal& peer) const {
 }
 
 Signal Signal::getCrossProduct(const Signal& peer) const {
-    Signal self = *this, other = peer; Azimuth direction(orientation);
-    float a = (self.getMagnitude() * peer.orientation);
-    float b = (self.orientation * other.getMagnitude());
-    float cross = (a - b);
-    Azimuth phase = direction.getNormal();
-    return Signal(phase, cross, self.getScaling(), self.getUnit());
+    Quantity self = *this, other = peer; Quantity product; Azimuth normal;
+    float difference = (peer.orientation - this->orientation);
+    if (difference != Direction::DEFAULT_RADIANS && difference != Direction::DEGREE_180) {
+        Direction angle = Direction::getDifference(this->orientation, peer.orientation);
+        float radians = angle.toRadians(); normal = Azimuth(radians);
+        product = (self * other).getSinComponent(radians);
+    } else if (difference == Direction::DEGREE_090 || difference == Direction::DEGREE_270) {
+        product = (self * other);
+    }
+    product.adjustScaling();
+    return Signal(normal.toRadians(), product.getMagnitude(), product.getScaling(), self.getUnit());
 }
 
 Frequency Signal::getFrequency() const {
@@ -274,6 +279,10 @@ float Signal::getMagnitude() const {
 
 void Signal::setMagnitude(const float value) {
     Quantity::setMagnitude(value);
+}
+
+void Signal::setMagnitude(const float value, const short int scale) {
+    Quantity::setMagnitude(value, scale);
 }
 
 float Signal::getAmplitude() const {

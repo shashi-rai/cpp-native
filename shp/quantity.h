@@ -70,6 +70,7 @@ public:
     void setUnit(const Unit& object) { this->unit = object; }
 
     // Additional methods
+    void setMagnitude(const float value, const short int scale);
     Quantity getAbsolute() const;
     Quantity getInverse() const;
     Quantity getPercent() const;

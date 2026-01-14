@@ -139,6 +139,7 @@ public:
     Frequency getOverlayCrossProduct(const Frequency& peer) const;
     float getMagnitude() const;
     void setMagnitude(const float value);
+    void setMagnitude(const float value, const short int scale);
     float getAmplitude() const;
     float getPhase() const;
     void setPhase(const float value);
