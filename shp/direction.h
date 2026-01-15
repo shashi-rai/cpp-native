@@ -65,6 +65,7 @@ public:
     float getCyclingRate() const;
     float getTimePerCycle() const;
     float toRadians() const;
+    void fromRadians(const float radians);
     bool checkNonZero() const;
     Direction getInverse() const;
     Direction getNormal() const;
@@ -80,14 +81,20 @@ private:
     short int getIndexMinutes(const short int value) const;
     short int getIndexSeconds(const short int value) const;
 public:
+    static const short int getQuadrant(const float radians);
+    static const float getPeriodic(const float radians);
     static const float getHalfPiAngle(const float radians);
     static const float getFullPiAngle(const float radians);
     static const float getTwoPiAngle(const float radians);
+    static const float getFourPiAngle(const float radians);
     static const Direction getDifference(const float x, const float y);
     static const Direction getDifference(const Direction& x, const Direction& y);
     static const Direction getNormal(const Direction& x, const Direction& y);
+    static const float getFraction(const float x, const float y);
+    static const float getFraction(const Direction& x, const Direction& y);
+    static const bool checkTranslation(const Direction& x, const Direction& y);
+    static const bool checkRotation(const Direction& x, const Direction& y);
 public:
-    static const float DEFAULT_RADIANS;
     static const short int DEGREES_MIN;
     static const short int DEGREES_MAX;
     static const short int MINUTES_MIN;
@@ -96,6 +103,7 @@ public:
     static const short int SECONDS_MAX;
 
     // Common high-Precision Radians
+    static const float DEGREE_000;
     static const float DEGREE_001;
     static const float DEGREE_005;
     static const float DEGREE_010;
@@ -106,6 +114,9 @@ public:
     static const float DEGREE_180;
     static const float DEGREE_270;
     static const float DEGREE_360;
+    static const float DEGREE_720;
+    static const float DEFAULT_RADIANS;
+    static const int DEFAULT_PRECISION;
 };
 
 typedef std::vector<Direction > DirectionArray;

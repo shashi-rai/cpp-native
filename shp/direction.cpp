@@ -22,7 +22,6 @@
 
 namespace shp {
 
-const float Direction::DEFAULT_RADIANS = 0.00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f;
 const short int Direction::DEGREES_MIN = 0;
 const short int Direction::DEGREES_MAX = 360;
 const short int Direction::MINUTES_MIN = 0;
@@ -30,36 +29,28 @@ const short int Direction::MINUTES_MAX = 60;
 const short int Direction::SECONDS_MIN = 0;
 const short int Direction::SECONDS_MAX = 3600;
 
-const float Direction::DEGREE_001 = 0.01745329251994329576923690768488612713442871888541725456097191440171009114603449443682241569634509482000f;
-const float Direction::DEGREE_005 = 0.08726646259971647000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f;
-const float Direction::DEGREE_010 = 0.17453292519943295769236907684886127134428718885417254560971914401710091146034494436822415696345094820000f;
-const float Direction::DEGREE_030 = 0.52359877559829887307710723054658381403286156656251763682915743205130273438103483310467247089035284460000f;
-const float Direction::DEGREE_045 = 0.78539816339744830961566084581987572104929234984381014855260173666687445771661358586419309459800262624510f;
-const float Direction::DEGREE_060 = 1.04719755119659770533265448951472838719685872395833333333333333333333333333333333333333333333333333333333f;
-const float Direction::DEGREE_090 = 1.57079632679489655799898173427209258079528808593750000000000000000000000000000000000000000000000000000000f;
-const float Direction::DEGREE_180 = 3.14159265358979323846264338327950288419716939937510582097494000000000000000000000000000000000000000000000f;
-const float Direction::DEGREE_270 = 4.71238898038469000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f;
-const float Direction::DEGREE_360 = 6.28318530717958647692528676655900576839433879875021164194988918461563281257241799725606965068423413600000f;
+const float Direction::DEGREE_000 = 0.0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000f;
+const float Direction::DEGREE_001 = 0.0174532925199432957692369076848861271344287188854172545609719144017100911460344944368224156963450948221230449250737905924838546922f;
+const float Direction::DEGREE_005 = 0.0872664625997164788461718712501509787673570650949700364603591981880513801861053180424520935579930267231145554620000000000000000000f;
+const float Direction::DEGREE_010 = 0.1745329251994329576923690772719685651268340119106090710188494191317676751759604322497678598104396000000000000000000000000000000000f;
+const float Direction::DEGREE_030 = 0.5235987755982988730771072305465838140328615665625176368291574320513027343810348331046724708903528446636913477522137177740000000000f;
+const float Direction::DEGREE_045 = 0.7853981633974483096156608458198757210492923498437764552437361480769541015715522496570087063355292669955370216283205766617735000000f;
+const float Direction::DEGREE_060 = 1.0471975511965977461542144610931676280657231331250352736583148641026054687620696662093449417807056893273826955044274355490000000000f;
+const float Direction::DEGREE_090 = 1.5707963267948966192313216916397514420985846996875529104874722961539082031431044993140174126710585339910740432566411533240000000000f;
+const float Direction::DEGREE_180 = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095f;
+const float Direction::DEGREE_270 = 4.7123889803846898576939650749192543262957540990626587314624168884617246094293134979420522380131756019732221297699234599700000000000f;
+const float Direction::DEGREE_360 = 6.2831853071795864769252867665590057683943387987502116419498891846156328125724179972560696506842341359642961730265646132942000000000f;
+const float Direction::DEGREE_720 = 12.566370614359172953850573533118011536788677597500423283899778369231265625144835994512139301368468271928592346053129226588375378440f;
+const float Direction::DEFAULT_RADIANS = Direction::DEGREE_000;
+const int Direction::DEFAULT_PRECISION = 10000000;
 
 Direction::Direction()
         : degrees(DEGREES_MIN), minutes(MINUTES_MIN), seconds(SECONDS_MIN) {
 
 }
 
-/*
- * Used for converting radians to degrees, minutes, seconds
- */
 Direction::Direction(const float radians) {
-    float deciDegrees = radians * (180.0 / M_PI);
-    degrees = getIndexDegrees(static_cast<int>(deciDegrees));
-    float fraDegrees = deciDegrees - degrees;
-
-    float deciMinutes = fraDegrees * 60.0;
-    minutes = getIndexMinutes(static_cast<int>(deciMinutes));
-    float fraMinutes = deciMinutes - minutes;
-
-    float deciSeconds = fraMinutes * 60.0;
-    seconds = getIndexSeconds(static_cast<int>(round(deciSeconds)));
+    fromRadians(radians);
 }
 
 Direction::Direction(const short int degrees)
@@ -122,23 +113,38 @@ Direction Direction::operator%(const Direction& peer) const {
 }
 
 float Direction::getCyclingRate() const {
-    return (toRadians() / (2 * M_PI));
+    return (toRadians() / (2 * Direction::DEGREE_180));
 }
 
 float Direction::getTimePerCycle() const {
-    return ((2 * M_PI) / toRadians());
+    return ((2 * Direction::DEGREE_180) / toRadians());
 }
 
 float Direction::toRadians() const {
     // compute total degrees as floating-point to avoid integer division,
     // then convert degrees to radians
     float total = degrees + (minutes / 60.0f) + (seconds / 3600.0f);
-    return (total * (M_PI / 180.0f));
+    return (total * (Direction::DEGREE_180 / 180.0f));
+}
+
+/*
+ * Used for converting radians to degrees, minutes, seconds
+ */
+void Direction::fromRadians(const float radians) {
+    float deciDegrees = radians * (180.0f / M_PI);
+    degrees = getIndexDegrees(static_cast<int>(deciDegrees));
+    float fraDegrees = deciDegrees - degrees;
+
+    float deciMinutes = fraDegrees * 60.0f;
+    minutes = getIndexMinutes(static_cast<int>(deciMinutes));
+    float fraMinutes = deciMinutes - minutes;
+
+    float deciSeconds = fraMinutes * 60.0f;
+    seconds = getIndexSeconds(static_cast<int>(round(deciSeconds)));
 }
 
 bool Direction::checkNonZero() const {
     return ((seconds != SECONDS_MIN) || (minutes != MINUTES_MIN) || (degrees != DEGREES_MIN));
-
 }
 
 Direction Direction::getInverse() const {
@@ -159,8 +165,8 @@ Direction Direction::getMultiple(const float coefficient) const {
 }
 
 Direction Direction::getDivision(const float coefficient) const {
-    float result = 0.0f;
-    if (coefficient != 0.0f) {
+    float result = DEFAULT_RADIANS;
+    if (coefficient != DEFAULT_RADIANS) {
         result = (toRadians() / coefficient);
     }
     return Direction(result);
@@ -185,6 +191,14 @@ std::string Direction::print() {
 	return result.str();
 }
 
+const short int Direction::getQuadrant(const float radians) {
+    return ((getPeriodic(radians) / DEGREE_090) + 1);
+}
+
+const float Direction::getPeriodic(const float radians) {
+    return getTwoPiAngle(radians);
+}
+
 const float Direction::getHalfPiAngle(const float radians) {
     return fmod(radians, Direction::DEGREE_090);
 }
@@ -197,30 +211,45 @@ const float Direction::getTwoPiAngle(const float radians) {
     return fmod(radians, Direction::DEGREE_360);
 }
 
+const float Direction::getFourPiAngle(const float radians) {
+    return fmod(radians, Direction::DEGREE_720);
+}
+
 const Direction Direction::getDifference(const float x_radians, const float y_radians) {
-    float left = getHalfPiAngle(x_radians), right = getHalfPiAngle(y_radians);
+    const float epsilon = std::numeric_limits<float>::epsilon() * DEFAULT_PRECISION;
+    float left = getHalfPiAngle(getPeriodic(x_radians)), right = getHalfPiAngle(getPeriodic(y_radians));
     float difference = DEFAULT_RADIANS;
     if (y_radians > x_radians) {
-        float quadrant = (y_radians / DEGREE_090);
-        if (quadrant >= 3) {
-            difference = (DEGREE_090 - (right - left));
-        } else if (quadrant >= 2) {
-            difference = (right - left);
-        } else if (quadrant >= 1) {
-            difference = (DEGREE_090 - (right - left));
-        } else {
-            difference = (right - left);
+        float delta = (right - left);
+        switch (getQuadrant(y_radians)) {
+        case 4:
+            difference = (delta > DEGREE_000) ? ((std::abs(right - DEGREE_090) < epsilon) ? delta : (DEGREE_090 - delta)) : (DEGREE_090 + delta);
+            break;
+        case 3:
+            difference = (delta > DEGREE_000) ? delta : -delta;
+            break;
+        case 2:
+            difference = (delta > DEGREE_000) ? (DEGREE_090 - delta) : (DEGREE_090 + delta);
+            break;
+        case 1:
+            difference = (delta > DEGREE_000) ? delta : (DEGREE_090 - left);
+            break;
         }
-    } else if (x_radians > y_radians) {
-        float quadrant = (x_radians / DEGREE_090);
-        if (quadrant >= 3) {
-            difference = (DEGREE_090 - (left - right));
-        } else if (quadrant >= 2) {
-            difference = (left - right);
-        } else if (quadrant >= 1) {
-            difference = (DEGREE_090 - (left - right));
-        } else {
-            difference = (left - right);
+    } else if ((x_radians > y_radians)) {
+        float delta = (left - right);
+        switch (getQuadrant(x_radians)) {
+        case 4:
+            difference = (delta > DEGREE_000) ? ((std::abs(left - DEGREE_090) < epsilon) ? delta : (DEGREE_090 - delta)) : (DEGREE_090 + delta);
+            break;
+        case 3:
+            difference = (delta > DEGREE_000) ? delta : -delta;
+            break;
+        case 2:
+            difference = (delta > DEGREE_000) ? (DEGREE_090 - delta) : (DEGREE_090 + delta);
+            break;
+        case 1:
+            difference = (delta > DEGREE_000) ? delta : (DEGREE_090 - right);
+            break;
         }
     }
     return Direction(difference);
@@ -233,6 +262,74 @@ const Direction Direction::getDifference(const Direction& x, const Direction& y)
 const Direction Direction::getNormal(const Direction& x, const Direction& y) {
     Direction difference = getDifference(x.toRadians(), y.toRadians());
     return difference.getNormal();
+}
+
+const float Direction::getFraction(const float x_radians, const float y_radians) {
+    const float epsilon = std::numeric_limits<float>::epsilon() * DEFAULT_PRECISION;
+    float left = getHalfPiAngle(getPeriodic(x_radians)), right = getHalfPiAngle(getPeriodic(y_radians));
+    float fraction = DEFAULT_RADIANS;
+    if ((y_radians > x_radians)) {
+        float delta = (right - left);
+        if (delta > DEGREE_000) {
+            switch (getQuadrant(y_radians)) {
+            case 4:
+                fraction = (left / ((std::abs(right - DEGREE_090) < epsilon) ? right : (DEGREE_090 - right)));
+                break;
+            case 3:
+                fraction = (left / right);
+                break;
+            case 2:
+                fraction = (left / ((std::abs(right - DEGREE_090) < epsilon) ? right : (DEGREE_090 - right)));
+                break;
+            case 1:
+                fraction = (left / right);
+                break;
+            }
+        } else {
+            if (delta < DEGREE_000) {
+                fraction = (left / right);
+            } else {
+                fraction = 1.0f;
+            }
+        }
+    } else if ((x_radians > y_radians)) {
+        float delta = (left - right);
+        if (delta > DEGREE_000) {
+            switch (getQuadrant(x_radians)) {
+            case 4:
+                fraction = (right / ((std::abs(left - DEGREE_090) < epsilon) ? left : (DEGREE_090 - left)));
+                break;
+            case 3:
+                fraction = (right / left);
+                break;
+            case 2:
+                fraction = (right / ((std::abs(left - DEGREE_090) < epsilon) ? left : (DEGREE_090 - left)));
+                break;
+            case 1:
+                fraction = (right / left);
+                break;
+            }
+        } else {
+            if (delta < DEGREE_000) {
+                fraction = (right / left);
+            } else {
+                fraction = 1.0f;
+            }
+        }
+    }
+    return fraction;
+}
+
+const float Direction::getFraction(const Direction& x, const Direction& y) {
+    return getFraction(x.toRadians(), y.toRadians());
+}
+
+const bool Direction::checkTranslation(const Direction& x, const Direction& y) {
+    return !(checkRotation(x.toRadians(), y.toRadians()));
+}
+
+const bool Direction::checkRotation(const Direction& x, const Direction& y) {
+    return getDifference(x.toRadians(), y.toRadians()).checkNonZero();
 }
 
 /*
