@@ -687,7 +687,7 @@ Energy Energy::operator/(const Energy& peer) const {
 }
 
 Energy Energy::operator%(const Energy& peer) const {
-    shp::Quantity amplitude = (getAmplitude() % peer.getAmplitude());
+    shp::Quantity amplitude = fmod(getAmplitude(), peer.getAmplitude());
     float gradient = fmod(getGradient(), peer.getGradient());
     float planck_phase = fmod(getPolarization(), peer.getPolarization());
     shp::Distance planck_wave = (wavelength % peer.wavelength);
@@ -723,41 +723,45 @@ void Energy::setChargeField(const std::shared_ptr<Field> field) {
     charge.setField(field);
 }
 
-shp::Quantity Energy::getTotal() const {
-    shp::Quantity potential = getPotential(); potential.adjustScaling();
-    shp::Quantity kinetic = getKinetic(); kinetic.adjustScaling();
+shp::Signal Energy::getTotal() const {
+    shp::Signal potential = getPotential(); potential.adjustScaling();
+    shp::Signal kinetic = getKinetic(); kinetic.adjustScaling();
     short int scaling = (potential.getScaling() - kinetic.getScaling());
     float quantum = (potential.getMagnitude() + (kinetic.getMagnitude() / std::pow(shp::Quantity::DECIMAL_SCALE, scaling)));
-    shp::Quantity result(quantum, potential.getScaling(), potential.getUnit());
+    shp::Signal result(quantum, potential.getScaling(), potential.getUnit());
     result.adjustScaling();
     return result;
 }
 
 Density Energy::getDensity(const shp::Volume& volume) const {
-    Density result(getTotal(), volume, getUnit());
+    shp::Signal self = this->getTotal(); 
+    Density result(self.getMagnitude(), self.getScaling(), self.getUnit(), volume);
     return result;
 }
 
-shp::Quantity Energy::getPotential() const {
+shp::Signal Energy::getPotential() const {
+    shp::Signal self = this->getSignal();
     shp::Quantity speed_of_light(LIGHT_SPEED, LIGHT_SCALE);
     float energy = ((speed_of_light * speed_of_light) * mass.getMagnitude()).getMagnitude();
-	shp::Quantity result(energy, ((LIGHT_SCALE * 2) + mass.getScaling()), unit);
+	shp::Signal result(self.getOrientation(), energy, ((LIGHT_SCALE * 2) + mass.getScaling()), unit);
     result.adjustScaling();
     return result;
 }
 
-shp::Quantity Energy::getKinetic() const {
-    shp::Quantity frequency = getFrequency();
+shp::Signal Energy::getKinetic() const {
+    shp::Signal self = this->getSignal();
+    shp::Signal frequency = getFrequency();
     float energy = (PLANCK_CONSTANT * frequency.getMagnitude());
-    shp::Quantity result(energy, (PLANCK_SCALE + frequency.getScaling()), unit);
+    shp::Signal result(self.getOrientation(), energy, (PLANCK_SCALE + frequency.getScaling()), unit);
     result.adjustScaling();
     return result;
 }
 
-shp::Quantity Energy::getFrequency() const {
-    shp::Quantity result = wavelength.getInverse();
-    result.setScaling((0 - wavelength.getScaling()));
-    result.setUnit(shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY));
+shp::Signal Energy::getFrequency() const {
+    shp::Quantity frequency = wavelength.getInverse();
+    frequency.setScaling((0 - wavelength.getScaling()));
+    frequency.setUnit(shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY));
+    shp::Quantity result(frequency.getMagnitude(), frequency.getScaling(), frequency.getUnit());
     result.adjustScaling();
     return result;;
 }
@@ -767,19 +771,19 @@ shp::Quantity Energy::getFrequency() const {
  * At a given point in space, no Planckian Energy exists if wavelength is zero
  */
 shp::Distance Energy::getDivergence(const float modulation) const {
-    shp::Quantity lambda(wavelength.getMagnitude(),
+    shp::Signal lambda(wavelength.getMagnitude(),
             wavelength.getScaling(), wavelength.getUnit());
-    float coefficient = (lambda.getMagnitude() * Phase::getAmplitudeAzimuthal(modulation).getMagnitude());
-    shp::Quantity delta((getPhysicalLimit().getMagnitude() / coefficient),
+    float coefficient = (lambda.getMagnitude() * Phase::getAzimuthCosComponent(modulation).getMagnitude());
+    shp::Signal delta(lambda.getOrientation(), (getPhysicalLimit().getMagnitude() / coefficient),
             (lambda.getScaling() - PLANCK_SCALE), shp::Unit::getBaseSymbol(shp::Unit::LENGTH));
     delta.adjustScaling();
     return shp::Distance(delta.getMagnitude(), delta.getScaling(), delta.getUnit());
 }
 
 qft::Time Energy::getPerpetuity(const float modulation) const {
-    shp::Quantity frequency = getFrequency();
-    float coefficient = (frequency.getMagnitude() * Phase::getAmplitudePolarization(modulation).getMagnitude());
-    shp::Quantity delta((getPhysicalLimit().getMagnitude() / coefficient),
+    shp::Signal frequency = this->getFrequency();
+    float coefficient = (frequency.getMagnitude() * Phase::getPolarCosComponent(modulation).getMagnitude());
+    shp::Signal delta(frequency.getOrientation(), (getPhysicalLimit().getMagnitude() / coefficient),
             (frequency.getScaling() - PLANCK_SCALE), shp::Unit::getBaseSymbol(shp::Unit::TIME));
     delta.adjustScaling();
     return qft::Time(delta.getMagnitude(), delta.getScaling(), delta.getUnit());
@@ -846,9 +850,14 @@ std::string Energy::print() {
 	return result.str();
 }
 
-shp::Quantity Energy::getComponent(float phase) const {
-	shp::Quantity energy = getTotal();
-	return shp::Quantity((energy.getMagnitude() * cos(phase)), energy.getScaling(), energy.getUnit());
+shp::Signal Energy::getCosComponent(const float phase) const {
+	shp::Signal energy = getTotal();
+	return shp::Signal(energy.getCosComponent(phase), energy.getScaling(), energy.getUnit());
+}
+
+shp::Signal Energy::getSinComponent(const float phase) const {
+	shp::Signal energy = getTotal();
+	return shp::Signal(energy.getSinComponent(phase), energy.getScaling(), energy.getUnit());
 }
 
 } // namespace qft

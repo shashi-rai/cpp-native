@@ -22,19 +22,23 @@
 
 namespace shp {
 
-Shape::Shape() : name("") {
+Shape::Shape()
+        : name("") {
     setOwner(nullptr);
 }
 
-Shape::Shape(std::string name) : name(name) {
+Shape::Shape(const std::string name)
+        : name(name) {
     setOwner(nullptr);
 }
 
-Shape::Shape(Shape* parent) : name("") {
+Shape::Shape(const std::shared_ptr<Shape> parent)
+        : name("") {
     setOwner(parent);
 }
 
-Shape::Shape(std::string name, Shape* parent) : name(name) {
+Shape::Shape(const std::string name, const std::shared_ptr<Shape> parent)
+        : name(name) {
     setOwner(parent);
 }
 
@@ -47,7 +51,7 @@ bool Shape::operator==(const Shape& peer) const {
 }
 
 bool Shape::isOwned() const {
-    return owner != nullptr;
+    return (owner != nullptr);
 }
 
 void Shape::clear() {
@@ -59,7 +63,7 @@ std::string Shape::print() {
     std::stringstream result;
     result << "(";
     result << name << ",o:";
-    result << (owner != nullptr ? owner->print() : "");
+    result << (isOwned() ? owner->print() : "");
     result << ")";
 	return result.str();
 }

@@ -159,8 +159,8 @@ Current Current::operator%(const Current& peer) const {
 }
 
 shp::Quantity Current::getMass() {
-    shp::Quantity difference = charge.getPotential().getDifference();
-    shp::Quantity angular = velocity.getAngular(shp::Quantity::DEFAULT_VALUE);
+    shp::Signal difference = charge.getPotential().getDifference();
+    shp::Signal angular = velocity.getAngular(shp::Quantity::DEFAULT_VALUE);
     float magnitude = ((difference.getMagnitude() / angular.getMagnitude()) * charge.getMagnitude());
     shp::Quantity result(magnitude, charge.getScaling(), shp::Unit::getBaseSymbol(shp::Unit::MASS));
     return result;
@@ -206,8 +206,8 @@ void Current::applyChangeDirection() {
     velocity.applyChangeDirection();
 }
 
-shp::Quantity Current::getVoltage() const {
-    shp::Quantity result = charge.getPotential().getDifference();
+shp::Signal Current::getVoltage() const {
+    shp::Signal result = charge.getPotential().getDifference();
     return result;
 }
 
@@ -224,8 +224,8 @@ shp::Quantity Current::getLinearTotal() const {
     return result;
 }
 
-shp::Quantity Current::getLinearPower() const {
-    shp::Quantity result = (getVoltage() * getLinearTotal());
+shp::Signal Current::getLinearPower() const {
+    shp::Signal result = (getVoltage() * getLinearTotal());
     return result;
 }
 
@@ -243,8 +243,8 @@ shp::Quantity Current::getAngularTotal() const {    // directional acceleration
     return result;
 }
 
-shp::Quantity Current::getAngularPower() const {
-    shp::Quantity result = (getVoltage() * getAngularTotal());
+shp::Signal Current::getAngularPower() const {
+    shp::Signal result = (getVoltage() * getAngularTotal());
     return result;
 }
 

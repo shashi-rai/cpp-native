@@ -24,7 +24,6 @@
 #include <string>
 #include <vector>
 #include "shell.h"
-#include "point.h"
 
 namespace shp {
 

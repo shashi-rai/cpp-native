@@ -100,7 +100,7 @@ Photon Photon::operator%(const Photon& peer) const {
 
 shp::Point Photon::copy() {
     Photon fresh(this->getName(), this->getEnergy());
-	fresh.setAmplitude(this->getAmplitude());
+	fresh.setMagnitude(this->getMagnitude());
 	fresh.setGradient(this->getGradient());
     return fresh;
 }

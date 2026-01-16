@@ -70,11 +70,12 @@ public:
     void setInterval(const qft::Time& delta) { this->interval = delta; }
 
     // Additional methods
-    shp::Quantity getTotal() const;
+    shp::Signal getTotal() const;
     virtual Power copy();
     virtual void clear();
     virtual std::string print();
-    shp::Quantity getComponent(float phase) const;
+    shp::Signal getCosComponent(const float phase) const;
+    shp::Signal getSinComponent(const float phase) const;
 public:
     static const std::string UNIT;
 };

@@ -89,13 +89,13 @@ public:
     void applyChangeFlowSpeed();
     void changeDirection(const float degree);
     void applyChangeDirection();
-    shp::Quantity getVoltage() const;
+    shp::Signal getVoltage() const;
     shp::Quantity getForce(const Time& interval) const;
     shp::Quantity getLinearTotal() const;
-    shp::Quantity getLinearPower() const;
+    shp::Signal getLinearPower() const;
     shp::Quantity getLinearKinetic() const;
     shp::Quantity getAngularTotal() const;
-    shp::Quantity getAngularPower() const;
+    shp::Signal getAngularPower() const;
     shp::Quantity getAngularKinetic() const;
     shp::Quantity getRateOfChange() const;
     std::shared_ptr<Field> getElectricField() const;

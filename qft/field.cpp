@@ -501,16 +501,16 @@ const shp::Point Field::operator()(const int x, const int y, const int z) const 
     return result;
 }
 
-shp::Quantity Field::operator()(const Field& peer,
+shp::Signal Field::operator()(const Field& peer,
         const shp::Distance& separation, const shp::Distance& position) const {
-    shp::Quantity result = potential(peer.potential, separation, position);
+    shp::Signal result = potential(peer.potential, separation, position);
     result.adjustScaling();
     return result;
 }
 
-shp::Quantity Field::operator()(const Field& peerX, const Field& peerY,
+shp::Signal Field::operator()(const Field& peerX, const Field& peerY,
     const shp::Distance& separationX, const shp::Distance& separationY) const {
-    shp::Quantity result = potential(peerX.getPotential(), peerY.getPotential(), separationX, separationY);
+    shp::Signal result = potential(peerX.getPotential(), peerY.getPotential(), separationX, separationY);
     result.adjustScaling();
     return result;
 }
@@ -558,9 +558,9 @@ void Field::setCircular(const shp::Direction& azimuth) {
 }
 
 void Field::changePoint(const Action& action) {
-    int x = action.getCoordinate().getX();
-    int y = action.getCoordinate().getY();
-    int z = action.getCoordinate().getZ();
+    int x = action.getPosition().getX();
+    int y = action.getPosition().getY();
+    int z = action.getPosition().getZ();
     shp::Wave received = action.getWave();
 
     // simply replace the existing Point found at specific coordinates
@@ -574,19 +574,19 @@ void Field::changePoint(const Action& action) {
 std::shared_ptr<Particle> Field::getDivergence(const Action& action) const {
     // TODO: how is particle destroyed
     std::shared_ptr<Particle> result = std::make_shared<Particle>();
-    result->setAmplitude(0);
+    result->setMagnitude(0);
     return result;
 }
 
 std::shared_ptr<Particle> Field::getConvergence(const Action& action) const {
     // TODO: how is particle generated
     std::shared_ptr<Particle> result = std::make_shared<Particle>();
-    result->setAmplitude(0);
+    result->setMagnitude(0);
     return result;
 }
 
 shp::Temporal Field::getTotal() const {
-    shp::Quantity difference = potential.getDifference();
+    shp::Signal difference = potential.getDifference();
     shp::Temporal result(difference.getMagnitude(), difference.getScaling(), difference.getUnit());
     return result;
 }

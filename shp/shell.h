@@ -23,7 +23,6 @@
 
 #include <string>
 #include <vector>
-#include "point.h"
 #include "polygon.h"
 
 namespace shp {

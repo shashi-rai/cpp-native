@@ -26,27 +26,27 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "quantity.h"
+#include "signal.h"
 
 namespace shp {
 
 class Area {
-    Quantity length;
-    Quantity breadth;
+    Signal length;
+    Signal breadth;
 public:
     // Constructors
     Area();
     Area(const std::string unit);
-    Area(short int scaling, const std::string unit);
+    Area(const short int scaling, const std::string unit);
     Area(const float length);
     Area(const float length, const std::string unit);
-    Area(const float length, short int scaling, const std::string unit);
+    Area(const float length, const short int scaling, const std::string unit);
     Area(const float length, const float breadth);
     Area(const float length, const float breadth, const std::string unit);
-    Area(const float length, const float breadth, short int scaling);
-    Area(const float length, const float breadth, short int scaling, const std::string unit);
-    Area(const Quantity& length);
-    Area(const Quantity& length, const Quantity& breadth);
+    Area(const float length, const float breadth, const short int scaling);
+    Area(const float length, const float breadth, const short int scaling, const std::string unit);
+    Area(const Signal& length);
+    Area(const Signal& length, const Signal& breadth);
 
     // Destructors
     ~Area();
@@ -60,20 +60,20 @@ public:
     Area operator%(const Area& peer) const;
 
     // Getters
-    Quantity getLength() const { return length; }
-    Quantity getBreadth() const { return breadth; }
+    Signal getLength() const { return length; }
+    Signal getBreadth() const { return breadth; }
 
     // Setters
-    void setLength(const Quantity& length) { this->length = length; }
-    void setBreadth(const Quantity& breadth) { this->breadth = breadth; }
+    void setLength(const Signal& length) { this->length = length; }
+    void setBreadth(const Signal& breadth) { this->breadth = breadth; }
 
     // Additional methods
-    Quantity getTotal() const;
+    Signal getTotal() const;
     std::string getUnit() const;
     virtual Area copy();
     virtual void clear();
     virtual std::string print();
-    Quantity getComponent(float phase) const;
+    Signal getComponent(const float phase) const;
 public:
     static const std::string UNIT;
     static const short int SCALING_FACTOR;

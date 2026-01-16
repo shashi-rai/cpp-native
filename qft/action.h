@@ -31,22 +31,22 @@ namespace qft {
 
 class Action : public shp::Change {
     std::string name;
-    shp::Coordinate coordinate;
+    shp::Coordinate position;
     shp::Wave wave;
 public:
     // Constructors
     Action();
-    Action(std::string name);
+    Action(const std::string name);
     Action(const shp::Coordinate& location);
     Action(const shp::Coordinate& location, const shp::Wave& wave);
-    Action(const shp::Quantity& potential);
-    Action(const shp::Quantity& dynamical, const shp::Quantity& potential);
-    Action(std::string name, const shp::Quantity& potential);
-    Action(std::string name, const shp::Quantity& dynamical, const shp::Quantity& potential);
-    Action(std::string name, const shp::Quantity& dynamical, const shp::Quantity& potential, const shp::Coordinate& location);
-    Action(std::string name, const shp::Quantity& dynamical, const shp::Quantity& potential, const shp::Coordinate& location, const shp::Wave& wave);
-    Action(std::string name, const shp::Coordinate& location);
-    Action(std::string name, const shp::Coordinate& location, const shp::Wave& wave);
+    Action(const shp::Signal& potential);
+    Action(const shp::Signal& dynamical, const shp::Signal& potential);
+    Action(const std::string name, const shp::Signal& potential);
+    Action(const std::string name, const shp::Signal& dynamical, const shp::Signal& potential);
+    Action(const std::string name, const shp::Signal& dynamical, const shp::Signal& potential, const shp::Coordinate& location);
+    Action(const std::string name, const shp::Signal& dynamical, const shp::Signal& potential, const shp::Coordinate& location, const shp::Wave& wave);
+    Action(const std::string name, const shp::Coordinate& location);
+    Action(const std::string name, const shp::Coordinate& location, const shp::Wave& wave);
 
     // Destructors
     ~Action();
@@ -58,20 +58,21 @@ public:
 
     // Getters
     std::string getName() const { return name; }
-    shp::Coordinate getCoordinate() const { return coordinate; }
+    shp::Coordinate getPosition() const { return position; }
     shp::Wave getWave() const { return wave; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
-    void setCoordinate(const shp::Coordinate& location) { this->coordinate = location; }
+    void setPosition(const shp::Coordinate& location) { this->position = location; }
     void setWave(const shp::Wave& pulse) { this->wave = pulse; }
 
     // Additional methods
-    shp::Quantity getTotal() const;
+    shp::Signal getTotal() const;
     virtual shp::Change copy();
     virtual void clear();
     virtual std::string print();
-    shp::Quantity getComponent(float phase) const;
+    shp::Signal getCosComponent(const float phase) const;
+    shp::Signal getSinComponent(const float phase) const;
 };
 
 typedef std::vector<Action > ActionArray;

@@ -104,7 +104,7 @@ Neutrino Neutrino::operator%(const Neutrino& peer) const {
 
 shp::Point Neutrino::copy() {
     Neutrino fresh(this->getName(), this->getEnergy());
-	fresh.setAmplitude(this->getAmplitude());
+	fresh.setMagnitude(this->getMagnitude());
 	fresh.setGradient(this->getGradient());
     return fresh;
 }

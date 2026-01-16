@@ -268,7 +268,7 @@ Electron Electron::operator%(const Photon& peer) const {
 
 shp::Point Electron::copy() {
     Electron fresh(getName(), principal, azimuthal, magnetic, this->getSpin(), this->getEnergy());
-	fresh.setAmplitude(this->getAmplitude());
+	fresh.setMagnitude(this->getMagnitude());
 	fresh.setGradient(this->getGradient());
 	return fresh;
 }

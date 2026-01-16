@@ -25,38 +25,52 @@
 #include <sstream>
 #include <vector>
 #include "angular.h"
+#include "azimuth.h"
+#include "signal.h"
 
 namespace shp {
 
 /*
  * Divergent fields could be represented with Potential
  */
-class Potential : protected Quantity {
+class Potential : protected Signal {
     float low;
     Angular origin;
 public:
     // Constructors
     Potential();
+    Potential(const Azimuth& phase);
     Potential(const Angular& origin);
     Potential(const float high);
     Potential(const float high, const Angular& origin);
+    Potential(const Azimuth& phase, const float high, const Angular& origin);
     Potential(const float high, const float low);
     Potential(const float high, const float low, const Angular& origin);
+    Potential(const Azimuth& phase, const float high, const float low, const Angular& origin);
     Potential(const std::string unit);
     Potential(const Unit& unit);
     Potential(const Unit& unit, const Angular& origin);
+    Potential(const Azimuth& phase, const Unit& unit, const Angular& origin);
     Potential(const short int scaling, const std::string unit);
     Potential(const short int scaling, const Unit& unit);
     Potential(const short int scaling, const Unit& unit, const Angular& origin);
+    Potential(const Azimuth& phase, const short int scaling, const Unit& unit, const Angular& origin);
     Potential(const float high, const std::string unit, const Angular& origin);
+    Potential(const Azimuth& phase, const float high, const std::string unit, const Angular& origin);
     Potential(const float high, const float low, const std::string unit);
     Potential(const float high, const float low, const std::string unit, const Angular& origin);
+    Potential(const Azimuth& phase, const float high, const float low, const std::string unit, const Angular& origin);
     Potential(const float high, const float low, const Unit& unit);
     Potential(const float high, const float low, const Unit& unit, const Angular& origin);
+    Potential(const Azimuth& phase, const float high, const float low, const Unit& unit, const Angular& origin);
     Potential(const float high, const float low, const short int scaling);
     Potential(const float high, const float low, const short int scaling, const std::string unit);
     Potential(const float high, const float low, const short int scaling, const Unit& unit);
+    Potential(const float phase, const float high, const float low, const short int scaling, const Unit& unit);
+    Potential(const Azimuth& phase, const float high, const float low, const short int scaling, const Unit& unit);
     Potential(const float high, const float low, const short int scaling, const Unit& unit, const Angular& origin);
+    Potential(const float phase, const float high, const float low, const short int scaling, const Unit& unit, const Angular& origin);
+    Potential(const Azimuth& phase, const float high, const float low, const short int scaling, const Unit& unit, const Angular& origin);
 
     // Destructors
     ~Potential();
@@ -70,22 +84,22 @@ public:
     Potential operator%(const Potential& peer) const;
 
     // Access operator
-    Quantity operator()(const Potential& peer,
+    Signal operator()(const Potential& peer,
         const Distance& separation, const Distance& position) const;
-    Quantity operator()(const Potential& peerX, const Potential& peerY,
+    Signal operator()(const Potential& peerX, const Potential& peerY,
         const Distance& separationX, const Distance& separationY) const;
 
     // Getters
-    float getHigh() const { return this->getMagnitude(); }
     float getLow() const { return low; }
     Angular getOrigin() const { return origin; }
 
     // Setters
-    void setHigh(const float value) { this->setMagnitude(value); }
     void setLow(const float value) { this->low = value; }
     void setOrigin(const Angular& position) { this->origin = position; }
 
     // Additional methods
+    float getHigh() const;
+    void setHigh(const float value);
     short int getScaling() const;
     void setScaling(const short int factor);
     Unit getUnit() const;
@@ -94,12 +108,12 @@ public:
     void setPolar(const Polar& angle);
     Azimuth getAzimuth() const;
     void setAzimuth(const Azimuth& angle);
-    Quantity getDifference() const;
-    Quantity getDivergence() const;
-    Quantity getRelative(const Distance& location, const float angle) const;
-    Quantity getPolarComponent(const Distance& location) const;
-    Quantity getAzimuthComponent(const Distance& location) const;
-    virtual Potential copy() const;
+    Signal getDifference() const;
+    Signal getDivergence() const;
+    Signal getRelative(const Distance& location, const float angle) const;
+    Signal getPolarComponent(const Distance& location) const;
+    Signal getAzimuthComponent(const Distance& location) const;
+    virtual Signal copy() const;
     virtual void clear();
     virtual std::string print();
 };

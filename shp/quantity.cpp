@@ -134,7 +134,6 @@ Quantity Quantity::operator%(const Quantity& peer) const {
     short int exponent = (self.scaling - peer.scaling);
     if (peer.magnitude != DEFAULT_VALUE) {
         mantissa = fmod(self.magnitude, (peer.magnitude / std::pow(DECIMAL_SCALE, exponent)));
-
     }
     Quantity result(mantissa, self.scaling, self.getUnit());
     return result;
@@ -143,6 +142,10 @@ Quantity Quantity::operator%(const Quantity& peer) const {
 void Quantity::setMagnitude(const float value, const short int scale) {
     this->magnitude = value;
     this->scaling = scale;
+}
+
+void Quantity::setUnit(const std::string name) {
+    this->unit.setName(name);
 }
 
 Quantity Quantity::getAbsolute() const {
@@ -275,16 +278,15 @@ std::string Quantity::print() {
 }
 
 float Quantity::getCosComponent(const float phase) const {
-    return getMagnitude() * cos(phase);
+    return (magnitude * cos(phase));
 }
 
 float Quantity::getSinComponent(const float phase) const {
-    return getMagnitude() * sin(phase);
+    return (magnitude * sin(phase));
 }
 
 const std::complex<float> Quantity::getComplex(const float value, const float direction) {
-    std::complex<float> result(value, direction);
-    return result;
+    return std::complex<float>(value, direction);
 }
 
 } // namespace shp

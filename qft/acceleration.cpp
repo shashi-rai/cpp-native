@@ -233,31 +233,31 @@ void Acceleration::applyChangeMagnitude() {
     Velocity::changeSpeed(changeSpeed);
 }
 
-shp::Quantity Acceleration::getTotal() const {
+shp::Signal Acceleration::getTotal() const {
 	qft::Velocity invariant = *this;		// non-accelerating component only
-    shp::Quantity velocity = (invariant.getTotal() + shp::Quantity(changeSpeed,
+    shp::Signal velocity = (invariant.getTotal() + shp::Quantity(changeSpeed,
 			getDisplacement().getScaling(), getUnit()));
     shp::Direction change = (invariant.getDirection() + getAngularShiftRate());
     float acceleration = (velocity.getMagnitude() * cos(change.toRadians()));
-    shp::Quantity result(acceleration, getDisplacement().getScaling(), getUnit());
+    shp::Signal result(acceleration, getDisplacement().getScaling(), getUnit());
     return result;
 }
 
-shp::Quantity Acceleration::getLinear(const Time& slice) {
+shp::Signal Acceleration::getLinear(const Time& slice) {
 	qft::Velocity invariant = *this;		// non-accelerating component only
 	shp::Frequency frequency = slice.getFrequency();
-    shp::Quantity velocity = (invariant.getTotal() + shp::Quantity(changeSpeed,
+    shp::Signal velocity = (invariant.getTotal() + shp::Quantity(changeSpeed,
 			getDisplacement().getScaling(), getUnit()));
 	float magnitude = (velocity.getMagnitude() * frequency.getMagnitude());
 	short int scaling = (velocity.getScaling() + frequency.getScaling());
-    shp::Quantity result(magnitude, scaling, UNIT); result.adjustScaling();
+    shp::Signal result(magnitude, scaling, UNIT); result.adjustScaling();
     return result;
 }
 
-shp::Quantity Acceleration::getAngular(const Time& theta) {
+shp::Signal Acceleration::getAngular(const Time& theta) {
 	qft::Velocity invariant = *this;		// non-accelerating component only
-	shp::Quantity rotation = invariant.getAngular((changeAngle + theta.getMagnitude()));
-    shp::Quantity result(rotation.getMagnitude(), rotation.getScaling(), rotation.getUnit());
+	shp::Signal rotation = invariant.getAngular((changeAngle + theta.getMagnitude()));
+    shp::Signal result(rotation.getMagnitude(), rotation.getScaling(), rotation.getUnit());
     return result;
 }
 
@@ -303,9 +303,15 @@ std::string Acceleration::print() {
 	return result.str();
 }
 
-shp::Quantity Acceleration::getComponent(float phase) const {
-	shp::Quantity acceleration = getTotal();
-	return shp::Quantity((acceleration.getMagnitude() * cos(phase)),
+shp::Signal Acceleration::getCosComponent(float phase) const {
+	shp::Signal acceleration = this->getTotal();
+	return shp::Signal((acceleration.getCosComponent(phase)),
+        acceleration.getScaling(), acceleration.getUnit());
+}
+
+shp::Signal Acceleration::getSinComponent(float phase) const {
+	shp::Signal acceleration = this->getTotal();
+	return shp::Signal((acceleration.getSinComponent(phase)),
         acceleration.getScaling(), acceleration.getUnit());
 }
 

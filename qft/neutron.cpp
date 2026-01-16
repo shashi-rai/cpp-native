@@ -152,7 +152,7 @@ Proton Neutron::operator-(const Electron& peer) const {
 
 shp::Point Neutron::copy() {
     Neutron fresh(this->getName(), this->getEnergy());
-	fresh.setAmplitude(this->getAmplitude());
+	fresh.setMagnitude(this->getMagnitude());
 	fresh.setGradient(this->getGradient());
     return fresh;
 }

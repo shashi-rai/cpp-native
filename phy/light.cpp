@@ -45,7 +45,7 @@ bool Light::operator==(const Light& peer) const {
 
 shp::Point Light::copy() {
     Light fresh(this->getName());
-    fresh.setAmplitude(this->getAmplitude());
+    fresh.setMagnitude(this->getMagnitude());
 	fresh.setGradient(this->getGradient());
 	fresh.setPolarization(this->getPolarization());
     return fresh;

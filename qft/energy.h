@@ -190,17 +190,18 @@ public:
     void setMassField(const std::shared_ptr<Field> field);
     std::shared_ptr<Field> getChargeField() const;
     void setChargeField(const std::shared_ptr<Field> field);
-    shp::Quantity getTotal() const;
+    shp::Signal getTotal() const;
     Density getDensity(const shp::Volume& volume) const;
-    shp::Quantity getPotential() const;
-    shp::Quantity getKinetic() const;
-    shp::Quantity getFrequency() const;
+    shp::Signal getPotential() const;
+    shp::Signal getKinetic() const;
+    shp::Signal getFrequency() const;
     shp::Distance getDivergence(const float modulation) const;
     qft::Time getPerpetuity(const float modulation) const;
     virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();
-    shp::Quantity getComponent(float phase) const;
+    shp::Signal getCosComponent(const float phase) const;
+    shp::Signal getSinComponent(const float phase) const;
 public:
     static const shp::Quantity getPhysicalLimit();
     static const shp::Quantity getPlanckConstant();

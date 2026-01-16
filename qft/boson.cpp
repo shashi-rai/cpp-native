@@ -160,7 +160,7 @@ Boson Boson::operator%(const Boson& peer) const {
 shp::Point Boson::copy() {
     Boson fresh(this->getName(), this->getEnergy());
     fresh.setHanded(handed);
-	fresh.setAmplitude(this->getAmplitude());
+	fresh.setMagnitude(this->getMagnitude());
 	fresh.setGradient(this->getGradient());
     return fresh;
 }

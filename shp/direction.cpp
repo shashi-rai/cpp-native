@@ -155,6 +155,10 @@ Direction Direction::getNormal() const {
     return Direction((toRadians() + DEGREE_090));
 }
 
+Direction Direction::getSquare() const {
+    return getInverse();
+}
+
 Direction Direction::getRotation(const short int degree) const {
     return Direction((toRadians() + (DEGREE_001 * degree)));
 }

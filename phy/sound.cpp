@@ -45,7 +45,7 @@ bool Sound::operator==(const Sound& peer) const {
 
 shp::Point Sound::copy() {
     Sound fresh(this->getName());
-    fresh.setAmplitude(this->getAmplitude());
+    fresh.setMagnitude(this->getMagnitude());
 	fresh.setGradient(this->getGradient());
 	fresh.setPolarization(this->getPolarization());
     return fresh;

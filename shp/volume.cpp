@@ -64,7 +64,7 @@ Volume::Volume(const Area& surface, const float depth, const short int scaling, 
 
 }
 
-Volume::Volume(const Area& surface, const Quantity& depth)
+Volume::Volume(const Area& surface, const Signal& depth)
         : surface(surface), depth(depth) {
 
 }
@@ -129,18 +129,18 @@ Volume::Volume(const float length, const float breadth, const float height,
 
 }
 
-Volume::Volume(const Quantity& length)
+Volume::Volume(const Signal& length)
         : surface(length, length), depth(length) {
 
 }
 
-Volume::Volume(const Quantity& length, const Quantity& breadth)
+Volume::Volume(const Signal& length, const Signal& breadth)
         : surface(length, breadth),
 		depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
-Volume::Volume(const Quantity& length, const Quantity& breadth, const Quantity& height)
+Volume::Volume(const Signal& length, const Signal& breadth, const Signal& height)
         : surface(length, breadth), depth(height) {
 
 }
@@ -154,53 +154,53 @@ bool Volume::operator==(const Volume& peer) const {
 }
 
 Volume Volume::operator+(const Volume& peer) const {
-	Quantity realvolume = (getTotal() + peer.getTotal());
+	Signal realvolume = (getTotal() + peer.getTotal());
     float part = std::cbrt(realvolume.getMagnitude());
 	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
-    return Volume(Quantity(part, realvolume.getScaling(), getUnit()),
-			Quantity(part, realvolume.getScaling(), getUnit()),
-			Quantity(part, realvolume.getScaling(), getUnit()));
+    return Volume(Signal(part, realvolume.getScaling(), getUnit()),
+			Signal(part, realvolume.getScaling(), getUnit()),
+			Signal(part, realvolume.getScaling(), getUnit()));
 }
 
 Volume Volume::operator-(const Volume& peer) const {
-	Quantity realvolume = (getTotal() - peer.getTotal());
+	Signal realvolume = (getTotal() - peer.getTotal());
     float part = std::cbrt(realvolume.getMagnitude());
 	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
-    return Volume(Quantity(part, realvolume.getScaling(), getUnit()),
-			Quantity(part, realvolume.getScaling(), getUnit()),
-			Quantity(part, realvolume.getScaling(), getUnit()));
+    return Volume(Signal(part, realvolume.getScaling(), getUnit()),
+			Signal(part, realvolume.getScaling(), getUnit()),
+			Signal(part, realvolume.getScaling(), getUnit()));
 }
 
 Volume Volume::operator*(const Volume& peer) const {
-	Quantity realvolume = (getTotal() * peer.getTotal());
+	Signal realvolume = (getTotal() * peer.getTotal());
     float part = std::cbrt(realvolume.getMagnitude());
 	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
-    return Volume(Quantity(part, realvolume.getScaling(), getUnit()),
-			Quantity(part, realvolume.getScaling(), getUnit()),
-			Quantity(part, realvolume.getScaling(), getUnit()));
+    return Volume(Signal(part, realvolume.getScaling(), getUnit()),
+			Signal(part, realvolume.getScaling(), getUnit()),
+			Signal(part, realvolume.getScaling(), getUnit()));
 }
 
 Volume Volume::operator/(const Volume& peer) const {
-	Quantity realvolume = (getTotal() / peer.getTotal());
+	Signal realvolume = (getTotal() / peer.getTotal());
     float part = std::cbrt(realvolume.getMagnitude());
 	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
-    return Volume(Quantity(part, realvolume.getScaling(), getUnit()),
-			Quantity(part, realvolume.getScaling(), getUnit()),
-			Quantity(part, realvolume.getScaling(), getUnit()));
+    return Volume(Signal(part, realvolume.getScaling(), getUnit()),
+			Signal(part, realvolume.getScaling(), getUnit()),
+			Signal(part, realvolume.getScaling(), getUnit()));
 }
 
 Volume Volume::operator%(const Volume& peer) const {
-	Quantity realvolume = (getTotal() % peer.getTotal());
+	Signal realvolume = (getTotal() % peer.getTotal());
     float part = std::cbrt(realvolume.getMagnitude());
 	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
-    return Volume(Quantity(part, realvolume.getScaling(), getUnit()),
-			Quantity(part, realvolume.getScaling(), getUnit()),
-			Quantity(part, realvolume.getScaling(), getUnit()));
+    return Volume(Signal(part, realvolume.getScaling(), getUnit()),
+			Signal(part, realvolume.getScaling(), getUnit()),
+			Signal(part, realvolume.getScaling(), getUnit()));
 }
 
-Quantity Volume::getTotal() const {
-    Quantity volume = (surface.getTotal() * depth);
-    return Quantity(volume.getMagnitude(), volume.getScaling(), volume.getUnit());
+Signal Volume::getTotal() const {
+    Signal volume = (surface.getTotal() * depth);
+    return Signal(volume.getOrientation(), volume.getMagnitude(), volume.getScaling(), volume.getUnit());
 }
 
 std::string Volume::getUnit() const {
@@ -225,9 +225,10 @@ std::string Volume::print() {
 	return result.str();
 }
 
-Quantity Volume::getComponent(float phase) const {
-	Quantity volume = getTotal();
-	return Quantity((volume.getMagnitude() * cos(phase)), volume.getScaling(), volume.getUnit());
+Signal Volume::getComponent(float phase) const {
+	Signal volume = this->getTotal();
+	return Signal(volume.getOrientation(),
+        (volume.getMagnitude() * cos(phase)), volume.getScaling(), volume.getUnit());
 }
 
 } // namespace shp

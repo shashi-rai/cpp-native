@@ -33,7 +33,7 @@ namespace shp {
 class Frequency;
 
 class Signal : private Quantity {
-    float orientation;
+    float orientation;      // azimuthal change in magnitude
 public:
     // Constructors
     Signal();
@@ -91,18 +91,21 @@ public:
     float getOrientation() const { return orientation; }
 
     // Setters
-    void setOrientation(const float direction) { this->orientation = direction; }
+    void setOrientation(const float direction) { this->orientation = Direction::getTwoPiAngle(direction); }
 
     // Additional methods
     Signal getRotation(const short int degree) const;
     Signal getDotProduct(const Signal& peer) const;
     Signal getCrossProduct(const Signal& peer) const;
+    Signal getDotFraction(const Signal& peer) const;
+    Signal getCrossFraction(const Signal& peer) const;
     Frequency getFrequency() const;
     float getCyclingRate() const;
     float getTimePerCycle() const;
     float getMagnitude() const;
     void setMagnitude(const float value);
     void setMagnitude(const float value, const short int scale);
+    void setMagnitude(const float value, const short int scale, const std::string unit);
     float getAmplitude() const;
     Direction getPhase() const;
     void setPhase(const Direction& direction);
@@ -117,10 +120,14 @@ public:
     Signal getScalarPercent() const;
     Signal getVectorPercent() const;
     Signal getDotProductSquare() const;
+    Signal getDotFractionSquare() const;
     Signal getCrossProductSquare() const;
+    Signal getCrossFractionSquare() const;
     Signal getDotProductSquareRoot() const;
     Signal getDotProductCube() const;
+    Signal getDotFractionCube() const;
     Signal getCrossProductCube() const;
+    Signal getCrossFractionCube() const;
     Signal getDotProductCubeRoot() const;
     bool isConvergent() const;
     bool isDivergent() const;
@@ -132,6 +139,10 @@ public:
     virtual Signal copy() const;
     virtual void clear();
     virtual std::string print();
+    float getCosComponent(const float phase) const;
+    float getSinComponent(const float phase) const;
+protected:
+    static const std::complex<float> getComplex(const float value, const float direction);
 };
 
 typedef std::vector<Signal > SignalArray;

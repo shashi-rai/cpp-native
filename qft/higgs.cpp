@@ -101,7 +101,7 @@ Higgs Higgs::operator%(const Higgs& peer) const {
 
 shp::Point Higgs::copy() {
     Higgs fresh(this->getName(), this->getEnergy());
-	fresh.setAmplitude(this->getAmplitude());
+	fresh.setMagnitude(this->getMagnitude());
 	fresh.setGradient(this->getGradient());
     return fresh;
 }

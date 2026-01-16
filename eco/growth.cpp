@@ -135,15 +135,15 @@ bool Growth::operator==(const Growth& peer) const {
 
 Growth Growth::operator+(const Growth& peer) const {
 	shp::Potential self = *this;
-    float newhigh = (self.getHigh() + (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
-    float newlow = (self.getLow() + (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    float newhigh = (self.getHigh() + (peer.getHigh() / std::pow(shp::Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    float newlow = (self.getLow() + (peer.getLow() / std::pow(shp::Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
     return Growth(newlow, newhigh, self.getScaling(), self.getUnit());
 }
 
 Growth Growth::operator-(const Growth& peer) const {
 	shp::Potential self = *this;
-    float newhigh = (self.getHigh() - (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
-    float newlow = (self.getLow() - (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    float newhigh = (self.getHigh() - (peer.getHigh() / std::pow(shp::Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    float newlow = (self.getLow() - (peer.getLow() / std::pow(shp::Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
     return Growth(newlow, newhigh, self.getScaling(), self.getUnit());
 }
 
@@ -178,23 +178,23 @@ Growth Growth::operator%(const Growth& peer) const {
     return Growth(newlow, newhigh, self.getScaling(), self.getUnit());
 }
 
-shp::Quantity Growth::operator()(const Growth& peer,
+shp::Signal Growth::operator()(const Growth& peer,
         const shp::Distance& separation, const shp::Distance& position) const {
-    shp::Potential self = *this; shp::Quantity distribution = getConvergence().getInverse();
+    shp::Potential self = *this; shp::Signal distribution = getConvergence().getScalarInverse();
     shp::Angular closure = self.getOrigin();
-    Quantity coefficient = (closure(peer.getClosure(), separation, position) * distribution.getMagnitude());
-    Quantity result(coefficient.getMagnitude(),
+    Signal coefficient = (closure(peer.getClosure(), separation, position) * distribution.getMagnitude());
+    Signal result(coefficient.getOrientation(), coefficient.getMagnitude(),
 		(coefficient.getScaling() + distribution.getScaling()), self.getUnit());
 	result.adjustScaling();
     return result;
 }
 
-shp::Quantity Growth::operator()(const Growth& peerX, const Growth& peerY,
+shp::Signal Growth::operator()(const Growth& peerX, const Growth& peerY,
         const shp::Distance& separationX, const shp::Distance& separationY) const {
-    shp::Potential self = *this; shp::Quantity distribution = getConvergence().getInverse();
+    shp::Potential self = *this; shp::Signal distribution = getConvergence().getScalarInverse();
     shp::Angular closure = self.getOrigin();
-    Quantity coefficient = (closure(peerX.getClosure(), peerY.getClosure(), separationX, separationY) * distribution.getMagnitude());
-    Quantity result(coefficient.getMagnitude(),
+    Signal coefficient = (closure(peerX.getClosure(), peerY.getClosure(), separationX, separationY) * distribution.getMagnitude());
+    Signal result(coefficient.getOrientation(), coefficient.getMagnitude(),
 		(coefficient.getScaling() + distribution.getScaling()), self.getUnit());
 	result.adjustScaling();
     return result;
@@ -246,29 +246,29 @@ void Growth::setAzimuth(const shp::Azimuth& angle) {
     origin.setAzimuth(angle);
 }
 
-shp::Quantity Growth::getConvergence() const {
+shp::Signal Growth::getConvergence() const {
 	shp::Potential self = *this;
-    shp::Quantity result((self.getLow() - self.getHigh()), self.getScaling(), self.getUnit());
+    shp::Signal result((self.getLow() - self.getHigh()), self.getScaling(), self.getUnit());
     return result;
 }
 
-shp::Quantity Growth::getRelative(const shp::Distance& location, const float angle) const {
+shp::Signal Growth::getRelative(const shp::Distance& location, const float angle) const {
 	return shp::Potential::getRelative(location, angle);
 }
 
-shp::Quantity Growth::getPolarComponent(const shp::Distance& location) const {
+shp::Signal Growth::getPolarComponent(const shp::Distance& location) const {
     shp::Potential self = *this;
 	shp::Angular closure = self.getOrigin();
     return self.getRelative(location, closure.getPolar().toRadians());
 }
 
-shp::Quantity Growth::getAzimuthComponent(const shp::Distance& location) const {
+shp::Signal Growth::getAzimuthComponent(const shp::Distance& location) const {
     shp::Potential self = *this;
 	shp::Angular closure = self.getOrigin();
     return self.getRelative(location, closure.getAzimuth().toRadians());
 }
 
-shp::Potential Growth::copy() const {
+shp::Signal Growth::copy() const {
 	shp::Potential self = *this;
     Growth fresh(self.getHigh(), self.getLow(), self.getScaling(), self.getUnit());
     return fresh;

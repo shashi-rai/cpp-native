@@ -24,8 +24,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "direction.h"
-#include "quantity.h"
+#include "signal.h"
 
 namespace shp {
 
@@ -39,29 +38,29 @@ namespace shp {
  *   cases (e.g., momentum) 
  */
 class Change {
-    Direction gradient;
-    Quantity dynamical;
-    Quantity potential;
+    Direction rate;
+    Signal dynamical;
+    Signal potential;
 public:
     // Constructors
     Change();
-    Change(const float gradient);
-    Change(const float gradient, short int scaling);
-    Change(const float gradient, short int scaling, std::string unit);
-    Change(const float gradient, short int scaling, const Unit& unit);
-    Change(const Direction& gradient);
-    Change(const float gradient, const float potential);
-    Change(const float gradient, const float potential, short int scaling);
-    Change(const float gradient, const float potential, short int scaling, std::string unit);
-    Change(const float gradient, const float potential, short int scaling, const Unit& unit);
-    Change(const Quantity& potential);
-    Change(const Quantity& dynamical, const Quantity& potential);
-    Change(const Direction& gradient, const Quantity& potential);
-    Change(const Direction& gradient, const Quantity& dynamical, const Quantity& potential);
-    Change(const float gradient, const float dynamical, const float potential);
-    Change(const float gradient, const float dynamical, const float potential, short int scaling);
-    Change(const float gradient, const float dynamical, const float potential, short int scaling, std::string unit);
-    Change(const float gradient, const float dynamical, const float potential, short int scaling, const Unit& unit);
+    Change(const float rate);
+    Change(const float rate, short int scaling);
+    Change(const float rate, short int scaling, std::string unit);
+    Change(const float rate, short int scaling, const Unit& unit);
+    Change(const Direction& rate);
+    Change(const float rate, const float potential);
+    Change(const float rate, const float potential, short int scaling);
+    Change(const float rate, const float potential, short int scaling, std::string unit);
+    Change(const float rate, const float potential, short int scaling, const Unit& unit);
+    Change(const Signal& potential);
+    Change(const Signal& dynamical, const Signal& potential);
+    Change(const Direction& rate, const Signal& potential);
+    Change(const Direction& rate, const Signal& dynamical, const Signal& potential);
+    Change(const float rate, const float dynamical, const float potential);
+    Change(const float rate, const float dynamical, const float potential, short int scaling);
+    Change(const float rate, const float dynamical, const float potential, short int scaling, std::string unit);
+    Change(const float rate, const float dynamical, const float potential, short int scaling, const Unit& unit);
 
     // Destructors
     ~Change();
@@ -75,20 +74,20 @@ public:
     Change operator%(const Change& peer) const;
 
     // Getters
-    Direction getGradient() const { return gradient; }
-    Quantity getDynamical() const { return dynamical; }
-    Quantity getPotential() const { return potential; }
+    Direction getRate() const { return rate; }
+    Signal getDynamical() const { return dynamical; }
+    Signal getPotential() const { return potential; }
 
     // Setters
-    void setGradient(const float phase) { this->gradient = Direction(phase); }
-    void setGradient(const Direction& phase) { this->gradient = phase; }
-    void setDynamical(const Quantity& property) { this->dynamical = property; }
-    void setPotential(const Quantity& property) { this->potential = property; }
+    void setRate(const Direction& change) { this->rate = change; }
+    void setDynamical(const Signal& property) { this->dynamical = property; }
+    void setPotential(const Signal& property) { this->potential = property; }
 
     // Additional methods
     float toRadians() const;
-    Quantity getLagrangian() const;
-    Quantity getHamiltonian() const;
+    void setConversion(const float rate);
+    Signal getLagrangian() const;
+    Signal getHamiltonian() const;
     float leastAction();
     virtual Change copy();
     virtual void clear();

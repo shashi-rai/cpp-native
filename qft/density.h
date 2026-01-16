@@ -29,33 +29,34 @@ namespace qft {
 
 class Density {
     std::string name;
-    shp::Unit unit;
-    shp::Quantity magnitude;
+    shp::Signal parameter;
     shp::Volume volume;
 public:
     // Constructors
     Density();
     Density(std::string name);
-    Density(const float magnitude);
-    Density(const float magnitude, const std::string unit);
-    Density(const float magnitude, const short int scaling, const std::string unit);
-    Density(const float magnitude, const float volume);
-    Density(const float magnitude, const float volume, const std::string unit);
-    Density(const float magnitude, const float volume, const short int scaling, const std::string unit);
-    Density(const shp::Quantity& magnitude, const shp::Volume& volume);
-    Density(const shp::Quantity& magnitude, const shp::Volume& volume, const shp::Unit& unit);
-    Density(std::string name, const shp::Unit& unit);
-    Density(std::string name, const short int scaling, const shp::Unit& unit);
-    Density(std::string name, const float magnitude);
-    Density(std::string name, const float magnitude, const std::string unit);
-    Density(std::string name, const float magnitude, const short int scaling, const std::string unit);
-    Density(std::string name, const float magnitude, const float volume);
-    Density(std::string name, const float magnitude, const float volume, const std::string unit);
-    Density(std::string name, const float magnitude, const float volume, const short int scaling, const std::string unit);
-    Density(std::string name, const shp::Quantity& magnitude);
-    Density(std::string name, const shp::Quantity& magnitude, const shp::Unit& unit);
-    Density(std::string name, const shp::Quantity& magnitude, const shp::Volume& volume);
-    Density(std::string name, const shp::Quantity& magnitude, const shp::Volume& volume, const shp::Unit& unit);
+    Density(const float parameter);
+    Density(const float parameter, const std::string unit);
+    Density(const float parameter, const short int scaling, const std::string unit);
+    Density(const float parameter, const float volume);
+    Density(const float parameter, const short int scaling, const float volume);
+    Density(const float parameter, const std::string unit, const float volume);
+    Density(const float parameter, const short int scaling, const std::string unit, const float volume);
+    Density(const float parameter, const short int scaling, const std::string unit, const shp::Volume& volume);
+    Density(const float parameter, const short int scaling, const shp::Unit& unit, const shp::Volume& volume);
+    Density(const shp::Signal& parameter, const shp::Volume& volume);
+    Density(const std::string name, const shp::Unit& unit);
+    Density(const std::string name, const short int scaling, const shp::Unit& unit);
+    Density(const std::string name, const float parameter);
+    Density(const std::string name, const float parameter, const std::string unit);
+    Density(const std::string name, const float parameter, const short int scaling, const std::string unit);
+    Density(const std::string name, const float parameter, const float volume);
+    Density(const std::string name, const float parameter, const short int scaling, const float volume);
+    Density(const std::string name, const float parameter, const std::string unit, const float volume);
+    Density(const std::string name, const float parameter, const short int scaling, const std::string unit, const float volume);
+    Density(const std::string name, const float parameter, const short int scaling, const shp::Unit& unit, const shp::Volume& volume);
+    Density(const std::string name, const shp::Signal& parameter);
+    Density(const std::string name, const shp::Signal& parameter, const shp::Volume& volume);
 
     // Destructors
     ~Density();
@@ -70,22 +71,30 @@ public:
 
     // Getters
     std::string getName() const { return name; }
-    shp::Unit getUnit() const { return unit; }
-    shp::Quantity getMagnitude() const { return magnitude; }
+    shp::Signal getParameter() const { return parameter; }
     shp::Volume getVolume() const { return volume; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
-    void setUnit(const shp::Unit& value) { this->unit = value; }
-    void setMagnitude(const shp::Quantity& magnitude) { this->magnitude = magnitude; }
-    void setVolume(const shp::Volume& space) { this->volume = space; }
+    void setParameter(const shp::Signal& temporal) { this->parameter = temporal; }
+    void setVolume(const shp::Volume& spatial) { this->volume = spatial; }
 
     // Additional methods
-    shp::Quantity getTotal() const;
+    float getMagnitude() const;
+    void setMagnitude(const float value);
+    void setMagnitude(const float value, const short int scale);
+    void setMagnitude(const float value, const short int scale, const std::string unit);
+    short int getScaling() const;
+    void setScaling(const short int scale);
+    shp::Unit getUnit() const;
+    void setUnit(const shp::Unit& unit);
+    void setVolume(const float value);
+    shp::Signal getTotal() const;
     virtual Density copy();
     virtual void clear();
     virtual std::string print();
-    shp::Quantity getComponent(float phase) const;
+    shp::Signal getCosComponent(const float phase) const;
+    shp::Signal getSinComponent(const float phase) const;
 public:
     static const std::string UNIT;
 };

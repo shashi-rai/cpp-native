@@ -103,7 +103,7 @@ Electroweak Electroweak::operator%(const Electroweak& peer) const {
 
 shp::Point Electroweak::copy() {
     Electroweak fresh(this->getName(), this->getEnergy());
-	fresh.setAmplitude(this->getAmplitude());
+	fresh.setMagnitude(this->getMagnitude());
 	fresh.setGradient(this->getGradient());
     return fresh;
 }

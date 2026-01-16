@@ -154,11 +154,11 @@ Momentum Momentum::operator%(const Momentum& peer) const {
     return Momentum("%", (mass % peer.mass), (velocity % peer.velocity));
 }
 
-shp::Quantity Momentum::getCharge() {
-    shp::Quantity difference = mass.getPotential().getDifference();
-    shp::Quantity angular = velocity.getAngular(shp::Quantity::DEFAULT_VALUE);
+shp::Signal Momentum::getCharge() {
+    shp::Signal difference = mass.getPotential().getDifference();
+    shp::Signal angular = velocity.getAngular(shp::Quantity::DEFAULT_VALUE);
     float magnitude = (((mass.getMagnitude() * angular.getMagnitude()) / difference.getMagnitude()));
-    shp::Quantity result(magnitude, mass.getScaling(), shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_CHARGE));
+    shp::Signal result(magnitude, mass.getScaling(), shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_CHARGE));
     return result;
 }
 
@@ -167,8 +167,8 @@ Acceleration Momentum::getAcceleration() const {
 }
 
 void Momentum::applyChangeTogether() {
-    applyChangeFlowSpeed();
-    applyChangeDirection();
+    this->applyChangeFlowSpeed();
+    this->applyChangeDirection();
 }
 
 void Momentum::changeFlowSpeed(const float motion) {
@@ -187,47 +187,47 @@ void Momentum::applyChangeDirection() {
     velocity.applyChangeDirection();
 }
 
-shp::Quantity Momentum::getPower(const Time& interval) const {
-    shp::Quantity result = (getForce(interval) * getVelocity().getTotal());
+shp::Signal Momentum::getPower(const Time& interval) const {
+    shp::Signal result = (this->getForce(interval) * this->getVelocity().getTotal());
     return result;
 }
 
-shp::Quantity Momentum::getForce(const Time& interval) const {
-    shp::Quantity result = (getRateOfChange() / interval.getMagnitude());
+shp::Signal Momentum::getForce(const Time& interval) const {
+    shp::Signal result = (this->getRateOfChange() / interval.getMagnitude());
     return result;
 }
 
-shp::Quantity Momentum::getLinearTotal() const {
+shp::Signal Momentum::getLinearTotal() const {
     qft::Velocity invariant = velocity;     // non-accelerating component only
     float momentum = mass.getMagnitude() * invariant.getTotal().getMagnitude();
     short int scaling = mass.getScaling() + invariant.getTotal().getScaling();
-    shp::Quantity result(momentum, scaling, UNIT);
+    shp::Signal result(momentum, scaling, UNIT);
     return result;
 }
 
-shp::Quantity Momentum::getLinearKinetic() const {
-    shp::Quantity momentum = getLinearTotal();
+shp::Signal Momentum::getLinearKinetic() const {
+    shp::Signal momentum = this->getLinearTotal();
     shp::Frequency total = (mass + mass);
-    shp::Quantity result = ((momentum * momentum) / total.getMagnitude());
+    shp::Signal result = ((momentum * momentum) / total.getMagnitude());
     return result;
 }
 
-shp::Quantity Momentum::getAngularTotal() const {   // directional acceleration
+shp::Signal Momentum::getAngularTotal() const {   // directional acceleration
     float momentum = mass.getMagnitude() * velocity.getTotal().getMagnitude();
     short int scaling = mass.getScaling() + velocity.getTotal().getScaling();
-    shp::Quantity result(momentum, scaling, UNIT);
+    shp::Signal result(momentum, scaling, UNIT);
     return result;
 }
 
-shp::Quantity Momentum::getAngularKinetic() const {
-    shp::Quantity momentum = getAngularTotal();
+shp::Signal Momentum::getAngularKinetic() const {
+    shp::Signal momentum = this->getAngularTotal();
     shp::Frequency total = (mass + mass);
-    shp::Quantity result = ((momentum * momentum) / total.getMagnitude());
+    shp::Signal result = ((momentum * momentum) / total.getMagnitude());
     return result;
 }
 
-shp::Quantity Momentum::getRateOfChange() const {
-    shp::Quantity result = (getLinearTotal() - getAngularTotal());
+shp::Signal Momentum::getRateOfChange() const {
+    shp::Signal result = (this->getLinearTotal() - this->getAngularTotal());
     result.adjustScaling();
     return result;
 }
@@ -238,7 +238,7 @@ std::shared_ptr<Field> Momentum::getMatterField() const {
 
 std::shared_ptr<Field> Momentum::getGravityField() const {
     std::shared_ptr<Field> field = Field::shareable(Momentum::GRAVITY_FIELD);
-    shp::Quantity motion = getRateOfChange();
+    shp::Signal motion = this->getRateOfChange();
     if (motion.checkNonZero()) {
         field->setPotential(shp::Potential(motion.getMagnitude(),
             shp::Quantity::DEFAULT_VALUE, motion.getScaling(), mass.getUnit(),
@@ -279,9 +279,15 @@ std::string Momentum::print() {
 	return result.str();
 }
 
-shp::Quantity Momentum::getComponent(float phase) const {
-	shp::Quantity momentum = getLinearTotal();
-	return shp::Quantity((momentum.getMagnitude() * cos(phase)),
+shp::Signal Momentum::getCosComponent(const float phase) const {
+	shp::Signal momentum = this->getLinearTotal();
+	return shp::Signal(momentum.getOrientation(), (momentum.getCosComponent(phase)),
+        momentum.getScaling(), momentum.getUnit());
+}
+
+shp::Signal Momentum::getSinComponent(const float phase) const {
+	shp::Signal momentum = this->getLinearTotal();
+	return shp::Signal(momentum.getOrientation(), (momentum.getSinComponent(phase)),
         momentum.getScaling(), momentum.getUnit());
 }
 

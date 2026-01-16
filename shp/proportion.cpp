@@ -27,7 +27,7 @@ Proportion::Proportion()
 
 }
 
-Proportion::Proportion(const Quantity& numerator)
+Proportion::Proportion(const Signal& numerator)
         : numerator(numerator), denominator() {
 
 }
@@ -37,22 +37,22 @@ Proportion::Proportion(const float numerator)
 
 }
 
-Proportion::Proportion(const float numerator, short int scaling)
+Proportion::Proportion(const float numerator, const short int scaling)
         : numerator(numerator, scaling), denominator(scaling) {
 
 }
 
-Proportion::Proportion(const float numerator, short int scaling, std::string unit)
+Proportion::Proportion(const float numerator, const short int scaling, const std::string unit)
         : numerator(numerator, scaling, unit), denominator(scaling, unit) {
 
 }
 
-Proportion::Proportion(const float numerator, short int scaling, const Unit& unit)
+Proportion::Proportion(const float numerator, const short int scaling, const Unit& unit)
         : numerator(numerator, scaling, unit), denominator(scaling, unit) {
 
 }
 
-Proportion::Proportion(const Quantity& numerator, const Quantity& denominator)
+Proportion::Proportion(const Signal& numerator, const Signal& denominator)
         : numerator(numerator), denominator(denominator) {
 
 }
@@ -62,17 +62,20 @@ Proportion::Proportion(const float numerator, const float denominator)
 
 }
 
-Proportion::Proportion(const float numerator, const float denominator, short int scaling)
+Proportion::Proportion(const float numerator, const float denominator,
+        const short int scaling)
         : numerator(numerator, scaling), denominator(denominator, scaling) {
 
 }
 
-Proportion::Proportion(const float numerator, const float denominator, short int scaling, std::string unit)
+Proportion::Proportion(const float numerator, const float denominator,
+        const short int scaling, const std::string unit)
         : numerator(numerator, scaling, unit), denominator(denominator, scaling, unit) {
 
 }
 
-Proportion::Proportion(const float numerator, const float denominator, short int scaling, const Unit& unit)
+Proportion::Proportion(const float numerator, const float denominator,
+        const short int scaling, const Unit& unit)
         : numerator(numerator, scaling, unit), denominator(denominator, scaling, unit) {
 
 }
@@ -105,9 +108,9 @@ Proportion Proportion::operator%(const Proportion& peer) const {
     return Proportion((numerator % peer.numerator), (denominator % peer.denominator));
 }
 
-shp::Quantity Proportion::getRatio() const {
-    Quantity ratio = (numerator / denominator); ratio.adjustScaling();
-    return Quantity(ratio.getMagnitude(), ratio.getScaling(), ratio.getUnit());
+Signal Proportion::getRatio() const {
+    Signal ratio = (numerator / denominator); ratio.adjustScaling();
+    return Signal(ratio.getOrientation(), ratio.getMagnitude(), ratio.getScaling(), ratio.getUnit());
 }
 
 Proportion Proportion::copy() {

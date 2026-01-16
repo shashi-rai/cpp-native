@@ -24,7 +24,6 @@
 #include <string>
 #include <vector>
 #include "planar.h"
-#include "point.h"
 
 namespace shp {
 

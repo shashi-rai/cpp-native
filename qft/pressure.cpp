@@ -105,15 +105,16 @@ Pressure Pressure::operator%(const Pressure& peer) const {
     return Pressure("%", (force % peer.force), (area % peer.area), unit);
 }
 
-shp::Quantity Pressure::getTotal() const {
+shp::Signal Pressure::getTotal() const {
     float pressure = (force.getTotal().getMagnitude() / area.getTotal().getMagnitude());
     short int scaling = (force.getTotal().getScaling() - area.getTotal().getScaling());
-    shp::Quantity result(pressure, scaling, getUnit());
+    shp::Signal result(pressure, scaling, getUnit());
     return result;
 }
 
 Density Pressure::getDensity(const shp::Volume& volume) const {
-    Density result(getTotal(), volume, getUnit());
+    shp::Signal total = this->getTotal(); 
+    Density result(total.getMagnitude(), total.getScaling(), total.getUnit(), volume);
     return result;
 }
 
@@ -140,9 +141,14 @@ std::string Pressure::print() {
 	return result.str();
 }
 
-shp::Quantity Pressure::getComponent(float phase) const {
-	shp::Quantity pressure = getTotal();
-	return shp::Quantity((pressure.getMagnitude() * cos(phase)), pressure.getScaling(), pressure.getUnit());
+shp::Signal Pressure::getCosComponent(const float phase) const {
+	shp::Signal pressure = this->getTotal();
+	return shp::Signal(pressure.getCosComponent(phase), pressure.getScaling(), pressure.getUnit());
+}
+
+shp::Signal Pressure::getSinComponent(const float phase) const {
+	shp::Signal pressure = this->getTotal();
+	return shp::Signal(pressure.getSinComponent(phase), pressure.getScaling(), pressure.getUnit());
 }
 
 } // namespace qft

@@ -24,26 +24,26 @@
 #include <sstream>
 #include <string>
 #include <vector>
-#include "quantity.h"
+#include "signal.h"
 
 namespace shp {
 
 class Proportion {
-    Quantity numerator;
-    Quantity denominator;
+    Signal numerator;
+    Signal denominator;
 public:
     // Constructors
     Proportion();
-    Proportion(const Quantity& numerator);
+    Proportion(const Signal& numerator);
     Proportion(const float numerator);
-    Proportion(const float numerator, short int scaling);
-    Proportion(const float numerator, short int scaling, std::string unit);
-    Proportion(const float numerator, short int scaling, const Unit& unit);
-    Proportion(const Quantity& numerator, const Quantity& denominator);
+    Proportion(const float numerator, const short int scaling);
+    Proportion(const float numerator, const short int scaling, const std::string unit);
+    Proportion(const float numerator, const short int scaling, const Unit& unit);
+    Proportion(const Signal& numerator, const Signal& denominator);
     Proportion(const float numerator, const float denominator);
-    Proportion(const float numerator, const float denominator, short int scaling);
-    Proportion(const float numerator, const float denominator, short int scaling, std::string unit);
-    Proportion(const float numerator, const float denominator, short int scaling, const Unit& unit);
+    Proportion(const float numerator, const float denominator, const short int scaling);
+    Proportion(const float numerator, const float denominator, const short int scaling, const std::string unit);
+    Proportion(const float numerator, const float denominator, const short int scaling, const Unit& unit);
 
     // Destructors
     ~Proportion();
@@ -57,15 +57,15 @@ public:
     Proportion operator%(const Proportion& peer) const;
 
     // Getters
-    Quantity getNumerator() const { return numerator; }
-    Quantity getDenominator() const { return denominator; }
+    Signal getNumerator() const { return numerator; }
+    Signal getDenominator() const { return denominator; }
 
     // Setters
-    void setNumerator(const Quantity& property) { this->numerator = property; }
-    void setDenominator(const Quantity& property) { this->denominator = property; }
+    void setNumerator(const Signal& property) { this->numerator = property; }
+    void setDenominator(const Signal& property) { this->denominator = property; }
 
     // Additional methods
-    Quantity getRatio() const;
+    Signal getRatio() const;
     virtual Proportion copy();
     virtual void clear();
     virtual std::string print();

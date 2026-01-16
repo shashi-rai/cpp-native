@@ -118,10 +118,10 @@ Power Power::operator%(const Power& peer) const {
     return Power("%", (energy % peer.energy), (interval % peer.interval), unit);
 }
 
-shp::Quantity Power::getTotal() const {
+shp::Signal Power::getTotal() const {
     float power = (energy.getMagnitude() / interval.getMagnitude());
     short int scaling = (energy.getScaling() - interval.getScaling());
-    shp::Quantity result(power, scaling, unit);
+    shp::Signal result(power, scaling, unit);
     return result;
 }
 
@@ -148,9 +148,14 @@ std::string Power::print() {
 	return result.str();
 }
 
-shp::Quantity Power::getComponent(float phase) const {
-	shp::Quantity power = getTotal();
-	return shp::Quantity((power.getMagnitude() * cos(phase)), power.getScaling(), power.getUnit());
+shp::Signal Power::getCosComponent(const float phase) const {
+	shp::Signal power = this->getTotal();
+	return shp::Signal(power.getCosComponent(phase), power.getScaling(), power.getUnit());
+}
+
+shp::Signal Power::getSinComponent(const float phase) const {
+	shp::Signal power = this->getTotal();
+	return shp::Signal(power.getSinComponent(phase), power.getScaling(), power.getUnit());
 }
 
 } // namespace qft

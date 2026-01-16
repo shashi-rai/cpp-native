@@ -27,37 +27,55 @@
 #include <vector>
 #include "angular.h"
 #include "shape.h"
+#include "signal.h"
 
 namespace shp {
 
 class Point : public Shape {
-    Quantity amplitude;
-    float gradient;         // azimuthal change in amplitude
+    Signal signal;
 public:
     // Constructors
     Point();
     Point(const Unit& unit);
     Point(const float gradient);
-    Point(const float amplitude, const float gradient);
-    Point(const float amplitude, const std::string unit);
-    Point(const float amplitude, const std::string unit, const float gradient);
-    Point(const float amplitude, const Unit& unit);
-    Point(const float amplitude, const Unit& unit, const float gradient);
-    Point(const float amplitude, const short int scaling, const std::string unit);
-    Point(const float amplitude, const short int scaling, const std::string unit, const float gradient);
-    Point(const float amplitude, const short int scaling, const Unit& unit);
-    Point(const float amplitude, const short int scaling, const Unit& unit, const float gradient);
-    Point(std::string name);
-    Point(std::string name, const float gradient);
-    Point(std::string name, const float amplitude, const float gradient);
-    Point(std::string name, const float amplitude, const std::string unit);
-    Point(std::string name, const float amplitude, const std::string unit, const float gradient);
-    Point(std::string name, const float amplitude, const Unit& unit);
-    Point(std::string name, const float amplitude, const Unit& unit, const float gradient);
-    Point(std::string name, const float amplitude, const short int scaling, const std::string unit);
-    Point(std::string name, const float amplitude, const short int scaling, const std::string unit, const float gradient);
-    Point(std::string name, const float amplitude, const short int scaling, const Unit& unit);
-    Point(std::string name, const float amplitude, const short int scaling, const Unit& unit, const float gradient);
+    Point(const Azimuth& gradient);
+    Point(const float magnitude, const float gradient);
+    Point(const float magnitude, const Azimuth& gradient);
+    Point(const float magnitude, const std::string unit);
+    Point(const float magnitude, const std::string unit, const float gradient);
+    Point(const float magnitude, const std::string unit, const Azimuth& gradient);
+    Point(const float magnitude, const Unit& unit);
+    Point(const float magnitude, const Unit& unit, const float gradient);
+    Point(const float magnitude, const Unit& unit, const Azimuth& gradient);
+    Point(const float magnitude, const short int scaling);
+    Point(const float magnitude, const short int scaling, const float gradient);
+    Point(const float magnitude, const short int scaling, const Azimuth& gradient);
+    Point(const float magnitude, const short int scaling, const std::string unit);
+    Point(const float magnitude, const short int scaling, const std::string unit, const float gradient);
+    Point(const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient);
+    Point(const float magnitude, const short int scaling, const Unit& unit);
+    Point(const float magnitude, const short int scaling, const Unit& unit, const float gradient);
+    Point(const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient);
+    Point(const std::string name);
+    Point(const std::string name, const float gradient);
+    Point(const std::string name, const Azimuth& gradient);
+    Point(const std::string name, const float magnitude, const float gradient);
+    Point(const std::string name, const float magnitude, const Azimuth& gradient);
+    Point(const std::string name, const float magnitude, const std::string unit);
+    Point(const std::string name, const float magnitude, const std::string unit, const float gradient);
+    Point(const std::string name, const float magnitude, const std::string unit, const Azimuth& gradient);
+    Point(const std::string name, const float magnitude, const Unit& unit);
+    Point(const std::string name, const float magnitude, const Unit& unit, const float gradient);
+    Point(const std::string name, const float magnitude, const Unit& unit, const Azimuth& gradient);
+    Point(const std::string name, const float magnitude, const short int scaling);
+    Point(const std::string name, const float magnitude, const short int scaling, const float gradient);
+    Point(const std::string name, const float magnitude, const short int scaling, const Azimuth& gradient);
+    Point(const std::string name, const float magnitude, const short int scaling, const std::string unit);
+    Point(const std::string name, const float magnitude, const short int scaling, const std::string unit, const float gradient);
+    Point(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient);
+    Point(const std::string name, const float magnitude, const short int scaling, const Unit& unit);
+    Point(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const float gradient);
+    Point(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient);
 
     // Destructors
     ~Point();
@@ -66,28 +84,41 @@ public:
     bool operator==(const Point& peer) const;
     Point operator+(const Point& peer) const;
     Point operator-(const Point& peer) const;
+    Point operator*(const Point& peer) const;
+    Point operator/(const Point& peer) const;
+    Point operator%(const Point& peer) const;
 
     // Getters
-    Quantity getAmplitude() const { return amplitude; }
-    float getGradient() const { return gradient; }
+    Signal getSignal() const { return signal; }
 
     // Setters
-    void setAmplitude(const Quantity& object) { amplitude = object; }
-    void setGradient(const float value) { this->gradient = value; }
+    void setSignal(const Signal& object) { this->signal = object; }
 
     // Additional methods
-    void setAmplitude(const float magnitude);
-    void setAmplitude(const float magnitude, const short int scaling);
-    void setAmplitude(const float magnitude, const short int scaling, const std::string unit);
-    void setAmplitude(const float magnitude, const short int scaling, const Unit& unit);
+    float getAmplitude() const;
+    float getMagnitude() const;
+    void setMagnitude(const float magnitudet);
+    void setMagnitude(const float magnitude, const short int scaling);
+    void setMagnitude(const float magnitude, const short int scaling, const std::string unit);
+    void setMagnitude(const float magnitude, const short int scaling, const Unit& unit);
+    short int getScaling() const;
+    void setScaling(const short int scaling);
+    Unit getUnit() const;
+    void setUnit(const Unit& unit);
+    float getAzimuthal() const;
+    void setAzimuthal(const float radians);
     void setAzimuthal(const Direction& orientation);
+    float getGradient() const;
+    void setGradient(const float radians);
+    void setGradient(const Direction& orientation);
     virtual Angular getOrientation() const;
     virtual Point copy() const;
     virtual void clear();
     virtual std::string print();
-    Quantity getAmplitudeAzimuthal(const float change) const;
+    Quantity getAzimuthCosComponent(const float change) const;
+    Quantity getAzimuthSinComponent(const float change) const;
 protected:
-    std::complex<float> toAzimuthalComplex(const float change);
+    std::complex<float> toComplexAzimuth(const float change);
 };
 
 typedef std::vector<Point > PointArray;

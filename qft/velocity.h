@@ -81,15 +81,16 @@ public:
     // Additional methods
     void changeSpeed(const float motion);
     void changeDirection(const float degree);
-    shp::Quantity getTotal() const;
-    virtual shp::Quantity getLinear(const Time& slice);
-    virtual shp::Quantity getAngular(const Time& theta);
+    shp::Signal getTotal() const;
+    virtual shp::Signal getLinear(const Time& slice);
+    virtual shp::Signal getAngular(const Time& theta);
     void adjustScaling();
     bool checkNonZero() const;
     virtual Velocity copy();
     virtual void clear();
     virtual std::string print();
-    shp::Quantity getComponent(float phase) const;
+    shp::Signal getCosComponent(const float phase) const;
+    shp::Signal getSinComponent(const float phase) const;
 protected:
     std::complex<float> toComplex(float coefficient, float change);
 

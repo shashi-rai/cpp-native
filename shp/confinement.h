@@ -70,9 +70,9 @@ public:
     Confinement operator%(const Confinement& peer) const;
 
     // Access operator
-    Quantity operator()(const Confinement& peer,
+    Signal operator()(const Confinement& peer,
         const Distance& separation, const Distance& position) const;
-    Quantity operator()(const Confinement& peerX, const Confinement& peerY,
+    Signal operator()(const Confinement& peerX, const Confinement& peerY,
         const Distance& separationX, const Distance& separationY) const;
 
     // Getters
@@ -90,11 +90,11 @@ public:
     void setPolar(const Polar& angle);
     Azimuth getAzimuth() const;
     void setAzimuth(const Azimuth& angle);
-    Quantity getConvergence() const;
-    Quantity getRelative(const Distance& location, const float angle) const;
-    Quantity getPolarComponent(const Distance& location) const;
-    Quantity getAzimuthComponent(const Distance& location) const;
-    virtual Potential copy() const;
+    Signal getConvergence() const;
+    Signal getRelative(const Distance& location, const float angle) const;
+    Signal getPolarComponent(const Distance& location) const;
+    Signal getAzimuthComponent(const Distance& location) const;
+    virtual Signal copy() const;
     virtual void clear();
     virtual std::string print();
 };

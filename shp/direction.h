@@ -69,6 +69,7 @@ public:
     bool checkNonZero() const;
     Direction getInverse() const;
     Direction getNormal() const;
+    Direction getSquare() const;
     Direction getRotation(const short int degree) const;
     Direction getMultiple(const float coefficient) const;
     Direction getDivision(const float coefficient) const;

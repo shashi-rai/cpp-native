@@ -79,27 +79,28 @@ public:
     void setVelocity(const qft::Acceleration& object) { this->velocity = object; }
 
     // Additional methods
-    shp::Quantity getCharge();
+    shp::Signal getCharge();
     qft::Acceleration getAcceleration() const;
     void applyChangeTogether();
     void changeFlowSpeed(const float motion);
     void applyChangeFlowSpeed();
     void changeDirection(const float degree);
     void applyChangeDirection();
-    shp::Quantity getPower(const Time& interval) const;
-    shp::Quantity getForce(const Time& interval) const;
-    shp::Quantity getLinearTotal() const;
-    shp::Quantity getLinearKinetic() const;
-    shp::Quantity getAngularTotal() const;
-    shp::Quantity getAngularKinetic() const;
-    shp::Quantity getRateOfChange() const;
+    shp::Signal getPower(const Time& interval) const;
+    shp::Signal getForce(const Time& interval) const;
+    shp::Signal getLinearTotal() const;
+    shp::Signal getLinearKinetic() const;
+    shp::Signal getAngularTotal() const;
+    shp::Signal getAngularKinetic() const;
+    shp::Signal getRateOfChange() const;
     std::shared_ptr<Field> getMatterField() const;
     std::shared_ptr<Field> getGravityField() const;
     bool checkNonZero() const;
     virtual Momentum copy();
     virtual void clear();
     virtual std::string print();
-    shp::Quantity getComponent(float phase) const;
+    shp::Signal getCosComponent(const float phase) const;
+    shp::Signal getSinComponent(const float phase) const;
 public:
     static const std::string UNIT;
     static const std::string GRAVITY_FIELD;

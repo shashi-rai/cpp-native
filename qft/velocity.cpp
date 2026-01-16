@@ -202,22 +202,22 @@ void Velocity::changeDirection(const float degree) {
     }
 }
 
-shp::Quantity Velocity::getTotal() const {
-    shp::Quantity result(displacement.getMagnitude(), displacement.getScaling(), getUnit());
+shp::Signal Velocity::getTotal() const {
+    shp::Signal result(displacement.getMagnitude(), displacement.getScaling(), getUnit());
     return result;
 }
 
-shp::Quantity Velocity::getLinear(const Time& slice) {
+shp::Signal Velocity::getLinear(const Time& slice) {
 	shp::Frequency frequency = slice.getFrequency();
 	float magnitude = (displacement.getMagnitude() * frequency.getMagnitude());
 	short int scaling = (displacement.getScaling() + frequency.getScaling());
-    shp::Quantity result(magnitude, scaling, UNIT); result.adjustScaling();
+    shp::Signal result(magnitude, scaling, UNIT); result.adjustScaling();
     return result;
 }
 
-shp::Quantity Velocity::getAngular(const Time& theta) {
+shp::Signal Velocity::getAngular(const Time& theta) {
 	shp::Quantity rotation = theta.getPhaseShift();
-    shp::Quantity result(rotation.getMagnitude(), rotation.getScaling(), rotation.getUnit());
+    shp::Signal result(rotation.getMagnitude(), rotation.getScaling(), rotation.getUnit());
     return result;
 }
 
@@ -250,9 +250,14 @@ std::string Velocity::print() {
 	return result.str();
 }
 
-shp::Quantity Velocity::getComponent(float phase) const {
-	shp::Quantity velocity = getTotal();
-	return shp::Quantity((velocity.getMagnitude() * cos(phase)), velocity.getScaling(), velocity.getUnit());
+shp::Signal Velocity::getCosComponent(const float phase) const {
+	shp::Signal velocity = this->getTotal();
+	return shp::Signal(velocity.getCosComponent(phase), velocity.getScaling(), velocity.getUnit());
+}
+
+shp::Signal Velocity::getSinComponent(const float phase) const {
+	shp::Signal velocity = this->getTotal();
+	return shp::Signal(velocity.getSinComponent(phase), velocity.getScaling(), velocity.getUnit());
 }
 
 std::complex<float> Velocity::toComplex(float coefficient, float change) {

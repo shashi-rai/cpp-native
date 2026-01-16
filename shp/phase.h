@@ -25,6 +25,7 @@
 #include <iomanip>
 #include <string>
 #include <vector>
+#include "angular.h"
 #include "point.h"
 
 namespace shp {
@@ -36,16 +37,96 @@ public:
     // Constructors
     Phase();
     Phase(const float gradient);
-    Phase(const float amplitude, const float gradient);
-    Phase(const float amplitude, const float polarization, const float azimuthal);
-    Phase(std::string name);
-    Phase(std::string name, const float gradient);
-    Phase(std::string name, const float amplitude, const float gradient);
-    Phase(std::string name, const float amplitude, const float polarization, const float azimuthal);
-    Phase(std::string name, const std::time_t timestamp);
-    Phase(std::string name, const float gradient, const std::time_t timestamp);
-    Phase(std::string name, const float amplitude, const float gradient, const std::time_t timestamp);
-    Phase(std::string name, const float amplitude, const float polarization, const float azimuthal, const std::time_t timestamp);
+    Phase(const Azimuth& gradient);
+    Phase(const Polar& polarization);
+    Phase(const float magnitude, const float gradient);
+    Phase(const float magnitude, const short int scaling,
+        const Azimuth& gradient);
+    Phase(const float magnitude, const short int scaling, const std::string unit,
+        const Azimuth& gradient);
+    Phase(const float magnitude, const short int scaling, const Unit& unit,
+        const Azimuth& gradient);
+    Phase(const float magnitude, const Azimuth& gradient);
+    Phase(const float magnitude, const Polar& polarization);
+    Phase(const float magnitude, const short int scaling,
+        const Polar& polarization);
+    Phase(const float magnitude, const short int scaling, const std::string unit,
+        const Polar& polarization);
+    Phase(const float magnitude, const short int scaling, const Unit& unit,
+        const Polar& polarization);
+    Phase(const float magnitude, const float polarization, const float azimuthal);
+    Phase(const float magnitude, const Polar& polarization, const Azimuth& azimuthal);
+    Phase(const float magnitude, const short int scaling,
+        const Polar& polarization, const Azimuth& azimuthal);
+    Phase(const float magnitude, const short int scaling, const std::string unit,
+        const Polar& polarization, const Azimuth& azimuthal);
+    Phase(const float magnitude, const short int scaling, const Unit& unit,
+        const Polar& polarization, const Azimuth& azimuthal);
+    Phase(const std::string name);
+    Phase(const std::string name, const float gradient);
+    Phase(const std::string name, const Azimuth& gradient);
+    Phase(const std::string name, const Polar& polarization);
+    Phase(const std::string name, const float magnitude,
+        const float gradient);
+    Phase(const std::string name, const float magnitude,
+        const Azimuth& gradient);
+    Phase(const std::string name, const float magnitude,
+        const short int scaling, const Azimuth& gradient);
+    Phase(const std::string name, const float magnitude,
+        const short int scaling, const std::string unit, const Azimuth& gradient);
+    Phase(const std::string name, const float magnitude,
+        const short int scaling, const Unit& unit, const Azimuth& gradient);
+    Phase(const std::string name, const float magnitude,
+        const Polar& polarization);
+    Phase(const std::string name, const float magnitude,
+        const short int scaling, const Polar& polarization);
+    Phase(const std::string name, const float magnitude,
+        const short int scaling, const std::string unit, const Polar& polarization);
+    Phase(const std::string name, const float magnitude,
+        const short int scaling, const Unit& unit, const Polar& polarization);
+    Phase(const std::string name, const float magnitude,
+        const float polarization, const float azimuthal);
+    Phase(const std::string name, const float magnitude,
+        const Polar& polarization, const Azimuth& azimuthal);
+    Phase(const std::string name, const float magnitude, const short int scaling,
+        const Polar& polarization, const Azimuth& azimuthal);
+    Phase(const std::string name, const float magnitude, const short int scaling, const std::string unit,
+        const Polar& polarization, const Azimuth& azimuthal);
+    Phase(const std::string name, const float magnitude,
+        const short int scaling, const Unit& unit,
+        const Polar& polarization, const Azimuth& azimuthal);
+    Phase(const std::string name, const std::time_t timestamp);
+    Phase(const std::string name, const float gradient, const std::time_t timestamp);
+    Phase(const std::string name, const Azimuth& gradient, const std::time_t timestamp);
+    Phase(const std::string name, const Polar& polarization, const std::time_t timestamp);
+    Phase(const std::string name, const float magnitude,
+        const float gradient, const std::time_t timestamp);
+    Phase(const std::string name, const float magnitude,
+        const Azimuth& gradient, const std::time_t timestamp);
+    Phase(const std::string name, const float magnitude, const short int scaling,
+        const Azimuth& gradient, const std::time_t timestamp);
+    Phase(const std::string name, const float magnitude, const short int scaling, const std::string unit,
+        const Azimuth& gradient, const std::time_t timestamp);
+    Phase(const std::string name, const float magnitude, const short int scaling, const Unit& unit,
+        const Azimuth& gradient, const std::time_t timestamp);
+    Phase(const std::string name, const float magnitude,
+        const Polar& polarization, const std::time_t timestamp);
+    Phase(const std::string name, const float magnitude, const short int scaling,
+        const Polar& polarization, const std::time_t timestamp);
+    Phase(const std::string name, const float magnitude, const short int scaling, const std::string unit,
+        const Polar& polarization, const std::time_t timestamp);
+    Phase(const std::string name, const float magnitude, const short int scaling, const Unit& unit,
+        const Polar& polarization, const std::time_t timestamp);
+    Phase(const std::string name, const float magnitude,
+        const float polarization, const float azimuthal, const std::time_t timestamp);
+    Phase(const std::string name, const float magnitude,
+        const Polar& polarization, const Azimuth& azimuthal, const std::time_t timestamp);
+    Phase(const std::string name, const float magnitude, const short int scaling,
+        const Polar& polarization, const Azimuth& azimuthal, const std::time_t timestamp);
+    Phase(const std::string name, const float magnitude, const short int scaling, const std::string unit,
+        const Polar& polarization, const Azimuth& azimuthal, const std::time_t timestamp);
+    Phase(const std::string name, const float magnitude, const short int scaling, const Unit& unit,
+        const Polar& polarization, const Azimuth& azimuthal, const std::time_t timestamp);
 
     // Destructors
     ~Phase();
@@ -72,13 +153,13 @@ public:
     virtual Point copy() const;
     virtual void clear();
     virtual std::string print();
-    Quantity getAmplitudePolarization(const float change) const;
+    Quantity getPolarCosComponent(const float change) const;
+    Quantity getPolarSinComponent(const float change) const;
 protected:
-    std::complex<float> toPolarizationComplex(const float change);
+    std::complex<float> toComplexPolar(const float change);
 public:
     static const std::time_t getSystem();
 public:
-    static const float DEFAULT_VALUE;
     static const std::time_t DEFAULT_TIME;
 };
 

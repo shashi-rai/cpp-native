@@ -67,9 +67,9 @@ public:
     Growth operator%(const Growth& peer) const;
 
     // Access operator
-    shp::Quantity operator()(const Growth& peer,
+    shp::Signal operator()(const Growth& peer,
         const shp::Distance& separation, const shp::Distance& position) const;
-    shp::Quantity operator()(const Growth& peerX, const Growth& peerY,
+    shp::Signal operator()(const Growth& peerX, const Growth& peerY,
         const shp::Distance& separationX, const shp::Distance& separationY) const;
 
     // Getters
@@ -87,11 +87,11 @@ public:
     void setPolar(const shp::Polar& angle);
     shp::Azimuth getAzimuth() const;
     void setAzimuth(const shp::Azimuth& angle);
-    shp::Quantity getConvergence() const;
-    shp::Quantity getRelative(const shp::Distance& location, const float angle) const;
-    shp::Quantity getPolarComponent(const shp::Distance& location) const;
-    shp::Quantity getAzimuthComponent(const shp::Distance& location) const;
-    shp::Potential copy() const;
+    shp::Signal getConvergence() const;
+    shp::Signal getRelative(const shp::Distance& location, const float angle) const;
+    shp::Signal getPolarComponent(const shp::Distance& location) const;
+    shp::Signal getAzimuthComponent(const shp::Distance& location) const;
+    shp::Signal copy() const;
     void clear();
     std::string print();
 };

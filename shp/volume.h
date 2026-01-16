@@ -26,13 +26,12 @@
 #include <string>
 #include <vector>
 #include "area.h"
-#include "quantity.h"
 
 namespace shp {
 
 class Volume {
     Area surface;
-    Quantity depth;
+    Signal depth;
 public:
     // Constructors
     Volume();
@@ -43,7 +42,7 @@ public:
     Volume(const Area& surface, const float depth);
     Volume(const Area& surface, const float depth, const std::string unit);
     Volume(const Area& surface, const float depth, const short int scaling, const std::string unit);
-    Volume(const Area& surface, const Quantity& depth);
+    Volume(const Area& surface, const Signal& depth);
     Volume(const float length);
     Volume(const float length, const std::string unit);
     Volume(const float length, const short int scaling, const std::string unit);
@@ -54,9 +53,9 @@ public:
     Volume(const float length, const float breadth, const float height, const std::string unit);
     Volume(const float length, const float breadth, const float height, const short int scaling);
     Volume(const float length, const float breadth, const float height, const short int scaling, const std::string unit);
-    Volume(const Quantity& length);
-    Volume(const Quantity& length, const Quantity& breadth);
-    Volume(const Quantity& length, const Quantity& breadth, const Quantity& height);
+    Volume(const Signal& length);
+    Volume(const Signal& length, const Signal& breadth);
+    Volume(const Signal& length, const Signal& breadth, const Signal& height);
 
     // Destructors
     ~Volume();
@@ -71,10 +70,10 @@ public:
 
     // Getters
     Area getSurface() const { return surface; }
-    Quantity getDepth() const { return depth; }
-    Quantity getLength() const { return surface.getLength(); }
-    Quantity getBreadth() const { return surface.getBreadth(); }
-    Quantity getHeight() const { return depth; }
+    Signal getDepth() const { return depth; }
+    Signal getLength() const { return surface.getLength(); }
+    Signal getBreadth() const { return surface.getBreadth(); }
+    Signal getHeight() const { return depth; }
 
     // Setters
     void setSurface(const Area& area) { this->surface = area; }
@@ -84,12 +83,12 @@ public:
     void setHeight(const Quantity& height) { this->depth = height; }
 
     // Additional methods
-    Quantity getTotal() const;
+    Signal getTotal() const;
     std::string getUnit() const;
     virtual Volume copy();
     virtual void clear();
     virtual std::string print();
-    Quantity getComponent(float phase) const;
+    Signal getComponent(float phase) const;
 public:
     static const std::string UNIT;
     static const short int SCALING_FACTOR;

@@ -71,6 +71,7 @@ public:
 
     // Additional methods
     void setMagnitude(const float value, const short int scale);
+    void setUnit(const std::string name);
     Quantity getAbsolute() const;
     Quantity getInverse() const;
     Quantity getPercent() const;

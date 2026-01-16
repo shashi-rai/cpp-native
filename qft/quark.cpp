@@ -240,7 +240,7 @@ shp::Point Quark::copy() {
     Quark fresh(this->getName(), this->getEnergy());
     fresh.setColour(colour);
     fresh.setHanded(handed);
-	fresh.setAmplitude(this->getAmplitude());
+	fresh.setMagnitude(this->getMagnitude());
 	fresh.setGradient(this->getGradient());
     return fresh;
 }

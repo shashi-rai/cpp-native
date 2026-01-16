@@ -28,14 +28,14 @@
 namespace shp {
 
 class Shape {
-    Shape* owner;
+    std::shared_ptr<Shape> owner;
     std::string name;
 public:
     // Constructors
     Shape();
-    Shape(std::string name);
-    Shape(Shape* parent);
-    Shape(std::string name, Shape* parent);
+    Shape(const std::string name);
+    Shape(const std::shared_ptr<Shape> parent);
+    Shape(const std::string name, const std::shared_ptr<Shape> parent);
 
     // Destructors
     ~Shape();
@@ -44,12 +44,12 @@ public:
     bool operator==(const Shape& peer) const;
 
     // Getters
-    Shape* getOwner() const { return owner; }
+    std::shared_ptr<Shape> getOwner() const { return owner; }
     std::string getName() const { return name; }
 
     // Setters
-    void setOwner(Shape* parent) { this->owner = parent; }
-    void setName(const std::string& name) { this->name = name; }
+    void setOwner(const std::shared_ptr<Shape> parent) { this->owner = parent; }
+    void setName(const std::string name) { this->name = name; }
 
     // Additional methods
     bool isOwned() const;

@@ -29,7 +29,17 @@ Wave::Wave()
 
 }
 
+Wave::Wave(const Azimuth& azimuthal)
+        : Curvature(azimuthal), wavelets() {
+
+}
+
 Wave::Wave(const float polarization)
+        : Curvature(polarization), wavelets() {
+
+}
+
+Wave::Wave(const Polar& polarization)
         : Curvature(polarization), wavelets() {
 
 }
@@ -39,35 +49,81 @@ Wave::Wave(const float polarization, const float azimuthal)
 
 }
 
-Wave::Wave(std::string name)
+Wave::Wave(const Polar& polarization, const Azimuth& azimuthal)
+        : Curvature(polarization, azimuthal), wavelets() {
+
+}
+
+Wave::Wave(const std::string name)
         : Curvature(name), wavelets() {
 
 }
 
-Wave::Wave(std::string name, const float polarization)
+Wave::Wave(const std::string name, const Azimuth& azimuthal)
+        : Curvature(name, azimuthal), wavelets() {
+
+}
+
+Wave::Wave(const std::string name, const float polarization)
         : Curvature(name, polarization), wavelets() {
 
 }
 
-Wave::Wave(std::string name, const float polarization, const float azimuthal)
+Wave::Wave(const std::string name, const Polar& polarization)
+        : Curvature(name, polarization), wavelets() {
+
+}
+
+Wave::Wave(const std::string name, const float polarization, const float azimuthal)
         : Curvature(name, polarization, azimuthal), wavelets() {
 
 }
 
-Wave::Wave(std::string name, const CurvatureArray& wavelets)
+Wave::Wave(const std::string name, const Polar& polarization, const Azimuth& azimuthal)
+        : Curvature(name, polarization, azimuthal), wavelets() {
+
+}
+
+Wave::Wave(const std::string name, const CurvatureArray& wavelets)
         : Curvature(name), wavelets(wavelets) {
 
 }
 
-Wave::Wave(std::string name, const CurvatureArray& wavelets,
+Wave::Wave(const std::string name, const CurvatureArray& wavelets,
+        const Azimuth& azimuthal)
+        : Curvature(name, azimuthal), wavelets(wavelets) {
+
+}
+
+Wave::Wave(const std::string name, const CurvatureArray& wavelets,
         const float polarization)
         : Curvature(name, polarization), wavelets(wavelets) {
 
 }
 
-Wave::Wave(std::string name,  const CurvatureArray& wavelets,
+Wave::Wave(const std::string name, const CurvatureArray& wavelets,
+        const Polar& polarization)
+        : Curvature(name, polarization), wavelets(wavelets) {
+
+}
+
+Wave::Wave(const std::string name, const CurvatureArray& wavelets,
         const float polarization, const float azimuthal)
         : Curvature(name, polarization, azimuthal), wavelets(wavelets) {
+
+}
+
+Wave::Wave(const std::string name, const CurvatureArray& wavelets,
+        const Polar& polarization, const Azimuth& azimuthal)
+        : Curvature(name, polarization, azimuthal), wavelets(wavelets) {
+
+}
+
+Wave::Wave(const std::string name, const CurvatureArray& wavelets,
+        const float magnitude, const short int scaling, const Unit& unit,
+        const Polar& polarization, const Azimuth& azimuthal)
+        : Curvature(name, magnitude, scaling, unit, polarization, azimuthal),
+        wavelets(wavelets) {
 
 }
 
@@ -85,16 +141,16 @@ Wave Wave::operator+(const Wave& peer) const {
     CurvatureArray fluctuations(wavelets);
     fluctuations.insert(fluctuations.end(), peer.wavelets.begin(), peer.wavelets.end());
     std::complex<float>
-        ap1 = self.toAzimuthalComplex(self.getGradient()),
-        ap2 = other.toAzimuthalComplex(peer.getGradient());
+        ap1 = self.toComplexAzimuth(self.getGradient()),
+        ap2 = other.toComplexAzimuth(peer.getGradient());
     std::complex<float> a_phasor = ap1 + ap2;
     std::complex<float>
-        pp1 = self.toPolarizationComplex(self.getPolarization()),
-        pp2 = other.toPolarizationComplex(peer.getPolarization());
+        pp1 = self.toComplexPolar(self.getPolarization()),
+        pp2 = other.toComplexPolar(peer.getPolarization());
     std::complex<float> p_phasor = pp1 + pp2;
     Wave result = Wave("+", fluctuations, std::arg(p_phasor), std::arg(a_phasor));
     // TODO: since amplitude would vary due to Polar & Azimuthal angle differences
-    result.setAmplitude(std::abs(p_phasor));
+    result.setMagnitude(std::abs(p_phasor), self.getScaling(), self.getUnit());
     return result;
 }
 
@@ -108,16 +164,16 @@ Wave Wave::operator-(const Wave& peer) const {
         }
     }
     std::complex<float>
-        ap1 = self.toAzimuthalComplex(self.getGradient()),
-        ap2 = other.toAzimuthalComplex(peer.getGradient());
+        ap1 = self.toComplexAzimuth(self.getGradient()),
+        ap2 = other.toComplexAzimuth(peer.getGradient());
     std::complex<float> a_phasor = ap1 - ap2;
     std::complex<float>
-        pp1 = self.toPolarizationComplex(self.getPolarization()),
-        pp2 = other.toPolarizationComplex(peer.getPolarization());
+        pp1 = self.toComplexPolar(self.getPolarization()),
+        pp2 = other.toComplexPolar(peer.getPolarization());
     std::complex<float> p_phasor = pp1 - pp2;
     Wave result = Wave("-", fluctuations, std::arg(p_phasor), std::arg(a_phasor));
     // TODO: since amplitude would vary due to Polar & Azimuthal angle differences
-    result.setAmplitude(std::abs(p_phasor));
+    result.setMagnitude(std::abs(p_phasor), self.getScaling(), self.getUnit());
     return result;
 }
 
@@ -154,7 +210,10 @@ void Wave::set(int index, const Curvature& object) {
 }
 
 Point Wave::copy() {
-    Wave fresh(getName(), wavelets, getPolarization(), getGradient());
+    Wave self = *this;
+    Wave fresh(self.getName(), self.wavelets,
+        self.getMagnitude(), self.getScaling(), self.getUnit(),
+        self.getPolarization(), self.getGradient());
     return fresh;
 }
 

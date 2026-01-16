@@ -258,6 +258,26 @@ Signal Signal::getCrossProduct(const Signal& peer) const {
     return Signal(normal.toRadians(), product.getMagnitude(), product.getScaling(), self.getUnit());
 }
 
+Signal Signal::getDotFraction(const Signal& peer) const {
+    Quantity self = *this, other = peer;
+    Quantity fraction = (self / other); fraction.adjustScaling();
+    return Signal(this->orientation, fraction.getMagnitude(), fraction.getScaling(), self.getUnit());
+}
+
+Signal Signal::getCrossFraction(const Signal& peer) const {
+    Quantity self = *this, other = peer; Quantity fraction; Azimuth infinitesimal;
+    float difference = (peer.orientation - this->orientation);
+    if (difference != Direction::DEFAULT_RADIANS && difference != Direction::DEGREE_180) {
+        Direction delta = Direction::getFraction(this->orientation, peer.orientation);
+        float radians = delta.toRadians(); infinitesimal = Azimuth(radians);
+        fraction = (self / other).getSinComponent(radians);
+    } else if (difference == Direction::DEGREE_090 || difference == Direction::DEGREE_270) {
+        fraction = (self / other);
+    }
+    fraction.adjustScaling();
+    return Signal(infinitesimal.toRadians(), fraction.getMagnitude(), fraction.getScaling(), self.getUnit());
+}
+
 Frequency Signal::getFrequency() const {
     Quantity wave = Quantity::getInverse();
     Frequency result(Direction::DEFAULT_RADIANS, orientation, std::abs(wave.getMagnitude()),
@@ -283,6 +303,11 @@ void Signal::setMagnitude(const float value) {
 
 void Signal::setMagnitude(const float value, const short int scale) {
     Quantity::setMagnitude(value, scale);
+}
+
+void Signal::setMagnitude(const float value, const short int scale, const std::string unit) {
+    Quantity::setMagnitude(value, scale);
+    Quantity::setUnit(unit);
 }
 
 float Signal::getAmplitude() const {
@@ -354,9 +379,24 @@ Signal Signal::getDotProductSquare() const {
     return result;
 }
 
+Signal Signal::getDotFractionSquare() const {
+    Quantity self = *this, inverse = Quantity::getInverse();
+    Quantity square = inverse.getSquare();
+    Signal result(this->orientation, square.getMagnitude(), square.getScaling(), square.getUnit());
+    return result;
+}
+
 Signal Signal::getCrossProductSquare() const {
     Signal self = *this;
     std::complex<float> component = Quantity::getComplex(Quantity::getMagnitude(), self.orientation);
+    std::complex<float> total = (component * component);
+    Signal result(total.imag(), total.real(), (self.getScaling() * 2), self.getUnit().getSquare()); 
+    return result;
+}
+
+Signal Signal::getCrossFractionSquare() const {
+    Signal self = *this; Quantity inverse = Quantity::getInverse();
+    std::complex<float> component = Quantity::getComplex(inverse.getMagnitude(), self.orientation);
     std::complex<float> total = (component * component);
     Signal result(total.imag(), total.real(), (self.getScaling() * 2), self.getUnit().getSquare()); 
     return result;
@@ -374,9 +414,24 @@ Signal Signal::getDotProductCube() const {
     return result;
 }
 
+Signal Signal::getDotFractionCube() const {
+    Quantity self = *this; Quantity inverse = Quantity::getInverse();
+    Quantity cube = inverse.getCube();
+    Signal result(this->orientation, cube.getMagnitude(), cube.getScaling(), cube.getUnit());
+    return result;
+}
+
 Signal Signal::getCrossProductCube() const {
     Signal self = *this;
     std::complex<float> factor = Quantity::getComplex(Quantity::getMagnitude(), self.orientation);
+    std::complex<float> total = ((factor * factor) * factor);
+    Signal result(total.imag(), total.real(), (self.getScaling() * 3), self.getUnit().getCube()); 
+    return result;
+}
+
+Signal Signal::getCrossFractionCube() const {
+    Signal self = *this; Quantity inverse = Quantity::getInverse();
+    std::complex<float> factor = Quantity::getComplex(inverse.getMagnitude(), self.orientation);
     std::complex<float> total = ((factor * factor) * factor);
     Signal result(total.imag(), total.real(), (self.getScaling() * 3), self.getUnit().getCube()); 
     return result;
@@ -424,7 +479,7 @@ Signal Signal::copy() const {
 
 void Signal::clear() {
     Quantity::clear();
-    orientation = Quantity::DEFAULT_VALUE;
+    orientation = Direction::DEFAULT_RADIANS;
     return;
 }
 
@@ -434,6 +489,18 @@ std::string Signal::print() {
     result << Quantity::print() << ",φ";
     result << Direction(orientation).print();
 	return result.str();
+}
+
+float Signal::getCosComponent(const float phase) const {
+    return Quantity::getCosComponent(phase);
+}
+
+float Signal::getSinComponent(const float phase) const {
+    return Quantity::getSinComponent(phase);
+}
+
+const std::complex<float> Signal::getComplex(const float value, const float direction) {
+    return Quantity::getComplex(value, direction);
 }
 
 } // namespace shp

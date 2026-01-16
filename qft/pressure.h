@@ -70,12 +70,13 @@ public:
     void setArea(const shp::Area& amount) { this->area = amount; }
 
     // Additional methods
-    shp::Quantity getTotal() const;
+    shp::Signal getTotal() const;
     Density getDensity(const shp::Volume& volume) const;
     virtual Pressure copy();
     virtual void clear();
     virtual std::string print();
-    shp::Quantity getComponent(float phase) const;
+    shp::Signal getCosComponent(const float phase) const;
+    shp::Signal getSinComponent(const float phase) const;
 public:
     static const std::string UNIT;
 };

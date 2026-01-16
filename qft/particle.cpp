@@ -37,17 +37,17 @@ Particle::Particle(const Spin& spin)
     setPhysical(nullptr);
 }
 
-Particle::Particle(std::string name)
+Particle::Particle(const std::string name)
         : Wave(name), isospin(), spin(), energy() {
     setPhysical(nullptr);
 }
 
-Particle::Particle(std::string name, const float spin)
+Particle::Particle(const std::string name, const float spin)
         : Wave(name), isospin(), spin(spin), energy() {
     setPhysical(nullptr);
 }
 
-Particle::Particle(std::string name, const Spin& spin)
+Particle::Particle(const std::string name, const Spin& spin)
         : Wave(name), isospin(), spin(spin), energy() {
     setPhysical(nullptr);
 }
@@ -57,7 +57,7 @@ Particle::Particle(const Energy& energy)
     setPhysical(nullptr);
 }
 
-Particle::Particle(std::string name, const Energy& energy)
+Particle::Particle(const std::string name, const Energy& energy)
         : Wave(name), isospin(), spin(), energy(energy) {
     setPhysical(nullptr);
 }
@@ -67,17 +67,17 @@ Particle::Particle(const Spin& spin, const Energy& energy)
     setPhysical(nullptr);
 }
 
-Particle::Particle(std::string name, const float spin, const float energy)
+Particle::Particle(const std::string name, const float spin, const float energy)
         : Wave(name), isospin(), spin(spin), energy(energy) {
     setPhysical(nullptr);
 }
 
-Particle::Particle(std::string name, const Spin& spin, const Energy& energy)
+Particle::Particle(const std::string name, const Spin& spin, const Energy& energy)
         : Wave(name), isospin(), spin(spin), energy(energy) {
     setPhysical(nullptr);
 }
 
-Particle::Particle(std::string name, const Isospin& isospin, const Spin& spin, const Energy& energy)
+Particle::Particle(const std::string name, const Isospin& isospin, const Spin& spin, const Energy& energy)
         : Wave(name), isospin(isospin), spin(spin), energy(energy) {
     setPhysical(nullptr);
 }
@@ -87,7 +87,7 @@ Particle::Particle(const Mass& mass, const Charge& charge)
     setPhysical(nullptr);
 }
 
-Particle::Particle(std::string name, const Mass& mass, const Charge& charge)
+Particle::Particle(const std::string name, const Mass& mass, const Charge& charge)
         : Wave(name), isospin(), spin(), energy(Mass(mass), Charge(charge)) {
     setPhysical(nullptr);
 }
@@ -97,59 +97,59 @@ Particle::Particle(const Spin& spin, const Mass& mass, const Charge& charge)
     setPhysical(nullptr);
 }
 
-Particle::Particle(std::string name, const float spin,
+Particle::Particle(const std::string name, const float spin,
         const float mass, const float charge)
         : Wave(name), isospin(), spin(spin), energy(Mass(mass), Charge(charge)) {
     setPhysical(nullptr);
 }
 
-Particle::Particle(std::string name, const Spin& spin,
+Particle::Particle(const std::string name, const Spin& spin,
         const Mass& mass, const Charge& charge)
         : Wave(name), isospin(), spin(spin), energy(Mass(mass), Charge(charge)) {
     setPhysical(nullptr);
 }
 
-Particle::Particle(shp::Shape* description)
+Particle::Particle(std::shared_ptr<shp::Shape> description)
         : Wave(), isospin(), spin(), energy() {
     setPhysical(description);
 }
 
-Particle::Particle(std::string name, shp::Shape* description)
+Particle::Particle(const std::string name, std::shared_ptr<shp::Shape> description)
         : Wave(name), isospin(), spin(), energy() {
     setPhysical(description);
 }
 
-Particle::Particle(std::string name, shp::Shape* description,
+Particle::Particle(const std::string name, std::shared_ptr<shp::Shape> description,
         const Spin& spin)
         : Wave(name), isospin(), spin(spin), energy() {
     setPhysical(description);
 }
 
-Particle::Particle(std::string name, shp::Shape* description,
+Particle::Particle(const std::string name, std::shared_ptr<shp::Shape> description,
         const Spin& spin, const Energy& energy)
         : Wave(name), isospin(), spin(spin), energy(energy) {
     setPhysical(description);
 }
 
-Particle::Particle(std::string name, shp::Shape* description,
+Particle::Particle(const std::string name, std::shared_ptr<shp::Shape> description,
         const Isospin& isospin, const Spin& spin, const Energy& energy)
         : Wave(name), isospin(isospin), spin(spin), energy(energy) {
     setPhysical(description);
 }
 
-Particle::Particle(shp::Shape* description,
+Particle::Particle(std::shared_ptr<shp::Shape> description,
         const Spin& spin, const Energy& energy)
         : Wave(), isospin(), spin(spin), energy(energy) {
     setPhysical(description);
 }
 
-Particle::Particle(shp::Shape* description,
+Particle::Particle(std::shared_ptr<shp::Shape> description,
         const Spin& spin, const Mass& mass, const Charge& charge)
         : Wave(), isospin(), spin(spin), energy(mass, charge) {
     setPhysical(description);
 }
 
-Particle::Particle(std::string name, shp::Shape* description,
+Particle::Particle(const std::string name, std::shared_ptr<shp::Shape> description,
         const Spin& spin, const Mass& mass, const Charge& charge)
         : Wave(name), isospin(), spin(spin), energy(mass, charge) {
     setPhysical(description);
@@ -201,15 +201,15 @@ Particle Particle::operator%(const Particle& peer) const {
     return Particle("%", newisospin, newspin, newenergy);
 }
 
-shp::Quantity Particle::getTotal() const {
+shp::Signal Particle::getTotal() const {
     return energy.getTotal();
 }
 
-shp::Quantity Particle::getFrequency() const {
+shp::Signal Particle::getFrequency() const {
     return energy.getWavelength().getInverse();
 }
 
-shp::Quantity Particle::getWavelength() const {
+shp::Signal Particle::getWavelength() const {
     return energy.getWavelength().getMagnitude();
 }
 
@@ -242,7 +242,7 @@ void Particle::setChargeField(const std::shared_ptr<Field> field) {
 }
 
 shp::Point Particle::copy() {
-    Particle fresh(getName(), physical, isospin, spin, energy);
+    Particle fresh(this->getName(), physical, isospin, spin, energy);
     return fresh;
 }
 
@@ -267,9 +267,14 @@ std::string Particle::print() {
 	return result.str();
 }
 
-shp::Quantity Particle::getComponent(float phase) const {
-	shp::Quantity energy = getTotal();
-	return shp::Quantity((energy.getMagnitude() * cos(phase)), energy.getScaling(), energy.getUnit());
+shp::Signal Particle::getCosComponent(const float phase) const {
+	shp::Signal energy = this->getTotal();
+	return shp::Signal(energy.getCosComponent(phase), energy.getScaling(), energy.getUnit());
+}
+
+shp::Signal Particle::getSinComponent(const float phase) const {
+	shp::Signal energy = this->getTotal();
+	return shp::Signal(energy.getSinComponent(phase), energy.getScaling(), energy.getUnit());
 }
 
 } // namespace qft

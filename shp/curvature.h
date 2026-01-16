@@ -24,7 +24,6 @@
 #include <string>
 #include <vector>
 #include "phase.h"
-#include "point.h"
 
 namespace shp {
 
@@ -35,14 +34,35 @@ public:
     // Constructors
     Curvature();
     Curvature(const float polarization);
+    Curvature(const Azimuth& azimuthal);
+    Curvature(const Polar& polarization);
     Curvature(const float polarization, const float azimuthal);
+    Curvature(const Polar& polarization, const Azimuth& azimuthal);
+    Curvature(const float magnitude, const short int scaling, const Unit& unit,
+        const Polar& polarization, const Azimuth& azimuthal);
     Curvature(const PhaseArray& deformations);
-    Curvature(std::string name);
-    Curvature(std::string name, const float polarization);
-    Curvature(std::string name, const float polarization, const float azimuthal);
-    Curvature(std::string name, const PhaseArray& deformations);
-    Curvature(std::string name, const PhaseArray& deformations, const float polarization);
-    Curvature(std::string name, const PhaseArray& deformations, const float polarization, const float azimuthal);
+    Curvature(const std::string name);
+    Curvature(const std::string name, const float polarization);
+    Curvature(const std::string name, const Azimuth& azimuthal);
+    Curvature(const std::string name, const Polar& polarization);
+    Curvature(const std::string name, const float polarization, const float azimuthal);
+    Curvature(const std::string name, const Polar& polarization, const Azimuth& azimuthal);
+    Curvature(const std::string name, const float magnitude, const short int scaling, const Unit& unit,
+        const Polar& polarization, const Azimuth& azimuthal);
+    Curvature(const std::string name, const PhaseArray& deformations);
+    Curvature(const std::string name, const PhaseArray& deformations,
+        const float polarization);
+    Curvature(const std::string name, const PhaseArray& deformations,
+        const Azimuth& azimuthal);
+    Curvature(const std::string name, const PhaseArray& deformations,
+        const Polar& polarization);
+    Curvature(const std::string name, const PhaseArray& deformations,
+        const float polarization, const float azimuthal);
+    Curvature(const std::string name, const PhaseArray& deformations,
+        const Polar& polarization, const Azimuth& azimuthal);
+    Curvature(const std::string name, const PhaseArray& deformations,
+        const float magnitude, const short int scaling, const Unit& unit,
+        const Polar& polarization, const Azimuth& azimuthal);
 
     // Destructors
     ~Curvature();
@@ -73,9 +93,10 @@ public:
     virtual Point copy();
     virtual void clear();
     virtual std::string print();
-    Quantity getAmplitudePolarization(float change) const;
+    Quantity getPolarCosComponent(float change) const;
+    Quantity getPolarSinComponent(float change) const;
 protected:
-    std::complex<float> toPolarizationComplex(float change);
+    std::complex<float> toComplexPolar(float change);
 };
 
 typedef std::vector<Curvature > CurvatureArray;

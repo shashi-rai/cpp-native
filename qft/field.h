@@ -174,9 +174,9 @@ public:
     // Access operator
     shp::Point operator()(const int x, const int y, const int z);
 	const shp::Point operator()(const int x, const int y, const int z) const;
-    shp::Quantity operator()(const Field& peer,
+    shp::Signal operator()(const Field& peer,
         const shp::Distance& separation, const shp::Distance& position) const;
-    shp::Quantity operator()(const Field& peerX, const Field& peerY,
+    shp::Signal operator()(const Field& peerX, const Field& peerY,
         const shp::Distance& separationX, const shp::Distance& separationY) const;
 
     // Getters

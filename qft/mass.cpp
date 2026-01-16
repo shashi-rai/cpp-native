@@ -152,8 +152,8 @@ Force Mass::operator()(const Mass& peer, const shp::Distance separation,
     if (isOwned()) {
         shp::Potential self = field->getPotential();
         shp::Potential other = peer.field->getPotential();
-        shp::Quantity factor = self(other, separation, position);
-        shp::Quantity force = (factor * (*this).getMagnitude());
+        shp::Signal factor = self(other, separation, position);
+        shp::Signal force = (factor * (*this).getMagnitude());
         Gravity result(force.getMagnitude(), self.getAzimuth().toRadians(), force.getScaling(), field);
         result.adjustScaling();
         return result;
@@ -190,7 +190,8 @@ shp::Potential Mass::getPotential() const {
 }
 
 Density Mass::getDensity(const shp::Volume& volume) const {
-    return Density(getMagnitude(), volume, getUnit());
+    shp::Frequency self = *this;
+    return Density(self.getMagnitude(), self.getScaling(), getUnit(), volume);
 }
 
 Force Mass::getForce(const shp::Angular& coordinates) const {

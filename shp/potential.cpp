@@ -16,112 +16,189 @@
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
+// THE SOFTWARE.const float high, const float low, const std::string unit, const Angular& origin
 
 #include "potential.h"
 
 namespace shp {
 
 Potential::Potential()
-        : Quantity(), low(), origin() {
+        : Signal(), low(), origin() {
+
+}
+
+Potential::Potential(const Azimuth& phase)
+        : Signal(phase), low(), origin() {
 
 }
 
 Potential::Potential(const Angular& origin)
-        : Quantity(), low(), origin(origin) {
+        : Signal(), low(), origin(origin) {
 
 }
 
 Potential::Potential(const float high)
-        : Quantity(high), low(), origin() {
+        : Signal(high), low(), origin() {
 
 }
 
 Potential::Potential(const float high, const Angular& origin)
-        : Quantity(high), low(), origin(origin) {
+        : Signal(high), low(), origin(origin) {
+}
+
+Potential::Potential(const Azimuth& phase, const float high, const Angular& origin)
+        : Signal(phase, high), low(), origin(origin) {
 }
 
 Potential::Potential(const float high, const float low)
-        : Quantity(high), low(low), origin() {
+        : Signal(high), low(low), origin() {
 
 }
 
-Potential::Potential(const float high, const float low, const Angular& origin)
-        : Quantity(high), low(low), origin(origin) {
+Potential::Potential(const float high, const float low,
+		const Angular& origin)
+        : Signal(high), low(low), origin(origin) {
+
+}
+
+Potential::Potential(const Azimuth& phase, const float high, const float low,
+		const Angular& origin)
+        : Signal(phase, high), low(low), origin(origin) {
 
 }
 
 Potential::Potential(const std::string unit)
-        : Quantity(unit), low(), origin() {
+        : Signal(unit), low(), origin() {
 
 }
 
 Potential::Potential(const Unit& unit)
-        : Quantity(unit), low(), origin() {
+        : Signal(unit), low(), origin() {
 }
 
 Potential::Potential(const Unit& unit, const Angular& origin)
-        : Quantity(unit), low(), origin(origin) {
+        : Signal(unit), low(), origin(origin) {
+}
+
+Potential::Potential(const Azimuth& phase, const Unit& unit, const Angular& origin)
+        : Signal(phase, unit), low(), origin(origin) {
 }
 
 Potential::Potential(const short int scaling, const std::string unit)
-        : Quantity(scaling, unit), low(), origin() {
+        : Signal(scaling, unit), low(), origin() {
 
 }
 
 Potential::Potential(const short int scaling, const Unit& unit)
-        : Quantity(scaling, unit), low(), origin() {
+        : Signal(scaling, unit), low(), origin() {
 
 }
 
-Potential::Potential(const short int scaling, const Unit& unit, const Angular& origin)
-        : Quantity(scaling, unit), low(), origin(origin) {
+Potential::Potential(const short int scaling,
+		const Unit& unit, const Angular& origin)
+        : Signal(scaling, unit), low(), origin(origin) {
 
 }
 
-Potential::Potential(const float high, const std::string unit, const Angular& origin)
-        : Quantity(high, unit), low(), origin(origin) {
+Potential::Potential(const Azimuth& phase, const short int scaling,
+		const Unit& unit, const Angular& origin)
+        : Signal(phase, scaling, unit), low(), origin(origin) {
 
 }
 
-Potential::Potential(const float high, const float low, const std::string unit)
-        : Quantity(high, unit), low(low), origin() {
+Potential::Potential(const float high,
+		const std::string unit, const Angular& origin)
+        : Signal(high, unit), low(), origin(origin) {
 
 }
 
-Potential::Potential(const float high, const float low, const std::string unit, const Angular& origin)
-        : Quantity(high, unit), low(low), origin(origin) {
+Potential::Potential(const Azimuth& phase, const float high,
+		const std::string unit, const Angular& origin)
+        : Signal(phase, high, unit), low(), origin(origin) {
 
 }
 
-Potential::Potential(const float high, const float low, const Unit& unit)
-        : Quantity(high, unit), low(low), origin() {
+Potential::Potential(const float high, const float low,
+		const std::string unit)
+        : Signal(high, unit), low(low), origin() {
 
 }
 
-Potential::Potential(const float high, const float low, const Unit& unit, const Angular& origin)
-        : Quantity(high, unit), low(low), origin(origin) {
+Potential::Potential(const float high, const float low,
+		const std::string unit, const Angular& origin)
+        : Signal(high, unit), low(low), origin(origin) {
 
 }
 
-Potential::Potential(const float high, const float low, const short int scaling)
-        : Quantity(high, scaling), low(low), origin() {
+Potential::Potential(const Azimuth& phase, const float high, const float low,
+		const std::string unit, const Angular& origin)
+        : Signal(phase, high, unit), low(low), origin(origin) {
 
 }
 
-Potential::Potential(const float high, const float low, const short int scaling, const std::string unit)
-        : Quantity(high, scaling, unit), low(low), origin() {
+Potential::Potential(const float high, const float low,
+		const Unit& unit)
+        : Signal(high, unit), low(low), origin() {
 
 }
 
-Potential::Potential(const float high, const float low, const short int scaling, const Unit& unit)
-        : Quantity(high, scaling, unit), low(low), origin() {
+Potential::Potential(const float high, const float low,
+		const Unit& unit, const Angular& origin)
+        : Signal(high, unit), low(low), origin(origin) {
 
 }
 
-Potential::Potential(const float high, const float low, const short int scaling, const Unit& unit,
-        const Angular& origin)
-        : Quantity(high, scaling, unit), low(low), origin(origin) {
+Potential::Potential(const Azimuth& phase, const float high, const float low,
+		const Unit& unit, const Angular& origin)
+        : Signal(phase, high, unit), low(low), origin(origin) {
+
+}
+
+Potential::Potential(const float high, const float low,
+		const short int scaling)
+        : Signal(high, scaling), low(low), origin() {
+
+}
+
+Potential::Potential(const float high, const float low,
+		const short int scaling, const std::string unit)
+        : Signal(high, scaling, unit), low(low), origin() {
+
+}
+
+Potential::Potential(const float high, const float low,
+		const short int scaling, const Unit& unit)
+        : Signal(high, scaling, unit), low(low), origin() {
+
+}
+
+Potential::Potential(const float phase, const float high, const float low,
+		const short int scaling, const Unit& unit)
+        : Signal(phase, high, scaling, unit), low(low), origin() {
+
+}
+
+Potential::Potential(const Azimuth& phase, const float high, const float low,
+		const short int scaling, const Unit& unit)
+        : Signal(phase, high, scaling, unit), low(low), origin() {
+
+}
+
+Potential::Potential(const float high, const float low,
+		const short int scaling, const Unit& unit, const Angular& origin)
+        : Signal(high, scaling, unit), low(low), origin(origin) {
+
+}
+
+Potential::Potential(const float phase, const float high, const float low,
+		const short int scaling, const Unit& unit, const Angular& origin)
+        : Signal(phase, high, scaling, unit), low(low), origin(origin) {
+
+}
+
+Potential::Potential(const Azimuth& phase, const float high, const float low,
+		const short int scaling, const Unit& unit, const Angular& origin)
+        : Signal(phase, high, scaling, unit), low(low), origin(origin) {
 
 }
 
@@ -130,89 +207,114 @@ Potential::~Potential() {
 }
 
 bool Potential::operator==(const Potential& peer) const {
-    return (static_cast<const Quantity&>(*this) == static_cast<const Quantity&>(peer))
+    return (static_cast<const Signal&>(*this) == static_cast<const Signal&>(peer))
         && (low == peer.low) && (origin == peer.origin);
 }
 
 Potential Potential::operator+(const Potential& peer) const {
 	Potential self = *this;
-    float newhigh = (self.getHigh() + (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
-    float newlow = (self.getLow() + (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
-    return Potential(newhigh, newlow, self.getScaling(), self.getUnit());
+	Direction phase = (self.getPhase() + peer.getPhase());
+    float newhigh = (self.getHigh() + (peer.getHigh() /
+		std::pow(shp::Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    float newlow = (self.getLow() + (peer.getLow() /
+		std::pow(shp::Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    return Potential(phase.toRadians(), newhigh, newlow,
+		self.getScaling(), self.getUnit());
 }
 
 Potential Potential::operator-(const Potential& peer) const {
 	Potential self = *this;
-    float newhigh = (self.getHigh() - (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
-    float newlow = (self.getLow() - (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
-    return Potential(newhigh, newlow, self.getScaling(), self.getUnit());
+	Direction phase = (self.getPhase() - peer.getPhase());
+    float newhigh = (self.getHigh() - (peer.getHigh() /
+		std::pow(shp::Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    float newlow = (self.getLow() - (peer.getLow() /
+		std::pow(shp::Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+    return Potential(phase.toRadians(), newhigh, newlow,
+		self.getScaling(), self.getUnit());
 }
 
 Potential Potential::operator*(const Potential& peer) const {
 	Potential self = *this;
+	Direction phase = (self.getPhase() * peer.getPhase());
     float newhigh = (self.getHigh() * peer.getHigh());
     float newlow = (self.getLow() * peer.getLow());
-    return Potential(newhigh, newlow, (self.getScaling() + peer.getScaling()), self.getUnit());
+    return Potential(phase.toRadians(), newhigh, newlow,
+		(self.getScaling() + peer.getScaling()), self.getUnit());
 }
 
 Potential Potential::operator/(const Potential& peer) const {
 	Potential self = *this;
-	float newhigh = Quantity::DEFAULT_VALUE, newlow = Quantity::DEFAULT_VALUE;
-	if (peer.getHigh() != Quantity::DEFAULT_VALUE) {
+	Direction phase = (self.getPhase() / peer.getPhase());
+	float newhigh = shp::Quantity::DEFAULT_VALUE, newlow = shp::Quantity::DEFAULT_VALUE;
+	if (peer.getHigh() != shp::Quantity::DEFAULT_VALUE) {
 		newhigh = (self.getHigh() / peer.getHigh());
 	}
-	if (peer.getLow() != Quantity::DEFAULT_VALUE) {
+	if (peer.getLow() != shp::Quantity::DEFAULT_VALUE) {
 		newlow = (self.getLow() / peer.getLow());
 	}
-    return Potential(newhigh, newlow, (self.getScaling() - peer.getScaling()), self.getUnit());
+    return Potential(phase.toRadians(), newhigh, newlow,
+		(self.getScaling() - peer.getScaling()), self.getUnit());
 }
 
 Potential Potential::operator%(const Potential& peer) const {
 	Potential self = *this;
-	float newhigh = Quantity::DEFAULT_VALUE, newlow = Quantity::DEFAULT_VALUE;
-	if (peer.getHigh() != Quantity::DEFAULT_VALUE) {
-    	newhigh = fmod(self.getHigh(), (peer.getHigh() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+	Direction phase = (self.getPhase() % peer.getPhase());
+	float newhigh = shp::Quantity::DEFAULT_VALUE, newlow = shp::Quantity::DEFAULT_VALUE;
+	if (peer.getHigh() != shp::Quantity::DEFAULT_VALUE) {
+    	newhigh = fmod(self.getHigh(), (peer.getHigh() /
+			std::pow(shp::Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
 	}
-	if (peer.getLow() != Quantity::DEFAULT_VALUE) {
-		newlow = fmod(self.getLow(), (peer.getLow() / std::pow(Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+	if (peer.getLow() != shp::Quantity::DEFAULT_VALUE) {
+		newlow = fmod(self.getLow(), (peer.getLow() /
+			std::pow(shp::Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
 	}
-    return Potential(newhigh, newlow, self.getScaling(), self.getUnit());
+    return Potential(phase.toRadians(), newhigh, newlow, self.getScaling(), self.getUnit());
 }
 
-Quantity Potential::operator()(const Potential& peer,
+Signal Potential::operator()(const Potential& peer,
         const Distance& separation, const Distance& position) const {
-    Potential self = *this; Quantity distribution = self.getDivergence();
-    Quantity coefficient = (self.origin(peer.origin, separation, position) * distribution.getMagnitude());
-    Quantity result(coefficient.getMagnitude(),
+    Potential self = *this; shp::Signal distribution = self.getDivergence();
+    shp::Signal coefficient = (self.origin(peer.origin, separation, position) *
+		distribution.getMagnitude());
+    shp::Signal result(coefficient.getOrientation(), coefficient.getMagnitude(),
 		(coefficient.getScaling() + distribution.getScaling()), self.getUnit());
 	result.adjustScaling();
     return result;
 }
 
-Quantity Potential::operator()(const Potential& peerX, const Potential& peerY,
+Signal Potential::operator()(const Potential& peerX, const Potential& peerY,
         const Distance& separationX, const Distance& separationY) const {
-	Potential self = *this; Quantity distribution = self.getDivergence();
-    Quantity coefficient = (self.origin(peerX.getOrigin(), peerY.getOrigin(), separationX, separationY) * distribution.getMagnitude());
-    Quantity result(coefficient.getMagnitude(),
+	Potential self = *this; shp::Signal distribution = self.getDivergence();
+    shp::Signal coefficient = (self.origin(peerX.getOrigin(), peerY.getOrigin(),
+		separationX, separationY) * distribution.getMagnitude());
+    shp::Signal result(coefficient.getOrientation(), coefficient.getMagnitude(),
 		(coefficient.getScaling() + distribution.getScaling()), self.getUnit());
 	result.adjustScaling();
     return result;
+}
+
+float Potential::getHigh() const {
+	return this->getMagnitude();
+}
+
+void Potential::setHigh(const float value) {
+	this->setMagnitude(value);
 }
 
 short int Potential::getScaling() const {
-	return Quantity::getScaling();
+	return Signal::getScaling();
 }
 
 void Potential::setScaling(const short int factor) {
-	Quantity::setScaling(factor);
+	Signal::setScaling(factor);
 }
 
 Unit Potential::getUnit() const {
-	return Quantity::getUnit();
+	return Signal::getUnit();
 }
 
 void Potential::setUnit(const Unit& object) {
-	Quantity::setUnit(object);
+	Signal::setUnit(object);
 }
 
 Polar Potential::getPolar() const {
@@ -231,45 +333,47 @@ void Potential::setAzimuth(const Azimuth& angle) {
     this->origin.setAzimuth(angle);
 }
 
-Quantity Potential::getDifference() const {
+Signal Potential::getDifference() const {
 	Potential self = *this;
-    Quantity result((self.getHigh() - self.getLow()), self.getScaling(), self.getUnit());
+    Signal result(self.getOrientation(), (self.getHigh() - self.getLow()),
+		self.getScaling(), self.getUnit());
     return result;
 }
 
-Quantity Potential::getDivergence() const {
+Signal Potential::getDivergence() const {
     return Potential::getDifference();
 }
 
-Quantity Potential::getRelative(const Distance& location, const float angle) const {
-    Potential self = *this; Quantity distribution = self.getDivergence();
-    Quantity coefficient = (origin.getRelative(location, angle) * distribution.getMagnitude());
-    Quantity result(coefficient.getMagnitude(),
+Signal Potential::getRelative(const Distance& location, const float angle) const {
+    Potential self = *this; Signal distribution = self.getDivergence();
+    Signal coefficient = (origin.getRelative(location, angle) * distribution.getMagnitude());
+    Signal result(coefficient.getOrientation(), coefficient.getMagnitude(),
 		(coefficient.getScaling() + distribution.getScaling()), self.getUnit());
 	result.adjustScaling();
     return result;
 }
 
-Quantity Potential::getPolarComponent(const Distance& location) const {
+Signal Potential::getPolarComponent(const Distance& location) const {
     Potential self = *this;
     return getRelative(location, self.origin.getPolar().toRadians());
 }
 
-Quantity Potential::getAzimuthComponent(const Distance& location) const {
+Signal Potential::getAzimuthComponent(const Distance& location) const {
 	Potential self = *this;
     return getRelative(location, self.origin.getAzimuth().toRadians());
 }
 
-Potential Potential::copy() const {
+Signal Potential::copy() const {
 	Potential self = *this;
-    Potential fresh(self.getHigh(), self.getLow(), self.getScaling(), self.getUnit());
+    Potential fresh(self.getOrientation(), self.getHigh(), self.getLow(),
+		self.getScaling(), self.getUnit());
     return fresh;
 }
 
 void Potential::clear() {
-    Quantity::clear();
+    Signal::clear();
     origin.clear();
-    low = Quantity::DEFAULT_VALUE;
+    low = shp::Quantity::DEFAULT_VALUE;
     return;
 }
 

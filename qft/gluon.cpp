@@ -124,7 +124,7 @@ Gluon Gluon::operator%(const Gluon& peer) const {
 shp::Point Gluon::copy() {
     Gluon fresh(this->getName(), this->getEnergy());
     fresh.setColour(colour);
-	fresh.setAmplitude(this->getAmplitude());
+	fresh.setMagnitude(this->getMagnitude());
 	fresh.setGradient(this->getGradient());
     return fresh;
 }

@@ -22,124 +22,133 @@
 
 namespace qft {
 
-const std::string Density::UNIT = "/m^3";   // System International
+const std::string Density::UNIT = "/m³";	// System International
 
 Density::Density()
-        : name(), unit(UNIT), magnitude(), volume() {
+        : name(), parameter(UNIT), volume() {
 
-}
+} 
 
 Density::Density(std::string name)
-        : name(name), unit(UNIT), magnitude(), volume() {
+        : name(name), parameter(UNIT), volume() {
 
 }
 
-Density::Density(const float magnitude)
-        : name(), unit(UNIT), magnitude(magnitude), volume() {
+Density::Density(const float parameter)
+        : name(), parameter(parameter, UNIT), volume() {
 
 }
 
-Density::Density(const float magnitude, const std::string unit)
-        : name(), unit(UNIT), magnitude(magnitude, unit), volume() {
+Density::Density(const float parameter, const std::string unit)
+        : name(), parameter(parameter, unit), volume() {
 
 }
 
-Density::Density(const float magnitude, const short int scaling, const std::string unit)
-        : name(), unit(UNIT), magnitude(magnitude, scaling, unit), volume() {
+Density::Density(const float parameter, const short int scaling, const std::string unit)
+        : name(), parameter(parameter, scaling, unit), volume() {
 
 }
 
-Density::Density(const float magnitude, const float volume)
-        : name(), unit(UNIT), magnitude(magnitude), volume(std::cbrt(volume)) {
-
+Density::Density(const float parameter, const float volume)
+        : name(), parameter(parameter, UNIT) {
+	this->setVolume(volume);
 }
 
-Density::Density(const float magnitude, const float volume,
-        const std::string unit)
-        : name(), unit(UNIT), magnitude(magnitude, unit), volume(std::cbrt(volume)) {
-
+Density::Density(const float parameter, const short int scaling, const float volume)
+        : name(), parameter(parameter, scaling, UNIT) {
+	this->setVolume(volume);
 }
 
-Density::Density(const float magnitude, const float volume,
-        const short int scaling, const std::string unit)
-        : name(), unit(UNIT), magnitude(magnitude, scaling, unit), volume(std::cbrt(volume)) {
-
+Density::Density(const float parameter, const std::string unit, const float volume)
+        : name(), parameter(parameter, unit) {
+	this->setVolume(volume);
 }
 
-Density::Density(const shp::Quantity& magnitude, const shp::Volume& volume)
-        : name(), unit(UNIT), magnitude(magnitude), volume(volume) {
-
+Density::Density(const float parameter,
+        const short int scaling, const std::string unit, const float volume)
+        : name(), parameter(parameter, scaling, unit) {
+	this->setVolume(volume);
 }
 
-Density::Density(const shp::Quantity& magnitude, const shp::Volume& volume,
-        const shp::Unit& unit)
-        : name(), unit(unit), magnitude(magnitude), volume(volume) {
+Density::Density(const float parameter,
+        const short int scaling, const std::string unit, const shp::Volume& volume)
+        : name(), parameter(parameter, scaling, unit) {
+	this->setVolume(volume);
+}
+
+Density::Density(const float parameter,
+        const short int scaling, const shp::Unit& unit, const shp::Volume& volume)
+        : name(), parameter(parameter, scaling, unit) {
+	this->setVolume(volume);
+}
+
+Density::Density(const shp::Signal& parameter, const shp::Volume& volume)
+        : name(), parameter(parameter), volume(volume) {
 
 }
 
 Density::Density(std::string name, const shp::Unit& unit)
-        : name(name), unit(UNIT), magnitude(unit), volume() {
+        : name(name), parameter(unit), volume() {
 
 }
 
 Density::Density(std::string name, const short int scaling, const shp::Unit& unit)
-        : name(name), unit(UNIT), magnitude(scaling, unit), volume() {
+        : name(name), parameter(scaling, unit), volume() {
 
 }
 
-Density::Density(std::string name, const float magnitude)
-        : name(name), unit(UNIT), magnitude(magnitude), volume() {
+Density::Density(std::string name, const float parameter)
+        : name(name), parameter(parameter, UNIT), volume() {
 
 }
 
-Density::Density(std::string name, const float magnitude, const std::string unit)
-        : name(name), unit(UNIT), magnitude(magnitude, unit), volume() {
+Density::Density(std::string name, const float parameter, const std::string unit)
+        : name(name), parameter(parameter, unit), volume() {
 
 }
 
-Density::Density(std::string name, const float magnitude,
+Density::Density(std::string name, const float parameter,
         const short int scaling, const std::string unit)
-        : name(name), unit(UNIT), magnitude(magnitude, scaling, unit), volume() {
+        : name(name), parameter(parameter, scaling, unit), volume() {
 
 }
 
-Density::Density(std::string name, const float magnitude, const float volume)
-        : name(name), unit(UNIT), magnitude(magnitude), volume(std::cbrt(volume)) {
+Density::Density(std::string name, const float parameter, const float volume)
+        : name(name), parameter(parameter, UNIT) {
+	this->setVolume(volume);
+}
+
+Density::Density(std::string name, const float parameter, const short int scaling,
+        const float volume)
+        : name(name), parameter(parameter, scaling, UNIT) {
+	this->setVolume(volume);
+}
+
+Density::Density(std::string name, const float parameter,
+        const std::string unit, const float volume)
+        : name(name), parameter(parameter, unit) {
+	this->setVolume(volume);
+}
+
+Density::Density(std::string name, const float parameter,
+        const short int scaling, const std::string unit, const float volume)
+        : name(name), parameter(parameter, scaling, unit) {
+	this->setVolume(volume);
+}
+
+Density::Density(std::string name, const float parameter,
+        const short int scaling, const shp::Unit& unit, const shp::Volume& volume)
+        : name(name), parameter(parameter, scaling, unit) {
+	this->setVolume(volume);
+}
+
+Density::Density(std::string name, const shp::Signal& parameter)
+        : name(name), parameter(parameter), volume() {
 
 }
 
-Density::Density(std::string name, const float magnitude, const float volume,
-        const std::string unit)
-        : name(name), unit(UNIT), magnitude(magnitude, unit), volume(std::cbrt(volume)) {
-
-}
-
-Density::Density(std::string name, const float magnitude, const float volume,
-        const short int scaling, const std::string unit)
-        : name(name), unit(UNIT), magnitude(magnitude, scaling, unit), volume(std::cbrt(volume)) {
-
-}
-
-Density::Density(std::string name, const shp::Quantity& magnitude)
-        : name(name), unit(UNIT), magnitude(magnitude), volume() {
-
-}
-
-Density::Density(std::string name, const shp::Quantity& magnitude,
-        const shp::Unit& unit)
-        : name(name), unit(unit), magnitude(magnitude), volume() {
-
-}
-
-Density::Density(std::string name,
-        const shp::Quantity& magnitude, const shp::Volume& volume)
-        : name(name), unit(UNIT), magnitude(magnitude), volume(volume) {
-
-}
-
-Density::Density(std::string name, const shp::Quantity& magnitude,
-        const shp::Volume& volume, const shp::Unit& unit)
-        : name(name), unit(unit), magnitude(magnitude), volume(volume) {
+Density::Density(std::string name, const shp::Signal& parameter, const shp::Volume& volume)
+        : name(name), parameter(parameter), volume(volume) {
 
 }
 
@@ -148,58 +157,93 @@ Density::~Density() {
 }
 
 bool Density::operator==(const Density& peer) const {
-    return (magnitude == peer.magnitude) && (volume == peer.volume);
+    return (parameter == peer.parameter) && (volume == peer.volume);
 }
 
 Density Density::operator+(const Density& peer) const {
-	shp::Quantity newmagnitude = (magnitude + peer.magnitude);
-    shp::Quantity newvolume = (volume.getTotal() + peer.volume.getTotal());
+	shp::Signal newparameter = (parameter + peer.parameter);
+    shp::Signal newvolume = (volume.getTotal() + peer.volume.getTotal());
 	newvolume.adjustScaling();
-    return Density("+", newmagnitude, newvolume);
+    return Density("+", newparameter, newvolume);
 }
 
 Density Density::operator-(const Density& peer) const {
-	shp::Quantity newmagnitude = (magnitude - peer.magnitude);
-    shp::Quantity newvolume = (volume.getTotal() - peer.volume.getTotal());
+	shp::Signal newparameter = (parameter - peer.parameter);
+    shp::Signal newvolume = (volume.getTotal() - peer.volume.getTotal());
 	newvolume.adjustScaling();
-    return Density("-", newmagnitude, newvolume);
+    return Density("-", newparameter, newvolume);
 }
 
 Density Density::operator*(const Density& peer) const {
-	shp::Quantity newmagnitude = (magnitude * peer.magnitude);
-    shp::Quantity newvolume = (volume.getTotal() * peer.volume.getTotal());
+	shp::Signal newparameter = (parameter * peer.parameter);
+    shp::Signal newvolume = (volume.getTotal() * peer.volume.getTotal());
 	newvolume.adjustScaling();
-    return Density("*", newmagnitude, newvolume);
+    return Density("*", newparameter, newvolume);
 }
 
 Density Density::operator/(const Density& peer) const {
-	shp::Quantity newmagnitude = (magnitude / peer.magnitude);
-    shp::Quantity newvolume = (volume.getTotal() / peer.volume.getTotal());
+	shp::Signal newparameter = (parameter / peer.parameter);
+    shp::Signal newvolume = (volume.getTotal() / peer.volume.getTotal());
 	newvolume.adjustScaling();
-    return Density("/", newmagnitude, newvolume);
+    return Density("/", newparameter, newvolume);
 }
 
 Density Density::operator%(const Density& peer) const {
-	shp::Quantity newmagnitude = (magnitude % peer.magnitude);
-    shp::Quantity newvolume = (volume.getTotal() % peer.volume.getTotal());
+	shp::Signal newparameter = (parameter % peer.parameter);
+    shp::Signal newvolume = (volume.getTotal() % peer.volume.getTotal());
 	newvolume.adjustScaling();
-    return Density("%", newmagnitude, newvolume);
+    return Density("%", newparameter, newvolume);
 }
 
-shp::Quantity Density::getTotal() const {
-    shp::Quantity density = (magnitude / volume.getTotal());
-    return shp::Quantity(density.getMagnitude(), density.getScaling(), density.getUnit());
+float Density::getMagnitude() const {
+    return parameter.getMagnitude();
+}
+
+void Density::setMagnitude(const float value) {
+	this->parameter.setMagnitude(value);
+}
+
+void Density::setMagnitude(const float value, const short int scale) {
+	this->parameter.setMagnitude(value, scale);
+}
+
+void Density::setMagnitude(const float value, const short int scale, const std::string unit) {
+	this->parameter.setMagnitude(value, scale, unit);
+}
+
+short int Density::getScaling() const {
+	return parameter.getScaling();
+}
+
+void Density::setScaling(const short int scale) {
+	this->parameter.setScaling(scale);
+}
+
+shp::Unit Density::getUnit() const {
+	return parameter.getUnit();
+}
+
+void Density::setUnit(const shp::Unit& unit) {
+	this->parameter.setUnit(unit);
+}
+
+void Density::setVolume(const float value) {
+	this->volume = shp::Volume(std::cbrt(value));
+}
+
+shp::Signal Density::getTotal() const {
+    shp::Signal density = (parameter / volume.getTotal());
+    return shp::Signal(density.getMagnitude(), density.getScaling(), density.getUnit());
 }
 
 Density Density::copy() {
-    Density fresh(name, magnitude, volume, unit);
+    Density fresh(name, parameter, volume);
     return fresh;
 }
 
 void Density::clear() {
 	name.clear();
-    unit.clear();
-    magnitude.clear();
+    parameter.clear();
     volume.clear();
     return;
 }
@@ -208,15 +252,21 @@ std::string Density::print() {
     std::stringstream result;
     result << "(ρ:";
 	result << name << ",";
-    result << magnitude.print() << ",";
+    result << parameter.print() << ",";
 	result << volume.print() << ")";
-	result << unit.print() + UNIT;
 	return result.str();
 }
 
-shp::Quantity Density::getComponent(float phase) const {
-	shp::Quantity density = getTotal();
-    return shp::Quantity(getTotal().getMagnitude() * cos(phase), density.getScaling(), density.getUnit());
+shp::Signal Density::getCosComponent(const float phase) const {
+	shp::Signal density = this->getTotal();
+    return shp::Signal(density.getOrientation(),
+		density.getCosComponent(phase), density.getScaling(), density.getUnit());
+}
+
+shp::Signal Density::getSinComponent(const float phase) const {
+	shp::Signal density = this->getTotal();
+    return shp::Signal(density.getOrientation(),
+		density.getSinComponent(phase), density.getScaling(), density.getUnit());
 }
 
 } // namespace qft
