@@ -80,6 +80,7 @@ public:
     void setChange(const Direction& orientation) { this->change = orientation; }
 
     // Additional methods
+    Direction getDeviation(const Direction& peer) const;
     Distance getFactorX(const Distance& peer) const;
     Distance getFactorY(const Distance& peer) const;
     Quantity getTotal() const;

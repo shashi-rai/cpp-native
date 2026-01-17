@@ -31,8 +31,28 @@ Angular::Angular()
 
 }
 
+Angular::Angular(const std::string unit)
+        : Distance(unit), polar(DEFAULT_POLARITY), azimuth(DEFAULT_AZIMUTHAL) {
+
+}
+
+Angular::Angular(const Unit& unit)
+        : Distance(unit), polar(DEFAULT_POLARITY), azimuth(DEFAULT_AZIMUTHAL) {
+
+}
+
 Angular::Angular(const float radius)
         : Distance(radius), polar(DEFAULT_POLARITY), azimuth(DEFAULT_AZIMUTHAL) {
+
+}
+
+Angular::Angular(const float radius, const std::string unit)
+        : Distance(radius, unit), polar(DEFAULT_POLARITY), azimuth(DEFAULT_AZIMUTHAL) {
+
+}
+
+Angular::Angular(const float radius, const Unit& unit)
+        : Distance(radius, unit), polar(DEFAULT_POLARITY), azimuth(DEFAULT_AZIMUTHAL) {
 
 }
 
@@ -41,7 +61,7 @@ Angular::Angular(const float radius, const short int scaling)
 
 }
 
-Angular::Angular(float radius, short int scaling, std::string unit)
+Angular::Angular(const float radius, const short int scaling, const std::string unit)
         : Distance(radius, scaling, unit), polar(DEFAULT_POLARITY), azimuth(DEFAULT_AZIMUTHAL) {
 
 }
@@ -61,17 +81,29 @@ Angular::Angular(const float radius, const float azimuth)
 
 }
 
+Angular::Angular(const float radius, const float azimuth, const std::string unit)
+		: Distance(radius, unit), polar(DEFAULT_POLARITY), azimuth(azimuth) {
+
+}
+
+Angular::Angular(const float radius, const float azimuth, const Unit& unit)
+		: Distance(radius, unit), polar(DEFAULT_POLARITY), azimuth(azimuth) {
+
+}
+
 Angular::Angular(const float radius, const short int scaling, const float azimuth)
 		: Distance(radius, scaling), polar(DEFAULT_POLARITY), azimuth(azimuth) {
 
 }
 
-Angular::Angular(const float radius, const short int scaling, std::string unit, const float azimuth)
+Angular::Angular(const float radius, const short int scaling, const std::string unit,
+        const float azimuth)
 		: Distance(radius, scaling, unit), polar(DEFAULT_POLARITY), azimuth(azimuth) {
 
 }
 
-Angular::Angular(const float radius, const short int scaling, const Unit& unit, const float azimuth)
+Angular::Angular(const float radius, const short int scaling, const Unit& unit,
+        const float azimuth)
 		: Distance(radius, scaling, unit), polar(DEFAULT_POLARITY), azimuth(azimuth) {
 
 }
@@ -118,12 +150,14 @@ Angular::Angular(const float radius, const short int scaling, const float polar,
 
 }
 
-Angular::Angular(const float radius, const short int scaling, std::string unit, const float polar, const float azimuth)
+Angular::Angular(const float radius, const short int scaling, const std::string unit,
+        const float polar, const float azimuth)
 		: Distance(radius, scaling, unit), polar(polar), azimuth(azimuth) {
 
 }
 
-Angular::Angular(const float radius, const short int scaling, const Unit& unit, const float polar, const float azimuth)
+Angular::Angular(const float radius, const short int scaling, const Unit& unit,
+        const float polar, const float azimuth)
 		: Distance(radius, scaling, unit), polar(polar), azimuth(azimuth) {
 
 }
@@ -321,17 +355,54 @@ Quantity Angular::operator()(const Angular& peerX, const Angular& peerY,
 }
 
 Distance Angular::getRadius() const {
-    return this->getMagnitude();
+    return Distance(Distance::getMagnitude(), Distance::getScaling(),
+        Distance::getUnit(), Distance::getChange());
 }
 
 void Angular::setRadius(const Distance& length) {
-    this->setMagnitude(length.getMagnitude());
-    this->setScaling(length.getScaling());
+    Quantity::setMagnitude(length.getMagnitude());
+    Quantity::setScaling(length.getScaling());
+    Quantity::setUnit(length.getUnit());
+    Distance::setChange(length.getChange());
+}
+
+void Angular::setRadius(const float length) {
+    Quantity::setMagnitude(length);
+}
+
+void Angular::setRadius(const float length, const short int scaling) {
+    Quantity::setMagnitude(length, scaling);
+}
+
+void Angular::setRadius(const float length, const short int scaling, const std::string unit) {
+    Quantity::setMagnitude(length, scaling);
+    Quantity::setUnit(unit);
+}
+
+void Angular::setRadius(const float length, const short int scaling, const Unit& unit) {
+    Quantity::setMagnitude(length, scaling);
+    Quantity::setUnit(unit);
+}
+
+Direction Angular::getChange() const {
+    return Distance::getChange();
+}
+
+void Angular::setChange(const Direction& orientation) {
+    Distance::setChange(orientation);
+}
+
+float Angular::getPolarFraction(const Polar& peer) const {
+    return Direction::getFraction(polar.toRadians(), peer.toRadians());
+}
+
+float Angular::getAzimuthFraction(const Azimuth& peer) const {
+    return Direction::getFraction(azimuth.toRadians(), peer.toRadians());
 }
 
 Quantity Angular::getRelative(const Distance& position, const float angle) const {
     Angular self = *this; Distance radius = self.getRadius();
-    Quantity coefficient  = radius(position);   // radial, X & Y both combined
+    Distance coefficient  = radius(position);               // radial, X & Y both combined
     Quantity result(coefficient.getMagnitude(), coefficient.getScaling(), self.getUnit());
     result.adjustScaling();
     return result;
@@ -378,10 +449,19 @@ void Angular::clear() {
 
 std::string Angular::print() {
     std::stringstream result;
-    result << "{r:";
+    result << "{";
     result << Distance::print() << ",";
     result << polar.print() << ",";
     result << azimuth.print() << "}";
+	return result.str();
+}
+
+std::string Angular::printEuler() {
+    std::stringstream result;
+    result << "{";
+    result << Distance::print() << ",";
+    result << polar.printEuler() << ",";
+    result << azimuth.printEuler() << "}";
 	return result.str();
 }
 

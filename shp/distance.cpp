@@ -197,15 +197,21 @@ Distance Distance::operator%(const Direction& rotation) const {
 Distance Distance::operator()(const Distance& peer) const {
     Distance self = *this;
     Quantity radial = (self.getRadial() + peer.getRadial());
-    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(), change);
+    Direction orientation = self.getDeviation(peer.getChange());
+    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(), orientation);
     result.adjustScaling();
     return result;
+}
+
+Direction Distance::getDeviation(const Direction& peer) const {
+    return Direction(change.getDegrees(), change.getMinutes(), change.getSeconds());
 }
 
 Distance Distance::getFactorX(const Distance& peer) const {
     Distance self = *this;
     Quantity radial = (self.getRadialX() + peer.getRadialX());
-    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(), change);
+    Direction orientation = self.getDeviation(peer.getChange());
+    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(), orientation);
     result.adjustScaling();
     return result;
 }
@@ -213,14 +219,15 @@ Distance Distance::getFactorX(const Distance& peer) const {
 Distance Distance::getFactorY(const Distance& peer) const {
     Distance self = *this;
     Quantity radial = (self.getRadialY() + peer.getRadialY());
-    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(), change);
+    Direction orientation = self.getDeviation(peer.getChange());
+    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(), orientation);
     result.adjustScaling();
     return result;
 }
 
 Quantity Distance::getTotal() const {
     Quantity self = *this;
-    return Distance(self.getMagnitude(), self.getScaling(), self.getUnit());
+    return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(), this->change);
 }
 
 Quantity Distance::getRadial() const {

@@ -54,6 +54,10 @@ Direction::Direction(const float radians) {
     fromRadians(radians);
 }
 
+Direction::Direction(const std::complex<float> polar) {
+    fromRadians(std::arg(polar));
+}
+
 Direction::Direction(const short int degrees)
         : degrees(getIndexDegrees(degrees)), minutes(0), seconds(0) {
 
@@ -232,17 +236,34 @@ std::string Direction::print() {
 	return result.str();
 }
 
-const float Direction::getSine(const std::complex<float> phase) {
-    return phase.real();
+std::string Direction::printEuler() {
+    std::stringstream result;
+    std::complex<float> phase = getPhase();
+    result << ":";
+    result << getTheta(phase) << "(";
+    result << getCosine(phase) << "+𝑖";
+    result << getSine(phase) << ")";
+	return result.str();
 }
 
-const float Direction::getCosine(const std::complex<float> phase) {
+const float Direction::getMagnitude(const std::complex<float> phase) {
+    return std::abs(phase);
+}
+
+const float Direction::getTheta(const std::complex<float> phase) {
+    return (std::arg(phase) * 180.0f / DEGREE_180);
+}
+
+const float Direction::getSine(const std::complex<float> phase) {
     return phase.imag();
 }
 
+const float Direction::getCosine(const std::complex<float> phase) {
+    return phase.real();
+}
+
 const float Direction::getTangent(const std::complex<float> phase) {
-    float sin = phase.real(), cos = phase.imag();
-    return (sin / cos);
+    return (getSine(phase) / getCosine(phase));
 }
 
 const short int Direction::getQuadrant(const float radians) {

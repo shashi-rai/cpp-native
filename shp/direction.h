@@ -37,6 +37,7 @@ public:
     // Constructors
     Direction();
     Direction(const float radians);
+    Direction(const std::complex<float> polar);
     Direction(const short int degrees);
     Direction(const short int degrees, const short int minutes);
     Direction(const short int degrees, const short int minutes, const short int seconds);
@@ -85,12 +86,15 @@ public:
     virtual Direction copy() const;
     virtual void clear();
     virtual std::string print();
+    virtual std::string printEuler();
 
 private:
     short int getIndexDegrees(const short int value) const;
     short int getIndexMinutes(const short int value) const;
     short int getIndexSeconds(const short int value) const;
 public:
+    static const float getMagnitude(const std::complex<float> phase);
+    static const float getTheta(const std::complex<float> phase);
     static const float getSine(const std::complex<float> phase);
     static const float getCosine(const std::complex<float> phase);
     static const float getTangent(const std::complex<float> phase);
@@ -103,7 +107,7 @@ public:
     static const Direction getDifference(const float x, const float y);
     static const Direction getDifference(const Direction& x, const Direction& y);
     static const Direction getNormal(const Direction& x, const Direction& y);
-    static const float getFraction(const float x, const float y);
+    static const float getFraction(const float x, const float y); 
     static const float getFraction(const Direction& x, const Direction& y);
     static const bool checkTranslation(const Direction& x, const Direction& y);
     static const bool checkRotation(const Direction& x, const Direction& y);

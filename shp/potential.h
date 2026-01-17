@@ -25,7 +25,6 @@
 #include <sstream>
 #include <vector>
 #include "angular.h"
-#include "azimuth.h"
 #include "signal.h"
 
 namespace shp {
@@ -100,6 +99,8 @@ public:
     // Additional methods
     float getHigh() const;
     void setHigh(const float value);
+    void setRange(const float high, const float low);
+    void setRange(const float high, const float low, const short int scale);
     short int getScaling() const;
     void setScaling(const short int factor);
     Unit getUnit() const;

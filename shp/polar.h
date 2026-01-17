@@ -34,11 +34,13 @@ public:
     // Constructors
     Polar();
     Polar(const float radians);
+    Polar(const std::complex<float> polar);
     Polar(const short int degrees);
     Polar(const short int degrees, const short int minutes);
     Polar(const short int degrees, const short int minutes, const short int seconds);
     Polar(const Direction& change);
     Polar(const float radians, const Direction& change);
+    Polar(const std::complex<float> polar, const Direction& change);
     Polar(const short int degrees, const Direction& change);
     Polar(const short int degrees, const short int minutes, const Direction& change);
     Polar(const short int degrees, const short int minutes, const short int seconds, const Direction& change);
@@ -64,6 +66,7 @@ public:
     virtual Direction copy() const;
     virtual void clear();
     virtual std::string print();
+    virtual std::string printEuler();
 };
 
 typedef std::vector<Polar > PolarArray;

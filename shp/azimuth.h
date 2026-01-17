@@ -34,11 +34,13 @@ public:
     // Constructors
     Azimuth();
     Azimuth(const float radians);
+    Azimuth(const std::complex<float> polar);
     Azimuth(const short int degrees);
     Azimuth(const short int degrees, const short int minutes);
     Azimuth(const short int degrees, const short int minutes, const short int seconds);
     Azimuth(const Direction& change);
     Azimuth(const float radians, const Direction& change);
+    Azimuth(const std::complex<float> polar, const Direction& change);
     Azimuth(const short int degrees, const Direction& change);
     Azimuth(const short int degrees, const short int minutes, const Direction& change);
     Azimuth(const short int degrees, const short int minutes, const short int seconds, const Direction& change);
@@ -64,6 +66,7 @@ public:
     virtual Direction copy() const;
     virtual void clear();
     virtual std::string print();
+    virtual std::string printEuler();
 };
 
 typedef std::vector<Azimuth > AzimuthArray;

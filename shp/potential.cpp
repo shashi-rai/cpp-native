@@ -301,6 +301,14 @@ void Potential::setHigh(const float value) {
 	this->setMagnitude(value);
 }
 
+void Potential::setRange(const float high, const float low) {
+	this->setHigh(high); this->setLow(low);
+}
+
+void Potential::setRange(const float high, const float low, const short int scale) {
+	this->setHigh(high); this->setLow(low); this->setScaling(scale);
+}
+
 short int Potential::getScaling() const {
 	return Signal::getScaling();
 }

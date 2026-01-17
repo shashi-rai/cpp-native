@@ -32,6 +32,11 @@ Azimuth::Azimuth(const float radians)
 
 }
 
+Azimuth::Azimuth(const std::complex<float> polar)
+        : Direction(polar), change(shp::Direction::DEFAULT_RADIANS) {
+
+}
+
 Azimuth::Azimuth(const short int degrees)
         : Direction(degrees), change(shp::Direction::DEFAULT_RADIANS) {
 
@@ -54,6 +59,11 @@ Azimuth::Azimuth(const Direction& change)
 
 Azimuth::Azimuth(const float radians, const Direction& change)
         : Direction(radians), change(change) {
+
+}
+
+Azimuth::Azimuth(const std::complex<float> polar, const Direction& change)
+        : Direction(polar), change(change) {
 
 }
 
@@ -129,6 +139,14 @@ std::string Azimuth::print() {
     result << "𝜙";
     result << Direction::print() << "δ";
 	result << change.print();
+	return result.str();
+}
+
+std::string Azimuth::printEuler() {
+    std::stringstream result;
+    result << "𝜙";
+    result << Direction::printEuler() << "δ";
+	result << change.printEuler();
 	return result.str();
 }
 

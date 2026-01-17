@@ -32,6 +32,11 @@ Polar::Polar(const float radians)
 
 }
 
+Polar::Polar(const std::complex<float> polar)
+        : Direction(polar), change(shp::Direction::DEFAULT_RADIANS) {
+
+}
+
 Polar::Polar(const short int degrees)
         : Direction(degrees), change(shp::Direction::DEFAULT_RADIANS) {
 
@@ -54,6 +59,11 @@ Polar::Polar(const Direction& change)
 
 Polar::Polar(const float radians, const Direction& change)
         : Direction(radians), change(change) {
+
+}
+
+Polar::Polar(const std::complex<float> polar, const Direction& change)
+        : Direction(polar), change(change) {
 
 }
 
@@ -129,6 +139,14 @@ std::string Polar::print() {
     result << "𝜃";
     result << Direction::print() << "δ";
 	result << change.print();
+	return result.str();
+}
+
+std::string Polar::printEuler() {
+    std::stringstream result;
+    result << "𝜃";
+    result << Direction::printEuler() << "δ";
+	result << change.printEuler();
 	return result.str();
 }
 
