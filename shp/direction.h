@@ -22,6 +22,7 @@
 #define SHP_DIRECTION_H
 
 #include <cmath>
+#include <complex>
 #include <iostream>
 #include <sstream>
 #include <vector>
@@ -62,11 +63,19 @@ public:
     void setSeconds(const short int value) { this->seconds = getIndexSeconds(value); }
 
     // Additional methods
+    void setAngle(const short int degrees);
+    void setAngle(const short int degrees, const short int minutes);
+    void setAngle(const short int degrees, const short int minutes, const short int seconds);
     float getCyclingRate() const;
     float getTimePerCycle() const;
     float toRadians() const;
     void fromRadians(const float radians);
     bool checkNonZero() const;
+    float getSine() const;
+    float getCosine() const;
+    float getTangent() const;
+    std::complex<float> getPhase() const;
+    std::complex<float> getCyclic(const float coefficient) const;
     Direction getInverse() const;
     Direction getNormal() const;
     Direction getSquare() const;
@@ -82,6 +91,9 @@ private:
     short int getIndexMinutes(const short int value) const;
     short int getIndexSeconds(const short int value) const;
 public:
+    static const float getSine(const std::complex<float> phase);
+    static const float getCosine(const std::complex<float> phase);
+    static const float getTangent(const std::complex<float> phase);
     static const short int getQuadrant(const float radians);
     static const float getPeriodic(const float radians);
     static const float getHalfPiAngle(const float radians);
@@ -118,6 +130,9 @@ public:
     static const float DEGREE_720;
     static const float DEFAULT_RADIANS;
     static const int DEFAULT_PRECISION;
+
+    // Common base
+    static const float EULER_NUMBER;
 };
 
 typedef std::vector<Direction > DirectionArray;

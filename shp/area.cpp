@@ -35,7 +35,16 @@ Area::Area(const std::string unit) : length(unit), breadth(unit) {
 
 }
 
+Area::Area(const Unit& unit) : length(unit), breadth(unit) {
+
+}
+
 Area::Area(const short int scaling, const std::string unit)
+        : length(scaling, unit), breadth(scaling, unit) {
+
+}
+
+Area::Area(const short int scaling, const Unit& unit)
         : length(scaling, unit), breadth(scaling, unit) {
 
 }
@@ -51,7 +60,17 @@ Area::Area(const float length, const std::string unit)
 
 }
 
+Area::Area(const float length, const Unit& unit)
+        : length(length, unit), breadth(length, unit) {
+
+}
+
 Area::Area(const float length, const short int scaling, const std::string unit)
+        : length(length, scaling, unit), breadth(length, scaling, unit) {
+
+}
+
+Area::Area(const float length, const short int scaling, const Unit& unit)
         : length(length, scaling, unit), breadth(length, scaling, unit) {
 
 }
@@ -67,6 +86,11 @@ Area::Area(const float length, const float breadth, const std::string unit)
 
 }
 
+Area::Area(const float length, const float breadth, const Unit& unit)
+        : length(length, unit), breadth(breadth, unit) {
+
+}
+
 Area::Area(const float length, const float breadth, const short int scaling)
         : length(length, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         breadth(breadth, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
@@ -74,6 +98,11 @@ Area::Area(const float length, const float breadth, const short int scaling)
 }
 
 Area::Area(const float length, const float breadth, const short int scaling, const std::string unit)
+        : length(length, scaling, unit), breadth(breadth, scaling, unit) {
+
+}
+
+Area::Area(const float length, const float breadth, const short int scaling, const Unit& unit)
         : length(length, scaling, unit), breadth(breadth, scaling, unit) {
 
 }
@@ -97,57 +126,144 @@ bool Area::operator==(const Area& peer) const {
 }
 
 Area Area::operator+(const Area& peer) const {
-    Signal realarea = (getTotal() + peer.getTotal());
+    Signal realarea = (getScalarTotal() + peer.getScalarTotal());
     std::complex<float> complexarea(realarea.getMagnitude(), Quantity::DEFAULT_VALUE);
     std::complex<float> part = std::sqrt(complexarea);
     realarea.setScaling(realarea.getScaling() / SCALING_FACTOR);
-    return Area(Signal(std::abs(part), realarea.getScaling(), getUnit()),
-        Signal(std::abs(part), realarea.getScaling(), getUnit()));
+    return Area(Signal(std::abs(part), realarea.getScaling(), length.getUnit()),
+        Signal(std::abs(part), realarea.getScaling(), breadth.getUnit()));
 }
 
 Area Area::operator-(const Area& peer) const {
-    Signal realarea = (getTotal() - peer.getTotal());
+    Signal realarea = (getScalarTotal() - peer.getScalarTotal());
     std::complex<float> complexarea(realarea.getMagnitude(), Quantity::DEFAULT_VALUE);
     std::complex<float> part = std::sqrt(complexarea);
     realarea.setScaling(realarea.getScaling() / SCALING_FACTOR);
-    return Area(Signal(std::abs(part), realarea.getScaling(), getUnit()),
-        Signal(std::abs(part), realarea.getScaling(), getUnit()));
+    return Area(Signal(std::abs(part), realarea.getScaling(), length.getUnit()),
+        Signal(std::abs(part), realarea.getScaling(), breadth.getUnit()));
 }
 
 Area Area::operator*(const Area& peer) const {
-    Signal realarea = (getTotal() * peer.getTotal());
+    Signal realarea = (getScalarTotal() * peer.getScalarTotal());
     std::complex<float> complexarea(realarea.getMagnitude(), Quantity::DEFAULT_VALUE);
     std::complex<float> part = std::sqrt(complexarea);
     realarea.setScaling(realarea.getScaling() / SCALING_FACTOR);
-    return Area(Signal(std::abs(part), realarea.getScaling(), getUnit()),
-        Signal(std::abs(part), realarea.getScaling(), getUnit()));
+    return Area(Signal(std::abs(part), realarea.getScaling(), length.getUnit()),
+        Signal(std::abs(part), realarea.getScaling(), breadth.getUnit()));
 }
 
 Area Area::operator/(const Area& peer) const {
-    Signal realarea = (getTotal() / peer.getTotal());
+    Signal realarea = (getScalarTotal() / peer.getScalarTotal());
     std::complex<float> complexarea(realarea.getMagnitude(), Quantity::DEFAULT_VALUE);
     std::complex<float> part = std::sqrt(complexarea);
     realarea.setScaling(realarea.getScaling() / SCALING_FACTOR);
-    return Area(Signal(std::abs(part), realarea.getScaling(), getUnit()),
-        Signal(std::abs(part), realarea.getScaling(), getUnit()));
+    return Area(Signal(std::abs(part), realarea.getScaling(), length.getUnit()),
+        Signal(std::abs(part), realarea.getScaling(), breadth.getUnit()));
 }
 
 Area Area::operator%(const Area& peer) const {
-    Signal realarea = (fmod(getTotal().getMagnitude(), peer.getTotal().getMagnitude()));
+    Signal realarea = (fmod(getScalarTotal().getMagnitude(), peer.getScalarTotal().getMagnitude()));
     std::complex<float> complexarea(realarea.getMagnitude(), Quantity::DEFAULT_VALUE);
     std::complex<float> part = std::sqrt(complexarea);
     realarea.setScaling(realarea.getScaling() / SCALING_FACTOR);
-    return Area(Signal(std::abs(part), realarea.getScaling(), getUnit()),
-        Signal(std::abs(part), realarea.getScaling(), getUnit()));
+    return Area(Signal(std::abs(part), realarea.getScaling(), length.getUnit()),
+        Signal(std::abs(part), realarea.getScaling(), breadth.getUnit()));
 }
 
-Signal Area::getTotal() const {
-    Signal area = (length * breadth);
+Signal Area::getScalarTotal() const {
+    Signal area = (length.getDotProduct(breadth));
     return Signal(area.getOrientation(), area.getMagnitude(), area.getScaling(), area.getUnit());
 }
 
-std::string Area::getUnit() const {
+Signal Area::getVectorTotal() const {
+    Signal area = (length.getCrossProduct(breadth));
+    return Signal(area.getOrientation(), area.getMagnitude(), area.getScaling(), area.getUnit());
+}
+
+Signal Area::getLengthRotation(const short int degree) const {
+    Azimuth direction(length.getOrientation());
+    Azimuth phase = direction.getRotation(degree);
+    return Signal(phase, length.getMagnitude(), length.getScaling(), length.getUnit());
+}
+
+Direction Area::getLengthPhase() const {
+    return Direction(length.getOrientation());
+}
+
+void Area::setLengthPhase(const Direction& direction) {
+    length.setOrientation(direction.toRadians());
+}
+
+void Area::setLength(const float value) {
+    length.setMagnitude(value);
+}
+
+void Area::setLength(const float value, const short int scale) {
+    length.setMagnitude(value, scale);
+}
+
+void Area::setLength(const float value, const short int scale, const std::string unit) {
+    length.setMagnitude(value, scale);
+    setLengthUnit(unit);
+}
+
+Signal Area::getBreadthRotation(const short int degree) const {
+    Azimuth direction(breadth.getOrientation());
+    Azimuth phase = direction.getRotation(degree);
+    return Signal(phase, length.getMagnitude(), length.getScaling(), length.getUnit());
+}
+
+Direction Area::getBreadthPhase() const {
+    return Direction(breadth.getOrientation());
+}
+
+void Area::setBreadthPhase(const Direction& direction) {
+    breadth.setOrientation(direction.toRadians());
+}
+
+void Area::setBreadth(const float value) {
+    breadth.setMagnitude(value);
+}
+
+void Area::setBreadth(const float value, const short int scale) {
+    breadth.setMagnitude(value, scale);
+}
+
+void Area::setBreadth(const float value, const short int scale, const std::string unit) {
+    breadth.setMagnitude(value, scale);
+    setBreadthUnit(unit);
+}
+
+short int Area::getLengthScaling() const {
+    return length.getScaling();
+}
+
+void Area::setLengthScaling(const short int factor) {
+    length.setScaling(factor);
+}
+
+short int Area::getBreadthScaling() const {
+    return breadth.getScaling();
+}
+
+void Area::setBreadthScaling(const short int factor) {
+    breadth.setScaling(factor);
+}
+
+std::string Area::getLengthUnit() const {
     return (length.getUnit().getName());
+}
+
+void Area::setLengthUnit(const Unit& object) {
+    length.setUnit(object);
+}
+
+std::string Area::getBreadthUnit() const {
+    return (breadth.getUnit().getName());
+}
+
+void Area::setBreadthUnit(const Unit& object) {
+    breadth.setUnit(object);
 }
 
 Area Area::copy() {
@@ -169,10 +285,16 @@ std::string Area::print() {
 	return result.str();
 }
 
-Signal Area::getComponent(float phase) const {
-    Signal area = this->getTotal();
-    return Signal(area.getOrientation(),
-        (area.getMagnitude() * cos(phase)), area.getScaling(), area.getUnit());
+Signal Area::getCosComponent(const float phase) const {
+    Signal area = this->getScalarTotal();
+    return Signal(area.getOrientation(), area.getCosComponent(phase),
+		area.getScaling(), area.getUnit());
+}
+
+Signal Area::getSinComponent(const float phase) const {
+    Signal area = this->getScalarTotal();
+    return Signal(area.getOrientation(), area.getSinComponent(phase),
+		area.getScaling(), area.getUnit());
 }
 
 } // namespace shp

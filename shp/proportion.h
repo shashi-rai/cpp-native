@@ -65,7 +65,15 @@ public:
     void setDenominator(const Signal& property) { this->denominator = property; }
 
     // Additional methods
+    Signal getRemainder() const;
     Signal getRatio() const;
+    Signal getInverse() const;
+    Signal getSquareDot() const;
+    Signal getSquareRootDot() const;
+    Signal getInverseSquareDot() const;
+    Signal getInverseSquareRootDot() const;
+    Signal getSquareCross() const;
+    Signal getInverseSquareCross() const;
     virtual Proportion copy();
     virtual void clear();
     virtual std::string print();

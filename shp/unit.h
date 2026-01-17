@@ -32,7 +32,7 @@ class Unit {
 public:
     // Constructors
     Unit();
-    Unit(std::string name);
+    Unit(const std::string name);
 
     // Destructors
     ~Unit();

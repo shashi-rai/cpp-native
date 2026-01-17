@@ -72,6 +72,7 @@ public:
     // Additional methods
     void setMagnitude(const float value, const short int scale);
     void setUnit(const std::string name);
+    double getZeroScale() const;            // convert value assuming scaling is zero
     Quantity getAbsolute() const;
     Quantity getInverse() const;
     Quantity getPercent() const;
@@ -80,6 +81,7 @@ public:
     Quantity getCube() const;
     Quantity getCubeRoot() const;
     Quantity getMultiple(const float coefficient) const;
+    Quantity getFraction(const float coefficient) const;
     Quantity getDivision(const float coefficient) const;
     bool isConvergent() const;
     bool isDivergent() const;
@@ -96,7 +98,7 @@ public:
 protected:
     static const std::complex<float> getComplex(const float value, const float direction);
 public:
-    static const float EULER_NUMBER;
+    static const std::string DEFAULT_TEXT;
     static const float DEFAULT_VALUE;
     static const float DECIMAL_SCALE;
     static const short int DEFAULT_SCALE;

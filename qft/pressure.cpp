@@ -106,8 +106,8 @@ Pressure Pressure::operator%(const Pressure& peer) const {
 }
 
 shp::Signal Pressure::getTotal() const {
-    float pressure = (force.getTotal().getMagnitude() / area.getTotal().getMagnitude());
-    short int scaling = (force.getTotal().getScaling() - area.getTotal().getScaling());
+    float pressure = (force.getTotal().getMagnitude() / area.getScalarTotal().getMagnitude());
+    short int scaling = (force.getTotal().getScaling() - area.getScalarTotal().getScaling());
     shp::Signal result(pressure, scaling, getUnit());
     return result;
 }

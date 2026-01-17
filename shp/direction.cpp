@@ -43,6 +43,7 @@ const float Direction::DEGREE_360 = 6.283185307179586476925286766559005768394338
 const float Direction::DEGREE_720 = 12.566370614359172953850573533118011536788677597500423283899778369231265625144835994512139301368468271928592346053129226588375378440f;
 const float Direction::DEFAULT_RADIANS = Direction::DEGREE_000;
 const int Direction::DEFAULT_PRECISION = 10000000;
+const float Direction::EULER_NUMBER = 2.7182818284590452353602874713526624977572470936999595749669676277240766303535475945713821785251664274274663919320030599218174135966290435729003342952605956307381323286279434907632336898f;
 
 Direction::Direction()
         : degrees(DEGREES_MIN), minutes(MINUTES_MIN), seconds(SECONDS_MIN) {
@@ -112,6 +113,21 @@ Direction Direction::operator%(const Direction& peer) const {
             getIndexSeconds(result.seconds));
 }
 
+void Direction::setAngle(const short int degrees) {
+    this->setDegrees(degrees);
+}
+
+void Direction::setAngle(const short int degrees, const short int minutes) {
+    this->setDegrees(degrees);
+    this->setMinutes(minutes);
+}
+
+void Direction::setAngle(const short int degrees, const short int minutes, const short int seconds) {
+    this->setDegrees(degrees);
+    this->setMinutes(minutes);
+    this->setSeconds(seconds);
+}
+
 float Direction::getCyclingRate() const {
     return (toRadians() / (2 * Direction::DEGREE_180));
 }
@@ -145,6 +161,27 @@ void Direction::fromRadians(const float radians) {
 
 bool Direction::checkNonZero() const {
     return ((seconds != SECONDS_MIN) || (minutes != MINUTES_MIN) || (degrees != DEGREES_MIN));
+}
+
+float Direction::getSine() const {
+    return std::sin(toRadians());
+}
+
+float Direction::getCosine() const {
+    return std::cos(toRadians());
+}
+
+float Direction::getTangent() const {
+    return std::tan(toRadians());
+}
+
+std::complex<float> Direction::getPhase() const {
+    return getCyclic(DEFAULT_RADIANS);
+}
+
+std::complex<float> Direction::getCyclic(const float coefficient) const {
+    std::complex<float> exponent(coefficient, toRadians());
+    return std::exp(exponent);
 }
 
 Direction Direction::getInverse() const {
@@ -193,6 +230,19 @@ std::string Direction::print() {
     result << minutes << ",";
     result << seconds << "]";
 	return result.str();
+}
+
+const float Direction::getSine(const std::complex<float> phase) {
+    return phase.real();
+}
+
+const float Direction::getCosine(const std::complex<float> phase) {
+    return phase.imag();
+}
+
+const float Direction::getTangent(const std::complex<float> phase) {
+    float sin = phase.real(), cos = phase.imag();
+    return (sin / cos);
 }
 
 const short int Direction::getQuadrant(const float radians) {

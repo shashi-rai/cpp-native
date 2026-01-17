@@ -36,23 +36,34 @@ public:
     // Constructors
     Volume();
     Volume(const std::string unit);
+    Volume(const Unit& unit);
     Volume(const Area& surface);
     Volume(const Area& surface, const std::string unit);
+    Volume(const Area& surface, const Unit& unit);
     Volume(const Area& surface, const short int scaling, const std::string unit);
+    Volume(const Area& surface, const short int scaling, const Unit& unit);
     Volume(const Area& surface, const float depth);
     Volume(const Area& surface, const float depth, const std::string unit);
+    Volume(const Area& surface, const float depth, const Unit& unit);
     Volume(const Area& surface, const float depth, const short int scaling, const std::string unit);
+    Volume(const Area& surface, const float depth, const short int scaling, const Unit& unit);
     Volume(const Area& surface, const Signal& depth);
     Volume(const float length);
     Volume(const float length, const std::string unit);
+    Volume(const float length, const Unit& unit);
     Volume(const float length, const short int scaling, const std::string unit);
+    Volume(const float length, const short int scaling, const Unit& unit);
     Volume(const float length, const float breadth);
     Volume(const float length, const float breadth, const std::string unit);
+    Volume(const float length, const float breadth, const Unit& unit);
     Volume(const float length, const float breadth, const short int scaling, const std::string unit);
+    Volume(const float length, const float breadth, const short int scaling, const Unit& unit);
     Volume(const float length, const float breadth, const float height);
     Volume(const float length, const float breadth, const float height, const std::string unit);
+    Volume(const float length, const float breadth, const float height, const Unit& unit);
     Volume(const float length, const float breadth, const float height, const short int scaling);
     Volume(const float length, const float breadth, const float height, const short int scaling, const std::string unit);
+    Volume(const float length, const float breadth, const float height, const short int scaling, const Unit& unit);
     Volume(const Signal& length);
     Volume(const Signal& length, const Signal& breadth);
     Volume(const Signal& length, const Signal& breadth, const Signal& height);
@@ -71,24 +82,53 @@ public:
     // Getters
     Area getSurface() const { return surface; }
     Signal getDepth() const { return depth; }
-    Signal getLength() const { return surface.getLength(); }
-    Signal getBreadth() const { return surface.getBreadth(); }
-    Signal getHeight() const { return depth; }
 
     // Setters
     void setSurface(const Area& area) { this->surface = area; }
     void setDepth(const Quantity& depth) { this->depth = depth; }
-    void setLength(const Quantity& length) { this->surface.setLength(length); }
-    void setBreadth(const Quantity& breadth) { this->surface.setBreadth(breadth); }
-    void setHeight(const Quantity& height) { this->depth = height; }
 
     // Additional methods
-    Signal getTotal() const;
-    std::string getUnit() const;
+    Signal getScalarTotal() const;
+    Signal getScalarSurfaceTotal() const;
+    Signal getVectorTotal() const;
+    Signal getVectorSurfaceTotal() const;
+    Signal getLengthRotation(const short int degree) const;
+    Direction getLengthPhase() const;
+    void setLengthPhase(const Direction& direction);
+    void setLength(const float value);
+    void setLength(const float value, const short int scale);
+    void setLength(const float value, const short int scale, const std::string unit);
+    Signal getBreadthRotation(const short int degree) const;
+    Direction getBreadthPhase() const;
+    void setBreadthPhase(const Direction& direction);
+    void setBreadth(const float value);
+    void setBreadth(const float value, const short int scale);
+    void setBreadth(const float value, const short int scale, const std::string unit);
+    Signal getHeight() const;
+    void setHeight(const Signal& height);
+    Signal getHeightRotation(const short int degree) const;
+    Direction getHeightPhase() const;
+    void setHeightPhase(const Direction& direction);
+    void setHeight(const float value);
+    void setHeight(const float value, const short int scale);
+    void setHeight(const float value, const short int scale, const std::string unit);
+    short int getLengthScaling() const;
+    void setLengthScaling(const short int factor);
+    short int getBreadthScaling() const;
+    void setBreadthScaling(const short int factor);
+    short int getHeightScaling() const;
+    void setHeightScaling(const short int factor);
+    std::string getLengthUnit() const;
+    void setLengthUnit(const Unit& object);
+    std::string getBreadthUnit() const;
+    void setBreadthUnit(const Unit& object);
+    std::string getHeightUnit() const;
+    void setHeightUnit(const Unit& object);
     virtual Volume copy();
     virtual void clear();
     virtual std::string print();
-    Signal getComponent(float phase) const;
+    Signal getCosComponent(const float phase) const;
+    Signal getSinComponent(const float phase) const;
 public:
     static const std::string UNIT;
     static const short int SCALING_FACTOR;

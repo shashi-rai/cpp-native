@@ -162,35 +162,35 @@ bool Density::operator==(const Density& peer) const {
 
 Density Density::operator+(const Density& peer) const {
 	shp::Signal newparameter = (parameter + peer.parameter);
-    shp::Signal newvolume = (volume.getTotal() + peer.volume.getTotal());
+    shp::Signal newvolume = (volume.getScalarTotal() + peer.volume.getScalarTotal());
 	newvolume.adjustScaling();
     return Density("+", newparameter, newvolume);
 }
 
 Density Density::operator-(const Density& peer) const {
 	shp::Signal newparameter = (parameter - peer.parameter);
-    shp::Signal newvolume = (volume.getTotal() - peer.volume.getTotal());
+    shp::Signal newvolume = (volume.getScalarTotal() - peer.volume.getScalarTotal());
 	newvolume.adjustScaling();
     return Density("-", newparameter, newvolume);
 }
 
 Density Density::operator*(const Density& peer) const {
 	shp::Signal newparameter = (parameter * peer.parameter);
-    shp::Signal newvolume = (volume.getTotal() * peer.volume.getTotal());
+    shp::Signal newvolume = (volume.getScalarTotal() * peer.volume.getScalarTotal());
 	newvolume.adjustScaling();
     return Density("*", newparameter, newvolume);
 }
 
 Density Density::operator/(const Density& peer) const {
 	shp::Signal newparameter = (parameter / peer.parameter);
-    shp::Signal newvolume = (volume.getTotal() / peer.volume.getTotal());
+    shp::Signal newvolume = (volume.getScalarTotal() / peer.volume.getScalarTotal());
 	newvolume.adjustScaling();
     return Density("/", newparameter, newvolume);
 }
 
 Density Density::operator%(const Density& peer) const {
 	shp::Signal newparameter = (parameter % peer.parameter);
-    shp::Signal newvolume = (volume.getTotal() % peer.volume.getTotal());
+    shp::Signal newvolume = (volume.getScalarTotal() % peer.volume.getScalarTotal());
 	newvolume.adjustScaling();
     return Density("%", newparameter, newvolume);
 }
@@ -231,8 +231,13 @@ void Density::setVolume(const float value) {
 	this->volume = shp::Volume(std::cbrt(value));
 }
 
-shp::Signal Density::getTotal() const {
-    shp::Signal density = (parameter / volume.getTotal());
+shp::Signal Density::getScalarTotal() const {
+    shp::Signal density = (parameter / volume.getScalarTotal());
+    return shp::Signal(density.getMagnitude(), density.getScaling(), density.getUnit());
+}
+
+shp::Signal Density::getVectorTotal() const {
+    shp::Signal density = (parameter / volume.getVectorTotal());
     return shp::Signal(density.getMagnitude(), density.getScaling(), density.getUnit());
 }
 
@@ -258,13 +263,13 @@ std::string Density::print() {
 }
 
 shp::Signal Density::getCosComponent(const float phase) const {
-	shp::Signal density = this->getTotal();
+	shp::Signal density = this->getScalarTotal();
     return shp::Signal(density.getOrientation(),
 		density.getCosComponent(phase), density.getScaling(), density.getUnit());
 }
 
 shp::Signal Density::getSinComponent(const float phase) const {
-	shp::Signal density = this->getTotal();
+	shp::Signal density = this->getScalarTotal();
     return shp::Signal(density.getOrientation(),
 		density.getSinComponent(phase), density.getScaling(), density.getUnit());
 }

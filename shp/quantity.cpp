@@ -22,23 +22,23 @@
 
 namespace shp {
 
-const float Quantity::EULER_NUMBER = 2.7182818284590452353602874713526624977572470936999f;
+const std::string Quantity::DEFAULT_TEXT = "";  // Empty
 const float Quantity::DEFAULT_VALUE = 0.0f;     // 0.0f
 const float Quantity::DECIMAL_SCALE = 10.0f;    // 10.0f
 const short int Quantity::DEFAULT_SCALE = 0;    // 10^0
 
 Quantity::Quantity()
-        : magnitude(DEFAULT_VALUE), scaling(DEFAULT_SCALE), unit() {
+        : magnitude(DEFAULT_VALUE), scaling(DEFAULT_SCALE), unit(DEFAULT_TEXT) {
 
 }
 
 Quantity::Quantity(const float magnitude)
-        : magnitude(magnitude), scaling(DEFAULT_SCALE), unit() {
+        : magnitude(magnitude), scaling(DEFAULT_SCALE), unit(DEFAULT_TEXT) {
 
 }
 
 Quantity::Quantity(const short int scaling)
-        : magnitude(), scaling(scaling), unit() {
+        : magnitude(), scaling(scaling), unit(DEFAULT_TEXT) {
 
 }
 
@@ -73,7 +73,7 @@ Quantity::Quantity(const float magnitude, const Unit& unit)
 }
 
 Quantity::Quantity(const float magnitude, const short int scaling)
-        : magnitude(magnitude), scaling(scaling), unit() {
+        : magnitude(magnitude), scaling(scaling), unit(DEFAULT_TEXT) {
 
 }
 
@@ -148,6 +148,10 @@ void Quantity::setUnit(const std::string name) {
     this->unit.setName(name);
 }
 
+double Quantity::getZeroScale() const {
+    return (magnitude * std::pow(DECIMAL_SCALE, scaling));
+}
+
 Quantity Quantity::getAbsolute() const {
     Quantity fresh(std::abs(magnitude), scaling, unit.getModulus());
     return fresh;
@@ -203,6 +207,15 @@ Quantity Quantity::getCubeRoot() const {
 Quantity Quantity::getMultiple(const float coefficient) const {
     Quantity self = *this;
     float mantissa = (self.magnitude * coefficient);
+    Quantity result(mantissa, self.scaling, self.getUnit());
+    return result;
+}
+
+Quantity Quantity::getFraction(const float coefficient) const {
+    Quantity self = *this; float mantissa = Quantity::DEFAULT_VALUE;
+    if (self.magnitude != Quantity::DEFAULT_VALUE) {
+        mantissa = (coefficient / self.magnitude);
+    }
     Quantity result(mantissa, self.scaling, self.getUnit());
     return result;
 }

@@ -37,14 +37,20 @@ public:
     // Constructors
     Area();
     Area(const std::string unit);
+    Area(const Unit& unit);
     Area(const short int scaling, const std::string unit);
+    Area(const short int scaling, const Unit& unit);
     Area(const float length);
     Area(const float length, const std::string unit);
+    Area(const float length, const Unit& unit);
     Area(const float length, const short int scaling, const std::string unit);
+    Area(const float length, const short int scaling, const Unit& unit);
     Area(const float length, const float breadth);
     Area(const float length, const float breadth, const std::string unit);
+    Area(const float length, const float breadth, const Unit& unit);
     Area(const float length, const float breadth, const short int scaling);
     Area(const float length, const float breadth, const short int scaling, const std::string unit);
+    Area(const float length, const float breadth, const short int scaling, const Unit& unit);
     Area(const Signal& length);
     Area(const Signal& length, const Signal& breadth);
 
@@ -68,12 +74,33 @@ public:
     void setBreadth(const Signal& breadth) { this->breadth = breadth; }
 
     // Additional methods
-    Signal getTotal() const;
-    std::string getUnit() const;
+    Signal getScalarTotal() const;
+    Signal getVectorTotal() const;
+    Signal getLengthRotation(const short int degree) const;
+    Direction getLengthPhase() const;
+    void setLengthPhase(const Direction& direction);
+    void setLength(const float value);
+    void setLength(const float value, const short int scale);
+    void setLength(const float value, const short int scale, const std::string unit);
+    Signal getBreadthRotation(const short int degree) const;
+    Direction getBreadthPhase() const;
+    void setBreadthPhase(const Direction& direction);
+    void setBreadth(const float value);
+    void setBreadth(const float value, const short int scale);
+    void setBreadth(const float value, const short int scale, const std::string unit);
+    short int getLengthScaling() const;
+    void setLengthScaling(const short int factor);
+    short int getBreadthScaling() const;
+    void setBreadthScaling(const short int factor);
+    std::string getLengthUnit() const;
+    void setLengthUnit(const Unit& object);
+    std::string getBreadthUnit() const;
+    void setBreadthUnit(const Unit& object);
     virtual Area copy();
     virtual void clear();
     virtual std::string print();
-    Signal getComponent(const float phase) const;
+    Signal getCosComponent(const float phase) const;
+    Signal getSinComponent(const float phase) const;
 public:
     static const std::string UNIT;
     static const short int SCALING_FACTOR;

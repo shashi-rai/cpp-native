@@ -34,6 +34,10 @@ Volume::Volume(const std::string unit) : surface(unit), depth(unit) {
 
 }
 
+Volume::Volume(const Unit& unit) : surface(unit), depth(unit) {
+
+}
+
 Volume::Volume(const Area& surface) : surface(surface),
 		depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
@@ -44,7 +48,17 @@ Volume::Volume(const Area& surface, const std::string unit)
 
 }
 
+Volume::Volume(const Area& surface, const Unit& unit)
+    : surface(surface), depth(unit) {
+
+}
+
 Volume::Volume(const Area& surface, const short int scaling, const std::string unit)
+    : surface(surface), depth(scaling, unit) {
+
+}
+
+Volume::Volume(const Area& surface, const short int scaling, const Unit& unit)
     : surface(surface), depth(scaling, unit) {
 
 }
@@ -59,7 +73,17 @@ Volume::Volume(const Area& surface, const float depth, const std::string unit)
 
 }
 
+Volume::Volume(const Area& surface, const float depth, const Unit& unit)
+        : surface(surface), depth(depth, unit) {
+
+}
+
 Volume::Volume(const Area& surface, const float depth, const short int scaling, const std::string unit)
+        : surface(surface), depth(depth, scaling, unit) {
+
+}
+
+Volume::Volume(const Area& surface, const float depth, const short int scaling, const Unit& unit)
         : surface(surface), depth(depth, scaling, unit) {
 
 }
@@ -81,7 +105,19 @@ Volume::Volume(const float length, const std::string unit)
 
 }
 
+Volume::Volume(const float length, const Unit& unit)
+        : surface(length, length, unit),
+		depth(length, unit) {
+
+}
+
 Volume::Volume(const float length, const short int scaling, const std::string unit)
+        : surface(length, length, scaling, unit),
+		depth(length, scaling, unit) {
+
+}
+
+Volume::Volume(const float length, const short int scaling, const Unit& unit)
         : surface(length, length, scaling, unit),
 		depth(length, scaling, unit) {
 
@@ -98,7 +134,17 @@ Volume::Volume(const float length, const float breadth, const std::string unit)
 
 }
 
+Volume::Volume(const float length, const float breadth, const Unit& unit)
+        : surface(length, breadth, unit), depth(unit) {
+
+}
+
 Volume::Volume(const float length, const float breadth, const short int scaling, const std::string unit)
+        : surface(length, breadth, scaling, unit), depth(scaling, unit) {
+
+}
+
+Volume::Volume(const float length, const float breadth, const short int scaling, const Unit& unit)
         : surface(length, breadth, scaling, unit), depth(scaling, unit) {
 
 }
@@ -116,6 +162,12 @@ Volume::Volume(const float length, const float breadth, const float height,
 }
 
 Volume::Volume(const float length, const float breadth, const float height,
+        const Unit& unit)
+        : surface(length, breadth, unit), depth(height, unit) {
+
+}
+
+Volume::Volume(const float length, const float breadth, const float height,
         const short int scaling)
         : surface(length, breadth, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
 		depth(height, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
@@ -124,6 +176,13 @@ Volume::Volume(const float length, const float breadth, const float height,
 
 Volume::Volume(const float length, const float breadth, const float height,
         const short int scaling, const std::string unit)
+        : surface(length, breadth, scaling, unit),
+		depth(height, scaling, unit) {
+
+}
+
+Volume::Volume(const float length, const float breadth, const float height,
+        const short int scaling, const Unit& unit)
         : surface(length, breadth, scaling, unit),
 		depth(height, scaling, unit) {
 
@@ -154,57 +213,199 @@ bool Volume::operator==(const Volume& peer) const {
 }
 
 Volume Volume::operator+(const Volume& peer) const {
-	Signal realvolume = (getTotal() + peer.getTotal());
+	Signal realvolume = (getScalarTotal() + peer.getScalarTotal());
     float part = std::cbrt(realvolume.getMagnitude());
 	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
-    return Volume(Signal(part, realvolume.getScaling(), getUnit()),
-			Signal(part, realvolume.getScaling(), getUnit()),
-			Signal(part, realvolume.getScaling(), getUnit()));
+    return Volume(Signal(part, realvolume.getScaling(), surface.getLengthUnit()),
+			Signal(part, realvolume.getScaling(), surface.getBreadthUnit()),
+			Signal(part, realvolume.getScaling(), depth.getUnit()));
 }
 
 Volume Volume::operator-(const Volume& peer) const {
-	Signal realvolume = (getTotal() - peer.getTotal());
+	Signal realvolume = (getScalarTotal() - peer.getScalarTotal());
     float part = std::cbrt(realvolume.getMagnitude());
 	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
-    return Volume(Signal(part, realvolume.getScaling(), getUnit()),
-			Signal(part, realvolume.getScaling(), getUnit()),
-			Signal(part, realvolume.getScaling(), getUnit()));
+    return Volume(Signal(part, realvolume.getScaling(), surface.getLengthUnit()),
+			Signal(part, realvolume.getScaling(), surface.getBreadthUnit()),
+			Signal(part, realvolume.getScaling(), depth.getUnit()));
 }
 
 Volume Volume::operator*(const Volume& peer) const {
-	Signal realvolume = (getTotal() * peer.getTotal());
+	Signal realvolume = (getScalarTotal() * peer.getScalarTotal());
     float part = std::cbrt(realvolume.getMagnitude());
 	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
-    return Volume(Signal(part, realvolume.getScaling(), getUnit()),
-			Signal(part, realvolume.getScaling(), getUnit()),
-			Signal(part, realvolume.getScaling(), getUnit()));
+    return Volume(Signal(part, realvolume.getScaling(), surface.getLengthUnit()),
+			Signal(part, realvolume.getScaling(), surface.getBreadthUnit()),
+			Signal(part, realvolume.getScaling(), depth.getUnit()));
 }
 
 Volume Volume::operator/(const Volume& peer) const {
-	Signal realvolume = (getTotal() / peer.getTotal());
+	Signal realvolume = (getScalarTotal() / peer.getScalarTotal());
     float part = std::cbrt(realvolume.getMagnitude());
 	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
-    return Volume(Signal(part, realvolume.getScaling(), getUnit()),
-			Signal(part, realvolume.getScaling(), getUnit()),
-			Signal(part, realvolume.getScaling(), getUnit()));
+    return Volume(Signal(part, realvolume.getScaling(), surface.getLengthUnit()),
+			Signal(part, realvolume.getScaling(), surface.getBreadthUnit()),
+			Signal(part, realvolume.getScaling(), depth.getUnit()));
 }
 
 Volume Volume::operator%(const Volume& peer) const {
-	Signal realvolume = (getTotal() % peer.getTotal());
+	Signal realvolume = (getScalarTotal() % peer.getScalarTotal());
     float part = std::cbrt(realvolume.getMagnitude());
 	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
-    return Volume(Signal(part, realvolume.getScaling(), getUnit()),
-			Signal(part, realvolume.getScaling(), getUnit()),
-			Signal(part, realvolume.getScaling(), getUnit()));
+    return Volume(Signal(part, realvolume.getScaling(), surface.getLengthUnit()),
+			Signal(part, realvolume.getScaling(), surface.getBreadthUnit()),
+			Signal(part, realvolume.getScaling(), depth.getUnit()));
 }
 
-Signal Volume::getTotal() const {
-    Signal volume = (surface.getTotal() * depth);
+Signal Volume::getScalarTotal() const {
+    Signal volume = (surface.getScalarTotal().getDotProduct(depth));
     return Signal(volume.getOrientation(), volume.getMagnitude(), volume.getScaling(), volume.getUnit());
 }
 
-std::string Volume::getUnit() const {
-    return depth.getUnit().getName();
+Signal Volume::getScalarSurfaceTotal() const {
+    Signal volume = surface.getScalarTotal();
+    return Signal(volume.getOrientation(), volume.getMagnitude(), volume.getScaling(), volume.getUnit());
+}
+
+Signal Volume::getVectorTotal() const {
+    Signal volume = (surface.getVectorTotal().getCrossProduct(depth));
+    return Signal(volume.getOrientation(), volume.getMagnitude(), volume.getScaling(), volume.getUnit());
+}
+
+Signal Volume::getVectorSurfaceTotal() const {
+    Signal volume = surface.getVectorTotal();
+    return Signal(volume.getOrientation(), volume.getMagnitude(), volume.getScaling(), volume.getUnit());
+}
+
+Signal Volume::getLengthRotation(const short int degree) const {
+    return surface.getLengthRotation(degree);
+}
+
+Direction Volume::getLengthPhase() const {
+    return surface.getLengthPhase();
+}
+
+void Volume::setLengthPhase(const Direction& direction) {
+    surface.setBreadthPhase(direction);
+}
+
+void Volume::setLength(const float value) {
+    surface.setLength(value);
+}
+
+void Volume::setLength(const float value, const short int scale) {
+    surface.setLength(value, scale);
+}
+
+void Volume::setLength(const float value, const short int scale, const std::string unit) {
+    surface.setLength(value, scale, unit);
+}
+
+Signal Volume::getBreadthRotation(const short int degree) const {
+    return surface.getBreadthRotation(degree);
+}
+
+Direction Volume::getBreadthPhase() const {
+    return surface.getBreadthPhase();
+}
+
+void Volume::setBreadthPhase(const Direction& direction) {
+    surface.setBreadthPhase(direction);
+}
+
+void Volume::setBreadth(const float value) {
+    surface.setBreadth(value);
+}
+
+void Volume::setBreadth(const float value, const short int scale) {
+    surface.setBreadth(value, scale);
+}
+
+void Volume::setBreadth(const float value, const short int scale, const std::string unit) {
+    surface.setBreadth(value, scale, unit);
+}
+
+Signal Volume::getHeight() const {
+    return depth;
+}
+
+void Volume::setHeight(const Signal& height) {
+    this->depth = height;
+}
+
+Signal Volume::getHeightRotation(const short int degree) const {
+    Azimuth direction(depth.getOrientation());
+    Azimuth phase = direction.getRotation(degree);
+    return Signal(phase, depth.getMagnitude(), depth.getScaling(), depth.getUnit());
+}
+
+Direction Volume::getHeightPhase() const {
+    return Direction(depth.getOrientation());
+}
+
+void Volume::setHeightPhase(const Direction& direction) {
+    depth.setOrientation(direction.toRadians());
+}
+
+void Volume::setHeight(const float value) {
+    depth.setMagnitude(value);
+}
+
+void Volume::setHeight(const float value, const short int scale) {
+    depth.setMagnitude(value, scale);
+}
+
+void Volume::setHeight(const float value, const short int scale, const std::string unit) {
+    depth.setMagnitude(value, scale);
+    depth.setUnit(unit);
+}
+
+short int Volume::getLengthScaling() const {
+    return surface.getLengthScaling();
+}
+
+void Volume::setLengthScaling(const short int factor) {
+    surface.setLengthScaling(factor);
+}
+
+short int Volume::getBreadthScaling() const {
+    return surface.getBreadthScaling();
+}
+
+void Volume::setBreadthScaling(const short int factor) {
+    surface.setBreadthScaling(factor);
+}
+
+short int Volume::getHeightScaling() const {
+    return depth.getScaling();
+}
+
+void Volume::setHeightScaling(const short int factor) {
+    depth.setScaling(factor);
+}
+
+std::string Volume::getLengthUnit() const {
+    return surface.getLengthUnit();
+}
+
+void Volume::setLengthUnit(const Unit& object) {
+    surface.setLengthUnit(object);
+}
+
+std::string Volume::getBreadthUnit() const {
+    return surface.getBreadthUnit();
+}
+
+void Volume::setBreadthUnit(const Unit& object) {
+    surface.setBreadthUnit(object);
+}
+
+std::string Volume::getHeightUnit() const {
+    return (depth.getUnit().getName());
+}
+
+void Volume::setHeightUnit(const Unit& object) {
+    depth.setUnit(object);
 }
 
 Volume Volume::copy() {
@@ -225,10 +426,16 @@ std::string Volume::print() {
 	return result.str();
 }
 
-Signal Volume::getComponent(float phase) const {
-	Signal volume = this->getTotal();
-	return Signal(volume.getOrientation(),
-        (volume.getMagnitude() * cos(phase)), volume.getScaling(), volume.getUnit());
+Signal Volume::getCosComponent(const float phase) const {
+	Signal volume = this->getScalarTotal();
+	return Signal(volume.getOrientation(), volume.getCosComponent(phase),
+        volume.getScaling(), volume.getUnit());
+}
+
+Signal Volume::getSinComponent(const float phase) const {
+	Signal volume = this->getScalarTotal();
+	return Signal(volume.getOrientation(), volume.getSinComponent(phase),
+        volume.getScaling(), volume.getUnit());
 }
 
 } // namespace shp

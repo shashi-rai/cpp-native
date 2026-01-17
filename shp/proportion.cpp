@@ -108,8 +108,57 @@ Proportion Proportion::operator%(const Proportion& peer) const {
     return Proportion((numerator % peer.numerator), (denominator % peer.denominator));
 }
 
+Signal Proportion::getRemainder() const {
+    Signal ratio = this->getRatio();
+    ratio.adjustScaling();
+    return Signal(ratio.getOrientation(), (1.0f - ratio.getMagnitude()), ratio.getScaling(), ratio.getUnit());
+}
+
 Signal Proportion::getRatio() const {
-    Signal ratio = (numerator / denominator); ratio.adjustScaling();
+    Signal ratio = (numerator / denominator);
+    ratio.adjustScaling();
+    return Signal(ratio.getOrientation(), ratio.getMagnitude(), ratio.getScaling(), ratio.getUnit());
+}
+
+Signal Proportion::getInverse() const {
+    Signal ratio = (denominator / numerator);
+    ratio.adjustScaling();
+    return Signal(ratio.getOrientation(), ratio.getMagnitude(), ratio.getScaling(), ratio.getUnit());
+}
+
+Signal Proportion::getSquareDot() const {
+    Signal ratio = (numerator.getDotProductSquare() / denominator.getDotProductSquare());
+    ratio.adjustScaling();
+    return Signal(ratio.getOrientation(), ratio.getMagnitude(), ratio.getScaling(), ratio.getUnit());
+}
+
+Signal Proportion::getSquareRootDot() const {
+    Signal ratio = (numerator.getDotProductSquareRoot() / denominator.getDotProductSquareRoot());
+    ratio.adjustScaling();
+    return Signal(ratio.getOrientation(), ratio.getMagnitude(), ratio.getScaling(), ratio.getUnit());
+}
+
+Signal Proportion::getInverseSquareDot() const {
+    Signal ratio = (denominator.getDotProductSquare() / numerator.getDotProductSquare());
+    ratio.adjustScaling();
+    return Signal(ratio.getOrientation(), ratio.getMagnitude(), ratio.getScaling(), ratio.getUnit());
+}
+
+Signal Proportion::getInverseSquareRootDot() const {
+    Signal ratio = (denominator.getDotProductSquareRoot() / numerator.getDotProductSquareRoot());
+    ratio.adjustScaling();
+    return Signal(ratio.getOrientation(), ratio.getMagnitude(), ratio.getScaling(), ratio.getUnit());
+}
+
+Signal Proportion::getSquareCross() const {
+    Signal ratio = (numerator.getCrossProductSquare() / denominator.getCrossProductSquare());
+    ratio.adjustScaling();
+    return Signal(ratio.getOrientation(), ratio.getMagnitude(), ratio.getScaling(), ratio.getUnit());
+}
+
+Signal Proportion::getInverseSquareCross() const {
+    Signal ratio = (denominator.getCrossProductSquare() / numerator.getCrossProductSquare());
+    ratio.adjustScaling();
     return Signal(ratio.getOrientation(), ratio.getMagnitude(), ratio.getScaling(), ratio.getUnit());
 }
 

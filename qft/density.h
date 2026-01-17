@@ -89,7 +89,8 @@ public:
     shp::Unit getUnit() const;
     void setUnit(const shp::Unit& unit);
     void setVolume(const float value);
-    shp::Signal getTotal() const;
+    shp::Signal getScalarTotal() const;
+    shp::Signal getVectorTotal() const;
     virtual Density copy();
     virtual void clear();
     virtual std::string print();

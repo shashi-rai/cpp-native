@@ -86,7 +86,7 @@ Unit::Unit() : name(UNKNOWN) {
 
 }
 
-Unit::Unit(std::string name) : name(name) {
+Unit::Unit(const std::string name) : name(name) {
 
 }
 
