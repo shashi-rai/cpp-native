@@ -131,8 +131,12 @@ public:
     Quantity getRelative(const Distance& position, const float angle) const;
     Quantity getRelativeX(const Distance& position, const float angle) const;
     Quantity getRelativeY(const Distance& position, const float angle) const;
-    Quantity getPolarComponent(const Distance& position) const;
-    Quantity getAzimuthComponent(const Distance& position) const;
+    Quantity getPolarRComponent(const Distance& position) const;
+    Quantity getPolarXComponent(const Distance& position) const;
+    Quantity getPolarZComponent(const Distance& position) const;
+    Quantity getAzimuthRComponent(const Distance& position) const;
+    Quantity getAzimuthXComponent(const Distance& position) const;
+    Quantity getAzimuthYComponent(const Distance& position) const;
     virtual Distance copy() const;
     virtual void clear();
     virtual std::string print();

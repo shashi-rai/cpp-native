@@ -34,26 +34,37 @@ class Growth : protected shp::Potential {
 public:
     // Constructors
     Growth();
+    Growth(const shp::Azimuth& phase);
     Growth(const shp::Angular& closure);
+    Growth(const shp::Azimuth& phase, const shp::Angular& closure);
     Growth(const float high);
     Growth(const float high, const shp::Angular& closure);
+    Growth(const shp::Azimuth& phase, const float high, const shp::Angular& closure);
     Growth(const float high, const float low);
     Growth(const float high, const float low, const shp::Angular& closure);
+    Growth(const shp::Azimuth& phase, const float high, const float low, const shp::Angular& closure);
     Growth(const std::string unit);
     Growth(const shp::Unit& unit);
     Growth(const shp::Unit& unit, const shp::Angular& closure);
+    Growth(const shp::Azimuth& phase, const shp::Unit& unit, const shp::Angular& closure);
     Growth(const short int scaling, const std::string unit);
     Growth(const short int scaling, const shp::Unit& unit);
     Growth(const short int scaling, const shp::Unit& unit, const shp::Angular& closure);
+    Growth(const shp::Azimuth& phase, const short int scaling, const shp::Unit& unit, const shp::Angular& closure);
     Growth(const float high, const std::string unit, const shp::Angular& closure);
+    Growth(const float high, const shp::Unit& unit, const shp::Angular& closure);
+    Growth(const shp::Azimuth& phase, const float high, const shp::Unit& unit, const shp::Angular& closure);
     Growth(const float high, const float low, const std::string unit);
     Growth(const float high, const float low, const std::string unit, const shp::Angular& closure);
     Growth(const float high, const float low, const shp::Unit& unit);
     Growth(const float high, const float low, const shp::Unit& unit, const shp::Angular& closure);
+    Growth(const shp::Azimuth& phase, const float high, const float low, const shp::Unit& unit, const shp::Angular& closure);
     Growth(const float high, const float low, const short int scaling);
     Growth(const float high, const float low, const short int scaling, const std::string unit);
     Growth(const float high, const float low, const short int scaling, const shp::Unit& unit);
+    Growth(const shp::Azimuth& phase, const float high, const float low, const short int scaling, const shp::Unit& unit);
     Growth(const float high, const float low, const short int scaling, const shp::Unit& unit, const shp::Angular& closure);
+    Growth(const shp::Azimuth& phase, const float high, const float low, const short int scaling, const shp::Unit& unit, const shp::Angular& closure);
 
     // Destructors
     ~Growth();
@@ -81,6 +92,12 @@ public:
     void setHigh(const float value);
     float getLow() const;
     void setLow(const float value);
+    void setRange(const float high, const float low);
+    void setRange(const float high, const float low, const short int scale);
+    short int getScaling() const;
+    void setScaling(const short int factor);
+    shp::Unit getUnit() const;
+    void setUnit(const shp::Unit& object);
     shp::Angular getClosure() const;
     void setClosure(const shp::Angular& position);
     shp::Polar getPolar() const;
@@ -89,8 +106,14 @@ public:
     void setAzimuth(const shp::Azimuth& angle);
     shp::Signal getConvergence() const;
     shp::Signal getRelative(const shp::Distance& location, const float angle) const;
-    shp::Signal getPolarComponent(const shp::Distance& location) const;
-    shp::Signal getAzimuthComponent(const shp::Distance& location) const;
+    shp::Signal getRelativeX(const shp::Distance& location, const float angle) const;
+    shp::Signal getRelativeY(const shp::Distance& location, const float angle) const;
+    shp::Signal getPolarRComponent(const shp::Distance& location) const;
+    shp::Signal getPolarXComponent(const shp::Distance& location) const;
+    shp::Signal getPolarZComponent(const shp::Distance& location) const;
+    shp::Signal getAzimuthRComponent(const shp::Distance& location) const;
+    shp::Signal getAzimuthXComponent(const shp::Distance& location) const;
+    shp::Signal getAzimuthYComponent(const shp::Distance& location) const;
     shp::Signal copy() const;
     void clear();
     std::string print();

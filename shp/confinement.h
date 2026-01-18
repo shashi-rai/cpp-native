@@ -37,26 +37,37 @@ class Confinement : protected Potential {
 public:
     // Constructors
     Confinement();
+    Confinement(const Azimuth& phase);
     Confinement(const Angular& closure);
+    Confinement(const Azimuth& phase, const Angular& closure);
     Confinement(const float high);
     Confinement(const float high, const Angular& closure);
+    Confinement(const Azimuth& phase, const float high, const Angular& closure);
     Confinement(const float high, const float low);
     Confinement(const float high, const float low, const Angular& closure);
+    Confinement(const Azimuth& phase, const float high, const float low, const Angular& closure);
     Confinement(const std::string unit);
     Confinement(const Unit& unit);
     Confinement(const Unit& unit, const Angular& closure);
+    Confinement(const Azimuth& phase, const Unit& unit, const Angular& closure);
     Confinement(const short int scaling, const std::string unit);
     Confinement(const short int scaling, const Unit& unit);
     Confinement(const short int scaling, const Unit& unit, const Angular& closure);
+    Confinement(const Azimuth& phase, const short int scaling, const Unit& unit, const Angular& closure);
     Confinement(const float high, const std::string unit, const Angular& closure);
+    Confinement(const float high, const Unit& unit, const Angular& closure);
+    Confinement(const Azimuth& phase, const float high, const Unit& unit, const Angular& closure);
     Confinement(const float high, const float low, const std::string unit);
     Confinement(const float high, const float low, const std::string unit, const Angular& closure);
     Confinement(const float high, const float low, const Unit& unit);
     Confinement(const float high, const float low, const Unit& unit, const Angular& closure);
+    Confinement(const Azimuth& phase, const float high, const float low, const Unit& unit, const Angular& closure);
     Confinement(const float high, const float low, const short int scaling);
     Confinement(const float high, const float low, const short int scaling, const std::string unit);
     Confinement(const float high, const float low, const short int scaling, const Unit& unit);
+    Confinement(const Azimuth& phase, const float high, const float low, const short int scaling, const Unit& unit);
     Confinement(const float high, const float low, const short int scaling, const Unit& unit, const Angular& closure);
+    Confinement(const Azimuth& phase, const float high, const float low, const short int scaling, const Unit& unit, const Angular& closure);
 
     // Destructors
     ~Confinement();
@@ -84,6 +95,12 @@ public:
     void setHigh(const float value);
     float getLow() const;
     void setLow(const float value);
+    void setRange(const float high, const float low);
+    void setRange(const float high, const float low, const short int scale);
+    short int getScaling() const;
+    void setScaling(const short int factor);
+    Unit getUnit() const;
+    void setUnit(const Unit& object);
     Angular getClosure() const;
     void setClosure(const Angular& position);
     Polar getPolar() const;
@@ -92,8 +109,14 @@ public:
     void setAzimuth(const Azimuth& angle);
     Signal getConvergence() const;
     Signal getRelative(const Distance& location, const float angle) const;
-    Signal getPolarComponent(const Distance& location) const;
-    Signal getAzimuthComponent(const Distance& location) const;
+    Signal getRelativeX(const Distance& location, const float angle) const;
+    Signal getRelativeY(const Distance& location, const float angle) const;
+    Signal getPolarRComponent(const Distance& location) const;
+    Signal getPolarXComponent(const Distance& location) const;
+    Signal getPolarZComponent(const Distance& location) const;
+    Signal getAzimuthRComponent(const Distance& location) const;
+    Signal getAzimuthXComponent(const Distance& location) const;
+    Signal getAzimuthYComponent(const Distance& location) const;
     virtual Signal copy() const;
     virtual void clear();
     virtual std::string print();

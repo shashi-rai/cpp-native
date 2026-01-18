@@ -37,6 +37,11 @@ Potential::Potential(const Angular& origin)
 
 }
 
+Potential::Potential(const Azimuth& phase, const Angular& origin)
+        : Signal(phase), low(), origin(origin) {
+
+}
+
 Potential::Potential(const float high)
         : Signal(high), low(), origin() {
 
@@ -274,22 +279,20 @@ Potential Potential::operator%(const Potential& peer) const {
 Signal Potential::operator()(const Potential& peer,
         const Distance& separation, const Distance& position) const {
     Potential self = *this; shp::Signal distribution = self.getDivergence();
-    shp::Signal coefficient = (self.origin(peer.origin, separation, position) *
-		distribution.getMagnitude());
-    shp::Signal result(coefficient.getOrientation(), coefficient.getMagnitude(),
-		(coefficient.getScaling() + distribution.getScaling()), self.getUnit());
-	result.adjustScaling();
+    shp::Quantity coefficient = self.origin(peer.origin, separation, position);
+    Signal signal = distribution.getSquareDivergence(coefficient); signal.adjustScaling();
+    Signal result(distribution.getOrientation(), signal.getMagnitude(),
+		(distribution.getScaling() + signal.getScaling()), self.getUnit());
     return result;
 }
 
 Signal Potential::operator()(const Potential& peerX, const Potential& peerY,
         const Distance& separationX, const Distance& separationY) const {
 	Potential self = *this; shp::Signal distribution = self.getDivergence();
-    shp::Signal coefficient = (self.origin(peerX.getOrigin(), peerY.getOrigin(),
-		separationX, separationY) * distribution.getMagnitude());
-    shp::Signal result(coefficient.getOrientation(), coefficient.getMagnitude(),
-		(coefficient.getScaling() + distribution.getScaling()), self.getUnit());
-	result.adjustScaling();
+    shp::Quantity coefficient = self.origin(peerX.getOrigin(),  peerY.getOrigin(), separationX, separationY);
+    Signal signal = distribution.getSquareDivergence(coefficient); signal.adjustScaling();
+    Signal result(distribution.getOrientation(), signal.getMagnitude(),
+		(distribution.getScaling() + signal.getScaling()), self.getUnit());
     return result;
 }
 
@@ -342,33 +345,71 @@ void Potential::setAzimuth(const Azimuth& angle) {
 }
 
 Signal Potential::getDifference() const {
+    return Potential::getDivergence();
+}
+
+Signal Potential::getDivergence() const {
 	Potential self = *this;
     Signal result(self.getOrientation(), (self.getHigh() - self.getLow()),
 		self.getScaling(), self.getUnit());
     return result;
 }
 
-Signal Potential::getDivergence() const {
-    return Potential::getDifference();
-}
-
 Signal Potential::getRelative(const Distance& location, const float angle) const {
     Potential self = *this; Signal distribution = self.getDivergence();
-    Signal coefficient = (origin.getRelative(location, angle) * distribution.getMagnitude());
-    Signal result(coefficient.getOrientation(), coefficient.getMagnitude(),
-		(coefficient.getScaling() + distribution.getScaling()), self.getUnit());
-	result.adjustScaling();
+    shp::Quantity coefficient = self.origin.getRelative(location, angle);
+    Signal signal = distribution.getSquareDivergence(coefficient); signal.adjustScaling();
+    Signal result(distribution.getOrientation(), signal.getMagnitude(),
+        (distribution.getScaling() + signal.getScaling()), self.getUnit());
     return result;
 }
 
-Signal Potential::getPolarComponent(const Distance& location) const {
+Signal Potential::getRelativeX(const Distance& location, const float angle) const {
+    Potential self = *this; Signal distribution = self.getDivergence();
+    shp::Quantity coefficient = self.origin.getRelativeX(location, angle);
+    Signal signal = distribution.getSquareDivergence(coefficient); signal.adjustScaling();
+    Signal result(distribution.getOrientation(), signal.getMagnitude(),
+		(distribution.getScaling() + signal.getScaling()), self.getUnit());
+    return result;
+}
+
+Signal Potential::getRelativeY(const Distance& location, const float angle) const {
+    Potential self = *this; Signal distribution = self.getDivergence();
+    shp::Quantity coefficient = self.origin.getRelativeY(location, angle);
+    Signal signal = distribution.getSquareDivergence(coefficient); signal.adjustScaling();
+    Signal result(distribution.getOrientation(), signal.getMagnitude(),
+		(distribution.getScaling() + signal.getScaling()), self.getUnit());
+    return result;
+}
+
+Signal Potential::getPolarRComponent(const Distance& location) const {
     Potential self = *this;
     return getRelative(location, self.origin.getPolar().toRadians());
 }
 
-Signal Potential::getAzimuthComponent(const Distance& location) const {
+Signal Potential::getPolarXComponent(const Distance& location) const {
+    Potential self = *this;
+    return getRelativeX(location, self.origin.getPolar().toRadians());
+}
+
+Signal Potential::getPolarZComponent(const Distance& location) const {
+    Potential self = *this;
+    return getRelativeY(location, self.origin.getPolar().toRadians());
+}
+
+Signal Potential::getAzimuthRComponent(const Distance& location) const {
 	Potential self = *this;
     return getRelative(location, self.origin.getAzimuth().toRadians());
+}
+
+Signal Potential::getAzimuthXComponent(const Distance& location) const {
+	Potential self = *this;
+    return getRelativeX(location, self.origin.getAzimuth().toRadians());
+}
+
+Signal Potential::getAzimuthYComponent(const Distance& location) const {
+	Potential self = *this;
+    return getRelativeY(location, self.origin.getAzimuth().toRadians());
 }
 
 Signal Potential::copy() const {
@@ -387,11 +428,12 @@ void Potential::clear() {
 
 std::string Potential::print() {
     std::stringstream result;
-    result << origin.print() << ",‖";
+    result << "‖";
     result << getHigh() << "~";
     result << getLow() << "ₑ";
     result << getScaling();
-    result << getUnit().print();
+    result << getUnit().print() << ",";
+    result << origin.print();
 	return result.str();
 }
 

@@ -238,6 +238,30 @@ Signal Signal::getRotation(const short int degree) const {
     return Signal(phase, self.getMagnitude(), self.getScaling(), self.getUnit());
 }
 
+Signal Signal::getLinearAmplified(const Quantity& peer) const {
+    Quantity self = *this, other = peer;
+    Quantity field = (self * other); field.adjustScaling();
+    return Signal(this->orientation, field.getMagnitude(), field.getScaling(), self.getUnit());
+}
+
+Signal Signal::getSquareAmplified(const Quantity& peer) const {
+    Quantity self = *this, other = peer;
+    Quantity field = (self * other.getSquare()); field.adjustScaling();
+    return Signal(this->orientation, field.getMagnitude(), field.getScaling(), self.getUnit());
+}
+
+Signal Signal::getLinearDivergence(const Quantity& peer) const {
+    Quantity self = *this, other = peer;
+    Quantity field = (self / other); field.adjustScaling();
+    return Signal(this->orientation, field.getMagnitude(), field.getScaling(), self.getUnit());
+}
+
+Signal Signal::getSquareDivergence(const Quantity& peer) const {
+    Quantity self = *this, other = peer;
+    Quantity field = (self / other.getSquare()); field.adjustScaling();
+    return Signal(this->orientation, field.getMagnitude(), field.getScaling(), self.getUnit());
+}
+
 Signal Signal::getDotProduct(const Signal& peer) const {
     Quantity self = *this, other = peer;
     Quantity product = (self * other); product.adjustScaling();

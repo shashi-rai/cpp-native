@@ -40,6 +40,7 @@ public:
     Potential();
     Potential(const Azimuth& phase);
     Potential(const Angular& origin);
+    Potential(const Azimuth& phase, const Angular& origin);
     Potential(const float high);
     Potential(const float high, const Angular& origin);
     Potential(const Azimuth& phase, const float high, const Angular& origin);
@@ -112,8 +113,14 @@ public:
     Signal getDifference() const;
     Signal getDivergence() const;
     Signal getRelative(const Distance& location, const float angle) const;
-    Signal getPolarComponent(const Distance& location) const;
-    Signal getAzimuthComponent(const Distance& location) const;
+    Signal getRelativeX(const Distance& location, const float angle) const;
+    Signal getRelativeY(const Distance& location, const float angle) const;
+    Signal getPolarRComponent(const Distance& location) const;
+    Signal getPolarXComponent(const Distance& location) const;
+    Signal getPolarZComponent(const Distance& location) const;
+    Signal getAzimuthRComponent(const Distance& location) const;
+    Signal getAzimuthXComponent(const Distance& location) const;
+    Signal getAzimuthYComponent(const Distance& location) const;
     virtual Signal copy() const;
     virtual void clear();
     virtual std::string print();
