@@ -227,7 +227,7 @@ void Direction::clear() {
     return;
 }
 
-std::string Direction::print() {
+std::string Direction::print() const {
     std::stringstream result;
     result << "[";
     result << degrees << ",";
@@ -236,7 +236,7 @@ std::string Direction::print() {
 	return result.str();
 }
 
-std::string Direction::printEuler() {
+std::string Direction::printEuler() const {
     std::stringstream result;
     std::complex<float> phase = getPhase();
     result << ":";

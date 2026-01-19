@@ -212,7 +212,7 @@ void Unit::clear() {
     return;
 }
 
-std::string Unit::print() {
+std::string Unit::print() const {
     std::stringstream result;
     result << name;
 	return result.str();

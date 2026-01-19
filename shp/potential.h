@@ -21,9 +21,6 @@
 #ifndef SHP_POTENTIAL_H
 #define SHP_POTENTIAL_H
 
-#include <cmath>
-#include <sstream>
-#include <vector>
 #include "angular.h"
 #include "signal.h"
 
@@ -98,6 +95,14 @@ public:
     void setOrigin(const Angular& position) { this->origin = position; }
 
     // Additional methods
+    Signal getLinearDisplacement(const Potential& peer,
+        const Distance& separation, const Distance& position) const;
+    Signal getAngularDisplacement(const Potential& peer,
+        const Distance& separation, const Distance& position) const;
+    Signal getLinearDisplacement(const Potential& peerX, const Potential& peerY,
+        const Distance& separationX, const Distance& separationY) const;
+    Signal getAngularDisplacement(const Potential& peerX, const Potential& peerY,
+        const Distance& separationX, const Distance& separationY) const;
     float getHigh() const;
     void setHigh(const float value);
     void setRange(const float high, const float low);
@@ -123,7 +128,7 @@ public:
     Signal getAzimuthYComponent(const Distance& location) const;
     virtual Signal copy() const;
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 };
 
 typedef std::vector<Potential > PotentialArray;

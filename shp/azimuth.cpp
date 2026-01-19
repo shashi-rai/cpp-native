@@ -134,7 +134,7 @@ void Azimuth::clear() {
     return;
 }
 
-std::string Azimuth::print() {
+std::string Azimuth::print() const {
     std::stringstream result;
     result << "𝜙";
     result << Direction::print() << "δ";
@@ -142,7 +142,7 @@ std::string Azimuth::print() {
 	return result.str();
 }
 
-std::string Azimuth::printEuler() {
+std::string Azimuth::printEuler() const {
     std::stringstream result;
     result << "𝜙";
     result << Direction::printEuler() << "δ";

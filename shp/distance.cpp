@@ -277,7 +277,7 @@ void Distance::clear() {
     return;
 }
 
-std::string Distance::print() {
+std::string Distance::print() const {
     std::stringstream result;
     result << Quantity::print() << "δ";
     result << change.print();

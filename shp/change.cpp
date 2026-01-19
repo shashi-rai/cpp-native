@@ -207,7 +207,7 @@ void Change::clear() {
     return;
 }
 
-std::string Change::print() {
+std::string Change::print() const {
     std::stringstream result;
     result << "T:";
     result << dynamical.print() << ",U:";

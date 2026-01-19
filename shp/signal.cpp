@@ -373,6 +373,18 @@ Signal Signal::getVectorAbsolute() const {
     return Signal(std::imag(result), std::abs(result), self.getScaling(), self.getUnit());
 }
 
+Signal Signal::getScalarNegative() const {
+    Quantity self = *this; Quantity negative = self.getNegative();
+    std::complex<float> result = Quantity::getComplex(negative.getMagnitude(), this->orientation);
+    return Signal(std::imag(result), std::real(result), negative.getScaling(), negative.getUnit());
+}
+
+Signal Signal::getVectorNegative() const {
+    Signal self = *this;
+    std::complex<float> result = Quantity::getComplex(Quantity::getMagnitude(), -self.orientation);
+    return Signal(std::imag(result), -std::real(result), self.getScaling(), self.getUnit());
+}
+
 Signal Signal::getScalarInverse() const {
     Quantity self = *this; Quantity inverse = self.getInverse();
     std::complex<float> result = Quantity::getComplex(inverse.getMagnitude(), this->orientation);
@@ -467,6 +479,16 @@ Signal Signal::getDotProductCubeRoot() const {
     return result;
 }
 
+Signal Signal::getScalarRemainder(const float coefficient) const {
+    Quantity self = *this, remainder = self.getRemainder(coefficient);
+    return Signal(this->orientation, remainder.getMagnitude(), remainder.getScaling(), self.getUnit());
+}
+
+Signal Signal::getScalarLeftOver(const float coefficient) const {
+    Quantity self = *this, leftover = self.getLeftOver(coefficient);
+    return Signal(this->orientation, leftover.getMagnitude(), leftover.getScaling(), self.getUnit());
+}
+
 bool Signal::isConvergent() const {
     return Quantity::isConvergent();
 }
@@ -507,7 +529,7 @@ void Signal::clear() {
     return;
 }
 
-std::string Signal::print() {
+std::string Signal::print() const {
     std::stringstream result;
     result << "∿";
     result << Quantity::print() << ",φ";

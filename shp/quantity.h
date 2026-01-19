@@ -23,8 +23,6 @@
 
 #include <cmath>
 #include <complex>
-#include <sstream>
-#include <vector>
 #include "unit.h"
 
 namespace shp {
@@ -74,6 +72,7 @@ public:
     void setUnit(const std::string name);
     double getZeroScale() const;            // convert value assuming scaling is zero
     Quantity getAbsolute() const;
+    Quantity getNegative() const;
     Quantity getInverse() const;
     Quantity getPercent() const;
     Quantity getSquare() const;
@@ -83,6 +82,8 @@ public:
     Quantity getMultiple(const float coefficient) const;
     Quantity getFraction(const float coefficient) const;
     Quantity getDivision(const float coefficient) const;
+    Quantity getRemainder(const float coefficient) const;
+    Quantity getLeftOver(const float coefficient) const;
     bool isConvergent() const;
     bool isDivergent() const;
     bool checkNonZero() const;
@@ -92,7 +93,7 @@ public:
     void adjustScaling();
     Quantity copy() const;
     void clear();
-    std::string print();
+    std::string print() const;
     float getCosComponent(const float phase) const;
     float getSinComponent(const float phase) const;
 protected:

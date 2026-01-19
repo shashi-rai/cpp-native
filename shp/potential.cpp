@@ -286,10 +286,51 @@ Signal Potential::operator()(const Potential& peer,
     return result;
 }
 
+Signal Potential::getLinearDisplacement(const Potential& peer,
+        const Distance& separation, const Distance& position) const {
+    Potential self = *this; shp::Signal distribution = self.getDivergence();
+    shp::Quantity coefficient = self.origin(peer.origin, separation, position);
+    Signal signal = distribution.getSquareDivergence(coefficient); signal.adjustScaling();
+    Signal result(distribution.getOrientation(), signal.getMagnitude(),
+		(distribution.getScaling() + signal.getScaling()), self.getUnit());
+    return result;
+}
+
+Signal Potential::getAngularDisplacement(const Potential& peer,
+        const Distance& separation, const Distance& position) const {
+    Potential self = *this; shp::Signal distribution = self.getDivergence();
+    shp::Quantity fraction = (position.getTotal() / separation.getTotal());
+    shp::Quantity coefficient = peer.origin(self.origin, separation, position) * fraction;
+    Signal signal = distribution.getSquareDivergence(coefficient); signal.adjustScaling();
+    Signal result(distribution.getOrientation(), signal.getMagnitude(),
+		(distribution.getScaling() + signal.getScaling()), self.getUnit());
+    return result;
+}
+
 Signal Potential::operator()(const Potential& peerX, const Potential& peerY,
         const Distance& separationX, const Distance& separationY) const {
 	Potential self = *this; shp::Signal distribution = self.getDivergence();
-    shp::Quantity coefficient = self.origin(peerX.getOrigin(),  peerY.getOrigin(), separationX, separationY);
+    shp::Quantity coefficient = self.origin(peerX.getOrigin(), peerY.getOrigin(), separationX, separationY);
+    Signal signal = distribution.getSquareAmplified(coefficient); signal.adjustScaling();
+    Signal result(distribution.getOrientation(), signal.getMagnitude(),
+		(distribution.getScaling() + signal.getScaling()), self.getUnit());
+    return result;
+}
+
+Signal Potential::getLinearDisplacement(const Potential& peerX, const Potential& peerY,
+        const Distance& separationX, const Distance& separationY) const {
+	Potential self = *this; shp::Signal distribution = self.getDivergence();
+    shp::Quantity coefficient = self.origin(peerX.getOrigin(), peerY.getOrigin(), separationX, separationY);
+    Signal signal = distribution.getSquareDivergence(coefficient); signal.adjustScaling();
+    Signal result(distribution.getOrientation(), signal.getMagnitude(),
+		(distribution.getScaling() + signal.getScaling()), self.getUnit());
+    return result;
+}
+
+Signal Potential::getAngularDisplacement(const Potential& peerX, const Potential& peerY,
+        const Distance& separationX, const Distance& separationY) const {
+	Potential self = *this; shp::Signal distribution = self.getDivergence();
+    shp::Quantity coefficient = self.origin(peerX.getOrigin(), peerY.getOrigin(), separationX, separationY);
     Signal signal = distribution.getSquareDivergence(coefficient); signal.adjustScaling();
     Signal result(distribution.getOrientation(), signal.getMagnitude(),
 		(distribution.getScaling() + signal.getScaling()), self.getUnit());
@@ -389,12 +430,12 @@ Signal Potential::getPolarRComponent(const Distance& location) const {
 
 Signal Potential::getPolarXComponent(const Distance& location) const {
     Potential self = *this;
-    return getRelativeX(location, self.origin.getPolar().toRadians());
+    return getRelativeX(location, self.origin.getPolar().getCosine());
 }
 
 Signal Potential::getPolarZComponent(const Distance& location) const {
     Potential self = *this;
-    return getRelativeY(location, self.origin.getPolar().toRadians());
+    return getRelativeY(location, self.origin.getPolar().getSine());
 }
 
 Signal Potential::getAzimuthRComponent(const Distance& location) const {
@@ -404,12 +445,12 @@ Signal Potential::getAzimuthRComponent(const Distance& location) const {
 
 Signal Potential::getAzimuthXComponent(const Distance& location) const {
 	Potential self = *this;
-    return getRelativeX(location, self.origin.getAzimuth().toRadians());
+    return getRelativeX(location, self.origin.getAzimuth().getCosine());
 }
 
 Signal Potential::getAzimuthYComponent(const Distance& location) const {
 	Potential self = *this;
-    return getRelativeY(location, self.origin.getAzimuth().toRadians());
+    return getRelativeY(location, self.origin.getAzimuth().getSine());
 }
 
 Signal Potential::copy() const {
@@ -426,7 +467,7 @@ void Potential::clear() {
     return;
 }
 
-std::string Potential::print() {
+std::string Potential::print() const {
     std::stringstream result;
     result << "‖";
     result << getHigh() << "~";

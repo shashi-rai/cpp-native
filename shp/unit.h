@@ -57,7 +57,7 @@ public:
     std::string getCubeRoot() const;
     virtual Unit copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 
 public:
     static const std::string getPrefixName(short int index);

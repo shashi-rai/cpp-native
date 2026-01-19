@@ -21,9 +21,6 @@
 #ifndef SHP_ANGULAR_H
 #define SHP_ANGULAR_H
 
-#include <complex>
-#include <string>
-#include <vector>
 #include "azimuth.h"
 #include "distance.h"
 #include "polar.h"
@@ -139,8 +136,8 @@ public:
     Quantity getAzimuthYComponent(const Distance& position) const;
     virtual Distance copy() const;
     virtual void clear();
-    virtual std::string print();
-    virtual std::string printEuler();
+    virtual std::string print() const;
+    virtual std::string printEuler() const;
 public:
     static const float DEFAULT_RADIUS;
     static const float DEFAULT_POLARITY;

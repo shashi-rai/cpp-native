@@ -467,7 +467,7 @@ void Angular::clear() {
     return;
 }
 
-std::string Angular::print() {
+std::string Angular::print() const {
     std::stringstream result;
     result << "{";
     result << Distance::print() << ",";
@@ -476,7 +476,7 @@ std::string Angular::print() {
 	return result.str();
 }
 
-std::string Angular::printEuler() {
+std::string Angular::printEuler() const {
     std::stringstream result;
     result << "{";
     result << Distance::print() << ",";

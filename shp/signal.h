@@ -21,9 +21,6 @@
 #ifndef SHP_SIGNAL_H
 #define SHP_SIGNAL_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "azimuth.h"
 #include "quantity.h"
 
@@ -119,6 +116,8 @@ public:
     void setUnit(const Unit& object);
     Signal getScalarAbsolute() const;
     Signal getVectorAbsolute() const;
+    Signal getScalarNegative() const;
+    Signal getVectorNegative() const;
     Signal getScalarInverse() const;
     Signal getVectorInverse() const;
     Signal getScalarPercent() const;
@@ -133,6 +132,8 @@ public:
     Signal getCrossProductCube() const;
     Signal getCrossFractionCube() const;
     Signal getDotProductCubeRoot() const;
+    Signal getScalarRemainder(const float coefficient) const;
+    Signal getScalarLeftOver(const float coefficient) const;
     bool isConvergent() const;
     bool isDivergent() const;
     bool checkNonZero() const;
@@ -142,7 +143,7 @@ public:
     void adjustScaling();
     virtual Signal copy() const;
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
     float getCosComponent(const float phase) const;
     float getSinComponent(const float phase) const;
 protected:

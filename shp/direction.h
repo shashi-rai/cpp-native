@@ -85,8 +85,8 @@ public:
     Direction getDivision(const float coefficient) const;
     virtual Direction copy() const;
     virtual void clear();
-    virtual std::string print();
-    virtual std::string printEuler();
+    virtual std::string print() const;
+    virtual std::string printEuler() const;
 
 private:
     short int getIndexDegrees(const short int value) const;

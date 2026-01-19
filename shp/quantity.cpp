@@ -157,6 +157,11 @@ Quantity Quantity::getAbsolute() const {
     return fresh;
 }
 
+Quantity Quantity::getNegative() const {
+    Quantity fresh(-magnitude, scaling, unit.getModulus());
+    return fresh;
+}
+
 Quantity Quantity::getInverse() const {
     Quantity fresh(magnitude != DEFAULT_VALUE
         ? (1 / magnitude) : DEFAULT_VALUE, -scaling, unit.getInverse());
@@ -229,6 +234,24 @@ Quantity Quantity::getDivision(const float coefficient) const {
     return result;
 }
 
+Quantity Quantity::getRemainder(const float coefficient) const {
+    Quantity self = *this; float mantissa = Quantity::DEFAULT_VALUE;
+    if (coefficient != Quantity::DEFAULT_VALUE) {
+        mantissa = fmod(self.magnitude, coefficient);
+    }
+    Quantity result(mantissa, self.scaling, self.getUnit());
+    return result;
+}
+
+Quantity Quantity::getLeftOver(const float coefficient) const {
+    Quantity self = *this; float mantissa = Quantity::DEFAULT_VALUE;
+    if (coefficient != Quantity::DEFAULT_VALUE) {
+        mantissa = (self.magnitude - coefficient);
+    }
+    Quantity result(mantissa, self.scaling, self.getUnit());
+    return result;
+}
+
 bool Quantity::isConvergent() const {
     return (magnitude > DEFAULT_VALUE);
 }
@@ -282,7 +305,7 @@ void Quantity::clear() {
     return;
 }
 
-std::string Quantity::print() {
+std::string Quantity::print() const {
     std::stringstream result;
     result << magnitude << "ₑ";
     result << scaling;

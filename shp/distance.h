@@ -91,7 +91,7 @@ public:
     Quantity getSquareY() const;
     virtual Distance copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 public:
     static const std::string UNIT;
 };

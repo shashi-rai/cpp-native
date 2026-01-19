@@ -21,9 +21,6 @@
 #ifndef SHP_AZIMUTH_H
 #define SHP_AZIMUTH_H
 
-#include <cmath>
-#include <sstream>
-#include <vector>
 #include "direction.h"
 
 namespace shp {
@@ -65,8 +62,8 @@ public:
     // Additional methods
     virtual Direction copy() const;
     virtual void clear();
-    virtual std::string print();
-    virtual std::string printEuler();
+    virtual std::string print() const;
+    virtual std::string printEuler() const;
 };
 
 typedef std::vector<Azimuth > AzimuthArray;
