@@ -195,10 +195,10 @@ Distance Distance::operator%(const Direction& rotation) const {
 }
 
 Distance Distance::operator()(const Distance& peer, const Direction& elevation) const {
-    Distance self = *this;
-    Quantity radial = (self.getRadial(elevation) + peer.getRadial(elevation));
-    Direction azimuth = self.getDeviation(elevation);
-    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(), azimuth);
+    Distance self = *this; Direction poi(Direction::DEFAULT_RADIANS);
+    Quantity radial = (self.getRadial(poi) + peer.getRadial(elevation));
+    Distance result(radial.getMagnitude(),
+        radial.getScaling(), self.getUnit(), self.getDeviation(elevation));
     result.adjustScaling();
     return result;
 }
@@ -208,29 +208,23 @@ Direction Distance::getDeviation(const Direction& elevation) const {
 }
 
 Distance Distance::getFactorX(const Distance& peer, const Direction& elevation) const {
-    Distance self = *this;
-    Quantity radial = (self.getRadialX(elevation) + peer.getRadialX(elevation));
-    Direction azimuth = self.getDeviation(elevation);
-    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(), azimuth);
-    result.adjustScaling();
+    Distance self = *this; Quantity component = self.getDiffusionX(peer, elevation);
+    Distance result(component.getMagnitude(),
+        component.getScaling(), self.getUnit(), self.getDeviation(elevation));
     return result;
 }
 
 Distance Distance::getFactorY(const Distance& peer, const Direction& elevation) const {
-    Distance self = *this;
-    Quantity radial = (self.getRadialY(elevation) + peer.getRadialY(elevation));
-    Direction azimuth = self.getDeviation(elevation);
-    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(), azimuth);
-    result.adjustScaling();
+    Distance self = *this; Quantity component = self.getDiffusionY(peer, elevation);
+    Distance result(component.getMagnitude(),
+        component.getScaling(), self.getUnit(), self.getDeviation(elevation));
     return result;
 }
 
 Distance Distance::getFactorZ(const Distance& peer, const Direction& elevation) const {
-    Distance self = *this;
-    Quantity radial = (self.getRadialZ(elevation) + peer.getRadialZ(elevation));
-    Direction azimuth = self.getDeviation(elevation);
-    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(), azimuth);
-    result.adjustScaling();
+    Distance self = *this; Quantity component = self.getDiffusionZ(peer, elevation);
+    Distance result(component.getMagnitude(),
+        component.getScaling(), self.getUnit(), self.getDeviation(elevation));
     return result;
 }
 
@@ -241,52 +235,44 @@ Quantity Distance::getTotal() const {
 
 Quantity Distance::getRadial(const Direction& elevation) const {
     Distance self = *this;
-    Quantity diagonal = self.getSquareX(elevation) + self.getSquareY(elevation) + self.getSquareZ(elevation);
-    Quantity radial = diagonal.getSquareRoot();
-    Quantity result(radial.getMagnitude(), radial.getScaling(), self.getUnit());
+    Quantity sumtotal = self.getSquareX(change) + self.getSquareY(change) + self.getSquareZ(elevation);
+    Quantity diagonal = sumtotal.getSquareRoot();
+    Quantity result(diagonal.getMagnitude(),
+        diagonal.getScaling(), self.getUnit()); result.adjustScaling();
     return result;
 }
 
 Quantity Distance::getRadialX(const Direction& elevation) const {
-    Distance self = *this; Quantity radial = self.getRadial(elevation);
-    float length = radial.getCosComponent(change.toRadians());
-    return Quantity(length, radial.getScaling(), radial.getUnit());
+    Distance self = *this; Quantity component = self.getDiffusionX(0, elevation);
+    Distance result(component.getMagnitude(),
+        component.getScaling(), self.getUnit(), self.getDeviation(elevation));
+    return result;
 }
 
 Quantity Distance::getRadialY(const Direction& elevation) const {
-    Distance self = *this; Quantity radial = self.getRadial(elevation);
-    float length = radial.getSinComponent(change.toRadians());
-    return Quantity(length, radial.getScaling(), radial.getUnit());
+    Distance self = *this; Quantity component = self.getDiffusionY(0, elevation);
+    Distance result(component.getMagnitude(),
+        component.getScaling(), self.getUnit(), self.getDeviation(elevation));
+    return result;
 }
 
 Quantity Distance::getRadialZ(const Direction& elevation) const {
-    Distance self = *this; Quantity radial = self.getRadial(elevation);
-    float length = radial.getSinComponent(elevation.toRadians());
-    return Quantity(length, radial.getScaling(), radial.getUnit());
+    Distance self = *this; Quantity component = self.getDiffusionZ(0, elevation);
+    Distance result(component.getMagnitude(),
+        component.getScaling(), self.getUnit(), self.getDeviation(elevation));
+    return result;
 }
 
 Quantity Distance::getSquareX(const Direction& elevation) const {
-    Distance self = *this; float azimuth = change.toRadians();
-    float length = (self.getCosComponent(azimuth) * self.getCosComponent(azimuth));
-    short int scaling = (self.getScaling() + self.getScaling());
-    Quantity result(length, scaling, self.getUnit());
-    return result;
+    return getRadialX(elevation).getSquare();
 }
 
 Quantity Distance::getSquareY(const Direction& elevation) const {
-    Distance self = *this; float azimuth = change.toRadians();
-    float length = (self.getSinComponent(azimuth) * self.getSinComponent(azimuth));
-    short int scaling = (self.getScaling() + self.getScaling());
-    Quantity result(length, scaling, self.getUnit());
-    return result;
+    return getRadialY(elevation).getSquare();
 }
 
 Quantity Distance::getSquareZ(const Direction& elevation) const {
-    Distance self = *this; float polar = elevation.toRadians();
-    float length = (self.getSinComponent(polar) * self.getSinComponent(polar));
-    short int scaling = (self.getScaling() + self.getScaling());
-    Quantity result(length, scaling, self.getUnit());
-    return result;
+    return getRadialZ(elevation).getSquare();
 }
 
 Distance Distance::copy() {
@@ -313,6 +299,37 @@ std::string Distance::printRadians() const {
     result << Quantity::print() << "δ";
     result << change.printRadians();
 	return result.str();
+}
+
+float Distance::getDiffusion(const Distance& peer, const Direction& elevation) const {
+    float y_component = peer.getSinComponent(peer.change.toRadians());
+    float z_component = peer.getCosComponent(elevation.toRadians());
+    float diffusion = std::sqrt((y_component * y_component) + (z_component * z_component));
+    return diffusion;
+}
+
+Quantity Distance::getDiffusionX(const Distance& peer, const Direction& elevation) const {
+    Quantity self = *this;
+    Quantity diffusion(getDiffusion(peer, elevation), self.getScaling(), self.getUnit());
+    Quantity result = (self + diffusion.getCosComponent(change.toRadians()));
+    result.adjustScaling();
+    return result;
+}
+
+Quantity Distance::getDiffusionY(const Distance& peer, const Direction& elevation) const {
+    Quantity self = *this;
+    Quantity diffusion(getDiffusion(peer, elevation), peer.getScaling(), peer.getUnit());
+    Quantity result = self.getFraction(diffusion.getSinComponent(peer.change.toRadians()));
+    result.adjustScaling();
+    return result;
+}
+
+Quantity Distance::getDiffusionZ(const Distance& peer, const Direction& elevation) const {
+    Distance self = *this;
+    Quantity diffusion(getDiffusion(peer, elevation), peer.getScaling(), peer.getUnit());
+    Quantity result = self.getFraction(diffusion.getSinComponent(elevation.toRadians()));
+    result.adjustScaling();
+    return result;
 }
 
 } // namespace shp

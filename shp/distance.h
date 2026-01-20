@@ -93,6 +93,11 @@ public:
     virtual void clear();
     virtual std::string print() const;
     virtual std::string printRadians() const;
+private:
+    float getDiffusion(const Distance& peer, const Direction& elevation) const;
+    Quantity getDiffusionX(const Distance& peer, const Direction& elevation) const;
+    Quantity getDiffusionY(const Distance& peer, const Direction& elevation) const;
+    Quantity getDiffusionZ(const Distance& peer, const Direction& elevation) const;
 public:
     static const std::string UNIT;
 };
