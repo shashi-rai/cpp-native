@@ -497,10 +497,17 @@ void Temporal::clear() {
     return;
 }
 
-std::string Temporal::print() {
+std::string Temporal::print() const {
     std::stringstream result;
     result << Signal::print() << "δ";
     result << modulation.print();
+	return result.str();
+}
+
+std::string Temporal::printRadians() const {
+    std::stringstream result;
+    result << Signal::printRadians() << "δ";
+    result << modulation.printRadians();
 	return result.str();
 }
 

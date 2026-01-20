@@ -511,11 +511,25 @@ void Phase::clear() {
     return;
 }
 
-std::string Phase::print() {
+std::string Phase::print() const {
     std::stringstream result;
     result << "[Φ:";
 	result << Point::print() << ",𝜃:";
-    result << polarization << ",t:";
+    result << Polar(polarization).print() << ",t:";
+    if (timestamp != DEFAULT_TIME) {
+        result << std::put_time(std::localtime(&timestamp), "[%Y-%m-%d %H:%M:%S]");
+    }
+    result << "]:";
+	return result.str();
+}
+
+std::string Phase::printRadians() const {
+    std::stringstream result;
+    result << "[Φ:";
+	result << Point::printRadians() << ",𝜃:";
+    result << std::setfill('0') <<  std::setprecision(8)
+        << polarization << shp::Unit::getDerivedSymbol(shp::Unit::PLANE_ANGLE);
+	result << ",t:";
     if (timestamp != DEFAULT_TIME) {
         result << std::put_time(std::localtime(&timestamp), "[%Y-%m-%d %H:%M:%S]");
     }

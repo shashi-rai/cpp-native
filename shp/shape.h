@@ -54,7 +54,7 @@ public:
     // Additional methods
     bool isOwned() const;
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 };
 
 typedef std::vector<Shape > ShapeArray;

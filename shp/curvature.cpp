@@ -195,7 +195,7 @@ int Curvature::getChangeCount() const {
     return deformations.size();
 }
 
-Phase Curvature::get(int index) const {
+Phase Curvature::get(const int index) const {
     Phase result;
     if (index < 0) {
         return result;
@@ -206,7 +206,7 @@ Phase Curvature::get(int index) const {
     return deformations[index];
 }
 
-void Curvature::set(int index, const Phase& object) {
+void Curvature::set(const int index, const Phase& object) {
     if (index < 0) {
         return;
     }
@@ -249,11 +249,22 @@ void Curvature::clear() {
     return;
 }
 
-std::string Curvature::print() {
+std::string Curvature::print() const {
     std::stringstream result;
     result << "[κ:";
 	result << Point::print() << ",𝜃:";
-    result << polarization << ",sz:";
+    result << Polar(polarization).print() << ",sz:";
+	result << deformations.size() << "]";
+	return result.str();
+}
+
+std::string Curvature::printRadians() const {
+    std::stringstream result;
+    result << "[κ:";
+	result << Point::printRadians() << ",𝜃:";
+    result << std::setfill('0') <<  std::setprecision(8)
+        << polarization << shp::Unit::getDerivedSymbol(shp::Unit::PLANE_ANGLE);
+	result << ",sz:";
 	result << deformations.size() << "]";
 	return result.str();
 }

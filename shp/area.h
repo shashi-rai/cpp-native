@@ -21,11 +21,6 @@
 #ifndef SHP_AREA_H
 #define SHP_AREA_H
 
-#include <cmath>
-#include <complex>
-#include <sstream>
-#include <string>
-#include <vector>
 #include "signal.h"
 
 namespace shp {
@@ -98,7 +93,8 @@ public:
     void setBreadthUnit(const Unit& object);
     virtual Area copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printRadians() const;
     Signal getCosComponent(const float phase) const;
     Signal getSinComponent(const float phase) const;
 public:

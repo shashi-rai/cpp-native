@@ -32,22 +32,37 @@ Frame::Frame(const float gradient)
 
 }
 
-Frame::Frame(std::string name)
+Frame::Frame(const Azimuth& gradient)
+        : Point(gradient), planes() {
+
+}
+
+Frame::Frame(const std::string name)
         : Point(name), planes() {
 
 }
 
-Frame::Frame(std::string name, const float gradient)
+Frame::Frame(const std::string name, const float gradient)
         : Point(name, gradient), planes() {
 
 }
 
-Frame::Frame(std::string name, const PlanarArray& planes)
+Frame::Frame(const std::string name, const Azimuth& gradient)
+        : Point(name, gradient), planes() {
+
+}
+
+Frame::Frame(const std::string name, const PlanarArray& planes)
         : Point(name), planes(planes) {
 
 }
 
-Frame::Frame(std::string name, const PlanarArray& planes, const float gradient)
+Frame::Frame(const std::string name, const PlanarArray& planes, const float gradient)
+        : Point(name, gradient), planes(planes) {
+
+}
+
+Frame::Frame(const std::string name, const PlanarArray& planes, const Azimuth& gradient)
         : Point(name, gradient), planes(planes) {
 
 }
@@ -82,7 +97,7 @@ int Frame::getPlaneCount() const {
     return planes.size();
 }
 
-Planar Frame::get(int index) const {
+Planar Frame::get(const int index) const {
     Planar result;
     if (index < 0) {
         return result;
@@ -93,7 +108,7 @@ Planar Frame::get(int index) const {
     return planes[index];
 }
 
-void Frame::set(int index, const Planar& object) {
+void Frame::set(const int index, const Planar& object) {
     if (index < 0) {
         return;
     }
@@ -111,7 +126,8 @@ void Frame::set(int index, const Planar& object) {
 }
 
 Point Frame::copy() {
-    Frame fresh(getName(), planes, getGradient());
+    Point self = *this;
+    Frame fresh(self.getName(), this->planes, self.getGradient());
     return fresh;
 }
 
@@ -121,10 +137,18 @@ void Frame::clear() {
     return;
 }
 
-std::string Frame::print() {
+std::string Frame::print() const {
     std::stringstream result;
     result << "{fr";
 	result << Point::print() << ",sz:";
+	result << planes.size() << "}";
+	return result.str();
+}
+
+std::string Frame::printRadians() const {
+    std::stringstream result;
+    result << "{fr";
+	result << Point::printRadians() << ",sz:";
 	result << planes.size() << "}";
 	return result.str();
 }

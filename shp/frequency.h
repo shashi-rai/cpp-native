@@ -21,9 +21,6 @@
 #ifndef SHP_FREQUENCY_H
 #define SHP_FREQUENCY_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "signal.h"
 
 namespace shp {
@@ -156,7 +153,8 @@ public:
     virtual shp::Quantity getLifespan() const;
     virtual Signal copy() const;
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printRadians() const;
 };
 
 typedef std::vector<Frequency > FrequencyArray;

@@ -26,27 +26,42 @@ Cellular::Cellular() : Point(), shells() {
 
 }
 
-Cellular::Cellular(float gradient)
+Cellular::Cellular(const float gradient)
         : Point(gradient), shells() {
 
 }
 
-Cellular::Cellular(std::string name)
+Cellular::Cellular(const Azimuth& gradient)
+        : Point(gradient), shells() {
+
+}
+
+Cellular::Cellular(const std::string name)
         : Point(name), shells() {
 
 }
 
-Cellular::Cellular(std::string name, const float gradient)
+Cellular::Cellular(const std::string name, const float gradient)
         : Point(name, gradient), shells() {
 
 }
 
-Cellular::Cellular(std::string name, const ShellArray& shells)
+Cellular::Cellular(const std::string name, const Azimuth& gradient)
+        : Point(name, gradient), shells() {
+
+}
+
+Cellular::Cellular(const std::string name, const ShellArray& shells)
         : Point(name), shells(shells) {
 
 }
 
-Cellular::Cellular(std::string name, const ShellArray& shells, const float gradient)
+Cellular::Cellular(const std::string name, const ShellArray& shells, const float gradient)
+        : Point(name, gradient), shells(shells) {
+
+}
+
+Cellular::Cellular(const std::string name, const ShellArray& shells, const Azimuth& gradient)
         : Point(name, gradient), shells(shells) {
 
 }
@@ -81,7 +96,7 @@ int Cellular::getShellCount() const {
     return shells.size();
 }
 
-Shell Cellular::get(int index) const {
+Shell Cellular::get(const int index) const {
     Shell result;
     if (index < 0) {
         return result;
@@ -92,7 +107,7 @@ Shell Cellular::get(int index) const {
     return shells[index];
 }
 
-void Cellular::set(int index, const Shell& object) {
+void Cellular::set(const int index, const Shell& object) {
     if (index < 0) {
         return;
     }
@@ -110,7 +125,8 @@ void Cellular::set(int index, const Shell& object) {
 }
 
 Point Cellular::copy() {
-    Cellular fresh(getName(), shells, getGradient());
+    Point self = *this;
+    Cellular fresh(self.getName(), this->shells, self.getGradient());
     return fresh;
 }
 
@@ -120,10 +136,22 @@ void Cellular::clear() {
     return;
 }
 
-std::string Cellular::print() {
+std::string Cellular::print() const {
     std::stringstream result;
     result << "{ce";
 	result << Point::print() << ",sz:";
+	result << shells.size() << "}{";
+    for (int i = 0; i < shells.size(); i++) {
+        result << "\t" << shells[i].print() << std::endl;
+    }
+    result << "}";
+    return result.str();
+}
+
+std::string Cellular::printRadians() const {
+    std::stringstream result;
+    result << "{ce";
+	result << Point::printRadians() << ",sz:";
 	result << shells.size() << "}{";
     for (int i = 0; i < shells.size(); i++) {
         result << "\t" << shells[i].print() << std::endl;

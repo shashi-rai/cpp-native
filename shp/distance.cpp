@@ -194,33 +194,42 @@ Distance Distance::operator%(const Direction& rotation) const {
     return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(), orientation);
 }
 
-Distance Distance::operator()(const Distance& peer) const {
+Distance Distance::operator()(const Distance& peer, const Direction& elevation) const {
     Distance self = *this;
-    Quantity radial = (self.getRadial() + peer.getRadial());
-    Direction orientation = self.getDeviation(peer.getChange());
-    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(), orientation);
+    Quantity radial = (self.getRadial(elevation) + peer.getRadial(elevation));
+    Direction azimuth = self.getDeviation(elevation);
+    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(), azimuth);
     result.adjustScaling();
     return result;
 }
 
-Direction Distance::getDeviation(const Direction& peer) const {
+Direction Distance::getDeviation(const Direction& elevation) const {
     return Direction(change.getDegrees(), change.getMinutes(), change.getSeconds());
 }
 
-Distance Distance::getFactorX(const Distance& peer) const {
+Distance Distance::getFactorX(const Distance& peer, const Direction& elevation) const {
     Distance self = *this;
-    Quantity radial = (self.getRadialX() + peer.getRadialX());
-    Direction orientation = self.getDeviation(peer.getChange());
-    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(), orientation);
+    Quantity radial = (self.getRadialX(elevation) + peer.getRadialX(elevation));
+    Direction azimuth = self.getDeviation(elevation);
+    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(), azimuth);
     result.adjustScaling();
     return result;
 }
 
-Distance Distance::getFactorY(const Distance& peer) const {
+Distance Distance::getFactorY(const Distance& peer, const Direction& elevation) const {
     Distance self = *this;
-    Quantity radial = (self.getRadialY() + peer.getRadialY());
-    Direction orientation = self.getDeviation(peer.getChange());
-    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(), orientation);
+    Quantity radial = (self.getRadialY(elevation) + peer.getRadialY(elevation));
+    Direction azimuth = self.getDeviation(elevation);
+    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(), azimuth);
+    result.adjustScaling();
+    return result;
+}
+
+Distance Distance::getFactorZ(const Distance& peer, const Direction& elevation) const {
+    Distance self = *this;
+    Quantity radial = (self.getRadialZ(elevation) + peer.getRadialZ(elevation));
+    Direction azimuth = self.getDeviation(elevation);
+    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(), azimuth);
     result.adjustScaling();
     return result;
 }
@@ -230,36 +239,51 @@ Quantity Distance::getTotal() const {
     return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(), this->change);
 }
 
-Quantity Distance::getRadial() const {
+Quantity Distance::getRadial(const Direction& elevation) const {
     Distance self = *this;
-    Quantity radial = (self.getSquareX() + self.getSquareY()).getSquareRoot();
+    Quantity diagonal = self.getSquareX(elevation) + self.getSquareY(elevation) + self.getSquareZ(elevation);
+    Quantity radial = diagonal.getSquareRoot();
     Quantity result(radial.getMagnitude(), radial.getScaling(), self.getUnit());
     return result;
 }
 
-Quantity Distance::getRadialX() const {
-    Distance self = *this; Quantity radial = self.getRadial();
+Quantity Distance::getRadialX(const Direction& elevation) const {
+    Distance self = *this; Quantity radial = self.getRadial(elevation);
     float length = radial.getCosComponent(change.toRadians());
     return Quantity(length, radial.getScaling(), radial.getUnit());
 }
 
-Quantity Distance::getRadialY() const {
-    Distance self = *this; Quantity radial = self.getRadial();
+Quantity Distance::getRadialY(const Direction& elevation) const {
+    Distance self = *this; Quantity radial = self.getRadial(elevation);
     float length = radial.getSinComponent(change.toRadians());
     return Quantity(length, radial.getScaling(), radial.getUnit());
 }
 
-Quantity Distance::getSquareX() const {
-    Distance self = *this; float angle = change.toRadians();
-    float length = (self.getCosComponent(angle) * self.getCosComponent(angle));
+Quantity Distance::getRadialZ(const Direction& elevation) const {
+    Distance self = *this; Quantity radial = self.getRadial(elevation);
+    float length = radial.getSinComponent(elevation.toRadians());
+    return Quantity(length, radial.getScaling(), radial.getUnit());
+}
+
+Quantity Distance::getSquareX(const Direction& elevation) const {
+    Distance self = *this; float azimuth = change.toRadians();
+    float length = (self.getCosComponent(azimuth) * self.getCosComponent(azimuth));
     short int scaling = (self.getScaling() + self.getScaling());
     Quantity result(length, scaling, self.getUnit());
     return result;
 }
 
-Quantity Distance::getSquareY() const {
-    Distance self = *this; float angle = change.toRadians();
-    float length = (self.getSinComponent(angle) * self.getSinComponent(angle));
+Quantity Distance::getSquareY(const Direction& elevation) const {
+    Distance self = *this; float azimuth = change.toRadians();
+    float length = (self.getSinComponent(azimuth) * self.getSinComponent(azimuth));
+    short int scaling = (self.getScaling() + self.getScaling());
+    Quantity result(length, scaling, self.getUnit());
+    return result;
+}
+
+Quantity Distance::getSquareZ(const Direction& elevation) const {
+    Distance self = *this; float polar = elevation.toRadians();
+    float length = (self.getSinComponent(polar) * self.getSinComponent(polar));
     short int scaling = (self.getScaling() + self.getScaling());
     Quantity result(length, scaling, self.getUnit());
     return result;
@@ -281,6 +305,13 @@ std::string Distance::print() const {
     std::stringstream result;
     result << Quantity::print() << "δ";
     result << change.print();
+	return result.str();
+}
+
+std::string Distance::printRadians() const {
+    std::stringstream result;
+    result << Quantity::print() << "δ";
+    result << change.printRadians();
 	return result.str();
 }
 

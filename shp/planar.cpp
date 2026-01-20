@@ -32,22 +32,37 @@ Planar::Planar(const float gradient)
 
 }
 
-Planar::Planar(std::string name)
+Planar::Planar(const Azimuth& gradient)
+        : Point(gradient), lines() {
+
+}
+
+Planar::Planar(const std::string name)
         : Point(name), lines() {
 
 }
 
-Planar::Planar(std::string name, const float gradient)
+Planar::Planar(const std::string name, const float gradient)
         : Point(name, gradient), lines() {
 
 }
 
-Planar::Planar(std::string name, const LinearArray& lines)
+Planar::Planar(const std::string name, const Azimuth& gradient)
+        : Point(name, gradient), lines() {
+
+}
+
+Planar::Planar(const std::string name, const LinearArray& lines)
         : Point(name), lines(lines) {
 
 }
 
-Planar::Planar(std::string name, const LinearArray& lines, const float gradient)
+Planar::Planar(const std::string name, const LinearArray& lines, const float gradient)
+        : Point(name, gradient), lines(lines) {
+
+}
+
+Planar::Planar(const std::string name, const LinearArray& lines, const Azimuth& gradient)
         : Point(name, gradient), lines(lines) {
 
 }
@@ -82,7 +97,7 @@ int Planar::getLineCount() const {
     return lines.size();
 }
 
-Linear Planar::get(int index) const {
+Linear Planar::get(const int index) const {
     Linear result;
     if (index < 0) {
         return result;
@@ -93,7 +108,7 @@ Linear Planar::get(int index) const {
     return lines[index];
 }
 
-void Planar::set(int index, const Linear& object) {
+void Planar::set(const int index, const Linear& object) {
     if (index < 0) {
         return;
     }
@@ -121,7 +136,7 @@ void Planar::clear() {
     return;
 }
 
-std::string Planar::print() {
+std::string Planar::print() const {
     std::stringstream result;
     result << "{pl";
 	result << Point::print() << ",sz:";

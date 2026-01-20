@@ -21,10 +21,6 @@
 #ifndef SHP_VOLUME_H
 #define SHP_VOLUME_H
 
-#include <cmath>
-#include <sstream>
-#include <string>
-#include <vector>
 #include "area.h"
 
 namespace shp {
@@ -126,7 +122,7 @@ public:
     void setHeightUnit(const Unit& object);
     virtual Volume copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
     Signal getCosComponent(const float phase) const;
     Signal getSinComponent(const float phase) const;
 public:

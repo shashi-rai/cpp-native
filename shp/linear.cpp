@@ -32,22 +32,37 @@ Linear::Linear(const float gradient)
 
 }
 
-Linear::Linear(std::string name)
+Linear::Linear(const Azimuth& gradient)
+        : Point(gradient), points() {
+
+}
+
+Linear::Linear(const std::string name)
         : Point(name), points() {
 
 }
 
-Linear::Linear(std::string name, const float gradient)
+Linear::Linear(const std::string name, const float gradient)
         : Point(name, gradient), points() {
 
 }
 
-Linear::Linear(std::string name, const PointArray& objects)
+Linear::Linear(const std::string name, const Azimuth& gradient)
+        : Point(name, gradient), points() {
+
+}
+
+Linear::Linear(const std::string name, const PointArray& objects)
         : Point(name), points(objects) {
 
 }
 
-Linear::Linear(std::string name, const PointArray& objects, const float gradient)
+Linear::Linear(const std::string name, const PointArray& objects, const float gradient)
+        : Point(name, gradient), points(objects) {
+
+}
+
+Linear::Linear(const std::string name, const PointArray& objects, const Azimuth& gradient)
         : Point(name, gradient), points(objects) {
 
 }
@@ -82,7 +97,7 @@ int Linear::getPointCount() const {
     return points.size();
 }
 
-Point Linear::get(int index) const {
+Point Linear::get(const int index) const {
     Point result;
     if (index < 0) {
         return result;
@@ -93,7 +108,7 @@ Point Linear::get(int index) const {
     return points[index];
 }
 
-void Linear::set(int index, const Point& object) {
+void Linear::set(const int index, const Point& object) {
     if (index < 0) {
         return;
     }
@@ -111,7 +126,8 @@ void Linear::set(int index, const Point& object) {
 }
 
 Point Linear::copy() {
-    Linear fresh(getName(), points,getGradient());
+    Point self = *this;
+    Linear fresh(self.getName(), this->points, self.getGradient());
     return fresh;
 }
 
@@ -121,7 +137,7 @@ void Linear::clear() {
     return;
 }
 
-std::string Linear::print() {
+std::string Linear::print() const {
     std::stringstream result;
     result << "{li";
 	result << Point::print() << ",sz:";

@@ -21,9 +21,6 @@
 #ifndef SHP_POLYGON_H
 #define SHP_POLYGON_H
 
-#include <string>
-#include <vector>
-#include "point.h"
 #include "wave.h"
 
 namespace shp {
@@ -35,13 +32,18 @@ public:
     // Constructors
     Polygon();
     Polygon(const float gradient);
-    Polygon(std::string name);
-    Polygon(std::string name, const int limit);
-    Polygon(std::string name, const float gradient);
-    Polygon(std::string name, const float gradient, const int limit);
-    Polygon(std::string name, const WaveArray& waves);
-    Polygon(std::string name, const WaveArray& waves, const float gradient);
-    Polygon(std::string name, const WaveArray& waves, const float gradient, const int limit);
+    Polygon(const Azimuth& gradient);
+    Polygon(const std::string name);
+    Polygon(const std::string name, const int limit);
+    Polygon(const std::string name, const float gradient);
+    Polygon(const std::string name, const Azimuth& gradient);
+    Polygon(const std::string name, const float gradient, const int limit);
+    Polygon(const std::string name, const Azimuth& gradient, const int limit);
+    Polygon(const std::string name, const WaveArray& waves);
+    Polygon(const std::string name, const WaveArray& waves, const float gradient);
+    Polygon(const std::string name, const WaveArray& waves, const Azimuth& gradient);
+    Polygon(const std::string name, const WaveArray& waves, const float gradient, const int limit);
+    Polygon(const std::string name, const WaveArray& waves, const Azimuth& gradient, const int limit);
 
     // Destructors
     ~Polygon();
@@ -65,11 +67,11 @@ public:
 
     // Additional methods
     int getWaveCount() const;
-    Wave get(int index) const;
-    void set(int index, const Wave& object);
+    Wave get(const int index) const;
+    void set(const int index, const Wave& object);
     virtual Point copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 
 public:
     static const int DEFAULT_LIMIT;

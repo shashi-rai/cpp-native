@@ -360,67 +360,40 @@ shp::Signal Growth::getConvergence() const {
     return result;
 }
 
-shp::Signal Growth::getRelative(const shp::Distance& location, const float angle) const {
+shp::Signal Growth::getRelative(const shp::Distance& location) const {
     shp::Potential self = *this; shp::Signal distribution = self.getDivergence();
-    shp::Quantity coefficient = getClosure().getRelative(location, angle);
+    shp::Quantity coefficient = getClosure().getRelative(location);
     shp::Signal signal = distribution.getSquareAmplified(coefficient); signal.adjustScaling();
     shp::Signal result(distribution.getOrientation(), signal.getMagnitude(),
         (distribution.getScaling() + signal.getScaling()), self.getUnit());
     return result;
 }
 
-shp::Signal Growth::getRelativeX(const shp::Distance& location, const float angle) const {
+shp::Signal Growth::getRelativeX(const shp::Distance& location) const {
     shp::Potential self = *this; shp::Signal distribution = self.getDivergence();
-    shp::Quantity coefficient = getClosure().getRelativeX(location, angle);
+    shp::Quantity coefficient = getClosure().getRelativeX(location);
     shp::Signal signal = distribution.getSquareAmplified(coefficient); signal.adjustScaling();
     shp::Signal result(distribution.getOrientation(), signal.getMagnitude(),
 		(distribution.getScaling() + signal.getScaling()), self.getUnit());
     return result;
 }
 
-shp::Signal Growth::getRelativeY(const shp::Distance& location, const float angle) const {
+shp::Signal Growth::getRelativeY(const shp::Distance& location) const {
     shp::Potential self = *this; shp::Signal distribution = self.getDivergence();
-    shp::Quantity coefficient = getClosure().getRelativeY(location, angle);
+    shp::Quantity coefficient = getClosure().getRelativeY(location);
     shp::Signal signal = distribution.getSquareAmplified(coefficient); signal.adjustScaling();
     shp::Signal result(distribution.getOrientation(), signal.getMagnitude(),
 		(distribution.getScaling() + signal.getScaling()), self.getUnit());
     return result;
 }
 
-shp::Signal Growth::getPolarRComponent(const shp::Distance& location) const {
-    shp::Potential self = *this;
-	shp::Angular closure = self.getOrigin();
-    return self.getRelative(location, closure.getPolar().toRadians());
-}
-
-shp::Signal Growth::getPolarXComponent(const shp::Distance& location) const {
-    shp::Potential self = *this;
-	shp::Angular closure = self.getOrigin();
-    return self.getRelativeX(location, closure.getPolar().toRadians());
-}
-
-shp::Signal Growth::getPolarZComponent(const shp::Distance& location) const {
-    shp::Potential self = *this;
-	shp::Angular closure = self.getOrigin();
-    return self.getRelativeY(location, closure.getPolar().toRadians());
-}
-
-shp::Signal Growth::getAzimuthRComponent(const shp::Distance& location) const {
-    shp::Potential self = *this;
-	shp::Angular closure = self.getOrigin();
-    return self.getRelative(location, closure.getAzimuth().toRadians());
-}
-
-shp::Signal Growth::getAzimuthXComponent(const shp::Distance& location) const {
-    shp::Potential self = *this;
-	shp::Angular closure = self.getOrigin();
-    return self.getRelativeX(location, closure.getAzimuth().toRadians());
-}
-
-shp::Signal Growth::getAzimuthYComponent(const shp::Distance& location) const {
-    shp::Potential self = *this;
-	shp::Angular closure = self.getOrigin();
-    return self.getRelativeY(location, closure.getAzimuth().toRadians());
+shp::Signal Growth::getRelativeZ(const shp::Distance& location) const {
+    shp::Potential self = *this; shp::Signal distribution = self.getDivergence();
+    shp::Quantity coefficient = getClosure().getRelativeZ(location);
+    shp::Signal signal = distribution.getSquareAmplified(coefficient); signal.adjustScaling();
+    shp::Signal result(distribution.getOrientation(), signal.getMagnitude(),
+		(distribution.getScaling() + signal.getScaling()), self.getUnit());
+    return result;
 }
 
 shp::Signal Growth::copy() const {
@@ -434,10 +407,17 @@ void Growth::clear() {
     return;
 }
 
-std::string Growth::print() {
+std::string Growth::print() const {
     std::stringstream result;
 	result << "↑";
     result << shp::Potential::print();
+	return result.str();
+}
+
+std::string Growth::printRadians() const {
+    std::stringstream result;
+	result << "↑";
+    result << shp::Potential::printRadians();
 	return result.str();
 }
 

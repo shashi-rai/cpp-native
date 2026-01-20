@@ -21,9 +21,6 @@
 #ifndef SHP_DISTANCE_H
 #define SHP_DISTANCE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "direction.h"
 #include "quantity.h"
 
@@ -71,7 +68,7 @@ public:
     Distance operator%(const Direction& rotation) const;
 
     // Access operator
-    Distance operator()(const Distance& peer) const;
+    Distance operator()(const Distance& peer, const Direction& elevation) const;
 
     // Getters
     Direction getChange() const { return change; }
@@ -80,18 +77,22 @@ public:
     void setChange(const Direction& orientation) { this->change = orientation; }
 
     // Additional methods
-    Direction getDeviation(const Direction& peer) const;
-    Distance getFactorX(const Distance& peer) const;
-    Distance getFactorY(const Distance& peer) const;
+    Direction getDeviation(const Direction& elevation) const;
+    Distance getFactorX(const Distance& peer, const Direction& elevation) const;
+    Distance getFactorY(const Distance& peer, const Direction& elevation) const;
+    Distance getFactorZ(const Distance& peer, const Direction& elevation) const;
     Quantity getTotal() const;
-    Quantity getRadial() const;
-    Quantity getRadialX() const;
-    Quantity getRadialY() const;
-    Quantity getSquareX() const;
-    Quantity getSquareY() const;
+    Quantity getRadial(const Direction& elevation) const;
+    Quantity getRadialX(const Direction& elevation) const;
+    Quantity getRadialY(const Direction& elevation) const;
+    Quantity getRadialZ(const Direction& elevation) const;
+    Quantity getSquareX(const Direction& elevation) const;
+    Quantity getSquareY(const Direction& elevation) const;
+    Quantity getSquareZ(const Direction& elevation) const;
     virtual Distance copy();
     virtual void clear();
     virtual std::string print() const;
+    virtual std::string printRadians() const;
 public:
     static const std::string UNIT;
 };

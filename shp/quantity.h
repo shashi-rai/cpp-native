@@ -69,6 +69,8 @@ public:
 
     // Additional methods
     void setMagnitude(const float value, const short int scale);
+    void setMagnitude(const float value, const short int scale, const std::string unit);
+    void setMagnitude(const float value, const short int scale, const Unit& unit);
     void setUnit(const std::string name);
     double getZeroScale() const;            // convert value assuming scaling is zero
     Quantity getAbsolute() const;
@@ -94,6 +96,8 @@ public:
     Quantity copy() const;
     void clear();
     std::string print() const;
+    std::string printSuffixed() const;
+    std::string printPrefixed() const;
     float getCosComponent(const float phase) const;
     float getSinComponent(const float phase) const;
 protected:

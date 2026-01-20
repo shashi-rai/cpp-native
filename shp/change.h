@@ -21,9 +21,6 @@
 #ifndef SHP_CHANGE_H
 #define SHP_CHANGE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "signal.h"
 
 namespace shp {
@@ -92,6 +89,7 @@ public:
     virtual Change copy();
     virtual void clear();
     virtual std::string print() const;
+    virtual std::string printRadians() const;
 };
 
 typedef std::vector<Change > ChangeArray;

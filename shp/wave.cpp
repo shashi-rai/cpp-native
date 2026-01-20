@@ -223,7 +223,7 @@ void Wave::clear() {
     return;
 }
 
-std::string Wave::print() {
+std::string Wave::print() const {
     std::stringstream result;
     result << "λ:";
 	result << Curvature::print() << ",sz:";

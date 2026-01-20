@@ -21,10 +21,6 @@
 #ifndef ECO_GROWTH_H
 #define ECO_GROWTH_H
 
-#include <cmath>
-#include <sstream>
-#include <string>
-#include <vector>
 #include "../shp/potential.h"
 
 namespace eco {
@@ -105,18 +101,14 @@ public:
     shp::Azimuth getAzimuth() const;
     void setAzimuth(const shp::Azimuth& angle);
     shp::Signal getConvergence() const;
-    shp::Signal getRelative(const shp::Distance& location, const float angle) const;
-    shp::Signal getRelativeX(const shp::Distance& location, const float angle) const;
-    shp::Signal getRelativeY(const shp::Distance& location, const float angle) const;
-    shp::Signal getPolarRComponent(const shp::Distance& location) const;
-    shp::Signal getPolarXComponent(const shp::Distance& location) const;
-    shp::Signal getPolarZComponent(const shp::Distance& location) const;
-    shp::Signal getAzimuthRComponent(const shp::Distance& location) const;
-    shp::Signal getAzimuthXComponent(const shp::Distance& location) const;
-    shp::Signal getAzimuthYComponent(const shp::Distance& location) const;
+    shp::Signal getRelative(const shp::Distance& location) const;
+    shp::Signal getRelativeX(const shp::Distance& location) const;
+    shp::Signal getRelativeY(const shp::Distance& location) const;
+    shp::Signal getRelativeZ(const shp::Distance& location) const;
     shp::Signal copy() const;
     void clear();
-    std::string print();
+    virtual std::string print() const;
+    virtual std::string printRadians() const;
 };
 
 typedef std::vector<Growth > GrowthArray;

@@ -487,10 +487,17 @@ void Frequency::clear() {
     return;
 }
 
-std::string Frequency::print() {
+std::string Frequency::print() const {
     std::stringstream result;
     result << Signal::print() << "δ";
     result << modulation.print();
+	return result.str();
+}
+
+std::string Frequency::printRadians() const {
+    std::stringstream result;
+    result << Signal::printRadians() << "δ";
+    result << modulation.printRadians();
 	return result.str();
 }
 

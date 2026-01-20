@@ -107,6 +107,7 @@ public:
     void setMagnitude(const float value);
     void setMagnitude(const float value, const short int scale);
     void setMagnitude(const float value, const short int scale, const std::string unit);
+    void setMagnitude(const float value, const short int scale, const Unit& unit);
     float getAmplitude() const;
     Direction getPhase() const;
     void setPhase(const Direction& direction);
@@ -144,6 +145,7 @@ public:
     virtual Signal copy() const;
     virtual void clear();
     virtual std::string print() const;
+    virtual std::string printRadians() const;
     float getCosComponent(const float phase) const;
     float getSinComponent(const float phase) const;
 protected:

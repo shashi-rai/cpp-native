@@ -142,6 +142,14 @@ std::string Azimuth::print() const {
 	return result.str();
 }
 
+std::string Azimuth::printRadians() const {
+    std::stringstream result;
+    result << "𝜙";
+    result << Direction::printRadians() << "δ";
+	result << change.printRadians();
+	return result.str();
+}
+
 std::string Azimuth::printEuler() const {
     std::stringstream result;
     result << "𝜙";

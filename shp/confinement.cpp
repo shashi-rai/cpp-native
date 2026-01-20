@@ -359,67 +359,40 @@ Signal Confinement::getConvergence() const {
     return result;
 }
 
-Signal Confinement::getRelative(const Distance& location, const float angle) const {
+Signal Confinement::getRelative(const Distance& location) const {
     Potential self = *this; Signal distribution = self.getDivergence();
-    shp::Quantity coefficient = getClosure().getRelative(location, angle);
+    shp::Quantity coefficient = getClosure().getRelative(location);
     Signal signal = distribution.getSquareAmplified(coefficient); signal.adjustScaling();
     Signal result(distribution.getOrientation(), signal.getMagnitude(),
         (distribution.getScaling() + signal.getScaling()), self.getUnit());
     return result;
 }
 
-Signal Confinement::getRelativeX(const Distance& location, const float angle) const {
+Signal Confinement::getRelativeX(const Distance& location) const {
     Potential self = *this; Signal distribution = self.getDivergence();
-    shp::Quantity coefficient = getClosure().getRelativeX(location, angle);
+    shp::Quantity coefficient = getClosure().getRelativeX(location);
     Signal signal = distribution.getSquareAmplified(coefficient); signal.adjustScaling();
     Signal result(distribution.getOrientation(), signal.getMagnitude(),
 		(distribution.getScaling() + signal.getScaling()), self.getUnit());
     return result;
 }
 
-Signal Confinement::getRelativeY(const Distance& location, const float angle) const {
+Signal Confinement::getRelativeY(const Distance& location) const {
     Potential self = *this; Signal distribution = self.getDivergence();
-    shp::Quantity coefficient = getClosure().getRelativeY(location, angle);
+    shp::Quantity coefficient = getClosure().getRelativeY(location);
     Signal signal = distribution.getSquareAmplified(coefficient); signal.adjustScaling();
     Signal result(distribution.getOrientation(), signal.getMagnitude(),
 		(distribution.getScaling() + signal.getScaling()), self.getUnit());
     return result;
 }
 
-Signal Confinement::getPolarRComponent(const Distance& location) const {
-    Potential self = *this;
-	Angular closure = self.getOrigin();
-    return self.getRelative(location, closure.getPolar().toRadians());
-}
-
-Signal Confinement::getPolarXComponent(const Distance& location) const {
-    Potential self = *this;
-	Angular closure = self.getOrigin();
-    return self.getRelativeX(location, closure.getPolar().toRadians());
-}
-
-Signal Confinement::getPolarZComponent(const Distance& location) const {
-    Potential self = *this;
-	Angular closure = self.getOrigin();
-    return self.getRelativeY(location, closure.getPolar().toRadians());
-}
-
-Signal Confinement::getAzimuthRComponent(const Distance& location) const {
-    Potential self = *this;
-	Angular closure = self.getOrigin();
-    return self.getRelative(location, closure.getAzimuth().toRadians());
-}
-
-Signal Confinement::getAzimuthXComponent(const Distance& location) const {
-    Potential self = *this;
-	Angular closure = self.getOrigin();
-    return self.getRelativeX(location, closure.getAzimuth().toRadians());
-}
-
-Signal Confinement::getAzimuthYComponent(const Distance& location) const {
-    Potential self = *this;
-	Angular closure = self.getOrigin();
-    return self.getRelativeY(location, closure.getAzimuth().toRadians());
+Signal Confinement::getRelativeZ(const Distance& location) const {
+    Potential self = *this; Signal distribution = self.getDivergence();
+    shp::Quantity coefficient = getClosure().getRelativeZ(location);
+    Signal signal = distribution.getSquareAmplified(coefficient); signal.adjustScaling();
+    Signal result(distribution.getOrientation(), signal.getMagnitude(),
+		(distribution.getScaling() + signal.getScaling()), self.getUnit());
+    return result;
 }
 
 Signal Confinement::copy() const {
@@ -433,10 +406,17 @@ void Confinement::clear() {
     return;
 }
 
-std::string Confinement::print() {
+std::string Confinement::print() const {
     std::stringstream result;
 	result << "⊙";
     result << Potential::print();
+	return result.str();
+}
+
+std::string Confinement::printRadians() const {
+    std::stringstream result;
+	result << "⊙";
+    result << Potential::printRadians();
 	return result.str();
 }
 

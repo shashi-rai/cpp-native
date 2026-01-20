@@ -115,6 +115,14 @@ public:
     void setAzimuth(const Azimuth& angle) { this->azimuth = angle; }
 
     // Additional methods
+    Quantity getLinearDisplacement(const Angular& peer,
+        const Distance& separation, const Distance& position) const;
+    Quantity getAngularDisplacement(const Angular& peer,
+        const Distance& separation, const Distance& position) const;
+    Quantity getLinearDisplacement(const Angular& peerX, const Angular& peerY,
+        const Distance& separationX, const Distance& separationY) const;
+    Quantity getAngularDisplacement(const Angular& peerX, const Angular& peerY,
+        const Distance& separationX, const Distance& separationY) const;
     Distance getRadius() const;
     void setRadius(const Distance& length);
     void setRadius(const float length);
@@ -125,18 +133,14 @@ public:
     void setChange(const Direction& orientation);
     float getPolarFraction(const Polar& peer) const;
     float getAzimuthFraction(const Azimuth& peer) const;
-    Quantity getRelative(const Distance& position, const float angle) const;
-    Quantity getRelativeX(const Distance& position, const float angle) const;
-    Quantity getRelativeY(const Distance& position, const float angle) const;
-    Quantity getPolarRComponent(const Distance& position) const;
-    Quantity getPolarXComponent(const Distance& position) const;
-    Quantity getPolarZComponent(const Distance& position) const;
-    Quantity getAzimuthRComponent(const Distance& position) const;
-    Quantity getAzimuthXComponent(const Distance& position) const;
-    Quantity getAzimuthYComponent(const Distance& position) const;
+    Quantity getRelative(const Distance& position) const;
+    Quantity getRelativeX(const Distance& position) const;
+    Quantity getRelativeY(const Distance& position) const;
+    Quantity getRelativeZ(const Distance& position) const;
     virtual Distance copy() const;
     virtual void clear();
     virtual std::string print() const;
+    virtual std::string printRadians() const;
     virtual std::string printEuler() const;
 public:
     static const float DEFAULT_RADIUS;

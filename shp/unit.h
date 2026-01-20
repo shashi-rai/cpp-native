@@ -33,6 +33,9 @@ public:
     // Constructors
     Unit();
     Unit(const std::string name);
+    Unit(const short int prefix, const std::string name);
+    Unit(const std::string name, const std::string suffix);
+    Unit(const short int prefix, const std::string name, const std::string suffix);
 
     // Destructors
     ~Unit();
@@ -45,9 +48,12 @@ public:
     std::string getName() const { return name; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setName(const std::string name) { this->name = name; }
 
     // Additional methods
+    void setName(const short int prefix, const std::string name);
+    void setName(const std::string name, const std::string suffix);
+    void setName(const short int prefix, const std::string name, const std::string suffix);
     std::string getModulus() const;
     std::string getInverse() const;
     std::string getPercent() const;
@@ -55,20 +61,20 @@ public:
     std::string getSquareRoot() const;
     std::string getCube() const;
     std::string getCubeRoot() const;
-    virtual Unit copy();
+    virtual Unit copy() const;
     virtual void clear();
     virtual std::string print() const;
 
 public:
-    static const std::string getPrefixName(short int index);
-    static const std::string getPrefixSymbol(short int index);
-    static const short int getPrefixBase(short int index);
-    static const std::string getBaseName(short int index);
-    static const std::string getBaseDimension(short int index);
-    static const std::string getBaseSymbol(short int index);
-    static const std::string getDerivedName(short int index);
-    static const std::string getDerivedDimension(short int index);
-    static const std::string getDerivedSymbol(short int index);
+    static const std::string getPrefixName(const short int index);
+    static const std::string getPrefixSymbol(const short int index);
+    static const short int getPrefixBase(const short int index);
+    static const std::string getBaseName(const short int index);
+    static const std::string getBaseDimension(const short int index);
+    static const std::string getBaseSymbol(const short int index);
+    static const std::string getDerivedName(const short int index);
+    static const std::string getDerivedDimension(const short int index);
+    static const std::string getDerivedSymbol(const short int index);
 
 public:
     static const std::string UNKNOWN;

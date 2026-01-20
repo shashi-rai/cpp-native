@@ -21,8 +21,6 @@
 #ifndef SHP_SHELL_H
 #define SHP_SHELL_H
 
-#include <string>
-#include <vector>
 #include "polygon.h"
 
 namespace shp {
@@ -34,13 +32,18 @@ public:
     // Constructors
     Shell();
     Shell(const float gradient);
-    Shell(std::string name);
-    Shell(std::string name, const int limit);
-    Shell(std::string name, const float gradient);
-    Shell(std::string name, const float gradient, const int limit);
-    Shell(std::string name, const OrbitalArray& orbitals);
-    Shell(std::string name, const OrbitalArray& orbitals, const float gradient);
-    Shell(std::string name, const OrbitalArray& orbitals, const float gradient, const int limit);
+    Shell(const Azimuth& gradient);
+    Shell(const std::string name);
+    Shell(const std::string name, const int limit);
+    Shell(const std::string name, const float gradient);
+    Shell(const std::string name, const Azimuth& gradient);
+    Shell(const std::string name, const float gradient, const int limit);
+    Shell(const std::string name, const Azimuth& gradient, const int limit);
+    Shell(const std::string name, const OrbitalArray& orbitals);
+    Shell(const std::string name, const OrbitalArray& orbitals, const float gradient);
+    Shell(const std::string name, const OrbitalArray& orbitals, const Azimuth& gradient);
+    Shell(const std::string name, const OrbitalArray& orbitals, const float gradient, const int limit);
+    Shell(const std::string name, const OrbitalArray& orbitals, const Azimuth& gradient, const int limit);
 
     // Destructors
     ~Shell();
@@ -66,11 +69,11 @@ public:
 
     // Additional methods
     int getOrbitalCount() const;
-    Polygon get(int index) const;
-    void set(int index, const Polygon& object);
+    Polygon get(const int index) const;
+    void set(const int index, const Polygon& object);
     virtual Point copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 
 public:
     static const int DEFAULT_LIMIT;

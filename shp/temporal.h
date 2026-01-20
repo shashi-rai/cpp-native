@@ -21,9 +21,6 @@
 #ifndef SHP_TEMPORAL_H
 #define SHP_TEMPORAL_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "signal.h"
 
 namespace shp {
@@ -160,7 +157,8 @@ public:
     virtual Frequency getFrequency() const;
     virtual Signal copy() const;
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printRadians() const;
 };
 
 typedef std::vector<Temporal > TemporalArray;

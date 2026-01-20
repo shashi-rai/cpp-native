@@ -21,9 +21,7 @@
 #ifndef SHP_AXIS_H
 #define SHP_AXIS_H
 
-#include <sstream>
-#include <string>
-#include <vector>
+#include "direction.h"
 #include "quantity.h"
 
 namespace shp {
@@ -31,14 +29,17 @@ namespace shp {
 class Axis {
     std::string name;
     float gradient;
-    float scaling;
+    short int scaling;
 public:
     // Constructors
     Axis();
-    Axis(std::string name);
+    Axis(const std::string name);
     Axis(const float gradient);
-    Axis(std::string name, const float gradient);
-    Axis(std::string name, const float gradient, const float scaling);
+    Axis(const Direction& gradient);
+    Axis(const std::string name, const float gradient);
+    Axis(const std::string name, const Direction& gradient);
+    Axis(const std::string name, const float gradient, const short int scaling);
+    Axis(const std::string name, const Direction& gradient, const short int scaling);
 
     // Destructors
     ~Axis();
@@ -51,20 +52,20 @@ public:
     // Getters
     std::string getName() const { return name; }
     float getGradient() const { return gradient; }
-    float getScaling() const { return scaling; }
+    short int getScaling() const { return scaling; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
     void setGradient(const float value) { this->gradient = value; }
-    void setScaling(const float value) { this->scaling = value; }
+    void setScaling(const short int value) { this->scaling = value; }
 
     // Additional methods
     Axis copy();
     void clear();
-    std::string print();
+    virtual std::string print() const;
+    virtual std::string printRadians() const;
 public:
-    static const float NORMAL;
-    static const float DEFAULT_VALUE;
+    static const float NORMAL_RADIANS;
 };
 
 typedef std::vector<Axis > AxisArray;

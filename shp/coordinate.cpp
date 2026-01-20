@@ -125,7 +125,7 @@ void Coordinate::clear() {
     return;
 }
 
-std::string Coordinate::print() {
+std::string Coordinate::print() const {
     std::stringstream result;
     result << "(";
     result << x << ",";

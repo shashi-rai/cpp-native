@@ -336,13 +336,52 @@ Angular Angular::operator%(const Polar& rotation) const {
 Quantity Angular::operator()(const Angular& peer,
         const Distance& separation, const Distance& position) const {
     Angular self = *this;
-    Quantity ax = self.getRelativeX(position, peer.polar.toRadians()),
-            bx = peer.getRelativeX((separation - position), peer.polar.toRadians());
+    Quantity ax = self.getRelativeX(position), bx = peer.getRelativeX((separation - position));
     Quantity result = (ax - bx); result.adjustScaling();
     return result;
 }
 
 Quantity Angular::operator()(const Angular& peerX, const Angular& peerY,
+        const Distance& separationX, const Distance& separationY) const {
+    Angular self = *this; float end = Quantity::DEFAULT_VALUE;
+    Quantity azimX = self(peerX, separationX, end).getCosComponent(peerX.polar.toRadians());
+    Quantity azimY = self(peerY, separationY, end).getCosComponent(peerY.polar.toRadians());
+    std::complex<float> radial(azimX.getMagnitude(), azimY.getMagnitude());
+    std::complex<float> polarized = std::sqrt(radial);
+    shp::Quantity result((std::abs(polarized) * cos(self.polar.toRadians())),
+            azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
+    return result;
+}
+
+Quantity Angular::getLinearDisplacement(const Angular& peer,
+        const Distance& separation, const Distance& position) const {
+    Angular self = *this;
+    Quantity ax = self.getRelativeX(position), bx = peer.getRelativeX((separation - position));
+    Quantity result = (ax - bx); result.adjustScaling();
+    return result;
+}
+
+Quantity Angular::getAngularDisplacement(const Angular& peer,
+        const Distance& separation, const Distance& position) const {
+    Angular self = *this;
+    Quantity ax = self.getRelativeX(position), bx = peer.getRelativeX((separation - position));
+    Quantity result = (ax - bx); result.adjustScaling();
+    return result;
+}
+
+Quantity Angular::getLinearDisplacement(const Angular& peerX, const Angular& peerY,
+        const Distance& separationX, const Distance& separationY) const {
+    Angular self = *this; float end = Quantity::DEFAULT_VALUE;
+    Quantity azimX = self(peerX, separationX, end).getCosComponent(peerX.polar.toRadians());
+    Quantity azimY = self(peerY, separationY, end).getCosComponent(peerY.polar.toRadians());
+    std::complex<float> radial(azimX.getMagnitude(), azimY.getMagnitude());
+    std::complex<float> polarized = std::sqrt(radial);
+    shp::Quantity result((std::abs(polarized) * cos(self.polar.toRadians())),
+            azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
+    return result;
+}
+
+Quantity Angular::getAngularDisplacement(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const {
     Angular self = *this; float end = Quantity::DEFAULT_VALUE;
     Quantity azimX = self(peerX, separationX, end).getCosComponent(peerX.polar.toRadians());
@@ -360,8 +399,7 @@ Distance Angular::getRadius() const {
 }
 
 void Angular::setRadius(const Distance& length) {
-    Quantity::setMagnitude(length.getMagnitude());
-    Quantity::setScaling(length.getScaling());
+    Quantity::setMagnitude(length.getMagnitude(), length.getScaling());
     Quantity::setUnit(length.getUnit());
     Distance::setChange(length.getChange());
 }
@@ -400,58 +438,36 @@ float Angular::getAzimuthFraction(const Azimuth& peer) const {
     return Direction::getFraction(azimuth.toRadians(), peer.toRadians());
 }
 
-Quantity Angular::getRelative(const Distance& position, const float angle) const {
+Quantity Angular::getRelative(const Distance& position) const {
     Angular self = *this; Distance radius = self.getRadius();
-    Quantity coefficient  = radius(position);               // radial, X & Y both combined
+    Quantity coefficient  = radius(position, polar);            // radial, X, Y, Z combined
     Quantity result(coefficient.getMagnitude(), coefficient.getScaling(), self.getUnit());
     result.adjustScaling();
     return result;
 }
 
-Quantity Angular::getRelativeX(const Distance& position, const float angle) const {
+Quantity Angular::getRelativeX(const Distance& position) const {
     Angular self = *this; Distance radius = self.getRadius();
-    Quantity coefficient  = radius.getFactorX(position);    // X component only
+    Quantity coefficient  = radius.getFactorX(position, polar); // X component only
     Quantity result(coefficient.getMagnitude(), coefficient.getScaling(), self.getUnit());
     result.adjustScaling();
     return result;
 }
 
-Quantity Angular::getRelativeY(const Distance& position, const float angle) const {
+Quantity Angular::getRelativeY(const Distance& position) const {
     Angular self = *this; Distance radius = self.getRadius();
-    Quantity coefficient  = radius.getFactorY(position);    // Y component only
+    Quantity coefficient  = radius.getFactorY(position, polar); // Y component only
     Quantity result(coefficient.getMagnitude(), coefficient.getScaling(), self.getUnit());
     result.adjustScaling();
     return result;
 }
 
-Quantity Angular::getPolarRComponent(const Distance& position) const {
-    Angular self = *this;
-    return getRelative(position, self.polar.toRadians());
-}
-
-Quantity Angular::getPolarXComponent(const Distance& position) const {
-    Angular self = *this;
-    return getRelativeX(position, self.polar.toRadians());
-}
-
-Quantity Angular::getPolarZComponent(const Distance& position) const {
-    Angular self = *this;
-    return getRelativeY(position, self.polar.toRadians());
-}
-
-Quantity Angular::getAzimuthRComponent(const Distance& position) const {
-    Angular self = *this;
-    return getRelative(position, self.azimuth.toRadians());
-}
-
-Quantity Angular::getAzimuthXComponent(const Distance& position) const {
-    Angular self = *this;
-    return getRelativeX(position, self.azimuth.toRadians());
-}
-
-Quantity Angular::getAzimuthYComponent(const Distance& position) const {
-    Angular self = *this;
-    return getRelativeY(position, self.azimuth.toRadians());
+Quantity Angular::getRelativeZ(const Distance& position) const {
+    Angular self = *this; Distance radius = self.getRadius();
+    Quantity coefficient  = radius.getFactorZ(position, polar); // Z component only
+    Quantity result(coefficient.getMagnitude(), coefficient.getScaling(), self.getUnit());
+    result.adjustScaling();
+    return result;
 }
 
 Distance Angular::copy() const {
@@ -473,6 +489,15 @@ std::string Angular::print() const {
     result << Distance::print() << ",";
     result << polar.print() << ",";
     result << azimuth.print() << "}";
+	return result.str();
+}
+
+std::string Angular::printRadians() const {
+    std::stringstream result;
+    result << "{";
+    result << Distance::print() << ",";
+    result << polar.printRadians() << ",";
+    result << azimuth.printRadians() << "}";
 	return result.str();
 }
 

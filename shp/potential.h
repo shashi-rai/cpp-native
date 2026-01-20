@@ -117,18 +117,14 @@ public:
     void setAzimuth(const Azimuth& angle);
     Signal getDifference() const;
     Signal getDivergence() const;
-    Signal getRelative(const Distance& location, const float angle) const;
-    Signal getRelativeX(const Distance& location, const float angle) const;
-    Signal getRelativeY(const Distance& location, const float angle) const;
-    Signal getPolarRComponent(const Distance& location) const;
-    Signal getPolarXComponent(const Distance& location) const;
-    Signal getPolarZComponent(const Distance& location) const;
-    Signal getAzimuthRComponent(const Distance& location) const;
-    Signal getAzimuthXComponent(const Distance& location) const;
-    Signal getAzimuthYComponent(const Distance& location) const;
+    Signal getRelative(const Distance& location) const;
+    Signal getRelativeX(const Distance& location) const;
+    Signal getRelativeY(const Distance& location) const;
+    Signal getRelativeZ(const Distance& location) const;
     virtual Signal copy() const;
     virtual void clear();
     virtual std::string print() const;
+    virtual std::string printRadians() const;
 };
 
 typedef std::vector<Potential > PotentialArray;

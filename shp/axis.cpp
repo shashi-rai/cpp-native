@@ -22,29 +22,46 @@
 
 namespace shp {
 
-const float Axis::NORMAL = 1.570796326794897000f;           // 90 degrees rotation
-const float Axis::DEFAULT_VALUE = Quantity::DEFAULT_VALUE;  // 0 degrees
+// Normal - 90 degrees rotation
+const float Axis::NORMAL_RADIANS = 1.5707963267948966192313216916397514420985846996875529104874722961539082031431044993140174126710585339910740432566411533240000000000f;
 
-Axis::Axis() : name(), gradient(DEFAULT_VALUE), scaling(DEFAULT_VALUE) {
+Axis::Axis()
+        : name(), gradient(Direction::DEFAULT_RADIANS), scaling(Quantity::DEFAULT_SCALE) {
+
+}
+
+Axis::Axis(const std::string name)
+        : name(name), gradient(Direction::DEFAULT_RADIANS), scaling(Quantity::DEFAULT_SCALE) {
 
 }
 
-Axis::Axis(std::string name)
-        : name(name), gradient(DEFAULT_VALUE), scaling(DEFAULT_VALUE) {
-
-}
 Axis::Axis(const float gradient)
-        : name(), gradient(gradient), scaling(DEFAULT_VALUE) {
+        : name(), gradient(gradient), scaling(Quantity::DEFAULT_SCALE) {
 
 }
 
-Axis::Axis(std::string name, const float gradient)
-        : name(name), gradient(gradient), scaling(DEFAULT_VALUE) {
+Axis::Axis(const Direction& gradient)
+        : name(), gradient(gradient.toRadians()), scaling(Quantity::DEFAULT_SCALE) {
 
 }
 
-Axis::Axis(std::string name, const float gradient, const float scaling)
+Axis::Axis(const std::string name, const float gradient)
+        : name(name), gradient(gradient), scaling(Quantity::DEFAULT_SCALE) {
+
+}
+
+Axis::Axis(const std::string name, const Direction& gradient)
+        : name(name), gradient(gradient.toRadians()), scaling(Quantity::DEFAULT_SCALE) {
+
+}
+
+Axis::Axis(const std::string name, const float gradient, const short int scaling)
         : name(name), gradient(gradient), scaling(scaling) {
+
+}
+
+Axis::Axis(const std::string name, const Direction& gradient, const short int scaling)
+        : name(name), gradient(gradient.toRadians()), scaling(scaling) {
 
 }
 
@@ -57,11 +74,11 @@ bool Axis::operator==(const Axis& peer) const {
 }
 
 Axis Axis::operator+(const Axis& peer) const {
-    return Axis("+", (gradient + (peer.gradient != 0 ? peer.gradient : NORMAL)), scaling);
+    return Axis("+", (gradient + (peer.gradient != 0 ? peer.gradient : NORMAL_RADIANS)), scaling);
 }
 
 Axis Axis::operator-(const Axis& peer) const {
-    return Axis("-", (gradient - (peer.gradient != 0 ? peer.gradient : NORMAL)), scaling);
+    return Axis("-", (gradient - (peer.gradient != 0 ? peer.gradient : NORMAL_RADIANS)), scaling);
 }
 
 Axis Axis::copy() {
@@ -70,15 +87,28 @@ Axis Axis::copy() {
 }
 
 void Axis::clear() {
-    name.clear(); gradient = scaling = DEFAULT_VALUE;
+    name.clear();
+    gradient = NORMAL_RADIANS;
+    scaling = Quantity::DEFAULT_SCALE;
     return;
 }
 
-std::string Axis::print() {
+std::string Axis::print() const {
     std::stringstream result;
     result << "{n:";
     result << name << ",𝜙:";
-    result << gradient << ",s:";
+    result << Direction(gradient).print() << ",s:";
+    result << scaling << "}";
+	return result.str();
+}
+
+std::string Axis::printRadians() const {
+    std::stringstream result;
+    result << "{n:";
+    result << name << ",𝜙:";
+    result << std::setfill('0') <<  std::setprecision(8)
+        << gradient << shp::Unit::getDerivedSymbol(shp::Unit::PLANE_ANGLE);
+    result << ",s:";
     result << scaling << "}";
 	return result.str();
 }

@@ -59,7 +59,7 @@ void Shape::clear() {
     return;
 }
 
-std::string Shape::print() {
+std::string Shape::print() const {
     std::stringstream result;
     result << "(";
     result << name << ",o:";

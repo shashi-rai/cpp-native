@@ -419,7 +419,7 @@ void Volume::clear() {
     return;
 }
 
-std::string Volume::print() {
+std::string Volume::print() const {
     std::stringstream result;
     result << surface.print() << ",h:";
     result << depth.print();

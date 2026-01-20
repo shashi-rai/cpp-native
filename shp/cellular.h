@@ -21,8 +21,6 @@
 #ifndef SHP_CELLULAR_H
 #define SHP_CELLULAR_H
 
-#include <string>
-#include <vector>
 #include "shell.h"
 
 namespace shp {
@@ -33,10 +31,13 @@ public:
     // Constructors
     Cellular();
     Cellular(const float gradient);
-    Cellular(std::string name);
-    Cellular(std::string name, const float gradient);
-    Cellular(std::string name, const ShellArray& shells);
-    Cellular(std::string name, const ShellArray& shells, const float gradient);
+    Cellular(const Azimuth& gradient);
+    Cellular(const std::string name);
+    Cellular(const std::string name, const float gradient);
+    Cellular(const std::string name, const Azimuth& gradient);
+    Cellular(const std::string name, const ShellArray& shells);
+    Cellular(const std::string name, const ShellArray& shells, const float gradient);
+    Cellular(const std::string name, const ShellArray& shells, const Azimuth& gradient);
 
     // Destructors
     ~Cellular();
@@ -62,11 +63,12 @@ public:
 
     // Additional methods
     int getShellCount() const;
-    Shell get(int index) const;
-    void set(int index, const Shell& object);
+    Shell get(const int index) const;
+    void set(const int index, const Shell& object);
     virtual Point copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printRadians() const;
 };
 
 typedef std::vector<Cellular > CellularArray;

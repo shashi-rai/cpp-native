@@ -34,37 +34,62 @@ Polygon::Polygon(const float gradient)
 
 }
 
-Polygon::Polygon(std::string name)
+Polygon::Polygon(const Azimuth& gradient)
+        : Point(gradient), waves(), limit(DEFAULT_LIMIT) {
+
+}
+
+Polygon::Polygon(const std::string name)
         : Point(name), waves(), limit(DEFAULT_LIMIT) {
 
 }
 
-Polygon::Polygon(std::string name, const int limit)
+Polygon::Polygon(const std::string name, const int limit)
         : Point(name), waves(), limit(limit) {
 
 }
 
-Polygon::Polygon(std::string name, const float gradient)
+Polygon::Polygon(const std::string name, const float gradient)
         : Point(name, gradient), waves(), limit(0) {
 
 }
 
-Polygon::Polygon(std::string name, const float gradient, const int limit)
+Polygon::Polygon(const std::string name, const Azimuth& gradient)
+        : Point(name, gradient), waves(), limit(0) {
+
+}
+
+Polygon::Polygon(const std::string name, const float gradient, const int limit)
     : Point(name, gradient), waves(), limit(limit) {
 
 }
 
-Polygon::Polygon(std::string name, const WaveArray& waves)
+Polygon::Polygon(const std::string name, const Azimuth& gradient, const int limit)
+    : Point(name, gradient), waves(), limit(limit) {
+
+}
+
+Polygon::Polygon(const std::string name, const WaveArray& waves)
         : Point(name), waves(waves), limit(DEFAULT_LIMIT) {
 
 }
 
-Polygon::Polygon(std::string name, const WaveArray& waves, const float gradient)
+Polygon::Polygon(const std::string name, const WaveArray& waves, const float gradient)
         : Point(name, gradient), waves(waves), limit(DEFAULT_LIMIT) {
 
 }
 
-Polygon::Polygon(std::string name, const WaveArray& waves, const float gradient, const int limit)
+Polygon::Polygon(const std::string name, const WaveArray& waves, const Azimuth& gradient)
+        : Point(name, gradient), waves(waves), limit(DEFAULT_LIMIT) {
+
+}
+
+Polygon::Polygon(const std::string name, const WaveArray& waves, const float gradient, const int limit)
+        : Point(name, gradient), waves(waves), limit(limit) {
+
+}
+
+Polygon::Polygon(const std::string name, const WaveArray& waves, const Azimuth& gradient, const int limit)
         : Point(name, gradient), waves(waves), limit(limit) {
 
 }
@@ -99,7 +124,7 @@ int Polygon::getWaveCount() const {
     return waves.size();
 }
 
-Wave Polygon::get(int index) const {
+Wave Polygon::get(const int index) const {
     Wave result;
     if (index < 0) {
         return result;
@@ -110,7 +135,7 @@ Wave Polygon::get(int index) const {
     return waves[index];
 }
 
-void Polygon::set(int index, const Wave& object) {
+void Polygon::set(const int index, const Wave& object) {
     if (index < 0 || index >= limit) {
         return;
     }
@@ -128,7 +153,8 @@ void Polygon::set(int index, const Wave& object) {
 }
 
 Point Polygon::copy() {
-    Polygon fresh(getName(), waves, getGradient(), limit);
+    Point self = *this;
+    Polygon fresh(self.getName(), this->waves, self.getGradient(), this->limit);
     return fresh;
 }
 
@@ -139,7 +165,7 @@ void Polygon::clear() {
     return;
 }
 
-std::string Polygon::print() {
+std::string Polygon::print() const {
     std::stringstream result;
     result << "{ψ:";
 	result << Point::print() << ",l:";

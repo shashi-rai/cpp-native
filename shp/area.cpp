@@ -267,7 +267,7 @@ void Area::setBreadthUnit(const Unit& object) {
 }
 
 Area Area::copy() {
-    Area fresh(length, breadth);
+    Area fresh(this->length, this->breadth);
     return fresh;
 }
 
@@ -277,11 +277,19 @@ void Area::clear() {
     return;
 }
 
-std::string Area::print() {
+std::string Area::print() const {
     std::stringstream result;
     result << "l:";
     result << length.print() << ",b:";
     result << breadth.print();
+	return result.str();
+}
+
+std::string Area::printRadians() const {
+    std::stringstream result;
+    result << "l:";
+    result << length.printRadians() << ",b:";
+    result << breadth.printRadians();
 	return result.str();
 }
 

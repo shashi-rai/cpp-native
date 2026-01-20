@@ -82,12 +82,24 @@ const std::string Unit::DERIVED_SYMBOL[] = {
     "H", "°C", "lm", "lx", "Bq", "Gy", "Sv", "kat",
 };
 
-Unit::Unit() : name(UNKNOWN) {
-
+Unit::Unit() {
+    setName(UNKNOWN);
 }
 
-Unit::Unit(const std::string name) : name(name) {
+Unit::Unit(const std::string name) {
+    setName(name);
+}
 
+Unit::Unit(const short int prefix, const std::string name) {
+    setName(prefix, name);
+}
+
+Unit::Unit(const std::string name, const std::string suffix) {
+    setName(name, suffix);
+}
+
+Unit::Unit(const short int prefix, const std::string name, const std::string suffix) {
+    setName(prefix, name, suffix);
 }
 
 Unit::~Unit() {
@@ -102,7 +114,7 @@ Unit Unit::operator+(const Unit& peer) const {
     return (name + peer.name);
 }
 
-const std::string Unit::getPrefixName(short int index) {
+const std::string Unit::getPrefixName(const short int index) {
     if ((index >= PREFIX_MIN) && (index < PREFIX_MAX)) {
         return PREFIX_NAME[index];
     } else {
@@ -110,7 +122,7 @@ const std::string Unit::getPrefixName(short int index) {
     }
 }
 
-const std::string Unit::getBaseName(short int index) {
+const std::string Unit::getBaseName(const short int index) {
     if ((index >= SI_BASE_MIN) && (index < SI_BASE_MAX)) {
         return BASE_NAME[index];
     } else {
@@ -118,7 +130,7 @@ const std::string Unit::getBaseName(short int index) {
     }
 }
 
-const std::string Unit::getPrefixSymbol(short int index) {
+const std::string Unit::getPrefixSymbol(const short int index) {
     if ((index >= PREFIX_MIN) && (index < PREFIX_MAX)) {
         return PREFIX_SYMBOL[index];
     } else {
@@ -126,7 +138,7 @@ const std::string Unit::getPrefixSymbol(short int index) {
     }
 }
 
-const short int Unit::getPrefixBase(short int index) {
+const short int Unit::getPrefixBase(const short int index) {
     if ((index >= PREFIX_MIN) && (index < PREFIX_MAX)) {
         return PREFIX_BASE[index];
     } else {
@@ -134,7 +146,7 @@ const short int Unit::getPrefixBase(short int index) {
     }
 }
 
-const std::string Unit::getBaseDimension(short int index) {
+const std::string Unit::getBaseDimension(const short int index) {
     if ((index >= SI_BASE_MIN) && (index < SI_BASE_MAX)) {
         return BASE_DIMENSION[index];
     } else {
@@ -142,7 +154,7 @@ const std::string Unit::getBaseDimension(short int index) {
     }
 }
 
-const std::string Unit::getBaseSymbol(short int index) {
+const std::string Unit::getBaseSymbol(const short int index) {
     if ((index >= SI_BASE_MIN) && (index < SI_BASE_MAX)) {
         return BASE_SYMBOL[index];
     } else {
@@ -150,7 +162,7 @@ const std::string Unit::getBaseSymbol(short int index) {
     }
 }
 
-const std::string Unit::getDerivedName(short int index) {
+const std::string Unit::getDerivedName(const short int index) {
     if ((index >= SI_DERIVED_MIN) && (index < SI_DERIVED_MAX)) {
         return DERIVED_NAME[index];
     } else {
@@ -158,7 +170,7 @@ const std::string Unit::getDerivedName(short int index) {
     }
 }
 
-const std::string Unit::getDerivedDimension(short int index) {
+const std::string Unit::getDerivedDimension(const short int index) {
     if ((index >= SI_DERIVED_MIN) && (index < SI_DERIVED_MAX)) {
         return DERIVED_DIMENSION[index];
     } else {
@@ -166,12 +178,34 @@ const std::string Unit::getDerivedDimension(short int index) {
     }
 }
 
-const std::string Unit::getDerivedSymbol(short int index) {
+const std::string Unit::getDerivedSymbol(const short int index) {
     if ((index >= SI_DERIVED_MIN) && (index < SI_DERIVED_MAX)) {
         return DERIVED_SYMBOL[index];
     } else {
         return UNKNOWN;
     }
+}
+
+void Unit::setName(const short int prefix, const std::string name) {
+    std::stringstream result;
+    result << getPrefixName(prefix);
+    result << name;
+    setName(result.str());
+}
+
+void Unit::setName(const std::string name, const std::string suffix) {
+    std::stringstream result;
+    result << name;
+    result << suffix;
+    setName(result.str());
+}
+
+void Unit::setName(const short int prefix, const std::string name, const std::string suffix) {
+    std::stringstream result;
+    result << getPrefixName(prefix);
+    result << name;
+    result << suffix;
+    setName(result.str());
 }
 
 std::string Unit::getModulus() const {
@@ -202,7 +236,7 @@ std::string Unit::getCubeRoot() const {
     return ("∛" + name);
 }
 
-Unit Unit::copy() {
+Unit Unit::copy() const {
     Unit fresh(name);
     return fresh;
 }

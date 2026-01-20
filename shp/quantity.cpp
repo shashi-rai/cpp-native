@@ -144,6 +144,18 @@ void Quantity::setMagnitude(const float value, const short int scale) {
     this->scaling = scale;
 }
 
+void Quantity::setMagnitude(const float value, const short int scale, const std::string unit) {
+    this->magnitude = value;
+    this->scaling = scale;
+    this->unit.setName(unit);
+}
+
+void Quantity::setMagnitude(const float value, const short int scale, const Unit& unit) {
+    this->magnitude = value;
+    this->scaling = scale;
+    this->unit = unit;
+}
+
 void Quantity::setUnit(const std::string name) {
     this->unit.setName(name);
 }
@@ -306,10 +318,22 @@ void Quantity::clear() {
 }
 
 std::string Quantity::print() const {
+	return printSuffixed();
+}
+
+std::string Quantity::printSuffixed() const {
     std::stringstream result;
     result << magnitude << "ₑ";
     result << scaling;
     result << unit.print();
+	return result.str();
+}
+
+std::string Quantity::printPrefixed() const {
+    std::stringstream result;
+    result << unit.print() << " ";
+    result << magnitude << "ₑ";
+    result << scaling;
 	return result.str();
 }
 

@@ -21,8 +21,6 @@
 #ifndef SHP_FRAME_H
 #define SHP_FRAME_H
 
-#include <string>
-#include <vector>
 #include "planar.h"
 
 namespace shp {
@@ -33,10 +31,13 @@ public:
     // Constructors
     Frame();
     Frame(const float gradient);
-    Frame(std::string name);
-    Frame(std::string name, const float gradient);
-    Frame(std::string name, const PlanarArray& planes);
-    Frame(std::string name, const PlanarArray& planes, const float gradient);
+    Frame(const Azimuth& gradient);
+    Frame(const std::string name);
+    Frame(const std::string name, const float gradient);
+    Frame(const std::string name, const Azimuth& gradient);
+    Frame(const std::string name, const PlanarArray& planes);
+    Frame(const std::string name, const PlanarArray& planes, const float gradient);
+    Frame(const std::string name, const PlanarArray& planes, const Azimuth& gradient);
 
     // Destructors
     ~Frame();
@@ -62,11 +63,12 @@ public:
 
     // Additional methods
     int getPlaneCount() const;
-    Planar get(int index) const;
-    void set(int index, const Planar& object);
+    Planar get(const int index) const;
+    void set(const int index, const Planar& object);
     virtual Point copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printRadians() const;
 };
 
 typedef std::vector<Frame > FrameArray;

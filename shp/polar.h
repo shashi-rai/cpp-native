@@ -63,6 +63,7 @@ public:
     virtual Direction copy() const;
     virtual void clear();
     virtual std::string print() const;
+    virtual std::string printRadians() const;
     virtual std::string printEuler() const;
 };
 

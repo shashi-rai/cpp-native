@@ -330,8 +330,11 @@ void Signal::setMagnitude(const float value, const short int scale) {
 }
 
 void Signal::setMagnitude(const float value, const short int scale, const std::string unit) {
-    Quantity::setMagnitude(value, scale);
-    Quantity::setUnit(unit);
+    Quantity::setMagnitude(value, scale, unit);
+}
+
+void Signal::setMagnitude(const float value, const short int scale, const Unit& unit) {
+    Quantity::setMagnitude(value, scale, unit);
 }
 
 float Signal::getAmplitude() const {
@@ -534,6 +537,15 @@ std::string Signal::print() const {
     result << "∿";
     result << Quantity::print() << ",φ";
     result << Direction(orientation).print();
+	return result.str();
+}
+
+std::string Signal::printRadians() const {
+    std::stringstream result;
+    result << "∿";
+    result << Quantity::print() << ",φ";
+    result << std::setfill('0') <<  std::setprecision(8)
+        << orientation << shp::Unit::getDerivedSymbol(shp::Unit::PLANE_ANGLE);
 	return result.str();
 }
 

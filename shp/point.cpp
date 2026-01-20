@@ -412,12 +412,19 @@ void Point::clear() {
     return;
 }
 
-std::string Point::print() {
+std::string Point::print() const {
     std::stringstream result;
     result << "{p:";
-	result << Shape::print() << ",a:";
-    result << signal.print() << ",𝜙:";
-	result << "}";
+	result << Shape::print() << ",";
+    result << signal.print() << "}";
+	return result.str();
+}
+
+std::string Point::printRadians() const {
+    std::stringstream result;
+    result << "{p:";
+	result << Shape::print() << ",";
+    result << signal.printRadians() << "}";
 	return result.str();
 }
 

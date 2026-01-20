@@ -196,7 +196,7 @@ float Change::leastAction() {
 }
 
 Change Change::copy() {
-    Change fresh(rate, dynamical, potential);
+    Change fresh(this->rate, this->dynamical, this->potential);
     return fresh;
 }
 
@@ -213,6 +213,15 @@ std::string Change::print() const {
     result << dynamical.print() << ",U:";
 	result << potential.print() << ",";
 	result << rate.print();
+	return result.str();
+}
+
+std::string Change::printRadians() const {
+    std::stringstream result;
+    result << "T:";
+    result << dynamical.printRadians() << ",U:";
+	result << potential.printRadians() << ",";
+	result << rate.printRadians();
 	return result.str();
 }
 

@@ -22,9 +22,6 @@
 #define SHP_PHASE_H
 
 #include <chrono>
-#include <iomanip>
-#include <string>
-#include <vector>
 #include "angular.h"
 #include "point.h"
 
@@ -152,7 +149,8 @@ public:
     virtual Angular getOrientation() const;
     virtual Point copy() const;
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printRadians() const;
     Quantity getPolarCosComponent(const float change) const;
     Quantity getPolarSinComponent(const float change) const;
 protected:

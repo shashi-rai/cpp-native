@@ -70,7 +70,7 @@ public:
     Coordinate shiftZ(const float step) const;
     Coordinate copy();
     void clear();
-    std::string print();
+    virtual std::string print() const;
 
 public:
     static const float ORIGIN;

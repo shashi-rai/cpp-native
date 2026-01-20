@@ -21,8 +21,6 @@
 #ifndef SHP_LINEAR_H
 #define SHP_LINEAR_H
 
-#include <string>
-#include <vector>
 #include "point.h"
 
 namespace shp {
@@ -33,10 +31,13 @@ public:
     // Constructors
     Linear();
     Linear(const float gradient);
-    Linear(std::string name);
-    Linear(std::string name, const float gradient);
-    Linear(std::string name, const PointArray& objects);
-    Linear(std::string name, const PointArray& objects, const float gradient);
+    Linear(const Azimuth& gradient);
+    Linear(const std::string name);
+    Linear(const std::string name, const float gradient);
+    Linear(const std::string name, const Azimuth& gradient);
+    Linear(const std::string name, const PointArray& objects);
+    Linear(const std::string name, const PointArray& objects, const float gradient);
+    Linear(const std::string name, const PointArray& objects, const Azimuth& gradient);
 
     // Destructors
     ~Linear();
@@ -58,11 +59,11 @@ public:
 
     // Additional methods
     int getPointCount() const;
-    Point get(int index) const;
-    void set(int index, const Point& object);
+    Point get(const int index) const;
+    void set(const int index, const Point& object);
     virtual Point copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 };
 
 typedef std::vector<Linear > LinearArray;

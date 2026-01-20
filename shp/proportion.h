@@ -21,9 +21,6 @@
 #ifndef SHP_PROPORTION_H
 #define SHP_PROPORTION_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "signal.h"
 
 namespace shp {
@@ -76,7 +73,9 @@ public:
     Signal getInverseSquareCross() const;
     virtual Proportion copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+public:
+    static const float DEFAULT_MAX;
 };
 
 typedef std::vector<Proportion > ProportionArray;

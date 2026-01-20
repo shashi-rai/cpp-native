@@ -21,10 +21,6 @@
 #ifndef SHP_POINT_H
 #define SHP_POINT_H
 
-#include <complex>
-#include <cmath>
-#include <string>
-#include <vector>
 #include "angular.h"
 #include "shape.h"
 #include "signal.h"
@@ -114,7 +110,8 @@ public:
     virtual Angular getOrientation() const;
     virtual Point copy() const;
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printRadians() const;
     Quantity getAzimuthCosComponent(const float change) const;
     Quantity getAzimuthSinComponent(const float change) const;
 protected:

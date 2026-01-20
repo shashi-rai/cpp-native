@@ -21,10 +21,7 @@
 #ifndef SHP_PLANAR_H
 #define SHP_PLANAR_H
 
-#include <string>
-#include <vector>
 #include "linear.h"
-#include "point.h"
 
 namespace shp {
 
@@ -34,10 +31,13 @@ public:
     // Constructors
     Planar();
     Planar(const float gradient);
-    Planar(std::string name);
-    Planar(std::string name, const float gradient);
-    Planar(std::string name, const LinearArray& lines);
-    Planar(std::string name, const LinearArray& lines, const float gradient);
+    Planar(const Azimuth& gradient);
+    Planar(const std::string name);
+    Planar(const std::string name, const float gradient);
+    Planar(const std::string name, const Azimuth& gradient);
+    Planar(const std::string name, const LinearArray& lines);
+    Planar(const std::string name, const LinearArray& lines, const float gradient);
+    Planar(const std::string name, const LinearArray& lines, const Azimuth& gradient);
 
     // Destructors
     ~Planar();
@@ -61,11 +61,11 @@ public:
 
     // Additional methods
     int getLineCount() const;
-    Linear get(int index) const;
-    void set(int index, const Linear& object);
+    Linear get(const int index) const;
+    void set(const int index, const Linear& object);
     virtual Point copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 };
 
 typedef std::vector<Planar > PlanarArray;

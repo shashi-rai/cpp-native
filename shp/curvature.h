@@ -21,8 +21,6 @@
 #ifndef SHP_CURVATURE_H
 #define SHP_CURVATURE_H
 
-#include <string>
-#include <vector>
 #include "phase.h"
 
 namespace shp {
@@ -86,13 +84,14 @@ public:
 
     // Additional methods
     int getChangeCount() const;
-    Phase get(int index) const;
-    void set(int index, const Phase& object);
+    Phase get(const int index) const;
+    void set(const int index, const Phase& object);
     void setPolarization(const Direction& orientation);
     virtual Angular getOrientation() const;
     virtual Point copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printRadians() const;
     Quantity getPolarCosComponent(float change) const;
     Quantity getPolarSinComponent(float change) const;
 protected:

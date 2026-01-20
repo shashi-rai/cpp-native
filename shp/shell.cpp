@@ -34,37 +34,62 @@ Shell::Shell(const float gradient)
 
 }
 
-Shell::Shell(std::string name)
+Shell::Shell(const Azimuth& gradient)
+        : Point(gradient), orbitals(), limit(DEFAULT_LIMIT) {
+
+}
+
+Shell::Shell(const std::string name)
         : Point(name), orbitals(), limit(DEFAULT_LIMIT) {
 
 }
 
-Shell::Shell(std::string name, const int limit)
+Shell::Shell(const std::string name, const int limit)
         : Point(name), orbitals(), limit(limit) {
 
 }
 
-Shell::Shell(std::string name, const float gradient)
+Shell::Shell(const std::string name, const float gradient)
         : Point(name, gradient), orbitals(), limit(DEFAULT_LIMIT) {
 
 }
 
-Shell::Shell(std::string name, const float gradient, const int limit)
-    : Point(name, gradient), orbitals(), limit(limit) {
+Shell::Shell(const std::string name, const Azimuth& gradient)
+        : Point(name, gradient), orbitals(), limit(DEFAULT_LIMIT) {
 
 }
 
-Shell::Shell(std::string name, const OrbitalArray& orbitals)
+Shell::Shell(const std::string name, const float gradient, const int limit)
+        : Point(name, gradient), orbitals(), limit(limit) {
+
+}
+
+Shell::Shell(const std::string name, const Azimuth& gradient, const int limit)
+        : Point(name, gradient), orbitals(), limit(limit) {
+
+}
+
+Shell::Shell(const std::string name, const OrbitalArray& orbitals)
         : Point(name), orbitals(orbitals), limit(DEFAULT_LIMIT) {
 
 }
 
-Shell::Shell(std::string name, const OrbitalArray& orbitals, const float gradient)
+Shell::Shell(const std::string name, const OrbitalArray& orbitals, const float gradient)
         : Point(name, gradient), orbitals(orbitals), limit(DEFAULT_LIMIT) {
 
 }
 
-Shell::Shell(std::string name, const OrbitalArray& orbitals, const float gradient, const int limit)
+Shell::Shell(const std::string name, const OrbitalArray& orbitals, const Azimuth& gradient)
+        : Point(name, gradient), orbitals(orbitals), limit(DEFAULT_LIMIT) {
+
+}
+
+Shell::Shell(const std::string name, const OrbitalArray& orbitals, const float gradient, const int limit)
+        : Point(name, gradient), orbitals(orbitals), limit(limit) {
+
+}
+
+Shell::Shell(const std::string name, const OrbitalArray& orbitals, const Azimuth& gradient, const int limit)
         : Point(name, gradient), orbitals(orbitals), limit(limit) {
 
 }
@@ -99,7 +124,7 @@ int Shell::getOrbitalCount() const {
     return orbitals.size();
 }
 
-Polygon Shell::get(int index) const {
+Polygon Shell::get(const int index) const {
     Polygon result;
     if (index < 0) {
         return result;
@@ -110,7 +135,7 @@ Polygon Shell::get(int index) const {
     return orbitals[index];
 }
 
-void Shell::set(int index, const Polygon& object) {
+void Shell::set(const int index, const Polygon& object) {
     if (index < 0 || index >= limit) {
         return;
     }
@@ -128,7 +153,8 @@ void Shell::set(int index, const Polygon& object) {
 }
 
 Point Shell::copy() {
-    Shell fresh(getName(), orbitals, getGradient(), limit);
+    Point self = *this;
+    Shell fresh(self.getName(), this->orbitals, self.getGradient(), this->limit);
     return fresh;
 }
 
@@ -139,7 +165,7 @@ void Shell::clear() {
     return;
 }
 
-std::string Shell::print() {
+std::string Shell::print() const {
     std::stringstream result;
     result << "{sh:";
 	result << Point::print() << ",l:";

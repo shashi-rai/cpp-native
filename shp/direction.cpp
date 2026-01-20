@@ -236,6 +236,13 @@ std::string Direction::print() const {
 	return result.str();
 }
 
+std::string Direction::printRadians() const {
+    std::stringstream result;
+    result << std::setfill('0') <<  std::setprecision(8)
+        << toRadians() << shp::Unit::getDerivedSymbol(shp::Unit::PLANE_ANGLE);
+	return result.str();
+}
+
 std::string Direction::printEuler() const {
     std::stringstream result;
     std::complex<float> phase = getPhase();

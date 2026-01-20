@@ -21,7 +21,6 @@
 #ifndef SHP_WAVE_H
 #define SHP_WAVE_H
 
-#include <vector>
 #include "curvature.h"
 
 namespace shp {
@@ -37,14 +36,14 @@ public:
     Wave(const float polarization, const float azimuthal);
     Wave(const Polar& polarization, const Azimuth& azimuthal);
     Wave(const std::string name);
-    Wave(const std::string name, const Azimuth& polarization);
+    Wave(const std::string name, const Azimuth& azimuthal);
     Wave(const std::string name, const float polarization);
     Wave(const std::string name, const Polar& polarization);
     Wave(const std::string name, const float polarization, const float azimuthal);
     Wave(const std::string name, const Polar& polarization, const Azimuth& azimuthal);
     Wave(const std::string name, const CurvatureArray& wavelets);
     Wave(const std::string name, const CurvatureArray& wavelets,
-        const Azimuth& polarization);
+        const Azimuth& azimuthal);
     Wave(const std::string name, const CurvatureArray& wavelets,
         const float polarization);
     Wave(const std::string name, const CurvatureArray& wavelets,
@@ -81,7 +80,7 @@ public:
     void set(int index, const Curvature& object);
     virtual Point copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 public:
     static const long DEFAULT_FREQUENCY;
 };

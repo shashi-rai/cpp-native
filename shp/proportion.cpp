@@ -22,6 +22,8 @@
 
 namespace shp {
 
+const float Proportion::DEFAULT_MAX = 1.0f;
+
 Proportion::Proportion()
         : numerator(), denominator() {
 
@@ -111,7 +113,7 @@ Proportion Proportion::operator%(const Proportion& peer) const {
 Signal Proportion::getRemainder() const {
     Signal ratio = this->getRatio();
     ratio.adjustScaling();
-    return Signal(ratio.getOrientation(), (1.0f - ratio.getMagnitude()), ratio.getScaling(), ratio.getUnit());
+    return Signal(ratio.getOrientation(), (DEFAULT_MAX - ratio.getMagnitude()), ratio.getScaling(), ratio.getUnit());
 }
 
 Signal Proportion::getRatio() const {
@@ -173,7 +175,7 @@ void Proportion::clear() {
     return;
 }
 
-std::string Proportion::print() {
+std::string Proportion::print() const {
     std::stringstream result;
     result << "{";
     result << numerator.print() << ",";
