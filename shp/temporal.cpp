@@ -294,6 +294,26 @@ bool Temporal::operator==(const Temporal& peer) const {
         && (modulation == peer.modulation);
 }
 
+bool Temporal::operator<(const Temporal& peer) const {
+    return (static_cast<const Signal&>(*this) < static_cast<const Signal&>(peer))
+        && (modulation < peer.modulation);
+}
+
+bool Temporal::operator>(const Temporal& peer) const {
+    return (static_cast<const Signal&>(*this) > static_cast<const Signal&>(peer))
+        && (modulation > peer.modulation);
+}
+
+bool Temporal::operator<=(const Temporal& peer) const {
+    Temporal self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Temporal::operator>=(const Temporal& peer) const {
+    Temporal self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Temporal Temporal::operator+(const Temporal& peer) const {
     Signal self = *this, other = peer;
     Signal signal = (self + other); signal.adjustScaling();

@@ -49,6 +49,10 @@ public:
 
     // Operator overloading
     bool operator==(const Direction& peer) const;
+    bool operator<(const Direction& peer) const;
+    bool operator>(const Direction& peer) const;
+    bool operator<=(const Direction& peer) const;
+    bool operator>=(const Direction& peer) const;
     Direction operator+(const Direction& peer) const;
     Direction operator-(const Direction& peer) const;
     Direction operator*(const Direction& peer) const;

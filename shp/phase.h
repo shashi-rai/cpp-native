@@ -130,6 +130,10 @@ public:
 
     // Operator overloading
     bool operator==(const Phase& peer) const;
+    bool operator<(const Phase& peer) const;
+    bool operator>(const Phase& peer) const;
+    bool operator<=(const Phase& peer) const;
+    bool operator>=(const Phase& peer) const;
     Phase operator+(const Phase& peer) const;
     Phase operator-(const Phase& peer) const;
     Phase operator*(const Phase& peer) const;

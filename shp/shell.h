@@ -50,14 +50,18 @@ public:
 
     // Operator overloading
     bool operator==(const Shell& peer) const;
+    bool operator<(const Shell& peer) const;
+    bool operator>(const Shell& peer) const;
+    bool operator<=(const Shell& peer) const;
+    bool operator>=(const Shell& peer) const;
     Shell operator+(const Shell& peer) const;
     Shell operator-(const Shell& peer) const;
 
     // Access operator
-    Polygon operator()(int x) { return orbitals[x]; }
-	const Polygon operator()(int x) const { return orbitals[x]; }
-    Wave operator()(int x, int y) { return orbitals[x](y); }
-	const Wave operator()(int x, int y) const { return orbitals[x](y); }
+    Polygon operator()(const int x) { return orbitals[x]; }
+	const Polygon operator()(const int x) const { return orbitals[x]; }
+    Wave operator()(const int x, const int y) { return orbitals[x](y); }
+	const Wave operator()(const int x, const int y) const { return orbitals[x](y); }
 
     // Getters
     int getLimit() const { return limit; }
@@ -74,6 +78,7 @@ public:
     virtual Point copy();
     virtual void clear();
     virtual std::string print() const;
+    virtual std::string printRadians() const;
 
 public:
     static const int DEFAULT_LIMIT;

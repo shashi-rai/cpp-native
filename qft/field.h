@@ -21,8 +21,6 @@
 #ifndef QFT_FIELD_H
 #define QFT_FIELD_H
 
-#include <string>
-#include <vector>
 #include "action.h"
 #include "charge.h"
 #include "mass.h"
@@ -165,6 +163,10 @@ public:
 
     // Operator overloading
     bool operator==(const Field& peer) const;
+    bool operator<(const Field& peer) const;
+    bool operator>(const Field& peer) const;
+    bool operator<=(const Field& peer) const;
+    bool operator>=(const Field& peer) const;
     Field operator+(const Field& peer) const;
     Field operator-(const Field& peer) const;
     Field operator*(const Field& peer) const;
@@ -205,7 +207,8 @@ public:
     shp::Temporal getTotal() const;
     virtual shp::Temporal copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printRadians() const;
     shp::Temporal getFluctuation(const float phase) const;
 public:
     static std::shared_ptr<qft::Field> shareable(const std::string name);

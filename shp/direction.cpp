@@ -80,9 +80,42 @@ Direction::~Direction() {
 }
 
 bool Direction::operator==(const Direction& peer) const {
-    return (degrees == peer.degrees) &&
-            (minutes == peer.minutes) &&
-            (seconds == peer.seconds);
+    Direction self = *this;
+    return (self.degrees == peer.degrees) &&
+            (self.minutes == peer.minutes) &&
+            (self.seconds == peer.seconds);
+}
+
+bool Direction::operator<(const Direction& peer) const {
+    Direction self = *this;
+    if (self.degrees < peer.degrees)
+        return true;
+    if (self.minutes < peer.minutes)
+        return true;
+    if (self.seconds < peer.seconds)
+        return true;
+    return false;
+}
+
+bool Direction::operator>(const Direction& peer) const {
+    Direction self = *this;
+    if (self.degrees > peer.degrees)
+        return true;
+    if (self.minutes > peer.minutes)
+        return true;
+    if (self.seconds > peer.seconds)
+        return true;
+    return false;
+}
+
+bool Direction::operator<=(const Direction& peer) const {
+    Direction self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Direction::operator>=(const Direction& peer) const {
+    Direction self = *this;
+    return (self > peer) || (self == peer);
 }
 
 Direction Direction::operator+(const Direction& peer) const {

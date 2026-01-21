@@ -21,9 +21,6 @@
 #ifndef QFT_VELOCITY_H
 #define QFT_VELOCITY_H
 
-#include <complex>
-#include <string>
-#include <vector>
 #include "time.h"
 #include "../shp/direction.h"
 #include "../shp/distance.h"
@@ -37,7 +34,7 @@ class Velocity {
 public:
     // Constructors
     Velocity();
-    Velocity(std::string name);
+    Velocity(const std::string name);
     Velocity(const float displacement);
     Velocity(const float displacement, const std::string unit);
     Velocity(const float displacement, const short int scaling, const std::string unit);
@@ -46,20 +43,24 @@ public:
     Velocity(const float displacement, const float direction, const short int scaling);
     Velocity(const float displacement, const float direction, const short int scaling, const std::string unit);
     Velocity(const shp::Distance& displacement, const shp::Direction& direction);
-    Velocity(std::string name, const shp::Unit& unit);
-    Velocity(std::string name, const float displacement);
-    Velocity(std::string name, const float displacement, const shp::Unit& unit);
-    Velocity(std::string name, const float displacement, const float direction);
-    Velocity(std::string name, const float displacement, const float direction, const std::string unit);
-    Velocity(std::string name, const float displacement, const float direction, const short int scaling);
-    Velocity(std::string name, const float displacement, const float direction, const short int scaling, const std::string unit);
-    Velocity(std::string name, const shp::Distance& displacement, const shp::Direction& direction);
+    Velocity(const std::string name, const shp::Unit& unit);
+    Velocity(const std::string name, const float displacement);
+    Velocity(const std::string name, const float displacement, const shp::Unit& unit);
+    Velocity(const std::string name, const float displacement, const float direction);
+    Velocity(const std::string name, const float displacement, const float direction, const std::string unit);
+    Velocity(const std::string name, const float displacement, const float direction, const short int scaling);
+    Velocity(const std::string name, const float displacement, const float direction, const short int scaling, const std::string unit);
+    Velocity(const std::string name, const shp::Distance& displacement, const shp::Direction& direction);
 
     // Destructors
     ~Velocity();
 
     // Operator overloading
     bool operator==(const Velocity& peer) const;
+    bool operator<(const Velocity& peer) const;
+    bool operator>(const Velocity& peer) const;
+    bool operator<=(const Velocity& peer) const;
+    bool operator>=(const Velocity& peer) const;
     Velocity operator+(const Velocity& peer) const;
     Velocity operator-(const Velocity& peer) const;
     Velocity operator*(const Velocity& peer) const;
@@ -88,7 +89,8 @@ public:
     bool checkNonZero() const;
     virtual Velocity copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printRadians() const;
     shp::Signal getCosComponent(const float phase) const;
     shp::Signal getSinComponent(const float phase) const;
 protected:

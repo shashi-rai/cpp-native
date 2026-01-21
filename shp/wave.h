@@ -61,12 +61,16 @@ public:
 
     // Operator overloading
     bool operator==(const Wave& peer) const;
+    bool operator<(const Wave& peer) const;
+    bool operator>(const Wave& peer) const;
+    bool operator<=(const Wave& peer) const;
+    bool operator>=(const Wave& peer) const;
     Wave operator+(const Wave& peer) const;
     Wave operator-(const Wave& peer) const;
 
     // Access operator
-    Curvature operator()(int index) { return wavelets[index]; }
-    const Curvature operator()(int index) const { return wavelets[index]; }
+    Curvature operator()(const int index) { return wavelets[index]; }
+    const Curvature operator()(const int index) const { return wavelets[index]; }
 
     // Getters
     CurvatureArray getWavelets() const { return wavelets; }
@@ -76,11 +80,12 @@ public:
 
     // Additional methods
     int getWaveletCount() const;
-    Curvature get(int index) const;
-    void set(int index, const Curvature& object);
+    Curvature get(const int index) const;
+    void set(const int index, const Curvature& object);
     virtual Point copy();
     virtual void clear();
     virtual std::string print() const;
+    virtual std::string printRadians() const;
 public:
     static const long DEFAULT_FREQUENCY;
 };

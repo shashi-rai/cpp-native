@@ -22,8 +22,6 @@
 #define QFT_TIME_H
 
 #include <chrono>
-#include <string>
-#include <vector>
 #include "../shp/frequency.h"
 #include "../shp/temporal.h"
 
@@ -139,6 +137,10 @@ public:
 
     // Operator overloading
     bool operator==(const Time& peer) const;
+    bool operator<(const Time& peer) const;
+    bool operator>(const Time& peer) const;
+    bool operator<=(const Time& peer) const;
+    bool operator>=(const Time& peer) const;
     Time operator+(const Time& peer) const;
     Time operator-(const Time& peer) const;
     Time operator*(const Time& peer) const;
@@ -158,7 +160,8 @@ public:
     long long getNanoseconds() const;
     virtual Time copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printRadians() const;
 
 public:
     static const std::string UNIT;

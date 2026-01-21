@@ -144,6 +144,24 @@ bool Force::operator==(const Force& peer) const {
     return (magnitude == peer.magnitude) && (direction == peer.direction);
 }
 
+bool Force::operator<(const Force& peer) const {
+    return (magnitude < peer.magnitude) && (direction < peer.direction);
+}
+
+bool Force::operator>(const Force& peer) const {
+    return (magnitude < peer.magnitude) && (direction < peer.direction);
+}
+
+bool Force::operator<=(const Force& peer) const {
+    Force self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Force::operator>=(const Force& peer) const {
+    Force self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Force Force::operator+(const Force& peer) const {
     Force self = *this, other = peer;
     std::complex<float>
@@ -228,12 +246,21 @@ void Force::clear() {
     return;
 }
 
-std::string Force::print() {
+std::string Force::print() const {
     std::stringstream result;
     result << "𝐹:";
 	result << name << ",";
     result << magnitude.print() << ",";
 	result << direction.print();
+	return result.str();
+}
+
+std::string Force::printRadians() const {
+    std::stringstream result;
+    result << "𝐹:";
+	result << name << ",";
+    result << magnitude.print() << ",";
+	result << direction.printRadians();
 	return result.str();
 }
 

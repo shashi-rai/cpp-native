@@ -44,14 +44,18 @@ public:
 
     // Operator overloading
     bool operator==(const Planar& peer) const;
+    bool operator<(const Planar& peer) const;
+    bool operator>(const Planar& peer) const;
+    bool operator<=(const Planar& peer) const;
+    bool operator>=(const Planar& peer) const;
     Planar operator+(const Planar& peer) const;
     Planar operator-(const Planar& peer) const;
 
     // Access operator
-    Linear operator()(int x) { return lines[x]; }
-    const Linear operator()(int x) const { return lines[x]; }
-    Point operator()(int x, int y) { return lines[x](y); }
-	const Point operator()(int x, int y) const { return lines[x](y); }
+    Linear operator()(const int x) { return lines[x]; }
+    const Linear operator()(const int x) const { return lines[x]; }
+    Point operator()(const int x, const int y) { return lines[x](y); }
+	const Point operator()(const int x, const int y) const { return lines[x](y); }
 
     // Getters
     LinearArray getLines() const { return lines; }
@@ -66,6 +70,7 @@ public:
     virtual Point copy();
     virtual void clear();
     virtual std::string print() const;
+    virtual std::string printRadians() const;
 };
 
 typedef std::vector<Planar > PlanarArray;

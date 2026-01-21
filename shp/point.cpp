@@ -293,6 +293,26 @@ bool Point::operator==(const Point& peer) const {
         && (signal == peer.signal);
 }
 
+bool Point::operator<(const Point& peer) const {
+    return (static_cast<const Shape&>(*this) == static_cast<const Shape&>(peer))
+        && (signal < peer.signal);
+}
+
+bool Point::operator>(const Point& peer) const {
+    return (static_cast<const Shape&>(*this) == static_cast<const Shape&>(peer))
+        && (signal > peer.signal);
+}
+
+bool Point::operator<=(const Point& peer) const {
+    Point self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Point::operator>=(const Point& peer) const {
+    Point self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Point Point::operator+(const Point& peer) const {
     Point self = *this, other = peer;
 	Signal signal = (self.signal + other.signal);

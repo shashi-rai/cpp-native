@@ -21,9 +21,6 @@
 #ifndef QFT_ISOSPIN_H
 #define QFT_ISOSPIN_H
 
-#include <cmath>
-#include <sstream>
-#include <vector>
 #include "../shp/quantity.h"
 
 namespace qft {
@@ -58,7 +55,7 @@ public:
     bool isAntiClockwise() const;
     virtual Isospin copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 
 public:
     static const float DEFAULT_VALUE;

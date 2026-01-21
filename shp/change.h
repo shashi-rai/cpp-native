@@ -64,6 +64,10 @@ public:
 
     // Operator overloading
     bool operator==(const Change& peer) const;
+    bool operator<(const Change& peer) const;
+    bool operator>(const Change& peer) const;
+    bool operator<=(const Change& peer) const;
+    bool operator>=(const Change& peer) const;
     Change operator+(const Change& peer) const;
     Change operator-(const Change& peer) const;
     Change operator*(const Change& peer) const;

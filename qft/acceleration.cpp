@@ -185,6 +185,26 @@ bool Acceleration::operator==(const Acceleration& peer) const {
         && (unit == peer.unit);
 }
 
+bool Acceleration::operator<(const Acceleration& peer) const {
+    return (static_cast<const Velocity&>(*this) < static_cast<const Velocity&>(peer))
+        && (changeSpeed < peer.changeSpeed) && (changeAngle < peer.changeAngle);
+}
+
+bool Acceleration::operator>(const Acceleration& peer) const {
+    return (static_cast<const Velocity&>(*this) > static_cast<const Velocity&>(peer))
+        && (changeSpeed > peer.changeSpeed) && (changeAngle > peer.changeAngle);
+}
+
+bool Acceleration::operator<=(const Acceleration& peer) const {
+    Acceleration self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Acceleration::operator>=(const Acceleration& peer) const {
+    Acceleration self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Acceleration Acceleration::operator+(const Acceleration& peer) const {
     Velocity self = *this, other = peer;
     Velocity velocity = (self + other);
@@ -293,11 +313,21 @@ void Acceleration::clear() {
     return;
 }
 
-std::string Acceleration::print() {
+std::string Acceleration::print() const {
     std::stringstream result;
     result << "a";
     result << Velocity::print() << ",Δ{";
 	result << changeSpeed  << ",⌒";
+    result << getAngularShiftRate().print() << "}";
+    result << unit.print();
+	return result.str();
+}
+
+std::string Acceleration::printRadians() const {
+    std::stringstream result;
+    result << "a";
+    result << Velocity::printRadians() << ",Δ{";
+	result << changeSpeed << ",⌒";
     result << getAngularShiftRate().print() << "}";
     result << unit.print();
 	return result.str();

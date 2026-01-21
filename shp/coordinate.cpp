@@ -19,6 +19,7 @@
 // THE SOFTWARE.
 
 #include "coordinate.h"
+#include "direction.h"
 
 namespace shp {
 
@@ -52,6 +53,24 @@ Coordinate::~Coordinate() {
 
 bool Coordinate::operator==(const Coordinate& peer) const {
     return (x == peer.x) && (y == peer.y) && (z == peer.z);
+}
+
+bool Coordinate::operator<(const Coordinate& peer) const {
+    return (x < peer.x) || (y < peer.y) || (z < peer.z);
+}
+
+bool Coordinate::operator>(const Coordinate& peer) const {
+    return (x > peer.x) || (y > peer.y) || (z > peer.z);
+}
+
+bool Coordinate::operator<=(const Coordinate& peer) const {
+    Coordinate self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Coordinate::operator>=(const Coordinate& peer) const {
+    Coordinate self = *this;
+    return (self > peer) || (self == peer);
 }
 
 Coordinate Coordinate::operator+(const Coordinate& peer) const {
@@ -131,6 +150,15 @@ std::string Coordinate::print() const {
     result << x << ",";
     result << y << ",";
     result << z << ")";
+	return result.str();
+}
+
+std::string Coordinate::printRadians() const {
+    std::stringstream result;
+    result << "(";
+    result << Direction(x).printRadians() << ",";
+    result << Direction(y).printRadians() << ",";
+    result << Direction(z).printRadians() << ")";
 	return result.str();
 }
 

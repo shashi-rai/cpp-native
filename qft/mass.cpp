@@ -117,6 +117,24 @@ bool Mass::operator==(const Mass& peer) const {
         && (field == peer.field);
 }
 
+bool Mass::operator<(const Mass& peer) const {
+    return (static_cast<const shp::Frequency&>(*this) < static_cast<const shp::Frequency&>(peer));
+}
+
+bool Mass::operator>(const Mass& peer) const {
+    return (static_cast<const shp::Frequency&>(*this) < static_cast<const shp::Frequency&>(peer));
+}
+
+bool Mass::operator<=(const Mass& peer) const {
+    Mass self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Mass::operator>=(const Mass& peer) const {
+    Mass self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Mass Mass::operator+(const Mass& peer) const {
     shp::Frequency self = *this, other = peer;
     shp::Frequency result = (self + other);
@@ -226,11 +244,19 @@ void Mass::clear() {
     return;
 }
 
-std::string Mass::print() {
+std::string Mass::print() const {
     std::stringstream result;
     result << shp::Unit::getBaseDimension(shp::Unit::MASS) << ":";
     result << shp::Frequency::print() << ",";
     result << (isOwned() ? field->print() : "");
+	return result.str();
+}
+
+std::string Mass::printRadians() const {
+    std::stringstream result;
+    result << shp::Unit::getBaseDimension(shp::Unit::MASS) << ":";
+    result << shp::Frequency::printRadians() << ",";
+    result << (isOwned() ? field->printRadians() : "");
 	return result.str();
 }
 

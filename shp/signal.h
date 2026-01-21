@@ -75,6 +75,10 @@ public:
 
     // Operator overloading
     bool operator==(const Signal& peer) const;
+    bool operator<(const Signal& peer) const;
+    bool operator>(const Signal& peer) const;
+    bool operator<=(const Signal& peer) const;
+    bool operator>=(const Signal& peer) const;
     Signal operator+(const Signal& peer) const;
     Signal operator-(const Signal& peer) const;
     Signal operator*(const Signal& peer) const;

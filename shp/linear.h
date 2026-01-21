@@ -44,12 +44,16 @@ public:
 
     // Operator overloading
     bool operator==(const Linear& peer) const;
+    bool operator<(const Linear& peer) const;
+    bool operator>(const Linear& peer) const;
+    bool operator<=(const Linear& peer) const;
+    bool operator>=(const Linear& peer) const;
     Linear operator+(const Linear& peer) const;
     Linear operator-(const Linear& peer) const;
 
     // Access operator
-    Point operator()(int x) { return points[x]; }
-    const Point operator()(int x) const { return points[x]; }
+    Point operator()(const int x) { return points[x]; }
+    const Point operator()(const int x) const { return points[x]; }
 
     // Getters
     PointArray getPoints() const { return points; }
@@ -64,6 +68,7 @@ public:
     virtual Point copy();
     virtual void clear();
     virtual std::string print() const;
+    virtual std::string printRadians() const;
 };
 
 typedef std::vector<Linear > LinearArray;

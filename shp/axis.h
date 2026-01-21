@@ -46,6 +46,10 @@ public:
 
     // Operator overloading
     bool operator==(const Axis& peer) const;
+    bool operator<(const Axis& peer) const;
+    bool operator>(const Axis& peer) const;
+    bool operator<=(const Axis& peer) const;
+    bool operator>=(const Axis& peer) const;
     Axis operator+(const Axis& peer) const;
     Axis operator-(const Axis& peer) const;
 

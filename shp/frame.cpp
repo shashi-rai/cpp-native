@@ -76,6 +76,26 @@ bool Frame::operator==(const Frame& peer) const {
         && (planes == peer.planes);
 }
 
+bool Frame::operator<(const Frame& peer) const {
+    return (static_cast<const Point&>(*this) < static_cast<const Point&>(peer))
+        && (planes < peer.planes);
+}
+
+bool Frame::operator>(const Frame& peer) const {
+    return (static_cast<const Point&>(*this) > static_cast<const Point&>(peer))
+        && (planes > peer.planes);
+}
+
+bool Frame::operator<=(const Frame& peer) const {
+    Frame self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Frame::operator>=(const Frame& peer) const {
+    Frame self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Frame Frame::operator+(const Frame& peer) const {
     PlanarArray result(planes);
     result.insert(result.end(), peer.planes.begin(), peer.planes.end());

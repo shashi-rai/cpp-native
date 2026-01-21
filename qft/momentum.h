@@ -21,10 +21,8 @@
 #ifndef QFT_MOMENTUM_H
 #define QFT_MOMENTUM_H
 
-#include <vector>
 #include "mass.h"
 #include "acceleration.h"
-#include "time.h"
 
 namespace qft {
 
@@ -37,7 +35,7 @@ class Momentum {
 public:
     // Constructors
     Momentum();
-    Momentum(std::string name);
+    Momentum(const std::string name);
     Momentum(const float mass);
     Momentum(const float mass, std::string unit);
     Momentum(const float mass, const shp::Unit& unit);
@@ -45,23 +43,27 @@ public:
     Momentum(const float mass, const short int scaling);
     Momentum(const float mass, const short int scaling, std::string unit);
     Momentum(const float mass, const short int scaling, const shp::Unit& unit);
-    Momentum(std::string name, const float mass);
-    Momentum(std::string name, const float mass, std::string unit);
-    Momentum(std::string name, const float mass, const shp::Unit& unit);
-    Momentum(std::string name, const qft::Mass& mass);
-    Momentum(std::string name, const float mass, const short int scaling);
-    Momentum(std::string name, const float mass, const short int scaling, std::string unit);
-    Momentum(std::string name, const float mass, const short int scaling, const shp::Unit& unit);
+    Momentum(const std::string name, const float mass);
+    Momentum(const std::string name, const float mass, std::string unit);
+    Momentum(const std::string name, const float mass, const shp::Unit& unit);
+    Momentum(const std::string name, const qft::Mass& mass);
+    Momentum(const std::string name, const float mass, const short int scaling);
+    Momentum(const std::string name, const float mass, const short int scaling, std::string unit);
+    Momentum(const std::string name, const float mass, const short int scaling, const shp::Unit& unit);
     Momentum(const float mass, const float velocity);
     Momentum(const qft::Mass& mass, const qft::Acceleration& velocity);
-    Momentum(std::string name, const float mass, const float velocity);
-    Momentum(std::string name, const qft::Mass& mass, const qft::Acceleration& velocity);
+    Momentum(const std::string name, const float mass, const float velocity);
+    Momentum(const std::string name, const qft::Mass& mass, const qft::Acceleration& velocity);
 
     // Destructors
     ~Momentum();
 
     // Operator overloading
     bool operator==(const Momentum& peer) const;
+    bool operator<(const Momentum& peer) const;
+    bool operator>(const Momentum& peer) const;
+    bool operator<=(const Momentum& peer) const;
+    bool operator>=(const Momentum& peer) const;
     Momentum operator+(const Momentum& peer) const;
     Momentum operator-(const Momentum& peer) const;
     Momentum operator*(const Momentum& peer) const;
@@ -98,7 +100,8 @@ public:
     bool checkNonZero() const;
     virtual Momentum copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printRadians() const;
     shp::Signal getCosComponent(const float phase) const;
     shp::Signal getSinComponent(const float phase) const;
 public:

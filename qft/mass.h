@@ -21,12 +21,8 @@
 #ifndef QFT_MASS_H
 #define QFT_MASS_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "density.h"
 #include "force.h"
-#include "../shp/angular.h"
 #include "../shp/potential.h"
 #include "../shp/frequency.h"
 
@@ -59,6 +55,10 @@ public:
 
     // Operator overloading
     bool operator==(const Mass& peer) const;
+    bool operator<(const Mass& peer) const;
+    bool operator>(const Mass& peer) const;
+    bool operator<=(const Mass& peer) const;
+    bool operator>=(const Mass& peer) const;
     Mass operator+(const Mass& peer) const;
     Mass operator-(const Mass& peer) const;
     Mass operator*(const Mass& peer) const;
@@ -85,7 +85,8 @@ public:
     std::shared_ptr<Field> getOriginField() const;
     virtual Mass copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printRadians() const;
     shp::Frequency getFluctuation(const float phase) const;
 public:
     static const std::string UNIT;

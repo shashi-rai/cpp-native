@@ -92,6 +92,26 @@ bool Azimuth::operator==(const Azimuth& peer) const {
         && (change == peer.change);
 }
 
+bool Azimuth::operator<(const Azimuth& peer) const {
+    return (static_cast<const Direction&>(*this) < static_cast<const Direction&>(peer))
+        && (change < peer.change);
+}
+
+bool Azimuth::operator>(const Azimuth& peer) const {
+    return (static_cast<const Direction&>(*this) > static_cast<const Direction&>(peer))
+        && (change > peer.change);
+}
+
+bool Azimuth::operator<=(const Azimuth& peer) const {
+    Azimuth self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Azimuth::operator>=(const Azimuth& peer) const {
+    Azimuth self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Azimuth Azimuth::operator+(const Direction& peer) const {
     Direction self = *this, other = peer;
     Direction azimuth = (self + other);

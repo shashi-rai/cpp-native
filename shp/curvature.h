@@ -67,6 +67,10 @@ public:
 
     // Operator overloading
     bool operator==(const Curvature& peer) const;
+    bool operator<(const Curvature& peer) const;
+    bool operator>(const Curvature& peer) const;
+    bool operator<=(const Curvature& peer) const;
+    bool operator>=(const Curvature& peer) const;
     Curvature operator+(const Curvature& peer) const;
     Curvature operator-(const Curvature& peer) const;
 

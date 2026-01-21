@@ -70,7 +70,43 @@ Axis::~Axis() {
 }
 
 bool Axis::operator==(const Axis& peer) const {
-    return (name == peer.name) && ((gradient == peer.gradient)) && (scaling == peer.scaling);
+    Axis self = *this;
+    if (self.gradient == peer.gradient)
+        return true;
+    if (self.scaling == peer.scaling)
+        return true;
+    if (self.name == peer.name) {
+        return true;
+    }
+    return false;
+}
+
+bool Axis::operator<(const Axis& peer) const {
+    Axis self = *this;
+    if (self.gradient < peer.gradient)
+        return true;
+    if (self.scaling < peer.scaling)
+        return true;
+    return false;
+}
+
+bool Axis::operator>(const Axis& peer) const {
+    Axis self = *this;
+    if (self.gradient > peer.gradient)
+        return true;
+    if (self.scaling > peer.scaling)
+        return true;
+    return false;
+}
+
+bool Axis::operator<=(const Axis& peer) const {
+    Axis self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Axis::operator>=(const Axis& peer) const {
+    Axis self = *this;
+    return (self > peer) || (self == peer);
 }
 
 Axis Axis::operator+(const Axis& peer) const {

@@ -203,6 +203,24 @@ bool Confinement::operator==(const Confinement& peer) const {
     return (static_cast<const Potential&>(*this) == static_cast<const Potential&>(peer));
 }
 
+bool Confinement::operator<(const Confinement& peer) const {
+    return (static_cast<const Potential&>(*this) < static_cast<const Potential&>(peer));
+}
+
+bool Confinement::operator>(const Confinement& peer) const {
+    return (static_cast<const Potential&>(*this) > static_cast<const Potential&>(peer));
+}
+
+bool Confinement::operator<=(const Confinement& peer) const {
+    Confinement self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Confinement::operator>=(const Confinement& peer) const {
+    Confinement self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Confinement Confinement::operator+(const Confinement& peer) const {
 	Potential self = *this;
     shp::Direction phase = (this->getPhase() + peer.getPhase());

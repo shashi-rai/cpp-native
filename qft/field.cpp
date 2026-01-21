@@ -435,6 +435,28 @@ bool Field::operator==(const Field& peer) const {
         && (orientation == peer.orientation);
 }
 
+bool Field::operator<(const Field& peer) const {
+    return (static_cast<const shp::Temporal&>(*this) < static_cast<const shp::Temporal&>(peer))
+        && (potential < peer.potential)
+        && (orientation < peer.orientation);
+}
+
+bool Field::operator>(const Field& peer) const {
+    return (static_cast<const shp::Temporal&>(*this) > static_cast<const shp::Temporal&>(peer))
+        && (potential > peer.potential)
+        && (orientation > peer.orientation);
+}
+
+bool Field::operator<=(const Field& peer) const {
+    Field self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Field::operator>=(const Field& peer) const {
+    Field self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Field Field::operator+(const Field& peer) const {
     shp::Temporal self = *this, other = peer;
     shp::Potential newpotential = (potential + peer.potential);
@@ -607,12 +629,21 @@ void Field::clear() {
     return;
 }
 
-std::string Field::print() {
+std::string Field::print() const {
     std::stringstream result;
     result << "≡";
     result << potential.print() << ",";
     result << orientation.print() << ",";
     result << shp::Temporal::print();
+	return result.str();
+}
+
+std::string Field::printRadians() const {
+    std::stringstream result;
+    result << "≡";
+    result << potential.printRadians() << ",";
+    result << orientation.printRadians() << ",";
+    result << shp::Temporal::printRadians();
 	return result.str();
 }
 

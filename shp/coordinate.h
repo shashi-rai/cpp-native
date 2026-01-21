@@ -44,6 +44,10 @@ public:
 
     // Operator overloading
     bool operator==(const Coordinate& peer) const;
+    bool operator<(const Coordinate& peer) const;
+    bool operator>(const Coordinate& peer) const;
+    bool operator<=(const Coordinate& peer) const;
+    bool operator>=(const Coordinate& peer) const;
     Coordinate operator+(const Coordinate& peer) const;
     Coordinate operator-(const Coordinate& peer) const;
     Coordinate operator*(const Coordinate& peer) const;
@@ -71,6 +75,7 @@ public:
     Coordinate copy();
     void clear();
     virtual std::string print() const;
+    virtual std::string printRadians() const;
 
 public:
     static const float ORIGIN;

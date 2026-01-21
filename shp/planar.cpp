@@ -76,6 +76,26 @@ bool Planar::operator==(const Planar& peer) const {
         && (lines == peer.lines);
 }
 
+bool Planar::operator<(const Planar& peer) const {
+    return (static_cast<const Point&>(*this) < static_cast<const Point&>(peer))
+        && (lines < peer.lines);
+}
+
+bool Planar::operator>(const Planar& peer) const {
+    return (static_cast<const Point&>(*this) > static_cast<const Point&>(peer))
+        && (lines > peer.lines);
+}
+
+bool Planar::operator<=(const Planar& peer) const {
+    Planar self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Planar::operator>=(const Planar& peer) const {
+    Planar self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Planar Planar::operator+(const Planar& peer) const {
     LinearArray result(lines);
     result.insert(result.end(), peer.lines.begin(), peer.lines.end());
@@ -140,6 +160,14 @@ std::string Planar::print() const {
     std::stringstream result;
     result << "{pl";
 	result << Point::print() << ",sz:";
+	result << lines.size() << "}";
+	return result.str();
+}
+
+std::string Planar::printRadians() const {
+    std::stringstream result;
+    result << "{pl";
+	result << Point::printRadians() << ",sz:";
 	result << lines.size() << "}";
 	return result.str();
 }

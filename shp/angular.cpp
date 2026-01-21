@@ -198,6 +198,28 @@ bool Angular::operator==(const Angular& peer) const {
             && (azimuth == peer.azimuth);
 }
 
+bool Angular::operator<(const Angular& peer) const {
+    return (static_cast<const Distance&>(*this) < static_cast<const Distance&>(peer))
+            && (polar < peer.polar)
+            && (azimuth < peer.azimuth);
+}
+
+bool Angular::operator>(const Angular& peer) const {
+    return (static_cast<const Distance&>(*this) > static_cast<const Distance&>(peer))
+            && (polar > peer.polar)
+            && (azimuth > peer.azimuth);
+}
+
+bool Angular::operator<=(const Angular& peer) const {
+    Angular self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Angular::operator>=(const Angular& peer) const {
+    Angular self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Angular Angular::operator+(const Angular& peer) const {
     Angular self = *this, other = peer;
     Distance newRadius = (self.getRadius() + other.getRadius());
@@ -336,8 +358,7 @@ Angular Angular::operator%(const Polar& rotation) const {
 Quantity Angular::operator()(const Angular& peer,
         const Distance& separation, const Distance& position) const {
     Angular self = *this;
-    Quantity ax = self.getRelativeX(position), bx = peer.getRelativeX((separation - position));
-    Quantity result = (ax - bx); result.adjustScaling();
+    Quantity result = getLinearDisplacement(peer, separation, position);
     return result;
 }
 
@@ -361,11 +382,19 @@ Quantity Angular::getLinearDisplacement(const Angular& peer,
     return result;
 }
 
-Quantity Angular::getAngularDisplacement(const Angular& peer,
+Quantity Angular::getAzimuthDisplacement(const Angular& peer,
         const Distance& separation, const Distance& position) const {
     Angular self = *this;
-    Quantity ax = self.getRelativeX(position), bx = peer.getRelativeX((separation - position));
-    Quantity result = (ax - bx); result.adjustScaling();
+    Quantity ay = self.getRelativeY(position), by = peer.getRelativeY((separation - position));
+    Quantity result = (ay - by); result.adjustScaling();
+    return result;
+}
+
+Quantity Angular::getPolarDisplacement(const Angular& peer,
+        const Distance& separation, const Distance& position) const {
+    Angular self = *this;
+    Quantity az = self.getRelativeZ(position), bz = peer.getRelativeZ((separation - position));
+    Quantity result = (az - bz); result.adjustScaling();
     return result;
 }
 
@@ -381,7 +410,19 @@ Quantity Angular::getLinearDisplacement(const Angular& peerX, const Angular& pee
     return result;
 }
 
-Quantity Angular::getAngularDisplacement(const Angular& peerX, const Angular& peerY,
+Quantity Angular::getAzimuthDisplacement(const Angular& peerX, const Angular& peerY,
+        const Distance& separationX, const Distance& separationY) const {
+    Angular self = *this; float end = Quantity::DEFAULT_VALUE;
+    Quantity azimX = self(peerX, separationX, end).getCosComponent(peerX.polar.toRadians());
+    Quantity azimY = self(peerY, separationY, end).getCosComponent(peerY.polar.toRadians());
+    std::complex<float> radial(azimX.getMagnitude(), azimY.getMagnitude());
+    std::complex<float> polarized = std::sqrt(radial);
+    shp::Quantity result((std::abs(polarized) * cos(self.polar.toRadians())),
+            azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
+    return result;
+}
+
+Quantity Angular::getPolarDisplacement(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const {
     Angular self = *this; float end = Quantity::DEFAULT_VALUE;
     Quantity azimX = self(peerX, separationX, end).getCosComponent(peerX.polar.toRadians());

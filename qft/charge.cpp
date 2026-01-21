@@ -122,6 +122,24 @@ bool Charge::operator==(const Charge& peer) const {
         && (field == peer.field);
 }
 
+bool Charge::operator<(const Charge& peer) const {
+    return (static_cast<const shp::Temporal&>(*this) < static_cast<const shp::Temporal&>(peer));
+}
+
+bool Charge::operator>(const Charge& peer) const {
+    return (static_cast<const shp::Temporal&>(*this) < static_cast<const shp::Temporal&>(peer));
+}
+
+bool Charge::operator<=(const Charge& peer) const {
+    Charge self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Charge::operator>=(const Charge& peer) const {
+    Charge self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Charge Charge::operator+(const Charge& peer) const {
     shp::Temporal self = *this, other = peer;
     shp::Temporal result = (self + other);
@@ -231,11 +249,19 @@ void Charge::clear() {
     return;
 }
 
-std::string Charge::print() {
+std::string Charge::print() const {
     std::stringstream result;
     result << "q:";
     result << shp::Temporal::print() << ",";
     result << (isOwned() ? field->print() : "");
+	return result.str();
+}
+
+std::string Charge::printRadians() const {
+    std::stringstream result;
+    result << "q:";
+    result << shp::Temporal::printRadians() << ",";
+    result << (isOwned() ? field->printRadians() : "");
 	return result.str();
 }
 

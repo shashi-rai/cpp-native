@@ -291,6 +291,26 @@ bool Frequency::operator==(const Frequency& peer) const {
         && (modulation == peer.modulation);
 }
 
+bool Frequency::operator<(const Frequency& peer) const {
+    return (static_cast<const Signal&>(*this) < static_cast<const Signal&>(peer))
+        && (modulation < peer.modulation);
+}
+
+bool Frequency::operator>(const Frequency& peer) const {
+    return (static_cast<const Signal&>(*this) > static_cast<const Signal&>(peer))
+        && (modulation > peer.modulation);
+}
+
+bool Frequency::operator<=(const Frequency& peer) const {
+    Frequency self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Frequency::operator>=(const Frequency& peer) const {
+    Frequency self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Frequency Frequency::operator+(const Frequency& peer) const {
     Signal self = *this, other = peer;
     Signal signal = (self + other); signal.adjustScaling();

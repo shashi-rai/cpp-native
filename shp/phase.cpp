@@ -385,6 +385,26 @@ bool Phase::operator==(const Phase& peer) const {
         && (polarization == peer.polarization) && (timestamp == peer.timestamp);
 }
 
+bool Phase::operator<(const Phase& peer) const {
+    return (static_cast<const Point&>(*this) < static_cast<const Point&>(peer))
+        && (polarization < peer.polarization) && (timestamp < peer.timestamp);
+}
+
+bool Phase::operator>(const Phase& peer) const {
+    return (static_cast<const Point&>(*this) > static_cast<const Point&>(peer))
+        && (polarization > peer.polarization) && (timestamp > peer.timestamp);
+}
+
+bool Phase::operator<=(const Phase& peer) const {
+    Phase self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Phase::operator>=(const Phase& peer) const {
+    Phase self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Phase Phase::operator+(const Phase& peer) const {
     Phase self = *this, other = peer;
     std::complex<float>

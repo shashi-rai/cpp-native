@@ -54,6 +54,10 @@ public:
 
     // Operator overloading
     bool operator==(const Distance& peer) const;
+    bool operator<(const Distance& peer) const;
+    bool operator>(const Distance& peer) const;
+    bool operator<=(const Distance& peer) const;
+    bool operator>=(const Distance& peer) const;
     Distance operator+(const Distance& peer) const;
     Distance operator-(const Distance& peer) const;
     Distance operator*(const Distance& peer) const;

@@ -423,6 +423,24 @@ bool Time::operator==(const Time& peer) const {
         && (name == peer.name);
 }
 
+bool Time::operator<(const Time& peer) const {
+    return (static_cast<const shp::Temporal&>(*this) < static_cast<const shp::Temporal&>(peer));
+}
+
+bool Time::operator>(const Time& peer) const {
+    return (static_cast<const shp::Temporal&>(*this) > static_cast<const shp::Temporal&>(peer));
+}
+
+bool Time::operator<=(const Time& peer) const {
+    Time self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Time::operator>=(const Time& peer) const {
+    Time self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Time Time::operator+(const Time& peer) const {
     Temporal self = *this, other = peer;
     Temporal duration = (self + other);
@@ -502,10 +520,17 @@ void Time::clear() {
     return;
 }
 
-std::string Time::print() {
+std::string Time::print() const {
     std::stringstream result;
     result << shp::Unit::getBaseDimension(shp::Unit::TIME);
     result << shp::Temporal::print();
+	return result.str();
+}
+
+std::string Time::printRadians() const {
+    std::stringstream result;
+    result << shp::Unit::getBaseDimension(shp::Unit::TIME);
+    result << shp::Temporal::printRadians();
 	return result.str();
 }
 

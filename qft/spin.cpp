@@ -83,7 +83,7 @@ void Spin::clear() {
     return;
 }
 
-std::string Spin::print() {
+std::string Spin::print() const {
     std::stringstream result;
     result << "|";
     if (hasNoSpin())

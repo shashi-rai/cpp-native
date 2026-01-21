@@ -44,16 +44,20 @@ public:
 
     // Operator overloading
     bool operator==(const Frame& peer) const;
+    bool operator<(const Frame& peer) const;
+    bool operator>(const Frame& peer) const;
+    bool operator<=(const Frame& peer) const;
+    bool operator>=(const Frame& peer) const;
     Frame operator+(const Frame& peer) const;
     Frame operator-(const Frame& peer) const;
 
     // Access operator
-    Planar operator()(int x) { return planes[x]; }
-    const Planar operator()(int x) const { return planes[x]; }
-    Linear operator()(int x, int y) { return planes[x](y); }
-	const Linear operator()(int x, int y) const { return planes[x](y); }
-    Point operator()(int x, int y, int z) { return planes[x](y)(z); }
-	const Point operator()(int x, int y, int z) const { return planes[x](y)(z); }
+    Planar operator()(const int x) { return planes[x]; }
+    const Planar operator()(const int x) const { return planes[x]; }
+    Linear operator()(const int x, const int y) { return planes[x](y); }
+	const Linear operator()(const int x, const int y) const { return planes[x](y); }
+    Point operator()(const int x, const int y, const int z) { return planes[x](y)(z); }
+	const Point operator()(const int x, const int y, const int z) const { return planes[x](y)(z); }
 
     // Getters
     PlanarArray getPlanes() const { return planes; }

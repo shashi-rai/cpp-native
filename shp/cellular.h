@@ -44,16 +44,20 @@ public:
 
     // Operator overloading
     bool operator==(const Cellular& peer) const;
+    bool operator<(const Cellular& peer) const;
+    bool operator>(const Cellular& peer) const;
+    bool operator<=(const Cellular& peer) const;
+    bool operator>=(const Cellular& peer) const;
     Cellular operator+(const Cellular& peer) const;
     Cellular operator-(const Cellular& peer) const;
 
     // Access operator
-    Shell operator()(int x) { return shells[x]; }
-    const Shell operator()(int x) const { return shells[x]; }
-    Polygon operator()(int x, int y) { return shells[x](y); }
-	const Polygon operator()(int x, int y) const { return shells[x](y); }
-    Wave operator()(int x, int y, int z) { return shells[x](y)(z); }
-	const Wave operator()(int x, int y, int z) const { return shells[x](y)(z); }
+    Shell operator()(const int x) { return shells[x]; }
+    const Shell operator()(const int x) const { return shells[x]; }
+    Polygon operator()(const int x, const int y) { return shells[x](y); }
+	const Polygon operator()(const int x, const int y) const { return shells[x](y); }
+    Wave operator()(const int x, const int y, const int z) { return shells[x](y)(z); }
+	const Wave operator()(const int x, const int y, const int z) const { return shells[x](y)(z); }
 
     // Getters
     ShellArray getShells() const { return shells; }

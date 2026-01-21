@@ -78,6 +78,10 @@ public:
 
     // Operator overloading
     bool operator==(const Point& peer) const;
+    bool operator<(const Point& peer) const;
+    bool operator>(const Point& peer) const;
+    bool operator<=(const Point& peer) const;
+    bool operator>=(const Point& peer) const;
     Point operator+(const Point& peer) const;
     Point operator-(const Point& peer) const;
     Point operator*(const Point& peer) const;

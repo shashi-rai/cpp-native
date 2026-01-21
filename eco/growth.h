@@ -67,6 +67,10 @@ public:
 
     // Operator overloading
     bool operator==(const Growth& peer) const;
+    bool operator<(const Growth& peer) const;
+    bool operator>(const Growth& peer) const;
+    bool operator<=(const Growth& peer) const;
+    bool operator>=(const Growth& peer) const;
     Growth operator+(const Growth& peer) const;
     Growth operator-(const Growth& peer) const;
     Growth operator*(const Growth& peer) const;

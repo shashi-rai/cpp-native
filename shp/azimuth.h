@@ -47,6 +47,10 @@ public:
 
     // Operator overloading
     bool operator==(const Azimuth& peer) const;
+    bool operator<(const Azimuth& peer) const;
+    bool operator>(const Azimuth& peer) const;
+    bool operator<=(const Azimuth& peer) const;
+    bool operator>=(const Azimuth& peer) const;
     Azimuth operator+(const Direction& peer) const;
     Azimuth operator-(const Direction& peer) const;
     Azimuth operator*(const Direction& peer) const;

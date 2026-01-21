@@ -111,6 +111,10 @@ public:
 
     // Operator overloading
     bool operator==(const Frequency& peer) const;
+    bool operator<(const Frequency& peer) const;
+    bool operator>(const Frequency& peer) const;
+    bool operator<=(const Frequency& peer) const;
+    bool operator>=(const Frequency& peer) const;
     Frequency operator+(const Frequency& peer) const;
     Frequency operator-(const Frequency& peer) const;
     Frequency operator*(const Frequency& peer) const;

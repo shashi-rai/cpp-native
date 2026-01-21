@@ -21,10 +21,7 @@
 #ifndef QFT_ACCELERATION_H
 #define QFT_ACCELERATION_H
 
-#include <string>
-#include <vector>
 #include "velocity.h"
-#include "time.h"
 
 namespace qft {
 
@@ -73,6 +70,10 @@ public:
 
     // Operator overloading
     bool operator==(const Acceleration& peer) const;
+    bool operator<(const Acceleration& peer) const;
+    bool operator>(const Acceleration& peer) const;
+    bool operator<=(const Acceleration& peer) const;
+    bool operator>=(const Acceleration& peer) const;
     Acceleration operator+(const Acceleration& peer) const;
     Acceleration operator-(const Acceleration& peer) const;
     Acceleration operator*(const Acceleration& peer) const;
@@ -99,7 +100,8 @@ public:
     bool checkNonZero() const;
     virtual Velocity copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printRadians() const;
     shp::Signal getCosComponent(const float phase) const;
     shp::Signal getSinComponent(const float phase) const;
     shp::Direction getAngularVelocity(const Time& interval) const;

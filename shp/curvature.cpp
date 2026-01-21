@@ -149,7 +149,27 @@ Curvature::~Curvature() {
 
 bool Curvature::operator==(const Curvature& peer) const {
     return (static_cast<const Point&>(*this) == static_cast<const Point&>(peer))
-        && (deformations == peer.deformations) && (polarization == peer.polarization);
+        && (polarization == peer.polarization) && (deformations == peer.deformations);
+}
+
+bool Curvature::operator<(const Curvature& peer) const {
+    return (static_cast<const Point&>(*this) < static_cast<const Point&>(peer))
+        && (polarization < peer.polarization) && (deformations < peer.deformations);
+}
+
+bool Curvature::operator>(const Curvature& peer) const {
+    return (static_cast<const Point&>(*this) > static_cast<const Point&>(peer))
+        && (polarization > peer.polarization) && (deformations > peer.deformations);
+}
+
+bool Curvature::operator<=(const Curvature& peer) const {
+    Curvature self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Curvature::operator>=(const Curvature& peer) const {
+    Curvature self = *this;
+    return (self > peer) || (self == peer);
 }
 
 Curvature Curvature::operator+(const Curvature& peer) const {

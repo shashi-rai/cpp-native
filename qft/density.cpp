@@ -160,6 +160,24 @@ bool Density::operator==(const Density& peer) const {
     return (parameter == peer.parameter) && (volume == peer.volume);
 }
 
+bool Density::operator<(const Density& peer) const {
+    return (parameter < peer.parameter) && (volume < peer.volume);
+}
+
+bool Density::operator>(const Density& peer) const {
+    return (parameter > peer.parameter) && (volume > peer.volume);
+}
+
+bool Density::operator<=(const Density& peer) const {
+    Density self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Density::operator>=(const Density& peer) const {
+    Density self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Density Density::operator+(const Density& peer) const {
 	shp::Signal newparameter = (parameter + peer.parameter);
     shp::Signal newvolume = (volume.getScalarTotal() + peer.volume.getScalarTotal());
@@ -259,6 +277,15 @@ std::string Density::print() {
 	result << name << ",";
     result << parameter.print() << ",";
 	result << volume.print() << ")";
+	return result.str();
+}
+
+std::string Density::printRadians() {
+    std::stringstream result;
+    result << "(ρ:";
+	result << name << ",";
+    result << parameter.printRadians() << ",";
+	result << volume.printRadians() << ")";
 	return result.str();
 }
 

@@ -22,7 +22,8 @@
 
 namespace shp {
 
-Cellular::Cellular() : Point(), shells() {
+Cellular::Cellular()
+        : Point(), shells() {
 
 }
 
@@ -73,6 +74,26 @@ Cellular::~Cellular() {
 bool Cellular::operator==(const Cellular& peer) const {
     return (static_cast<const Point&>(*this) == static_cast<const Point&>(peer))
         && (shells == peer.shells);
+}
+
+bool Cellular::operator<(const Cellular& peer) const {
+    return (static_cast<const Point&>(*this) < static_cast<const Point&>(peer))
+        && (shells < peer.shells);
+}
+
+bool Cellular::operator>(const Cellular& peer) const {
+    return (static_cast<const Point&>(*this) > static_cast<const Point&>(peer))
+        && (shells > peer.shells);
+}
+
+bool Cellular::operator<=(const Cellular& peer) const {
+    Cellular self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Cellular::operator>=(const Cellular& peer) const {
+    Cellular self = *this;
+    return (self > peer) || (self == peer);
 }
 
 Cellular Cellular::operator+(const Cellular& peer) const {

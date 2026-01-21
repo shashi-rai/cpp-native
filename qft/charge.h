@@ -21,12 +21,8 @@
 #ifndef QFT_CHARGE_H
 #define QFT_CHARGE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "density.h"
 #include "force.h"
-#include "../shp/angular.h"
 #include "../shp/potential.h"
 #include "../shp/temporal.h"
 
@@ -60,6 +56,10 @@ public:
 
     // Operator overloading
     bool operator==(const Charge& peer) const;
+    bool operator<(const Charge& peer) const;
+    bool operator>(const Charge& peer) const;
+    bool operator<=(const Charge& peer) const;
+    bool operator>=(const Charge& peer) const;
     Charge operator+(const Charge& peer) const;
     Charge operator-(const Charge& peer) const;
     Charge operator*(const Charge& peer) const;
@@ -86,7 +86,8 @@ public:
     std::shared_ptr<Field> getOriginField() const;
     virtual Charge copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printRadians() const;
     shp::Temporal getFluctuation(const float phase) const;
 public:
     static const std::string UNIT;

@@ -161,9 +161,28 @@ Particle::~Particle() {
 
 bool Particle::operator==(const Particle& peer) const {
     return (static_cast<const Wave&>(*this) == static_cast<const Wave&>(peer))
-        && (physical == peer.physical)
-        && (isospin == peer.isospin) && (spin == peer.spin)
-        && (energy == peer.energy);
+        && (energy == peer.energy) && (isospin == peer.isospin) && (spin == peer.spin)
+        && (physical == peer.physical);
+}
+
+bool Particle::operator<(const Particle& peer) const {
+    return (static_cast<const Wave&>(*this) < static_cast<const Wave&>(peer))
+        && (energy < peer.energy);
+}
+
+bool Particle::operator>(const Particle& peer) const {
+    return (static_cast<const Wave&>(*this) > static_cast<const Wave&>(peer))
+        && (energy > peer.energy);
+}
+
+bool Particle::operator<=(const Particle& peer) const {
+    Particle self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Particle::operator>=(const Particle& peer) const {
+    Particle self = *this;
+    return (self > peer) || (self == peer);
 }
 
 Particle Particle::operator+(const Particle& peer) const {
@@ -255,11 +274,23 @@ void Particle::clear() {
     return;
 }
 
-std::string Particle::print() {
+std::string Particle::print() const {
     std::stringstream result;
     result << "[";
     result << Wave::print() << ",";
     result << energy.print() << ",";
+    result << isospin.print() << ",";
+    result << spin.print() << ",";
+    result << (physical != nullptr ? physical->print() : "");
+    result << "]";
+	return result.str();
+}
+
+std::string Particle::printRadians() const {
+    std::stringstream result;
+    result << "[";
+    result << Wave::printRadians() << ",";
+    result << energy.printRadians() << ",";
     result << isospin.print() << ",";
     result << spin.print() << ",";
     result << (physical != nullptr ? physical->print() : "");

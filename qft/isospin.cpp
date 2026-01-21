@@ -83,7 +83,7 @@ void Isospin::clear() {
     return;
 }
 
-std::string Isospin::print() {
+std::string Isospin::print() const {
     std::stringstream result;
     result << "T3|";
     if (hasNoIsospin())

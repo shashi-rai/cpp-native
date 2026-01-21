@@ -21,9 +21,6 @@
 #ifndef QFT_FORCE_H
 #define QFT_FORCE_H
 
-#include <complex>
-#include <string>
-#include <vector>
 #include "../shp/direction.h"
 #include "../shp/quantity.h"
 
@@ -71,6 +68,10 @@ public:
 
     // Operator overloading
     bool operator==(const Force& peer) const;
+    bool operator<(const Force& peer) const;
+    bool operator>(const Force& peer) const;
+    bool operator<=(const Force& peer) const;
+    bool operator>=(const Force& peer) const;
     Force operator+(const Force& peer) const;
     Force operator-(const Force& peer) const;
     Force operator*(const Force& peer) const;
@@ -95,7 +96,8 @@ public:
     void adjustScaling();
     virtual Force copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printRadians() const;
     shp::Quantity getComponent(float phase) const;
 protected:
     std::complex<float> toComplex(float coefficient, float change);

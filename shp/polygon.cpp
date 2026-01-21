@@ -100,7 +100,27 @@ Polygon::~Polygon() {
 
 bool Polygon::operator==(const Polygon& peer) const {
     return (static_cast<const Point&>(*this) == static_cast<const Point&>(peer))
-        && (waves == peer.waves) && (limit == peer.limit);
+        && (limit == peer.limit) && (waves == peer.waves);
+}
+
+bool Polygon::operator<(const Polygon& peer) const {
+    return (static_cast<const Point&>(*this) < static_cast<const Point&>(peer))
+        && (limit < peer.limit) && (waves < peer.waves);
+}
+
+bool Polygon::operator>(const Polygon& peer) const {
+    return (static_cast<const Point&>(*this) > static_cast<const Point&>(peer))
+        && (limit > peer.limit) && (waves > peer.waves);
+}
+
+bool Polygon::operator<=(const Polygon& peer) const {
+    Polygon self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Polygon::operator>=(const Polygon& peer) const {
+    Polygon self = *this;
+    return (self > peer) || (self == peer);
 }
 
 Polygon Polygon::operator+(const Polygon& peer) const {
@@ -169,6 +189,19 @@ std::string Polygon::print() const {
     std::stringstream result;
     result << "{ψ:";
 	result << Point::print() << ",l:";
+    result << limit << ",sz:";
+	result << waves.size() << "}\n{";
+    for (int i = 0; i < waves.size(); i++) {
+        result << "\t" << waves[i].print() << std::endl;
+    }
+    result << "}";
+	return result.str();
+}
+
+std::string Polygon::printRadians() const {
+    std::stringstream result;
+    result << "{ψ:";
+	result << Point::printRadians() << ",l:";
     result << limit << ",sz:";
 	result << waves.size() << "}\n{";
     for (int i = 0; i < waves.size(); i++) {

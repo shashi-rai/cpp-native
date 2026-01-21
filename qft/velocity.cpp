@@ -29,7 +29,7 @@ Velocity::Velocity() : name(),
 
 }
 
-Velocity::Velocity(std::string name) : name(name),
+Velocity::Velocity(const std::string name) : name(name),
         displacement(UNIT), direction() {
 
 }
@@ -75,45 +75,45 @@ Velocity::Velocity(const shp::Distance& displacement, const shp::Direction& dire
 
 }
 
-Velocity::Velocity(std::string name, const shp::Unit& unit)
+Velocity::Velocity(const std::string name, const shp::Unit& unit)
         : name(name), displacement(unit), direction() {
 
 }
 
-Velocity::Velocity(std::string name, const float displacement)
+Velocity::Velocity(const std::string name, const float displacement)
         : name(name), displacement(displacement, UNIT), direction() {
 
 }
 
-Velocity::Velocity(std::string name, const float displacement, const shp::Unit& unit)
+Velocity::Velocity(const std::string name, const float displacement, const shp::Unit& unit)
         : name(name), displacement(displacement, unit), direction() {
 
 }
 
-Velocity::Velocity(std::string name, const float displacement, const float direction)
+Velocity::Velocity(const std::string name, const float displacement, const float direction)
         : name(name), displacement(displacement, UNIT), direction(direction) {
 
 }
 
-Velocity::Velocity(std::string name, const float displacement, const float direction,
+Velocity::Velocity(const std::string name, const float displacement, const float direction,
         const std::string unit)
         : name(name), displacement(displacement, unit), direction(direction) {
 
 }
 
-Velocity::Velocity(std::string name, const float displacement, const float direction,
+Velocity::Velocity(const std::string name, const float displacement, const float direction,
         const short int scaling)
         : name(name), displacement(displacement, scaling, UNIT), direction(direction) {
 
 }
 
-Velocity::Velocity(std::string name, const float displacement, const float direction,
+Velocity::Velocity(const std::string name, const float displacement, const float direction,
         const short int scaling, const std::string unit)
         : name(name), displacement(displacement, scaling, unit), direction(direction) {
 
 }
 
-Velocity::Velocity(std::string name, const shp::Distance& displacement, const shp::Direction& direction)
+Velocity::Velocity(const std::string name, const shp::Distance& displacement, const shp::Direction& direction)
         : name(name), displacement(displacement), direction(direction) {
 
 }
@@ -124,6 +124,24 @@ Velocity::~Velocity() {
 
 bool Velocity::operator==(const Velocity& peer) const {
     return (displacement == peer.displacement) && (direction == peer.direction);
+}
+
+bool Velocity::operator<(const Velocity& peer) const {
+    return (displacement < peer.displacement) && (direction < peer.direction);
+}
+
+bool Velocity::operator>(const Velocity& peer) const {
+    return (displacement > peer.displacement) && (direction > peer.direction);
+}
+
+bool Velocity::operator<=(const Velocity& peer) const {
+    Velocity self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Velocity::operator>=(const Velocity& peer) const {
+    Velocity self = *this;
+    return (self > peer) || (self == peer);
 }
 
 Velocity Velocity::operator+(const Velocity& peer) const {
@@ -241,12 +259,21 @@ void Velocity::clear() {
     return;
 }
 
-std::string Velocity::print() {
+std::string Velocity::print() const {
     std::stringstream result;
     result << "(v:";
 	result << name << ",";
     result << displacement.print() << ",";
 	result << direction.print() << ")";
+	return result.str();
+}
+
+std::string Velocity::printRadians() const {
+    std::stringstream result;
+    result << "(v:";
+	result << name << ",";
+    result << displacement.printRadians() << ",";
+	result << direction.printRadians() << ")";
 	return result.str();
 }
 

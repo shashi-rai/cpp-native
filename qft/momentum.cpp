@@ -31,7 +31,7 @@ Momentum::Momentum()
 
 }
 
-Momentum::Momentum(std::string name)
+Momentum::Momentum(const std::string name)
         : name(name), mass(), velocity() {
 
 }
@@ -71,37 +71,37 @@ Momentum::Momentum(const float mass, const short int scaling, const shp::Unit& u
 
 }
 
-Momentum::Momentum(std::string name, const float mass)
+Momentum::Momentum(const std::string name, const float mass)
         : name(name), mass(mass), velocity() {
 
 }
 
-Momentum::Momentum(std::string name, const float mass, std::string unit)
+Momentum::Momentum(const std::string name, const float mass, std::string unit)
         : name(name), mass(mass, unit), velocity() {
 
 }
 
-Momentum::Momentum(std::string name, const float mass, const shp::Unit& unit)
+Momentum::Momentum(const std::string name, const float mass, const shp::Unit& unit)
         : name(name), mass(mass, unit), velocity() {
 
 }
 
-Momentum::Momentum(std::string name, const qft::Mass& mass)
+Momentum::Momentum(const std::string name, const qft::Mass& mass)
         : name(name), mass(mass), velocity() {
 
 }
 
-Momentum::Momentum(std::string name, const float mass, const short int scaling)
+Momentum::Momentum(const std::string name, const float mass, const short int scaling)
         : name(name), mass(mass, scaling), velocity() {
 
 }
 
-Momentum::Momentum(std::string name, const float mass, const short int scaling, std::string unit)
+Momentum::Momentum(const std::string name, const float mass, const short int scaling, std::string unit)
         : name(name), mass(mass, scaling, unit), velocity() {
 
 }
 
-Momentum::Momentum(std::string name, const float mass, const short int scaling, const shp::Unit& unit)
+Momentum::Momentum(const std::string name, const float mass, const short int scaling, const shp::Unit& unit)
         : name(name), mass(mass, scaling, unit), velocity() {
 
 }
@@ -116,12 +116,12 @@ Momentum::Momentum(const qft::Mass& mass, const qft::Acceleration& velocity)
 
 }
 
-Momentum::Momentum(std::string name, const float mass, const float velocity)
+Momentum::Momentum(const std::string name, const float mass, const float velocity)
         : name(name), mass(mass), velocity(velocity) {
 
 }
 
-Momentum::Momentum(std::string name, const qft::Mass& mass, const qft::Acceleration& velocity)
+Momentum::Momentum(const std::string name, const qft::Mass& mass, const qft::Acceleration& velocity)
         : name(name), mass(mass), velocity(velocity) {
 
 }
@@ -132,6 +132,24 @@ Momentum::~Momentum() {
 
 bool Momentum::operator==(const Momentum& peer) const {
     return (mass == peer.mass) && (velocity == peer.velocity);
+}
+
+bool Momentum::operator<(const Momentum& peer) const {
+    return (mass < peer.mass) && (velocity < peer.velocity);
+}
+
+bool Momentum::operator>(const Momentum& peer) const {
+    return (mass > peer.mass) && (velocity > peer.velocity);
+}
+
+bool Momentum::operator<=(const Momentum& peer) const {
+    Momentum self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Momentum::operator>=(const Momentum& peer) const {
+    Momentum self = *this;
+    return (self > peer) || (self == peer);
 }
 
 Momentum Momentum::operator+(const Momentum& peer) const {
@@ -269,12 +287,22 @@ void Momentum::clear() {
     return;
 }
 
-std::string Momentum::print() {
+std::string Momentum::print() const {
     std::stringstream result;
     result << "Π:";
     result << name << ",";
     result << mass.print() << ",";
     result << velocity.print();
+    result << UNIT;
+	return result.str();
+}
+
+std::string Momentum::printRadians() const {
+    std::stringstream result;
+    result << "Π:";
+    result << name << ",";
+    result << mass.printRadians() << ",";
+    result << velocity.printRadians();
     result << UNIT;
 	return result.str();
 }

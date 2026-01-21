@@ -100,7 +100,27 @@ Shell::~Shell() {
 
 bool Shell::operator==(const Shell& peer) const {
     return (static_cast<const Point&>(*this) == static_cast<const Point&>(peer))
-        && (orbitals == peer.orbitals) && (limit == peer.limit);
+        && (limit == peer.limit) && (orbitals == peer.orbitals);
+}
+
+bool Shell::operator<(const Shell& peer) const {
+    return (static_cast<const Point&>(*this) < static_cast<const Point&>(peer))
+        && (limit < peer.limit) && (orbitals < peer.orbitals);
+}
+
+bool Shell::operator>(const Shell& peer) const {
+    return (static_cast<const Point&>(*this) > static_cast<const Point&>(peer))
+        && (limit > peer.limit) && (orbitals > peer.orbitals);
+}
+
+bool Shell::operator<=(const Shell& peer) const {
+    Shell self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Shell::operator>=(const Shell& peer) const {
+    Shell self = *this;
+    return (self > peer) || (self == peer);
 }
 
 Shell Shell::operator+(const Shell& peer) const {
@@ -169,6 +189,19 @@ std::string Shell::print() const {
     std::stringstream result;
     result << "{sh:";
 	result << Point::print() << ",l:";
+    result << limit << ",sz:";
+	result << orbitals.size() << "}\n{";
+    for (int i = 0; i < orbitals.size(); i++) {
+        result << "\t" << orbitals[i].print() << std::endl;
+    }
+    result << "}";
+	return result.str();
+}
+
+std::string Shell::printRadians() const {
+    std::stringstream result;
+    result << "{sh:";
+	result << Point::printRadians() << ",l:";
     result << limit << ",sz:";
 	result << orbitals.size() << "}\n{";
     for (int i = 0; i < orbitals.size(); i++) {

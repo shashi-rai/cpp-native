@@ -113,6 +113,10 @@ public:
 
     // Operator overloading
     bool operator==(const Temporal& peer) const;
+    bool operator<(const Temporal& peer) const;
+    bool operator>(const Temporal& peer) const;
+    bool operator<=(const Temporal& peer) const;
+    bool operator>=(const Temporal& peer) const;
     Temporal operator+(const Temporal& peer) const;
     Temporal operator-(const Temporal& peer) const;
     Temporal operator*(const Temporal& peer) const;

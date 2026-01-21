@@ -47,6 +47,10 @@ public:
 
     // Operator overloading
     bool operator==(const Proportion& peer) const;
+    bool operator<(const Proportion& peer) const;
+    bool operator>(const Proportion& peer) const;
+    bool operator<=(const Proportion& peer) const;
+    bool operator>=(const Proportion& peer) const;
     Proportion operator+(const Proportion& peer) const;
     Proportion operator-(const Proportion& peer) const;
     Proportion operator*(const Proportion& peer) const;

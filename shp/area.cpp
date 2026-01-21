@@ -125,6 +125,24 @@ bool Area::operator==(const Area& peer) const {
     return (length == peer.length) && (breadth == peer.breadth);
 }
 
+bool Area::operator<(const Area& peer) const {
+    return (length < peer.length) && (breadth < peer.breadth);
+}
+
+bool Area::operator>(const Area& peer) const {
+    return (length > peer.length) && (breadth > peer.breadth);
+}
+
+bool Area::operator<=(const Area& peer) const {
+    Area self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Area::operator>=(const Area& peer) const {
+    Area self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Area Area::operator+(const Area& peer) const {
     Signal realarea = (getScalarTotal() + peer.getScalarTotal());
     std::complex<float> complexarea(realarea.getMagnitude(), Quantity::DEFAULT_VALUE);

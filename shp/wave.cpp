@@ -136,6 +136,26 @@ bool Wave::operator==(const Wave& peer) const {
         && (wavelets == peer.wavelets);
 }
 
+bool Wave::operator<(const Wave& peer) const {
+    return (static_cast<const Curvature&>(*this) < static_cast<const Curvature&>(peer))
+        && (wavelets < peer.wavelets);
+}
+
+bool Wave::operator>(const Wave& peer) const {
+    return (static_cast<const Curvature&>(*this) > static_cast<const Curvature&>(peer))
+        && (wavelets > peer.wavelets);
+}
+
+bool Wave::operator<=(const Wave& peer) const {
+    Wave self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Wave::operator>=(const Wave& peer) const {
+    Wave self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Wave Wave::operator+(const Wave& peer) const {
     Wave self = *this, other = peer;
     CurvatureArray fluctuations(wavelets);
@@ -181,7 +201,7 @@ int Wave::getWaveletCount() const {
     return wavelets.size();
 }
 
-Curvature Wave::get(int index) const {
+Curvature Wave::get(const int index) const {
     Curvature result;
     if (index < 0) {
         return result;
@@ -192,7 +212,7 @@ Curvature Wave::get(int index) const {
     return wavelets[index];
 }
 
-void Wave::set(int index, const Curvature& object) {
+void Wave::set(const int index, const Curvature& object) {
     if (index < 0) {
         return;
     }
@@ -227,6 +247,14 @@ std::string Wave::print() const {
     std::stringstream result;
     result << "λ:";
 	result << Curvature::print() << ",sz:";
+	result << wavelets.size() << "!";
+	return result.str();
+}
+
+std::string Wave::printRadians() const {
+    std::stringstream result;
+    result << "λ:";
+	result << Curvature::printRadians() << ",sz:";
 	result << wavelets.size() << "!";
 	return result.str();
 }

@@ -54,6 +54,10 @@ public:
 
     // Operator overloading
     bool operator==(const Area& peer) const;
+    bool operator<(const Area& peer) const;
+    bool operator>(const Area& peer) const;
+    bool operator<=(const Area& peer) const;
+    bool operator>=(const Area& peer) const;
     Area operator+(const Area& peer) const;
     Area operator-(const Area& peer) const;
     Area operator*(const Area& peer) const;

@@ -76,6 +76,26 @@ bool Linear::operator==(const Linear& peer) const {
         && (points == peer.points);
 }
 
+bool Linear::operator<(const Linear& peer) const {
+    return (static_cast<const Point&>(*this) < static_cast<const Point&>(peer))
+        && (points < peer.points);
+}
+
+bool Linear::operator>(const Linear& peer) const {
+    return (static_cast<const Point&>(*this) > static_cast<const Point&>(peer))
+        && (points > peer.points);
+}
+
+bool Linear::operator<=(const Linear& peer) const {
+    Linear self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Linear::operator>=(const Linear& peer) const {
+    Linear self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Linear Linear::operator+(const Linear& peer) const {
     PointArray result(points);
     result.insert(result.end(), peer.points.begin(), peer.points.end());
@@ -141,6 +161,14 @@ std::string Linear::print() const {
     std::stringstream result;
     result << "{li";
 	result << Point::print() << ",sz:";
+	result << points.size() << "}";
+	return result.str();
+}
+
+std::string Linear::printRadians() const {
+    std::stringstream result;
+    result << "{li";
+	result << Point::printRadians() << ",sz:";
 	result << points.size() << "}";
 	return result.str();
 }

@@ -50,12 +50,16 @@ public:
 
     // Operator overloading
     bool operator==(const Polygon& peer) const;
+    bool operator<(const Polygon& peer) const;
+    bool operator>(const Polygon& peer) const;
+    bool operator<=(const Polygon& peer) const;
+    bool operator>=(const Polygon& peer) const;
     Polygon operator+(const Polygon& peer) const;
     Polygon operator-(const Polygon& peer) const;
 
     // Access operator
-    Wave operator()(int x) { return waves[x]; }
-    const Wave operator()(int x) const { return waves[x]; }
+    Wave operator()(const int x) { return waves[x]; }
+    const Wave operator()(const int x) const { return waves[x]; }
 
     // Getters
     int getLimit() const { return limit; }
@@ -72,6 +76,7 @@ public:
     virtual Point copy();
     virtual void clear();
     virtual std::string print() const;
+    virtual std::string printRadians() const;
 
 public:
     static const int DEFAULT_LIMIT;

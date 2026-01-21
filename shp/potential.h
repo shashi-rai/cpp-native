@@ -74,6 +74,10 @@ public:
 
     // Operator overloading
     bool operator==(const Potential& peer) const;
+    bool operator<(const Potential& peer) const;
+    bool operator>(const Potential& peer) const;
+    bool operator<=(const Potential& peer) const;
+    bool operator>=(const Potential& peer) const;
     Potential operator+(const Potential& peer) const;
     Potential operator-(const Potential& peer) const;
     Potential operator*(const Potential& peer) const;
@@ -95,13 +99,17 @@ public:
     void setOrigin(const Angular& position) { this->origin = position; }
 
     // Additional methods
-    Signal getLinearDisplacement(const Potential& peer,
+    Signal getLinearPotential(const Potential& peer,
         const Distance& separation, const Distance& position) const;
-    Signal getAngularDisplacement(const Potential& peer,
+    Signal getAzimuthPotential(const Potential& peer,
         const Distance& separation, const Distance& position) const;
-    Signal getLinearDisplacement(const Potential& peerX, const Potential& peerY,
+    Signal getPolarPotential(const Potential& peer,
+        const Distance& separation, const Distance& position) const;
+    Signal getLinearPotential(const Potential& peerX, const Potential& peerY,
         const Distance& separationX, const Distance& separationY) const;
-    Signal getAngularDisplacement(const Potential& peerX, const Potential& peerY,
+    Signal getAzimuthPotential(const Potential& peerX, const Potential& peerY,
+        const Distance& separationX, const Distance& separationY) const;
+    Signal getPolarPotential(const Potential& peerX, const Potential& peerY,
         const Distance& separationX, const Distance& separationY) const;
     float getHigh() const;
     void setHigh(const float value);

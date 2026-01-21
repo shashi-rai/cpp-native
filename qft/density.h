@@ -21,8 +21,6 @@
 #ifndef QFT_DENSITY_H
 #define QFT_DENSITY_H
 
-#include <string>
-#include <vector>
 #include "../shp/volume.h"
 
 namespace qft {
@@ -63,6 +61,10 @@ public:
 
     // Operator overloading
     bool operator==(const Density& peer) const;
+    bool operator<(const Density& peer) const;
+    bool operator>(const Density& peer) const;
+    bool operator<=(const Density& peer) const;
+    bool operator>=(const Density& peer) const;
     Density operator+(const Density& peer) const;
     Density operator-(const Density& peer) const;
     Density operator*(const Density& peer) const;
@@ -94,6 +96,7 @@ public:
     virtual Density copy();
     virtual void clear();
     virtual std::string print();
+    virtual std::string printRadians();
     shp::Signal getCosComponent(const float phase) const;
     shp::Signal getSinComponent(const float phase) const;
 public:

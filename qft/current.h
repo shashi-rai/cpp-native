@@ -21,10 +21,8 @@
 #ifndef QFT_CURRENT_H
 #define QFT_CURRENT_H
 
-#include <vector>
 #include "charge.h"
 #include "acceleration.h"
-#include "time.h"
 #include "../shp/potential.h"
 
 namespace qft {
@@ -38,7 +36,7 @@ class Current {
 public:
     // Constructors
     Current();
-    Current(std::string name);
+    Current(const std::string name);
     Current(const float charge);
     Current(const float charge, std::string unit);
     Current(const float charge, const shp::Unit& unit);
@@ -46,23 +44,27 @@ public:
     Current(const float charge, const short int scaling);
     Current(const float charge, const short int scaling, std::string unit);
     Current(const float charge, const short int scaling, const shp::Unit& unit);
-    Current(std::string name, const float charge);
-    Current(std::string name, const float charge, std::string unit);
-    Current(std::string name, const float charge, const shp::Unit& unit);
-    Current(std::string name, const qft::Charge& charge);
-    Current(std::string name, const float charge, const short int scaling);
-    Current(std::string name, const float charge, const short int scaling, std::string unit);
-    Current(std::string name, const float charge, const short int scaling, const shp::Unit& unit);
+    Current(const std::string name, const float charge);
+    Current(const std::string name, const float charge, std::string unit);
+    Current(const std::string name, const float charge, const shp::Unit& unit);
+    Current(const std::string name, const qft::Charge& charge);
+    Current(const std::string name, const float charge, const short int scaling);
+    Current(const std::string name, const float charge, const short int scaling, std::string unit);
+    Current(const std::string name, const float charge, const short int scaling, const shp::Unit& unit);
     Current(const float charge, const float velocity);
     Current(const qft::Charge& charge, const qft::Acceleration& velocity);
-    Current(std::string name, const float charge, const float velocity);
-    Current(std::string name, const qft::Charge& charge, const qft::Acceleration& velocity);
+    Current(const std::string name, const float charge, const float velocity);
+    Current(const std::string name, const qft::Charge& charge, const qft::Acceleration& velocity);
 
     // Destructors
     ~Current();
 
     // Operator overloading
     bool operator==(const Current& peer) const;
+    bool operator<(const Current& peer) const;
+    bool operator>(const Current& peer) const;
+    bool operator<=(const Current& peer) const;
+    bool operator>=(const Current& peer) const;
     Current operator+(const Current& peer) const;
     Current operator-(const Current& peer) const;
     Current operator*(const Current& peer) const;
@@ -103,8 +105,10 @@ public:
     bool checkNonZero() const;
     virtual Current copy() const;
     virtual void clear();
-    virtual std::string print();
-    shp::Quantity getComponent(float phase) const;
+    virtual std::string print() const;
+    virtual std::string printRadians() const;
+    shp::Signal getCosComponent(const float phase) const;
+    shp::Signal getSinComponent(const float phase) const;
 public:
     static const Current getLooping(const Current& unitary, const float multiplier);
     static const shp::Quantity getAmpereCoulombs();

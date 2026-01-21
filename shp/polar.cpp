@@ -92,6 +92,26 @@ bool Polar::operator==(const Polar& peer) const {
         && (change == peer.change);
 }
 
+bool Polar::operator<(const Polar& peer) const {
+    return (static_cast<const Direction&>(*this) < static_cast<const Direction&>(peer))
+        && (change < peer.change);
+}
+
+bool Polar::operator>(const Polar& peer) const {
+    return (static_cast<const Direction&>(*this) > static_cast<const Direction&>(peer))
+        && (change > peer.change);
+}
+
+bool Polar::operator<=(const Polar& peer) const {
+    Polar self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Polar::operator>=(const Polar& peer) const {
+    Polar self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Polar Polar::operator+(const Direction& peer) const {
     Direction self = *this, other = peer;
     Direction polar = (self + other);

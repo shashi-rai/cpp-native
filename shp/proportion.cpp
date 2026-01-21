@@ -90,6 +90,24 @@ bool Proportion::operator==(const Proportion& peer) const {
     return (numerator == peer.numerator) && (denominator == peer.denominator);
 }
 
+bool Proportion::operator<(const Proportion& peer) const {
+    return (numerator < peer.numerator) && (denominator < peer.denominator);
+}
+
+bool Proportion::operator>(const Proportion& peer) const {
+    return (numerator > peer.numerator) && (denominator > peer.denominator);
+}
+
+bool Proportion::operator<=(const Proportion& peer) const {
+    Proportion self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Proportion::operator>=(const Proportion& peer) const {
+    Proportion self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Proportion Proportion::operator+(const Proportion& peer) const {
     return Proportion((numerator + peer.numerator), (denominator + peer.denominator));
 }

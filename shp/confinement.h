@@ -70,6 +70,10 @@ public:
 
     // Operator overloading
     bool operator==(const Confinement& peer) const;
+    bool operator<(const Confinement& peer) const;
+    bool operator>(const Confinement& peer) const;
+    bool operator<=(const Confinement& peer) const;
+    bool operator>=(const Confinement& peer) const;
     Confinement operator+(const Confinement& peer) const;
     Confinement operator-(const Confinement& peer) const;
     Confinement operator*(const Confinement& peer) const;

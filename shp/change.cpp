@@ -141,6 +141,28 @@ bool Change::operator==(const Change& peer) const {
         && (potential == peer.potential);
 }
 
+bool Change::operator<(const Change& peer) const {
+    return (rate < peer.rate)
+        && (dynamical < peer.dynamical)
+        && (potential < peer.potential);
+}
+
+bool Change::operator>(const Change& peer) const {
+    return (rate > peer.rate)
+        && (dynamical > peer.dynamical)
+        && (potential > peer.potential);
+}
+
+bool Change::operator<=(const Change& peer) const {
+    Change self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Change::operator>=(const Change& peer) const {
+    Change self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Change Change::operator+(const Change& peer) const {
     return Change((rate + peer.rate),
             (dynamical + peer.dynamical), (potential + peer.potential));

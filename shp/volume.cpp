@@ -212,6 +212,24 @@ bool Volume::operator==(const Volume& peer) const {
     return (surface == peer.surface) && (depth == peer.depth);
 }
 
+bool Volume::operator<(const Volume& peer) const {
+    return (surface < peer.surface) && (depth < peer.depth);
+}
+
+bool Volume::operator>(const Volume& peer) const {
+    return (surface > peer.surface) && (depth > peer.depth);
+}
+
+bool Volume::operator<=(const Volume& peer) const {
+    Volume self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Volume::operator>=(const Volume& peer) const {
+    Volume self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Volume Volume::operator+(const Volume& peer) const {
 	Signal realvolume = (getScalarTotal() + peer.getScalarTotal());
     float part = std::cbrt(realvolume.getMagnitude());
@@ -423,6 +441,13 @@ std::string Volume::print() const {
     std::stringstream result;
     result << surface.print() << ",h:";
     result << depth.print();
+	return result.str();
+}
+
+std::string Volume::printRadians() const {
+    std::stringstream result;
+    result << surface.printRadians() << ",h:";
+    result << depth.printRadians();
 	return result.str();
 }
 

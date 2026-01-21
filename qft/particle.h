@@ -21,7 +21,6 @@
 #ifndef QFT_PARTICLE_H
 #define QFT_PARTICLE_H
 
-#include <vector>
 #include "energy.h"
 #include "isospin.h"
 #include "spin.h"
@@ -76,6 +75,10 @@ public:
 
     // Operator overloading
     bool operator==(const Particle& peer) const;
+    bool operator<(const Particle& peer) const;
+    bool operator>(const Particle& peer) const;
+    bool operator<=(const Particle& peer) const;
+    bool operator>=(const Particle& peer) const;
     Particle operator+(const Particle& peer) const;
     Particle operator-(const Particle& peer) const;
     Particle operator*(const Particle& peer) const;
@@ -111,7 +114,8 @@ public:
     shp::Signal getTotal() const;
     virtual shp::Point copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printRadians() const;
     shp::Signal getCosComponent(const float phase) const;
     shp::Signal getSinComponent(const float phase) const;
 };

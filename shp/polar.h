@@ -47,6 +47,10 @@ public:
 
     // Operator overloading
     bool operator==(const Polar& peer) const;
+    bool operator<(const Polar& peer) const;
+    bool operator>(const Polar& peer) const;
+    bool operator<=(const Polar& peer) const;
+    bool operator>=(const Polar& peer) const;
     Polar operator+(const Direction& peer) const;
     Polar operator-(const Direction& peer) const;
     Polar operator*(const Direction& peer) const;

@@ -158,6 +158,26 @@ bool Signal::operator==(const Signal& peer) const {
         && (orientation == peer.orientation);
 }
 
+bool Signal::operator<(const Signal& peer) const {
+    return (static_cast<const Quantity&>(*this) < static_cast<const Quantity&>(peer))
+        && (orientation < peer.orientation);
+}
+
+bool Signal::operator>(const Signal& peer) const {
+    return (static_cast<const Quantity&>(*this) > static_cast<const Quantity&>(peer))
+        && (orientation < peer.orientation);
+}
+
+bool Signal::operator<=(const Signal& peer) const {
+    Signal self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Signal::operator>=(const Signal& peer) const {
+    Signal self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Signal Signal::operator+(const Signal& peer) const {
     Quantity self = *this, other = peer;
     short int exponent = (self.getScaling() - other.getScaling());

@@ -134,6 +134,26 @@ bool Distance::operator==(const Distance& peer) const {
         && (change == peer.change);
 }
 
+bool Distance::operator<(const Distance& peer) const {
+    return (static_cast<const Quantity&>(*this) < static_cast<const Quantity&>(peer))
+        && (change < peer.change);
+}
+
+bool Distance::operator>(const Distance& peer) const {
+    return (static_cast<const Quantity&>(*this) > static_cast<const Quantity&>(peer))
+        && (change > peer.change);
+}
+
+bool Distance::operator<=(const Distance& peer) const {
+    Distance self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Distance::operator>=(const Distance& peer) const {
+    Distance self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Distance Distance::operator+(const Distance& peer) const {
     Quantity self = *this, other = peer;
     Quantity distance = (self + other);

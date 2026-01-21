@@ -73,6 +73,10 @@ public:
 
     // Operator overloading
     bool operator==(const Angular& peer) const;
+    bool operator<(const Angular& peer) const;
+    bool operator>(const Angular& peer) const;
+    bool operator<=(const Angular& peer) const;
+    bool operator>=(const Angular& peer) const;
     Angular operator+(const Angular& peer) const;
     Angular operator-(const Angular& peer) const;
     Angular operator*(const Angular& peer) const;
@@ -117,11 +121,15 @@ public:
     // Additional methods
     Quantity getLinearDisplacement(const Angular& peer,
         const Distance& separation, const Distance& position) const;
-    Quantity getAngularDisplacement(const Angular& peer,
+    Quantity getAzimuthDisplacement(const Angular& peer,
+        const Distance& separation, const Distance& position) const;
+    Quantity getPolarDisplacement(const Angular& peer,
         const Distance& separation, const Distance& position) const;
     Quantity getLinearDisplacement(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const;
-    Quantity getAngularDisplacement(const Angular& peerX, const Angular& peerY,
+    Quantity getAzimuthDisplacement(const Angular& peerX, const Angular& peerY,
+        const Distance& separationX, const Distance& separationY) const;
+    Quantity getPolarDisplacement(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const;
     Distance getRadius() const;
     void setRadius(const Distance& length);

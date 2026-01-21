@@ -51,6 +51,10 @@ public:
 
     // Operator overloading
     bool operator==(const Quantity& peer) const;
+    bool operator<(const Quantity& peer) const;
+    bool operator>(const Quantity& peer) const;
+    bool operator<=(const Quantity& peer) const;
+    bool operator>=(const Quantity& peer) const;
     Quantity operator+(const Quantity& peer) const;
     Quantity operator-(const Quantity& peer) const;
     Quantity operator*(const Quantity& peer) const;

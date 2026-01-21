@@ -35,7 +35,7 @@ Current::Current()
 
 }
 
-Current::Current(std::string name)
+Current::Current(const std::string name)
         : name(name), charge(), velocity() {
 
 }
@@ -75,37 +75,37 @@ Current::Current(const float charge, const short int scaling, const shp::Unit& u
 
 }
 
-Current::Current(std::string name, const float charge)
+Current::Current(const std::string name, const float charge)
         : name(name), charge(charge), velocity() {
 
 }
 
-Current::Current(std::string name, const float charge, std::string unit)
+Current::Current(const std::string name, const float charge, std::string unit)
         : name(name), charge(charge, unit), velocity() {
 
 }
 
-Current::Current(std::string name, const float charge, const shp::Unit& unit)
+Current::Current(const std::string name, const float charge, const shp::Unit& unit)
         : name(name), charge(charge, unit), velocity() {
 
 }
 
-Current::Current(std::string name, const qft::Charge& charge)
+Current::Current(const std::string name, const qft::Charge& charge)
         : name(name), charge(charge), velocity() {
 
 }
 
-Current::Current(std::string name, const float charge, const short int scaling)
+Current::Current(const std::string name, const float charge, const short int scaling)
         : name(name), charge(charge, scaling), velocity() {
 
 }
 
-Current::Current(std::string name, const float charge, const short int scaling, std::string unit)
+Current::Current(const std::string name, const float charge, const short int scaling, std::string unit)
         : name(name), charge(charge, scaling, unit), velocity() {
 
 }
 
-Current::Current(std::string name, const float charge, const short int scaling, const shp::Unit& unit)
+Current::Current(const std::string name, const float charge, const short int scaling, const shp::Unit& unit)
         : name(name), charge(charge, scaling, unit), velocity() {
 
 }
@@ -120,12 +120,12 @@ Current::Current(const qft::Charge& charge, const qft::Acceleration& velocity)
 
 }
 
-Current::Current(std::string name, const float charge, const float velocity)
+Current::Current(const std::string name, const float charge, const float velocity)
         : name(name), charge(charge), velocity(velocity) {
 
 }
 
-Current::Current(std::string name, const qft::Charge& charge, const qft::Acceleration& velocity)
+Current::Current(const std::string name, const qft::Charge& charge, const qft::Acceleration& velocity)
         : name(name), charge(charge), velocity(velocity) {
 
 }
@@ -136,6 +136,24 @@ Current::~Current() {
 
 bool Current::operator==(const Current& peer) const {
     return (charge == peer.charge) && (velocity == peer.velocity);
+}
+
+bool Current::operator<(const Current& peer) const {
+    return (charge < peer.charge) && (velocity < peer.velocity);
+}
+
+bool Current::operator>(const Current& peer) const {
+    return (charge > peer.charge) && (velocity > peer.velocity);
+}
+
+bool Current::operator<=(const Current& peer) const {
+    Current self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Current::operator>=(const Current& peer) const {
+    Current self = *this;
+    return (self > peer) || (self == peer);
 }
 
 Current Current::operator+(const Current& peer) const {
@@ -307,7 +325,7 @@ void Current::clear() {
     return;
 }
 
-std::string Current::print() {
+std::string Current::print() const {
     std::stringstream result;
     result << "I:";
     result << name << ",";
@@ -317,9 +335,26 @@ std::string Current::print() {
 	return result.str();
 }
 
-shp::Quantity Current::getComponent(float phase) const {
-	shp::Quantity current = getLinearTotal();
-	return shp::Quantity((current.getMagnitude() * cos(phase)), current.getScaling(), current.getUnit());
+std::string Current::printRadians() const {
+    std::stringstream result;
+    result << "I:";
+    result << name << ",";
+    result << charge.printRadians() << ",";
+    result << velocity.printRadians();
+    result << UNIT;
+	return result.str();
+}
+
+shp::Signal Current::getCosComponent(const float phase) const {
+	shp::Signal current = this->getLinearTotal();
+	return shp::Signal(current.getOrientation(), (current.getCosComponent(phase)),
+        current.getScaling(), current.getUnit());
+}
+
+shp::Signal Current::getSinComponent(const float phase) const {
+	shp::Signal current = this->getLinearTotal();
+	return shp::Signal(current.getOrientation(), (current.getSinComponent(phase)),
+        current.getScaling(), current.getUnit());
 }
 
 const shp::Quantity Current::getAmpereCoulombs() {

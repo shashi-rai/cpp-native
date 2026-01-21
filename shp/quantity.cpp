@@ -92,9 +92,42 @@ Quantity::~Quantity() {
 }
 
 bool Quantity::operator==(const Quantity& peer) const {
-    return (magnitude == peer.magnitude)
-        && (scaling == peer.scaling)
-        && (unit == peer.unit);
+    Quantity self = *this;
+    return (self.magnitude == peer.magnitude)
+        && (self.scaling == peer.scaling)
+        && (self.unit == peer.unit);
+}
+
+bool Quantity::operator<(const Quantity& peer) const {
+    Quantity self = *this;
+    if (self.magnitude < peer.magnitude)
+        return true;
+    if (self.scaling < peer.scaling)
+        return true;
+    if (self.unit == peer.unit)
+        return true;
+    return false;
+}
+
+bool Quantity::operator>(const Quantity& peer) const {
+    Quantity self = *this;
+    if (self.magnitude > peer.magnitude)
+        return true;
+    if (self.scaling > peer.scaling)
+        return true;
+    if (self.unit == peer.unit)
+        return true;
+    return false;
+}
+
+bool Quantity::operator<=(const Quantity& peer) const {
+    Quantity self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Quantity::operator>=(const Quantity& peer) const {
+    Quantity self = *this;
+    return (self > peer) || (self == peer);
 }
 
 Quantity Quantity::operator+(const Quantity& peer) const {

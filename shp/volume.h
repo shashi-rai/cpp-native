@@ -69,6 +69,10 @@ public:
 
     // Operator overloading
     bool operator==(const Volume& peer) const;
+    bool operator<(const Volume& peer) const;
+    bool operator>(const Volume& peer) const;
+    bool operator<=(const Volume& peer) const;
+    bool operator>=(const Volume& peer) const;
     Volume operator+(const Volume& peer) const;
     Volume operator-(const Volume& peer) const;
     Volume operator*(const Volume& peer) const;
@@ -123,6 +127,7 @@ public:
     virtual Volume copy();
     virtual void clear();
     virtual std::string print() const;
+    virtual std::string printRadians() const;
     Signal getCosComponent(const float phase) const;
     Signal getSinComponent(const float phase) const;
 public:

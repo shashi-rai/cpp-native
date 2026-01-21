@@ -204,6 +204,24 @@ bool Growth::operator==(const Growth& peer) const {
     return (static_cast<const shp::Potential&>(*this) == static_cast<const shp::Potential&>(peer));
 }
 
+bool Growth::operator<(const Growth& peer) const {
+    return (static_cast<const shp::Potential&>(*this) < static_cast<const shp::Potential&>(peer));
+}
+
+bool Growth::operator>(const Growth& peer) const {
+    return (static_cast<const shp::Potential&>(*this) > static_cast<const shp::Potential&>(peer));
+}
+
+bool Growth::operator<=(const Growth& peer) const {
+    Growth self = *this;
+    return (self < peer) || (self == peer);
+}
+
+bool Growth::operator>=(const Growth& peer) const {
+    Growth self = *this;
+    return (self > peer) || (self == peer);
+}
+
 Growth Growth::operator+(const Growth& peer) const {
 	shp::Potential self = *this;
     shp::Direction phase = (this->getPhase() + peer.getPhase());
