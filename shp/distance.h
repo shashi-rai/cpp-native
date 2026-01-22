@@ -82,26 +82,41 @@ public:
 
     // Additional methods
     Direction getDeviation(const Direction& elevation) const;
-    Distance getFactorX(const Distance& peer, const Direction& elevation) const;
-    Distance getFactorY(const Distance& peer, const Direction& elevation) const;
-    Distance getFactorZ(const Distance& peer, const Direction& elevation) const;
+    Distance getLinear(const Distance& peer, const Direction& elevation) const;
+    Distance getLinearAmplified(const Distance& peer, const Direction& elevation) const;
+    Distance getLinearDivergence(const Distance& peer, const Direction& elevation) const;
+    Distance getPlanar(const Distance& peer, const Direction& elevation) const;
+    Distance getPlanarAmplified(const Distance& peer, const Direction& elevation) const;
+    Distance getPlanarDivergence(const Distance& peer, const Direction& elevation) const;
+    Distance getOrthogonal(const Distance& peer, const Direction& elevation) const;
+    Distance getOrthogonalAmplified(const Distance& peer, const Direction& elevation) const;
+    Distance getOrthogonalDivergence(const Distance& peer, const Direction& elevation) const;
     Quantity getTotal() const;
     Quantity getRadial(const Direction& elevation) const;
     Quantity getRadialX(const Direction& elevation) const;
     Quantity getRadialY(const Direction& elevation) const;
     Quantity getRadialZ(const Direction& elevation) const;
-    Quantity getSquareX(const Direction& elevation) const;
-    Quantity getSquareY(const Direction& elevation) const;
-    Quantity getSquareZ(const Direction& elevation) const;
+    Quantity getRadialXSquare(const Direction& elevation) const;
+    Quantity getRadialYSquare(const Direction& elevation) const;
+    Quantity getRadialZSquare(const Direction& elevation) const;
     virtual Distance copy();
     virtual void clear();
     virtual std::string print() const;
     virtual std::string printRadians() const;
 private:
-    float getDiffusion(const Distance& peer, const Direction& elevation) const;
-    Quantity getDiffusionX(const Distance& peer, const Direction& elevation) const;
-    Quantity getDiffusionY(const Distance& peer, const Direction& elevation) const;
-    Quantity getDiffusionZ(const Distance& peer, const Direction& elevation) const;
+    static const std::complex<float> getDiffusion(const Distance& peer, const Direction& elevation);
+    Quantity getLinearX(const Distance& peer, const Direction& elevation) const;
+    Quantity getSquareX(const Distance& peer, const Direction& elevation) const;
+    Quantity getInverseX(const Distance& peer, const Direction& elevation) const;
+    Quantity getInverseSquareX(const Distance& peer, const Direction& elevation) const;
+    Quantity getLinearY(const Distance& peer, const Direction& elevation) const;
+    Quantity getSquareY(const Distance& peer, const Direction& elevation) const;
+    Quantity getInverseY(const Distance& peer, const Direction& elevation) const;
+    Quantity getInverseSquareY(const Distance& peer, const Direction& elevation) const;
+    Quantity getLinearZ(const Distance& peer, const Direction& elevation) const;
+    Quantity getSquareZ(const Distance& peer, const Direction& elevation) const;
+    Quantity getInverseZ(const Distance& peer, const Direction& elevation) const;
+    Quantity getInverseSquareZ(const Distance& peer, const Direction& elevation) const;
 public:
     static const std::string UNIT;
 };

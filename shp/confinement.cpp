@@ -388,7 +388,7 @@ Signal Confinement::getRelative(const Distance& location) const {
 
 Signal Confinement::getRelativeX(const Distance& location) const {
     Potential self = *this; Signal distribution = self.getDivergence();
-    shp::Quantity coefficient = getClosure().getRelativeX(location);
+    shp::Quantity coefficient = getClosure().getLinearX(location);
     Signal signal = distribution.getSquareAmplified(coefficient); signal.adjustScaling();
     Signal result(distribution.getOrientation(), signal.getMagnitude(),
 		(distribution.getScaling() + signal.getScaling()), self.getUnit());
@@ -397,7 +397,7 @@ Signal Confinement::getRelativeX(const Distance& location) const {
 
 Signal Confinement::getRelativeY(const Distance& location) const {
     Potential self = *this; Signal distribution = self.getDivergence();
-    shp::Quantity coefficient = getClosure().getRelativeY(location);
+    shp::Quantity coefficient = getClosure().getLinearY(location);
     Signal signal = distribution.getSquareAmplified(coefficient); signal.adjustScaling();
     Signal result(distribution.getOrientation(), signal.getMagnitude(),
 		(distribution.getScaling() + signal.getScaling()), self.getUnit());
@@ -406,7 +406,7 @@ Signal Confinement::getRelativeY(const Distance& location) const {
 
 Signal Confinement::getRelativeZ(const Distance& location) const {
     Potential self = *this; Signal distribution = self.getDivergence();
-    shp::Quantity coefficient = getClosure().getRelativeZ(location);
+    shp::Quantity coefficient = getClosure().getLinearZ(location);
     Signal signal = distribution.getSquareAmplified(coefficient); signal.adjustScaling();
     Signal result(distribution.getOrientation(), signal.getMagnitude(),
 		(distribution.getScaling() + signal.getScaling()), self.getUnit());

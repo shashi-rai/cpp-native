@@ -120,13 +120,43 @@ Angular::Angular(const float radius, const short int scaling, const Unit& unit,
 
 }
 
+Angular::Angular(const float radius, const Azimuth& azimuth)
+		: Distance(radius), polar(DEFAULT_POLARITY), azimuth(azimuth) {
+
+}
+
+Angular::Angular(const float radius, const short int scaling, const Azimuth& azimuth)
+		: Distance(radius, scaling), polar(DEFAULT_POLARITY), azimuth(azimuth) {
+
+}
+
 Angular::Angular(const Distance& radius, const Azimuth& azimuth)
 		: Distance(radius), polar(DEFAULT_POLARITY), azimuth(azimuth) {
 
 }
 
+Angular::Angular(const float radius, const Polar& polar)
+		: Distance(radius), polar(polar), azimuth(DEFAULT_AZIMUTHAL) {
+
+}
+
+Angular::Angular(const float radius, const short int scaling, const Polar& polar)
+		: Distance(radius, scaling), polar(polar), azimuth(DEFAULT_AZIMUTHAL) {
+
+}
+
 Angular::Angular(const Distance& radius, const Polar& polar)
 		: Distance(radius), polar(polar), azimuth(DEFAULT_AZIMUTHAL) {
+
+}
+
+Angular::Angular(const float radius, const Polar& polar, const Azimuth& azimuth)
+		: Distance(radius), polar(polar), azimuth(azimuth) {
+
+}
+
+Angular::Angular(const float radius, const short int scaling, const Polar& polar, const Azimuth& azimuth)
+		: Distance(radius, scaling), polar(polar), azimuth(azimuth) {
 
 }
 
@@ -377,7 +407,7 @@ Quantity Angular::operator()(const Angular& peerX, const Angular& peerY,
 Quantity Angular::getLinearDisplacement(const Angular& peer,
         const Distance& separation, const Distance& position) const {
     Angular self = *this;
-    Quantity ax = self.getRelativeX(position), bx = peer.getRelativeX((separation - position));
+    Quantity ax = self.getLinearXDivergence(position), bx = peer.getLinearXDivergence((separation - position));
     Quantity result = (ax - bx); result.adjustScaling();
     return result;
 }
@@ -385,7 +415,7 @@ Quantity Angular::getLinearDisplacement(const Angular& peer,
 Quantity Angular::getAzimuthDisplacement(const Angular& peer,
         const Distance& separation, const Distance& position) const {
     Angular self = *this;
-    Quantity ay = self.getRelativeY(position), by = peer.getRelativeY((separation - position));
+    Quantity ay = self.getLinearYDivergence(position), by = peer.getLinearYDivergence((separation - position));
     Quantity result = (ay - by); result.adjustScaling();
     return result;
 }
@@ -393,7 +423,7 @@ Quantity Angular::getAzimuthDisplacement(const Angular& peer,
 Quantity Angular::getPolarDisplacement(const Angular& peer,
         const Distance& separation, const Distance& position) const {
     Angular self = *this;
-    Quantity az = self.getRelativeZ(position), bz = peer.getRelativeZ((separation - position));
+    Quantity az = self.getLinearZDivergence(position), bz = peer.getLinearZDivergence((separation - position));
     Quantity result = (az - bz); result.adjustScaling();
     return result;
 }
@@ -440,8 +470,7 @@ Distance Angular::getRadius() const {
 }
 
 void Angular::setRadius(const Distance& length) {
-    Quantity::setMagnitude(length.getMagnitude(), length.getScaling());
-    Quantity::setUnit(length.getUnit());
+    Quantity::setMagnitude(length.getMagnitude(), length.getScaling(), length.getUnit());
     Distance::setChange(length.getChange());
 }
 
@@ -454,13 +483,11 @@ void Angular::setRadius(const float length, const short int scaling) {
 }
 
 void Angular::setRadius(const float length, const short int scaling, const std::string unit) {
-    Quantity::setMagnitude(length, scaling);
-    Quantity::setUnit(unit);
+    Quantity::setMagnitude(length, scaling, unit);
 }
 
 void Angular::setRadius(const float length, const short int scaling, const Unit& unit) {
-    Quantity::setMagnitude(length, scaling);
-    Quantity::setUnit(unit);
+    Quantity::setMagnitude(length, scaling, unit);
 }
 
 Direction Angular::getChange() const {
@@ -481,34 +508,52 @@ float Angular::getAzimuthFraction(const Azimuth& peer) const {
 
 Quantity Angular::getRelative(const Distance& position) const {
     Angular self = *this; Distance radius = self.getRadius();
-    Quantity coefficient  = radius(position, polar);            // radial, X, Y, Z combined
-    Quantity result(coefficient.getMagnitude(), coefficient.getScaling(), self.getUnit());
-    result.adjustScaling();
-    return result;
+    return radius(position, Direction::DEFAULT_RADIANS); // radial, X, Y, Z combined;
 }
 
-Quantity Angular::getRelativeX(const Distance& position) const {
+Quantity Angular::getLinearX(const Distance& position) const {
     Angular self = *this; Distance radius = self.getRadius();
-    Quantity coefficient  = radius.getFactorX(position, polar); // X component only
-    Quantity result(coefficient.getMagnitude(), coefficient.getScaling(), self.getUnit());
-    result.adjustScaling();
-    return result;
+    return radius.getLinear(position, polar); // X component only;
 }
 
-Quantity Angular::getRelativeY(const Distance& position) const {
+Quantity Angular::getLinearXAmplified(const Distance& position) const {
     Angular self = *this; Distance radius = self.getRadius();
-    Quantity coefficient  = radius.getFactorY(position, polar); // Y component only
-    Quantity result(coefficient.getMagnitude(), coefficient.getScaling(), self.getUnit());
-    result.adjustScaling();
-    return result;
+    return radius.getLinearAmplified(position, polar); // X component only;
 }
 
-Quantity Angular::getRelativeZ(const Distance& position) const {
+Quantity Angular::getLinearXDivergence(const Distance& position) const {
     Angular self = *this; Distance radius = self.getRadius();
-    Quantity coefficient  = radius.getFactorZ(position, polar); // Z component only
-    Quantity result(coefficient.getMagnitude(), coefficient.getScaling(), self.getUnit());
-    result.adjustScaling();
-    return result;
+    return radius.getLinearDivergence(position, polar); // X component only;
+}
+
+Quantity Angular::getLinearY(const Distance& position) const {
+    Angular self = *this; Distance radius = self.getRadius();
+    return radius.getOrthogonal(position, azimuth); // Y component only;
+}
+
+Quantity Angular::getLinearYAmplified(const Distance& position) const {
+    Angular self = *this; Distance radius = self.getRadius();
+    return radius.getOrthogonalAmplified(position, polar); // Y component only;
+}
+
+Quantity Angular::getLinearYDivergence(const Distance& position) const {
+    Angular self = *this; Distance radius = self.getRadius();
+    return radius.getOrthogonalDivergence(position, polar); // Y component only;
+}
+
+Quantity Angular::getLinearZ(const Distance& position) const {
+    Angular self = *this; Distance radius = self.getRadius();
+    return radius.getOrthogonal(position, polar); // Z component only;
+}
+
+Quantity Angular::getLinearZAmplified(const Distance& position) const {
+    Angular self = *this; Distance radius = self.getRadius();
+    return radius.getOrthogonalAmplified(position, polar); // Z component only;
+}
+
+Quantity Angular::getLinearZDivergence(const Distance& position) const {
+    Angular self = *this; Distance radius = self.getRadius();
+    return radius.getOrthogonalDivergence(position, polar); // Z component only;
 }
 
 Distance Angular::copy() const {

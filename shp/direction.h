@@ -105,6 +105,10 @@ public:
     static const float getSine(const std::complex<float> phase);
     static const float getCosine(const std::complex<float> phase);
     static const float getTangent(const std::complex<float> phase);
+    static const std::complex<float> getConstructive(
+        const std::complex<float> phase_a, const std::complex<float> phase_b);
+    static const std::complex<float> getDestructive(
+        const std::complex<float> phase_a, const std::complex<float> phase_b);
     static const short int getQuadrant(const float radians);
     static const float getPeriodic(const float radians);
     static const float getHalfPiAngle(const float radians);

@@ -306,6 +306,15 @@ const float Direction::getTangent(const std::complex<float> phase) {
     return (getSine(phase) / getCosine(phase));
 }
 
+const std::complex<float> Direction::getConstructive(const std::complex<float> phase_a,
+        const std::complex<float> phase_b) {
+    return (phase_a * phase_b);
+}
+
+const std::complex<float> Direction::getDestructive(const std::complex<float> phase_a,
+        const std::complex<float> phase_b) {
+    return (phase_a / phase_b);
+}
 const short int Direction::getQuadrant(const float radians) {
     return ((getPeriodic(radians) / DEGREE_090) + 1);
 }

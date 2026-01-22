@@ -389,7 +389,7 @@ shp::Signal Growth::getRelative(const shp::Distance& location) const {
 
 shp::Signal Growth::getRelativeX(const shp::Distance& location) const {
     shp::Potential self = *this; shp::Signal distribution = self.getDivergence();
-    shp::Quantity coefficient = getClosure().getRelativeX(location);
+    shp::Quantity coefficient = getClosure().getLinearX(location);
     shp::Signal signal = distribution.getSquareAmplified(coefficient); signal.adjustScaling();
     shp::Signal result(distribution.getOrientation(), signal.getMagnitude(),
 		(distribution.getScaling() + signal.getScaling()), self.getUnit());
@@ -398,7 +398,7 @@ shp::Signal Growth::getRelativeX(const shp::Distance& location) const {
 
 shp::Signal Growth::getRelativeY(const shp::Distance& location) const {
     shp::Potential self = *this; shp::Signal distribution = self.getDivergence();
-    shp::Quantity coefficient = getClosure().getRelativeY(location);
+    shp::Quantity coefficient = getClosure().getLinearY(location);
     shp::Signal signal = distribution.getSquareAmplified(coefficient); signal.adjustScaling();
     shp::Signal result(distribution.getOrientation(), signal.getMagnitude(),
 		(distribution.getScaling() + signal.getScaling()), self.getUnit());
@@ -407,7 +407,7 @@ shp::Signal Growth::getRelativeY(const shp::Distance& location) const {
 
 shp::Signal Growth::getRelativeZ(const shp::Distance& location) const {
     shp::Potential self = *this; shp::Signal distribution = self.getDivergence();
-    shp::Quantity coefficient = getClosure().getRelativeZ(location);
+    shp::Quantity coefficient = getClosure().getLinearZ(location);
     shp::Signal signal = distribution.getSquareAmplified(coefficient); signal.adjustScaling();
     shp::Signal result(distribution.getOrientation(), signal.getMagnitude(),
 		(distribution.getScaling() + signal.getScaling()), self.getUnit());

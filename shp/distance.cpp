@@ -224,25 +224,67 @@ Distance Distance::operator()(const Distance& peer, const Direction& elevation) 
 }
 
 Direction Distance::getDeviation(const Direction& elevation) const {
-    return Direction(change.getDegrees(), change.getMinutes(), change.getSeconds());
+    return Direction::getConstructive(change.getPhase(), elevation.getPhase());
 }
 
-Distance Distance::getFactorX(const Distance& peer, const Direction& elevation) const {
-    Distance self = *this; Quantity component = self.getDiffusionX(peer, elevation);
+Distance Distance::getLinear(const Distance& peer, const Direction& elevation) const {
+    Distance self = *this; Quantity component = self.getLinearX(peer, elevation);
     Distance result(component.getMagnitude(),
         component.getScaling(), self.getUnit(), self.getDeviation(elevation));
     return result;
 }
 
-Distance Distance::getFactorY(const Distance& peer, const Direction& elevation) const {
-    Distance self = *this; Quantity component = self.getDiffusionY(peer, elevation);
+Distance Distance::getLinearAmplified(const Distance& peer, const Direction& elevation) const {
+    Distance self = *this; Quantity component = self.getSquareX(peer, elevation);
     Distance result(component.getMagnitude(),
         component.getScaling(), self.getUnit(), self.getDeviation(elevation));
     return result;
 }
 
-Distance Distance::getFactorZ(const Distance& peer, const Direction& elevation) const {
-    Distance self = *this; Quantity component = self.getDiffusionZ(peer, elevation);
+Distance Distance::getLinearDivergence(const Distance& peer, const Direction& elevation) const {
+    Distance self = *this; Quantity component = self.getInverseSquareX(peer, elevation);
+    Distance result(component.getMagnitude(),
+        component.getScaling(), self.getUnit(), self.getDeviation(elevation));
+    return result;
+}
+
+Distance Distance::getPlanar(const Distance& peer, const Direction& elevation) const {
+    Distance self = *this; Quantity component = self.getLinearY(peer, elevation);
+    Distance result(component.getMagnitude(),
+        component.getScaling(), self.getUnit(), self.getDeviation(elevation));
+    return result;
+}
+
+Distance Distance::getPlanarAmplified(const Distance& peer, const Direction& elevation) const {
+    Distance self = *this; Quantity component = self.getSquareY(peer, elevation);
+    Distance result(component.getMagnitude(),
+        component.getScaling(), self.getUnit(), self.getDeviation(elevation));
+    return result;
+}
+
+Distance Distance::getPlanarDivergence(const Distance& peer, const Direction& elevation) const {
+    Distance self = *this; Quantity component = self.getInverseSquareY(peer, elevation);
+    Distance result(component.getMagnitude(),
+        component.getScaling(), self.getUnit(), self.getDeviation(elevation));
+    return result;
+}
+
+Distance Distance::getOrthogonal(const Distance& peer, const Direction& elevation) const {
+    Distance self = *this; Quantity component = self.getLinearZ(peer, elevation);
+    Distance result(component.getMagnitude(),
+        component.getScaling(), self.getUnit(), self.getDeviation(elevation));
+    return result;
+}
+
+Distance Distance::getOrthogonalAmplified(const Distance& peer, const Direction& elevation) const {
+    Distance self = *this; Quantity component = self.getSquareZ(peer, elevation);
+    Distance result(component.getMagnitude(),
+        component.getScaling(), self.getUnit(), self.getDeviation(elevation));
+    return result;
+}
+
+Distance Distance::getOrthogonalDivergence(const Distance& peer, const Direction& elevation) const {
+    Distance self = *this; Quantity component = self.getInverseSquareZ(peer, elevation);
     Distance result(component.getMagnitude(),
         component.getScaling(), self.getUnit(), self.getDeviation(elevation));
     return result;
@@ -254,44 +296,49 @@ Quantity Distance::getTotal() const {
 }
 
 Quantity Distance::getRadial(const Direction& elevation) const {
-    Distance self = *this;
-    Quantity sumtotal = self.getSquareX(change) + self.getSquareY(change) + self.getSquareZ(elevation);
-    Quantity diagonal = sumtotal.getSquareRoot();
+    Distance self = *this; Quantity sumtotal, diagonal;
+    sumtotal = self.getRadialXSquare(change)
+            + self.getRadialYSquare(change)
+            + self.getRadialZSquare(elevation);
+    diagonal = sumtotal.getSquareRoot();
     Quantity result(diagonal.getMagnitude(),
         diagonal.getScaling(), self.getUnit()); result.adjustScaling();
     return result;
 }
 
 Quantity Distance::getRadialX(const Direction& elevation) const {
-    Distance self = *this; Quantity component = self.getDiffusionX(0, elevation);
+    Distance self = *this;
+    Quantity component = self.getLinearX(Quantity::DEFAULT_VALUE, elevation);
     Distance result(component.getMagnitude(),
         component.getScaling(), self.getUnit(), self.getDeviation(elevation));
     return result;
 }
 
 Quantity Distance::getRadialY(const Direction& elevation) const {
-    Distance self = *this; Quantity component = self.getDiffusionY(0, elevation);
+    Distance self = *this;
+    Quantity component = self.getLinearY(Quantity::DEFAULT_VALUE, elevation);
     Distance result(component.getMagnitude(),
         component.getScaling(), self.getUnit(), self.getDeviation(elevation));
     return result;
 }
 
 Quantity Distance::getRadialZ(const Direction& elevation) const {
-    Distance self = *this; Quantity component = self.getDiffusionZ(0, elevation);
+    Distance self = *this;
+    Quantity component = self.getLinearZ(Quantity::DEFAULT_VALUE, elevation);
     Distance result(component.getMagnitude(),
         component.getScaling(), self.getUnit(), self.getDeviation(elevation));
     return result;
 }
 
-Quantity Distance::getSquareX(const Direction& elevation) const {
+Quantity Distance::getRadialXSquare(const Direction& elevation) const {
     return getRadialX(elevation).getSquare();
 }
 
-Quantity Distance::getSquareY(const Direction& elevation) const {
+Quantity Distance::getRadialYSquare(const Direction& elevation) const {
     return getRadialY(elevation).getSquare();
 }
 
-Quantity Distance::getSquareZ(const Direction& elevation) const {
+Quantity Distance::getRadialZSquare(const Direction& elevation) const {
     return getRadialZ(elevation).getSquare();
 }
 
@@ -321,35 +368,74 @@ std::string Distance::printRadians() const {
 	return result.str();
 }
 
-float Distance::getDiffusion(const Distance& peer, const Direction& elevation) const {
-    float y_component = peer.getSinComponent(peer.change.toRadians());
-    float z_component = peer.getCosComponent(elevation.toRadians());
-    float diffusion = std::sqrt((y_component * y_component) + (z_component * z_component));
-    return diffusion;
+/*
+ * The peer is assumed to be point of interest, where the x_component is zero,
+ * while y_component spreads horizontally, the z_component spreads vertically.
+ * Only if peer is a variant, then y_component contributes its change. Also, if
+ * peer remains invariant, then z_component could still contribute its stretch.
+ */
+const std::complex<float> Distance::getDiffusion(const Distance& peer, const Direction& elevation) {
+    return Direction::getConstructive(peer.change.getPhase(), elevation.getPhase());
 }
 
-Quantity Distance::getDiffusionX(const Distance& peer, const Direction& elevation) const {
-    Quantity self = *this;
-    Quantity diffusion(getDiffusion(peer, elevation), self.getScaling(), self.getUnit());
-    Quantity result = (self + diffusion.getCosComponent(change.toRadians()));
-    result.adjustScaling();
+Quantity Distance::getLinearX(const Distance& peer, const Direction& elevation) const {
+    Quantity self = *this, other = peer;
+    std::complex<float> concentration = Distance::getDiffusion(peer, elevation);
+    Quantity diffusion(Direction::getCosine(concentration), self.getScaling(), self.getUnit());
+    Quantity result = self + (other * diffusion); result.adjustScaling();
     return result;
 }
 
-Quantity Distance::getDiffusionY(const Distance& peer, const Direction& elevation) const {
-    Quantity self = *this;
-    Quantity diffusion(getDiffusion(peer, elevation), peer.getScaling(), peer.getUnit());
-    Quantity result = self.getFraction(diffusion.getSinComponent(peer.change.toRadians()));
-    result.adjustScaling();
+Quantity Distance::getSquareX(const Distance& peer, const Direction& elevation) const {
+    return getLinearX(peer, elevation).getSquare();
+}
+
+Quantity Distance::getInverseX(const Distance& peer, const Direction& elevation) const {
+    return getLinearX(peer, elevation).getInverse();
+}
+
+Quantity Distance::getInverseSquareX(const Distance& peer, const Direction& elevation) const {
+    return getInverseX(peer, elevation).getSquare();
+}
+
+Quantity Distance::getLinearY(const Distance& peer, const Direction& elevation) const {
+    Quantity self = *this, other = peer;
+    std::complex<float> concentration = Distance::getDiffusion(peer, elevation);
+    Quantity diffusion(Direction::getCosine(concentration), peer.getScaling(), peer.getUnit());
+    Quantity result = (other * diffusion); result.adjustScaling();
     return result;
 }
 
-Quantity Distance::getDiffusionZ(const Distance& peer, const Direction& elevation) const {
-    Distance self = *this;
-    Quantity diffusion(getDiffusion(peer, elevation), peer.getScaling(), peer.getUnit());
-    Quantity result = self.getFraction(diffusion.getSinComponent(elevation.toRadians()));
-    result.adjustScaling();
+Quantity Distance::getSquareY(const Distance& peer, const Direction& elevation) const {
+    return getLinearY(peer, elevation).getSquare();
+}
+
+Quantity Distance::getInverseY(const Distance& peer, const Direction& elevation) const {
+    return getLinearY(peer, elevation).getInverse();
+}
+
+Quantity Distance::getInverseSquareY(const Distance& peer, const Direction& elevation) const {
+    return getInverseY(peer, elevation).getSquare();
+}
+
+Quantity Distance::getLinearZ(const Distance& peer, const Direction& elevation) const {
+    Quantity self = *this, other = peer;
+    std::complex<float> concentration = Distance::getDiffusion(peer, elevation);
+    Quantity diffusion(Direction::getSine(concentration), peer.getScaling(), peer.getUnit());
+    Quantity result = (other * diffusion); result.adjustScaling();
     return result;
+}
+
+Quantity Distance::getSquareZ(const Distance& peer, const Direction& elevation) const {
+    return getLinearZ(peer, elevation).getSquare();
+}
+
+Quantity Distance::getInverseZ(const Distance& peer, const Direction& elevation) const {
+    return getLinearZ(peer, elevation).getInverse();
+}
+
+Quantity Distance::getInverseSquareZ(const Distance& peer, const Direction& elevation) const {
+    return getInverseZ(peer, elevation).getSquare();
 }
 
 } // namespace shp
