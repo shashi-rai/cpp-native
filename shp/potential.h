@@ -101,15 +101,39 @@ public:
     // Additional methods
     Signal getLinearPotential(const Potential& peer,
         const Distance& separation, const Distance& position) const;
+    Signal getLinearConvergence(const Potential& peer,
+        const Distance& separation, const Distance& position) const;
+    Signal getLinearDivergence(const Potential& peer,
+        const Distance& separation, const Distance& position) const;
     Signal getAzimuthPotential(const Potential& peer,
+        const Distance& separation, const Distance& position) const;
+    Signal getAzimuthConvergence(const Potential& peer,
+        const Distance& separation, const Distance& position) const;
+    Signal getAzimuthDivergence(const Potential& peer,
         const Distance& separation, const Distance& position) const;
     Signal getPolarPotential(const Potential& peer,
         const Distance& separation, const Distance& position) const;
+    Signal getPolarConvergence(const Potential& peer,
+        const Distance& separation, const Distance& position) const;
+    Signal getPolarDivergence(const Potential& peer,
+        const Distance& separation, const Distance& position) const;
     Signal getLinearPotential(const Potential& peerX, const Potential& peerY,
+        const Distance& separationX, const Distance& separationY) const;
+    Signal getLinearConvergence(const Potential& peerX, const Potential& peerY,
+        const Distance& separationX, const Distance& separationY) const;
+    Signal getLinearDivergence(const Potential& peerX, const Potential& peerY,
         const Distance& separationX, const Distance& separationY) const;
     Signal getAzimuthPotential(const Potential& peerX, const Potential& peerY,
         const Distance& separationX, const Distance& separationY) const;
+    Signal getAzimuthConvergence(const Potential& peerX, const Potential& peerY,
+        const Distance& separationX, const Distance& separationY) const;
+    Signal getAzimuthDivergence(const Potential& peerX, const Potential& peerY,
+        const Distance& separationX, const Distance& separationY) const;
     Signal getPolarPotential(const Potential& peerX, const Potential& peerY,
+        const Distance& separationX, const Distance& separationY) const;
+    Signal getPolarConvergence(const Potential& peerX, const Potential& peerY,
+        const Distance& separationX, const Distance& separationY) const;
+    Signal getPolarDivergence(const Potential& peerX, const Potential& peerY,
         const Distance& separationX, const Distance& separationY) const;
     float getHigh() const;
     void setHigh(const float value);
@@ -133,6 +157,8 @@ public:
     virtual void clear();
     virtual std::string print() const;
     virtual std::string printRadians() const;
+protected:
+    float getSpread() const;
 };
 
 typedef std::vector<Potential > PotentialArray;

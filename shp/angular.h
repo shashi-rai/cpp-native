@@ -62,9 +62,12 @@ public:
     Angular(const float radius, const float polar, const float azimuth);
     Angular(const float radius, const std::string unit, const float polar, const float azimuth);
     Angular(const float radius, const Unit& unit, const float polar, const float azimuth);
+    Angular(const float radius, const Unit& unit, const Polar& polar, const Azimuth& azimuth);
     Angular(const float radius, const short int scaling, const float polar, const float azimuth);
     Angular(const float radius, const short int scaling, const std::string unit,
         const float polar, const float azimuth);
+    Angular(const float radius, const short int scaling, const std::string unit,
+        const Polar& polar, const Azimuth& azimuth);
     Angular(const float radius, const short int scaling, const Unit& unit,
         const float polar, const float azimuth);
     Angular(const float radius, const short int scaling, const Unit& unit,
@@ -127,15 +130,39 @@ public:
     // Additional methods
     Quantity getLinearDisplacement(const Angular& peer,
         const Distance& separation, const Distance& position) const;
+    Quantity getLinearConvergence(const Angular& peer,
+        const Distance& separation, const Distance& position) const;
+    Quantity getLinearDivergence(const Angular& peer,
+        const Distance& separation, const Distance& position) const;
     Quantity getAzimuthDisplacement(const Angular& peer,
+        const Distance& separation, const Distance& position) const;
+    Quantity getAzimuthConvergence(const Angular& peer,
+        const Distance& separation, const Distance& position) const;
+    Quantity getAzimuthDivergence(const Angular& peer,
         const Distance& separation, const Distance& position) const;
     Quantity getPolarDisplacement(const Angular& peer,
         const Distance& separation, const Distance& position) const;
+    Quantity getPolarConvergence(const Angular& peer,
+        const Distance& separation, const Distance& position) const;
+    Quantity getPolarDivergence(const Angular& peer,
+        const Distance& separation, const Distance& position) const;
     Quantity getLinearDisplacement(const Angular& peerX, const Angular& peerY,
+        const Distance& separationX, const Distance& separationY) const;
+    Quantity getLinearConvergence(const Angular& peerX, const Angular& peerY,
+        const Distance& separationX, const Distance& separationY) const;
+    Quantity getLinearDivergence(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const;
     Quantity getAzimuthDisplacement(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const;
+    Quantity getAzimuthConvergence(const Angular& peerX, const Angular& peerY,
+        const Distance& separationX, const Distance& separationY) const;
+    Quantity getAzimuthDivergence(const Angular& peerX, const Angular& peerY,
+        const Distance& separationX, const Distance& separationY) const;
     Quantity getPolarDisplacement(const Angular& peerX, const Angular& peerY,
+        const Distance& separationX, const Distance& separationY) const;
+    Quantity getPolarConvergence(const Angular& peerX, const Angular& peerY,
+        const Distance& separationX, const Distance& separationY) const;
+    Quantity getPolarDivergence(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const;
     Distance getRadius() const;
     void setRadius(const Distance& length);
@@ -143,19 +170,33 @@ public:
     void setRadius(const float length, const short int scaling);
     void setRadius(const float length, const short int scaling, const std::string unit);
     void setRadius(const float length, const short int scaling, const Unit& unit);
-    Direction getChange() const;
-    void setChange(const Direction& orientation);
+    Direction getRadiusChange() const;
+    void setRadiusChange(const Direction& orientation);
+    float getPolarCyclingRate() const;
+    float getPolarTimePerCycle() const;
+    Direction getPolarTangent() const;
+    Direction getPolarRotation(const short int degree) const;
+    void setPolarRotation(const short int degree);
+    Direction getPolarChange() const;
+    void setPolarChange(const Direction& orientation);
     float getPolarFraction(const Polar& peer) const;
+    float getAzimuthCyclingRate() const;
+    float getAzimuthTimePerCycle() const;
+    Direction getAzimuthTangent() const;
+    Direction getAzimuthRotation(const short int degree) const;
+    void setAzimuthRotation(const short int degree);
+    Direction getAzimuthChange() const;
+    void setAzimuthChange(const Direction& orientation);
     float getAzimuthFraction(const Azimuth& peer) const;
     Quantity getRelative(const Distance& position) const;
     Quantity getLinearX(const Distance& position) const;
-    Quantity getLinearXAmplified(const Distance& position) const;
+    Quantity getLinearXConvergence(const Distance& position) const;
     Quantity getLinearXDivergence(const Distance& position) const;
     Quantity getLinearY(const Distance& position) const;
-    Quantity getLinearYAmplified(const Distance& position) const;
+    Quantity getLinearYConvergence(const Distance& position) const;
     Quantity getLinearYDivergence(const Distance& position) const;
     Quantity getLinearZ(const Distance& position) const;
-    Quantity getLinearZAmplified(const Distance& position) const;
+    Quantity getLinearZConvergence(const Distance& position) const;
     Quantity getLinearZDivergence(const Distance& position) const;
     virtual Distance copy() const;
     virtual void clear();

@@ -93,13 +93,23 @@ bool Polar::operator==(const Polar& peer) const {
 }
 
 bool Polar::operator<(const Polar& peer) const {
-    return (static_cast<const Direction&>(*this) < static_cast<const Direction&>(peer))
-        && (change < peer.change);
+    Polar self = *this; bool result = false;
+    if (static_cast<const Direction&>(*this) < static_cast<const Direction&>(peer)) {
+        result = true;
+    } else if (change < peer.change) {
+        result = true;
+    }
+    return result;
 }
 
 bool Polar::operator>(const Polar& peer) const {
-    return (static_cast<const Direction&>(*this) > static_cast<const Direction&>(peer))
-        && (change > peer.change);
+    Polar self = *this; bool result = false;
+    if (static_cast<const Direction&>(*this) > static_cast<const Direction&>(peer)) {
+        result = true;
+    } else if (change > peer.change) {
+        result = true;
+    }
+    return result;
 }
 
 bool Polar::operator<=(const Polar& peer) const {

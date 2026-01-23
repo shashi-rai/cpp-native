@@ -87,6 +87,7 @@ public:
     Direction getNormal() const;
     Direction getSquare() const;
     Direction getRotation(const short int degree) const;
+    void setRotation(const short int degree);
     Direction getMultiple(const float coefficient) const;
     Direction getDivision(const float coefficient) const;
     virtual Direction copy() const;

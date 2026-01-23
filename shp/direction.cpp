@@ -237,6 +237,10 @@ Direction Direction::getRotation(const short int degree) const {
     return Direction((toRadians() + (DEGREE_001 * degree)));
 }
 
+void Direction::setRotation(const short int degree) {
+    this->fromRadians((toRadians() + (DEGREE_001 * degree)));
+}
+
 Direction Direction::getMultiple(const float coefficient) const {
     float result = (toRadians() * coefficient);
     return Direction(result);

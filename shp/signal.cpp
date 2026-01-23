@@ -159,13 +159,23 @@ bool Signal::operator==(const Signal& peer) const {
 }
 
 bool Signal::operator<(const Signal& peer) const {
-    return (static_cast<const Quantity&>(*this) < static_cast<const Quantity&>(peer))
-        && (orientation < peer.orientation);
+    Signal self = *this; bool result = false;
+    if (static_cast<const Quantity&>(*this) < static_cast<const Quantity&>(peer)) {
+        result = true;
+    } else if (orientation < peer.orientation) {
+        result = true;
+    }
+    return result;
 }
 
 bool Signal::operator>(const Signal& peer) const {
-    return (static_cast<const Quantity&>(*this) > static_cast<const Quantity&>(peer))
-        && (orientation < peer.orientation);
+    Signal self = *this; bool result = false;
+    if (static_cast<const Quantity&>(*this) > static_cast<const Quantity&>(peer)) {
+        result = true;
+    } else if (orientation > peer.orientation) {
+        result = true;
+    }
+    return result;
 }
 
 bool Signal::operator<=(const Signal& peer) const {
