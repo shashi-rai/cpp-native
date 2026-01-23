@@ -566,7 +566,6 @@ Quantity Angular::getPolarConvergence(const Angular& peerX, const Angular& peerY
     Quantity azimX = self.getPolarConvergence(peerX, separationX, end);
     Quantity azimY = self.getPolarConvergence(peerY, separationY, end);
     std::complex<float> radial(azimX.getMagnitude(), azimY.getMagnitude());
-    std::complex<float> polarized = std::sqrt(radial);
     shp::Quantity result(std::abs(radial), azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
     return result;
 }
