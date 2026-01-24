@@ -27,7 +27,6 @@ namespace qft {
 
 class Acceleration : public qft::Velocity {
     shp::Unit unit;
-    float changeAngle;
     float changeSpeed;
 public:
     // Constructors
@@ -44,10 +43,8 @@ public:
         const shp::Unit& unit);
     Acceleration(const float changeAngle, const float changeSpeed,
         const qft::Velocity& velocity);
-    Acceleration(const float changeAngle, const float changeSpeed,
-        const qft::Velocity& velocity, const std::string unit);
-    Acceleration(const float changeAngle, const float changeSpeed,
-        const qft::Velocity& velocity, const shp::Unit& unit);
+    Acceleration(const float changeSpeed, const qft::Velocity& velocity, const std::string unit);
+    Acceleration(const float changeSpeed, const qft::Velocity& velocity, const shp::Unit& unit);
     Acceleration(std::string name);
     Acceleration(std::string name, const shp::Unit& unit);
     Acceleration(std::string name, const float changeAngle);
@@ -58,11 +55,11 @@ public:
         const std::string unit);
     Acceleration(std::string name, const float changeAngle, const float changeSpeed,
         const shp::Unit& unit);
-    Acceleration(std::string name, const float changeAngle, const float changeSpeed,
+    Acceleration(std::string name, const float changeSpeed,
         const qft::Velocity& velocity);
-    Acceleration(std::string name, const float changeAngle, const float changeSpeed,
+    Acceleration(std::string name, const float changeSpeed,
         const qft::Velocity& velocity, const std::string unit);
-    Acceleration(std::string name, const float changeAngle, const float changeSpeed,
+    Acceleration(std::string name, const float changeSpeed,
         const qft::Velocity& velocity, const shp::Unit& unit);
     
     // Destructors
@@ -82,12 +79,10 @@ public:
 
     // Getters
     shp::Unit getUnit() const { return unit; }
-    float getChangeDirection() const { return changeAngle; }
     float getChangeMagnitude() const { return changeSpeed; }
 
     // Setters
     void setUnit(const shp::Unit& value) { this->unit = value; }
-    void setChangeDirection(const float degree) { this->changeAngle = degree; }
     void setChangeMagnitude(const float speed) { this->changeSpeed = speed; }
 
     // Additional methods

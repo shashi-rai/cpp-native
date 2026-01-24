@@ -194,6 +194,18 @@ Distance Distance::operator%(const Distance& peer) const {
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(), change);
 }
 
+Distance Distance::operator+(const float value) const {
+    Quantity self = *this, other(value, self.getScaling(), self.getUnit());
+    Quantity distance = (self + other);
+    return Distance(distance.getMagnitude() + value, distance.getScaling(), distance.getUnit(), change);
+}
+
+Distance Distance::operator-(const float value) const {
+    Quantity self = *this, other(value, self.getScaling(), self.getUnit());
+    Quantity distance = (self - other);
+    return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(), change);
+}
+
 Distance Distance::operator+(const Direction& rotation) const {
     Distance self = *this;
     Direction orientation = (self.change + rotation);

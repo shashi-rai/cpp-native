@@ -43,7 +43,7 @@ Charge::Charge(const std::shared_ptr<Field> field)
     setField(field);
 }
 
-Charge::Charge(std::string unit)
+Charge::Charge(const std::string unit)
         : shp::Temporal(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, std::string(unit)) {
     setField(nullptr);
 }
@@ -70,7 +70,7 @@ Charge::Charge(const float magnitude, const std::shared_ptr<Field> field)
     setField(field);
 }
 
-Charge::Charge(const float magnitude, std::string unit)
+Charge::Charge(const float magnitude, const std::string unit)
         : shp::Temporal(magnitude, ATOMIC_SCALE, shp::Unit(unit)) {
     setField(nullptr);
 }
@@ -97,7 +97,7 @@ Charge::Charge(const float magnitude, const short int scaling, const std::shared
     setField(field);
 }
 
-Charge::Charge(const float magnitude, const short int scaling, std::string unit)
+Charge::Charge(const float magnitude, const short int scaling, const std::string unit)
         : shp::Temporal(magnitude, scaling, shp::Unit(unit)) {
     setField(nullptr);
 }
@@ -210,6 +210,14 @@ shp::Potential Charge::getPotential() const {
         result = field->getPotential();
     }
     return result;
+}
+
+shp::Signal Charge::getVelocity() const {
+    return shp::Temporal::getModulation();
+}
+
+void Charge::setVelocity(const shp::Signal& velocity) {
+    shp::Temporal::setModulation(velocity);
 }
 
 Density Charge::getDensity(const shp::Volume& volume) const {

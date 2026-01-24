@@ -22,7 +22,7 @@
 #define QFT_CURRENT_H
 
 #include "charge.h"
-#include "acceleration.h"
+#include "velocity.h"
 #include "../shp/potential.h"
 
 namespace qft {
@@ -32,7 +32,7 @@ class Field;
 class Current {
     std::string name;
     qft::Charge charge;
-    qft::Acceleration velocity;
+    qft::Velocity velocity;
 public:
     // Constructors
     Current();
@@ -52,9 +52,9 @@ public:
     Current(const std::string name, const float charge, const short int scaling, std::string unit);
     Current(const std::string name, const float charge, const short int scaling, const shp::Unit& unit);
     Current(const float charge, const float velocity);
-    Current(const qft::Charge& charge, const qft::Acceleration& velocity);
+    Current(const qft::Charge& charge, const qft::Velocity& velocity);
     Current(const std::string name, const float charge, const float velocity);
-    Current(const std::string name, const qft::Charge& charge, const qft::Acceleration& velocity);
+    Current(const std::string name, const qft::Charge& charge, const qft::Velocity& velocity);
 
     // Destructors
     ~Current();
@@ -79,18 +79,14 @@ public:
     // Setters
     void setName(const std::string& name) { this->name = name; }
     void setCharge(const qft::Charge& object) { this->charge = object; }
-    void setVelocity(const qft::Acceleration& object) { this->velocity = object; }
+    void setVelocity(const qft::Velocity& object) { this->velocity = object; }
 
     // Additional methods
     shp::Quantity getMass();
-    qft::Acceleration getAcceleration() const;
     shp::Quantity getElectrons() const;
     void setElectrons(const int count);
-    void applyChangeTogether();
     void changeFlowSpeed(const float motion);
-    void applyChangeFlowSpeed();
     void changeDirection(const float degree);
-    void applyChangeDirection();
     shp::Signal getVoltage() const;
     shp::Quantity getForce(const Time& interval) const;
     shp::Quantity getLinearTotal() const;

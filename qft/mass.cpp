@@ -44,7 +44,7 @@ Mass::Mass(const std::shared_ptr<Field> field)
     setField(field);
 }
 
-Mass::Mass(std::string unit)
+Mass::Mass(const std::string unit)
         : shp::Frequency(shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, shp::Unit(unit)) {
     setField(nullptr);
 }
@@ -71,7 +71,7 @@ Mass::Mass(const float magnitude, const std::shared_ptr<Field> field)
     setField(field);
 }
 
-Mass::Mass(const float magnitude, std::string unit)
+Mass::Mass(const float magnitude, const std::string unit)
         : shp::Frequency(magnitude, ATOMIC_SCALE, shp::Unit(unit)) {
     setField(nullptr);
 }
@@ -92,7 +92,7 @@ Mass::Mass(const float magnitude, const short int scaling)
     setField(nullptr);
 }
 
-Mass::Mass(const float magnitude, const short int scaling, std::string unit)
+Mass::Mass(const float magnitude, const short int scaling, const std::string unit)
         : shp::Frequency(magnitude, scaling, shp::Unit(unit)) {
     setField(nullptr);
 }
@@ -205,6 +205,14 @@ shp::Potential Mass::getPotential() const {
         result = field->getPotential();
     }
     return result;
+}
+
+shp::Signal Mass::getVelocity() const {
+    return shp::Frequency::getModulation();
+}
+
+void Mass::setVelocity(const shp::Signal& velocity) {
+    shp::Frequency::setModulation(velocity);
 }
 
 Density Mass::getDensity(const shp::Volume& volume) const {

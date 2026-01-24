@@ -122,12 +122,15 @@ public:
     Frequency operator%(const Frequency& peer) const;
 
     // Getters
+protected:
     Signal getModulation() const { return modulation; }
 
     // Setters
+protected:
     void setModulation(const Signal& shift) { this->modulation = shift; }
 
     // Additional methods
+public:
     Frequency getCarrierScalar(const float coefficient) const;
     Frequency getOverlayScalar(const float coefficient) const;
     Frequency getCarrierRotation(const short int degree) const;

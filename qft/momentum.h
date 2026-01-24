@@ -22,7 +22,7 @@
 #define QFT_MOMENTUM_H
 
 #include "mass.h"
-#include "acceleration.h"
+#include "velocity.h"
 
 namespace qft {
 
@@ -31,7 +31,7 @@ class Field;
 class Momentum {
     std::string name;
     qft::Mass mass;
-    qft::Acceleration velocity;
+    qft::Velocity velocity;
 public:
     // Constructors
     Momentum();
@@ -51,9 +51,9 @@ public:
     Momentum(const std::string name, const float mass, const short int scaling, std::string unit);
     Momentum(const std::string name, const float mass, const short int scaling, const shp::Unit& unit);
     Momentum(const float mass, const float velocity);
-    Momentum(const qft::Mass& mass, const qft::Acceleration& velocity);
+    Momentum(const qft::Mass& mass, const qft::Velocity& velocity);
     Momentum(const std::string name, const float mass, const float velocity);
-    Momentum(const std::string name, const qft::Mass& mass, const qft::Acceleration& velocity);
+    Momentum(const std::string name, const qft::Mass& mass, const qft::Velocity& velocity);
 
     // Destructors
     ~Momentum();
@@ -78,16 +78,12 @@ public:
     // Setters
     void setName(const std::string& name) { this->name = name; }
     void setMass(const qft::Mass& object) { this->mass = object; }
-    void setVelocity(const qft::Acceleration& object) { this->velocity = object; }
+    void setVelocity(const qft::Velocity& object) { this->velocity = object; }
 
     // Additional methods
     shp::Signal getCharge();
-    qft::Acceleration getAcceleration() const;
-    void applyChangeTogether();
     void changeFlowSpeed(const float motion);
-    void applyChangeFlowSpeed();
     void changeDirection(const float degree);
-    void applyChangeDirection();
     shp::Signal getPower(const Time& interval) const;
     shp::Signal getForce(const Time& interval) const;
     shp::Signal getLinearTotal() const;

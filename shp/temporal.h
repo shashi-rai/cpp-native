@@ -124,12 +124,15 @@ public:
     Temporal operator%(const Temporal& peer) const;
 
     // Getters
+protected:
     Signal getModulation() const { return modulation; }
 
     // Setters
+protected:
     void setModulation(const Signal& shift) { this->modulation = shift; }
 
     // Additional methods
+public:
     Temporal getCarrierScalar(const float coefficient) const;
     Temporal getOverlayScalar(const float coefficient) const;
     Temporal getCarrierRotation(const short int degree) const;

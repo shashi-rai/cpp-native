@@ -64,6 +64,10 @@ public:
     Distance operator/(const Distance& peer) const;
     Distance operator%(const Distance& peer) const;
 
+    // Distance operator
+    Distance operator+(const float value) const;
+    Distance operator-(const float value) const;
+
     // Direction operator
     Distance operator+(const Direction& rotation) const;
     Distance operator-(const Direction& rotation) const;

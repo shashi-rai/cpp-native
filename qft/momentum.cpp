@@ -111,7 +111,7 @@ Momentum::Momentum(const float mass, const float velocity)
 
 }
 
-Momentum::Momentum(const qft::Mass& mass, const qft::Acceleration& velocity)
+Momentum::Momentum(const qft::Mass& mass, const qft::Velocity& velocity)
         : name(), mass(mass), velocity(velocity) {
 
 }
@@ -121,7 +121,7 @@ Momentum::Momentum(const std::string name, const float mass, const float velocit
 
 }
 
-Momentum::Momentum(const std::string name, const qft::Mass& mass, const qft::Acceleration& velocity)
+Momentum::Momentum(const std::string name, const qft::Mass& mass, const qft::Velocity& velocity)
         : name(name), mass(mass), velocity(velocity) {
 
 }
@@ -180,29 +180,12 @@ shp::Signal Momentum::getCharge() {
     return result;
 }
 
-Acceleration Momentum::getAcceleration() const {
-    return velocity;
-}
-
-void Momentum::applyChangeTogether() {
-    this->applyChangeFlowSpeed();
-    this->applyChangeDirection();
-}
-
 void Momentum::changeFlowSpeed(const float motion) {
     velocity.setChangeMagnitude(motion);
 }
 
-void Momentum::applyChangeFlowSpeed() {
-    velocity.applyChangeMagnitude();
-}
-
 void Momentum::changeDirection(const float degree) {
     velocity.setChangeDirection(degree);
-}
-
-void Momentum::applyChangeDirection() {
-    velocity.applyChangeDirection();
 }
 
 shp::Signal Momentum::getPower(const Time& interval) const {

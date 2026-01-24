@@ -115,7 +115,7 @@ Current::Current(const float charge, const float velocity)
 
 }
 
-Current::Current(const qft::Charge& charge, const qft::Acceleration& velocity)
+Current::Current(const qft::Charge& charge, const qft::Velocity& velocity)
         : name(), charge(charge), velocity(velocity) {
 
 }
@@ -125,7 +125,7 @@ Current::Current(const std::string name, const float charge, const float velocit
 
 }
 
-Current::Current(const std::string name, const qft::Charge& charge, const qft::Acceleration& velocity)
+Current::Current(const std::string name, const qft::Charge& charge, const qft::Velocity& velocity)
         : name(name), charge(charge), velocity(velocity) {
 
 }
@@ -184,10 +184,6 @@ shp::Quantity Current::getMass() {
     return result;
 }
 
-Acceleration Current::getAcceleration() const {
-    return velocity;
-}
-
 shp::Quantity Current::getElectrons() const {
     qft::Charge electron(qft::Charge::ELECTRON);
     float quantum = (charge.getMagnitude() / Current::getAmpereCoulombs().getMagnitude());
@@ -203,25 +199,12 @@ void Current::setElectrons(const int count) {
     }
 }
 
-void Current::applyChangeTogether() {
-    applyChangeFlowSpeed();
-    applyChangeDirection();
-}
-
 void Current::changeFlowSpeed(const float motion) {
     velocity.setChangeMagnitude(motion);
 }
 
-void Current::applyChangeFlowSpeed() {
-    velocity.applyChangeMagnitude();
-}
-
 void Current::changeDirection(const float degree) {
     velocity.setChangeDirection(degree);
-}
-
-void Current::applyChangeDirection() {
-    velocity.applyChangeDirection();
 }
 
 shp::Signal Current::getVoltage() const {

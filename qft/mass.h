@@ -37,16 +37,16 @@ public:
     // Constructors
     Mass();
     Mass(const std::shared_ptr<Field> field);
-    Mass(std::string unit);
+    Mass(const std::string unit);
     Mass(const shp::Unit& unit);
     Mass(const shp::Unit& unit, const std::shared_ptr<Field> field);
     Mass(const float magnitude);
     Mass(const float magnitude, const std::shared_ptr<Field> field);
-    Mass(const float magnitude, std::string unit);
+    Mass(const float magnitude, const std::string unit);
     Mass(const float magnitude, const shp::Unit& unit);
     Mass(const float magnitude, const shp::Unit& unit, const std::shared_ptr<Field> field);
     Mass(const float magnitude, const short int scaling);
-    Mass(const float magnitude, const short int scaling, std::string unit);
+    Mass(const float magnitude, const short int scaling, const std::string unit);
     Mass(const float magnitude, const short int scaling, const shp::Unit& unit);
     Mass(const float magnitude, const short int scaling, const shp::Unit& unit, const std::shared_ptr<Field> field);
 
@@ -80,6 +80,8 @@ public:
     shp::Distance getRadius() const;
     void setRadius(const shp::Distance& length);
     shp::Potential getPotential() const;
+    shp::Signal getVelocity() const;
+    void setVelocity(const shp::Signal& velocity);
     Density getDensity(const shp::Volume& volume) const;
     Force getForce(const shp::Angular& coordinates) const;
     std::shared_ptr<Field> getOriginField() const;

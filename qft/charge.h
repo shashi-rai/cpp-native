@@ -37,17 +37,17 @@ public:
     // Constructors
     Charge();
     Charge(const std::shared_ptr<Field> field);
-    Charge(std::string unit);
+    Charge(const std::string unit);
     Charge(const shp::Unit& unit);
     Charge(const shp::Unit& unit, const std::shared_ptr<Field> field);
     Charge(const float magnitude);
     Charge(const float magnitude, const std::shared_ptr<Field> field);
-    Charge(const float magnitude, std::string unit);
+    Charge(const float magnitude, const std::string unit);
     Charge(const float magnitude, const shp::Unit& unit);
     Charge(const float magnitude, const shp::Unit& unit, const std::shared_ptr<Field> field);
     Charge(const float magnitude, const short int scaling);
     Charge(const float magnitude, const short int scaling, const std::shared_ptr<Field> field);
-    Charge(const float magnitude, const short int scaling, std::string unit);
+    Charge(const float magnitude, const short int scaling, const std::string unit);
     Charge(const float magnitude, const short int scaling, const shp::Unit& unit);
     Charge(const float magnitude, const short int scaling, const shp::Unit& unit, const std::shared_ptr<Field> field);
 
@@ -81,6 +81,8 @@ public:
     shp::Distance getRadius() const;
     void setRadius(const shp::Distance& length);
     shp::Potential getPotential() const;
+    shp::Signal getVelocity() const;
+    void setVelocity(const shp::Signal& velocity);
     Density getDensity(const shp::Volume& volume) const;
     Force getForce(const shp::Angular& coordinates) const;
     std::shared_ptr<Field> getOriginField() const;
