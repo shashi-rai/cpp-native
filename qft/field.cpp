@@ -462,7 +462,7 @@ Field Field::operator+(const Field& peer) const {
     shp::Potential newpotential = (potential + peer.potential);
     shp::Angular neworientation = (orientation + peer.orientation);
     shp::Temporal field = (self + other);
-    return Field("+", field.getModulation(), field.getPhase(),
+    return Field("+", field.getWavelengthChange(), field.getAmplitudeChange(),
         field.getMagnitude(), field.getScaling(), field.getUnit(),
         newpotential, neworientation, this->physical);
 }
@@ -472,7 +472,7 @@ Field Field::operator-(const Field& peer) const {
     shp::Potential newpotential = (potential - peer.potential);
     shp::Angular neworientation = (orientation - peer.orientation);
     shp::Temporal field = (self - other);
-    return Field("-", field.getModulation(), field.getPhase(),
+    return Field("-", field.getWavelengthChange(), field.getAmplitudeChange(),
         field.getMagnitude(), field.getScaling(), field.getUnit(),
         newpotential, neworientation, this->physical);
 }
@@ -482,7 +482,7 @@ Field Field::operator*(const Field& peer) const {
     shp::Potential newpotential = (potential * peer.potential);
     shp::Angular neworientation = (orientation * peer.orientation);
     shp::Temporal field = (self * other);
-    return Field("*", field.getModulation(), field.getPhase(),
+    return Field("*", field.getWavelengthChange(), field.getAmplitudeChange(),
         field.getMagnitude(), field.getScaling(), field.getUnit(),
         newpotential, neworientation, this->physical);
 }
@@ -492,7 +492,7 @@ Field Field::operator/(const Field& peer) const {
     shp::Potential newpotential = (potential / peer.potential);
     shp::Angular neworientation = (orientation / peer.orientation);
     shp::Temporal field = (self / other);
-    return Field("/", field.getModulation(), field.getPhase(),
+    return Field("/", field.getWavelengthChange(), field.getAmplitudeChange(),
         field.getMagnitude(), field.getScaling(), field.getUnit(),
         newpotential, neworientation, this->physical);
 }
@@ -502,7 +502,7 @@ Field Field::operator%(const Field& peer) const {
     shp::Potential newpotential = (potential % peer.potential);
     shp::Angular neworientation = (orientation % peer.orientation);
     shp::Temporal field = (self % other);
-    return Field("%", field.getModulation(), field.getPhase(),
+    return Field("%", field.getWavelengthChange(), field.getAmplitudeChange(),
         field.getMagnitude(), field.getScaling(), field.getUnit(),
         newpotential, neworientation, this->physical);
 }
@@ -615,7 +615,7 @@ shp::Temporal Field::getTotal() const {
 
 shp::Temporal Field::copy() {
     shp::Temporal self = *this;
-    Field fresh(this->getFieldLabel(), self.getModulation(), self.getPhase(),
+    Field fresh(this->getFieldLabel(), self.getWavelengthChange(), self.getAmplitudeChange(),
         self.getMagnitude(), self.getScaling(), self.getUnit(),
         this->potential, this->orientation, this->physical);
     return fresh;
@@ -649,7 +649,7 @@ std::string Field::printRadians() const {
 
 shp::Temporal Field::getFluctuation(const float phase) const {
 	shp::Temporal intensity = this->getTotal();
-    intensity.setPhase(phase);
+    intensity.setAmplitudeChange(phase);
 	return shp::Temporal(intensity.getMagnitude(), intensity.getScaling(), intensity.getUnit());
 }
 

@@ -21,27 +21,43 @@
 #ifndef QFT_TEMPERATURE_H
 #define QFT_TEMPERATURE_H
 
-#include <sstream>
-#include <vector>
+#include "../shp/direction.h"
 #include "../shp/quantity.h"
 
 namespace qft {
 
 class Temperature : public shp::Quantity {
-
+    shp::Direction change;
 public:
     // Constructors
     Temperature();
+    Temperature(const std::string unit);
+    Temperature(const shp::Unit& unit);
     Temperature(const float quantity);
-    Temperature(const float quantity, const short int scaling);
+    Temperature(const float quantity, const std::string unit);
     Temperature(const float quantity, const shp::Unit& unit);
+    Temperature(const float quantity, const short int scaling);
+    Temperature(const float quantity, const short int scaling, const std::string unit);
     Temperature(const float quantity, const short int scaling, const shp::Unit& unit);
+    Temperature(const shp::Direction& change);
+    Temperature(const std::string unit, const shp::Direction& change);
+    Temperature(const shp::Unit& unit, const shp::Direction& change);
+    Temperature(const float quantity, const shp::Direction& change);
+    Temperature(const float quantity, const std::string unit, const shp::Direction& change);
+    Temperature(const float quantity, const shp::Unit& unit, const shp::Direction& change);
+    Temperature(const float quantity, const short int scaling, const shp::Direction& change);
+    Temperature(const float quantity, const short int scaling, const std::string unit, const shp::Direction& change);
+    Temperature(const float quantity, const short int scaling, const shp::Unit& unit, const shp::Direction& change);
 
     // Destructors
     ~Temperature();
 
     // Operator overloading
     bool operator==(const Temperature& peer) const;
+    bool operator<(const Temperature& peer) const;
+    bool operator>(const Temperature& peer) const;
+    bool operator<=(const Temperature& peer) const;
+    bool operator>=(const Temperature& peer) const;
     Temperature operator+(const Temperature& peer) const;
     Temperature operator-(const Temperature& peer) const;
     Temperature operator*(const Temperature& peer) const;
@@ -49,8 +65,10 @@ public:
     Temperature operator%(const Temperature& peer) const;
 
     // Getters
+    shp::Direction getChange() const { return change; }
 
     // Setters
+    void setChange(const shp::Direction& orientation) { this->change = orientation; }
 
     // Additional methods
     shp::Quantity getTotal() const;
@@ -61,13 +79,24 @@ public:
     float toKelvin() const;
     virtual Temperature copy();
     virtual void clear();
-    virtual std::string print();
-    shp::Quantity getComponent(float phase) const;
+    virtual std::string print() const;
+    virtual std::string printRadians() const;
+    virtual std::string printKelvin() const;
+    virtual std::string printCelsius() const;
+    virtual std::string printFahrenheit() const;
+    float getCosComponent(const float phase) const;
+    float getSinComponent(const float phase) const;
+protected:
+    static const std::complex<float> getComplex(const float value, const float direction);
+public:
+    static const shp::Quantity getBoltzmannConstant();
 public:
     static const std::string UNIT;
     static const float BASE_VALUE;
     static const short int DEFAULT_SCALE;
     static const float DEFAULT_VALUE;
+    static const float BOLTZMANN_CONSTANT;
+    static const short int BOLTZMANN_SCALE;
 };
 
 typedef std::vector<Temperature > TemperatureArray;

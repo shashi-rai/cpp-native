@@ -32,9 +32,9 @@
 namespace shp {
 
 class Direction {
-    short int degrees;
-    short int minutes;
-    short int seconds;
+    short int degrees;      // ° degrees
+    short int minutes;      // ' minutes
+    short int seconds;      // ″ seconds
 public:
     // Constructors
     Direction();
@@ -116,6 +116,7 @@ public:
     static const float getFullPiAngle(const float radians);
     static const float getTwoPiAngle(const float radians);
     static const float getFourPiAngle(const float radians);
+    static const float getEightPiAngle(const float radians);
     static const Direction getDifference(const float x, const float y);
     static const Direction getDifference(const Direction& x, const Direction& y);
     static const Direction getNormal(const Direction& x, const Direction& y);
@@ -123,6 +124,27 @@ public:
     static const float getFraction(const Direction& x, const Direction& y);
     static const bool checkTranslation(const Direction& x, const Direction& y);
     static const bool checkRotation(const Direction& x, const Direction& y);
+public:
+    static const float get90minus(const float radians);
+    static const float get90plus(const float radians);
+    static const float getHalfPiRadians();
+    static const float getFullPiRadians();
+    static const float getTwoPiRadians();
+    static const float getFourPiRadians();
+    static const float getEightPiRadians();
+public:
+    static const bool checkPositive(const float radians);
+    static const bool checkNegative(const float radians);
+    static const bool check0degree(const float radians);
+    static const bool check30degree(const float radians);
+    static const bool check45degree(const float radians);
+    static const bool check60degree(const float radians);
+    static const bool check90degree(const float radians);
+    static const bool check180degree(const float radians);
+    static const bool check270degree(const float radians);
+    static const bool check360degree(const float radians);
+    static const bool check720degree(const float radians);
+    static const bool check1440degree(const float radians);
 public:
     static const short int DEGREES_MIN;
     static const short int DEGREES_MAX;
@@ -144,6 +166,7 @@ public:
     static const float DEGREE_270;
     static const float DEGREE_360;
     static const float DEGREE_720;
+    static const float DEGREE_1440;
     static const float DEFAULT_RADIANS;
     static const int DEFAULT_PRECISION;
 

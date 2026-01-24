@@ -444,41 +444,41 @@ bool Time::operator>=(const Time& peer) const {
 Time Time::operator+(const Time& peer) const {
     Temporal self = *this, other = peer;
     Temporal duration = (self + other);
-    return Time("+", duration.getModulation(), duration.getPhase(),
+    return Time("+", duration.getWavelengthChange(), duration.getAmplitudeChange(),
         duration.getMagnitude(), duration.getScaling(), duration.getUnit());
 }
 
 Time Time::operator-(const Time& peer) const {
     Temporal self = *this, other = peer;
     Temporal duration = (self - other);
-    return Time("-", duration.getModulation(), duration.getPhase(),
+    return Time("-", duration.getWavelengthChange(), duration.getAmplitudeChange(),
         duration.getMagnitude(), duration.getScaling(), duration.getUnit());
 }
 
 Time Time::operator*(const Time& peer) const {
     Temporal self = *this, other = peer;
     Temporal duration = (self * other);
-    return Time("*", duration.getModulation(), duration.getPhase(),
+    return Time("*", duration.getWavelengthChange(), duration.getAmplitudeChange(),
         duration.getMagnitude(), duration.getScaling(), duration.getUnit());
 }
 
 Time Time::operator/(const Time& peer) const {
     Temporal self = *this, other = peer;
     Temporal duration = (self / other);
-    return Time("/", duration.getModulation(), duration.getPhase(),
+    return Time("/", duration.getWavelengthChange(), duration.getAmplitudeChange(),
         duration.getMagnitude(), duration.getScaling(), duration.getUnit());
 }
 
 Time Time::operator%(const Time& peer) const {
     Temporal self = *this, other = peer;
     Temporal duration = (self % other);
-    return Time("%", duration.getModulation(), duration.getPhase(),
+    return Time("%", duration.getWavelengthChange(), duration.getAmplitudeChange(),
         duration.getMagnitude(), duration.getScaling(), duration.getUnit());
 }
 
 shp::Temporal Time::getTotal() const {
     Temporal self = *this;
-    shp::Temporal result(self.getModulation(), self.getPhase(),
+    shp::Temporal result(self.getWavelengthChange(), self.getAmplitudeChange(),
         self.getAmplitude(), self.getScaling(), self.getUnit());
     return result;
 }
@@ -509,7 +509,7 @@ long long Time::getNanoseconds() const {
 
 Time Time::copy() {
     Temporal self = *this;
-    Time fresh(name, self.getModulation(), self.getPhase(),
+    Time fresh(name, self.getWavelengthChange(), self.getAmplitudeChange(),
         self.getMagnitude(), self.getScaling(), self.getUnit());
     return fresh;
 }

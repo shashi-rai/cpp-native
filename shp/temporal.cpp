@@ -431,12 +431,20 @@ float Temporal::getAmplitude() const {
     return Signal::getAmplitude();
 }
 
-float Temporal::getPhase() const {
+float Temporal::getAmplitudeChange() const {
     return Signal::getOrientation();
 }
 
-void Temporal::setPhase(const float value) {
-    Signal::setOrientation(value);
+void Temporal::setAmplitudeChange(const Azimuth& shift) {
+    Signal::setOrientation(shift.toRadians());
+}
+
+float Temporal::getWavelengthChange() const {
+    return modulation.getOrientation();
+}
+
+void Temporal::setWavelengthChange(const Azimuth& shift) {
+    modulation.setOrientation(shift.toRadians());
 }
 
 short int Temporal::getScaling() const {

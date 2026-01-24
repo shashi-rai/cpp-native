@@ -142,8 +142,10 @@ public:
     void setMagnitude(const float value);
     void setMagnitude(const float value, const short int scale);
     float getAmplitude() const;
-    float getPhase() const;
-    void setPhase(const float value);
+    float getAmplitudeChange() const;
+    void setAmplitudeChange(const Azimuth& shift);
+    float getWavelengthChange() const;
+    void setWavelengthChange(const Azimuth& shift);
     short int getScaling() const;
     void setScaling(const short int factor);
     Unit getUnit() const;

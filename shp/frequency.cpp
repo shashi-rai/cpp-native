@@ -432,12 +432,20 @@ float Frequency::getAmplitude() const {
     return Signal::getAmplitude();
 }
 
-float Frequency::getPhase() const {
+float Frequency::getAmplitudeChange() const {
     return Signal::getOrientation();
 }
 
-void Frequency::setPhase(const float value) {
-    Signal::setOrientation(value);
+void Frequency::setAmplitudeChange(const Azimuth& shift) {
+    Signal::setOrientation(shift.toRadians());
+}
+
+float Frequency::getWavelengthChange() const {
+    return modulation.getOrientation();
+}
+
+void Frequency::setWavelengthChange(const Azimuth& shift) {
+    modulation.setOrientation(shift.toRadians());
 }
 
 short int Frequency::getScaling() const {

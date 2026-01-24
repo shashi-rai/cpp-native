@@ -263,7 +263,7 @@ std::string Mass::printRadians() const {
 shp::Frequency Mass::getFluctuation(const float phase) const {
     shp::Frequency self = *this;
     shp::Frequency intensity = self.getMagnitude();
-    intensity.setPhase(phase);
+    intensity.setAmplitudeChange(phase);
 	return shp::Frequency(intensity.getMagnitude(), intensity.getScaling(), intensity.getUnit());
 }
 
