@@ -21,8 +21,6 @@
 #ifndef QFT_QUARK_H
 #define QFT_QUARK_H
 
-#include <string>
-#include <vector>
 #include "colour.h"
 #include "energy.h"
 #include "handed.h"

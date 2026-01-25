@@ -21,8 +21,6 @@
 #ifndef QFT_PROTON_H
 #define QFT_PROTON_H
 
-#include <string>
-#include <vector>
 #include "electron.h"
 #include "energy.h"
 #include "particle.h"

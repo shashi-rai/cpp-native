@@ -264,7 +264,7 @@ bool Acceleration::checkNonZero() const {
 	return Velocity::checkNonZero() && (changeSpeed != shp::Quantity::DEFAULT_VALUE);
 }
 
-Velocity Acceleration::copy() {
+shp::Distance Acceleration::copy() {
     Velocity self = *this;
     Acceleration fresh(this->changeSpeed, self, unit);
     return fresh;

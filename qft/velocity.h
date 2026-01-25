@@ -22,15 +22,12 @@
 #define QFT_VELOCITY_H
 
 #include "time.h"
-#include "../shp/azimuth.h"
 #include "../shp/distance.h"
 
 namespace qft {
 
-class Velocity {
+class Velocity : protected shp::Distance {
     std::string name;
-    shp::Distance displacement;
-    shp::Azimuth direction;
 public:
     // Constructors
     Velocity();
@@ -51,7 +48,6 @@ public:
     Velocity(const float displacement, const short int scaling, const shp::Azimuth& direction);
     Velocity(const float displacement, const short int scaling, const std::string unit, const float direction);
     Velocity(const float displacement, const short int scaling, const std::string unit, const shp::Azimuth& direction);
-    Velocity(const shp::Distance& displacement, const shp::Azimuth& direction);
     Velocity(const std::string name, const std::string unit);
     Velocity(const std::string name, const shp::Unit& unit);
     Velocity(const std::string name, const shp::Azimuth& direction);
@@ -68,7 +64,6 @@ public:
     Velocity(const std::string name, const float displacement, const short int scaling, const std::string unit, const float direction);
     Velocity(const std::string name, const float displacement, const short int scaling, const shp::Unit& unit, const float direction);
     Velocity(const std::string name, const float displacement, const short int scaling, const shp::Unit& unit, const shp::Azimuth& direction);
-    Velocity(const std::string name, const shp::Distance& displacement, const shp::Azimuth& direction);
 
     // Destructors
     ~Velocity();
@@ -87,17 +82,17 @@ public:
 
     // Getters
     std::string getName() const { return name; }
-    shp::Unit getUnit() const { return displacement.getUnit(); }
-    shp::Distance getDisplacement() const { return displacement; }
-    shp::Azimuth getDirection() const { return direction; }
 
     // Setters
     void setName(const std::string& name) { this->name = name; }
-    void setUnit(const shp::Unit& value) { this->displacement.setUnit(value); }
-    void setDisplacement(const shp::Distance& magnitude) { this->displacement = magnitude; }
-    void setDirection(const shp::Azimuth& direction) { this->direction = direction; }
 
     // Additional methods
+    shp::Unit getUnit() const;
+    void setUnit(const shp::Unit& unit);
+    shp::Distance getDisplacement() const;
+    void setDisplacement(const shp::Distance& distance);
+    shp::Azimuth getDirection() const;
+    void setDirection(const shp::Azimuth& direction);
     void setChangeMagnitude(const float motion);
     void setChangeDirection(const float degree);
     shp::Signal getTotal() const;
@@ -105,14 +100,14 @@ public:
     virtual shp::Signal getAngular(const Time& theta);
     void adjustScaling();
     bool checkNonZero() const;
-    virtual Velocity copy();
+    virtual shp::Distance copy();
     virtual void clear();
     virtual std::string print() const;
     virtual std::string printRadians() const;
     shp::Signal getCosComponent(const float phase) const;
     shp::Signal getSinComponent(const float phase) const;
 protected:
-    std::complex<float> toComplex(float coefficient, float change);
+    std::complex<float> toComplex(const float coefficient, const float change);
 
 public:
     static const std::string UNIT;

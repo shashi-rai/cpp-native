@@ -21,9 +21,7 @@
 #ifndef SHP_ANGULAR_H
 #define SHP_ANGULAR_H
 
-#include "azimuth.h"
 #include "distance.h"
-#include "polar.h"
 
 namespace shp {
 
@@ -114,9 +112,9 @@ public:
     Angular operator%(const Polar& rotation) const;
 
     // Access operator
-    Quantity operator()(const Angular& peer,
+    shp::Signal operator()(const Angular& peer,
         const Distance& separation, const Distance& position) const;
-    Quantity operator()(const Angular& peerX, const Angular& peerY,
+    shp::Signal operator()(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const;
 
     // Getters
@@ -128,41 +126,41 @@ public:
     void setAzimuth(const Azimuth& angle) { this->azimuth = angle; }
 
     // Additional methods
-    Quantity getLinearDisplacement(const Angular& peer,
+    shp::Signal getLinearDisplacement(const Angular& peer,
         const Distance& separation, const Distance& position) const;
-    Quantity getLinearConvergence(const Angular& peer,
+    shp::Signal getLinearConvergence(const Angular& peer,
         const Distance& separation, const Distance& position) const;
-    Quantity getLinearDivergence(const Angular& peer,
+    shp::Signal getLinearDivergence(const Angular& peer,
         const Distance& separation, const Distance& position) const;
-    Quantity getAzimuthDisplacement(const Angular& peer,
+    shp::Signal getAzimuthDisplacement(const Angular& peer,
         const Distance& separation, const Distance& position) const;
-    Quantity getAzimuthConvergence(const Angular& peer,
+    shp::Signal getAzimuthConvergence(const Angular& peer,
         const Distance& separation, const Distance& position) const;
-    Quantity getAzimuthDivergence(const Angular& peer,
+    shp::Signal getAzimuthDivergence(const Angular& peer,
         const Distance& separation, const Distance& position) const;
-    Quantity getPolarDisplacement(const Angular& peer,
+    shp::Signal getPolarDisplacement(const Angular& peer,
         const Distance& separation, const Distance& position) const;
-    Quantity getPolarConvergence(const Angular& peer,
+    shp::Signal getPolarConvergence(const Angular& peer,
         const Distance& separation, const Distance& position) const;
-    Quantity getPolarDivergence(const Angular& peer,
+    shp::Signal getPolarDivergence(const Angular& peer,
         const Distance& separation, const Distance& position) const;
-    Quantity getLinearDisplacement(const Angular& peerX, const Angular& peerY,
+    shp::Signal getLinearDisplacement(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const;
-    Quantity getLinearConvergence(const Angular& peerX, const Angular& peerY,
+    shp::Signal getLinearConvergence(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const;
-    Quantity getLinearDivergence(const Angular& peerX, const Angular& peerY,
+    shp::Signal getLinearDivergence(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const;
-    Quantity getAzimuthDisplacement(const Angular& peerX, const Angular& peerY,
+    shp::Signal getAzimuthDisplacement(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const;
-    Quantity getAzimuthConvergence(const Angular& peerX, const Angular& peerY,
+    shp::Signal getAzimuthConvergence(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const;
-    Quantity getAzimuthDivergence(const Angular& peerX, const Angular& peerY,
+    shp::Signal getAzimuthDivergence(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const;
-    Quantity getPolarDisplacement(const Angular& peerX, const Angular& peerY,
+    shp::Signal getPolarDisplacement(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const;
-    Quantity getPolarConvergence(const Angular& peerX, const Angular& peerY,
+    shp::Signal getPolarConvergence(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const;
-    Quantity getPolarDivergence(const Angular& peerX, const Angular& peerY,
+    shp::Signal getPolarDivergence(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const;
     Distance getRadius() const;
     void setRadius(const Distance& length);
@@ -171,7 +169,9 @@ public:
     void setRadius(const float length, const short int scaling, const std::string unit);
     void setRadius(const float length, const short int scaling, const Unit& unit);
     Direction getRadiusChange() const;
-    void setRadiusChange(const Direction& orientation);
+    void setRadiusChange(const Azimuth& orientation);
+    Direction getDopplerShift() const;
+    void setDopplerShift(const Polar& orientation);
     float getPolarCyclingRate() const;
     float getPolarTimePerCycle() const;
     Direction getPolarTangent() const;
@@ -188,17 +188,17 @@ public:
     Direction getAzimuthChange() const;
     void setAzimuthChange(const Direction& orientation);
     float getAzimuthFraction(const Azimuth& peer) const;
-    Quantity getRelative(const Distance& position) const;
-    Quantity getLinearX(const Distance& position) const;
-    Quantity getLinearXConvergence(const Distance& position) const;
-    Quantity getLinearXDivergence(const Distance& position) const;
-    Quantity getLinearY(const Distance& position) const;
-    Quantity getLinearYConvergence(const Distance& position) const;
-    Quantity getLinearYDivergence(const Distance& position) const;
-    Quantity getLinearZ(const Distance& position) const;
-    Quantity getLinearZConvergence(const Distance& position) const;
-    Quantity getLinearZDivergence(const Distance& position) const;
-    virtual Distance copy() const;
+    shp::Signal getRelative(const Distance& position) const;
+    shp::Signal getLinearX(const Distance& position) const;
+    shp::Signal getLinearXConvergence(const Distance& position) const;
+    shp::Signal getLinearXDivergence(const Distance& position) const;
+    shp::Signal getLinearY(const Distance& position) const;
+    shp::Signal getLinearYConvergence(const Distance& position) const;
+    shp::Signal getLinearYDivergence(const Distance& position) const;
+    shp::Signal getLinearZ(const Distance& position) const;
+    shp::Signal getLinearZConvergence(const Distance& position) const;
+    shp::Signal getLinearZDivergence(const Distance& position) const;
+    virtual Distance copy();
     virtual void clear();
     virtual std::string print() const;
     virtual std::string printRadians() const;

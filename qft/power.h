@@ -21,8 +21,6 @@
 #ifndef QFT_POWER_H
 #define QFT_POWER_H
 
-#include <string>
-#include <vector>
 #include "time.h"
 
 namespace qft {

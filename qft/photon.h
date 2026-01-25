@@ -21,8 +21,6 @@
 #ifndef QFT_PHOTON_H
 #define QFT_PHOTON_H
 
-#include <string>
-#include <vector>
 #include "energy.h"
 #include "boson.h"
 

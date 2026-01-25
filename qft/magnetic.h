@@ -21,8 +21,6 @@
 #ifndef QFT_MAGNETIC_H
 #define QFT_MAGNETIC_H
 
-#include <string>
-#include <vector>
 #include "current.h"
 #include "field.h"
 #include "force.h"

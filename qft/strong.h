@@ -21,8 +21,6 @@
 #ifndef QFT_STRONG_H
 #define QFT_STRONG_H
 
-#include <string>
-#include <vector>
 #include "neutron.h"
 #include "nuclear.h"
 #include "proton.h"

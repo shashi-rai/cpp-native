@@ -21,8 +21,6 @@
 #ifndef QFT_WEAK_H
 #define QFT_WEAK_H
 
-#include <string>
-#include <vector>
 #include "nuclear.h"
 
 namespace qft {

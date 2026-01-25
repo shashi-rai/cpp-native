@@ -93,7 +93,7 @@ public:
     virtual shp::Signal getLinear(const Time& slice);
     virtual shp::Signal getAngular(const Time& theta);
     bool checkNonZero() const;
-    virtual Velocity copy();
+    virtual shp::Distance copy();
     virtual void clear();
     virtual std::string print() const;
     virtual std::string printRadians() const;

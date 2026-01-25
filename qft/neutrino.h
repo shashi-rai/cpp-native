@@ -21,8 +21,6 @@
 #ifndef QFT_NEUTRINO_H
 #define QFT_NEUTRINO_H
 
-#include <string>
-#include <vector>
 #include "energy.h"
 #include "particle.h"
 

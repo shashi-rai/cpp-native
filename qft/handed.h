@@ -21,9 +21,6 @@
 #ifndef QFT_HANDED_H
 #define QFT_HANDED_H
 
-#include <cmath>
-#include <sstream>
-#include <vector>
 #include "../shp/quantity.h"
 
 namespace qft {

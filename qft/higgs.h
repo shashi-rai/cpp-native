@@ -21,8 +21,6 @@
 #ifndef QFT_HIGGS_H
 #define QFT_HIGGS_H
 
-#include <string>
-#include <vector>
 #include "energy.h"
 #include "boson.h"
 

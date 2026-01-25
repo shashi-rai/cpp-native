@@ -268,27 +268,51 @@ Signal Signal::getRotation(const short int degree) const {
     return Signal(phase, self.getMagnitude(), self.getScaling(), self.getUnit());
 }
 
-Signal Signal::getLinearAmplified(const Quantity& peer) const {
+Quantity Signal::getLinearConvergence(const Quantity& peer) const {
     Quantity self = *this, other = peer;
     Quantity field = (self * other); field.adjustScaling();
+    return Quantity(field.getMagnitude(), field.getScaling(), self.getUnit());
+}
+
+Signal Signal::getLinearConvergence(const Signal& peer) const {
+    Signal self = *this, other = peer;
+    Signal field = (self * other); field.adjustScaling();
     return Signal(this->orientation, field.getMagnitude(), field.getScaling(), self.getUnit());
 }
 
-Signal Signal::getSquareAmplified(const Quantity& peer) const {
+Quantity Signal::getSquareConvergence(const Quantity& peer) const {
     Quantity self = *this, other = peer;
     Quantity field = (self * other.getSquare()); field.adjustScaling();
+    return Quantity(field.getMagnitude(), field.getScaling(), self.getUnit());
+}
+
+Signal Signal::getSquareConvergence(const Signal& peer) const {
+    Signal self = *this, other = peer;
+    Signal field = (self * other.getSquare()); field.adjustScaling();
     return Signal(this->orientation, field.getMagnitude(), field.getScaling(), self.getUnit());
 }
 
-Signal Signal::getLinearDivergence(const Quantity& peer) const {
+Quantity Signal::getLinearDivergence(const Quantity& peer) const {
     Quantity self = *this, other = peer;
     Quantity field = (self / other); field.adjustScaling();
+    return Quantity(field.getMagnitude(), field.getScaling(), self.getUnit());
+}
+
+Signal Signal::getLinearDivergence(const Signal& peer) const {
+    Signal self = *this, other = peer;
+    Signal field = (self / other); field.adjustScaling();
     return Signal(this->orientation, field.getMagnitude(), field.getScaling(), self.getUnit());
 }
 
-Signal Signal::getSquareDivergence(const Quantity& peer) const {
+Quantity Signal::getSquareDivergence(const Quantity& peer) const {
     Quantity self = *this, other = peer;
     Quantity field = (self / other.getSquare()); field.adjustScaling();
+    return Quantity(field.getMagnitude(), field.getScaling(), self.getUnit());
+}
+
+Signal Signal::getSquareDivergence(const Signal& peer) const {
+    Signal self = *this, other = peer;
+    Signal field = (self / other.getSquare()); field.adjustScaling();
     return Signal(this->orientation, field.getMagnitude(), field.getScaling(), self.getUnit());
 }
 

@@ -21,8 +21,6 @@
 #ifndef QFT_NUCLEAR_H
 #define QFT_NUCLEAR_H
 
-#include <string>
-#include <vector>
 #include "field.h"
 #include "force.h"
 

@@ -21,8 +21,6 @@
 #ifndef QFT_GRAVITY_H
 #define QFT_GRAVITY_H
 
-#include <string>
-#include <vector>
 #include "field.h"
 #include "force.h"
 

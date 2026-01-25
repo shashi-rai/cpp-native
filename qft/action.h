@@ -21,8 +21,6 @@
 #ifndef QFT_ACTION_H
 #define QFT_ACTION_H
 
-#include <string>
-#include <vector>
 #include "../shp/change.h"
 #include "../shp/coordinate.h"
 #include "../shp/wave.h"

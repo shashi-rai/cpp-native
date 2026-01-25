@@ -22,9 +22,9 @@
 
 namespace shp {
 
-const float Angular::DEFAULT_RADIUS = Quantity::DEFAULT_VALUE;
-const float Angular::DEFAULT_POLARITY = Quantity::DEFAULT_VALUE;
-const float Angular::DEFAULT_AZIMUTHAL = Quantity::DEFAULT_VALUE;
+const float Angular::DEFAULT_RADIUS = shp::Quantity::DEFAULT_VALUE;
+const float Angular::DEFAULT_POLARITY = shp::Quantity::DEFAULT_VALUE;
+const float Angular::DEFAULT_AZIMUTHAL = shp::Quantity::DEFAULT_VALUE;
 
 Angular::Angular()
         : Distance(DEFAULT_RADIUS), polar(DEFAULT_POLARITY), azimuth(DEFAULT_AZIMUTHAL) {
@@ -408,211 +408,220 @@ Angular Angular::operator%(const Polar& rotation) const {
     return Angular(self.getRadius(), newPolar, self.azimuth);
 }
 
-Quantity Angular::operator()(const Angular& peer,
+shp::Signal Angular::operator()(const Angular& peer,
         const Distance& separation, const Distance& position) const {
     return getLinearDisplacement(peer, separation, position);
 }
 
-Quantity Angular::operator()(const Angular& peerX, const Angular& peerY,
+shp::Signal Angular::operator()(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const {
     return getLinearDisplacement(peerX, peerY, separationX, separationY);
 }
 
-Quantity Angular::getLinearDisplacement(const Angular& peer,
+shp::Signal Angular::getLinearDisplacement(const Angular& peer,
         const Distance& separation, const Distance& position) const {
     Angular self = *this;
-    Quantity ax = self.getLinearX(position), bx = peer.getLinearX((separation - position));
-    Quantity result = (ax - bx); result.adjustScaling();
+    shp::Signal ax = self.getLinearX(position), bx = peer.getLinearX((separation - position));
+    shp::Signal result = (ax - bx); result.adjustScaling();
     return result;
 }
 
-Quantity Angular::getLinearConvergence(const Angular& peer,
+shp::Signal Angular::getLinearConvergence(const Angular& peer,
         const Distance& separation, const Distance& position) const {
     Angular self = *this;
-    Quantity ax = self.getLinearXConvergence(position), bx = peer.getLinearXConvergence((separation - position));
-    Quantity result = (ax - bx); result.adjustScaling();
+    shp::Signal ax = self.getLinearXConvergence(position), bx = peer.getLinearXConvergence((separation - position));
+    shp::Signal result = (ax - bx); result.adjustScaling();
     return result;
 }
 
-Quantity Angular::getLinearDivergence(const Angular& peer,
+shp::Signal Angular::getLinearDivergence(const Angular& peer,
         const Distance& separation, const Distance& position) const {
     Angular self = *this;
-    Quantity ax = self.getLinearXDivergence(position), bx = peer.getLinearXDivergence((separation - position));
-    Quantity result = (ax - bx); result.adjustScaling();
+    shp::Signal ax = self.getLinearXDivergence(position), bx = peer.getLinearXDivergence((separation - position));
+    shp::Signal result = (ax - bx); result.adjustScaling();
     return result;
 }
 
-Quantity Angular::getAzimuthDisplacement(const Angular& peer,
+shp::Signal Angular::getAzimuthDisplacement(const Angular& peer,
         const Distance& separation, const Distance& position) const {
     Angular self = *this;
-    Quantity ay = self.getLinearY(position), by = peer.getLinearY((separation - position));
-    Quantity result = (ay - by); result.adjustScaling();
+    shp::Signal ay = self.getLinearY(position), by = peer.getLinearY((separation - position));
+    shp::Signal result = (ay - by); result.adjustScaling();
     return result;
 }
 
-Quantity Angular::getAzimuthConvergence(const Angular& peer,
+shp::Signal Angular::getAzimuthConvergence(const Angular& peer,
         const Distance& separation, const Distance& position) const {
     Angular self = *this;
-    Quantity ay = self.getLinearYConvergence(position), by = peer.getLinearYConvergence((separation - position));
-    Quantity result = (ay - by); result.adjustScaling();
+    shp::Signal ay = self.getLinearYConvergence(position), by = peer.getLinearYConvergence((separation - position));
+    shp::Signal result = (ay - by); result.adjustScaling();
     return result;
 }
 
-Quantity Angular::getAzimuthDivergence(const Angular& peer,
+shp::Signal Angular::getAzimuthDivergence(const Angular& peer,
         const Distance& separation, const Distance& position) const {
     Angular self = *this;
-    Quantity ay = self.getLinearYDivergence(position), by = peer.getLinearYDivergence((separation - position));
-    Quantity result = (ay - by); result.adjustScaling();
+    shp::Signal ay = self.getLinearYDivergence(position), by = peer.getLinearYDivergence((separation - position));
+    shp::Signal result = (ay - by); result.adjustScaling();
     return result;
 }
 
-Quantity Angular::getPolarDisplacement(const Angular& peer,
+shp::Signal Angular::getPolarDisplacement(const Angular& peer,
         const Distance& separation, const Distance& position) const {
     Angular self = *this;
-    Quantity az = self.getLinearZ(position), bz = peer.getLinearZ((separation - position));
-    Quantity result = (az - bz); result.adjustScaling();
+    shp::Signal az = self.getLinearZ(position), bz = peer.getLinearZ((separation - position));
+    shp::Signal result = (az - bz); result.adjustScaling();
     return result;
 }
 
-Quantity Angular::getPolarConvergence(const Angular& peer,
+shp::Signal Angular::getPolarConvergence(const Angular& peer,
         const Distance& separation, const Distance& position) const {
     Angular self = *this;
-    Quantity az = self.getLinearZConvergence(position), bz = peer.getLinearZConvergence((separation - position));
-    Quantity result = (az - bz); result.adjustScaling();
+    shp::Signal az = self.getLinearZConvergence(position), bz = peer.getLinearZConvergence((separation - position));
+    shp::Signal result = (az - bz); result.adjustScaling();
     return result;
 }
 
-Quantity Angular::getPolarDivergence(const Angular& peer,
+shp::Signal Angular::getPolarDivergence(const Angular& peer,
         const Distance& separation, const Distance& position) const {
     Angular self = *this;
-    Quantity az = self.getLinearZDivergence(position), bz = peer.getLinearZDivergence((separation - position));
-    Quantity result = (az - bz); result.adjustScaling();
+    shp::Signal az = self.getLinearZDivergence(position), bz = peer.getLinearZDivergence((separation - position));
+    shp::Signal result = (az - bz); result.adjustScaling();
     return result;
 }
 
-Quantity Angular::getLinearDisplacement(const Angular& peerX, const Angular& peerY,
+shp::Signal Angular::getLinearDisplacement(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const {
-    Angular self = *this; Distance end = Quantity::DEFAULT_VALUE;
-    Quantity azimX = self.getLinearDisplacement(peerX, separationX, end);
-    Quantity azimY = self.getLinearDisplacement(peerY, separationY, end);
+    Angular self = *this; Distance end = shp::Quantity::DEFAULT_VALUE;
+    shp::Signal azimX = self.getLinearDisplacement(peerX, separationX, end);
+    shp::Signal azimY = self.getLinearDisplacement(peerY, separationY, end);
     std::complex<float> radial(azimX.getMagnitude(), azimY.getMagnitude());
-    shp::Quantity result(std::abs(radial), azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
+    shp::Signal result(std::abs(radial), azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
     return result;
 }
 
-Quantity Angular::getLinearConvergence(const Angular& peerX, const Angular& peerY,
+shp::Signal Angular::getLinearConvergence(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const {
-    Angular self = *this; Distance end = Quantity::DEFAULT_VALUE;
-    Quantity azimX = self.getLinearConvergence(peerX, separationX, end);
-    Quantity azimY = self.getLinearConvergence(peerY, separationY, end);
+    Angular self = *this; Distance end = shp::Quantity::DEFAULT_VALUE;
+    shp::Signal azimX = self.getLinearConvergence(peerX, separationX, end);
+    shp::Signal azimY = self.getLinearConvergence(peerY, separationY, end);
     std::complex<float> radial(azimX.getMagnitude(), azimY.getMagnitude());
-    shp::Quantity result(std::abs(radial), azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
+    shp::Signal result(std::abs(radial), azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
     return result;
 }
 
-Quantity Angular::getLinearDivergence(const Angular& peerX, const Angular& peerY,
+shp::Signal Angular::getLinearDivergence(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const {
-    Angular self = *this; Distance end = Quantity::DEFAULT_VALUE;
-    Quantity azimX = self.getLinearDivergence(peerX, separationX, end);
-    Quantity azimY = self.getLinearDivergence(peerY, separationY, end);
+    Angular self = *this; Distance end = shp::Quantity::DEFAULT_VALUE;
+    shp::Signal azimX = self.getLinearDivergence(peerX, separationX, end);
+    shp::Signal azimY = self.getLinearDivergence(peerY, separationY, end);
     std::complex<float> radial(azimX.getMagnitude(), azimY.getMagnitude());
-    shp::Quantity result(std::abs(radial), azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
+    shp::Signal result(std::abs(radial), azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
     return result;
 }
 
-Quantity Angular::getAzimuthDisplacement(const Angular& peerX, const Angular& peerY,
+shp::Signal Angular::getAzimuthDisplacement(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const {
-    Angular self = *this; Distance end = Quantity::DEFAULT_VALUE;
-    Quantity azimX = self.getAzimuthDisplacement(peerX, separationX, end);
-    Quantity azimY = self.getAzimuthDisplacement(peerY, separationY, end);
+    Angular self = *this; Distance end = shp::Quantity::DEFAULT_VALUE;
+    shp::Signal azimX = self.getAzimuthDisplacement(peerX, separationX, end);
+    shp::Signal azimY = self.getAzimuthDisplacement(peerY, separationY, end);
     std::complex<float> radial(azimX.getMagnitude(), azimY.getMagnitude());
-    shp::Quantity result(std::abs(radial), azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
+    shp::Signal result(std::abs(radial), azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
     return result;
 }
 
-Quantity Angular::getAzimuthConvergence(const Angular& peerX, const Angular& peerY,
+shp::Signal Angular::getAzimuthConvergence(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const {
-    Angular self = *this; Distance end = Quantity::DEFAULT_VALUE;
-    Quantity azimX = self.getAzimuthConvergence(peerX, separationX, end);
-    Quantity azimY = self.getAzimuthConvergence(peerY, separationY, end);
+    Angular self = *this; Distance end = shp::Quantity::DEFAULT_VALUE;
+    shp::Signal azimX = self.getAzimuthConvergence(peerX, separationX, end);
+    shp::Signal azimY = self.getAzimuthConvergence(peerY, separationY, end);
     std::complex<float> radial(azimX.getMagnitude(), azimY.getMagnitude());
-    shp::Quantity result(std::abs(radial), azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
+    shp::Signal result(std::abs(radial), azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
     return result;
 }
 
-Quantity Angular::getAzimuthDivergence(const Angular& peerX, const Angular& peerY,
+shp::Signal Angular::getAzimuthDivergence(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const {
-    Angular self = *this; Distance end = Quantity::DEFAULT_VALUE;
-    Quantity azimX = self.getAzimuthDivergence(peerX, separationX, end);
-    Quantity azimY = self.getAzimuthDivergence(peerY, separationY, end);
+    Angular self = *this; Distance end = shp::Quantity::DEFAULT_VALUE;
+    shp::Signal azimX = self.getAzimuthDivergence(peerX, separationX, end);
+    shp::Signal azimY = self.getAzimuthDivergence(peerY, separationY, end);
     std::complex<float> radial(azimX.getMagnitude(), azimY.getMagnitude());
-    shp::Quantity result(std::abs(radial), azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
+    shp::Signal result(std::abs(radial), azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
     return result;
 }
 
-Quantity Angular::getPolarDisplacement(const Angular& peerX, const Angular& peerY,
+shp::Signal Angular::getPolarDisplacement(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const {
-    Angular self = *this; Distance end = Quantity::DEFAULT_VALUE;
-    Quantity azimX = self.getPolarDisplacement(peerX, separationX, end);
-    Quantity azimY = self.getPolarDisplacement(peerY, separationY, end);
+    Angular self = *this; Distance end = shp::Quantity::DEFAULT_VALUE;
+    shp::Signal azimX = self.getPolarDisplacement(peerX, separationX, end);
+    shp::Signal azimY = self.getPolarDisplacement(peerY, separationY, end);
     std::complex<float> radial(azimX.getMagnitude(), azimY.getMagnitude());
-    shp::Quantity result(std::abs(radial), azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
+    shp::Signal result(std::abs(radial), azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
     return result;
 }
 
-Quantity Angular::getPolarConvergence(const Angular& peerX, const Angular& peerY,
+shp::Signal Angular::getPolarConvergence(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const {
-    Angular self = *this; Distance end = Quantity::DEFAULT_VALUE;
-    Quantity azimX = self.getPolarConvergence(peerX, separationX, end);
-    Quantity azimY = self.getPolarConvergence(peerY, separationY, end);
+    Angular self = *this; Distance end = shp::Quantity::DEFAULT_VALUE;
+    shp::Signal azimX = self.getPolarConvergence(peerX, separationX, end);
+    shp::Signal azimY = self.getPolarConvergence(peerY, separationY, end);
     std::complex<float> radial(azimX.getMagnitude(), azimY.getMagnitude());
-    shp::Quantity result(std::abs(radial), azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
+    shp::Signal result(std::abs(radial), azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
     return result;
 }
 
-Quantity Angular::getPolarDivergence(const Angular& peerX, const Angular& peerY,
+shp::Signal Angular::getPolarDivergence(const Angular& peerX, const Angular& peerY,
         const Distance& separationX, const Distance& separationY) const {
-    Angular self = *this; Distance end = Quantity::DEFAULT_VALUE;
-    Quantity azimX = self.getPolarDivergence(peerX, separationX, end);
-    Quantity azimY = self.getPolarDivergence(peerY, separationY, end);
+    Angular self = *this; Distance end = shp::Quantity::DEFAULT_VALUE;
+    shp::Signal azimX = self.getPolarDivergence(peerX, separationX, end);
+    shp::Signal azimY = self.getPolarDivergence(peerY, separationY, end);
     std::complex<float> radial(azimX.getMagnitude(), azimY.getMagnitude());
-    shp::Quantity result(std::abs(radial), azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
+    shp::Signal result(std::abs(radial), azimX.getScaling(), azimX.getUnit()); result.adjustScaling();
     return result;
 }
 
 Distance Angular::getRadius() const {
-    return Distance(Distance::getMagnitude(), Distance::getScaling(),
-        Distance::getUnit(), Distance::getChange());
+    return Distance(Distance::getMagnitude(), Distance::getScaling(), Distance::getUnit(),
+        Distance::getAzimuth(), Distance::getModulation());
 }
 
 void Angular::setRadius(const Distance& length) {
     Angular self = *this;
     self.setRadius(length.getMagnitude(), length.getScaling(), length.getUnit());
-    self.setRadiusChange(length.getChange());
+    self.setRadiusChange(length.getAzimuth());
+    self.setDopplerShift(length.getModulation());
 }
 
 void Angular::setRadius(const float length) {
-    Quantity::setMagnitude(length);
+    Distance::setMagnitude(length);
 }
 
 void Angular::setRadius(const float length, const short int scaling) {
-    Quantity::setMagnitude(length, scaling);
+    Distance::setMagnitude(length, scaling);
 }
 
 void Angular::setRadius(const float length, const short int scaling, const std::string unit) {
-    Quantity::setMagnitude(length, scaling, unit);
+    Distance::setMagnitude(length, scaling, unit);
 }
 
 void Angular::setRadius(const float length, const short int scaling, const Unit& unit) {
-    Quantity::setMagnitude(length, scaling, unit);
+    Distance::setMagnitude(length, scaling, unit);
 }
 
 Direction Angular::getRadiusChange() const {
-    return Distance::getChange();
+    return Distance::getAzimuth();
 }
 
-void Angular::setRadiusChange(const Direction& orientation) {
-    Distance::setChange(orientation);
+void Angular::setRadiusChange(const Azimuth& orientation) {
+    Distance::setAzimuth(orientation);
+}
+
+Direction Angular::getDopplerShift() const {
+    return Distance::getModulation();
+}
+
+void Angular::setDopplerShift(const Polar& relativity) {
+    Distance::setModulation(relativity);
 }
 
 float Angular::getPolarCyclingRate() const {
@@ -693,57 +702,57 @@ float Angular::getAzimuthFraction(const Azimuth& peer) const {
     return Direction::getFraction(self.azimuth.toRadians(), peer.toRadians());
 }
 
-Quantity Angular::getRelative(const Distance& position) const {
+shp::Signal Angular::getRelative(const Distance& position) const {
     Angular self = *this; Distance radius = self.getRadius();
-    return radius(position, Direction::DEFAULT_RADIANS);    // radial, X, Y, Z combined;
+    return radius(position, Direction::DEFAULT_RADIANS);        // radial, X, Y, Z combined;
 }
 
-Quantity Angular::getLinearX(const Distance& position) const {
+shp::Signal Angular::getLinearX(const Distance& position) const {
     Angular self = *this; Distance radius = self.getRadius();
-    return radius.getLinear(position, polar);               // X component only;
+    return radius.getLinear(position, polar);                   // X component only;
 }
 
-Quantity Angular::getLinearXConvergence(const Distance& position) const {
+shp::Signal Angular::getLinearXConvergence(const Distance& position) const {
     Angular self = *this; Distance radius = self.getRadius();
-    return radius.getLinearAmplified(position, polar);      // X component only;
+    return radius.getLinearConvergence(position, polar);        // X component only;
 }
 
-Quantity Angular::getLinearXDivergence(const Distance& position) const {
+shp::Signal Angular::getLinearXDivergence(const Distance& position) const {
     Angular self = *this; Distance radius = self.getRadius();
-    return radius.getLinearDivergence(position, polar);     // X component only;
+    return radius.getLinearDivergence(position, polar);         // X component only;
 }
 
-Quantity Angular::getLinearY(const Distance& position) const {
+shp::Signal Angular::getLinearY(const Distance& position) const {
     Angular self = *this; Distance radius = self.getRadius();
-    return radius.getOrthogonal(position, azimuth);         // Y component only;
+    return radius.getOrthogonal(position, azimuth);             // Y component only;
 }
 
-Quantity Angular::getLinearYConvergence(const Distance& position) const {
+shp::Signal Angular::getLinearYConvergence(const Distance& position) const {
     Angular self = *this; Distance radius = self.getRadius();
-    return radius.getOrthogonalAmplified(position, polar);  // Y component only;
+    return radius.getOrthogonalConvergence(position, polar);    // Y component only;
 }
 
-Quantity Angular::getLinearYDivergence(const Distance& position) const {
+shp::Signal Angular::getLinearYDivergence(const Distance& position) const {
     Angular self = *this; Distance radius = self.getRadius();
-    return radius.getOrthogonalDivergence(position, polar); // Y component only;
+    return radius.getOrthogonalDivergence(position, polar);     // Y component only;
 }
 
-Quantity Angular::getLinearZ(const Distance& position) const {
+shp::Signal Angular::getLinearZ(const Distance& position) const {
     Angular self = *this; Distance radius = self.getRadius();
-    return radius.getOrthogonal(position, polar);           // Z component only;
+    return radius.getOrthogonal(position, polar);               // Z component only;
 }
 
-Quantity Angular::getLinearZConvergence(const Distance& position) const {
+shp::Signal Angular::getLinearZConvergence(const Distance& position) const {
     Angular self = *this; Distance radius = self.getRadius();
-    return radius.getOrthogonalAmplified(position, polar);  // Z component only;
+    return radius.getOrthogonalConvergence(position, polar);    // Z component only;
 }
 
-Quantity Angular::getLinearZDivergence(const Distance& position) const {
+shp::Signal Angular::getLinearZDivergence(const Distance& position) const {
     Angular self = *this; Distance radius = self.getRadius();
-    return radius.getOrthogonalDivergence(position, polar); // Z component only;
+    return radius.getOrthogonalDivergence(position, polar);     // Z component only;
 }
 
-Distance Angular::copy() const {
+Distance Angular::copy() {
     Angular self = *this;
     Angular fresh(self.getRadius(), self.polar, self.azimuth);
     return fresh;

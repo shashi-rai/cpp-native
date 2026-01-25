@@ -225,7 +225,7 @@ shp::Signal Particle::getTotal() const {
 }
 
 shp::Signal Particle::getFrequency() const {
-    return energy.getWavelength().getInverse();
+    return energy.getWavelength().getScalarInverse();
 }
 
 shp::Signal Particle::getWavelength() const {

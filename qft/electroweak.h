@@ -21,8 +21,6 @@
 #ifndef QFT_ELECTROWEAK_H
 #define QFT_ELECTROWEAK_H
 
-#include <string>
-#include <vector>
 #include "energy.h"
 #include "boson.h"
 

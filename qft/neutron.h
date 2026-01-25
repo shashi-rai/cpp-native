@@ -21,8 +21,6 @@
 #ifndef QFT_NEUTRON_H
 #define QFT_NEUTRON_H
 
-#include <string>
-#include <vector>
 #include "electron.h"
 #include "energy.h"
 #include "particle.h"

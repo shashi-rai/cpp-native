@@ -22,7 +22,6 @@
 #define SHP_POTENTIAL_H
 
 #include "angular.h"
-#include "signal.h"
 
 namespace shp {
 

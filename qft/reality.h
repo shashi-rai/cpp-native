@@ -21,9 +21,6 @@
 #ifndef QFT_REALITY_H
 #define QFT_REALITY_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "colour.h"
 #include "current.h"
 #include "field.h"

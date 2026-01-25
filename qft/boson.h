@@ -21,8 +21,6 @@
 #ifndef QFT_BOSON_H
 #define QFT_BOSON_H
 
-#include <string>
-#include <vector>
 #include "energy.h"
 #include "handed.h"
 #include "particle.h"

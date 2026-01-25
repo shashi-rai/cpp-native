@@ -21,8 +21,6 @@
 #ifndef QFT_ELECTRON_H
 #define QFT_ELECTRON_H
 
-#include <string>
-#include <vector>
 #include "energy.h"
 #include "particle.h"
 #include "photon.h"

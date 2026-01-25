@@ -96,10 +96,14 @@ public:
 
     // Additional methods
     Signal getRotation(const short int degree) const;
-    Signal getLinearAmplified(const Quantity& peer) const;
-    Signal getSquareAmplified(const Quantity& peer) const;
-    Signal getLinearDivergence(const Quantity& peer) const;
-    Signal getSquareDivergence(const Quantity& peer) const;
+    Quantity getLinearConvergence(const Quantity& peer) const;
+    Signal getLinearConvergence(const Signal& peer) const;
+    Quantity getSquareConvergence(const Quantity& peer) const;
+    Signal getSquareConvergence(const Signal& peer) const;
+    Quantity getLinearDivergence(const Quantity& peer) const;
+    Signal getLinearDivergence(const Signal& peer) const;
+    Quantity getSquareDivergence(const Quantity& peer) const;
+    Signal getSquareDivergence(const Signal& peer) const;
     Signal getDotProduct(const Signal& peer) const;
     Signal getCrossProduct(const Signal& peer) const;
     Signal getDotFraction(const Signal& peer) const;

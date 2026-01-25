@@ -21,13 +21,13 @@
 #ifndef SHP_DISTANCE_H
 #define SHP_DISTANCE_H
 
-#include "direction.h"
-#include "quantity.h"
+#include "polar.h"
+#include "signal.h"
 
 namespace shp {
 
-class Distance : public Quantity {
-    Direction change;
+class Distance : private Signal {
+    Polar modulation;       // relativity factor, curvature of spacetime
 public:
     // Constructors
     Distance();
@@ -39,15 +39,30 @@ public:
     Distance(const float length, const short int scaling);
     Distance(const float length, const short int scaling, const std::string unit);
     Distance(const float length, const short int scaling, const Unit& unit);
-    Distance(const Direction& change);
-    Distance(const std::string unit, const Direction& change);
-    Distance(const Unit& unit, const Direction& change);
-    Distance(const float length, const Direction& change);
-    Distance(const float length, const std::string unit, const Direction& change);
-    Distance(const float length, const Unit& unit, const Direction& change);
-    Distance(const float length, const short int scaling, const Direction& change);
-    Distance(const float length, const short int scaling, const std::string unit, const Direction& change);
-    Distance(const float length, const short int scaling, const Unit& unit, const Direction& change);
+    Distance(const Azimuth& orientation);
+    Distance(const Polar& modulation);
+    Distance(const std::string unit, const Azimuth& orientation);
+    Distance(const Unit& unit, const Azimuth& orientation);
+    Distance(const Unit& unit, const Polar& modulation);
+    Distance(const float length, const Azimuth& orientation);
+    Distance(const float length, const Polar& modulation);
+    Distance(const float length, const std::string unit, const float orientation);
+    Distance(const float length, const std::string unit, const Azimuth& orientation);
+    Distance(const float length, const Unit& unit, const float orientation);
+    Distance(const float length, const Unit& unit, const Azimuth& orientation);
+    Distance(const float length, const std::string unit, const Polar& modulation);
+    Distance(const float length, const Unit& unit, const Polar& modulation);
+    Distance(const float length, const short int scaling, const float orientation);
+    Distance(const float length, const short int scaling, const Azimuth& orientation);
+    Distance(const float length, const short int scaling, const Polar& modulation);
+    Distance(const float length, const short int scaling, const std::string unit, const float orientation);
+    Distance(const float length, const short int scaling, const std::string unit, const Azimuth& orientation);
+    Distance(const float length, const short int scaling, const Unit& unit, const float orientation);
+    Distance(const float length, const short int scaling, const Unit& unit, const Azimuth& orientation);
+    Distance(const float length, const short int scaling, const Unit& unit, const Polar& modulation);
+    Distance(const float length, const short int scaling, const std::string unit, const float orientation, const Polar& modulation);
+    Distance(const float length, const short int scaling, const Unit& unit, const float orientation, const Polar& modulation);
+    Distance(const float length, const short int scaling, const Unit& unit, const Azimuth& orientation, const Polar& modulation);
 
     // Destructors
     ~Distance();
@@ -65,62 +80,93 @@ public:
     Distance operator%(const Distance& peer) const;
 
     // Distance operator
-    Distance operator+(const float value) const;
-    Distance operator-(const float value) const;
+    Distance operator+(const float length) const;
+    Distance operator-(const float length) const;
+    Distance operator+(const shp::Quantity length) const;
+    Distance operator-(const shp::Quantity length) const;
 
     // Direction operator
-    Distance operator+(const Direction& rotation) const;
-    Distance operator-(const Direction& rotation) const;
-    Distance operator*(const Direction& rotation) const;
-    Distance operator/(const Direction& rotation) const;
-    Distance operator%(const Direction& rotation) const;
+    Distance operator+(const Azimuth& rotation) const;
+    Distance operator-(const Azimuth& rotation) const;
+    Distance operator*(const Azimuth& rotation) const;
+    Distance operator/(const Azimuth& rotation) const;
+    Distance operator%(const Azimuth& rotation) const;
+
+    // Relativity operator
+    Distance operator+(const Polar& rotation) const;
+    Distance operator-(const Polar& rotation) const;
+    Distance operator*(const Polar& rotation) const;
+    Distance operator/(const Polar& rotation) const;
+    Distance operator%(const Polar& rotation) const;
 
     // Access operator
-    Distance operator()(const Distance& peer, const Direction& elevation) const;
+    Signal operator()(const Distance& peer, const Direction& elevation) const;
 
     // Getters
-    Direction getChange() const { return change; }
+    Polar getModulation() const { return modulation; }
 
     // Setters
-    void setChange(const Direction& orientation) { this->change = orientation; }
+    void setModulation(const Polar& relativity) { this->modulation = relativity; }
 
     // Additional methods
-    Direction getDeviation(const Direction& elevation) const;
-    Distance getLinear(const Distance& peer, const Direction& elevation) const;
-    Distance getLinearAmplified(const Distance& peer, const Direction& elevation) const;
-    Distance getLinearDivergence(const Distance& peer, const Direction& elevation) const;
-    Distance getPlanar(const Distance& peer, const Direction& elevation) const;
-    Distance getPlanarAmplified(const Distance& peer, const Direction& elevation) const;
-    Distance getPlanarDivergence(const Distance& peer, const Direction& elevation) const;
-    Distance getOrthogonal(const Distance& peer, const Direction& elevation) const;
-    Distance getOrthogonalAmplified(const Distance& peer, const Direction& elevation) const;
-    Distance getOrthogonalDivergence(const Distance& peer, const Direction& elevation) const;
-    Quantity getTotal() const;
-    Quantity getRadial(const Direction& elevation) const;
-    Quantity getRadialX(const Direction& elevation) const;
-    Quantity getRadialY(const Direction& elevation) const;
-    Quantity getRadialZ(const Direction& elevation) const;
-    Quantity getRadialXSquare(const Direction& elevation) const;
-    Quantity getRadialYSquare(const Direction& elevation) const;
-    Quantity getRadialZSquare(const Direction& elevation) const;
+    float getMagnitude() const;
+    void setMagnitude(const float value);
+    void setMagnitude(const float value, const short int scale);
+    void setMagnitude(const float value, const short int scale, const std::string unit);
+    void setMagnitude(const float value, const short int scale, const Unit& unit);
+    short int getScaling() const;
+    void setScaling(const short int factor);
+    Unit getUnit() const;
+    void setUnit(const Unit& object);
+    Azimuth getAzimuth() const;
+    void setAzimuth(const float orientation);
+    void setAzimuth(const Azimuth& orientation);
+    void setChangeMagnitude(const float motion);
+    void setChangeDirection(const float degree);
+    void adjustNumeric();
+    void adjustScaling();
+    bool checkNonZero() const;
+    bool checkInfinity() const;
+    short int checkScaling(const float amount) const;
+    Signal getScalarInverse() const;
+    Signal getVectorInverse() const;
+    Polar getRelativity(const Direction& elevation) const;
+    Azimuth getDeviation(const Direction& elevation) const;
+    Signal getLinear(const Distance& peer, const Direction& elevation) const;
+    Signal getLinearConvergence(const Distance& peer, const Direction& elevation) const;
+    Signal getLinearDivergence(const Distance& peer, const Direction& elevation) const;
+    Signal getPlanar(const Distance& peer, const Direction& elevation) const;
+    Signal getPlanarConvergence(const Distance& peer, const Direction& elevation) const;
+    Signal getPlanarDivergence(const Distance& peer, const Direction& elevation) const;
+    Signal getOrthogonal(const Distance& peer, const Direction& elevation) const;
+    Signal getOrthogonalConvergence(const Distance& peer, const Direction& elevation) const;
+    Signal getOrthogonalDivergence(const Distance& peer, const Direction& elevation) const;
+    Signal getTotal() const;
+    Signal getRadial(const Direction& elevation) const;
+    Signal getRadialX(const Direction& elevation) const;
+    Signal getRadialY(const Direction& elevation) const;
+    Signal getRadialZ(const Direction& elevation) const;
+    Signal getRadialXSquare(const Direction& elevation) const;
+    Signal getRadialYSquare(const Direction& elevation) const;
+    Signal getRadialZSquare(const Direction& elevation) const;
     virtual Distance copy();
     virtual void clear();
     virtual std::string print() const;
     virtual std::string printRadians() const;
 private:
     static const std::complex<float> getDiffusion(const Distance& peer, const Direction& elevation);
-    Quantity getLinearX(const Distance& peer, const Direction& elevation) const;
-    Quantity getSquareX(const Distance& peer, const Direction& elevation) const;
-    Quantity getInverseX(const Distance& peer, const Direction& elevation) const;
-    Quantity getInverseSquareX(const Distance& peer, const Direction& elevation) const;
-    Quantity getLinearY(const Distance& peer, const Direction& elevation) const;
-    Quantity getSquareY(const Distance& peer, const Direction& elevation) const;
-    Quantity getInverseY(const Distance& peer, const Direction& elevation) const;
-    Quantity getInverseSquareY(const Distance& peer, const Direction& elevation) const;
-    Quantity getLinearZ(const Distance& peer, const Direction& elevation) const;
-    Quantity getSquareZ(const Distance& peer, const Direction& elevation) const;
-    Quantity getInverseZ(const Distance& peer, const Direction& elevation) const;
-    Quantity getInverseSquareZ(const Distance& peer, const Direction& elevation) const;
+    shp::Quantity getLinearX(const Distance& peer, const Direction& elevation) const;
+    shp::Quantity getSquareX(const Distance& peer, const Direction& elevation) const;
+    shp::Quantity getInverseX(const Distance& peer, const Direction& elevation) const;
+    shp::Quantity getInverseSquareX(const Distance& peer, const Direction& elevation) const;
+    shp::Quantity getLinearY(const Distance& peer, const Direction& elevation) const;
+    shp::Quantity getSquareY(const Distance& peer, const Direction& elevation) const;
+    shp::Quantity getInverseY(const Distance& peer, const Direction& elevation) const;
+    shp::Quantity getInverseSquareY(const Distance& peer, const Direction& elevation) const;
+    shp::Quantity getLinearZ(const Distance& peer, const Direction& elevation) const;
+    shp::Quantity getSquareZ(const Distance& peer, const Direction& elevation) const;
+    shp::Quantity getInverseZ(const Distance& peer, const Direction& elevation) const;
+    shp::Quantity getInverseSquareZ(const Distance& peer, const Direction& elevation) const;
 public:
     static const std::string UNIT;
 };

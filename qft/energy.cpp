@@ -782,7 +782,7 @@ shp::Signal Energy::getKinetic() const {
 }
 
 shp::Signal Energy::getFrequency() const {
-    shp::Quantity frequency = wavelength.getInverse();
+    shp::Signal frequency = wavelength.getScalarInverse();
     frequency.setScaling((0 - wavelength.getScaling()));
     frequency.setUnit(shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY));
     shp::Quantity result(frequency.getMagnitude(), frequency.getScaling(), frequency.getUnit());

@@ -21,8 +21,6 @@
 #ifndef QFT_GLUON_H
 #define QFT_GLUON_H
 
-#include <string>
-#include <vector>
 #include "energy.h"
 #include "boson.h"
 #include "colour.h"

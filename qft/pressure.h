@@ -21,8 +21,6 @@
 #ifndef QFT_PRESSURE_H
 #define QFT_PRESSURE_H
 
-#include <string>
-#include <vector>
 #include "density.h"
 #include "force.h"
 #include "../shp/area.h"

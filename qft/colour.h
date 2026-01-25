@@ -21,9 +21,6 @@
 #ifndef QFT_COLOUR_H
 #define QFT_COLOUR_H
 
-#include <cmath>
-#include <sstream>
-#include <vector>
 #include "charge.h"
 #include "../img/rgb.h"
 
