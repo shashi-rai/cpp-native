@@ -188,12 +188,76 @@ Change Change::operator%(const Change& peer) const {
             (dynamical % peer.dynamical), (potential % peer.potential));
 }
 
+Change Change::operator+(const Direction& peer) const {
+    Change self = *this;
+    Direction conversion = (self.rate + peer);
+    return Change(conversion, self.dynamical, self.potential);
+}
+
+Change Change::operator-(const Direction& peer) const {
+    Change self = *this;
+    Direction conversion = (self.rate - peer);
+    return Change(conversion, self.dynamical, self.potential);
+}
+
+Change Change::operator*(const Direction& peer) const {
+    Change self = *this;
+    Direction conversion = (self.rate * peer);
+    return Change(conversion, self.dynamical, self.potential);
+}
+
+Change Change::operator/(const Direction& peer) const {
+    Change self = *this;
+    Direction conversion = (self.rate / peer);
+    return Change(conversion, self.dynamical, self.potential);
+}
+
+Change Change::operator%(const Direction& peer) const {
+    Change self = *this;
+    Direction conversion = (self.rate % peer);
+    return Change(conversion, self.dynamical, self.potential);
+}
+
+Change Change::operator+(const Signal& peer) const {
+    Change self = *this;
+    Signal kinetic = (self.dynamical + peer);
+    return Change(self.rate, kinetic, self.potential);
+}
+
+Change Change::operator-(const Signal& peer) const {
+    Change self = *this;
+    Signal kinetic = (self.dynamical - peer);
+    return Change(self.rate, kinetic, self.potential);
+}
+
+Change Change::operator*(const Signal& peer) const {
+    Change self = *this;
+    Signal kinetic = (self.dynamical * peer);
+    return Change(self.rate, kinetic, self.potential);
+}
+
+Change Change::operator/(const Signal& peer) const {
+    Change self = *this;
+    Signal kinetic = (self.dynamical / peer);
+    return Change(self.rate, kinetic, self.potential);
+}
+
+Change Change::operator%(const Signal& peer) const {
+    Change self = *this;
+    Signal kinetic = (self.dynamical % peer);
+    return Change(self.rate, kinetic, self.potential);
+}
+
 float Change::toRadians() const {
     return rate.toRadians();
 }
 
 void Change::setConversion(const float rate) {
     this->rate = Direction(rate);
+}
+
+void Change::setConversion(const Direction& rate) {
+    this->rate = rate;
 }
 
 shp::Signal Change::getLagrangian() const {

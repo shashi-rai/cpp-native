@@ -64,6 +64,13 @@ public:
     Area operator/(const Area& peer) const;
     Area operator%(const Area& peer) const;
 
+    // Breadth operator
+    Area operator+(const Signal& peer) const;
+    Area operator-(const Signal& peer) const;
+    Area operator*(const Signal& peer) const;
+    Area operator/(const Signal& peer) const;
+    Area operator%(const Signal& peer) const;
+
     // Getters
     Signal getLength() const { return length; }
     Signal getBreadth() const { return breadth; }
@@ -77,16 +84,20 @@ public:
     Signal getVectorTotal() const;
     Signal getLengthRotation(const short int degree) const;
     Direction getLengthPhase() const;
+    void setLengthPhase(const float direction);
     void setLengthPhase(const Direction& direction);
     void setLength(const float value);
     void setLength(const float value, const short int scale);
     void setLength(const float value, const short int scale, const std::string unit);
+    void setLength(const float value, const short int scale, const Unit& unit);
     Signal getBreadthRotation(const short int degree) const;
     Direction getBreadthPhase() const;
+    void setBreadthPhase(const float direction);
     void setBreadthPhase(const Direction& direction);
     void setBreadth(const float value);
     void setBreadth(const float value, const short int scale);
     void setBreadth(const float value, const short int scale, const std::string unit);
+    void setBreadth(const float value, const short int scale, const Unit& unit);
     short int getLengthScaling() const;
     void setLengthScaling(const short int factor);
     short int getBreadthScaling() const;

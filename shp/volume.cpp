@@ -30,11 +30,23 @@ Volume::Volume()
 
 }
 
-Volume::Volume(const std::string unit) : surface(unit), depth(unit) {
+Volume::Volume(const std::string unit)
+        : surface(unit), depth(unit) {
 
 }
 
-Volume::Volume(const Unit& unit) : surface(unit), depth(unit) {
+Volume::Volume(const Unit& unit)
+        : surface(unit), depth(unit) {
+
+}
+
+Volume::Volume(const short int scaling, const std::string unit)
+        : surface(scaling, unit), depth(scaling, unit) {
+
+}
+
+Volume::Volume(const short int scaling, const Unit& unit)
+        : surface(scaling, unit), depth(scaling, unit) {
 
 }
 
@@ -213,11 +225,25 @@ bool Volume::operator==(const Volume& peer) const {
 }
 
 bool Volume::operator<(const Volume& peer) const {
-    return (surface < peer.surface) && (depth < peer.depth);
+    Volume self = *this; bool result = false;
+    if (surface < peer.surface) {
+        result = true;
+    }
+    if (depth < peer.depth) {
+        result = true;
+    }
+    return result;
 }
 
 bool Volume::operator>(const Volume& peer) const {
-    return (surface > peer.surface) && (depth > peer.depth);
+    Volume self = *this; bool result = false;
+    if (surface > peer.surface) {
+        result = true;
+    }
+    if (depth > peer.depth) {
+        result = true;
+    }
+    return result;
 }
 
 bool Volume::operator<=(const Volume& peer) const {
@@ -231,7 +257,8 @@ bool Volume::operator>=(const Volume& peer) const {
 }
 
 Volume Volume::operator+(const Volume& peer) const {
-	Signal realvolume = (getScalarTotal() + peer.getScalarTotal());
+    Volume self = *this, other = peer;
+	Signal realvolume = (self.getScalarTotal() + other.getScalarTotal());
     float part = std::cbrt(realvolume.getMagnitude());
 	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
     return Volume(Signal(part, realvolume.getScaling(), surface.getLengthUnit()),
@@ -240,7 +267,8 @@ Volume Volume::operator+(const Volume& peer) const {
 }
 
 Volume Volume::operator-(const Volume& peer) const {
-	Signal realvolume = (getScalarTotal() - peer.getScalarTotal());
+    Volume self = *this, other = peer;
+	Signal realvolume = (self.getScalarTotal() - other.getScalarTotal());
     float part = std::cbrt(realvolume.getMagnitude());
 	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
     return Volume(Signal(part, realvolume.getScaling(), surface.getLengthUnit()),
@@ -249,7 +277,8 @@ Volume Volume::operator-(const Volume& peer) const {
 }
 
 Volume Volume::operator*(const Volume& peer) const {
-	Signal realvolume = (getScalarTotal() * peer.getScalarTotal());
+    Volume self = *this, other = peer;
+	Signal realvolume = (self.getScalarTotal() * other.getScalarTotal());
     float part = std::cbrt(realvolume.getMagnitude());
 	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
     return Volume(Signal(part, realvolume.getScaling(), surface.getLengthUnit()),
@@ -258,7 +287,8 @@ Volume Volume::operator*(const Volume& peer) const {
 }
 
 Volume Volume::operator/(const Volume& peer) const {
-	Signal realvolume = (getScalarTotal() / peer.getScalarTotal());
+    Volume self = *this, other = peer;
+	Signal realvolume = (self.getScalarTotal() / other.getScalarTotal());
     float part = std::cbrt(realvolume.getMagnitude());
 	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
     return Volume(Signal(part, realvolume.getScaling(), surface.getLengthUnit()),
@@ -267,12 +297,73 @@ Volume Volume::operator/(const Volume& peer) const {
 }
 
 Volume Volume::operator%(const Volume& peer) const {
-	Signal realvolume = (getScalarTotal() % peer.getScalarTotal());
+    Volume self = *this, other = peer;
+	Signal realvolume = (self.getScalarTotal() % other.getScalarTotal());
     float part = std::cbrt(realvolume.getMagnitude());
 	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
     return Volume(Signal(part, realvolume.getScaling(), surface.getLengthUnit()),
 			Signal(part, realvolume.getScaling(), surface.getBreadthUnit()),
 			Signal(part, realvolume.getScaling(), depth.getUnit()));
+}
+
+Volume Volume::operator+(const Area& peer) const {
+    Volume self = *this;
+    Area area = (self.surface + peer);
+    return Volume(area, self.depth);
+}
+
+Volume Volume::operator-(const Area& peer) const {
+    Volume self = *this;
+    Area area = (self.surface - peer);
+    return Volume(area, self.depth);
+}
+
+Volume Volume::operator*(const Area& peer) const {
+    Volume self = *this;
+    Area area = (self.surface * peer);
+    return Volume(area, self.depth);
+}
+
+Volume Volume::operator/(const Area& peer) const {
+    Volume self = *this;
+    Area area = (self.surface / peer);
+    return Volume(area, self.depth);
+}
+
+Volume Volume::operator%(const Area& peer) const {
+    Volume self = *this;
+    Area area = (self.surface % peer);
+    return Volume(area, self.depth);
+}
+
+Volume Volume::operator+(const Signal& peer) const {
+    Volume self = *this;
+    Signal height = (self.depth + peer);
+    return Volume(self.surface, height);
+}
+
+Volume Volume::operator-(const Signal& peer) const {
+    Volume self = *this;
+    Signal height = (self.depth - peer);
+    return Volume(self.surface, height);
+}
+
+Volume Volume::operator*(const Signal& peer) const {
+    Volume self = *this;
+    Signal height = (self.depth * peer);
+    return Volume(self.surface, height);
+}
+
+Volume Volume::operator/(const Signal& peer) const {
+    Volume self = *this;
+    Signal height = (self.depth / peer);
+    return Volume(self.surface, height);
+}
+
+Volume Volume::operator%(const Signal& peer) const {
+    Volume self = *this;
+    Signal height = (self.depth % peer);
+    return Volume(self.surface, height);
 }
 
 Signal Volume::getScalarTotal() const {
@@ -303,8 +394,12 @@ Direction Volume::getLengthPhase() const {
     return surface.getLengthPhase();
 }
 
+void Volume::setLengthPhase(const float direction) {
+    surface.setLengthPhase(direction);
+}
+
 void Volume::setLengthPhase(const Direction& direction) {
-    surface.setBreadthPhase(direction);
+    surface.setLengthPhase(direction);
 }
 
 void Volume::setLength(const float value) {
@@ -319,12 +414,20 @@ void Volume::setLength(const float value, const short int scale, const std::stri
     surface.setLength(value, scale, unit);
 }
 
+void Volume::setLength(const float value, const short int scale, const Unit& unit) {
+    surface.setLength(value, scale, unit);
+}
+
 Signal Volume::getBreadthRotation(const short int degree) const {
     return surface.getBreadthRotation(degree);
 }
 
 Direction Volume::getBreadthPhase() const {
     return surface.getBreadthPhase();
+}
+
+void Volume::setBreadthPhase(const float direction) {
+    surface.setBreadthPhase(direction);
 }
 
 void Volume::setBreadthPhase(const Direction& direction) {
@@ -340,6 +443,10 @@ void Volume::setBreadth(const float value, const short int scale) {
 }
 
 void Volume::setBreadth(const float value, const short int scale, const std::string unit) {
+    surface.setBreadth(value, scale, unit);
+}
+
+void Volume::setBreadth(const float value, const short int scale, const Unit& unit) {
     surface.setBreadth(value, scale, unit);
 }
 
@@ -361,6 +468,10 @@ Direction Volume::getHeightPhase() const {
     return Direction(depth.getOrientation());
 }
 
+void Volume::setHeightPhase(const float direction) {
+    depth.setOrientation(direction);
+}
+
 void Volume::setHeightPhase(const Direction& direction) {
     depth.setOrientation(direction.toRadians());
 }
@@ -374,8 +485,11 @@ void Volume::setHeight(const float value, const short int scale) {
 }
 
 void Volume::setHeight(const float value, const short int scale, const std::string unit) {
-    depth.setMagnitude(value, scale);
-    depth.setUnit(unit);
+    depth.setMagnitude(value, scale, unit);
+}
+
+void Volume::setHeight(const float value, const short int scale, const Unit& unit) {
+    depth.setMagnitude(value, scale, unit);
 }
 
 short int Volume::getLengthScaling() const {

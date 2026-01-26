@@ -74,6 +74,20 @@ public:
     Change operator/(const Change& peer) const;
     Change operator%(const Change& peer) const;
 
+    // Rate operator
+    Change operator+(const Direction& peer) const;
+    Change operator-(const Direction& peer) const;
+    Change operator*(const Direction& peer) const;
+    Change operator/(const Direction& peer) const;
+    Change operator%(const Direction& peer) const;
+
+    // Kinetic operator
+    Change operator+(const Signal& peer) const;
+    Change operator-(const Signal& peer) const;
+    Change operator*(const Signal& peer) const;
+    Change operator/(const Signal& peer) const;
+    Change operator%(const Signal& peer) const;
+
     // Getters
     Direction getRate() const { return rate; }
     Signal getDynamical() const { return dynamical; }
@@ -87,6 +101,7 @@ public:
     // Additional methods
     float toRadians() const;
     void setConversion(const float rate);
+    void setConversion(const Direction& rate);
     Signal getLagrangian() const;
     Signal getHamiltonian() const;
     float leastAction();

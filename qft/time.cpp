@@ -255,6 +255,11 @@ Time::Time(const std::string name, const float duration, const shp::Unit& unit)
 
 }
 
+Time::Time(const std::string name, const float duration, const short int scaling)
+        : shp::Temporal(shp::Quantity::DEFAULT_VALUE, duration, scaling), name(name) {
+
+}
+
 Time::Time(const std::string name, const float duration, const short int scaling, const std::string unit)
         : shp::Temporal(shp::Quantity::DEFAULT_VALUE,
             duration, scaling, unit), name(name) {
@@ -476,11 +481,8 @@ Time Time::operator%(const Time& peer) const {
         duration.getMagnitude(), duration.getScaling(), duration.getUnit());
 }
 
-shp::Temporal Time::getTotal() const {
-    Temporal self = *this;
-    shp::Temporal result(self.getWavelengthChange(), self.getAmplitudeChange(),
-        self.getAmplitude(), self.getScaling(), self.getUnit());
-    return result;
+shp::Signal Time::getTotal() const {
+    return shp::Temporal::getTotal();
 }
 
 shp::Signal Time::getEntropy() const {
@@ -540,6 +542,12 @@ std::string Time::printRadians() const {
     result << shp::Unit::getBaseDimension(shp::Unit::TIME);
     result << shp::Temporal::printRadians();
 	return result.str();
+}
+
+std::shared_ptr<qft::Time> Time::shareable(const std::string name,
+        const float ticking, const short int scaling) {
+    std::shared_ptr<qft::Time> result = std::make_shared<qft::Time> (name, ticking, scaling);
+    return result;
 }
 
 } // namespace qft

@@ -182,7 +182,7 @@ Force Mass::operator()(const Mass& peer, const shp::Distance separation,
 }
 
 bool Mass::isOwned() const {
-    return field != nullptr;
+    return (field != nullptr);
 }
 
 shp::Distance Mass::getRadius() const {

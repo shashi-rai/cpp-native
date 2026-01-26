@@ -23,69 +23,86 @@
 namespace qft {
 
 const float Reality::DEFAULT_VALUE = 0.0f;
+const float Reality::DEFAULT_TICKS = 1.0f;
 const float Reality::DEFAULT_FIELD = 1.0f;
 
 Reality::Reality()
-        : gravity(), electric(), magnetic(), up(), down(), charm(), strange(), top(), bottom(),
+        : clock(), gravity(), electric(), magnetic(),
+        up(), down(), charm(), strange(), top(), bottom(),
         electron(), electronNeutrino(), muon(), muonNeutrino(), tau(), tauNeutrino(),
         photon(), gluon(), strong(), weak(), higgs() {
+    initializeTimeDomain();
     initializeGravityField(DEFAULT_FIELD);
     initializeElectricField(DEFAULT_FIELD);
     initializeMagneticField(DEFAULT_FIELD);
 }
 
 Reality::Reality(const Mass& mass)
-        : gravity(), electric(), magnetic(), up(), down(), charm(), strange(), top(), bottom(),
+        : clock(), gravity(), electric(), magnetic(),
+        up(), down(), charm(), strange(), top(), bottom(),
         electron(), electronNeutrino(), muon(), muonNeutrino(), tau(), tauNeutrino(),
         photon(), gluon(), strong(), weak(), higgs() {
+    initializeTimeDomain();
     initializeGravityField(mass);
 }
 
 Reality::Reality(const Charge& charge)
-        : gravity(), electric(), magnetic(), up(), down(), charm(), strange(), top(), bottom(),
+        : clock(), gravity(), electric(), magnetic(),
+        up(), down(), charm(), strange(), top(), bottom(),
         electron(), electronNeutrino(), muon(), muonNeutrino(), tau(), tauNeutrino(),
         photon(), gluon(), strong(), weak(), higgs() {
+    initializeTimeDomain();
     initializeElectricField(charge);
     initializeMagneticField(charge);
 }
 
 Reality::Reality(const Colour& colour)
-        : gravity(), electric(), magnetic(), up(), down(), charm(), strange(), top(), bottom(),
+        : clock(), gravity(), electric(), magnetic(),
+        up(), down(), charm(), strange(), top(), bottom(),
         electron(), electronNeutrino(), muon(), muonNeutrino(), tau(), tauNeutrino(),
         photon(), gluon(), strong(), weak(), higgs() {
+    initializeTimeDomain();
     initializeGluonField(colour);
 }
 
 Reality::Reality(const Mass& mass, const Charge& charge)
-        : gravity(), electric(), magnetic(), up(), down(), charm(), strange(), top(), bottom(),
+        : clock(), gravity(), electric(), magnetic(),
+        up(), down(), charm(), strange(), top(), bottom(),
         electron(), electronNeutrino(), muon(), muonNeutrino(), tau(), tauNeutrino(),
         photon(), gluon(), strong(), weak(), higgs() {
+    initializeTimeDomain();
     initializeGravityField(mass);
     initializeElectricField(charge);
     initializeMagneticField(charge);
 }
 
 Reality::Reality(const Charge& charge, const Colour& colour)
-        : gravity(), electric(), magnetic(), up(), down(), charm(), strange(), top(), bottom(),
+        : clock(), gravity(), electric(), magnetic(),
+        up(), down(), charm(), strange(), top(), bottom(),
         electron(), electronNeutrino(), muon(), muonNeutrino(), tau(), tauNeutrino(),
         photon(), gluon(), strong(), weak(), higgs() {
+    initializeTimeDomain();
     initializeElectricField(charge);
     initializeMagneticField(charge);
     initializeGluonField(colour);
 }
 
 Reality::Reality(const Mass& mass, const Colour& colour)
-        : gravity(), electric(), magnetic(), up(), down(), charm(), strange(), top(), bottom(),
+        : clock(), gravity(), electric(), magnetic(),
+        up(), down(), charm(), strange(), top(), bottom(),
         electron(), electronNeutrino(), muon(), muonNeutrino(), tau(), tauNeutrino(),
         photon(), gluon(), strong(), weak(), higgs() {
+    initializeTimeDomain();
     initializeGravityField(mass);
     initializeGluonField(colour);
 }
 
 Reality::Reality(const Mass& mass, const Charge& charge, const Colour& colour)
-        : gravity(), electric(), magnetic(), up(), down(), charm(), strange(), top(), bottom(),
+        : clock(), gravity(), electric(), magnetic(),
+        up(), down(), charm(), strange(), top(), bottom(),
         electron(), electronNeutrino(), muon(), muonNeutrino(), tau(), tauNeutrino(),
         photon(), gluon(), strong(), weak(), higgs() {
+    initializeTimeDomain();
     initializeGravityField(mass);
     initializeElectricField(charge);
     initializeMagneticField(charge);
@@ -97,7 +114,9 @@ Reality::~Reality() {
 }
 
 bool Reality::operator==(const Reality& peer) const {
-    return (gravity == peer.gravity) && (electric == peer.electric) && (magnetic == peer.magnetic)
+    return (clock == peer.clock)
+        // Generic Fields
+        && (gravity == peer.gravity) && (electric == peer.electric) && (magnetic == peer.magnetic)
         // Quark Fields
         && (up == peer.up) && (down == peer.down)
         && (charm == peer.charm) && (strange == peer.strange)
@@ -165,6 +184,7 @@ std::shared_ptr<qft::Field> Reality::operator()(const Momentum& cause) {
 
 Reality Reality::copy() const {
     Reality fresh;
+    fresh.setClock(clock);
     fresh.setGravity(gravity);
     fresh.setElectric(electric);
     fresh.setMagnetic(magnetic);
@@ -189,7 +209,7 @@ Reality Reality::copy() const {
 }
 
 void Reality::clear() {
-    gravity->clear(); electric->clear(); magnetic->clear();
+    clock->clear(), gravity->clear(); electric->clear(); magnetic->clear();
     up->clear(); down->clear(); charm->clear(); strange->clear(); top->clear(); bottom->clear();
     electron->clear(); electronNeutrino->clear(); muon->clear(); muonNeutrino->clear(); tau->clear(); tauNeutrino->clear();
     photon->clear(); gluon->clear(); strong->clear(); weak->clear(); higgs->clear();
@@ -199,6 +219,9 @@ void Reality::clear() {
 std::string Reality::print() {
     std::stringstream result;
     result << "ॐ:[" << std::endl;
+    if (clock != nullptr) {
+        result << "\t" << clock->print() << "," << std::endl;
+    }
     if (gravity != nullptr) {
         result << "\t" << gravity->print() << "," << std::endl;
     }
@@ -261,6 +284,10 @@ std::string Reality::print() {
     }
     result << "]" << std::endl;
 	return result.str();
+}
+
+void Reality::initializeTimeDomain() {
+    clock = qft::Time::shareable("Time", DEFAULT_TICKS, shp::Quantity::DEFAULT_SCALE);
 }
 
 void Reality::initializeGravityField(const Mass& mass) {

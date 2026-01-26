@@ -552,11 +552,11 @@ void Field::setFieldLabel(const std::string name) {
 }
 
 bool Field::isStructured() const {
-    return physical != nullptr;
+    return (physical != nullptr);
 }
 
 shp::Distance Field::getRadius() const {
-    return orientation.getRadius().getMagnitude();
+    return orientation.getRadius();
 }
 
 void Field::setRadius(const shp::Distance& length) {
@@ -580,15 +580,15 @@ void Field::setCircular(const shp::Direction& azimuth) {
 }
 
 void Field::changePoint(const Action& action) {
-    int x = action.getPosition().getX();
-    int y = action.getPosition().getY();
-    int z = action.getPosition().getZ();
+    shp::Distance x = action.getPosition().getX();
+    shp::Distance y = action.getPosition().getY();
+    shp::Distance z = action.getPosition().getZ();
     shp::Wave received = action.getWave();
 
     // simply replace the existing Point found at specific coordinates
     // with a new Point received from the Action item
     if (isStructured()) {
-        physical->get(x).get(y).set(z, received);
+        physical->get(x.getMagnitude()).get(y.getMagnitude()).set(z.getMagnitude(), received);
     }
     return;
 }

@@ -31,11 +31,13 @@ Area::Area()
 
 }
 
-Area::Area(const std::string unit) : length(unit), breadth(unit) {
+Area::Area(const std::string unit)
+        : length(unit), breadth(unit) {
 
 }
 
-Area::Area(const Unit& unit) : length(unit), breadth(unit) {
+Area::Area(const Unit& unit)
+        : length(unit), breadth(unit) {
 
 }
 
@@ -126,11 +128,25 @@ bool Area::operator==(const Area& peer) const {
 }
 
 bool Area::operator<(const Area& peer) const {
-    return (length < peer.length) && (breadth < peer.breadth);
+    Area self = *this; bool result = false;
+    if (length < peer.length) {
+        result = true;
+    }
+    if (breadth < peer.breadth) {
+        result = true;
+    }
+    return result;
 }
 
 bool Area::operator>(const Area& peer) const {
-    return (length > peer.length) && (breadth > peer.breadth);
+    Area self = *this; bool result = false;
+    if (length > peer.length) {
+        result = true;
+    }
+    if (breadth > peer.breadth) {
+        result = true;
+    }
+    return result;
 }
 
 bool Area::operator<=(const Area& peer) const {
@@ -188,6 +204,36 @@ Area Area::operator%(const Area& peer) const {
         Signal(std::abs(part), realarea.getScaling(), breadth.getUnit()));
 }
 
+Area Area::operator+(const Signal& peer) const {
+    Area self = *this;
+    Signal width = (self.breadth + peer);
+    return Area(self.length, width);
+}
+
+Area Area::operator-(const Signal& peer) const {
+    Area self = *this;
+    Signal width = (self.breadth - peer);
+    return Area(self.length, width);
+}
+
+Area Area::operator*(const Signal& peer) const {
+    Area self = *this;
+    Signal width = (self.breadth * peer);
+    return Area(self.length, width);
+}
+
+Area Area::operator/(const Signal& peer) const {
+    Area self = *this;
+    Signal width = (self.breadth / peer);
+    return Area(self.length, width);
+}
+
+Area Area::operator%(const Signal& peer) const {
+    Area self = *this;
+    Signal width = (self.breadth % peer);
+    return Area(self.length, width);
+}
+
 Signal Area::getScalarTotal() const {
     Signal area = (length.getDotProduct(breadth));
     return Signal(area.getOrientation(), area.getMagnitude(), area.getScaling(), area.getUnit());
@@ -208,6 +254,10 @@ Direction Area::getLengthPhase() const {
     return Direction(length.getOrientation());
 }
 
+void Area::setLengthPhase(const float direction) {
+    length.setOrientation(direction);
+}
+
 void Area::setLengthPhase(const Direction& direction) {
     length.setOrientation(direction.toRadians());
 }
@@ -221,8 +271,11 @@ void Area::setLength(const float value, const short int scale) {
 }
 
 void Area::setLength(const float value, const short int scale, const std::string unit) {
-    length.setMagnitude(value, scale);
-    setLengthUnit(unit);
+    length.setMagnitude(value, scale, unit);
+}
+
+void Area::setLength(const float value, const short int scale, const Unit& unit) {
+    length.setMagnitude(value, scale, unit);
 }
 
 Signal Area::getBreadthRotation(const short int degree) const {
@@ -233,6 +286,10 @@ Signal Area::getBreadthRotation(const short int degree) const {
 
 Direction Area::getBreadthPhase() const {
     return Direction(breadth.getOrientation());
+}
+
+void Area::setBreadthPhase(const float direction) {
+    breadth.setOrientation(direction);
 }
 
 void Area::setBreadthPhase(const Direction& direction) {
@@ -248,8 +305,11 @@ void Area::setBreadth(const float value, const short int scale) {
 }
 
 void Area::setBreadth(const float value, const short int scale, const std::string unit) {
-    breadth.setMagnitude(value, scale);
-    setBreadthUnit(unit);
+    breadth.setMagnitude(value, scale, unit);
+}
+
+void Area::setBreadth(const float value, const short int scale, const Unit& unit) {
+    breadth.setMagnitude(value, scale, unit);
 }
 
 short int Area::getLengthScaling() const {

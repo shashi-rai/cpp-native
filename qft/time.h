@@ -84,6 +84,7 @@ public:
     Time(const std::string name, const float duration);
     Time(const std::string name, const float duration, const std::string unit);
     Time(const std::string name, const float duration, const shp::Unit& unit);
+    Time(const std::string name, const float duration, const short int scaling);
     Time(const std::string name, const float duration, const short int scaling,
         const std::string unit);
     Time(const std::string name, const float duration, const short int scaling,
@@ -153,7 +154,7 @@ public:
     void setName(const std::string& name) { this->name = name; }
 
     // Additional methods
-    shp::Temporal getTotal() const;
+    shp::Signal getTotal() const;
     shp::Signal getEntropy() const;
     void setEntropy(const shp::Signal& traversal);
     long getSeconds() const;
@@ -163,7 +164,9 @@ public:
     virtual void clear();
     virtual std::string print() const;
     virtual std::string printRadians() const;
-
+public:
+    static std::shared_ptr<qft::Time> shareable(const std::string name,
+        const float ticking, const short int scaling);
 public:
     static const std::string UNIT;
     static const short int ATOMIC_SCALE;

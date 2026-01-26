@@ -146,6 +146,8 @@ public:
     float getMagnitude() const;
     void setMagnitude(const float value);
     void setMagnitude(const float value, const short int scale);
+    void setMagnitude(const float value, const short int scale, const std::string unit);
+    void setMagnitude(const float value, const short int scale, const Unit& unit);
     float getAmplitude() const;
     float getAmplitudeChange() const;
     void setAmplitudeChange(const Azimuth& shift);
@@ -164,6 +166,7 @@ public:
     virtual shp::Quantity getCyclicTraversal() const;
     virtual Signal getLinearTraversal() const;
     virtual Frequency getFrequency() const;
+    Signal getTotal() const;
     virtual Signal copy() const;
     virtual void clear();
     virtual std::string print() const;

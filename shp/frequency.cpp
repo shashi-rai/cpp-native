@@ -428,6 +428,14 @@ void Frequency::setMagnitude(const float value, const short int scale) {
     Signal::setMagnitude(value, scale);
 }
 
+void Frequency::setMagnitude(const float value, const short int scale, const std::string unit) {
+    Signal::setMagnitude(value, scale, unit);
+}
+
+void Frequency::setMagnitude(const float value, const short int scale, const Unit& unit) {
+    Signal::setMagnitude(value, scale, unit);
+}
+
 float Frequency::getAmplitude() const {
     return Signal::getAmplitude();
 }
@@ -502,10 +510,17 @@ Quantity Frequency::getLifespan() const {
     return result;
 }
 
+Signal Frequency::getTotal() const {
+    Signal self = *this;
+    Frequency fresh(modulation, self.getOrientation(),
+        self.getMagnitude(), self.getScaling(), self.getUnit());
+    return fresh;
+}
+
 Signal Frequency::copy() const {
     Signal self = *this;
     Frequency fresh(modulation, self.getOrientation(),
-        self.getAmplitude(), self.getScaling(), self.getUnit());
+        self.getMagnitude(), self.getScaling(), self.getUnit());
     return fresh;
 }
 

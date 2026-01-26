@@ -29,6 +29,9 @@
 namespace qft {
 
 class Reality {
+    // Temporal domain
+    std::shared_ptr<qft::Time> clock;
+
     // Generic Fields
     std::shared_ptr<qft::Field> gravity;
     std::shared_ptr<qft::Field> electric;
@@ -81,6 +84,7 @@ public:
     std::shared_ptr<qft::Field> operator()(const Momentum& cause);
 
     // Getters
+    std::shared_ptr<qft::Time> getClock() const { return clock; }
     std::shared_ptr<qft::Field> getGravity() const { return gravity; }
     std::shared_ptr<qft::Field> getElectric() const { return electric; }
     std::shared_ptr<qft::Field> getMagnetic() const { return magnetic; }
@@ -103,6 +107,7 @@ public:
     std::shared_ptr<qft::Field> getHiggs() const { return higgs; }
 
     // Setters
+    void setClock(const std::shared_ptr<qft::Time> domain) { this->clock = domain; }
     void setGravity(const std::shared_ptr<qft::Field> field) { this->gravity = field; }
     void setElectric(const std::shared_ptr<qft::Field> field) { this->electric = field; }
     void setMagnetic(const std::shared_ptr<qft::Field> field) { this->magnetic = field; }
@@ -130,6 +135,7 @@ public:
     virtual std::string print();
 
 private:
+    void initializeTimeDomain();
     void initializeGravityField(const Mass& mass);
     void initializeElectricField(const Charge& charge);
     void initializeMagneticField(const Charge& charge);
@@ -152,6 +158,7 @@ private:
     void initializeHiggsField(const Mass& mass);
 public:
     static const float DEFAULT_VALUE;
+    static const float DEFAULT_TICKS;
     static const float DEFAULT_FIELD;
 };
 

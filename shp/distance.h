@@ -79,11 +79,26 @@ public:
     Distance operator/(const Distance& peer) const;
     Distance operator%(const Distance& peer) const;
 
-    // Distance operator
+    // Length Factor operator
     Distance operator+(const float length) const;
     Distance operator-(const float length) const;
+    Distance operator*(const float length) const;
+    Distance operator/(const float length) const;
+    Distance operator%(const float length) const;
+
+    // Quantity Factor operator
     Distance operator+(const shp::Quantity length) const;
     Distance operator-(const shp::Quantity length) const;
+    Distance operator*(const shp::Quantity length) const;
+    Distance operator/(const shp::Quantity length) const;
+    Distance operator%(const shp::Quantity length) const;
+
+    // Signal Factor operator
+    Distance operator+(const shp::Signal factor) const;
+    Distance operator-(const shp::Signal factor) const;
+    Distance operator*(const shp::Signal factor) const;
+    Distance operator/(const shp::Signal factor) const;
+    Distance operator%(const shp::Signal factor) const;
 
     // Direction operator
     Distance operator+(const Azimuth& rotation) const;
@@ -109,6 +124,7 @@ public:
     void setModulation(const Polar& relativity) { this->modulation = relativity; }
 
     // Additional methods
+    float getAmplitude() const;
     float getMagnitude() const;
     void setMagnitude(const float value);
     void setMagnitude(const float value, const short int scale);
@@ -121,6 +137,7 @@ public:
     Azimuth getAzimuth() const;
     void setAzimuth(const float orientation);
     void setAzimuth(const Azimuth& orientation);
+    void setModulation(const float relativity);
     void setChangeMagnitude(const float motion);
     void setChangeDirection(const float degree);
     void adjustNumeric();
@@ -128,8 +145,16 @@ public:
     bool checkNonZero() const;
     bool checkInfinity() const;
     short int checkScaling(const float amount) const;
+    Signal getScalarNegative() const;
+    Signal getVectorNegative() const;
     Signal getScalarInverse() const;
     Signal getVectorInverse() const;
+    Signal getScalarSquare() const;
+    Signal getVectorSquare() const;
+    Signal getScalarFraction(const float length) const;
+    Signal getScalarFraction(const float length, const short int scale) const;
+    Signal getScalarSquareFraction(const float length) const;
+    Signal getScalarSquareFraction(const float length, const short int scale) const;
     Polar getRelativity(const Direction& elevation) const;
     Azimuth getDeviation(const Direction& elevation) const;
     Signal getLinear(const Distance& peer, const Direction& elevation) const;

@@ -299,6 +299,27 @@ Distance Distance::operator-(const float length) const {
         distance.getOrientation(), this->modulation);
 }
 
+Distance Distance::operator*(const float length) const {
+    Signal self = *this, other(length, self.getScaling(), self.getUnit());
+    Signal distance = (self * other);
+    return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
+        distance.getOrientation(), this->modulation);
+}
+
+Distance Distance::operator/(const float length) const {
+    Signal self = *this, other(length, self.getScaling(), self.getUnit());
+    Signal distance = (self / other);
+    return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
+        distance.getOrientation(), this->modulation);
+}
+
+Distance Distance::operator%(const float length) const {
+    Signal self = *this, other(length, self.getScaling(), self.getUnit());
+    Signal distance = (self % other);
+    return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
+        distance.getOrientation(), this->modulation);
+}
+
 Distance Distance::operator+(const shp::Quantity length) const {
     Signal self = *this, other(length.getMagnitude(), length.getScaling(), length.getUnit());
     Signal distance = (self + other);
@@ -309,6 +330,62 @@ Distance Distance::operator+(const shp::Quantity length) const {
 Distance Distance::operator-(const shp::Quantity length) const {
     Signal self = *this, other(length.getMagnitude(), length.getScaling(), length.getUnit());
     Signal distance = (self - other);
+    return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
+        distance.getOrientation(), this->modulation);
+}
+
+Distance Distance::operator*(const shp::Quantity length) const {
+    Signal self = *this, other(length.getMagnitude(), length.getScaling(), length.getUnit());
+    Signal distance = (self * other);
+    return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
+        distance.getOrientation(), this->modulation);
+}
+
+Distance Distance::operator/(const shp::Quantity length) const {
+    Signal self = *this, other(length.getMagnitude(), length.getScaling(), length.getUnit());
+    Signal distance = (self / other);
+    return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
+        distance.getOrientation(), this->modulation);
+}
+
+Distance Distance::operator%(const shp::Quantity length) const {
+    Signal self = *this, other(length.getMagnitude(), length.getScaling(), length.getUnit());
+    Signal distance = (self % other);
+    return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
+        distance.getOrientation(), this->modulation);
+}
+
+Distance Distance::operator+(const shp::Signal factor) const {
+    Signal self = *this, other(factor.getMagnitude(), factor.getScaling(), factor.getUnit());
+    Signal distance = (self + other);
+    return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
+        distance.getOrientation(), this->modulation);
+}
+
+Distance Distance::operator-(const shp::Signal factor) const {
+    Signal self = *this, other(factor.getMagnitude(), factor.getScaling(), factor.getUnit());
+    Signal distance = (self - other);
+    return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
+        distance.getOrientation(), this->modulation);
+}
+
+Distance Distance::operator*(const shp::Signal factor) const {
+    Signal self = *this, other(factor.getMagnitude(), factor.getScaling(), factor.getUnit());
+    Signal distance = (self * other);
+    return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
+        distance.getOrientation(), this->modulation);
+}
+
+Distance Distance::operator/(const shp::Signal factor) const {
+    Signal self = *this, other(factor.getMagnitude(), factor.getScaling(), factor.getUnit());
+    Signal distance = (self / other);
+    return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
+        distance.getOrientation(), this->modulation);
+}
+
+Distance Distance::operator%(const shp::Signal factor) const {
+    Signal self = *this, other(factor.getMagnitude(), factor.getScaling(), factor.getUnit());
+    Signal distance = (self % other);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
         distance.getOrientation(), this->modulation);
 }
@@ -392,6 +469,10 @@ Signal Distance::operator()(const Distance& peer, const Direction& elevation) co
     return result;
 }
 
+float Distance::getAmplitude() const {
+    return Signal::getAmplitude();
+}
+
 float Distance::getMagnitude() const {
     return Signal::getMagnitude();
 }
@@ -440,6 +521,10 @@ void Distance::setAzimuth(const Azimuth& orientation) {
     Signal::setOrientation(orientation.toRadians());
 }
 
+void Distance::setModulation(const float relativity) {
+    modulation = Polar(relativity);
+}
+
 void Distance::setChangeMagnitude(const float motion) {
 	if (motion != shp::Quantity::DEFAULT_VALUE) {
         float displacement = Signal::getMagnitude() + motion;
@@ -474,12 +559,44 @@ void Distance::adjustScaling() {
     Signal::adjustScaling();
 }
 
+Signal Distance::getScalarNegative() const {
+    return Signal::getScalarNegative();
+}
+
+Signal Distance::getVectorNegative() const {
+    return Signal::getVectorNegative();
+}
+
 Signal Distance::getScalarInverse() const {
     return Signal::getScalarInverse();
 }
 
 Signal Distance::getVectorInverse() const {
     return Signal::getVectorInverse();
+}
+
+Signal Distance::getScalarSquare() const {
+    return Signal::getDotProductSquare();
+}
+
+Signal Distance::getVectorSquare() const {
+    return Signal::getCrossProductSquare();
+}
+
+Signal Distance::getScalarFraction(const float length) const {
+    return Signal::getDotFraction(length);
+}
+
+Signal Distance::getScalarFraction(const float length, const short int scale) const {
+    return Signal::getDotFraction(length, scale);
+}
+
+Signal Distance::getScalarSquareFraction(const float length) const {
+    return Signal::getDotFractionSquare(length);
+}
+
+Signal Distance::getScalarSquareFraction(const float length, const short int scale) const {
+    return Signal::getDotFractionSquare(length, scale);
 }
 
 Polar Distance::getRelativity(const Direction& elevation) const {

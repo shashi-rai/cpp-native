@@ -33,6 +33,8 @@ public:
     Volume();
     Volume(const std::string unit);
     Volume(const Unit& unit);
+    Volume(const short int scaling, const std::string unit);
+    Volume(const short int scaling, const Unit& unit);
     Volume(const Area& surface);
     Volume(const Area& surface, const std::string unit);
     Volume(const Area& surface, const Unit& unit);
@@ -79,6 +81,20 @@ public:
     Volume operator/(const Volume& peer) const;
     Volume operator%(const Volume& peer) const;
 
+    // Surface operator
+    Volume operator+(const Area& peer) const;
+    Volume operator-(const Area& peer) const;
+    Volume operator*(const Area& peer) const;
+    Volume operator/(const Area& peer) const;
+    Volume operator%(const Area& peer) const;
+
+    // Depth operator
+    Volume operator+(const Signal& peer) const;
+    Volume operator-(const Signal& peer) const;
+    Volume operator*(const Signal& peer) const;
+    Volume operator/(const Signal& peer) const;
+    Volume operator%(const Signal& peer) const;
+
     // Getters
     Area getSurface() const { return surface; }
     Signal getDepth() const { return depth; }
@@ -94,24 +110,30 @@ public:
     Signal getVectorSurfaceTotal() const;
     Signal getLengthRotation(const short int degree) const;
     Direction getLengthPhase() const;
+    void setLengthPhase(const float direction);
     void setLengthPhase(const Direction& direction);
     void setLength(const float value);
     void setLength(const float value, const short int scale);
     void setLength(const float value, const short int scale, const std::string unit);
+    void setLength(const float value, const short int scale, const Unit& unit);
     Signal getBreadthRotation(const short int degree) const;
     Direction getBreadthPhase() const;
+    void setBreadthPhase(const float direction);
     void setBreadthPhase(const Direction& direction);
     void setBreadth(const float value);
     void setBreadth(const float value, const short int scale);
     void setBreadth(const float value, const short int scale, const std::string unit);
+    void setBreadth(const float value, const short int scale, const Unit& unit);
     Signal getHeight() const;
     void setHeight(const Signal& height);
     Signal getHeightRotation(const short int degree) const;
     Direction getHeightPhase() const;
+    void setHeightPhase(const float direction);
     void setHeightPhase(const Direction& direction);
     void setHeight(const float value);
     void setHeight(const float value, const short int scale);
     void setHeight(const float value, const short int scale, const std::string unit);
+    void setHeight(const float value, const short int scale, const Unit& unit);
     short int getLengthScaling() const;
     void setLengthScaling(const short int factor);
     short int getBreadthScaling() const;

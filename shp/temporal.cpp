@@ -423,8 +423,20 @@ float Temporal::getMagnitude() const {
     return Signal::getMagnitude();
 }
 
+void Temporal::setMagnitude(const float value) {
+    Signal::setMagnitude(value);
+}
+
 void Temporal::setMagnitude(const float value, const short int scale) {
     Signal::setMagnitude(value, scale);
+}
+
+void Temporal::setMagnitude(const float value, const short int scale, const std::string unit) {
+    Signal::setMagnitude(value, scale, unit);
+}
+
+void Temporal::setMagnitude(const float value, const short int scale, const Unit& unit) {
+    Signal::setMagnitude(value, scale, unit);
 }
 
 float Temporal::getAmplitude() const {
@@ -512,10 +524,17 @@ Frequency Temporal::getFrequency() const {
     return Signal::getFrequency();
 }
 
+Signal Temporal::getTotal() const {
+    Signal self = *this;
+    Temporal fresh(modulation, self.getOrientation(),
+        self.getMagnitude(), self.getScaling(), self.getUnit());
+    return fresh;
+}
+
 Signal Temporal::copy() const {
     Signal self = *this;
     Temporal fresh(modulation, self.getOrientation(),
-        self.getAmplitude(), self.getScaling(), self.getUnit());
+        self.getMagnitude(), self.getScaling(), self.getUnit());
     return fresh;
 }
 

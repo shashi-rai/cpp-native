@@ -104,8 +104,12 @@ public:
     Signal getLinearDivergence(const Signal& peer) const;
     Quantity getSquareDivergence(const Quantity& peer) const;
     Signal getSquareDivergence(const Signal& peer) const;
+    Signal getDotProduct(const float factor) const;
+    Signal getDotProduct(const float factor, const short int scale) const;
     Signal getDotProduct(const Signal& peer) const;
     Signal getCrossProduct(const Signal& peer) const;
+    Signal getDotFraction(const float factor) const;
+    Signal getDotFraction(const float factor, const short int scale) const;
     Signal getDotFraction(const Signal& peer) const;
     Signal getCrossFraction(const Signal& peer) const;
     Frequency getFrequency() const;
@@ -133,6 +137,8 @@ public:
     Signal getVectorPercent() const;
     Signal getDotProductSquare() const;
     Signal getDotFractionSquare() const;
+    Signal getDotFractionSquare(const float factor) const;
+    Signal getDotFractionSquare(const float factor, const short int scale) const;
     Signal getCrossProductSquare() const;
     Signal getCrossFractionSquare() const;
     Signal getDotProductSquareRoot() const;

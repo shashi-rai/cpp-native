@@ -187,7 +187,7 @@ Force Charge::operator()(const Charge& peer, const shp::Distance separation,
 }
 
 bool Charge::isOwned() const {
-    return field != nullptr;
+    return (field != nullptr);
 }
 
 shp::Distance Charge::getRadius() const {

@@ -23,8 +23,8 @@
 namespace shp {
 
 const float Angular::DEFAULT_RADIUS = shp::Quantity::DEFAULT_VALUE;
-const float Angular::DEFAULT_POLARITY = shp::Quantity::DEFAULT_VALUE;
-const float Angular::DEFAULT_AZIMUTHAL = shp::Quantity::DEFAULT_VALUE;
+const float Angular::DEFAULT_POLARITY = shp::Direction::DEFAULT_RADIANS;
+const float Angular::DEFAULT_AZIMUTHAL = shp::Direction::DEFAULT_RADIANS;
 
 Angular::Angular()
         : Distance(DEFAULT_RADIUS), polar(DEFAULT_POLARITY), azimuth(DEFAULT_AZIMUTHAL) {
@@ -81,12 +81,22 @@ Angular::Angular(const float radius, const float azimuth)
 
 }
 
-Angular::Angular(const float radius, const float azimuth, const std::string unit)
+Angular::Angular(const float radius, const std::string unit, const float azimuth)
 		: Distance(radius, unit), polar(DEFAULT_POLARITY), azimuth(azimuth) {
 
 }
 
-Angular::Angular(const float radius, const float azimuth, const Unit& unit)
+Angular::Angular(const float radius, const std::string unit, const Azimuth& azimuth)
+		: Distance(radius, unit), polar(DEFAULT_POLARITY), azimuth(azimuth) {
+
+}
+
+Angular::Angular(const float radius, const Unit& unit, const float azimuth)
+		: Distance(radius, unit), polar(DEFAULT_POLARITY), azimuth(azimuth) {
+
+}
+
+Angular::Angular(const float radius, const Unit& unit, const Azimuth& azimuth)
 		: Distance(radius, unit), polar(DEFAULT_POLARITY), azimuth(azimuth) {
 
 }
@@ -96,8 +106,19 @@ Angular::Angular(const float radius, const short int scaling, const float azimut
 
 }
 
+Angular::Angular(const float radius, const short int scaling, const Azimuth& azimuth)
+		: Distance(radius, scaling), polar(DEFAULT_POLARITY), azimuth(azimuth) {
+
+}
+
 Angular::Angular(const float radius, const short int scaling, const std::string unit,
         const float azimuth)
+		: Distance(radius, scaling, unit), polar(DEFAULT_POLARITY), azimuth(azimuth) {
+
+}
+
+Angular::Angular(const float radius, const short int scaling, const std::string unit,
+        const Azimuth& azimuth)
 		: Distance(radius, scaling, unit), polar(DEFAULT_POLARITY), azimuth(azimuth) {
 
 }
@@ -122,11 +143,6 @@ Angular::Angular(const float radius, const short int scaling, const Unit& unit,
 
 Angular::Angular(const float radius, const Azimuth& azimuth)
 		: Distance(radius), polar(DEFAULT_POLARITY), azimuth(azimuth) {
-
-}
-
-Angular::Angular(const float radius, const short int scaling, const Azimuth& azimuth)
-		: Distance(radius, scaling), polar(DEFAULT_POLARITY), azimuth(azimuth) {
 
 }
 
@@ -588,7 +604,7 @@ Distance Angular::getRadius() const {
 void Angular::setRadius(const Distance& length) {
     Angular self = *this;
     self.setRadius(length.getMagnitude(), length.getScaling(), length.getUnit());
-    self.setRadiusChange(length.getAzimuth());
+    self.setStressFactor(length.getAzimuth());
     self.setDopplerShift(length.getModulation());
 }
 
@@ -608,16 +624,24 @@ void Angular::setRadius(const float length, const short int scaling, const Unit&
     Distance::setMagnitude(length, scaling, unit);
 }
 
-Direction Angular::getRadiusChange() const {
+Direction Angular::getStressFactor() const {
     return Distance::getAzimuth();
 }
 
-void Angular::setRadiusChange(const Azimuth& orientation) {
+void Angular::setStressFactor(const float orientation) {
+    Distance::setAzimuth(orientation);
+}
+
+void Angular::setStressFactor(const Azimuth& orientation) {
     Distance::setAzimuth(orientation);
 }
 
 Direction Angular::getDopplerShift() const {
     return Distance::getModulation();
+}
+
+void Angular::setDopplerShift(const float relativity) {
+    Distance::setModulation(relativity);
 }
 
 void Angular::setDopplerShift(const Polar& relativity) {
