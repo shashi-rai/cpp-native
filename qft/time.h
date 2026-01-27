@@ -26,7 +26,7 @@
 
 namespace qft {
 
-class Time : public shp::Temporal {
+class Time : protected shp::Temporal {
     std::string name;
 public:
     // Constructors
@@ -154,9 +154,38 @@ public:
     void setName(const std::string& name) { this->name = name; }
 
     // Additional methods
-    shp::Signal getTotal() const;
     shp::Signal getEntropy() const;
     void setEntropy(const shp::Signal& traversal);
+    float getMagnitude() const;
+    void setMagnitude(const float value);
+    void setMagnitude(const float value, const short int scale);
+    void setMagnitude(const float value, const short int scale, const std::string unit);
+    void setMagnitude(const float value, const short int scale, const shp::Unit& unit);
+    float getPeriod() const;
+    float getPeriodDrift() const;
+    void setPeriodDrift(const shp::Azimuth& direction);
+    float getDopplerShift() const;
+    void setDopplerShift(const shp::Azimuth& curvature);
+    void setDopplerShift(const float motion, const shp::Azimuth& curvature);
+    void setDopplerShift(const float motion, const short int scale, const shp::Azimuth& curvature);
+    void setDopplerShift(const float motion, const short int scale, const std::string unit, const shp::Azimuth& curvature);
+    void setDopplerShift(const float motion, const short int scale, const shp::Unit& unit, const shp::Azimuth& curvature);
+    short int getScaling() const;
+    void setScaling(const short int factor);
+    shp::Unit getUnit() const;
+    void setUnit(const shp::Unit& object);
+    void adjustNumeric();
+    void adjustScaling();
+    bool checkNonZero() const;
+    bool checkInfinity() const;
+    short int checkScaling(const float amount) const;
+    virtual shp::Quantity getCurvature() const;
+    virtual shp::Quantity getPhaseScaling() const;
+    virtual shp::Quantity getPeriodScaling() const;
+    virtual shp::Signal getLinearSpace() const;
+    virtual shp::Signal getCurvedSpace() const;
+    shp::Frequency getFrequency() const;
+    shp::Signal getTotal() const;
     long getSeconds() const;
     long getMilliseconds() const;
     long long getNanoseconds() const;

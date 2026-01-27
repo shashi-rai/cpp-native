@@ -19,7 +19,6 @@
 // THE SOFTWARE.
 
 #include "temporal.h"
-#include "frequency.h"
 
 namespace shp {
 
@@ -439,24 +438,52 @@ void Temporal::setMagnitude(const float value, const short int scale, const Unit
     Signal::setMagnitude(value, scale, unit);
 }
 
-float Temporal::getAmplitude() const {
+float Temporal::getIntensity() const {
     return Signal::getAmplitude();
 }
 
-float Temporal::getAmplitudeChange() const {
+float Temporal::getIntensityDrift() const {
     return Signal::getOrientation();
 }
 
-void Temporal::setAmplitudeChange(const Azimuth& shift) {
+void Temporal::setIntensityDrift(const float shift) {
+    Signal::setOrientation(shift);
+}
+
+void Temporal::setIntensityDrift(const Azimuth& shift) {
     Signal::setOrientation(shift.toRadians());
 }
 
-float Temporal::getWavelengthChange() const {
+float Temporal::getSpatialDrift() const {
     return modulation.getOrientation();
 }
 
-void Temporal::setWavelengthChange(const Azimuth& shift) {
-    modulation.setOrientation(shift.toRadians());
+void Temporal::setSpatialDrift(const Azimuth& rate) {
+    modulation.setOrientation(rate.toRadians());
+}
+
+void Temporal::setSpatialDrift(const float distance,
+        const Azimuth& rate) {
+    modulation.setMagnitude(distance);
+    modulation.setOrientation(rate.toRadians());
+}
+
+void Temporal::setSpatialDrift(const float distance, const short int scale,
+        const Azimuth& rate) {
+    modulation.setMagnitude(distance, scale);
+    modulation.setOrientation(rate.toRadians());
+}
+
+void Temporal::setSpatialDrift(const float distance, const short int scale, const std::string unit,
+        const Azimuth& rate) {
+    modulation.setMagnitude(distance, scale, unit);
+    modulation.setOrientation(rate.toRadians());
+}
+
+void Temporal::setSpatialDrift(const float distance, const short int scale, const Unit& unit,
+        const Azimuth& rate) {
+    modulation.setMagnitude(distance, scale, unit);
+    modulation.setOrientation(rate.toRadians());
 }
 
 short int Temporal::getScaling() const {
@@ -497,30 +524,44 @@ void Temporal::adjustScaling() {
 
 Quantity Temporal::getPhaseShift() const {
     Signal self = *this;
-    float phase = modulation.getCyclingRate();
-    shp::Quantity result(phase, shp::Quantity::DEFAULT_SCALE,
+    float twoPiFraction = modulation.getCyclingRate();
+    shp::Quantity result(twoPiFraction, shp::Quantity::DEFAULT_SCALE,
         shp::Unit::getDerivedSymbol(shp::Unit::PLANE_ANGLE));
 	result.adjustScaling(); result.adjustNumeric();
     return result;
 }
 
-Quantity Temporal::getCyclicTraversal() const {
+Quantity Temporal::getPhaseScaling() const {
     Signal self = *this;
-    float propagation = (modulation.getCyclingRate() * self.getAmplitude());
+    float twoPiFraction = (modulation.getCyclingRate() * self.getAmplitude());
+    shp::Quantity result(twoPiFraction, self.getScaling(), self.getUnit());
+	result.adjustScaling(); result.adjustNumeric();
+    return result;
+}
+
+Quantity Temporal::getPeriodScaling() const {
+    Signal self = *this;
+    float propagation = (modulation.getTimePerCycle() * self.getAmplitude());
     shp::Quantity result(propagation, self.getScaling(), self.getUnit());
 	result.adjustScaling(); result.adjustNumeric();
     return result;
 }
 
-Signal Temporal::getLinearTraversal() const {
-    Signal self = *this; Signal propagation = self.getCrossProduct(modulation);
+Signal Temporal::getLinearField() const {
+    Signal self = *this; Signal propagation = self.getDotProduct(modulation);
     Signal result(propagation.getOrientation(), propagation.getMagnitude(),
         propagation.getScaling(), self.getUnit());
-	//result.adjustScaling();
     return result;
 }
 
-Frequency Temporal::getFrequency() const {
+Signal Temporal::getCurvedField() const {
+    Signal self = *this; Signal propagation = self.getCrossProduct(modulation);
+    Signal result(propagation.getOrientation(), propagation.getMagnitude(),
+        propagation.getScaling(), self.getUnit());
+    return result;
+}
+
+Signal Temporal::getFrequency() const {
     return Signal::getFrequency();
 }
 

@@ -25,9 +25,6 @@
 
 namespace shp {
 
-// To enable compiler resolve forward declarations
-class Frequency;
-
 class Temporal : private Signal {
     Signal modulation;
 public:
@@ -148,11 +145,16 @@ public:
     void setMagnitude(const float value, const short int scale);
     void setMagnitude(const float value, const short int scale, const std::string unit);
     void setMagnitude(const float value, const short int scale, const Unit& unit);
-    float getAmplitude() const;
-    float getAmplitudeChange() const;
-    void setAmplitudeChange(const Azimuth& shift);
-    float getWavelengthChange() const;
-    void setWavelengthChange(const Azimuth& shift);
+    float getIntensity() const;
+    float getIntensityDrift() const;
+    void setIntensityDrift(const float shift);
+    void setIntensityDrift(const Azimuth& shift);
+    float getSpatialDrift() const;
+    void setSpatialDrift(const Azimuth& rate);
+    void setSpatialDrift(const float distance, const Azimuth& rate);
+    void setSpatialDrift(const float distance, const short int scale, const Azimuth& rate);
+    void setSpatialDrift(const float distance, const short int scale, const std::string unit, const Azimuth& rate);
+    void setSpatialDrift(const float distance, const short int scale, const Unit& unit, const Azimuth& rate);
     short int getScaling() const;
     void setScaling(const short int factor);
     Unit getUnit() const;
@@ -163,9 +165,11 @@ public:
     bool checkInfinity() const;
     short int checkScaling(const float amount) const;
     virtual shp::Quantity getPhaseShift() const;
-    virtual shp::Quantity getCyclicTraversal() const;
-    virtual Signal getLinearTraversal() const;
-    virtual Frequency getFrequency() const;
+    virtual shp::Quantity getPhaseScaling() const;
+    virtual shp::Quantity getPeriodScaling() const;
+    virtual Signal getLinearField() const;
+    virtual Signal getCurvedField() const;
+    Signal getFrequency() const;
     Signal getTotal() const;
     virtual Signal copy() const;
     virtual void clear();

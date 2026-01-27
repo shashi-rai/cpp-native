@@ -556,23 +556,24 @@ shp::Signal Velocity::getTotal() const {
 
 shp::Signal Velocity::getLinear(const float slice) {
 	shp::Distance self = *this; shp::Frequency frequency(shp::Quantity::DEFAULT_VALUE);
-	float magnitude; short int scaling = shp::Quantity::DEFAULT_SCALE;
+	float magnitude = shp::Quantity::DEFAULT_VALUE; short int scaling = shp::Quantity::DEFAULT_SCALE;
 	if (isTimeBound()) {
 		frequency = temporal->getFrequency();
 		magnitude = ((self.getAmplitude() * frequency.getMagnitude()) / slice);
 		scaling = (self.getScaling() + frequency.getScaling());
 	}
-    shp::Signal result(self.getAzimuth(), magnitude, scaling, UNIT); result.adjustScaling();
+    shp::Signal result(shp::Direction::DEFAULT_RADIANS, magnitude, scaling, UNIT); result.adjustScaling();
     return result;
 }
 
 shp::Signal Velocity::getAngular(const float theta) {
 	shp::Distance self = *this; shp::Quantity rotation;
+	shp::Azimuth velocity = self.getAzimuth();
 	if (isTimeBound()) {
-		rotation = temporal->getPhaseShift();
-		rotation = rotation.getMultiple(theta);
+		rotation = temporal->getCurvature();
+		velocity.setRotation(rotation.getMagnitude() + theta);
 	}
-    shp::Signal result(self.getAzimuth(), rotation.getMagnitude(), rotation.getScaling(), rotation.getUnit());
+    shp::Signal result(velocity, rotation.getMagnitude(), rotation.getScaling(), rotation.getUnit());
     return result;
 }
 

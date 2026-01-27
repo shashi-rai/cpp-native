@@ -19,7 +19,6 @@
 // THE SOFTWARE.
 
 #include "signal.h"
-#include "frequency.h"
 
 namespace shp {
 
@@ -263,7 +262,7 @@ Signal Signal::operator()(const float scaleup) const {
 }
 
 Signal Signal::getRotation(const short int degree) const {
-    Quantity self = *this; Azimuth direction(orientation);
+    Quantity self = *this; Azimuth direction(this->orientation);
     Azimuth phase = direction.getRotation(degree);
     return Signal(phase, self.getMagnitude(), self.getScaling(), self.getUnit());
 }
@@ -380,10 +379,10 @@ Signal Signal::getCrossFraction(const Signal& peer) const {
     return Signal(infinitesimal.toRadians(), fraction.getMagnitude(), fraction.getScaling(), self.getUnit());
 }
 
-Frequency Signal::getFrequency() const {
+Signal Signal::getFrequency() const {
     Quantity wave = Quantity::getInverse();
-    Frequency result(Direction::DEFAULT_RADIANS, orientation, std::abs(wave.getMagnitude()),
-        wave.getScaling(), shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY));
+    Signal result(orientation, std::abs(wave.getMagnitude()), wave.getScaling(),
+        shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY));
     return result;
 }
 

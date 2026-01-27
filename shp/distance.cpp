@@ -534,7 +534,7 @@ void Distance::setChangeMagnitude(const float motion) {
 
 void Distance::setChangeDirection(const float degree) {
     if (degree != shp::Quantity::DEFAULT_VALUE) {
-        Signal direction = Signal::getRotation(degree);
+        Signal direction = (*this + Azimuth(Direction::DEGREE_001 * degree));
         Signal::setOrientation(direction.getOrientation());
     }
 }

@@ -276,7 +276,7 @@ std::string Charge::printRadians() const {
 shp::Temporal Charge::getFluctuation(const float phase) const {
     shp::Temporal self = *this;
     shp::Temporal intensity = self.getMagnitude();
-    intensity.setAmplitudeChange(phase);
+    intensity.setIntensityDrift(phase);
 	return shp::Temporal(intensity.getMagnitude(), intensity.getScaling(), intensity.getUnit());
 }
 

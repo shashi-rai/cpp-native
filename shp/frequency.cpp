@@ -444,6 +444,10 @@ float Frequency::getAmplitudeChange() const {
     return Signal::getOrientation();
 }
 
+void Frequency::setAmplitudeChange(const float shift) {
+    Signal::setOrientation(shift);
+}
+
 void Frequency::setAmplitudeChange(const Azimuth& shift) {
     Signal::setOrientation(shift.toRadians());
 }
@@ -507,6 +511,13 @@ Quantity Frequency::getLifespan() const {
     shp::Quantity result(lifetime, (modulation.getScaling() + time.getScaling()),
 		shp::Unit::getBaseSymbol(shp::Unit::TIME));
 	result.adjustScaling(); result.adjustNumeric();
+    return result;
+}
+
+Signal Frequency::getTemporal() const {
+    Signal self = *this, wave = self.getScalarInverse();
+    Signal result(self.getOrientation(), std::abs(wave.getMagnitude()), wave.getScaling(),
+        shp::Unit::getBaseSymbol(shp::Unit::TIME));
     return result;
 }
 

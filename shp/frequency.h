@@ -148,6 +148,7 @@ public:
     void setMagnitude(const float value, const short int scale, const Unit& unit);
     float getAmplitude() const;
     float getAmplitudeChange() const;
+    void setAmplitudeChange(const float shift);
     void setAmplitudeChange(const Azimuth& shift);
     float getWavelengthChange() const;
     void setWavelengthChange(const Azimuth& shift);
@@ -162,6 +163,7 @@ public:
     short int checkScaling(const float amount) const;
     virtual shp::Quantity getTraversal() const;
     virtual shp::Quantity getLifespan() const;
+    Signal getTemporal() const;
     Signal getTotal() const;
     virtual Signal copy() const;
     virtual void clear();

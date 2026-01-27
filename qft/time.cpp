@@ -449,40 +449,36 @@ bool Time::operator>=(const Time& peer) const {
 Time Time::operator+(const Time& peer) const {
     Temporal self = *this, other = peer;
     Temporal duration = (self + other);
-    return Time("+", duration.getWavelengthChange(), duration.getAmplitudeChange(),
+    return Time("+", duration.getSpatialDrift(), duration.getIntensityDrift(),
         duration.getMagnitude(), duration.getScaling(), duration.getUnit());
 }
 
 Time Time::operator-(const Time& peer) const {
     Temporal self = *this, other = peer;
     Temporal duration = (self - other);
-    return Time("-", duration.getWavelengthChange(), duration.getAmplitudeChange(),
+    return Time("-", duration.getSpatialDrift(), duration.getIntensityDrift(),
         duration.getMagnitude(), duration.getScaling(), duration.getUnit());
 }
 
 Time Time::operator*(const Time& peer) const {
     Temporal self = *this, other = peer;
     Temporal duration = (self * other);
-    return Time("*", duration.getWavelengthChange(), duration.getAmplitudeChange(),
+    return Time("*", duration.getSpatialDrift(), duration.getIntensityDrift(),
         duration.getMagnitude(), duration.getScaling(), duration.getUnit());
 }
 
 Time Time::operator/(const Time& peer) const {
     Temporal self = *this, other = peer;
     Temporal duration = (self / other);
-    return Time("/", duration.getWavelengthChange(), duration.getAmplitudeChange(),
+    return Time("/", duration.getSpatialDrift(), duration.getIntensityDrift(),
         duration.getMagnitude(), duration.getScaling(), duration.getUnit());
 }
 
 Time Time::operator%(const Time& peer) const {
     Temporal self = *this, other = peer;
     Temporal duration = (self % other);
-    return Time("%", duration.getWavelengthChange(), duration.getAmplitudeChange(),
+    return Time("%", duration.getSpatialDrift(), duration.getIntensityDrift(),
         duration.getMagnitude(), duration.getScaling(), duration.getUnit());
-}
-
-shp::Signal Time::getTotal() const {
-    return shp::Temporal::getTotal();
 }
 
 shp::Signal Time::getEntropy() const {
@@ -491,6 +487,131 @@ shp::Signal Time::getEntropy() const {
 
 void Time::setEntropy(const shp::Signal& traversal) {
     shp::Temporal::setModulation(traversal);
+}
+
+float Time::getMagnitude() const {
+    return shp::Temporal::getMagnitude();
+}
+
+void Time::setMagnitude(const float value) {
+    shp::Temporal::setMagnitude(value);
+}
+
+void Time::setMagnitude(const float value, const short int scale) {
+    shp::Temporal::setMagnitude(value, scale);
+}
+
+void Time::setMagnitude(const float value, const short int scale, const std::string unit) {
+    shp::Temporal::setMagnitude(value, scale, unit);
+}
+
+void Time::setMagnitude(const float value, const short int scale, const shp::Unit& unit) {
+    shp::Temporal::setMagnitude(value, scale, unit);
+}
+
+float Time::getPeriod() const {
+    return shp::Temporal::getIntensity();
+}
+
+float Time::getPeriodDrift() const {
+    return shp::Temporal::getIntensityDrift();
+}
+
+void Time::setPeriodDrift(const shp::Azimuth& direction) {
+    shp::Temporal::setIntensityDrift(direction.toRadians());
+}
+
+float Time::getDopplerShift() const {
+    return shp::Temporal::getSpatialDrift();
+}
+
+void Time::setDopplerShift(const shp::Azimuth& curvature) {
+	shp::Temporal::setSpatialDrift(curvature);
+}
+
+void Time::setDopplerShift(const float motion,
+        const shp::Azimuth& curvature) {
+	shp::Temporal::setSpatialDrift(motion, curvature);
+}
+
+void Time::setDopplerShift(const float motion, const short int scale,
+        const shp::Azimuth& curvature) {
+	shp::Temporal::setSpatialDrift(motion, scale, curvature);
+}
+
+void Time::setDopplerShift(const float motion, const short int scale, const std::string unit,
+        const shp::Azimuth& curvature) {
+	shp::Temporal::setSpatialDrift(motion, scale, unit, curvature);
+}
+
+void Time::setDopplerShift(const float motion, const short int scale, const shp::Unit& unit,
+        const shp::Azimuth& curvature) {
+	shp::Temporal::setSpatialDrift(motion, scale, unit, curvature);
+}
+
+short int Time::getScaling() const {
+    return shp::Temporal::getScaling();
+}
+
+void Time::setScaling(const short int factor) {
+    shp::Temporal::setScaling(factor);
+}
+
+shp::Unit Time::getUnit() const {
+    return shp::Temporal::getUnit();
+}
+
+void Time::setUnit(const shp::Unit& object) {
+    shp::Temporal::setUnit(object);
+}
+
+bool Time::checkNonZero() const {
+    return shp::Temporal::checkNonZero();
+}
+
+bool Time::checkInfinity() const {
+    return shp::Temporal::checkInfinity();
+}
+
+short int Time::checkScaling(const float amount) const {
+    return shp::Temporal::checkScaling(amount);
+}
+
+void Time::adjustNumeric() {
+    return shp::Temporal::adjustNumeric();
+}
+
+void Time::adjustScaling() {
+    shp::Temporal::adjustScaling();
+}
+
+shp::Quantity Time::getCurvature() const {
+    return shp::Temporal::getPhaseShift();
+}
+
+shp::Quantity Time::getPhaseScaling() const {
+    return shp::Temporal::getPhaseScaling();
+}
+
+shp::Quantity Time::getPeriodScaling() const {
+    return shp::Temporal::getPeriodScaling();
+}
+
+shp::Signal Time::getLinearSpace() const {
+    return shp::Temporal::getLinearField();
+}
+
+shp::Signal Time::getCurvedSpace() const {
+    return shp::Temporal::getCurvedField();
+}
+
+shp::Frequency Time::getFrequency() const {
+    shp::Signal frequency = shp::Temporal::getFrequency();
+    return shp::Frequency(frequency.getMagnitude(), frequency.getScaling(), frequency.getUnit());
+}
+
+shp::Signal Time::getTotal() const {
+    return shp::Temporal::getTotal();
 }
 
 long Time::getSeconds() const {
@@ -518,8 +639,8 @@ long long Time::getNanoseconds() const {
 }
 
 Time Time::copy() {
-    Temporal self = *this;
-    Time fresh(name, self.getWavelengthChange(), self.getAmplitudeChange(),
+    Time self = *this;
+    Time fresh(name, self.getDopplerShift(), self.getPeriodDrift(),
         self.getMagnitude(), self.getScaling(), self.getUnit());
     return fresh;
 }

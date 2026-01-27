@@ -26,9 +26,6 @@
 
 namespace shp {
 
-// To enable compiler resolve forward declarations
-class Frequency;
-
 class Signal : private Quantity {
     float orientation;      // azimuthal change in magnitude
 public:
@@ -112,7 +109,7 @@ public:
     Signal getDotFraction(const float factor, const short int scale) const;
     Signal getDotFraction(const Signal& peer) const;
     Signal getCrossFraction(const Signal& peer) const;
-    Frequency getFrequency() const;
+    Signal getFrequency() const;
     float getCyclingRate() const;
     float getTimePerCycle() const;
     float getMagnitude() const;
