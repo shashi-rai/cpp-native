@@ -139,6 +139,7 @@ public:
     void setAzimuth(const Azimuth& orientation);
     void setModulation(const float relativity);
     void setChangeMagnitude(const float motion);
+    void setChangeMagnitude(const float motion, const short int scale);
     void setChangeDirection(const float degree);
     void adjustNumeric();
     void adjustScaling();

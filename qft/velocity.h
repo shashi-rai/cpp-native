@@ -105,6 +105,10 @@ public:
     Velocity(const std::string name, const float displacement, const shp::Unit& unit,
         const std::shared_ptr<Time> domain);
     Velocity(const std::string name, const float displacement, const short int scaling);
+    Velocity(const std::string name, const float displacement, const short int scaling,
+        const std::string unit);
+    Velocity(const std::string name, const float displacement, const short int scaling,
+        const shp::Unit& unit);
     Velocity(const std::string name, const float displacement, const float direction);
     Velocity(const std::string name, const float displacement,
         const float direction, const std::shared_ptr<Time> domain);
@@ -160,6 +164,41 @@ public:
     Velocity operator/(const Velocity& peer) const;
     Velocity operator%(const Velocity& peer) const;
 
+    // Distance operator
+    Velocity operator+(const float distance) const;
+    Velocity operator-(const float distance) const;
+    Velocity operator*(const float distance) const;
+    Velocity operator/(const float distance) const;
+    Velocity operator%(const float distance) const;
+
+    // Distance operator
+    Velocity operator+(const shp::Quantity& distance) const;
+    Velocity operator-(const shp::Quantity& distance) const;
+    Velocity operator*(const shp::Quantity& distance) const;
+    Velocity operator/(const shp::Quantity& distance) const;
+    Velocity operator%(const shp::Quantity& distance) const;
+
+    // Displacement operator
+    Velocity operator+(const shp::Distance& distance) const;
+    Velocity operator-(const shp::Distance& distance) const;
+    Velocity operator*(const shp::Distance& distance) const;
+    Velocity operator/(const shp::Distance& distance) const;
+    Velocity operator%(const shp::Distance& distance) const;
+
+    // Direction operator
+    Velocity operator+(const shp::Azimuth& orientation) const;
+    Velocity operator-(const shp::Azimuth& orientation) const;
+    Velocity operator*(const shp::Azimuth& orientation) const;
+    Velocity operator/(const shp::Azimuth& orientation) const;
+    Velocity operator%(const shp::Azimuth& orientation) const;
+
+    // SpaceTime operator
+    Velocity operator+(const shp::Polar& curvature) const;
+    Velocity operator-(const shp::Polar& curvature) const;
+    Velocity operator*(const shp::Polar& curvature) const;
+    Velocity operator/(const shp::Polar& curvature) const;
+    Velocity operator%(const shp::Polar& curvature) const;
+
     // Getters
     std::shared_ptr<Time> getTemporal() const { return temporal; }
     std::string getName() const { return name; }
@@ -169,34 +208,61 @@ public:
     void setName(const std::string name) { this->name = name; }
 
     // Additional methods
-    shp::Unit getUnit() const;
-    void setUnit(const shp::Unit& unit);
     shp::Distance getDisplacement() const;
+    void setDisplacement(const shp::Quantity& distance, const shp::Azimuth& direction);
+    void setDisplacement(const shp::Quantity& distance, const shp::Polar& curvature);
     void setDisplacement(const shp::Distance& distance);
     void setDisplacement(const float distance);
     void setDisplacement(const float distance, const short int scale);
     void setDisplacement(const float distance, const short int scale, const std::string unit);
     void setDisplacement(const float distance, const short int scale, const shp::Unit& unit);
+    short int getScaling() const;
+    void setScaling(const short int factor);
+    shp::Unit getUnit() const;
+    void setUnit(const shp::Unit& unit);
     shp::Azimuth getDirection() const;
     void setDirection(const float orientation);
     void setDirection(const shp::Azimuth& orientation);
+    shp::Polar getFieldCurvature() const;
+    void setFieldCurvature(const shp::Polar& curvature);
     void setChangeMagnitude(const float motion);
+    void setChangeMagnitude(const float motion, const short int scale);
     void setChangeDirection(const float degree);
     shp::Signal getTotal() const;
-    virtual shp::Signal getLinear(const float slice);
-    virtual shp::Signal getAngular(const float theta);
+    virtual shp::Signal getLinear();
+    virtual shp::Signal getLinear(const Time& slice);
+    virtual shp::Signal getAngular();
+    virtual shp::Signal getAngular(const shp::Direction& theta);
+    void adjustNumeric();
     void adjustScaling();
     bool checkNonZero() const;
+    bool checkInfinity() const;
+    short int checkScaling(const float amount) const;
+    shp::Signal getScalarNegative() const;
+    shp::Signal getVectorNegative() const;
+    shp::Signal getScalarInverse() const;
+    shp::Signal getVectorInverse() const;
+    shp::Signal getScalarSquare() const;
+    shp::Signal getVectorSquare() const;
+    shp::Signal getScalarFraction(const float length) const;
+    shp::Signal getScalarFraction(const float length, const short int scale) const;
+    shp::Signal getScalarSquareFraction(const float length) const;
+    shp::Signal getScalarSquareFraction(const float length, const short int scale) const;
     bool isTimeBound() const;
     virtual shp::Distance copy();
     virtual void clear();
     virtual std::string print() const;
+    virtual std::string printTemporal() const;
     virtual std::string printRadians() const;
+    virtual std::string printTemporalRadians() const;
     shp::Signal getCosComponent(const float phase) const;
     shp::Signal getSinComponent(const float phase) const;
+    shp::Direction getAngularVelocity(const Time& interval) const;
+    shp::Direction getCurvedSpaceTime(const Time& interval) const;
 protected:
+    shp::Direction getAngularShiftRate() const;
+    shp::Direction getCurvatureShiftRate() const;
     std::complex<float> toComplex(const float coefficient, const float change);
-
 public:
     static const std::string UNIT;
 };

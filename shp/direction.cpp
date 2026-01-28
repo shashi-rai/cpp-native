@@ -274,7 +274,7 @@ Direction Direction::getRotation(const short int degree) const {
 
 void Direction::setRotation(const short int degree) {
     Direction self = *this;
-    self.fromRadians(self.toRadians() + (Direction::DEGREE_001 * degree));
+    fromRadians(self.toRadians() + (Direction::DEGREE_001 * degree));
 }
 
 Direction Direction::getMultiple(const float coefficient) const {

@@ -527,8 +527,15 @@ void Distance::setModulation(const float relativity) {
 
 void Distance::setChangeMagnitude(const float motion) {
 	if (motion != shp::Quantity::DEFAULT_VALUE) {
-        float displacement = Signal::getMagnitude() + motion;
-        Signal::setMagnitude(displacement);
+        Signal self = *this, other(motion, self.getScaling()), displacement = (self + other);
+        Signal::setMagnitude(displacement.getMagnitude(), displacement.getScaling());
+	}
+}
+
+void Distance::setChangeMagnitude(const float motion, const short int scale) {
+	if (motion != shp::Quantity::DEFAULT_VALUE) {
+        Signal self = *this, other(motion, scale), displacement = (self + other);
+        Signal::setMagnitude(displacement.getMagnitude(), displacement.getScaling());
 	}
 }
 
@@ -739,14 +746,14 @@ void Distance::clear() {
 
 std::string Distance::print() const {
     std::stringstream result;
-    result << Signal::print() << "δ";
+    result << Signal::print() << "⌒";
     result << modulation.print();
 	return result.str();
 }
 
 std::string Distance::printRadians() const {
     std::stringstream result;
-    result << Signal::print() << "δ";
+    result << Signal::print() << "⌒";
     result << modulation.printRadians();
 	return result.str();
 }

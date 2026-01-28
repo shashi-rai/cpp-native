@@ -299,6 +299,18 @@ Velocity::Velocity(const std::string name, const float displacement, const short
 	setTemporal(nullptr);
 }
 
+Velocity::Velocity(const std::string name, const float displacement, const short int scaling,
+		const std::string unit)
+        : shp::Distance(displacement, scaling, unit), name(name) {
+	setTemporal(nullptr);
+}
+
+Velocity::Velocity(const std::string name, const float displacement, const short int scaling,
+		const shp::Unit& unit)
+        : shp::Distance(displacement, scaling, unit), name(name) {
+	setTemporal(nullptr);
+}
+
 Velocity::Velocity(const std::string name, const float displacement, const float direction)
         : shp::Distance(displacement, UNIT, direction), name(name) {
 	setTemporal(nullptr);
@@ -453,46 +465,193 @@ bool Velocity::operator>=(const Velocity& peer) const {
 }
 
 Velocity Velocity::operator+(const Velocity& peer) const {
-    shp::Distance self = *this, other = peer;
-	shp::Distance velocity = (self + other);
+    shp::Distance self = *this, other = peer, velocity = (self + other);
     return Velocity("+", velocity.getMagnitude(), velocity.getScaling(), self.getUnit(),
 		velocity.getAzimuth(), this->temporal);
 }
 
 Velocity Velocity::operator-(const Velocity& peer) const {
-    shp::Distance self = *this, other = peer;
-	shp::Distance velocity = (self - other);
+    shp::Distance self = *this, other = peer, velocity = (self - other);
     return Velocity("-", velocity.getMagnitude(), velocity.getScaling(), self.getUnit(),
 		velocity.getAzimuth(), this->temporal);
 }
 
 Velocity Velocity::operator*(const Velocity& peer) const {
-    shp::Distance self = *this, other = peer;
-	shp::Distance velocity = (self * other);
+    shp::Distance self = *this, other = peer, velocity = (self * other);
     return Velocity("*", velocity.getMagnitude(), velocity.getScaling(), self.getUnit(),
 		velocity.getAzimuth(), this->temporal);
 }
 
 Velocity Velocity::operator/(const Velocity& peer) const {
-    shp::Distance self = *this, other = peer;
-	shp::Distance velocity = (self / other);
+    shp::Distance self = *this, other = peer, velocity = (self / other);
     return Velocity("/", velocity.getMagnitude(), velocity.getScaling(), self.getUnit(),
 		velocity.getAzimuth(), this->temporal);
 }
 
 Velocity Velocity::operator%(const Velocity& peer) const {
-    shp::Distance self = *this, other = peer;
-	shp::Distance velocity = (self % other);
+    shp::Distance self = *this, other = peer, velocity = (self % other);
     return Velocity("%", velocity.getMagnitude(), velocity.getScaling(), self.getUnit(),
 		velocity.getAzimuth(), this->temporal);
 }
 
-shp::Unit Velocity::getUnit() const {
-	return shp::Distance::getUnit();
+Velocity Velocity::operator+(const float distance) const {
+    Velocity self = *this; shp::Distance displacement = (self + distance);
+    return Velocity("+", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
+		displacement.getAzimuth(), self.temporal);
 }
 
-void Velocity::setUnit(const shp::Unit& unit) {
-	shp::Distance::setUnit(unit);
+Velocity Velocity::operator-(const float distance) const {
+    Velocity self = *this; shp::Distance displacement = (self - distance);
+    return Velocity("-", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
+		displacement.getAzimuth(), self.temporal);
+}
+
+Velocity Velocity::operator*(const float distance) const {
+    Velocity self = *this; shp::Distance displacement = (self * distance);
+    return Velocity("*", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
+		displacement.getAzimuth(), self.temporal);
+}
+
+Velocity Velocity::operator/(const float distance) const {
+    Velocity self = *this; shp::Distance displacement = (self / distance);
+    return Velocity("/", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
+		displacement.getAzimuth(), self.temporal);
+}
+
+Velocity Velocity::operator%(const float distance) const {
+    Velocity self = *this; shp::Distance displacement = (self % distance);
+    return Velocity("%", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
+		displacement.getAzimuth(), self.temporal);
+}
+
+Velocity Velocity::operator+(const shp::Quantity& distance) const {
+    Velocity self = *this; shp::Distance displacement = (self + distance);
+    return Velocity("+", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
+		displacement.getAzimuth(), self.temporal);
+}
+
+Velocity Velocity::operator-(const shp::Quantity& distance) const {
+    Velocity self = *this; shp::Distance displacement = (self - distance);
+    return Velocity("-", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
+		displacement.getAzimuth(), self.temporal);
+}
+
+Velocity Velocity::operator*(const shp::Quantity& distance) const {
+    Velocity self = *this; shp::Distance displacement = (self * distance);
+    return Velocity("*", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
+		displacement.getAzimuth(), self.temporal);
+}
+
+Velocity Velocity::operator/(const shp::Quantity& distance) const {
+    Velocity self = *this; shp::Distance displacement = (self / distance);
+    return Velocity("/", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
+		displacement.getAzimuth(), self.temporal);
+}
+
+Velocity Velocity::operator%(const shp::Quantity& distance) const {
+    Velocity self = *this; shp::Distance displacement = (self % distance);
+    return Velocity("%", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
+		displacement.getAzimuth(), self.temporal);
+}
+
+Velocity Velocity::operator+(const shp::Distance& distance) const {
+    Velocity self = *this; shp::Distance displacement = (self + distance);
+    return Velocity("+", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
+		displacement.getAzimuth(), self.temporal);
+}
+
+Velocity Velocity::operator-(const shp::Distance& distance) const {
+    Velocity self = *this; shp::Distance displacement = (self - distance);
+    return Velocity("-", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
+		displacement.getAzimuth(), self.temporal);
+}
+
+Velocity Velocity::operator*(const shp::Distance& distance) const {
+    Velocity self = *this; shp::Distance displacement = (self * distance);
+    return Velocity("*", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
+		displacement.getAzimuth(), self.temporal);
+}
+
+Velocity Velocity::operator/(const shp::Distance& distance) const {
+    Velocity self = *this; shp::Distance displacement = (self / distance);
+    return Velocity("/", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
+		displacement.getAzimuth(), self.temporal);
+}
+
+Velocity Velocity::operator%(const shp::Distance& distance) const {
+    Velocity self = *this; shp::Distance displacement = (self % distance);
+    return Velocity("%", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
+		displacement.getAzimuth(), self.temporal);
+}
+
+Velocity Velocity::operator+(const shp::Azimuth& orientation) const {
+    Velocity self = *this; shp::Azimuth newAzimuth = (self.getAzimuth() + orientation);
+    return Velocity("+", self.getMagnitude(), self.getScaling(), self.getUnit(),
+		newAzimuth, self.temporal);
+}
+
+Velocity Velocity::operator-(const shp::Azimuth& orientation) const {
+    Velocity self = *this; shp::Azimuth newAzimuth = (self.getAzimuth() - orientation);
+    return Velocity("-", self.getMagnitude(), self.getScaling(), self.getUnit(),
+		newAzimuth, self.temporal);
+}
+
+Velocity Velocity::operator*(const shp::Azimuth& orientation) const {
+    Velocity self = *this; shp::Azimuth newAzimuth = (self.getAzimuth() * orientation);
+    return Velocity("*", self.getMagnitude(), self.getScaling(), self.getUnit(),
+		newAzimuth, self.temporal);
+}
+
+Velocity Velocity::operator/(const shp::Azimuth& orientation) const {
+    Velocity self = *this; shp::Azimuth newAzimuth = (self.getAzimuth() / orientation);
+    return Velocity("/", self.getMagnitude(), self.getScaling(), self.getUnit(),
+		newAzimuth, self.temporal);
+}
+
+Velocity Velocity::operator%(const shp::Azimuth& orientation) const {
+    Velocity self = *this; shp::Azimuth newAzimuth = (self.getAzimuth() % orientation);
+    return Velocity("%", self.getMagnitude(), self.getScaling(), self.getUnit(),
+		newAzimuth, self.temporal);
+}
+
+Velocity Velocity::operator+(const shp::Polar& curvature) const {
+    Velocity self = *this; shp::Polar newCurvature = (self.getModulation() + curvature);
+    Velocity result("+", self.getMagnitude(), self.getScaling(), self.getUnit(),
+		self.getAzimuth(), self.temporal);
+	result.setModulation(newCurvature);
+	return result;
+}
+
+Velocity Velocity::operator-(const shp::Polar& curvature) const {
+    Velocity self = *this; shp::Polar newCurvature = (self.getModulation() - curvature);
+    Velocity result("-", self.getMagnitude(), self.getScaling(), self.getUnit(),
+		self.getAzimuth(), self.temporal);
+	result.setModulation(newCurvature);
+	return result;
+}
+
+Velocity Velocity::operator*(const shp::Polar& curvature) const {
+    Velocity self = *this; shp::Polar newCurvature = (self.getModulation() * curvature);
+    Velocity result("*", self.getMagnitude(), self.getScaling(), self.getUnit(),
+		self.getAzimuth(), self.temporal);
+	result.setModulation(newCurvature);
+	return result;
+}
+
+Velocity Velocity::operator/(const shp::Polar& curvature) const {
+    Velocity self = *this; shp::Polar newCurvature = (self.getModulation() / curvature);
+    Velocity result("/", self.getMagnitude(), self.getScaling(), self.getUnit(),
+		self.getAzimuth(), self.temporal);
+	result.setModulation(newCurvature);
+	return result;
+}
+
+Velocity Velocity::operator%(const shp::Polar& curvature) const {
+    Velocity self = *this; shp::Polar newCurvature = (self.getModulation() % curvature);
+    Velocity result("%", self.getMagnitude(), self.getScaling(), self.getUnit(),
+		self.getAzimuth(), self.temporal);
+	result.setModulation(newCurvature);
+	return result;
 }
 
 shp::Distance Velocity::getDisplacement() const {
@@ -500,8 +659,20 @@ shp::Distance Velocity::getDisplacement() const {
 	return result;
 }
 
+void Velocity::setDisplacement(const shp::Quantity& distance, const shp::Azimuth& direction) {
+	shp::Distance::setMagnitude(distance.getMagnitude(), distance.getScaling(), distance.getUnit());
+	shp::Distance::setAzimuth(direction);
+}
+
+void Velocity::setDisplacement(const shp::Quantity& distance, const shp::Polar& curvature) {
+	shp::Distance::setMagnitude(distance.getMagnitude(), distance.getScaling(), distance.getUnit());
+	shp::Distance::setModulation(curvature);
+}
+
 void Velocity::setDisplacement(const shp::Distance& distance) {
 	shp::Distance::setMagnitude(distance.getMagnitude(), distance.getScaling(), distance.getUnit());
+	shp::Distance::setAzimuth(distance.getAzimuth());
+	shp::Distance::setModulation(distance.getModulation());
 }
 
 void Velocity::setDisplacement(const float distance) {
@@ -520,6 +691,22 @@ void Velocity::setDisplacement(const float distance, const short int scale, cons
 	shp::Distance::setMagnitude(distance, scale, unit);
 }
 
+short int Velocity::getScaling() const {
+    return shp::Distance::getScaling();
+}
+
+void Velocity::setScaling(const short int factor) {
+    shp::Distance::setScaling(factor);
+}
+
+shp::Unit Velocity::getUnit() const {
+	return shp::Distance::getUnit();
+}
+
+void Velocity::setUnit(const shp::Unit& unit) {
+	shp::Distance::setUnit(unit);
+}
+
 shp::Azimuth Velocity::getDirection() const {
 	return shp::Distance::getAzimuth();
 }
@@ -532,8 +719,20 @@ void Velocity::setDirection(const shp::Azimuth& orientation) {
 	shp::Distance::setAzimuth(orientation);
 }
 
+shp::Polar Velocity::getFieldCurvature() const {
+	return shp::Distance::getModulation();
+}
+
+void Velocity::setFieldCurvature(const shp::Polar& curvature) {
+	shp::Distance::setModulation(curvature);
+}
+
 void Velocity::setChangeMagnitude(const float motion) {
 	shp::Distance::setChangeMagnitude(motion);
+}
+
+void Velocity::setChangeMagnitude(const float motion, const short int scale) {
+	shp::Distance::setChangeMagnitude(motion, scale);
 }
 
 void Velocity::setChangeDirection(const float degree) {
@@ -554,27 +753,41 @@ shp::Signal Velocity::getTotal() const {
     return result;
 }
 
-shp::Signal Velocity::getLinear(const float slice) {
+shp::Signal Velocity::getLinear() {
+	const float timeperiod = 1.0f;
+	return this->getLinear(timeperiod);
+}
+
+shp::Signal Velocity::getLinear(const Time& slice) {
 	shp::Distance self = *this; shp::Frequency frequency(shp::Quantity::DEFAULT_VALUE);
 	float magnitude = shp::Quantity::DEFAULT_VALUE; short int scaling = shp::Quantity::DEFAULT_SCALE;
 	if (isTimeBound()) {
 		frequency = temporal->getFrequency();
-		magnitude = ((self.getAmplitude() * frequency.getMagnitude()) / slice);
+		magnitude = ((self.getAmplitude() * frequency.getMagnitude()) / slice.getMagnitude());
 		scaling = (self.getScaling() + frequency.getScaling());
 	}
     shp::Signal result(shp::Direction::DEFAULT_RADIANS, magnitude, scaling, UNIT); result.adjustScaling();
     return result;
 }
 
-shp::Signal Velocity::getAngular(const float theta) {
+shp::Signal Velocity::getAngular() {
+	return this->getAngular(shp::Direction::DEFAULT_RADIANS);
+}
+
+shp::Signal Velocity::getAngular(const shp::Direction& theta) {
 	shp::Distance self = *this; shp::Quantity rotation;
-	shp::Azimuth velocity = self.getAzimuth();
+	shp::Azimuth displacement = self.getAzimuth();
 	if (isTimeBound()) {
 		rotation = temporal->getCurvature();
-		velocity.setRotation(rotation.getMagnitude() + theta);
+		displacement.setRotation(rotation.getMagnitude() + theta.toRadians());
 	}
-    shp::Signal result(velocity, rotation.getMagnitude(), rotation.getScaling(), rotation.getUnit());
+	std::string unit = rotation.getUnit().getName() + '/' + shp::Unit::getBaseSymbol(shp::Unit::TIME);
+    shp::Signal result(displacement, rotation.getMagnitude(), rotation.getScaling(), unit);
     return result;
+}
+
+void Velocity::adjustNumeric() {
+    shp::Distance::adjustNumeric();
 }
 
 void Velocity::adjustScaling() {
@@ -585,13 +798,62 @@ bool Velocity::checkNonZero() const {
 	return shp::Distance::checkNonZero();
 }
 
+bool Velocity::checkInfinity() const {
+    return shp::Distance::checkInfinity();
+}
+
+short int Velocity::checkScaling(const float amount) const {
+    return shp::Distance::checkScaling(amount);
+}
+
+shp::Signal Velocity::getScalarNegative() const {
+    return shp::Distance::getScalarNegative();
+}
+
+shp::Signal Velocity::getVectorNegative() const {
+    return shp::Distance::getVectorNegative();
+}
+
+shp::Signal Velocity::getScalarInverse() const {
+    return shp::Distance::getScalarInverse();
+}
+
+shp::Signal Velocity::getVectorInverse() const {
+    return shp::Distance::getVectorInverse();
+}
+
+shp::Signal Velocity::getScalarSquare() const {
+    return shp::Distance::getScalarSquare();
+}
+
+shp::Signal Velocity::getVectorSquare() const {
+    return shp::Distance::getVectorSquare();
+}
+
+shp::Signal Velocity::getScalarFraction(const float length) const {
+    return shp::Distance::getScalarFraction(length);
+}
+
+shp::Signal Velocity::getScalarFraction(const float length, const short int scale) const {
+    return shp::Distance::getScalarFraction(length, scale);
+}
+
+shp::Signal Velocity::getScalarSquareFraction(const float length) const {
+    return shp::Distance::getScalarSquareFraction(length);
+}
+
+shp::Signal Velocity::getScalarSquareFraction(const float length, const short int scale) const {
+    return shp::Distance::getScalarSquareFraction(length, scale);
+}
+
 bool Velocity::isTimeBound() const {
     return (temporal != nullptr);
 }
 
 shp::Distance Velocity::copy() {
 	shp::Distance self = *this;
-    Velocity fresh(getName(), self.getMagnitude(), self.getScaling(), self.getUnit(), self.getAzimuth());
+    Velocity fresh(getName(), self.getMagnitude(), self.getScaling(), self.getUnit(),
+		self.getAzimuth(), this->temporal);
     return fresh;
 }
 
@@ -603,17 +865,35 @@ void Velocity::clear() {
 
 std::string Velocity::print() const {
     std::stringstream result;
-    result << "(v:";
-	result << name << ",";
-    result << shp::Distance::print() << ")";
+    result << "(" << name << ",";
+    result << shp::Distance::print();
+	result << ")";
+	return result.str();
+}
+
+std::string Velocity::printTemporal() const {
+    std::stringstream result;
+    result << "(" << name << ",";
+    result << shp::Distance::print() << ",";
+	result << (isTimeBound() ? temporal->print() : "");
+	result << ")";
 	return result.str();
 }
 
 std::string Velocity::printRadians() const {
     std::stringstream result;
-    result << "(v:";
-	result << name << ",";
-    result << shp::Distance::printRadians() << ")";
+    result << "(" << name << ",";
+    result << shp::Distance::printRadians();
+	result << ")";
+	return result.str();
+}
+
+std::string Velocity::printTemporalRadians() const {
+    std::stringstream result;
+    result << "(" << name << ",";
+    result << shp::Distance::printRadians() << ",";
+	result << (isTimeBound() ? temporal->printRadians() : "");
+	result << ")";
 	return result.str();
 }
 
@@ -625,6 +905,30 @@ shp::Signal Velocity::getCosComponent(const float phase) const {
 shp::Signal Velocity::getSinComponent(const float phase) const {
 	shp::Signal velocity = this->getTotal();
 	return shp::Signal(velocity.getSinComponent(phase), velocity.getScaling(), velocity.getUnit());
+}
+
+shp::Direction Velocity::getAngularVelocity(const Time& interval) const {
+	float rate = (shp::Distance::getAzimuth().toRadians() / interval.getMagnitude());
+	rate = std::isinf(rate) ? 0 : rate;		// if time interval = zero
+	shp::Direction result(rate * shp::Direction::DEGREE_001);
+	return result;
+}
+
+shp::Direction Velocity::getCurvedSpaceTime(const Time& interval) const {
+	float rate = (shp::Distance::getModulation().toRadians() / interval.getMagnitude());
+	rate = std::isinf(rate) ? 0 : rate;		// if time interval = zero
+	shp::Direction result(rate * shp::Direction::DEGREE_001);
+	return result;
+}
+
+shp::Direction Velocity::getAngularShiftRate() const {
+	shp::Direction result(shp::Distance::getAzimuth().toRadians() * shp::Direction::DEGREE_001);
+	return result;
+}
+
+shp::Direction Velocity::getCurvatureShiftRate() const {
+	shp::Direction result(shp::Distance::getModulation().toRadians() * shp::Direction::DEGREE_001);
+	return result;
 }
 
 std::complex<float> Velocity::toComplex(const float coefficient, const float change) {
