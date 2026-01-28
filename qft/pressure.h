@@ -35,14 +35,14 @@ class Pressure {
 public:
     // Constructors
     Pressure();
-    Pressure(std::string name);
+    Pressure(const std::string name);
     Pressure(const float force);
     Pressure(const float force, const float length, const float breadth);
     Pressure(const qft::Force& force, const shp::Area& area);
-    Pressure(std::string name, const shp::Unit& unit);
-    Pressure(std::string name, const float force, const float length, const float breadth);
-    Pressure(std::string name, const qft::Force& force, const shp::Area& area);
-    Pressure(std::string name, const qft::Force& force, const shp::Area& area, const shp::Unit& unit);
+    Pressure(const std::string name, const shp::Unit& unit);
+    Pressure(const std::string name, const float force, const float length, const float breadth);
+    Pressure(const std::string name, const qft::Force& force, const shp::Area& area);
+    Pressure(const std::string name, const qft::Force& force, const shp::Area& area, const shp::Unit& unit);
 
     // Destructors
     ~Pressure();

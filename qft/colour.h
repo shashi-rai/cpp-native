@@ -34,12 +34,12 @@ public:
     Colour(const std::shared_ptr<Field> field);
     Colour(const img::RGB& colour);
     Colour(const img::RGB& colour, const std::shared_ptr<Field> field);
-    Colour(std::string unit);
+    Colour(const std::string unit);
     Colour(const shp::Unit& unit);
     Colour(const img::RGB& colour, const shp::Unit& unit);
     Colour(const img::RGB& colour, const shp::Unit& unit, const std::shared_ptr<Field> field);
     Colour(const float magnitude);
-    Colour(const float magnitude, std::string unit);
+    Colour(const float magnitude, const std::string unit);
     Colour(const float magnitude, const shp::Unit& unit);
     Colour(const img::RGB& colour, const float magnitude, const shp::Unit& unit);
     Colour(const float magnitude, const shp::Unit& unit, const std::shared_ptr<Field> field);
@@ -48,7 +48,7 @@ public:
     Colour(const img::RGB& colour, const float magnitude, const short int scaling);
     Colour(const float magnitude, const short int scaling, const std::shared_ptr<Field> field);
     Colour(const img::RGB& colour, const float magnitude, const short int scaling, const std::shared_ptr<Field> field);
-    Colour(const float magnitude, const short int scaling, std::string unit);
+    Colour(const float magnitude, const short int scaling, const std::string unit);
     Colour(const float magnitude, const short int scaling, const shp::Unit& unit);
     Colour(const img::RGB& colour, const float magnitude, const short int scaling, const shp::Unit& unit);
     Colour(const float magnitude, const short int scaling, const shp::Unit& unit, const std::shared_ptr<Field> field);

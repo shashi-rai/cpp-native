@@ -44,42 +44,42 @@ Proton::Proton(const std::shared_ptr<Field> mass, const std::shared_ptr<Field> c
     initialize();
 }
 
-Proton::Proton(std::string name)
+Proton::Proton(const std::string name)
         : Particle(name, Spin(DEFAULT_SPIN), Mass(Mass::PROTON), Charge(Charge::PROTON)),
         up(), down() {
     initialize();
 }
 
-Proton::Proton(float wavelength)
+Proton::Proton(const float wavelength)
         : Particle(Spin(DEFAULT_SPIN), Mass(Mass::PROTON), Charge(Charge::PROTON)),
         up(), down() {
     initialize();
     Energy self = getEnergy(); self.setWavelength(wavelength);
 }
 
-Proton::Proton(std::string name, float wavelength)
+Proton::Proton(const std::string name, const float wavelength)
         : Particle(name, Spin(DEFAULT_SPIN), Mass(Mass::PROTON), Charge(Charge::PROTON)),
         up(), down() {
     initialize();
     Energy self = getEnergy(); self.setWavelength(wavelength);
 }
 
-Proton::Proton(std::string name, const Energy& energy)
+Proton::Proton(const std::string name, const Energy& energy)
         : Particle(name, Spin(DEFAULT_SPIN), energy), up(), down() {
     initialize();
 }
 
-Proton::Proton(std::string name, const Spin& spin, const Energy& energy)
+Proton::Proton(const std::string name, const Spin& spin, const Energy& energy)
         : Particle(name, spin, energy), up(), down() {
     initialize();
 }
 
-Proton::Proton(std::string name, const float spin, const float mass, const float charge)
+Proton::Proton(const std::string name, const float spin, const float mass, const float charge)
         : Particle(name, Spin(spin), Energy(Mass(mass), Charge(charge))), up(), down() {
     initialize();
 }
 
-Proton::Proton(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
+Proton::Proton(const std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
         : Particle(name, spin, Energy(mass, charge)), up(), down() {
     initialize();
 }
@@ -88,7 +88,7 @@ Proton::~Proton() {
 
 }
 
-Quark Proton::getUp(short int index) const {
+Quark Proton::getUp(const short int index) const {
     Quark result;
     if (index >= UP_MIN && index < UP_MAX) {
         result = up[index];
@@ -100,7 +100,7 @@ Quark Proton::getDown() const {
     return down;
 }
 
-void Proton::setUp(const Quark& particle, short int index) {
+void Proton::setUp(const Quark& particle, const short int index) {
     if (index >= UP_MIN && index < UP_MAX) {
         this->up[index] = particle;
     }

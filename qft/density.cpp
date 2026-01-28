@@ -29,7 +29,7 @@ Density::Density()
 
 } 
 
-Density::Density(std::string name)
+Density::Density(const std::string name)
         : name(name), parameter(UNIT), volume() {
 
 }
@@ -87,67 +87,67 @@ Density::Density(const shp::Signal& parameter, const shp::Volume& volume)
 
 }
 
-Density::Density(std::string name, const shp::Unit& unit)
+Density::Density(const std::string name, const shp::Unit& unit)
         : name(name), parameter(unit), volume() {
 
 }
 
-Density::Density(std::string name, const short int scaling, const shp::Unit& unit)
+Density::Density(const std::string name, const short int scaling, const shp::Unit& unit)
         : name(name), parameter(scaling, unit), volume() {
 
 }
 
-Density::Density(std::string name, const float parameter)
+Density::Density(const std::string name, const float parameter)
         : name(name), parameter(parameter, UNIT), volume() {
 
 }
 
-Density::Density(std::string name, const float parameter, const std::string unit)
+Density::Density(const std::string name, const float parameter, const std::string unit)
         : name(name), parameter(parameter, unit), volume() {
 
 }
 
-Density::Density(std::string name, const float parameter,
+Density::Density(const std::string name, const float parameter,
         const short int scaling, const std::string unit)
         : name(name), parameter(parameter, scaling, unit), volume() {
 
 }
 
-Density::Density(std::string name, const float parameter, const float volume)
+Density::Density(const std::string name, const float parameter, const float volume)
         : name(name), parameter(parameter, UNIT) {
 	this->setVolume(volume);
 }
 
-Density::Density(std::string name, const float parameter, const short int scaling,
+Density::Density(const std::string name, const float parameter, const short int scaling,
         const float volume)
         : name(name), parameter(parameter, scaling, UNIT) {
 	this->setVolume(volume);
 }
 
-Density::Density(std::string name, const float parameter,
+Density::Density(const std::string name, const float parameter,
         const std::string unit, const float volume)
         : name(name), parameter(parameter, unit) {
 	this->setVolume(volume);
 }
 
-Density::Density(std::string name, const float parameter,
+Density::Density(const std::string name, const float parameter,
         const short int scaling, const std::string unit, const float volume)
         : name(name), parameter(parameter, scaling, unit) {
 	this->setVolume(volume);
 }
 
-Density::Density(std::string name, const float parameter,
+Density::Density(const std::string name, const float parameter,
         const short int scaling, const shp::Unit& unit, const shp::Volume& volume)
         : name(name), parameter(parameter, scaling, unit) {
 	this->setVolume(volume);
 }
 
-Density::Density(std::string name, const shp::Signal& parameter)
+Density::Density(const std::string name, const shp::Signal& parameter)
         : name(name), parameter(parameter), volume() {
 
 }
 
-Density::Density(std::string name, const shp::Signal& parameter, const shp::Volume& volume)
+Density::Density(const std::string name, const shp::Signal& parameter, const shp::Volume& volume)
         : name(name), parameter(parameter), volume(volume) {
 
 }

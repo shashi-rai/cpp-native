@@ -38,13 +38,13 @@ public:
     // Constructors
     Proton();
     Proton(const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
-    Proton(std::string name);
+    Proton(const std::string name);
     Proton(const float wavelength);
-    Proton(std::string name, const float wavelength);
-    Proton(std::string name, const Energy& energy);
-    Proton(std::string name, const Spin& spin, const Energy& energy);
-    Proton(std::string name, const float spin, const float mass, const float charge);
-    Proton(std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
+    Proton(const std::string name, const float wavelength);
+    Proton(const std::string name, const Energy& energy);
+    Proton(const std::string name, const Spin& spin, const Energy& energy);
+    Proton(const std::string name, const float spin, const float mass, const float charge);
+    Proton(const std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
 
     // Destructors
     ~Proton();
@@ -59,11 +59,11 @@ public:
     Neutron operator+(const Electron& peer) const;
 
     // Getters
-    Quark getUp(short int index) const;
+    Quark getUp(const short int index) const;
     Quark getDown() const;
 
     // Setters
-    void setUp(const Quark& particle, short int index);
+    void setUp(const Quark& particle, const short int index);
     void setDown(const Quark& particle);
 
     // Additional methods

@@ -31,12 +31,12 @@ Gluon::Gluon(const std::shared_ptr<Field> mass, const std::shared_ptr<Field> cha
 
 }
 
-Gluon::Gluon(std::string name)
+Gluon::Gluon(const std::string name)
         : Boson(name), colour() {
 
 }
 
-Gluon::Gluon(std::string name,
+Gluon::Gluon(const std::string name,
         const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
         : Boson(name, mass, charge), colour() {
 
@@ -51,33 +51,33 @@ Gluon::Gluon(const float wavelength,
         : Boson(wavelength, mass, charge), colour() {
 }
 
-Gluon::Gluon(std::string name, const float wavelength)
+Gluon::Gluon(const std::string name, const float wavelength)
         : Boson(name, wavelength), colour() {
 
 }
 
-Gluon::Gluon(std::string name, const float wavelength,
+Gluon::Gluon(const std::string name, const float wavelength,
         const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
         : Boson(name, wavelength, mass, charge), colour() {
 
 }
 
-Gluon::Gluon(std::string name, const Energy& energy)
+Gluon::Gluon(const std::string name, const Energy& energy)
         : Boson(name, energy), colour() {
 
 }
 
-Gluon::Gluon(std::string name, const Spin& spin, const Energy& energy)
+Gluon::Gluon(const std::string name, const Spin& spin, const Energy& energy)
         : Boson(name, spin, energy), colour() {
 
 }
 
-Gluon::Gluon(std::string name, const float spin, const float mass, const float charge)
+Gluon::Gluon(const std::string name, const float spin, const float mass, const float charge)
         : Boson(name, Spin(spin), Energy(Mass(mass), Charge(charge))), colour() {
 
 }
 
-Gluon::Gluon(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
+Gluon::Gluon(const std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
         : Boson(name, spin, Energy(mass, charge)), colour() {
 
 }

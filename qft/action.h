@@ -60,7 +60,7 @@ public:
     shp::Wave getWave() const { return wave; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setName(const std::string name) { this->name = name; }
     void setPosition(const shp::Coordinate& location) { this->position = location; }
     void setWave(const shp::Wave& pulse) { this->wave = pulse; }
 

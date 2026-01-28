@@ -33,16 +33,16 @@ class Power {
 public:
     // Constructors
     Power();
-    Power(std::string name);
+    Power(const std::string name);
     Power(const float energy);
     Power(const float energy, const float interval);
     Power(const shp::Quantity& energy, const Time& interval);
     Power(const shp::Quantity& energy, const Time& interval, const shp::Unit& unit);
-    Power(std::string name, const shp::Unit& unit);
-    Power(std::string name, const float energy, const float interval);
-    Power(std::string name, const float energy, const float interval, const std::string unit);
-    Power(std::string name, const shp::Quantity& energy, const qft::Time& interval);
-    Power(std::string name, const shp::Quantity& energy, const qft::Time& interval, const shp::Unit& unit);
+    Power(const std::string name, const shp::Unit& unit);
+    Power(const std::string name, const float energy, const float interval);
+    Power(const std::string name, const float energy, const float interval, const std::string unit);
+    Power(const std::string name, const shp::Quantity& energy, const qft::Time& interval);
+    Power(const std::string name, const shp::Quantity& energy, const qft::Time& interval, const shp::Unit& unit);
 
     // Destructors
     ~Power();

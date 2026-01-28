@@ -33,16 +33,16 @@ public:
     // Constructors
     Gluon();
     Gluon(const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
-    Gluon(std::string name);
-    Gluon(std::string name, const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
+    Gluon(const std::string name);
+    Gluon(const std::string name, const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Gluon(const float wavelength);
     Gluon(const float wavelength, const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
-    Gluon(std::string name, const float wavelength);
-    Gluon(std::string name, const float wavelength, const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
-    Gluon(std::string name, const Energy& energy);
-    Gluon(std::string name, const Spin& spin, const Energy& energy);
-    Gluon(std::string name, const float spin, const float mass, const float charge);
-    Gluon(std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
+    Gluon(const std::string name, const float wavelength);
+    Gluon(const std::string name, const float wavelength, const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
+    Gluon(const std::string name, const Energy& energy);
+    Gluon(const std::string name, const Spin& spin, const Energy& energy);
+    Gluon(const std::string name, const float spin, const float mass, const float charge);
+    Gluon(const std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
 
     // Destructors
     ~Gluon();

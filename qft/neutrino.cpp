@@ -29,7 +29,7 @@ Neutrino::Neutrino()
 
 }
 
-Neutrino::Neutrino(std::string name)
+Neutrino::Neutrino(const std::string name)
         : Particle(name, Spin(DEFAULT_SPIN)) {
 
 }
@@ -39,27 +39,27 @@ Neutrino::Neutrino(const float wavelength)
     this->getEnergy().setWavelength(wavelength);
 }
 
-Neutrino::Neutrino(std::string name, const float wavelength)
+Neutrino::Neutrino(const std::string name, const float wavelength)
         : Particle(name, Spin(DEFAULT_SPIN)) {
     this->getEnergy().setWavelength(wavelength);
 }
 
-Neutrino::Neutrino(std::string name, const Energy& energy)
+Neutrino::Neutrino(const std::string name, const Energy& energy)
         : Particle(name, Spin(DEFAULT_SPIN), energy) {
 
 }
 
-Neutrino::Neutrino(std::string name, const Spin& spin, const Energy& energy)
+Neutrino::Neutrino(const std::string name, const Spin& spin, const Energy& energy)
         : Particle(name, spin, energy) {
 
 }
 
-Neutrino::Neutrino(std::string name, const float spin, const float mass, const float charge)
+Neutrino::Neutrino(const std::string name, const float spin, const float mass, const float charge)
         : Particle(name, Spin(spin), Energy(Mass(mass), Charge(charge))) {
 
 }
 
-Neutrino::Neutrino(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
+Neutrino::Neutrino(const std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
         : Particle(name, spin, Energy(mass, charge)) {
 
 }

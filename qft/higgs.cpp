@@ -27,7 +27,7 @@ Higgs::Higgs()
 
 }
 
-Higgs::Higgs(std::string name)
+Higgs::Higgs(const std::string name)
         : Boson(name, Spin(Boson::SCALAR_SPIN)) {
 
 }
@@ -36,27 +36,27 @@ Higgs::Higgs(const float wavelength)
         : Boson(wavelength) {
 }
 
-Higgs::Higgs(std::string name, const float wavelength)
+Higgs::Higgs(const std::string name, const float wavelength)
         : Boson(name, wavelength) {
 
 }
 
-Higgs::Higgs(std::string name, const Energy& energy)
+Higgs::Higgs(const std::string name, const Energy& energy)
         : Boson(name, energy) {
 
 }
 
-Higgs::Higgs(std::string name, const Spin& spin, const Energy& energy)
+Higgs::Higgs(const std::string name, const Spin& spin, const Energy& energy)
         : Boson(name, spin, energy) {
 
 }
 
-Higgs::Higgs(std::string name, const float spin, const float mass, const float charge)
+Higgs::Higgs(const std::string name, const float spin, const float mass, const float charge)
         : Boson(name, Spin(spin), Energy(Mass(mass), Charge(charge))) {
 
 }
 
-Higgs::Higgs(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
+Higgs::Higgs(const std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
         : Boson(name, spin, Energy(mass, charge)) {
 
 }

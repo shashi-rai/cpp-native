@@ -23,6 +23,7 @@
 
 #include "density.h"
 #include "force.h"
+#include "velocity.h"
 #include "../shp/potential.h"
 #include "../shp/temporal.h"
 
@@ -82,7 +83,7 @@ public:
     void setRadius(const shp::Distance& length);
     shp::Potential getPotential() const;
     shp::Signal getVelocity() const;
-    void setVelocity(const shp::Signal& velocity);
+    void setVelocity(const qft::Velocity& velocity);
     Density getDensity(const shp::Volume& volume) const;
     Force getForce(const shp::Angular& coordinates) const;
     std::shared_ptr<Field> getOriginField() const;

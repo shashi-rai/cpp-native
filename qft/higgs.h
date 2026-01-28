@@ -31,13 +31,13 @@ class Higgs : public Boson {
 public:
     // Constructors
     Higgs();
-    Higgs(std::string name);
+    Higgs(const std::string name);
     Higgs(const float wavelength);
-    Higgs(std::string name, const float wavelength);
-    Higgs(std::string name, const Energy& energy);
-    Higgs(std::string name, const Spin& spin, const Energy& energy);
-    Higgs(std::string name, const float spin, const float mass, const float charge);
-    Higgs(std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
+    Higgs(const std::string name, const float wavelength);
+    Higgs(const std::string name, const Energy& energy);
+    Higgs(const std::string name, const Spin& spin, const Energy& energy);
+    Higgs(const std::string name, const float spin, const float mass, const float charge);
+    Higgs(const std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
 
     // Destructors
     ~Higgs();

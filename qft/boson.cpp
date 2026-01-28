@@ -50,23 +50,23 @@ Boson::Boson(const Spin& spin,
 
 }
 
-Boson::Boson(std::string name)
+Boson::Boson(const std::string name)
         : Particle(name, GUAGE_SPIN1), handed() {
 
 }
 
-Boson::Boson(std::string name,
+Boson::Boson(const std::string name,
         const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
         : Particle(name, GUAGE_SPIN1, mass, charge), handed() {
 
 }
 
-Boson::Boson(std::string name, const Spin& spin)
+Boson::Boson(const std::string name, const Spin& spin)
         : Particle(name, spin), handed() {
 
 }
 
-Boson::Boson(std::string name,
+Boson::Boson(const std::string name,
         const Spin& spin, const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
         : Particle(name, spin, mass, charge), handed() {
 
@@ -85,35 +85,35 @@ Boson::Boson(const float wavelength,
     energy.setWavelength(wavelength);
 }
 
-Boson::Boson(std::string name, const float wavelength)
+Boson::Boson(const std::string name, const float wavelength)
         : Particle(name, GUAGE_SPIN1), handed() {
     Energy energy = getEnergy();
     energy.setWavelength(wavelength);
 }
 
-Boson::Boson(std::string name, const float wavelength,
+Boson::Boson(const std::string name, const float wavelength,
         const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
         : Particle(name, GUAGE_SPIN1, mass, charge), handed() {
     Energy energy = getEnergy();
     energy.setWavelength(wavelength);
 }
 
-Boson::Boson(std::string name, const Energy& energy)
+Boson::Boson(const std::string name, const Energy& energy)
         : Particle(name, GUAGE_SPIN1, energy), handed() {
 
 }
 
-Boson::Boson(std::string name, const Spin& spin, const Energy& energy)
+Boson::Boson(const std::string name, const Spin& spin, const Energy& energy)
         : Particle(name, spin, energy), handed() {
 
 }
 
-Boson::Boson(std::string name, const float spin, const float mass, const float charge)
+Boson::Boson(const std::string name, const float spin, const float mass, const float charge)
         : Particle(name, Spin(spin), Energy(Mass(mass), Charge(charge))), handed() {
 
 }
 
-Boson::Boson(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
+Boson::Boson(const std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
         : Particle(name, spin, Energy(mass, charge)), handed() {
 
 }

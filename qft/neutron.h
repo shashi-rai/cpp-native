@@ -38,13 +38,13 @@ public:
     // Constructors
     Neutron();
     Neutron(const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
-    Neutron(std::string name);
+    Neutron(const std::string name);
     Neutron(const float wavelength);
-    Neutron(std::string name, const float wavelength);
-    Neutron(std::string name, const Energy& energy);
-    Neutron(std::string name, const Spin& spin, const Energy& energy);
-    Neutron(std::string name, const float spin, const float mass, const float charge);
-    Neutron(std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
+    Neutron(const std::string name, const float wavelength);
+    Neutron(const std::string name, const Energy& energy);
+    Neutron(const std::string name, const Spin& spin, const Energy& energy);
+    Neutron(const std::string name, const float spin, const float mass, const float charge);
+    Neutron(const std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
 
     // Destructors
     ~Neutron();
@@ -60,11 +60,11 @@ public:
 
     // Getters
     Quark getUp() const;
-    Quark getDown(short int index) const;
+    Quark getDown(const short int index) const;
 
     // Setters
     void setUp(const Quark& particle);
-    void setDown(const Quark& particle, short int index);
+    void setDown(const Quark& particle, const short int index);
 
     // Additional methods
     virtual shp::Point copy();

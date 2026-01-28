@@ -41,7 +41,7 @@ Momentum::Momentum(const float mass)
 
 }
 
-Momentum::Momentum(const float mass, std::string unit)
+Momentum::Momentum(const float mass, const std::string unit)
         : name(), mass(mass, unit), velocity() {
 
 }
@@ -61,7 +61,7 @@ Momentum::Momentum(const float mass, const short int scaling)
 
 }
 
-Momentum::Momentum(const float mass, const short int scaling, std::string unit)
+Momentum::Momentum(const float mass, const short int scaling, const std::string unit)
         : name(), mass(mass, scaling, unit), velocity() {
 
 }
@@ -76,7 +76,7 @@ Momentum::Momentum(const std::string name, const float mass)
 
 }
 
-Momentum::Momentum(const std::string name, const float mass, std::string unit)
+Momentum::Momentum(const std::string name, const float mass, const std::string unit)
         : name(name), mass(mass, unit), velocity() {
 
 }
@@ -96,7 +96,7 @@ Momentum::Momentum(const std::string name, const float mass, const short int sca
 
 }
 
-Momentum::Momentum(const std::string name, const float mass, const short int scaling, std::string unit)
+Momentum::Momentum(const std::string name, const float mass, const short int scaling, const std::string unit)
         : name(name), mass(mass, scaling, unit), velocity() {
 
 }

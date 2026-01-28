@@ -44,7 +44,7 @@ Colour::Colour(const img::RGB& colour, const std::shared_ptr<Field> field)
 
 }
 
-Colour::Colour(std::string unit)
+Colour::Colour(const std::string unit)
         : Charge(unit), colour() {
 
 }
@@ -69,7 +69,7 @@ Colour::Colour(const float magnitude)
 
 }
 
-Colour::Colour(const float magnitude, std::string unit)
+Colour::Colour(const float magnitude, const std::string unit)
         : Charge(magnitude, unit), colour() {
 
 }
@@ -114,7 +114,7 @@ Colour::Colour(const img::RGB& colour, const float magnitude, const short int sc
 
 }
 
-Colour::Colour(const float magnitude, const short int scaling, std::string unit)
+Colour::Colour(const float magnitude, const short int scaling, const std::string unit)
         : Charge(magnitude, scaling, shp::Unit(unit)), colour() {
 
 }

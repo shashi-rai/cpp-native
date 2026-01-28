@@ -31,7 +31,7 @@ class Nuclear : public Force {
 public:
     // Constructors
     Nuclear();
-    Nuclear(std::string name);
+    Nuclear(const std::string name);
     Nuclear(const std::shared_ptr<Field> field);
     Nuclear(std::string name, const std::shared_ptr<Field> field);
     Nuclear(const float magnitude);
@@ -41,14 +41,14 @@ public:
     Nuclear(const float magnitude, const float direction, const short int scaling);
     Nuclear(const float magnitude, const float direction, const short int scaling,
         const std::shared_ptr<Field> field);
-    Nuclear(std::string name, const float magnitude);
-    Nuclear(std::string name, const float magnitude, const std::shared_ptr<Field> field);
-    Nuclear(std::string name, const float magnitude, const float direction);
-    Nuclear(std::string name, const float magnitude, const float direction,
+    Nuclear(const std::string name, const float magnitude);
+    Nuclear(const std::string name, const float magnitude, const std::shared_ptr<Field> field);
+    Nuclear(const std::string name, const float magnitude, const float direction);
+    Nuclear(const std::string name, const float magnitude, const float direction,
         const std::shared_ptr<Field> field);
-    Nuclear(std::string name, const float magnitude, const float direction,
+    Nuclear(const std::string name, const float magnitude, const float direction,
         const short int scaling);
-    Nuclear(std::string name, const float magnitude, const float direction,
+    Nuclear(const std::string name, const float magnitude, const float direction,
         const short int scaling, const std::shared_ptr<Field> field);
 
     // Destructors

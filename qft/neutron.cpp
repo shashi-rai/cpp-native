@@ -44,7 +44,7 @@ Neutron::Neutron(const std::shared_ptr<Field> mass, const std::shared_ptr<Field>
     initialize();
 }
 
-Neutron::Neutron(std::string name)
+Neutron::Neutron(const std::string name)
         : Particle(name, Spin(DEFAULT_SPIN), Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)),
         up(), down() {
     initialize();
@@ -57,29 +57,29 @@ Neutron::Neutron(const float wavelength)
     Energy self = getEnergy(); self.setWavelength(wavelength);
 }
 
-Neutron::Neutron(std::string name, const float wavelength)
+Neutron::Neutron(const std::string name, const float wavelength)
         : Particle(name, Spin(DEFAULT_SPIN), Mass(Mass::NEUTRON), Charge(Charge::NEUTRON)),
         up(), down() {
     initialize();
     Energy self = getEnergy(); self.setWavelength(wavelength);
 }
 
-Neutron::Neutron(std::string name, const Energy& energy)
+Neutron::Neutron(const std::string name, const Energy& energy)
         : Particle(name, Spin(DEFAULT_SPIN), energy), up(), down() {
     initialize();
 }
 
-Neutron::Neutron(std::string name, const Spin& spin, const Energy& energy)
+Neutron::Neutron(const std::string name, const Spin& spin, const Energy& energy)
         : Particle(name, spin, energy), up(), down() {
     initialize();
 }
 
-Neutron::Neutron(std::string name, const float spin, const float mass, const float charge)
+Neutron::Neutron(const std::string name, const float spin, const float mass, const float charge)
         : Particle(name, Spin(spin), Energy(Mass(mass), Charge(charge))), up(), down() {
     initialize();
 }
 
-Neutron::Neutron(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
+Neutron::Neutron(const std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
         : Particle(name, spin, Energy(mass, charge)), up(), down() {
     initialize();
 }
@@ -92,7 +92,7 @@ Quark Neutron::getUp() const {
     return up;
 }
 
-Quark Neutron::getDown(short int index) const {
+Quark Neutron::getDown(const short int index) const {
     Quark result;
     if (index >= DOWN_MIN && index < DOWN_MAX) {
         result = down[index];
@@ -104,7 +104,7 @@ void Neutron::setUp(const Quark& particle) {
     this->up = particle;
 }
 
-void Neutron::setDown(const Quark& particle, short int index) {
+void Neutron::setDown(const Quark& particle, const short int index) {
     if (index >= DOWN_MIN && index < DOWN_MAX) {
         this->down[index] = particle;
     }

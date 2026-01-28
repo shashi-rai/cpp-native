@@ -31,13 +31,13 @@ class Electroweak : public Boson {
 public:
     // Constructors
     Electroweak();
-    Electroweak(std::string name);
+    Electroweak(const std::string name);
     Electroweak(const float wavelength);
-    Electroweak(std::string name, const float wavelength);
-    Electroweak(std::string name, const Energy& energy);
-    Electroweak(std::string name, const Spin& spin, const Energy& energy);
-    Electroweak(std::string name, const float spin, const float mass, const float charge);
-    Electroweak(std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
+    Electroweak(const std::string name, const float wavelength);
+    Electroweak(const std::string name, const Energy& energy);
+    Electroweak(const std::string name, const Spin& spin, const Energy& energy);
+    Electroweak(const std::string name, const float spin, const float mass, const float charge);
+    Electroweak(const std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
 
     // Destructors
     ~Electroweak();

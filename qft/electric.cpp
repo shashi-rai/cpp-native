@@ -27,7 +27,7 @@ Electric::Electric() : Force() {
         setField(nullptr);
 }
 
-Electric::Electric(std::string name)
+Electric::Electric(const std::string name)
         : Force(name) {
     setField(nullptr);
 }
@@ -37,7 +37,7 @@ Electric::Electric(const std::shared_ptr<Field> field)
     setField(field);
 }
 
-Electric::Electric(std::string name, const std::shared_ptr<Field> field)
+Electric::Electric(const std::string name, const std::shared_ptr<Field> field)
         : Force(name) {
     setField(field);
 }
@@ -74,35 +74,35 @@ Electric::Electric(const float magnitude, const float direction, const short int
     setField(field);
 }
 
-Electric::Electric(std::string name, const float magnitude)
+Electric::Electric(const std::string name, const float magnitude)
         : Force(name, magnitude) {
     setField(nullptr);
 }
 
-Electric::Electric(std::string name, const float magnitude,
+Electric::Electric(const std::string name, const float magnitude,
         const std::shared_ptr<Field> field)
         : Force(name, magnitude) {
     setField(field);
 }
 
-Electric::Electric(std::string name, const float magnitude, const float direction)
+Electric::Electric(const std::string name, const float magnitude, const float direction)
         : Force(name, magnitude, direction) {
     setField(nullptr);
 }
 
-Electric::Electric(std::string name, const float magnitude, const float direction,
+Electric::Electric(const std::string name, const float magnitude, const float direction,
         const std::shared_ptr<Field> field)
         : Force(name, magnitude, direction) {
     setField(field);
 }
 
-Electric::Electric(std::string name, const float magnitude, const float direction,
+Electric::Electric(const std::string name, const float magnitude, const float direction,
         const short int scaling)
         : Force(name, magnitude, direction, scaling) {
     setField(nullptr);
 }
 
-Electric::Electric(std::string name, const float magnitude, const float direction,
+Electric::Electric(const std::string name, const float magnitude, const float direction,
         const short int scaling, const std::shared_ptr<Field> field)
         : Force(name, magnitude, direction, scaling) {
     setField(field);
@@ -141,7 +141,7 @@ Acceleration Electric::getAcceleration(const Charge& charge) const {
 }
 
 bool Electric::isOwned() const {
-    return field != nullptr;
+    return (field != nullptr);
 }
 
 Force Electric::copy() {

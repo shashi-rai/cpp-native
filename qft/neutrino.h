@@ -31,13 +31,13 @@ class Neutrino : public Particle {
 public:
     // Constructors
     Neutrino();
-    Neutrino(std::string name);
+    Neutrino(const std::string name);
     Neutrino(const float wavelength);
-    Neutrino(std::string name, const float wavelength);
-    Neutrino(std::string name, const Energy& energy);
-    Neutrino(std::string name, const Spin& spin, const Energy& energy);
-    Neutrino(std::string name, const float spin, const float mass, const float charge);
-    Neutrino(std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
+    Neutrino(const std::string name, const float wavelength);
+    Neutrino(const std::string name, const Energy& energy);
+    Neutrino(const std::string name, const Spin& spin, const Energy& energy);
+    Neutrino(const std::string name, const float spin, const float mass, const float charge);
+    Neutrino(const std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
 
     // Destructors
     ~Neutrino();

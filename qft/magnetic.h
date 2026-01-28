@@ -34,12 +34,12 @@ public:
     // Constructors
     Magnetic();
     Magnetic(const Current& current);
-    Magnetic(std::string name);
-    Magnetic(std::string name, const Current& current);
+    Magnetic(const std::string name);
+    Magnetic(const std::string name, const Current& current);
     Magnetic(const std::shared_ptr<Field> field);
     Magnetic(const Current& current, const std::shared_ptr<Field> field);
-    Magnetic(std::string name, const std::shared_ptr<Field> field);
-    Magnetic(std::string name, const Current& current, const std::shared_ptr<Field> field);
+    Magnetic(const std::string name, const std::shared_ptr<Field> field);
+    Magnetic(const std::string name, const Current& current, const std::shared_ptr<Field> field);
     Magnetic(const float magnitude);
     Magnetic(const float magnitude, const std::shared_ptr<Field> field);
     Magnetic(const float magnitude, const float direction);
@@ -47,14 +47,14 @@ public:
     Magnetic(const float magnitude, const float direction, const short int scaling);
     Magnetic(const float magnitude, const float direction, const short int scaling,
         const std::shared_ptr<Field> field);
-    Magnetic(std::string name, const float magnitude);
-    Magnetic(std::string name, const float magnitude, const std::shared_ptr<Field> field);
-    Magnetic(std::string name, const float magnitude, const float direction);
-    Magnetic(std::string name, const float magnitude, const float direction,
+    Magnetic(const std::string name, const float magnitude);
+    Magnetic(const std::string name, const float magnitude, const std::shared_ptr<Field> field);
+    Magnetic(const std::string name, const float magnitude, const float direction);
+    Magnetic(const std::string name, const float magnitude, const float direction,
         const std::shared_ptr<Field> field);
-    Magnetic(std::string name, const float magnitude, const float direction,
+    Magnetic(const std::string name, const float magnitude, const float direction,
         const short int scaling);
-    Magnetic(std::string name, const float magnitude, const float direction,
+    Magnetic(const std::string name, const float magnitude, const float direction,
         const short int scaling, const std::shared_ptr<Field> field);
 
     // Destructors

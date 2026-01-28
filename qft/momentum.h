@@ -37,18 +37,18 @@ public:
     Momentum();
     Momentum(const std::string name);
     Momentum(const float mass);
-    Momentum(const float mass, std::string unit);
+    Momentum(const float mass, const std::string unit);
     Momentum(const float mass, const shp::Unit& unit);
     Momentum(const qft::Mass& mass);
     Momentum(const float mass, const short int scaling);
-    Momentum(const float mass, const short int scaling, std::string unit);
+    Momentum(const float mass, const short int scaling, const std::string unit);
     Momentum(const float mass, const short int scaling, const shp::Unit& unit);
     Momentum(const std::string name, const float mass);
-    Momentum(const std::string name, const float mass, std::string unit);
+    Momentum(const std::string name, const float mass, const std::string unit);
     Momentum(const std::string name, const float mass, const shp::Unit& unit);
     Momentum(const std::string name, const qft::Mass& mass);
     Momentum(const std::string name, const float mass, const short int scaling);
-    Momentum(const std::string name, const float mass, const short int scaling, std::string unit);
+    Momentum(const std::string name, const float mass, const short int scaling, const std::string unit);
     Momentum(const std::string name, const float mass, const short int scaling, const shp::Unit& unit);
     Momentum(const float mass, const float velocity);
     Momentum(const qft::Mass& mass, const qft::Velocity& velocity);
@@ -76,7 +76,7 @@ public:
     qft::Velocity getVelocity() const { return velocity; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setName(const std::string name) { this->name = name; }
     void setMass(const qft::Mass& object) { this->mass = object; }
     void setVelocity(const qft::Velocity& object) { this->velocity = object; }
 

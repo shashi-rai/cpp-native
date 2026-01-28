@@ -36,22 +36,22 @@ public:
     Boson(const Spin& spin);
     Boson(const Spin& spin,
         const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
-    Boson(std::string name);
-    Boson(std::string name,
+    Boson(const std::string name);
+    Boson(const std::string name,
         const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
-    Boson(std::string name, const Spin& spin);
-    Boson(std::string name, const Spin& spin,
+    Boson(const std::string name, const Spin& spin);
+    Boson(const std::string name, const Spin& spin,
         const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Boson(const float wavelength);
     Boson(const float wavelength,
         const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
-    Boson(std::string name, const float wavelength);
-    Boson(std::string name, const float wavelength,
+    Boson(const std::string name, const float wavelength);
+    Boson(const std::string name, const float wavelength,
         const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
-    Boson(std::string name, const Energy& energy);
-    Boson(std::string name, const Spin& spin, const Energy& energy);
-    Boson(std::string name, const float spin, const float mass, const float charge);
-    Boson(std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
+    Boson(const std::string name, const Energy& energy);
+    Boson(const std::string name, const Spin& spin, const Energy& energy);
+    Boson(const std::string name, const float spin, const float mass, const float charge);
+    Boson(const std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
 
     // Destructors
     ~Boson();

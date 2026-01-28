@@ -30,7 +30,7 @@ Power::Power()
 
 }
 
-Power::Power(std::string name)
+Power::Power(const std::string name)
         : name(name), unit(shp::Unit::getDerivedSymbol(shp::Unit::POWER)),
         energy(), interval() {
 
@@ -60,31 +60,31 @@ Power::Power(const shp::Quantity& energy, const qft::Time& interval,
 
 }
 
-Power::Power(std::string name, const shp::Unit& unit)
+Power::Power(const std::string name, const shp::Unit& unit)
         : name(name), unit(unit),
         energy(), interval() {
 
 }
 
-Power::Power(std::string name, const float energy, const float interval)
+Power::Power(const std::string name, const float energy, const float interval)
         : name(name), unit(shp::Unit::getDerivedSymbol(shp::Unit::POWER)),
         energy(energy), interval(interval) {
 
 }
 
-Power::Power(std::string name, const float energy, const float interval,
+Power::Power(const std::string name, const float energy, const float interval,
         const std::string unit)
         : name(name), unit(unit), energy(energy), interval(interval) {
 
 }
 
-Power::Power(std::string name, const shp::Quantity& energy, const qft::Time& interval)
+Power::Power(const std::string name, const shp::Quantity& energy, const qft::Time& interval)
         : name(name), unit(shp::Unit::getDerivedSymbol(shp::Unit::POWER)),
         energy(energy), interval(interval) {
 
 }
 
-Power::Power(std::string name, const shp::Quantity& energy, const qft::Time& interval,
+Power::Power(const std::string name, const shp::Quantity& energy, const qft::Time& interval,
         const shp::Unit& unit)
         : name(name), unit(unit), energy(energy), interval(interval) {
 

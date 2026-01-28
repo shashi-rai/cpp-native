@@ -26,7 +26,7 @@ Photon::Photon() : Boson() {
 
 }
 
-Photon::Photon(std::string name)
+Photon::Photon(const std::string name)
         : Boson(name) {
 
 }
@@ -35,27 +35,27 @@ Photon::Photon(const float wavelength)
         : Boson(wavelength) {
 }
 
-Photon::Photon(std::string name, const float wavelength)
+Photon::Photon(const std::string name, const float wavelength)
         : Boson(name, wavelength) {
 
 }
 
-Photon::Photon(std::string name, const Energy& energy)
+Photon::Photon(const std::string name, const Energy& energy)
         : Boson(name, energy) {
 
 }
 
-Photon::Photon(std::string name, const Spin& spin, const Energy& energy)
+Photon::Photon(const std::string name, const Spin& spin, const Energy& energy)
         : Boson(name, spin, energy) {
 
 }
 
-Photon::Photon(std::string name, const float spin, const float mass, const float charge)
+Photon::Photon(const std::string name, const float spin, const float mass, const float charge)
         : Boson(name, Spin(spin), Energy(Mass(mass), Charge(charge))) {
 
 }
 
-Photon::Photon(std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
+Photon::Photon(const std::string name, const Spin& spin, const Mass& mass, const Charge& charge)
         : Boson(name, spin, Energy(mass, charge)) {
 
 }

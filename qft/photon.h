@@ -31,13 +31,13 @@ class Photon : public Boson {
 public:
     // Constructors
     Photon();
-    Photon(std::string name);
+    Photon(const std::string name);
     Photon(const float wavelength);
-    Photon(std::string name, const float wavelength);
-    Photon(std::string name, const Energy& energy);
-    Photon(std::string name, const Spin& spin, const Energy& energy);
-    Photon(std::string name, const float spin, const float mass, const float charge);
-    Photon(std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
+    Photon(const std::string name, const float wavelength);
+    Photon(const std::string name, const Energy& energy);
+    Photon(const std::string name, const Spin& spin, const Energy& energy);
+    Photon(const std::string name, const float spin, const float mass, const float charge);
+    Photon(const std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
 
     // Destructors
     ~Photon();

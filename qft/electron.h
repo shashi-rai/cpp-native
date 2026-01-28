@@ -43,34 +43,34 @@ public:
     Electron(const float polarization, const float azimuthal);
     Electron(const float polarization, const float azimuthal,
         const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
-    Electron(std::string name);
-    Electron(std::string name,
+    Electron(const std::string name);
+    Electron(const std::string name,
         const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
-    Electron(std::string name, const float polarization);
-    Electron(std::string name, const float polarization,
+    Electron(const std::string name, const float polarization);
+    Electron(const std::string name, const float polarization,
         const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
-    Electron(std::string name, const float polarization, const float azimuthal);
+    Electron(const std::string name, const float polarization, const float azimuthal);
     Electron(std::string name, const float polarization, const float azimuthal,
         const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Electron(const Energy& energy);
-    Electron(std::string name, const Energy& energy);
-    Electron(std::string name, const Spin& spin, const Energy& energy);
+    Electron(const std::string name, const Energy& energy);
+    Electron(const std::string name, const Spin& spin, const Energy& energy);
     Electron(const Mass& mass, const Charge& charge);
-    Electron(std::string name, const Mass& mass, const Charge& charge);
-    Electron(std::string name, const float spin, const float mass, const float charge);
-    Electron(std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
+    Electron(const std::string name, const Mass& mass, const Charge& charge);
+    Electron(const std::string name, const float spin, const float mass, const float charge);
+    Electron(const std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
     Electron(const short int principal, const short int azimuthal,
         const short int magnetic, const float spin);
-    Electron(std::string name, const short int principal, const short int azimuthal,
+    Electron(const std::string name, const short int principal, const short int azimuthal,
         const short int magnetic, const Spin& spin,
         const Energy& energy);
-    Electron(std::string name, const short int principal, const short int azimuthal,
+    Electron(const std::string name, const short int principal, const short int azimuthal,
         const short int magnetic, const Spin& spin,
         const Mass& mass);
-    Electron(std::string name, const short int principal, const short int azimuthal,
+    Electron(const std::string name, const short int principal, const short int azimuthal,
         const short int magnetic, const Spin& spin,
         const Charge& charge);
-    Electron(std::string name, const short int principal, const short int azimuthal,
+    Electron(const std::string name, const short int principal, const short int azimuthal,
         const short int magnetic, const Spin& spin,
         const Mass& mass, const Charge& charge);
 

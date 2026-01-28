@@ -31,9 +31,9 @@ class Gravity : public Force {
 public:
     // Constructors
     Gravity();
-    Gravity(std::string name);
+    Gravity(const std::string name);
     Gravity(const std::shared_ptr<Field> field);
-    Gravity(std::string name, const std::shared_ptr<Field> field);
+    Gravity(const std::string name, const std::shared_ptr<Field> field);
     Gravity(const float magnitude);
     Gravity(const float magnitude, const std::shared_ptr<Field> field);
     Gravity(const float magnitude, const float direction);
@@ -41,14 +41,14 @@ public:
     Gravity(const float magnitude, const float direction, const short int scaling);
     Gravity(const float magnitude, const float direction, const short int scaling,
         const std::shared_ptr<Field> field);
-    Gravity(std::string name, const float magnitude);
-    Gravity(std::string name, const float magnitude, const std::shared_ptr<Field> field);
+    Gravity(const std::string name, const float magnitude);
+    Gravity(const std::string name, const float magnitude, const std::shared_ptr<Field> field);
     Gravity(std::string name, const float magnitude, const float direction);
-    Gravity(std::string name, const float magnitude, const float direction,
+    Gravity(const std::string name, const float magnitude, const float direction,
         const std::shared_ptr<Field> field);
-    Gravity(std::string name, const float magnitude, const float direction,
+    Gravity(const std::string name, const float magnitude, const float direction,
         const short int scaling);
-    Gravity(std::string name, const float magnitude, const float direction,
+    Gravity(const std::string name, const float magnitude, const float direction,
         const short int scaling, const std::shared_ptr<Field> field);
 
     // Destructors

@@ -35,7 +35,7 @@ Force::Force() : name(),
 
 }
 
-Force::Force(std::string name)
+Force::Force(const std::string name)
         : name(name),
         magnitude(shp::Unit::getDerivedSymbol(shp::Unit::FORCE)), direction() {
 
@@ -86,38 +86,38 @@ Force::Force(const shp::Quantity& magnitude, const shp::Direction& direction)
 
 }
 
-Force::Force(std::string name, const shp::Unit& unit)
+Force::Force(const std::string name, const shp::Unit& unit)
         : name(name), magnitude(unit), direction() {
 
 }
 
-Force::Force(std::string name, const float magnitude)
+Force::Force(const std::string name, const float magnitude)
         : name(name),
         magnitude(magnitude, shp::Unit::getDerivedSymbol(shp::Unit::FORCE)),
         direction() {
 
 }
 
-Force::Force(std::string name, const float magnitude, const shp::Unit& unit)
+Force::Force(const std::string name, const float magnitude, const shp::Unit& unit)
         : name(name), magnitude(magnitude, unit),
         direction() {
 
 }
 
-Force::Force(std::string name, const float magnitude, const float direction)
+Force::Force(const std::string name, const float magnitude, const float direction)
         : name(name),
         magnitude(magnitude, shp::Unit::getDerivedSymbol(shp::Unit::FORCE)),
         direction(direction) {
 
 }
 
-Force::Force(std::string name, const float magnitude, const float direction,
+Force::Force(const std::string name, const float magnitude, const float direction,
         const std::string unit)
         : name(name), magnitude(magnitude, unit), direction(direction) {
 
 }
 
-Force::Force(std::string name, const float magnitude, const float direction,
+Force::Force(const std::string name, const float magnitude, const float direction,
         const short int scaling)
         : name(name),
         magnitude(magnitude, scaling, shp::Unit::getDerivedSymbol(shp::Unit::FORCE)),
@@ -125,13 +125,13 @@ Force::Force(std::string name, const float magnitude, const float direction,
 
 }
 
-Force::Force(std::string name, const float magnitude, const float direction,
+Force::Force(const std::string name, const float magnitude, const float direction,
         const short int scaling, const std::string unit)
         : name(name), magnitude(magnitude, scaling, unit), direction(direction) {
 
 }
 
-Force::Force(std::string name, const shp::Quantity& magnitude, const shp::Direction& direction)
+Force::Force(const std::string name, const shp::Quantity& magnitude, const shp::Direction& direction)
         : name(name), magnitude(magnitude), direction(direction) {
 
 }
@@ -264,12 +264,12 @@ std::string Force::printRadians() const {
 	return result.str();
 }
 
-shp::Quantity Force::getComponent(float phase) const {
+shp::Quantity Force::getComponent(const float phase) const {
 	shp::Quantity force = getTotal();
 	return shp::Quantity((force.getMagnitude() * cos(phase)), force.getScaling(), force.getUnit());
 }
 
-std::complex<float> Force::toComplex(float coefficient, float change) {
+std::complex<float> Force::toComplex(const float coefficient, const float change) {
     return std::complex<float>(
         coefficient * std::cos(change),
         coefficient * std::sin(change));

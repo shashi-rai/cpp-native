@@ -32,7 +32,7 @@ class Density {
 public:
     // Constructors
     Density();
-    Density(std::string name);
+    Density(const std::string name);
     Density(const float parameter);
     Density(const float parameter, const std::string unit);
     Density(const float parameter, const short int scaling, const std::string unit);
@@ -77,7 +77,7 @@ public:
     shp::Volume getVolume() const { return volume; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setName(const std::string name) { this->name = name; }
     void setParameter(const shp::Signal& temporal) { this->parameter = temporal; }
     void setVolume(const shp::Volume& spatial) { this->volume = spatial; }
 

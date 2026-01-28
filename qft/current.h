@@ -38,18 +38,18 @@ public:
     Current();
     Current(const std::string name);
     Current(const float charge);
-    Current(const float charge, std::string unit);
+    Current(const float charge, const std::string unit);
     Current(const float charge, const shp::Unit& unit);
     Current(const qft::Charge& charge);
     Current(const float charge, const short int scaling);
-    Current(const float charge, const short int scaling, std::string unit);
+    Current(const float charge, const short int scaling, const std::string unit);
     Current(const float charge, const short int scaling, const shp::Unit& unit);
     Current(const std::string name, const float charge);
-    Current(const std::string name, const float charge, std::string unit);
+    Current(const std::string name, const float charge, const std::string unit);
     Current(const std::string name, const float charge, const shp::Unit& unit);
     Current(const std::string name, const qft::Charge& charge);
     Current(const std::string name, const float charge, const short int scaling);
-    Current(const std::string name, const float charge, const short int scaling, std::string unit);
+    Current(const std::string name, const float charge, const short int scaling, const std::string unit);
     Current(const std::string name, const float charge, const short int scaling, const shp::Unit& unit);
     Current(const float charge, const float velocity);
     Current(const qft::Charge& charge, const qft::Velocity& velocity);
@@ -77,7 +77,7 @@ public:
     qft::Velocity getVelocity() const { return velocity; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setName(const std::string name) { this->name = name; }
     void setCharge(const qft::Charge& object) { this->charge = object; }
     void setVelocity(const qft::Velocity& object) { this->velocity = object; }
 

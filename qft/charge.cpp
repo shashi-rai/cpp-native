@@ -216,8 +216,8 @@ shp::Signal Charge::getVelocity() const {
     return shp::Temporal::getModulation();
 }
 
-void Charge::setVelocity(const shp::Signal& velocity) {
-    shp::Temporal::setModulation(velocity);
+void Charge::setVelocity(const qft::Velocity& velocity) {
+    shp::Temporal::setModulation(velocity.getTotal());
 }
 
 Density Charge::getDensity(const shp::Volume& volume) const {

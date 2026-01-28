@@ -45,12 +45,12 @@ Current::Current(const float charge)
 
 }
 
-Current::Current(const float charge, std::string unit)
+Current::Current(const float charge, const std::string unit)
         : name(), charge(charge, unit), velocity() {
 
 }
 
-Current::Current(const float charge,const shp::Unit& unit)
+Current::Current(const float charge, const shp::Unit& unit)
         : name(), charge(charge, unit), velocity() {
 
 }
@@ -65,7 +65,7 @@ Current::Current(const float charge, const short int scaling)
 
 }
 
-Current::Current(const float charge, const short int scaling, std::string unit)
+Current::Current(const float charge, const short int scaling, const std::string unit)
         : name(), charge(charge, scaling, unit), velocity() {
 
 }
@@ -80,7 +80,7 @@ Current::Current(const std::string name, const float charge)
 
 }
 
-Current::Current(const std::string name, const float charge, std::string unit)
+Current::Current(const std::string name, const float charge, const std::string unit)
         : name(name), charge(charge, unit), velocity() {
 
 }
@@ -100,7 +100,7 @@ Current::Current(const std::string name, const float charge, const short int sca
 
 }
 
-Current::Current(const std::string name, const float charge, const short int scaling, std::string unit)
+Current::Current(const std::string name, const float charge, const short int scaling, const std::string unit)
         : name(name), charge(charge, scaling, unit), velocity() {
 
 }

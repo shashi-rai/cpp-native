@@ -211,8 +211,8 @@ shp::Signal Mass::getVelocity() const {
     return shp::Frequency::getModulation();
 }
 
-void Mass::setVelocity(const shp::Signal& velocity) {
-    shp::Frequency::setModulation(velocity);
+void Mass::setVelocity(const qft::Velocity& velocity) {
+    shp::Frequency::setModulation(velocity.getTotal());
 }
 
 Density Mass::getDensity(const shp::Volume& volume) const {

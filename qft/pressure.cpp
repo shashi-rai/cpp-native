@@ -30,7 +30,7 @@ Pressure::Pressure()
 
 }
 
-Pressure::Pressure(std::string name)
+Pressure::Pressure(const std::string name)
         : name(name), unit(shp::Unit::getDerivedSymbol(shp::Unit::PRESSURE)),
         force(), area() {
 
@@ -54,24 +54,24 @@ Pressure::Pressure(const qft::Force& force, const shp::Area& area)
 
 }
 
-Pressure::Pressure(std::string name, const shp::Unit& unit) : name(name), unit(unit),
+Pressure::Pressure(const std::string name, const shp::Unit& unit) : name(name), unit(unit),
         force(), area() {
 
 }
 
-Pressure::Pressure(std::string name, const float force, const float length, const float breadth)
+Pressure::Pressure(const std::string name, const float force, const float length, const float breadth)
         : name(name), unit(shp::Unit::getDerivedSymbol(shp::Unit::PRESSURE)),
         force(force), area(length, breadth) {
 
 }
 
-Pressure::Pressure(std::string name, const qft::Force& force, const shp::Area& area)
+Pressure::Pressure(const std::string name, const qft::Force& force, const shp::Area& area)
         : name(name), unit(shp::Unit::getDerivedSymbol(shp::Unit::PRESSURE)),
         force(force), area(area) {
 
 }
 
-Pressure::Pressure(std::string name,
+Pressure::Pressure(const std::string name,
         const qft::Force& force, const shp::Area& area, const shp::Unit& unit)
         : name(name), unit(unit), force(force), area(area) {
 

@@ -32,12 +32,12 @@ Magnetic::Magnetic(const Current& current)
     setField(nullptr);
 }
 
-Magnetic::Magnetic(std::string name)
+Magnetic::Magnetic(const std::string name)
         : Force(name), current() {
     setField(nullptr);
 }
 
-Magnetic::Magnetic(std::string name, const Current& current)
+Magnetic::Magnetic(const std::string name, const Current& current)
         : Force(name), current(current) {
     setField(nullptr);
 }
@@ -52,12 +52,12 @@ Magnetic::Magnetic(const Current& current, const std::shared_ptr<Field> field)
     setField(field);
 }
 
-Magnetic::Magnetic(std::string name, const std::shared_ptr<Field> field)
+Magnetic::Magnetic(const std::string name, const std::shared_ptr<Field> field)
         : Force(name), current() {
     setField(field);
 }
 
-Magnetic::Magnetic(std::string name, const Current& current, const std::shared_ptr<Field> field)
+Magnetic::Magnetic(const std::string name, const Current& current, const std::shared_ptr<Field> field)
         : Force(name), current(current) {
     setField(field);
 }
@@ -94,35 +94,35 @@ Magnetic::Magnetic(const float magnitude, const float direction, const short int
     setField(field);
 }
 
-Magnetic::Magnetic(std::string name, const float magnitude)
+Magnetic::Magnetic(const std::string name, const float magnitude)
         : Force(name, magnitude), current() {
     setField(nullptr);
 }
 
-Magnetic::Magnetic(std::string name, const float magnitude,
+Magnetic::Magnetic(const std::string name, const float magnitude,
         const std::shared_ptr<Field> field)
         : Force(name, magnitude), current() {
     setField(field);
 }
 
-Magnetic::Magnetic(std::string name, const float magnitude, const float direction)
+Magnetic::Magnetic(const std::string name, const float magnitude, const float direction)
         : Force(name, magnitude, direction), current() {
     setField(nullptr);
 }
 
-Magnetic::Magnetic(std::string name, const float magnitude, const float direction,
+Magnetic::Magnetic(const std::string name, const float magnitude, const float direction,
         const std::shared_ptr<Field> field)
         : Force(name, magnitude, direction), current() {
     setField(field);
 }
 
-Magnetic::Magnetic(std::string name, const float magnitude, const float direction,
+Magnetic::Magnetic(const std::string name, const float magnitude, const float direction,
         const short int scaling)
         : Force(name, magnitude, direction, scaling), current() {
     setField(nullptr);
 }
 
-Magnetic::Magnetic(std::string name, const float magnitude, const float direction,
+Magnetic::Magnetic(const std::string name, const float magnitude, const float direction,
         const short int scaling, const std::shared_ptr<Field> field)
         : Force(name, magnitude, direction, scaling), current() {
     setField(field);
@@ -138,7 +138,7 @@ bool Magnetic::operator==(const Magnetic& peer) const {
 }
 
 bool Magnetic::isOwned() const {
-    return field != nullptr;
+    return (field != nullptr);
 }
 
 const Magnetic Magnetic::getForce(const Magnetic& force, const float multiplier) {
