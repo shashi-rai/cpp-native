@@ -25,228 +25,414 @@ namespace qft {
 const std::string Acceleration::UNIT = "m/s²";          // System International
 
 Acceleration::Acceleration()
-        : qft::Velocity(), changeSpeed(shp::Quantity::DEFAULT_VALUE), unit(UNIT) {
+        : qft::Velocity(), change(shp::Quantity::DEFAULT_VALUE, qft::Velocity::UNIT) {
 
 }
 
 Acceleration::Acceleration(const Velocity& velocity)
-        : qft::Velocity(velocity), changeSpeed(shp::Quantity::DEFAULT_VALUE), unit(UNIT) {
+        : qft::Velocity(velocity), change(shp::Quantity::DEFAULT_VALUE, qft::Velocity::UNIT) {
 
 }
 
 Acceleration::Acceleration(const std::shared_ptr<Time> domain)
-        : qft::Velocity(domain), changeSpeed(shp::Quantity::DEFAULT_VALUE), unit(UNIT) {
+        : qft::Velocity(domain), change(shp::Quantity::DEFAULT_VALUE, qft::Velocity::UNIT) {
 
 }
 
 Acceleration::Acceleration(const shp::Unit& unit)
-        : qft::Velocity(), changeSpeed(shp::Quantity::DEFAULT_VALUE), unit(unit) {
+        : qft::Velocity(unit), change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
 Acceleration::Acceleration(const shp::Unit& unit, const std::shared_ptr<Time> domain)
-        : qft::Velocity(domain), changeSpeed(shp::Quantity::DEFAULT_VALUE), unit(unit) {
+        : qft::Velocity(unit, domain), change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const float changeAngle)
-        : qft::Velocity(shp::Azimuth(changeAngle)), changeSpeed(shp::Quantity::DEFAULT_VALUE),
-        unit(UNIT) {
+Acceleration::Acceleration(const float orientation)
+        : qft::Velocity(shp::Azimuth(orientation)),
+        change(shp::Quantity::DEFAULT_VALUE, qft::Velocity::UNIT) {
 
 }
 
-Acceleration::Acceleration(const float changeAngle, const std::shared_ptr<Time> domain)
-        : qft::Velocity(shp::Azimuth(changeAngle), domain), changeSpeed(shp::Quantity::DEFAULT_VALUE),
-        unit(UNIT) {
+Acceleration::Acceleration(const shp::Azimuth& orientation)
+        : qft::Velocity(orientation), change(shp::Quantity::DEFAULT_VALUE, qft::Velocity::UNIT) {
 
 }
 
-Acceleration::Acceleration(const float changeAngle, const std::string unit)
-        : qft::Velocity(shp::Azimuth(changeAngle)), changeSpeed(shp::Quantity::DEFAULT_VALUE),
-        unit(unit) {
+Acceleration::Acceleration(const float orientation, const std::shared_ptr<Time> domain)
+        : qft::Velocity(shp::Azimuth(orientation), domain),
+        change(shp::Quantity::DEFAULT_VALUE, qft::Velocity::UNIT) {
 
 }
 
-Acceleration::Acceleration(const float changeAngle, const std::string unit, const std::shared_ptr<Time> domain)
-        : qft::Velocity(shp::Azimuth(changeAngle), domain), changeSpeed(shp::Quantity::DEFAULT_VALUE),
-        unit(unit) {
+Acceleration::Acceleration(const shp::Azimuth& orientation, const std::shared_ptr<Time> domain)
+        : qft::Velocity(orientation, domain),
+        change(shp::Quantity::DEFAULT_VALUE, qft::Velocity::UNIT) {
 
 }
 
-Acceleration::Acceleration(const float changeAngle, const shp::Unit& unit)
-        : qft::Velocity(shp::Azimuth(changeAngle)), changeSpeed(shp::Quantity::DEFAULT_VALUE),
-        unit(unit) {
+Acceleration::Acceleration(const float orientation, const std::string unit)
+        : qft::Velocity(unit, shp::Azimuth(orientation)),
+        change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const float changeAngle, const shp::Unit& unit, const std::shared_ptr<Time> domain)
-        : qft::Velocity(shp::Azimuth(changeAngle), domain), changeSpeed(shp::Quantity::DEFAULT_VALUE),
-        unit(unit) {
+Acceleration::Acceleration(const shp::Azimuth& orientation, const std::string unit)
+        : qft::Velocity(unit, orientation), change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const float changeAngle, const float changeSpeed)
-        : qft::Velocity(shp::Azimuth(changeAngle)), changeSpeed(changeSpeed),
-        unit(UNIT) {
+Acceleration::Acceleration(const float orientation, const std::string unit,
+        const std::shared_ptr<Time> domain)
+        : qft::Velocity(unit, shp::Azimuth(orientation), domain),
+        change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const float changeAngle, const float changeSpeed, const std::shared_ptr<Time> domain)
-        : qft::Velocity(shp::Azimuth(changeAngle), domain), changeSpeed(changeSpeed),
-        unit(UNIT) {
+Acceleration::Acceleration(const shp::Azimuth& orientation, const std::string unit,
+        const std::shared_ptr<Time> domain)
+        : qft::Velocity(unit, orientation, domain), change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const float changeAngle, const float changeSpeed,
+Acceleration::Acceleration(const float orientation, const shp::Unit& unit)
+        : qft::Velocity(shp::Azimuth(orientation)),
+        change(shp::Quantity::DEFAULT_VALUE, unit) {
+
+}
+
+Acceleration::Acceleration(const shp::Azimuth& orientation, const shp::Unit& unit)
+        : qft::Velocity(shp::Azimuth(orientation)),
+        change(shp::Quantity::DEFAULT_VALUE, unit) {
+
+}
+
+Acceleration::Acceleration(const float orientation, const shp::Unit& unit,
+        const std::shared_ptr<Time> domain)
+        : qft::Velocity(shp::Azimuth(orientation), domain),
+        change(shp::Quantity::DEFAULT_VALUE, unit) {
+
+}
+
+Acceleration::Acceleration(const shp::Azimuth& orientation, const shp::Unit& unit,
+        const std::shared_ptr<Time> domain)
+        : qft::Velocity(orientation, domain),
+        change(shp::Quantity::DEFAULT_VALUE, unit) {
+
+}
+
+Acceleration::Acceleration(const float orientation, const shp::Signal& change)
+        : qft::Velocity(shp::Azimuth(orientation)),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), change.getUnit()) {
+
+}
+
+Acceleration::Acceleration(const shp::Azimuth& orientation, const shp::Signal& change)
+        : qft::Velocity(orientation),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), change.getUnit()) {
+
+}
+
+Acceleration::Acceleration(const float orientation, const shp::Signal& change,
+        const std::shared_ptr<Time> domain)
+        : qft::Velocity(shp::Azimuth(orientation), domain),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), change.getUnit()) {
+
+}
+
+Acceleration::Acceleration(const shp::Azimuth& orientation, const shp::Signal& change,
+        const std::shared_ptr<Time> domain)
+        : qft::Velocity(orientation, domain),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), change.getUnit()) {
+
+}
+
+Acceleration::Acceleration(const float orientation, const shp::Signal& change,
         const std::string unit)
-        : qft::Velocity(shp::Azimuth(changeAngle)), changeSpeed(changeSpeed), unit(unit) {
+        : qft::Velocity(unit, shp::Azimuth(orientation)),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
 
 }
 
-Acceleration::Acceleration(const float changeAngle, const float changeSpeed,
+Acceleration::Acceleration(const shp::Azimuth& orientation, const shp::Signal& change,
+        const std::string unit)
+        : qft::Velocity(unit, orientation),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
+
+}
+
+Acceleration::Acceleration(const float orientation, const shp::Signal& change,
         const std::string unit, const std::shared_ptr<Time> domain)
-        : qft::Velocity(shp::Azimuth(changeAngle), domain), changeSpeed(changeSpeed), unit(unit) {
+        : qft::Velocity(unit, shp::Azimuth(orientation), domain),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
 
 }
 
-Acceleration::Acceleration(const float changeAngle, const float changeSpeed,
+Acceleration::Acceleration(const shp::Azimuth& orientation, const shp::Signal& change,
+        const std::string unit, const std::shared_ptr<Time> domain)
+        : qft::Velocity(unit, orientation, domain),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
+
+}
+
+Acceleration::Acceleration(const float orientation, const shp::Signal& change,
         const shp::Unit& unit)
-        : qft::Velocity(shp::Azimuth(changeAngle)), changeSpeed(changeSpeed), unit(unit) {
+        : qft::Velocity(shp::Azimuth(orientation)),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
 
 }
 
-Acceleration::Acceleration(const float changeAngle, const float changeSpeed,
+Acceleration::Acceleration(const shp::Azimuth& orientation, const shp::Signal& change,
+        const shp::Unit& unit)
+        : qft::Velocity(orientation),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
+
+}
+
+Acceleration::Acceleration(const float orientation, const shp::Signal& change,
         const shp::Unit& unit, const std::shared_ptr<Time> domain)
-        : qft::Velocity(shp::Azimuth(changeAngle), domain), changeSpeed(changeSpeed), unit(unit) {
+        : qft::Velocity(shp::Azimuth(orientation), domain),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
 
 }
 
-Acceleration::Acceleration(const float changeSpeed, const Velocity& velocity, const std::string unit)
-        : qft::Velocity(velocity), changeSpeed(changeSpeed), unit(unit) {
+Acceleration::Acceleration(const shp::Azimuth& orientation, const shp::Signal& change,
+        const shp::Unit& unit, const std::shared_ptr<Time> domain)
+        : qft::Velocity(orientation, domain),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
 
 }
 
-Acceleration::Acceleration(const float changeSpeed, const Velocity& velocity, const shp::Unit& unit)
-        : qft::Velocity(velocity), changeSpeed(changeSpeed), unit(unit) {
+Acceleration::Acceleration(const float change, const Velocity& velocity, const std::string unit)
+        : qft::Velocity(velocity), change(change, unit) {
+
+}
+
+Acceleration::Acceleration(const shp::Signal& change, const Velocity& velocity, const std::string unit)
+        : qft::Velocity(velocity),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
+
+}
+
+Acceleration::Acceleration(const float change, const Velocity& velocity, const shp::Unit& unit)
+        : qft::Velocity(velocity), change(change, unit) {
+
+}
+
+Acceleration::Acceleration(const shp::Signal& change, const Velocity& velocity, const shp::Unit& unit)
+        : qft::Velocity(velocity),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
 
 }
 
 Acceleration::Acceleration(const std::string name)
-        : qft::Velocity(name), changeSpeed(shp::Quantity::DEFAULT_VALUE), unit(UNIT) {
+        : qft::Velocity(name), change(shp::Quantity::DEFAULT_VALUE, qft::Velocity::UNIT) {
 
 }
 
 Acceleration::Acceleration(const std::string name, const std::shared_ptr<Time> domain)
-        : qft::Velocity(name, domain), changeSpeed(shp::Quantity::DEFAULT_VALUE), unit(UNIT) {
+        : qft::Velocity(name, domain), change(shp::Quantity::DEFAULT_VALUE, qft::Velocity::UNIT) {
 
 }
 
 Acceleration::Acceleration(const std::string name, const std::string unit)
-        : qft::Velocity(name), changeSpeed(shp::Quantity::DEFAULT_VALUE), unit(unit) {
+        : qft::Velocity(name, unit), change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const std::string unit, const std::shared_ptr<Time> domain)
-        : qft::Velocity(name, domain), changeSpeed(shp::Quantity::DEFAULT_VALUE), unit(unit) {
+Acceleration::Acceleration(const std::string name, const std::string unit,
+        const std::shared_ptr<Time> domain)
+        : qft::Velocity(name, unit, domain), change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
 Acceleration::Acceleration(const std::string name, const shp::Unit& unit)
-        : qft::Velocity(name), changeSpeed(shp::Quantity::DEFAULT_VALUE), unit(unit) {
+        : qft::Velocity(name, unit), change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const shp::Unit& unit, const std::shared_ptr<Time> domain)
-        : qft::Velocity(name, domain), changeSpeed(shp::Quantity::DEFAULT_VALUE), unit(unit) {
+Acceleration::Acceleration(const std::string name, const shp::Unit& unit,
+        const std::shared_ptr<Time> domain)
+        : qft::Velocity(name, unit, domain), change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const float changeAngle)
-        : qft::Velocity(name, shp::Azimuth(changeAngle)),
-		changeSpeed(shp::Quantity::DEFAULT_VALUE), unit(UNIT) {
+Acceleration::Acceleration(const std::string name, const float orientation)
+        : qft::Velocity(name, shp::Azimuth(orientation)),
+		change(shp::Quantity::DEFAULT_VALUE, qft::Velocity::UNIT) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const float changeAngle, const std::shared_ptr<Time> domain)
-        : qft::Velocity(name, shp::Azimuth(changeAngle), domain),
-		changeSpeed(shp::Quantity::DEFAULT_VALUE), unit(UNIT) {
+Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation)
+        : qft::Velocity(name, orientation),
+        change(shp::Quantity::DEFAULT_VALUE, qft::Velocity::UNIT) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const float changeAngle, const std::string unit)
-        : qft::Velocity(name, shp::Azimuth(changeAngle)),
-		changeSpeed(shp::Quantity::DEFAULT_VALUE), unit(unit) {
+Acceleration::Acceleration(const std::string name, const float orientation,
+        const std::shared_ptr<Time> domain)
+        : qft::Velocity(name, shp::Azimuth(orientation), domain),
+		change(shp::Quantity::DEFAULT_VALUE, qft::Velocity::UNIT) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const float changeAngle, const std::string unit, const std::shared_ptr<Time> domain)
-        : qft::Velocity(name, shp::Azimuth(changeAngle), domain),
-		changeSpeed(shp::Quantity::DEFAULT_VALUE), unit(unit) {
+Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation,
+        const std::shared_ptr<Time> domain)
+        : qft::Velocity(name, orientation, domain),
+        change(shp::Quantity::DEFAULT_VALUE, qft::Velocity::UNIT) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const float changeAngle, const shp::Unit& unit)
-        : qft::Velocity(name, shp::Azimuth(changeAngle)),
-		changeSpeed(shp::Quantity::DEFAULT_VALUE), unit(unit) {
+Acceleration::Acceleration(const std::string name, const float orientation, const std::string unit)
+        : qft::Velocity(name, shp::Azimuth(orientation)),
+		change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const float changeAngle, const shp::Unit& unit, const std::shared_ptr<Time> domain)
-        : qft::Velocity(name, shp::Azimuth(changeAngle), domain),
-		changeSpeed(shp::Quantity::DEFAULT_VALUE), unit(unit) {
+Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation, const std::string unit)
+        : qft::Velocity(name, orientation), change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const float changeAngle, const float changeSpeed)
-        : qft::Velocity(name, shp::Azimuth(changeAngle)), changeSpeed(changeSpeed), unit(UNIT) {
+Acceleration::Acceleration(const std::string name, const float orientation, const std::string unit,
+        const std::shared_ptr<Time> domain)
+        : qft::Velocity(name, shp::Azimuth(orientation), domain),
+		change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const float changeAngle, const float changeSpeed, const std::shared_ptr<Time> domain)
-        : qft::Velocity(name, shp::Azimuth(changeAngle), domain), changeSpeed(changeSpeed), unit(UNIT) {
+Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation, const std::string unit,
+        const std::shared_ptr<Time> domain)
+        : qft::Velocity(name, orientation, domain), change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const float changeAngle,
-        const float changeSpeed, const std::string unit)
-        : qft::Velocity(name, shp::Azimuth(changeAngle)), changeSpeed(changeSpeed), unit(unit) {
+Acceleration::Acceleration(const std::string name, const float orientation, const shp::Unit& unit)
+        : qft::Velocity(name, shp::Azimuth(orientation)),
+		change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const float changeAngle,
-        const float changeSpeed, const std::string unit, const std::shared_ptr<Time> domain)
-        : qft::Velocity(name, shp::Azimuth(changeAngle), domain), changeSpeed(changeSpeed), unit(unit) {
+Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation, const shp::Unit& unit)
+        : qft::Velocity(name, orientation), change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const float changeAngle,
-        const float changeSpeed, const shp::Unit& unit)
-        : qft::Velocity(name, shp::Azimuth(changeAngle)), changeSpeed(changeSpeed), unit(unit) {
+Acceleration::Acceleration(const std::string name, const float orientation, const shp::Unit& unit,
+        const std::shared_ptr<Time> domain)
+        : qft::Velocity(name, shp::Azimuth(orientation), domain),
+		change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const float changeAngle,
-        const float changeSpeed, const shp::Unit& unit, const std::shared_ptr<Time> domain)
-        : qft::Velocity(name, shp::Azimuth(changeAngle), domain), changeSpeed(changeSpeed), unit(unit) {
+Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation, const shp::Unit& unit,
+        const std::shared_ptr<Time> domain)
+        : qft::Velocity(name, orientation, domain), change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const float changeSpeed, const qft::Velocity& velocity)
-        : qft::Velocity(velocity), changeSpeed(changeSpeed), unit(UNIT) {
+Acceleration::Acceleration(const std::string name, const float orientation, const shp::Signal& change)
+        : qft::Velocity(name, shp::Azimuth(orientation)),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), change.getUnit()) {
+
+}
+
+Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation, const shp::Signal& change)
+        : qft::Velocity(name, orientation),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), change.getUnit()) {
+
+}
+
+Acceleration::Acceleration(const std::string name, const float orientation, const shp::Signal& change,
+        const std::shared_ptr<Time> domain)
+        : qft::Velocity(name, shp::Azimuth(orientation), domain),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), change.getUnit()) {
+
+}
+
+Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation, const shp::Signal& change,
+        const std::shared_ptr<Time> domain)
+        : qft::Velocity(name, orientation, domain),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), change.getUnit()) {
+
+}
+
+Acceleration::Acceleration(const std::string name, const float orientation,
+        const shp::Signal& change, const std::string unit)
+        : qft::Velocity(name, shp::Azimuth(orientation)),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
+
+}
+
+Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation,
+        const shp::Signal& change, const std::string unit)
+        : qft::Velocity(name, orientation),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
+
+}
+
+Acceleration::Acceleration(const std::string name, const float orientation,
+        const shp::Signal& change, const std::string unit, const std::shared_ptr<Time> domain)
+        : qft::Velocity(name, shp::Azimuth(orientation), domain),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
+
+}
+
+Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation,
+        const shp::Signal& change, const std::string unit, const std::shared_ptr<Time> domain)
+        : qft::Velocity(name, orientation, domain),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
+
+}
+
+Acceleration::Acceleration(const std::string name, const float orientation,
+        const shp::Signal& change, const shp::Unit& unit)
+        : qft::Velocity(name, shp::Azimuth(orientation)),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
+
+}
+
+Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation,
+        const shp::Signal& change, const shp::Unit& unit)
+        : qft::Velocity(name, orientation),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
+
+}
+
+Acceleration::Acceleration(const std::string name, const float orientation,
+        const shp::Signal& change, const shp::Unit& unit, const std::shared_ptr<Time> domain)
+        : qft::Velocity(name, shp::Azimuth(orientation), domain),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
+
+}
+
+Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation,
+        const shp::Signal& change, const shp::Unit& unit, const std::shared_ptr<Time> domain)
+        : qft::Velocity(name, orientation, domain),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
+
+}
+
+Acceleration::Acceleration(const shp::Signal& change, const qft::Velocity& velocity)
+        : qft::Velocity(velocity),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), change.getUnit()) {
 
 }
 
 Acceleration::Acceleration(const std::string name, const float displacement, const short int scale,
         const std::string unit, const shp::Azimuth& orientation, const std::shared_ptr<Time> domain,
-        const float changeSpeed)
-        : qft::Velocity(name, displacement, scale), changeSpeed(changeSpeed), unit(unit) {
+        const shp::Signal& change)
+        : qft::Velocity(name, displacement, scale),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
 
 }
 
 Acceleration::Acceleration(const std::string name, const float displacement, const short int scale,
         const shp::Unit& unit, const shp::Azimuth& orientation, const std::shared_ptr<Time> domain,
-        const float changeSpeed)
-        : qft::Velocity(name, displacement, scale), changeSpeed(changeSpeed), unit(unit) {
+        const shp::Signal& change)
+        : qft::Velocity(name, displacement, scale),
+        change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
 
 }
 
@@ -256,14 +442,14 @@ Acceleration::~Acceleration() {
 
 bool Acceleration::operator==(const Acceleration& peer) const {
     return (static_cast<const Velocity&>(*this) == static_cast<const Velocity&>(peer))
-        && (changeSpeed == peer.changeSpeed) && (unit == peer.unit);
+        && (change == peer.change);
 }
 
 bool Acceleration::operator<(const Acceleration& peer) const {
 	Acceleration self = *this; bool result = false;
     if (static_cast<const qft::Velocity&>(*this) < static_cast<const qft::Velocity&>(peer)) {
 		result = true;
-	} else if (changeSpeed < peer.changeSpeed) {
+	} else if (change < peer.change) {
         result = true;
     }
 	return result;
@@ -273,7 +459,7 @@ bool Acceleration::operator>(const Acceleration& peer) const {
 	Acceleration self = *this; bool result = false;
     if (static_cast<const qft::Velocity&>(*this) > static_cast<const qft::Velocity&>(peer)) {
 		result = true;
-	} else if (changeSpeed > peer.changeSpeed) {
+	} else if (change > peer.change) {
         result = true;
     }
 	return result;
@@ -292,167 +478,167 @@ bool Acceleration::operator>=(const Acceleration& peer) const {
 Acceleration Acceleration::operator+(const Acceleration& peer) const {
     Velocity self = *this, other = peer;
     Velocity newVelocity = (self + other);
-    return Acceleration((changeSpeed + peer.changeSpeed), newVelocity, unit);
+    return Acceleration((change + peer.change), newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator-(const Acceleration& peer) const {
     Velocity self = *this, other = peer;
     Velocity newVelocity = (self - other);
-    return Acceleration((changeSpeed - peer.changeSpeed), newVelocity, unit);
+    return Acceleration((change - peer.change), newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator*(const Acceleration& peer) const {
     Velocity self = *this, other = peer;
     Velocity newVelocity = (self * other);
-    return Acceleration((changeSpeed * peer.changeSpeed), newVelocity, unit);
+    return Acceleration((change * peer.change), newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator/(const Acceleration& peer) const {
     Velocity self = *this, other = peer;
     Velocity newVelocity = (self / other);
-    return Acceleration((changeSpeed / peer.changeSpeed), newVelocity, unit);
+    return Acceleration((change / peer.change), newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator%(const Acceleration& peer) const {
     Velocity self = *this, other = peer;
     Velocity newVelocity = (self % other);
-    return Acceleration(fmod(changeSpeed, peer.changeSpeed), newVelocity, unit);
+    return Acceleration((change % peer.change), newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator+(const float distance) const {
     Velocity self = *this, newVelocity = (self + distance);
-    return Acceleration(this->changeSpeed, newVelocity, unit);
+    return Acceleration(this->change, newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator-(const float distance) const {
     Velocity self = *this, newVelocity = (self - distance);
-    return Acceleration(this->changeSpeed, newVelocity, unit);
+    return Acceleration(this->change, newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator*(const float distance) const {
     Velocity self = *this, newVelocity = (self * distance);
-    return Acceleration(this->changeSpeed, newVelocity, unit);
+    return Acceleration(this->change, newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator/(const float distance) const {
     Velocity self = *this, newVelocity = (self / distance);
-    return Acceleration(this->changeSpeed, newVelocity, unit);
+    return Acceleration(this->change, newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator%(const float distance) const {
     Velocity self = *this, newVelocity = (self % distance);
-    return Acceleration(this->changeSpeed, newVelocity, unit);
+    return Acceleration(this->change, newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator+(const shp::Quantity& distance) const {
     Velocity self = *this, newVelocity = (self + distance);
-    return Acceleration(this->changeSpeed, newVelocity, unit);
+    return Acceleration(this->change, newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator-(const shp::Quantity& distance) const {
     Velocity self = *this, newVelocity = (self - distance);
-    return Acceleration(this->changeSpeed, newVelocity, unit);
+    return Acceleration(this->change, newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator*(const shp::Quantity& distance) const {
     Velocity self = *this, newVelocity = (self * distance);
-    return Acceleration(this->changeSpeed, newVelocity, unit);
+    return Acceleration(this->change, newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator/(const shp::Quantity& distance) const {
     Velocity self = *this, newVelocity = (self / distance);
-    return Acceleration(this->changeSpeed, newVelocity, unit);
+    return Acceleration(this->change, newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator%(const shp::Quantity& distance) const {
     Velocity self = *this, newVelocity = (self % distance);
-    return Acceleration(this->changeSpeed, newVelocity, unit);
+    return Acceleration(this->change, newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator+(const shp::Distance& distance) const {
     Velocity self = *this, newVelocity = (self + distance);
-    return Acceleration(this->changeSpeed, newVelocity, unit);
+    return Acceleration(this->change, newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator-(const shp::Distance& distance) const {
     Velocity self = *this, newVelocity = (self - distance);
-    return Acceleration(this->changeSpeed, newVelocity, unit);
+    return Acceleration(this->change, newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator*(const shp::Distance& distance) const {
     Velocity self = *this, newVelocity = (self * distance);
-    return Acceleration(this->changeSpeed, newVelocity, unit);
+    return Acceleration(this->change, newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator/(const shp::Distance& distance) const {
     Velocity self = *this, newVelocity = (self / distance);
-    return Acceleration(this->changeSpeed, newVelocity, unit);
+    return Acceleration(this->change, newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator%(const shp::Distance& distance) const {
     Velocity self = *this, newVelocity = (self % distance);
-    return Acceleration(this->changeSpeed, newVelocity, unit);
+    return Acceleration(this->change, newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator+(const Velocity& velocity) const {
     Velocity self = *this, newVelocity = (self + velocity);
-    return Acceleration(this->changeSpeed, newVelocity, unit);
+    return Acceleration(this->change, newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator-(const Velocity& velocity) const {
     Velocity self = *this, newVelocity = (self - velocity);
-    return Acceleration(this->changeSpeed, newVelocity, unit);
+    return Acceleration(this->change, newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator*(const Velocity& velocity) const {
     Velocity self = *this, newVelocity = (self * velocity);
-    return Acceleration(this->changeSpeed, newVelocity, unit);
+    return Acceleration(this->change, newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator/(const Velocity& velocity) const {
     Velocity self = *this, newVelocity = (self / velocity);
-    return Acceleration(this->changeSpeed, newVelocity, unit);
+    return Acceleration(this->change, newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator%(const Velocity& velocity) const {
     Velocity self = *this, newVelocity = (self % velocity);
-    return Acceleration(this->changeSpeed, newVelocity, unit);
+    return Acceleration(this->change, newVelocity, UNIT);
 }
 
 Acceleration Acceleration::operator+(const shp::Azimuth& orientation) const {
     Velocity self = *this; shp::Azimuth azimuth = (self.getDirection() + orientation);
     return Acceleration("+", self.getDisplacement().getMagnitude(), self.getScaling(), self.getUnit(),
-		azimuth, self.getTemporal(), this->changeSpeed);
+		azimuth, self.getTemporal(), this->change);
 }
 
 Acceleration Acceleration::operator-(const shp::Azimuth& orientation) const {
     Velocity self = *this; shp::Azimuth azimuth = (self.getDirection() - orientation);
     return Acceleration("-", self.getDisplacement().getMagnitude(), self.getScaling(), self.getUnit(),
-		azimuth, self.getTemporal(), this->changeSpeed);
+		azimuth, self.getTemporal(), this->change);
 }
 
 Acceleration Acceleration::operator*(const shp::Azimuth& orientation) const {
     Velocity self = *this; shp::Azimuth azimuth = (self.getDirection() * orientation);
     return Acceleration("*", self.getDisplacement().getMagnitude(), self.getScaling(), self.getUnit(),
-		azimuth, self.getTemporal(), this->changeSpeed);
+		azimuth, self.getTemporal(), this->change);
 }
 
 Acceleration Acceleration::operator/(const shp::Azimuth& orientation) const {
     Velocity self = *this; shp::Azimuth azimuth = (self.getDirection() / orientation);
     return Acceleration("/", self.getDisplacement().getMagnitude(), self.getScaling(), self.getUnit(),
-		azimuth, self.getTemporal(), this->changeSpeed);
+		azimuth, self.getTemporal(), this->change);
 }
 
 Acceleration Acceleration::operator%(const shp::Azimuth& orientation) const {
     Velocity self = *this; shp::Azimuth azimuth = (self.getDirection() % orientation);
     return Acceleration("%", self.getDisplacement().getMagnitude(), self.getScaling(), self.getUnit(),
-		azimuth, self.getTemporal(), this->changeSpeed);
+		azimuth, self.getTemporal(), this->change);
 }
 
 Acceleration Acceleration::operator+(const shp::Polar& curvature) const {
     Velocity self = *this; shp::Polar newCurvature = (self.getFieldCurvature() + curvature);
     Acceleration result("+", self.getDisplacement().getMagnitude(), self.getScaling(), self.getUnit(),
-		self.getDirection(), self.getTemporal(), this->changeSpeed);
+		self.getDirection(), self.getTemporal(), this->change);
     result.setFieldCurvature(newCurvature);
     return result;
 }
@@ -460,7 +646,7 @@ Acceleration Acceleration::operator+(const shp::Polar& curvature) const {
 Acceleration Acceleration::operator-(const shp::Polar& curvature) const {
     Velocity self = *this; shp::Polar newCurvature = (self.getFieldCurvature() - curvature);
     Acceleration result("-", self.getDisplacement().getMagnitude(), self.getScaling(), self.getUnit(),
-		self.getDirection(), self.getTemporal(), this->changeSpeed);
+		self.getDirection(), self.getTemporal(), this->change);
     result.setFieldCurvature(newCurvature);
     return result;
 }
@@ -468,7 +654,7 @@ Acceleration Acceleration::operator-(const shp::Polar& curvature) const {
 Acceleration Acceleration::operator*(const shp::Polar& curvature) const {
     Velocity self = *this; shp::Polar newCurvature = (self.getFieldCurvature() * curvature);
     Acceleration result("*", self.getDisplacement().getMagnitude(), self.getScaling(), self.getUnit(),
-		self.getDirection(), self.getTemporal(), this->changeSpeed);
+		self.getDirection(), self.getTemporal(), this->change);
     result.setFieldCurvature(newCurvature);
     return result;
 }
@@ -476,7 +662,7 @@ Acceleration Acceleration::operator*(const shp::Polar& curvature) const {
 Acceleration Acceleration::operator/(const shp::Polar& curvature) const {
     Velocity self = *this; shp::Polar newCurvature = (self.getFieldCurvature() / curvature);
     Acceleration result("/", self.getDisplacement().getMagnitude(), self.getScaling(), self.getUnit(),
-		self.getDirection(), self.getTemporal(), this->changeSpeed);
+		self.getDirection(), self.getTemporal(), this->change);
     result.setFieldCurvature(newCurvature);
     return result;
 }
@@ -484,7 +670,7 @@ Acceleration Acceleration::operator/(const shp::Polar& curvature) const {
 Acceleration Acceleration::operator%(const shp::Polar& curvature) const {
     Velocity self = *this; shp::Polar newCurvature = (self.getFieldCurvature() % curvature);
     Acceleration result("%", self.getDisplacement().getMagnitude(), self.getScaling(), self.getUnit(),
-		self.getDirection(), self.getTemporal(), this->changeSpeed);
+		self.getDirection(), self.getTemporal(), this->change);
     result.setFieldCurvature(newCurvature);
     return result;
 }
@@ -513,50 +699,161 @@ void Acceleration::setDisplacement(const float distance, const short int scale) 
 	Velocity::setMagnitude(distance, scale);
 }
 
+void Acceleration::setDisplacement(const float distance, const short int scale,
+        const shp::Azimuth& direction) {
+	Velocity::setMagnitude(distance, scale);
+    Velocity::setDirection(direction);
+}
+
+void Acceleration::setDisplacement(const float distance, const short int scale,
+        const shp::Polar& curvature) {
+	Velocity::setMagnitude(distance, scale);
+    Velocity::setFieldCurvature(curvature);
+}
+
+void Acceleration::setDisplacement(const float distance, const short int scale,
+        const shp::Azimuth& direction, const shp::Polar& curvature) {
+	Velocity::setMagnitude(distance, scale);
+    Velocity::setDirection(direction);
+    Velocity::setFieldCurvature(curvature);
+}
+
 void Acceleration::setDisplacement(const float distance, const short int scale, const std::string unit) {
 	Velocity::setMagnitude(distance, scale, unit);
+}
+
+void Acceleration::setDisplacement(const float distance, const short int scale, const std::string unit,
+        const shp::Azimuth& direction) {
+	Velocity::setMagnitude(distance, scale, unit);
+    Velocity::setDirection(direction);
+}
+
+void Acceleration::setDisplacement(const float distance, const short int scale, const std::string unit,
+        const shp::Polar& curvature) {
+	Velocity::setMagnitude(distance, scale, unit);
+    Velocity::setFieldCurvature(curvature);
+}
+
+void Acceleration::setDisplacement(const float distance, const short int scale, const std::string unit,
+        const shp::Azimuth& direction, const shp::Polar& curvature) {
+	Velocity::setMagnitude(distance, scale, unit);
+    Velocity::setDirection(direction);
+    Velocity::setFieldCurvature(curvature);
 }
 
 void Acceleration::setDisplacement(const float distance, const short int scale, const shp::Unit& unit) {
 	Velocity::setMagnitude(distance, scale, unit);
 }
 
-void Acceleration::applyChangeTogether() {
-    this->applyChangeDirection();
-	this->applyChangeMagnitude();
+void Acceleration::setDisplacement(const float distance, const short int scale, const shp::Unit& unit,
+        const shp::Azimuth& direction) {
+	Velocity::setMagnitude(distance, scale, unit);
+    Velocity::setDirection(direction);
 }
 
-void Acceleration::applyChangeDirection() {
-    Velocity::setChangeDirection(Velocity::getDirection().toRadians());
+void Acceleration::setDisplacement(const float distance, const short int scale, const shp::Unit& unit,
+        const shp::Polar& curvature) {
+	Velocity::setMagnitude(distance, scale, unit);
+    Velocity::setFieldCurvature(curvature);
 }
 
-void Acceleration::applyChangeMagnitude() {
-    Velocity::setChangeMagnitude(changeSpeed);
+void Acceleration::setDisplacement(const float distance, const short int scale, const shp::Unit& unit,
+        const shp::Azimuth& direction, const shp::Polar& curvature) {
+	Velocity::setMagnitude(distance, scale, unit);
+    Velocity::setDirection(direction);
+    Velocity::setFieldCurvature(curvature);
 }
 
-float Acceleration::getChangeMagnitude() const {
-    return changeSpeed;
+short int Acceleration::getScaling() const {
+    return Velocity::getScaling();
 }
 
-void Acceleration::setChangeMagnitude(const float speed) {
-    this->changeSpeed = speed; Velocity::setChangeMagnitude(speed);
+void Acceleration::setScaling(const short int factor) {
+    Velocity::setScaling(factor);
 }
 
-void Acceleration::setChangeMagnitude(const float speed, const short int scale) {
-	Velocity::setChangeMagnitude(speed, scale);
+shp::Azimuth Acceleration::getDirection() const {
+	return Velocity::getDirection();
+}
+
+void Acceleration::setDirection(const float direction) {
+    Velocity::setDirection(direction);
+}
+
+void Acceleration::setDirection(const shp::Azimuth& direction) {
+    Velocity::setDirection(direction);
 }
 
 void Acceleration::setChangeDirection(const float degree) {
 	Velocity::setChangeDirection(degree);
 }
 
+shp::Polar Acceleration::getFieldCurvature() const {
+	return Velocity::getFieldCurvature();
+}
+
+void Acceleration::setFieldCurvature(const float curvature) {
+    Velocity::setFieldCurvature(curvature);
+}
+
+void Acceleration::setFieldCurvature(const shp::Polar& curvature) {
+    Velocity::setFieldCurvature(curvature);
+}
+
+void Acceleration::setChangeFieldCurvature(const float degree) {
+	Velocity::setChangeFieldCurvature(degree);
+}
+
+shp::Unit Acceleration::getUnit() const {
+    return change.getUnit();
+}
+
+void Acceleration::setUnit(const shp::Unit& unit) {
+    this->change.setUnit(unit);
+}
+
+void Acceleration::applyChangeTogether() {
+    this->applyChangeDirection();
+	this->applyChangeSpeed();
+}
+
+void Acceleration::applyChangeDirection() {
+    Velocity::setChangeDirection(change.getOrientation());
+}
+
+void Acceleration::applyChangeSpeed() {
+    Velocity::setChangeMagnitude(change.getMagnitude(), change.getScaling());
+}
+
+float Acceleration::getChangeSpeed() const {
+    return change.getMagnitude();
+}
+
+void Acceleration::setChangeSpeed(const shp::Signal& modulation) {
+    this->change = modulation;
+}
+
+void Acceleration::setChangeSpeed(const float motion) {
+    this->change.setMagnitude(motion, Velocity::getScaling());
+}
+
+void Acceleration::setChangeSpeed(const float motion, const short int scale) {
+	this->change.setMagnitude(motion, scale);
+}
+
+void Acceleration::setChangeDivergence(const float degree) {
+    if (degree != shp::Quantity::DEFAULT_VALUE) {
+        float direction = (this->change.getOrientation() + (shp::Direction::DEGREE_001 * degree));
+        this->change.setOrientation(direction);
+    }
+}
+
 shp::Signal Acceleration::getTotal() const {
 	Velocity invariant = *this;     // non-accelerating component only
-    shp::Signal velocity = (invariant.getTotal() +
-        shp::Quantity(changeSpeed, getDisplacement().getScaling(), getUnit()));
-    shp::Direction change = (invariant.getDirection() + Velocity::getAngularShiftRate());
-    float acceleration = (velocity.getMagnitude() * cos(change.toRadians()));
-    shp::Signal result(acceleration, getDisplacement().getScaling(), getUnit());
+    shp::Signal velocity = invariant.getTotal().getDotProduct(change);
+    shp::Signal result(velocity.getOrientation(),
+        velocity.getMagnitude(), velocity.getScaling(), UNIT);
+    result.adjustScaling();
     return result;
 }
 
@@ -567,9 +864,10 @@ shp::Signal Acceleration::getLinear() {
 
 shp::Signal Acceleration::getLinear(const Time& slice) {
 	Velocity invariant = *this;     // non-accelerating component only
-    shp::Signal velocity = (invariant.getLinear(slice) +
-        shp::Quantity(changeSpeed, invariant.getDisplacement().getScaling(), invariant.getUnit()));
-    shp::Signal result(velocity.getMagnitude(), velocity.getScaling(), UNIT); result.adjustScaling();
+    shp::Signal velocity = invariant.getLinear(slice).getDotProduct(change);
+    shp::Signal result(shp::Direction::DEFAULT_RADIANS,
+        velocity.getMagnitude(), velocity.getScaling(), UNIT);
+    result.adjustScaling();
     return result;
 }
 
@@ -579,9 +877,10 @@ shp::Signal Acceleration::getAngular() {
 
 shp::Signal Acceleration::getAngular(const shp::Direction& theta) {
 	Velocity invariant = *this;     // non-accelerating component only
-	shp::Signal rotation = invariant.getAngular(theta);
+	shp::Signal rotation = invariant.getAngular(theta).getCrossProduct(change);
     shp::Signal result(rotation.getOrientation(),
         rotation.getMagnitude(), rotation.getScaling(), rotation.getUnit());
+    result.adjustScaling();
     return result;
 }
 
@@ -594,7 +893,7 @@ void Acceleration::adjustScaling() {
 }
 
 bool Acceleration::checkNonZero() const {
-	return Velocity::checkNonZero() && (changeSpeed != shp::Quantity::DEFAULT_VALUE);
+	return Velocity::checkNonZero() && (change.getMagnitude() != shp::Quantity::DEFAULT_VALUE);
 }
 
 bool Acceleration::checkInfinity() const {
@@ -646,15 +945,14 @@ shp::Signal Acceleration::getScalarSquareFraction(const float length, const shor
 }
 
 shp::Distance Acceleration::copy() {
-    Velocity self = *this;
-    Acceleration fresh(this->changeSpeed, self, unit);
+    Velocity velocity = *this;
+    Acceleration fresh(this->change, velocity, UNIT);
     return fresh;
 }
 
 void Acceleration::clear() {
     Velocity::clear();
-    changeSpeed = shp::Quantity::DEFAULT_VALUE;
-    unit.clear();
+    change.clear();
     return;
 }
 
@@ -662,8 +960,7 @@ std::string Acceleration::print() const {
     std::stringstream result;
     result << "a";
     result << Velocity::print() << ",Δ:";
-	result << changeSpeed;
-    result << unit.print();
+	result << change.print();
 	return result.str();
 }
 
@@ -671,8 +968,7 @@ std::string Acceleration::printRadians() const {
     std::stringstream result;
     result << "a";
     result << Velocity::printRadians() << ",Δ:";
-	result << changeSpeed;
-    result << unit.print();
+	result << change.printRadians();
 	return result.str();
 }
 

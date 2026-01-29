@@ -93,6 +93,11 @@ Distance::Distance(const Unit& unit, const Azimuth& orientation)
 
 }
 
+Distance::Distance(const std::string unit, const Polar& modulation)
+        : Signal(unit), modulation(modulation) {
+
+}
+
 Distance::Distance(const Unit& unit, const Polar& modulation)
         : Signal(unit), modulation(modulation) {
 
@@ -543,6 +548,12 @@ void Distance::setChangeDirection(const float degree) {
     if (degree != shp::Quantity::DEFAULT_VALUE) {
         Signal direction = (*this + Azimuth(Direction::DEGREE_001 * degree));
         Signal::setOrientation(direction.getOrientation());
+    }
+}
+
+void Distance::setChangeCurvature(const float degree) {
+    if (degree != shp::Quantity::DEFAULT_VALUE) {
+        modulation.setRotation(degree);
     }
 }
 

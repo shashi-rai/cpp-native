@@ -719,12 +719,24 @@ void Velocity::setDirection(const shp::Azimuth& orientation) {
 	shp::Distance::setAzimuth(orientation);
 }
 
+void Velocity::setChangeDirection(const float degree) {
+	shp::Distance::setChangeDirection(degree);
+}
+
 shp::Polar Velocity::getFieldCurvature() const {
 	return shp::Distance::getModulation();
 }
 
+void Velocity::setFieldCurvature(const float curvature) {
+	shp::Distance::setModulation(curvature);
+}
+
 void Velocity::setFieldCurvature(const shp::Polar& curvature) {
 	shp::Distance::setModulation(curvature);
+}
+
+void Velocity::setChangeFieldCurvature(const float degree) {
+	shp::Distance::setChangeCurvature(degree);
 }
 
 void Velocity::setChangeMagnitude(const float motion) {
@@ -733,10 +745,6 @@ void Velocity::setChangeMagnitude(const float motion) {
 
 void Velocity::setChangeMagnitude(const float motion, const short int scale) {
 	shp::Distance::setChangeMagnitude(motion, scale);
-}
-
-void Velocity::setChangeDirection(const float degree) {
-	shp::Distance::setChangeDirection(degree);
 }
 
 /*

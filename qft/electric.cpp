@@ -131,10 +131,10 @@ Acceleration Electric::getAcceleration(const Charge& charge) const {
     Acceleration result;
     if (isOwned()) {
         shp::Quantity quantum = (this->getMagnitude() / charge.getMagnitude());
-	    result = Acceleration(quantum.getMagnitude(), quantum.getScaling(), quantum.getUnit());
+	    result.setDisplacement(quantum.getMagnitude(), quantum.getScaling(), quantum.getUnit());
     } else {
         shp::Quantity quantum = this->getMagnitude();
-        result = Acceleration(quantum.getMagnitude(), quantum.getScaling(), quantum.getUnit());
+        result.setDisplacement(quantum.getMagnitude(), quantum.getScaling(), quantum.getUnit());
     }
 	result.adjustScaling();
     return result;

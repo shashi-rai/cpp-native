@@ -43,6 +43,7 @@ public:
     Distance(const Polar& modulation);
     Distance(const std::string unit, const Azimuth& orientation);
     Distance(const Unit& unit, const Azimuth& orientation);
+    Distance(const std::string unit, const Polar& modulation);
     Distance(const Unit& unit, const Polar& modulation);
     Distance(const float length, const Azimuth& orientation);
     Distance(const float length, const Polar& modulation);
@@ -141,6 +142,7 @@ public:
     void setChangeMagnitude(const float motion);
     void setChangeMagnitude(const float motion, const short int scale);
     void setChangeDirection(const float degree);
+    void setChangeCurvature(const float degree);
     void adjustNumeric();
     void adjustScaling();
     bool checkNonZero() const;

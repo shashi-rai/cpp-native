@@ -223,11 +223,13 @@ public:
     shp::Azimuth getDirection() const;
     void setDirection(const float orientation);
     void setDirection(const shp::Azimuth& orientation);
+    void setChangeDirection(const float degree);
     shp::Polar getFieldCurvature() const;
+    void setFieldCurvature(const float curvature);
     void setFieldCurvature(const shp::Polar& curvature);
+    void setChangeFieldCurvature(const float degree);
     void setChangeMagnitude(const float motion);
     void setChangeMagnitude(const float motion, const short int scale);
-    void setChangeDirection(const float degree);
     shp::Signal getTotal() const;
     virtual shp::Signal getLinear();
     virtual shp::Signal getLinear(const Time& slice);

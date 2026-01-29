@@ -219,8 +219,8 @@ Force Force::operator%(const Force& peer) const {
 }
 
 Acceleration Force::getAcceleration(const Mass& mass) const {
-	shp::Quantity quantum = (magnitude / mass.getMagnitude());
-	Acceleration result(quantum.getMagnitude(), quantum.getScaling(), quantum.getUnit());
+	Acceleration result; shp::Quantity quantum = (magnitude / mass.getMagnitude());
+    result.setDisplacement(quantum.getMagnitude(), quantum.getScaling(), quantum.getUnit());
 	result.adjustScaling();
     return result;
 }

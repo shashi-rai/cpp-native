@@ -26,8 +26,7 @@
 namespace qft {
 
 class Acceleration : protected qft::Velocity {
-    shp::Unit unit;
-    float changeSpeed;
+    shp::Signal change;
 public:
     // Constructors
     Acceleration();
@@ -35,59 +34,101 @@ public:
     Acceleration(const std::shared_ptr<Time> domain);
     Acceleration(const shp::Unit& unit);
     Acceleration(const shp::Unit& unit, const std::shared_ptr<Time> domain);
-    Acceleration(const float changeAngle);
-    Acceleration(const float changeAngle, const std::shared_ptr<Time> domain);
-    Acceleration(const float changeAngle, const std::string unit);
-    Acceleration(const float changeAngle, const std::string unit,
+    Acceleration(const float orientation);
+    Acceleration(const shp::Azimuth& orientation);
+    Acceleration(const float orientation, const std::shared_ptr<Time> domain);
+    Acceleration(const shp::Azimuth& orientation, const std::shared_ptr<Time> domain);
+    Acceleration(const float orientation, const std::string unit);
+    Acceleration(const shp::Azimuth& orientation, const std::string unit);
+    Acceleration(const float orientation, const std::string unit,
         const std::shared_ptr<Time> domain);
-    Acceleration(const float changeAngle, const shp::Unit& unit);
-    Acceleration(const float changeAngle, const shp::Unit& unit,
+    Acceleration(const shp::Azimuth& orientation, const std::string unit,
         const std::shared_ptr<Time> domain);
-    Acceleration(const float changeAngle, const float changeSpeed);
-    Acceleration(const float changeAngle, const float changeSpeed,
+    Acceleration(const float orientation, const shp::Unit& unit);
+    Acceleration(const shp::Azimuth& orientation, const shp::Unit& unit);
+    Acceleration(const float orientation, const shp::Unit& unit,
         const std::shared_ptr<Time> domain);
-    Acceleration(const float changeAngle, const float changeSpeed, const std::string unit);
-    Acceleration(const float changeAngle, const float changeSpeed, const std::string unit,
+    Acceleration(const shp::Azimuth& orientation, const shp::Unit& unit,
         const std::shared_ptr<Time> domain);
-    Acceleration(const float changeAngle, const float changeSpeed, const shp::Unit& unit);
-    Acceleration(const float changeAngle, const float changeSpeed, const shp::Unit& unit,
+    Acceleration(const float orientation, const shp::Signal& change);
+    Acceleration(const shp::Azimuth& orientation, const shp::Signal& change);
+    Acceleration(const float orientation, const shp::Signal& change,
         const std::shared_ptr<Time> domain);
-    Acceleration(const float changeAngle, const float changeSpeed, const qft::Velocity& velocity);
-    Acceleration(const float changeAngle, const float changeSpeed, const qft::Velocity& velocity,
+    Acceleration(const shp::Azimuth& orientation, const shp::Signal& change,
         const std::shared_ptr<Time> domain);
-    Acceleration(const float changeSpeed, const qft::Velocity& velocity, const std::string unit);
-    Acceleration(const float changeSpeed, const qft::Velocity& velocity, const shp::Unit& unit);
+    Acceleration(const float orientation, const shp::Signal& change, const std::string unit);
+    Acceleration(const shp::Azimuth& orientation, const shp::Signal& change, const std::string unit);
+    Acceleration(const float orientation, const shp::Signal& change, const std::string unit,
+        const std::shared_ptr<Time> domain);
+    Acceleration(const shp::Azimuth& orientation, const shp::Signal& change, const std::string unit,
+        const std::shared_ptr<Time> domain);
+    Acceleration(const float orientation, const shp::Signal& change, const shp::Unit& unit);
+    Acceleration(const shp::Azimuth& orientation, const shp::Signal& change, const shp::Unit& unit);
+    Acceleration(const float orientation, const shp::Signal& change, const shp::Unit& unit,
+        const std::shared_ptr<Time> domain);
+    Acceleration(const shp::Azimuth& orientation, const shp::Signal& change, const shp::Unit& unit,
+        const std::shared_ptr<Time> domain);
+    Acceleration(const float orientation, const shp::Signal& change, const qft::Velocity& velocity);
+    Acceleration(const shp::Azimuth& orientation, const shp::Signal& change, const qft::Velocity& velocity);
+    Acceleration(const float orientation, const shp::Signal& change, const qft::Velocity& velocity,
+        const std::shared_ptr<Time> domain);
+    Acceleration(const shp::Azimuth& orientation, const shp::Signal& change, const qft::Velocity& velocity,
+        const std::shared_ptr<Time> domain);
+    Acceleration(const float change, const qft::Velocity& velocity, const std::string unit);
+    Acceleration(const shp::Signal& change, const qft::Velocity& velocity, const std::string unit);
+    Acceleration(const float change, const qft::Velocity& velocity, const shp::Unit& unit);
+    Acceleration(const shp::Signal& change, const qft::Velocity& velocity, const shp::Unit& unit);
     Acceleration(const std::string name);
     Acceleration(const std::string name, const std::shared_ptr<Time> domain);
     Acceleration(const std::string name, const std::string unit);
     Acceleration(const std::string name, const std::string unit, const std::shared_ptr<Time> domain);
     Acceleration(const std::string name, const shp::Unit& unit);
     Acceleration(const std::string name, const shp::Unit& unit, const std::shared_ptr<Time> domain);
-    Acceleration(const std::string name, const float changeAngle);
-    Acceleration(const std::string name, const float changeAngle,
+    Acceleration(const std::string name, const float orientation);
+    Acceleration(const std::string name, const shp::Azimuth& orientation);
+    Acceleration(const std::string name, const float orientation,
         const std::shared_ptr<Time> domain);
-    Acceleration(const std::string name, const float changeAngle, const std::string unit);
-    Acceleration(const std::string name, const float changeAngle, const std::string unit,
+    Acceleration(const std::string name, const shp::Azimuth& orientation,
         const std::shared_ptr<Time> domain);
-    Acceleration(const std::string name, const float changeAngle, const shp::Unit& unit);
-    Acceleration(const std::string name, const float changeAngle, const shp::Unit& unit,
+    Acceleration(const std::string name, const float orientation, const std::string unit);
+    Acceleration(const std::string name, const shp::Azimuth& orientation, const std::string unit);
+    Acceleration(const std::string name, const float orientation, const std::string unit,
         const std::shared_ptr<Time> domain);
-    Acceleration(const std::string name, const float changeAngle, const float changeSpeed);
-    Acceleration(const std::string name, const float changeAngle, const float changeSpeed,
+    Acceleration(const std::string name, const shp::Azimuth& orientation, const std::string unit,
         const std::shared_ptr<Time> domain);
-    Acceleration(const std::string name, const float changeAngle, const float changeSpeed,
+    Acceleration(const std::string name, const float orientation, const shp::Unit& unit);
+    Acceleration(const std::string name, const shp::Azimuth& orientation, const shp::Unit& unit);
+    Acceleration(const std::string name, const float orientation, const shp::Unit& unit,
+        const std::shared_ptr<Time> domain);
+    Acceleration(const std::string name, const shp::Azimuth& orientation, const shp::Unit& unit,
+        const std::shared_ptr<Time> domain);
+    Acceleration(const std::string name, const float orientation, const shp::Signal& change);
+    Acceleration(const std::string name, const shp::Azimuth& orientation, const shp::Signal& change);
+    Acceleration(const std::string name, const float orientation, const shp::Signal& change,
+        const std::shared_ptr<Time> domain);
+    Acceleration(const std::string name, const shp::Azimuth& orientation, const shp::Signal& change,
+        const std::shared_ptr<Time> domain);
+    Acceleration(const std::string name, const float orientation, const shp::Signal& change,
         const std::string unit);
-    Acceleration(const std::string name, const float changeAngle, const float changeSpeed,
+    Acceleration(const std::string name, const shp::Azimuth& orientation, const shp::Signal& change,
+        const std::string unit);
+    Acceleration(const std::string name, const float orientation, const shp::Signal& change,
         const std::string unit, const std::shared_ptr<Time> domain);
-    Acceleration(const std::string name, const float changeAngle, const float changeSpeed,
+    Acceleration(const std::string name, const shp::Azimuth& orientation, const shp::Signal& change,
+        const std::string unit, const std::shared_ptr<Time> domain);
+    Acceleration(const std::string name, const float orientation, const shp::Signal& change,
         const shp::Unit& unit);
-    Acceleration(const std::string name, const float changeAngle, const float changeSpeed,
+    Acceleration(const std::string name, const shp::Azimuth& orientation, const shp::Signal& change,
+        const shp::Unit& unit);
+    Acceleration(const std::string name, const float orientation, const shp::Signal& change,
         const shp::Unit& unit, const std::shared_ptr<Time> domain);
-    Acceleration(const float changeSpeed, const qft::Velocity& velocity);
+    Acceleration(const std::string name, const shp::Azimuth& orientation, const shp::Signal& change,
+        const shp::Unit& unit, const std::shared_ptr<Time> domain);
+    Acceleration(const shp::Signal& change, const qft::Velocity& velocity);
     Acceleration(const std::string name, const float displacement, const short int scale, const std::string unit,
-        const shp::Azimuth& orientation, const std::shared_ptr<Time> domain, const float changeSpeed);
+        const shp::Azimuth& orientation, const std::shared_ptr<Time> domain, const shp::Signal& change);
     Acceleration(const std::string name, const float displacement, const short int scale, const shp::Unit& unit,
-        const shp::Azimuth& orientation, const std::shared_ptr<Time> domain, const float changeSpeed);
+        const shp::Azimuth& orientation, const std::shared_ptr<Time> domain, const shp::Signal& change);
     
     // Destructors
     ~Acceleration();
@@ -147,10 +188,10 @@ public:
     Acceleration operator%(const shp::Polar& curvature) const;
 
     // Getters
-    shp::Unit getUnit() const { return unit; }
+    shp::Signal getChange() const { return change; }
 
     // Setters
-    void setUnit(const shp::Unit& value) { this->unit = value; }
+    void setChange(const shp::Signal& rate) { this->change = rate; }
 
     // Additional methods
     shp::Distance getDisplacement() const;
@@ -159,15 +200,46 @@ public:
     void setDisplacement(const shp::Distance& distance);
     void setDisplacement(const float distance);
     void setDisplacement(const float distance, const short int scale);
+    void setDisplacement(const float distance, const short int scale,
+        const shp::Azimuth& direction);
+    void setDisplacement(const float distance, const short int scale,
+        const shp::Polar& curvature);
+    void setDisplacement(const float distance, const short int scale,
+        const shp::Azimuth& direction, const shp::Polar& curvature);
     void setDisplacement(const float distance, const short int scale, const std::string unit);
+    void setDisplacement(const float distance, const short int scale, const std::string unit,
+        const shp::Azimuth& direction);
+    void setDisplacement(const float distance, const short int scale, const std::string unit,
+        const shp::Polar& curvature);
+    void setDisplacement(const float distance, const short int scale, const std::string unit,
+        const shp::Azimuth& direction, const shp::Polar& curvature);
     void setDisplacement(const float distance, const short int scale, const shp::Unit& unit);
+    void setDisplacement(const float distance, const short int scale, const shp::Unit& unit,
+        const shp::Azimuth& direction);
+    void setDisplacement(const float distance, const short int scale, const shp::Unit& unit,
+        const shp::Polar& curvature);
+    void setDisplacement(const float distance, const short int scale, const shp::Unit& unit,
+        const shp::Azimuth& direction, const shp::Polar& curvature);
+    short int getScaling() const;
+    void setScaling(const short int factor);
+    shp::Azimuth getDirection() const;
+    void setDirection(const float orientation);
+    void setDirection(const shp::Azimuth& direction);
+    void setChangeDirection(const float degree);
+    shp::Polar getFieldCurvature() const;
+    void setFieldCurvature(const float curvature);
+    void setFieldCurvature(const shp::Polar& curvature);
+    void setChangeFieldCurvature(const float degree);
+    shp::Unit getUnit() const;
+    void setUnit(const shp::Unit& value);
     void applyChangeTogether();
     void applyChangeDirection();
-    void applyChangeMagnitude();
-    float getChangeMagnitude() const;
-    void setChangeMagnitude(const float speed);
-    void setChangeMagnitude(const float speed, const short int scale);
-    void setChangeDirection(const float degree);
+    void applyChangeSpeed();
+    float getChangeSpeed() const;
+    void setChangeSpeed(const shp::Signal& modulation);
+    void setChangeSpeed(const float motion);
+    void setChangeSpeed(const float motion, const short int scale);
+    void setChangeDivergence(const float degree);
     shp::Signal getTotal() const;
     virtual shp::Signal getLinear();
     virtual shp::Signal getLinear(const Time& slice);
