@@ -31,102 +31,104 @@ const float Current::ELECTRON_FLOW_RATE = 6.241509f;    // 6.241509x10^18 electr
 const short int Current::ELECTRON_FLOW_SCALE = 18;      // 10^18
 
 Current::Current()
-        : name(), charge(), velocity() {
+        : qft::Charge(UNIT), velocity() {
 
 }
 
 Current::Current(const std::string name)
-        : name(name), charge(), velocity() {
-
-}
-
-Current::Current(const float charge)
-        : name(), charge(charge), velocity() {
-
-}
-
-Current::Current(const float charge, const std::string unit)
-        : name(), charge(charge, unit), velocity() {
-
-}
-
-Current::Current(const float charge, const shp::Unit& unit)
-        : name(), charge(charge, unit), velocity() {
+        : qft::Charge(UNIT), velocity(name) {
 
 }
 
 Current::Current(const qft::Charge& charge)
-        : name(), charge(charge), velocity() {
+        : qft::Charge(charge.getMagnitude(), charge.getScaling(), charge.getUnit(), charge.getField()),
+        velocity() {
+
+}
+
+Current::Current(const float charge)
+        : qft::Charge(charge, UNIT), velocity() {
+
+}
+
+Current::Current(const float charge, const std::string unit)
+        : qft::Charge(charge, unit), velocity() {
+
+}
+
+Current::Current(const float charge, const shp::Unit& unit)
+        : qft::Charge(charge, unit), velocity() {
 
 }
 
 Current::Current(const float charge, const short int scaling)
-        : name(), charge(charge, scaling), velocity() {
+        : qft::Charge(charge, scaling, UNIT), velocity() {
 
 }
 
 Current::Current(const float charge, const short int scaling, const std::string unit)
-        : name(), charge(charge, scaling, unit), velocity() {
+        : qft::Charge(charge, scaling, unit), velocity() {
 
 }
 
 Current::Current(const float charge, const short int scaling, const shp::Unit& unit)
-        : name(), charge(charge, scaling, unit), velocity() {
+        : qft::Charge(charge, scaling, unit), velocity() {
 
 }
 
-Current::Current(const std::string name, const float charge)
-        : name(name), charge(charge), velocity() {
-
-}
-
-Current::Current(const std::string name, const float charge, const std::string unit)
-        : name(name), charge(charge, unit), velocity() {
-
-}
-
-Current::Current(const std::string name, const float charge, const shp::Unit& unit)
-        : name(name), charge(charge, unit), velocity() {
+Current::Current(const qft::Velocity& velocity)
+        : qft::Charge(UNIT), velocity(velocity) {
 
 }
 
 Current::Current(const std::string name, const qft::Charge& charge)
-        : name(name), charge(charge), velocity() {
+        : qft::Charge(charge), velocity(name) {
+
+}
+
+Current::Current(const std::string name, const float charge)
+        : qft::Charge(charge, UNIT), velocity(name) {
+
+}
+
+Current::Current(const std::string name, const float charge, const std::string unit)
+        : qft::Charge(charge, unit), velocity(name) {
+
+}
+
+Current::Current(const std::string name, const float charge, const shp::Unit& unit)
+        : qft::Charge(charge, unit), velocity(name) {
 
 }
 
 Current::Current(const std::string name, const float charge, const short int scaling)
-        : name(name), charge(charge, scaling), velocity() {
+        : qft::Charge(charge, scaling, UNIT), velocity(name) {
 
 }
 
 Current::Current(const std::string name, const float charge, const short int scaling, const std::string unit)
-        : name(name), charge(charge, scaling, unit), velocity() {
+        : qft::Charge(charge, scaling, unit), velocity(name) {
 
 }
 
 Current::Current(const std::string name, const float charge, const short int scaling, const shp::Unit& unit)
-        : name(name), charge(charge, scaling, unit), velocity() {
-
-}
-
-Current::Current(const float charge, const float velocity)
-        : name(), charge(charge), velocity(velocity) {
+        : qft::Charge(charge, scaling, unit), velocity(name) {
 
 }
 
 Current::Current(const qft::Charge& charge, const qft::Velocity& velocity)
-        : name(), charge(charge), velocity(velocity) {
+        : qft::Charge(charge.getMagnitude(), charge.getScaling(), charge.getUnit(), charge.getField()),
+        velocity(velocity) {
+
+}
+
+Current::Current(const float charge, const float velocity)
+        : qft::Charge(charge), velocity(velocity) {
 
 }
 
 Current::Current(const std::string name, const float charge, const float velocity)
-        : name(name), charge(charge), velocity(velocity) {
-
-}
-
-Current::Current(const std::string name, const qft::Charge& charge, const qft::Velocity& velocity)
-        : name(name), charge(charge), velocity(velocity) {
+        : qft::Charge(charge), velocity(name, velocity) {
 
 }
 
@@ -135,15 +137,28 @@ Current::~Current() {
 }
 
 bool Current::operator==(const Current& peer) const {
-    return (charge == peer.charge) && (velocity == peer.velocity);
+    return (static_cast<const qft::Charge&>(*this) == static_cast<const qft::Charge&>(peer))
+        && (velocity == peer.velocity);
 }
 
 bool Current::operator<(const Current& peer) const {
-    return (charge < peer.charge) && (velocity < peer.velocity);
+    Current self = *this; bool result = false;
+    if (static_cast<const qft::Charge&>(*this) < static_cast<const qft::Charge&>(peer)) {
+        result = true;
+    } else if (self.velocity < peer.velocity) {
+        result = true;
+    }
+    return result;
 }
 
 bool Current::operator>(const Current& peer) const {
-    return (charge > peer.charge) && (velocity > peer.velocity);
+    Current self = *this; bool result = false;
+    if (static_cast<const qft::Charge&>(*this) > static_cast<const qft::Charge&>(peer)) {
+        result = true;
+    } else if (self.velocity > peer.velocity) {
+        result = true;
+    }
+    return result;
 }
 
 bool Current::operator<=(const Current& peer) const {
@@ -157,27 +172,104 @@ bool Current::operator>=(const Current& peer) const {
 }
 
 Current Current::operator+(const Current& peer) const {
-    return Current("+", (charge + peer.charge), (velocity + peer.velocity));
+    Charge self = *this, other = peer, newCharge = (self + other);
+    Velocity newVelocity = (this->velocity + peer.velocity);
+    return Current(newCharge, newVelocity);
 }
 
 Current Current::operator-(const Current& peer) const {
-    return Current("-", (charge - peer.charge), (velocity - peer.velocity));
+    Charge self = *this, other = peer, newCharge = (self - other);
+    Velocity newVelocity = (this->velocity - peer.velocity);
+    return Current(newCharge, newVelocity);
 }
 
 Current Current::operator*(const Current& peer) const {
-    return Current("*", (charge * peer.charge), (velocity * peer.velocity));
+    Charge self = *this, other = peer, newCharge = (self * other);
+    Velocity newVelocity = (this->velocity * peer.velocity);
+    return Current(newCharge, newVelocity);
 }
 
 Current Current::operator/(const Current& peer) const {
-    return Current("/", (charge / peer.charge), (velocity / peer.velocity));
+    Charge self = *this, other = peer, newCharge = (self / other);
+    Velocity newVelocity = (this->velocity / peer.velocity);
+    return Current(newCharge, newVelocity);
 }
 
 Current Current::operator%(const Current& peer) const {
-    return Current("%", (charge % peer.charge), (velocity % peer.velocity));
+    Charge self = *this, other = peer, newCharge = (self % other);
+    Velocity newVelocity = (this->velocity % peer.velocity);
+    return Current(newCharge, newVelocity);
+}
+
+Current Current::operator+(const Charge& peer) const {
+    Charge self = *this, newCharge = (self + peer);
+    return Current(newCharge, this->velocity);
+}
+
+Current Current::operator-(const Charge& peer) const {
+    Charge self = *this, newCharge = (self - peer);
+    return Current(newCharge, this->velocity);
+}
+
+Current Current::operator*(const Charge& peer) const {
+    Charge self = *this, newCharge = (self * peer);
+    return Current(newCharge, this->velocity);
+}
+
+Current Current::operator/(const Charge& peer) const {
+    Charge self = *this, newCharge = (self / peer);
+    return Current(newCharge, this->velocity);
+}
+
+Current Current::operator%(const Charge& peer) const {
+    Charge self = *this, newCharge = (self % peer);
+    return Current(newCharge, this->velocity);
+}
+
+Current Current::operator+(const Velocity& peer) const {
+    Current self = *this; Velocity newVelocity = (self.velocity + peer);
+    return Current(self.getCharge(), newVelocity);
+}
+
+Current Current::operator-(const Velocity& peer) const {
+    Current self = *this; Velocity newVelocity = (self.velocity - peer);
+    return Current(self.getCharge(), newVelocity);
+}
+
+Current Current::operator*(const Velocity& peer) const {
+    Current self = *this; Velocity newVelocity = (self.velocity * peer);
+    return Current(self.getCharge(), newVelocity);
+}
+
+Current Current::operator/(const Velocity& peer) const {
+    Current self = *this; Velocity newVelocity = (self.velocity / peer);
+    return Current(self.getCharge(), newVelocity);
+}
+
+Current Current::operator%(const Velocity& peer) const {
+    Current self = *this; Velocity newVelocity = (self.velocity % peer);
+    return Current(self.getCharge(), newVelocity);
+}
+
+std::string Current::getName() const {
+    return velocity.getName();
+}
+
+void Current::setName(const std::string name) {
+    this->velocity.setName(name);
+}
+
+qft::Charge Current::getCharge() const {
+    qft::Charge result = *this;
+    return result;
+}
+
+void Current::setCharge(const qft::Charge& charge) {
+    Charge::setMagnitude(charge.getMagnitude(), charge.getScaling(), charge.getUnit());
 }
 
 shp::Quantity Current::getMass() {
-    shp::Signal difference = charge.getPotential().getDifference();
+    Charge charge = *this; shp::Signal difference = charge.getPotential().getDifference();
     shp::Signal angular = velocity.getAngular(shp::Quantity::DEFAULT_VALUE);
     float magnitude = ((difference.getMagnitude() / angular.getMagnitude()) * charge.getMagnitude());
     shp::Quantity result(magnitude, charge.getScaling(), shp::Unit::getBaseSymbol(shp::Unit::MASS));
@@ -185,13 +277,14 @@ shp::Quantity Current::getMass() {
 }
 
 shp::Quantity Current::getElectrons() const {
-    qft::Charge electron(qft::Charge::ELECTRON);
+    Charge charge = *this; qft::Charge electron(qft::Charge::ELECTRON);
     float quantum = (charge.getMagnitude() / Current::getAmpereCoulombs().getMagnitude());
     return shp::Quantity((quantum / electron.getMagnitude()),
         (charge.getScaling() - electron.getScaling()), "e⁻");
 }
 
 void Current::setElectrons(const int count) {
+    Charge charge = *this;
     if (count > 0) {
         qft::Charge electron(qft::Charge::ELECTRON);
         float total = (electron.getMagnitude() * count);
@@ -208,67 +301,79 @@ void Current::changeDirection(const float degree) {
 }
 
 shp::Signal Current::getVoltage() const {
+    Charge charge = *this;
     shp::Signal result = charge.getPotential().getDifference();
     return result;
 }
 
-shp::Quantity Current::getForce(const Time& interval) const {
-    shp::Quantity result = (getRateOfChange() / interval.getMagnitude());
+shp::Signal Current::getForce(const Time& interval) const {
+    shp::Signal result = (this->getRateOfChange() / interval.getMagnitude());
     return result;
 }
 
-shp::Quantity Current::getLinearTotal() const {
-    qft::Velocity invariant = velocity;     // non-accelerating component only
-    float current = charge.getMagnitude() * invariant.getTotal().getMagnitude();
-    short int scaling = charge.getScaling() + invariant.getTotal().getScaling();
-    shp::Quantity result(-current, scaling, UNIT); result.adjustScaling();
+shp::Signal Current::getPotential() const {
+    Charge charge = *this;      // electric charge non-accelerating only
+    charge.setSpatialDrift(velocity.getDisplacement().getAmplitude(), velocity.getScaling(), velocity.getDirection());
+    shp::Signal current = charge.getPhaseSpace();
+    shp::Signal result(-current.getMagnitude(), current.getScaling(), UNIT); result.adjustScaling();
     return result;
 }
 
-shp::Signal Current::getLinearPower() const {
-    shp::Signal result = (getVoltage() * getLinearTotal());
+shp::Signal Current::getChargeFlow() const {
+    Charge charge = *this;      // electric charge non-accelerating only
+    charge.setSpatialDrift(velocity.getDisplacement().getAmplitude(), velocity.getScaling(), velocity.getDirection());
+    shp::Signal current = charge.getLinearSpace();
+    shp::Signal result(-current.getMagnitude(), current.getScaling(), UNIT); result.adjustScaling();
     return result;
 }
 
-shp::Quantity Current::getLinearKinetic() const {
-    shp::Quantity current = getLinearTotal();
+shp::Signal Current::getInductance() const {
+    Charge charge = *this;      // electric charge in motion only
+    charge.setSpatialDrift(velocity.getDisplacement().getAmplitude(), velocity.getScaling(), velocity.getDirection());
+    shp::Signal current = charge.getCurvedSpace();
+    shp::Signal result(-current.getMagnitude(), current.getScaling(), UNIT); result.adjustScaling();
+    return result;
+}
+
+shp::Signal Current::getElectricPower() const {
+    shp::Signal result = (this->getVoltage() * this->getChargeFlow());
+    return result;
+}
+
+shp::Signal Current::getElectroKinetic() const {
+    Charge charge = *this; shp::Signal current = getChargeFlow();
     shp::Temporal total = (charge + charge);
-    shp::Quantity result = ((current * current) / total.getMagnitude());
+    shp::Signal result = ((current * current) / total.getMagnitude());
     return result;
 }
 
-shp::Quantity Current::getAngularTotal() const {    // directional acceleration
-    float current = charge.getMagnitude() * velocity.getTotal().getMagnitude();
-    short int scaling = charge.getScaling() + velocity.getTotal().getScaling();
-    shp::Quantity result(-current, scaling, UNIT); result.adjustScaling();
+shp::Signal Current::getMagneticPower() const {
+    shp::Signal result = (this->getVoltage() * this->getInductance());
     return result;
 }
 
-shp::Signal Current::getAngularPower() const {
-    shp::Signal result = (getVoltage() * getAngularTotal());
-    return result;
-}
-
-shp::Quantity Current::getAngularKinetic() const {
-    shp::Quantity current = getAngularTotal();
+shp::Signal Current::getMagnetoKinetic() const {
+    Charge charge = *this; shp::Signal current = getInductance();
     shp::Temporal total = (charge + charge);
-    shp::Quantity result = ((current * current) / total.getMagnitude());
+    shp::Signal result = ((current * current) / total.getMagnitude());
     return result;
 }
 
-shp::Quantity Current::getRateOfChange() const {
-    shp::Quantity result = (getLinearTotal() - getAngularTotal());
+shp::Signal Current::getRateOfChange() const {
+    shp::Signal result = (this->getChargeFlow() - this->getInductance());
     result.adjustScaling();
     return result;
 }
 
 std::shared_ptr<Field> Current::getElectricField() const {
+    Charge charge = *this;
     return charge.getOriginField();
 }
 
 std::shared_ptr<Field> Current::getMagneticField() const {
+    Charge charge = *this;
     std::shared_ptr<Field> field = Field::shareable(Current::MAGNETIC_FIELD);
-    shp::Quantity motion = getRateOfChange();
+    shp::Signal motion = getRateOfChange();
     if (motion.checkNonZero()) {
         field->setPotential(shp::Potential(motion.getMagnitude(),
             shp::Quantity::DEFAULT_VALUE, motion.getScaling(), charge.getUnit(),
@@ -284,26 +389,18 @@ std::shared_ptr<Field> Current::getMagneticField() const {
 }
 
 bool Current::checkNonZero() const {
+    Charge charge = *this;
     return (charge.checkNonZero() && velocity.checkNonZero());
 }
 
-const Current Current::getLooping(const Current& unitary, const float multiplier) {
-    if (multiplier > 0) {
-        Current fresh = unitary.copy();
-        fresh.setElectrons(multiplier);
-        return fresh;
-    }
-    return unitary;
-}
-
-Current Current::copy() const {
-    Current fresh(name, charge, velocity);
-    return fresh;
+shp::Signal Current::copy() const {
+    Charge charge = *this;
+    Current fresh = Current(charge, velocity);
+    return fresh.getTotal();
 }
 
 void Current::clear() {
-    name.clear();
-    charge.clear();
+    Charge::clear();
     velocity.clear();
     return;
 }
@@ -311,8 +408,7 @@ void Current::clear() {
 std::string Current::print() const {
     std::stringstream result;
     result << "I:";
-    result << name << ",";
-    result << charge.print() << ",";
+    result << Charge::print() << ",";
     result << velocity.print();
     result << UNIT;
 	return result.str();
@@ -321,23 +417,31 @@ std::string Current::print() const {
 std::string Current::printRadians() const {
     std::stringstream result;
     result << "I:";
-    result << name << ",";
-    result << charge.printRadians() << ",";
+    result << Charge::printRadians() << ",";
     result << velocity.printRadians();
     result << UNIT;
 	return result.str();
 }
 
 shp::Signal Current::getCosComponent(const float phase) const {
-	shp::Signal current = this->getLinearTotal();
+	shp::Signal current = this->getChargeFlow();
 	return shp::Signal(current.getOrientation(), (current.getCosComponent(phase)),
         current.getScaling(), current.getUnit());
 }
 
 shp::Signal Current::getSinComponent(const float phase) const {
-	shp::Signal current = this->getLinearTotal();
+	shp::Signal current = this->getChargeFlow();
 	return shp::Signal(current.getOrientation(), (current.getSinComponent(phase)),
         current.getScaling(), current.getUnit());
+}
+
+const Current Current::getLooping(const Current unitary, const float multiplier) {
+    if (multiplier > 0) {
+        Current fresh = unitary;
+        fresh.setElectrons(multiplier);
+        return fresh;
+    }
+    return unitary;
 }
 
 const shp::Quantity Current::getAmpereCoulombs() {

@@ -150,6 +150,7 @@ public:
     void setIntensityDrift(const float shift);
     void setIntensityDrift(const Azimuth& shift);
     float getSpatialDrift() const;
+    void setSpatialDrift(const Signal& motion);
     void setSpatialDrift(const Azimuth& rate);
     void setSpatialDrift(const float distance, const Azimuth& rate);
     void setSpatialDrift(const float distance, const short int scale, const Azimuth& rate);
@@ -167,8 +168,9 @@ public:
     virtual shp::Quantity getPhaseShift() const;
     virtual shp::Quantity getPhaseScaling() const;
     virtual shp::Quantity getPeriodScaling() const;
-    virtual Signal getLinearField() const;
-    virtual Signal getCurvedField() const;
+    virtual Signal getPhaseSpace() const;
+    virtual Signal getLinearSpace() const;
+    virtual Signal getCurvedSpace() const;
     Signal getFrequency() const;
     Signal getTotal() const;
     virtual Signal copy() const;

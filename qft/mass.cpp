@@ -19,7 +19,6 @@
 // THE SOFTWARE.
 
 #include "mass.h"
-#include "field.h"
 #include "gravity.h"
 
 namespace qft {
@@ -240,10 +239,10 @@ std::shared_ptr<Field> Mass::getOriginField() const {
     return result;
 }
 
-Mass Mass::copy() {
+shp::Signal Mass::copy() const {
     shp::Frequency self = *this;
     Mass fresh(self.getMagnitude(), self.getScaling(), self.getUnit(), field);
-    return fresh;
+    return fresh.getTotal();
 }
 
 void Mass::clear() {
@@ -271,7 +270,7 @@ std::string Mass::printRadians() const {
 shp::Frequency Mass::getFluctuation(const float phase) const {
     shp::Frequency self = *this;
     shp::Frequency intensity = self.getMagnitude();
-    intensity.setAmplitudeChange(phase);
+    intensity.setIntensityDrift(phase);
 	return shp::Frequency(intensity.getMagnitude(), intensity.getScaling(), intensity.getUnit());
 }
 

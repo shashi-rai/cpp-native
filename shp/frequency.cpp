@@ -440,24 +440,56 @@ float Frequency::getAmplitude() const {
     return Signal::getAmplitude();
 }
 
-float Frequency::getAmplitudeChange() const {
+float Frequency::getIntensity() const {
+    return Signal::getAmplitude();
+}
+
+float Frequency::getIntensityDrift() const {
     return Signal::getOrientation();
 }
 
-void Frequency::setAmplitudeChange(const float shift) {
+void Frequency::setIntensityDrift(const float shift) {
     Signal::setOrientation(shift);
 }
 
-void Frequency::setAmplitudeChange(const Azimuth& shift) {
+void Frequency::setIntensityDrift(const Azimuth& shift) {
     Signal::setOrientation(shift.toRadians());
 }
 
-float Frequency::getWavelengthChange() const {
+float Frequency::getSpatialDrift() const {
     return modulation.getOrientation();
 }
 
-void Frequency::setWavelengthChange(const Azimuth& shift) {
-    modulation.setOrientation(shift.toRadians());
+void Frequency::setSpatialDrift(const shp::Signal& motion) {
+    modulation = motion;
+}
+
+void Frequency::setSpatialDrift(const Azimuth& rate) {
+    modulation.setOrientation(rate.toRadians());
+}
+
+void Frequency::setSpatialDrift(const float wavelength,
+        const Azimuth& rate) {
+    modulation.setMagnitude(wavelength);
+    modulation.setOrientation(rate.toRadians());
+}
+
+void Frequency::setSpatialDrift(const float wavelength, const short int scale,
+        const Azimuth& rate) {
+    modulation.setMagnitude(wavelength, scale);
+    modulation.setOrientation(rate.toRadians());
+}
+
+void Frequency::setSpatialDrift(const float wavelength, const short int scale, const std::string unit,
+        const Azimuth& rate) {
+    modulation.setMagnitude(wavelength, scale, unit);
+    modulation.setOrientation(rate.toRadians());
+}
+
+void Frequency::setSpatialDrift(const float wavelength, const short int scale, const Unit& unit,
+        const Azimuth& rate) {
+    modulation.setMagnitude(wavelength, scale, unit);
+    modulation.setOrientation(rate.toRadians());
 }
 
 short int Frequency::getScaling() const {
@@ -518,6 +550,27 @@ Signal Frequency::getTemporal() const {
     Signal self = *this, wave = self.getScalarInverse();
     Signal result(self.getOrientation(), std::abs(wave.getMagnitude()), wave.getScaling(),
         shp::Unit::getBaseSymbol(shp::Unit::TIME));
+    return result;
+} 
+
+Signal Frequency::getPhaseSpace() const {
+    Signal self = *this;
+    Signal result(self.getOrientation(), self.getMagnitude(),
+        self.getScaling(), self.getUnit());
+    return result;
+}
+
+Signal Frequency::getLinearSpace() const {
+    Signal self = *this; Signal propagation = self.getDotProduct(modulation);
+    Signal result(propagation.getOrientation(), propagation.getMagnitude(),
+        propagation.getScaling(), self.getUnit());
+    return result;
+}
+
+Signal Frequency::getCurvedSpace() const {
+    Signal self = *this; Signal propagation = self.getCrossProduct(modulation);
+    Signal result(propagation.getOrientation(), propagation.getMagnitude(),
+        propagation.getScaling(), self.getUnit());
     return result;
 }
 

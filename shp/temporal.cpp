@@ -458,6 +458,10 @@ float Temporal::getSpatialDrift() const {
     return modulation.getOrientation();
 }
 
+void Temporal::setSpatialDrift(const shp::Signal& motion) {
+    modulation = motion;
+}
+
 void Temporal::setSpatialDrift(const Azimuth& rate) {
     modulation.setOrientation(rate.toRadians());
 }
@@ -547,14 +551,21 @@ Quantity Temporal::getPeriodScaling() const {
     return result;
 }
 
-Signal Temporal::getLinearField() const {
+Signal Temporal::getPhaseSpace() const {
+    Signal self = *this;
+    Signal result(self.getOrientation(), self.getMagnitude(),
+        self.getScaling(), self.getUnit());
+    return result;
+}
+
+Signal Temporal::getLinearSpace() const {
     Signal self = *this; Signal propagation = self.getDotProduct(modulation);
     Signal result(propagation.getOrientation(), propagation.getMagnitude(),
         propagation.getScaling(), self.getUnit());
     return result;
 }
 
-Signal Temporal::getCurvedField() const {
+Signal Temporal::getCurvedSpace() const {
     Signal self = *this; Signal propagation = self.getCrossProduct(modulation);
     Signal result(propagation.getOrientation(), propagation.getMagnitude(),
         propagation.getScaling(), self.getUnit());

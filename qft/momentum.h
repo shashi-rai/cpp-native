@@ -22,38 +22,36 @@
 #define QFT_MOMENTUM_H
 
 #include "mass.h"
-#include "velocity.h"
 
 namespace qft {
 
+// To enable compiler resolve forward declarations
 class Field;
 
-class Momentum {
-    std::string name;
-    qft::Mass mass;
+class Momentum : protected qft::Mass {
     qft::Velocity velocity;
 public:
     // Constructors
     Momentum();
     Momentum(const std::string name);
+    Momentum(const qft::Mass& mass);
     Momentum(const float mass);
     Momentum(const float mass, const std::string unit);
     Momentum(const float mass, const shp::Unit& unit);
-    Momentum(const qft::Mass& mass);
     Momentum(const float mass, const short int scaling);
     Momentum(const float mass, const short int scaling, const std::string unit);
     Momentum(const float mass, const short int scaling, const shp::Unit& unit);
+    Momentum(const qft::Velocity& velocity);
+    Momentum(const std::string name, const qft::Mass& mass);
     Momentum(const std::string name, const float mass);
     Momentum(const std::string name, const float mass, const std::string unit);
     Momentum(const std::string name, const float mass, const shp::Unit& unit);
-    Momentum(const std::string name, const qft::Mass& mass);
     Momentum(const std::string name, const float mass, const short int scaling);
     Momentum(const std::string name, const float mass, const short int scaling, const std::string unit);
     Momentum(const std::string name, const float mass, const short int scaling, const shp::Unit& unit);
+    Momentum(const std::string name, const float mass, const float velocity);
     Momentum(const float mass, const float velocity);
     Momentum(const qft::Mass& mass, const qft::Velocity& velocity);
-    Momentum(const std::string name, const float mass, const float velocity);
-    Momentum(const std::string name, const qft::Mass& mass, const qft::Velocity& velocity);
 
     // Destructors
     ~Momentum();
@@ -70,39 +68,66 @@ public:
     Momentum operator/(const Momentum& peer) const;
     Momentum operator%(const Momentum& peer) const;
 
+    // Mass operator
+    Momentum operator+(const Mass& peer) const;
+    Momentum operator-(const Mass& peer) const;
+    Momentum operator*(const Mass& peer) const;
+    Momentum operator/(const Mass& peer) const;
+    Momentum operator%(const Mass& peer) const;
+
+    // Velocity operator
+    Momentum operator+(const Velocity& peer) const;
+    Momentum operator-(const Velocity& peer) const;
+    Momentum operator*(const Velocity& peer) const;
+    Momentum operator/(const Velocity& peer) const;
+    Momentum operator%(const Velocity& peer) const;
+
     // Getters
-    std::string getName() const { return name; }
-    qft::Mass getMass() const { return mass; }
     qft::Velocity getVelocity() const { return velocity; }
 
     // Setters
-    void setName(const std::string name) { this->name = name; }
-    void setMass(const qft::Mass& object) { this->mass = object; }
     void setVelocity(const qft::Velocity& object) { this->velocity = object; }
 
     // Additional methods
+    std::string getName() const;
+    void setName(const std::string name);
+    qft::Mass getMass() const;
+    void setMass(const qft::Mass& object);
     shp::Signal getCharge();
+    shp::Quantity getParticles() const;
+    void setParticles(const int count);
     void changeFlowSpeed(const float motion);
     void changeDirection(const float degree);
+    shp::Signal getDifference() const;
     shp::Signal getPower(const Time& interval) const;
     shp::Signal getForce(const Time& interval) const;
-    shp::Signal getLinearTotal() const;
-    shp::Signal getLinearKinetic() const;
-    shp::Signal getAngularTotal() const;
-    shp::Signal getAngularKinetic() const;
+    shp::Signal getPotential() const;
+    shp::Signal getMatterFlow() const;
+    shp::Signal getGravitation() const;
+    shp::Signal getMatterPower() const;
+    shp::Signal getMatterKinetic() const;
+    shp::Signal getGravityPower() const;
+    shp::Signal getGravityKinetic() const;
     shp::Signal getRateOfChange() const;
     std::shared_ptr<Field> getMatterField() const;
     std::shared_ptr<Field> getGravityField() const;
     bool checkNonZero() const;
-    virtual Momentum copy();
+    virtual shp::Signal copy() const;
     virtual void clear();
     virtual std::string print() const;
     virtual std::string printRadians() const;
     shp::Signal getCosComponent(const float phase) const;
     shp::Signal getSinComponent(const float phase) const;
 public:
+    static const Momentum getOrbiting(const Momentum unitary, const float multiplier);
+    static const shp::Quantity getMatterParticles();
+    static const shp::Quantity getMatterFlowRate();
+public:
     static const std::string UNIT;
+    static const std::string KILOGRAM_SECOND;
     static const std::string GRAVITY_FIELD;
+    static const float ELECTRON_FLOW_RATE;
+    static const short int ELECTRON_FLOW_SCALE;
 };
 
 typedef std::vector<Momentum > MomentumArray;

@@ -143,7 +143,7 @@ std::shared_ptr<qft::Field> Reality::operator()(const Charge& cause) {
 
 std::shared_ptr<qft::Field> Reality::operator()(const Current& cause) {
     if (magnetic != nullptr) {
-        shp::Quantity total = cause.getLinearTotal();
+        shp::Signal total = cause.getChargeFlow();
         magnetic->setRadius(cause.getCharge().getRadius());
         magnetic->setMagnitude(total.getMagnitude());
     } else {

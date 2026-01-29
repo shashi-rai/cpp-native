@@ -598,11 +598,11 @@ shp::Quantity Time::getPeriodScaling() const {
 }
 
 shp::Signal Time::getLinearSpace() const {
-    return shp::Temporal::getLinearField();
+    return shp::Temporal::getLinearSpace();
 }
 
 shp::Signal Time::getCurvedSpace() const {
-    return shp::Temporal::getCurvedField();
+    return shp::Temporal::getCurvedSpace();
 }
 
 shp::Frequency Time::getFrequency() const {

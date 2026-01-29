@@ -22,39 +22,36 @@
 #define QFT_CURRENT_H
 
 #include "charge.h"
-#include "velocity.h"
-#include "../shp/potential.h"
 
 namespace qft {
 
+// To enable compiler resolve forward declarations
 class Field;
 
-class Current {
-    std::string name;
-    qft::Charge charge;
+class Current : protected qft::Charge {
     qft::Velocity velocity;
 public:
     // Constructors
     Current();
     Current(const std::string name);
+    Current(const qft::Charge& charge);
     Current(const float charge);
     Current(const float charge, const std::string unit);
     Current(const float charge, const shp::Unit& unit);
-    Current(const qft::Charge& charge);
     Current(const float charge, const short int scaling);
     Current(const float charge, const short int scaling, const std::string unit);
     Current(const float charge, const short int scaling, const shp::Unit& unit);
+    Current(const qft::Velocity& velocity);
+    Current(const std::string name, const qft::Charge& charge);
     Current(const std::string name, const float charge);
     Current(const std::string name, const float charge, const std::string unit);
     Current(const std::string name, const float charge, const shp::Unit& unit);
-    Current(const std::string name, const qft::Charge& charge);
     Current(const std::string name, const float charge, const short int scaling);
     Current(const std::string name, const float charge, const short int scaling, const std::string unit);
     Current(const std::string name, const float charge, const short int scaling, const shp::Unit& unit);
-    Current(const float charge, const float velocity);
     Current(const qft::Charge& charge, const qft::Velocity& velocity);
+    Current(const float charge, const float velocity);
     Current(const std::string name, const float charge, const float velocity);
-    Current(const std::string name, const qft::Charge& charge, const qft::Velocity& velocity);
 
     // Destructors
     ~Current();
@@ -71,42 +68,57 @@ public:
     Current operator/(const Current& peer) const;
     Current operator%(const Current& peer) const;
 
+    // Charge operator
+    Current operator+(const Charge& peer) const;
+    Current operator-(const Charge& peer) const;
+    Current operator*(const Charge& peer) const;
+    Current operator/(const Charge& peer) const;
+    Current operator%(const Charge& peer) const;
+
+    // Velocity operator
+    Current operator+(const Velocity& peer) const;
+    Current operator-(const Velocity& peer) const;
+    Current operator*(const Velocity& peer) const;
+    Current operator/(const Velocity& peer) const;
+    Current operator%(const Velocity& peer) const;
+
     // Getters
-    std::string getName() const { return name; }
-    qft::Charge getCharge() const { return charge; }
     qft::Velocity getVelocity() const { return velocity; }
 
     // Setters
-    void setName(const std::string name) { this->name = name; }
-    void setCharge(const qft::Charge& object) { this->charge = object; }
     void setVelocity(const qft::Velocity& object) { this->velocity = object; }
 
     // Additional methods
+    std::string getName() const;
+    void setName(const std::string name);
+    qft::Charge getCharge() const;
+    void setCharge(const qft::Charge& object);
     shp::Quantity getMass();
     shp::Quantity getElectrons() const;
     void setElectrons(const int count);
     void changeFlowSpeed(const float motion);
     void changeDirection(const float degree);
     shp::Signal getVoltage() const;
-    shp::Quantity getForce(const Time& interval) const;
-    shp::Quantity getLinearTotal() const;
-    shp::Signal getLinearPower() const;
-    shp::Quantity getLinearKinetic() const;
-    shp::Quantity getAngularTotal() const;
-    shp::Signal getAngularPower() const;
-    shp::Quantity getAngularKinetic() const;
-    shp::Quantity getRateOfChange() const;
+    shp::Signal getForce(const Time& interval) const;
+    shp::Signal getPotential() const;
+    shp::Signal getChargeFlow() const;
+    shp::Signal getInductance() const;
+    shp::Signal getElectricPower() const;
+    shp::Signal getElectroKinetic() const;
+    shp::Signal getMagneticPower() const;
+    shp::Signal getMagnetoKinetic() const;
+    shp::Signal getRateOfChange() const;
     std::shared_ptr<Field> getElectricField() const;
     std::shared_ptr<Field> getMagneticField() const;
     bool checkNonZero() const;
-    virtual Current copy() const;
+    virtual shp::Signal copy() const;
     virtual void clear();
     virtual std::string print() const;
     virtual std::string printRadians() const;
     shp::Signal getCosComponent(const float phase) const;
     shp::Signal getSinComponent(const float phase) const;
 public:
-    static const Current getLooping(const Current& unitary, const float multiplier);
+    static const Current getLooping(const Current unitary, const float multiplier);
     static const shp::Quantity getAmpereCoulombs();
     static const shp::Quantity getAmpereFlowRate();
 public:

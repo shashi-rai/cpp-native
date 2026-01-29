@@ -20,7 +20,6 @@
 
 #include "charge.h"
 #include "electric.h"
-#include "field.h"
 
 namespace qft {
 
@@ -245,10 +244,10 @@ std::shared_ptr<Field> Charge::getOriginField() const {
     return result;
 }
 
-Charge Charge::copy() {
+shp::Signal Charge::copy() const {
     shp::Temporal self = *this;
     Charge fresh(self.getMagnitude(), self.getScaling(), self.getUnit(), field);
-    return fresh;
+    return fresh.getTotal();
 }
 
 void Charge::clear() {

@@ -87,7 +87,7 @@ public:
     Density getDensity(const shp::Volume& volume) const;
     Force getForce(const shp::Angular& coordinates) const;
     std::shared_ptr<Field> getOriginField() const;
-    virtual Charge copy();
+    virtual shp::Signal copy() const;
     virtual void clear();
     virtual std::string print() const;
     virtual std::string printRadians() const;

@@ -316,21 +316,24 @@ Signal Signal::getSquareDivergence(const Signal& peer) const {
 }
 
 Signal Signal::getDotProduct(const float factor) const {
-    Quantity self = *this, other(factor);
+    Quantity self(this->getAmplitude(), Quantity::getScaling(), Quantity::getUnit());
+    Quantity other(factor, Quantity::getScaling(), Quantity::getUnit());
     Quantity product = (self * other); product.adjustScaling();
-    return Signal(this->orientation, product.getMagnitude(), product.getScaling(), self.getUnit());
+    return Signal(Direction::DEFAULT_RADIANS, product.getMagnitude(), product.getScaling(), self.getUnit());
 }
 
 Signal Signal::getDotProduct(const float factor, const short int scale) const {
-    Quantity self = *this, other(factor, scale);
+    Quantity self(this->getAmplitude(), Quantity::getScaling(), Quantity::getUnit());
+    Quantity other(factor, scale, Quantity::getUnit());
     Quantity product = (self * other); product.adjustScaling();
-    return Signal(this->orientation, product.getMagnitude(), product.getScaling(), self.getUnit());
+    return Signal(Direction::DEFAULT_RADIANS, product.getMagnitude(), product.getScaling(), self.getUnit());
 }
 
 Signal Signal::getDotProduct(const Signal& peer) const {
-    Quantity self = *this, other = peer;
+    Quantity self(this->getAmplitude(), Quantity::getScaling(), Quantity::getUnit());
+    Quantity other = peer;
     Quantity product = (self * other); product.adjustScaling();
-    return Signal(this->orientation, product.getMagnitude(), product.getScaling(), self.getUnit());
+    return Signal(Direction::DEFAULT_RADIANS, product.getMagnitude(), product.getScaling(), self.getUnit());
 }
 
 Signal Signal::getCrossProduct(const Signal& peer) const {
@@ -348,21 +351,24 @@ Signal Signal::getCrossProduct(const Signal& peer) const {
 }
 
 Signal Signal::getDotFraction(const float factor) const {
-    Quantity self = *this, other(factor);
+    Quantity self(this->getAmplitude(), Quantity::getScaling(), Quantity::getUnit());
+    Quantity other(factor, Quantity::getScaling(), Quantity::getUnit());
     Quantity fraction = (self / other); fraction.adjustScaling();
-    return Signal(this->orientation, fraction.getMagnitude(), fraction.getScaling(), self.getUnit());
+    return Signal(Direction::DEFAULT_RADIANS, fraction.getMagnitude(), fraction.getScaling(), self.getUnit());
 }
 
 Signal Signal::getDotFraction(const float factor, const short int scale) const {
-    Quantity self = *this, other(factor, scale);
+    Quantity self(this->getAmplitude(), Quantity::getScaling(), Quantity::getUnit());
+    Quantity other(factor, scale, Quantity::getUnit());
     Quantity fraction = (self / other); fraction.adjustScaling();
-    return Signal(this->orientation, fraction.getMagnitude(), fraction.getScaling(), self.getUnit());
+    return Signal(Direction::DEFAULT_RADIANS, fraction.getMagnitude(), fraction.getScaling(), self.getUnit());
 }
 
 Signal Signal::getDotFraction(const Signal& peer) const {
-    Quantity self = *this, other = peer;
+    Quantity self(this->getAmplitude(), Quantity::getScaling(), Quantity::getUnit());
+    Quantity other = peer;
     Quantity fraction = (self / other); fraction.adjustScaling();
-    return Signal(this->orientation, fraction.getMagnitude(), fraction.getScaling(), self.getUnit());
+    return Signal(Direction::DEFAULT_RADIANS, fraction.getMagnitude(), fraction.getScaling(), self.getUnit());
 }
 
 Signal Signal::getCrossFraction(const Signal& peer) const {
@@ -381,7 +387,7 @@ Signal Signal::getCrossFraction(const Signal& peer) const {
 
 Signal Signal::getFrequency() const {
     Quantity wave = Quantity::getInverse();
-    Signal result(orientation, std::abs(wave.getMagnitude()), wave.getScaling(),
+    Signal result(this->orientation, std::abs(wave.getMagnitude()), wave.getScaling(),
         shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY));
     return result;
 }
@@ -444,7 +450,7 @@ void Signal::setUnit(const Unit& object) {
 
 Signal Signal::getScalarAbsolute() const {
     Quantity self = *this;
-    return Signal(this->orientation, std::abs(self.getMagnitude()), self.getScaling(), self.getUnit());
+    return Signal(Direction::DEFAULT_RADIANS, std::abs(self.getMagnitude()), self.getScaling(), self.getUnit());
 }
 
 Signal Signal::getVectorAbsolute() const {
@@ -479,7 +485,7 @@ Signal Signal::getVectorInverse() const {
 
 Signal Signal::getScalarPercent() const {
     Quantity self = *this, percent = Quantity::getPercent();
-    Signal result(this->orientation, percent.getMagnitude(), percent.getScaling(), percent.getUnit());
+    Signal result(Direction::DEFAULT_RADIANS, percent.getMagnitude(), percent.getScaling(), percent.getUnit());
     return result;
 }
 
@@ -491,28 +497,28 @@ Signal Signal::getVectorPercent() const {
 
 Signal Signal::getDotProductSquare() const {
     Quantity self = *this, square = Quantity::getSquare();
-    Signal result(this->orientation, square.getMagnitude(), square.getScaling(), square.getUnit());
+    Signal result(Direction::DEFAULT_RADIANS, square.getMagnitude(), square.getScaling(), square.getUnit());
     return result;
 }
 
 Signal Signal::getDotFractionSquare() const {
     Quantity self = *this, inverse = Quantity::getInverse();
     Quantity square = inverse.getSquare();
-    Signal result(this->orientation, square.getMagnitude(), square.getScaling(), square.getUnit());
+    Signal result(Direction::DEFAULT_RADIANS, square.getMagnitude(), square.getScaling(), square.getUnit());
     return result;
 }
 
 Signal Signal::getDotFractionSquare(const float factor) const {
     Quantity self = *this, other(factor), inverse = Quantity::getInverse();
     Quantity square = (other * inverse.getSquare());
-    Signal result(this->orientation, square.getMagnitude(), square.getScaling(), square.getUnit());
+    Signal result(Direction::DEFAULT_RADIANS, square.getMagnitude(), square.getScaling(), square.getUnit());
     return result;
 }
 
 Signal Signal::getDotFractionSquare(const float factor, const short int scale) const {
     Quantity self = *this, other(factor, scale), inverse = Quantity::getInverse();
     Quantity square = (other * inverse.getSquare());
-    Signal result(this->orientation, square.getMagnitude(), square.getScaling(), square.getUnit());
+    Signal result(Direction::DEFAULT_RADIANS, square.getMagnitude(), square.getScaling(), square.getUnit());
     return result;
 }
 
@@ -534,20 +540,20 @@ Signal Signal::getCrossFractionSquare() const {
 
 Signal Signal::getDotProductSquareRoot() const {
     Quantity self = *this, root = Quantity::getSquareRoot();
-    Signal result(this->orientation, root.getMagnitude(), root.getScaling(), root.getUnit());
+    Signal result(Direction::DEFAULT_RADIANS, root.getMagnitude(), root.getScaling(), root.getUnit());
     return result;
 }
 
 Signal Signal::getDotProductCube() const {
     Quantity self = *this, cube = Quantity::getCube();
-    Signal result(this->orientation, cube.getMagnitude(), cube.getScaling(), cube.getUnit());
+    Signal result(Direction::DEFAULT_RADIANS, cube.getMagnitude(), cube.getScaling(), cube.getUnit());
     return result;
 }
 
 Signal Signal::getDotFractionCube() const {
     Quantity self = *this; Quantity inverse = Quantity::getInverse();
     Quantity cube = inverse.getCube();
-    Signal result(this->orientation, cube.getMagnitude(), cube.getScaling(), cube.getUnit());
+    Signal result(Direction::DEFAULT_RADIANS, cube.getMagnitude(), cube.getScaling(), cube.getUnit());
     return result;
 }
 
@@ -569,18 +575,18 @@ Signal Signal::getCrossFractionCube() const {
 
 Signal Signal::getDotProductCubeRoot() const {
     Quantity self = *this, root = Quantity::getCubeRoot();
-    Signal result(this->orientation, root.getMagnitude(), root.getScaling(), root.getUnit());
+    Signal result(Direction::DEFAULT_RADIANS, root.getMagnitude(), root.getScaling(), root.getUnit());
     return result;
 }
 
 Signal Signal::getScalarRemainder(const float coefficient) const {
     Quantity self = *this, remainder = self.getRemainder(coefficient);
-    return Signal(this->orientation, remainder.getMagnitude(), remainder.getScaling(), self.getUnit());
+    return Signal(Direction::DEFAULT_RADIANS, remainder.getMagnitude(), remainder.getScaling(), self.getUnit());
 }
 
 Signal Signal::getScalarLeftOver(const float coefficient) const {
     Quantity self = *this, leftover = self.getLeftOver(coefficient);
-    return Signal(this->orientation, leftover.getMagnitude(), leftover.getScaling(), self.getUnit());
+    return Signal(Direction::DEFAULT_RADIANS, leftover.getMagnitude(), leftover.getScaling(), self.getUnit());
 }
 
 bool Signal::isConvergent() const {
@@ -613,7 +619,7 @@ void Signal::adjustScaling() {
 
 Signal Signal::copy() const {
     Quantity self = *this;
-    Signal fresh(orientation, self.getMagnitude(), self.getScaling(), self.getUnit());
+    Signal fresh(this->orientation, self.getMagnitude(), self.getScaling(), self.getUnit());
     return fresh;
 }
 
