@@ -26,12 +26,12 @@ Commodity::Commodity() : act::Item() {
 
 }
 
-Commodity::Commodity(std::string name)
+Commodity::Commodity(const std::string name)
         : act::Item(name) {
 
 }
 
-Commodity::Commodity(std::string name, const shp::Quantity& quantity)
+Commodity::Commodity(const std::string name, const shp::Quantity& quantity)
         : act::Item(name, quantity) {
 
 }

@@ -24,105 +24,72 @@ namespace gis {
 
 const std::string Address::DEFAULT_VALUE = "";
 
-Address::Address() : room(), unit(), floor(), building(), plot(), survey(),
-        street(), village(), town(), postbox(), postoffice(), policestation(),
-        city(), district(), division(), province(), country(), pincode() {
+Address::Address()
+        : indoor(), outdoor() {
     setLocation(nullptr);
 }
 
-Address::Address(Location* location): room(), unit(), floor(), building(), plot(),
-        survey(), street(), village(), town(), postbox(), postoffice(), policestation(),
-        city(), district(), division(), province(), country(), pincode() {
+Address::Address(const std::shared_ptr<Location> location)
+        : indoor(), outdoor() {
     setLocation(location);
 }
 
-Address::Address(std::string pincode): room(), unit(), floor(), building(), plot(),
-        survey(), street(), village(), town(), postbox(), postoffice(), policestation(),
-        city(), district(), division(), province(), country(), pincode(pincode) {
+Address::Address(const Indoor& indoor)
+        : indoor(indoor), outdoor() {
     setLocation(nullptr);
 }
 
-Address::~Address() {
+Address::Address(const Indoor& indoor, const std::shared_ptr<Location> location)
+        : indoor(indoor), outdoor() {
+    setLocation(location);
+}
 
+Address::Address(const Outdoor& outdoor)
+        : indoor(), outdoor(outdoor) {
+    setLocation(nullptr);
+}
+
+Address::Address(const Outdoor& outdoor, const std::shared_ptr<Location> location)
+        : indoor(), outdoor(outdoor) {
+    setLocation(location);
+}
+
+Address::Address(const Indoor& indoor, const Outdoor& outdoor, const std::shared_ptr<Location> location)
+        : indoor(indoor), outdoor(outdoor) {
+    setLocation(location);
+}
+
+Address::~Address() {
+    setLocation(nullptr);
 }
 
 bool Address::operator==(const Address& peer) const {
     return (location == peer.location)
-        && (room == peer.room)
-        && (unit == peer.unit)
-        && (floor == peer.floor)
-        && (building == peer.building)
-        && (plot == peer.plot)
-        && (survey == peer.survey)
-        && (street == peer.street)
-        && (village == peer.village)
-        && (town == peer.town)
-        && (postbox == peer.postbox)
-        && (postoffice == peer.postoffice)
-        && (policestation == peer.policestation)
-        && (city == peer.city)
-        && (district == peer.district)
-        && (division == peer.division)
-        && (province == peer.province)
-        && (country == peer.country)
-        && (pincode == peer.pincode);
+        && (indoor == peer.indoor)
+        && (outdoor == peer.outdoor);
 }
 
 bool Address::isLocated() const {
-    return location != nullptr;
+    return (location != nullptr);
 }
 
 Address Address::copy() {
-    Address fresh(location);
+    Address fresh(indoor, outdoor, location);
     return fresh;
 }
 
 void Address::clear() {
     setLocation(nullptr);
-    setRoom(DEFAULT_VALUE);
-    setUnit(DEFAULT_VALUE);
-    setFloor(DEFAULT_VALUE);
-    setBuilding(DEFAULT_VALUE);
-    setPlot(DEFAULT_VALUE);
-    setSurvey(DEFAULT_VALUE);
-    setStreet(DEFAULT_VALUE);
-    setVillage(DEFAULT_VALUE);
-    setTown(DEFAULT_VALUE);
-    setPostBox(DEFAULT_VALUE);
-    setPostOffice(DEFAULT_VALUE);
-    setPoliceStation(DEFAULT_VALUE);
-    setCity(DEFAULT_VALUE);
-    setDistrict(DEFAULT_VALUE);
-    setDivision(DEFAULT_VALUE);
-    setProvince(DEFAULT_VALUE);
-    setCountry(DEFAULT_VALUE);
-    setPinCode(DEFAULT_VALUE);
+    indoor.clear();
+    outdoor.clear();
     return;
 }
 
 std::string Address::print() {
     std::stringstream result;
-    result << "{loc:";
-    result << (location != nullptr ? location->print() : DEFAULT_VALUE);
-    result << ",r:";
-    result << room << ",u:";
-    result << unit << ",flr:";
-    result << floor << ",bldg:";
-    result << building << ",pl:";
-    result << plot << ",sv:";
-    result << survey << ",st:";
-    result << street << ",vill:";
-    result << village << ",tw:";
-    result << town << ",pb:";
-    result << postbox << ",po:";
-    result << postoffice << ",ps:";
-    result << policestation << ",c:";
-    result << city << ",dist:";
-    result << district << ",div:";
-    result << division << ",prov:";
-    result << province << ",co:";
-    result << country << ",pin:";
-    result << pincode << "}";
+    result << "[" << (isLocated() ? location->print() : DEFAULT_VALUE) << ",";
+    result << indoor.print() << ",";
+    result << outdoor.print() << "]";
 	return result.str();
 }
 

@@ -31,7 +31,7 @@ Asset::Asset(const float value)
 
 }
 
-Asset::Asset(std::string name)
+Asset::Asset(const std::string name)
         : Amount(), name(name), registration(), depreciation() {
 
 }
@@ -41,35 +41,35 @@ Asset::Asset(const doc::Document& registration)
 
 }
 
-Asset::Asset(std::string name, const doc::Document& registration)
+Asset::Asset(const std::string name, const doc::Document& registration)
         : Amount(), name(name), registration(registration), depreciation() {
 
 }
 
-Asset::Asset(std::string name, const float value)
+Asset::Asset(const std::string name, const float value)
         : Amount(value), name(name), registration(), depreciation() {
 
 }
 
-Asset::Asset(std::string name, std::string remarks)
+Asset::Asset(const std::string name, const std::string remarks)
         : Amount(remarks), name(name), registration(), depreciation() {
 
 }
 
-Asset::Asset(std::string name,
-        const Currency& currency, std::string remarks)
+Asset::Asset(const std::string name,
+        const Currency& currency, const std::string remarks)
         : Amount(currency, remarks), name(name), registration(), depreciation() {
 
 }
 
-Asset::Asset(std::string name, const float value,
-        const Currency& currency, std::string remarks)
+Asset::Asset(const std::string name, const float value,
+        const Currency& currency, const std::string remarks)
         : Amount(value, currency, remarks), name(name), registration(), depreciation() {
 
 }
 
-Asset::Asset(std::string name, const long datetime, const float value,
-        const Currency& currency, std::string remarks)
+Asset::Asset(const std::string name, const long datetime, const float value,
+        const Currency& currency, const std::string remarks)
         : Amount(datetime, value, currency, remarks), name(name), registration(), depreciation() {
 
 }

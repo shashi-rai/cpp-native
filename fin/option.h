@@ -21,8 +21,6 @@
 #ifndef FIN_OPTION_H
 #define FIN_OPTION_H
 
-#include <string>
-#include <vector>
 #include "securities.h"
 #include "../act/asset.h"
 #include "../act/price.h"
@@ -35,7 +33,7 @@ class Option : public Securities {
 public:
     // Constructors
     Option();
-    Option(std::string name);
+    Option(const std::string name);
     Option(const act::Contract& contract);
     Option(const act::Asset& underlying);
     Option(const act::Price& strike);
@@ -43,13 +41,13 @@ public:
     Option(const act::Contract& contract, const act::Asset& underlying);
     Option(const act::Contract& contract, const act::Price& strike);
     Option(const act::Contract& contract, const act::Asset& underlying, const act::Price& strike);
-    Option(std::string name, const act::Contract& contract);
-    Option(std::string name, const act::Asset& underlying);
-    Option(std::string name, const act::Price& strike);
-    Option(std::string name, const act::Asset& underlying, const act::Price& strike);
-    Option(std::string name, const act::Contract& contract, const act::Asset& underlying);
-    Option(std::string name, const act::Contract& contract, const act::Price& strike);
-    Option(std::string name, const act::Contract& contract, const act::Asset& underlying, const act::Price& strike);
+    Option(const std::string name, const act::Contract& contract);
+    Option(const std::string name, const act::Asset& underlying);
+    Option(const std::string name, const act::Price& strike);
+    Option(const std::string name, const act::Asset& underlying, const act::Price& strike);
+    Option(const std::string name, const act::Contract& contract, const act::Asset& underlying);
+    Option(const std::string name, const act::Contract& contract, const act::Price& strike);
+    Option(const std::string name, const act::Contract& contract, const act::Asset& underlying, const act::Price& strike);
 
     // Destructors
     ~Option();

@@ -57,37 +57,37 @@ Demand::Demand(const float quantity, const short int scaling,
 
 }
 
-Demand::Demand(std::string name)
+Demand::Demand(const std::string name)
         : shp::Quantity(), name(name), growth() {
 
 }
 
-Demand::Demand(std::string name, const Growth& growth)
+Demand::Demand(const std::string name, const Growth& growth)
         : shp::Quantity(), name(name), growth(growth) {
 
 }
 
-Demand::Demand(std::string name,const float quantity)
+Demand::Demand(const std::string name,const float quantity)
         : shp::Quantity(quantity), name(name), growth() {
 
 }
 
-Demand::Demand(std::string name, const float quantity, const short int scaling)
+Demand::Demand(const std::string name, const float quantity, const short int scaling)
         : shp::Quantity(quantity, scaling), name(name), growth() {
 
 }
 
-Demand::Demand(std::string name, const float quantity, const shp::Unit& unit)
+Demand::Demand(const std::string name, const float quantity, const shp::Unit& unit)
         : shp::Quantity(quantity, unit), name(name), growth() {
 
 }
 
-Demand::Demand(std::string name, const float quantity, const short int scaling, const shp::Unit& unit)
+Demand::Demand(const std::string name, const float quantity, const short int scaling, const shp::Unit& unit)
         : shp::Quantity(quantity, scaling, unit), name(name), growth() {
 
 }
 
-Demand::Demand(std::string name, const float quantity, const short int scaling,
+Demand::Demand(const std::string name, const float quantity, const short int scaling,
         const shp::Unit& unit, const Growth& growth)
         : shp::Quantity(quantity, scaling, unit), name(name), growth(growth) {
 

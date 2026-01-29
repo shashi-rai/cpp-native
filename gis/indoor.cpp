@@ -18,49 +18,45 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef GIS_TERRITORY_H
-#define GIS_TERRITORY_H
-
-#include "address.h"
-#include "location.h"
-#include "../shp/point.h"
+#include "indoor.h"
 
 namespace gis {
 
-class Territory : public shp::Point {
-    Address address;
-public:
-    // Constructors
-    Territory();
-    Territory(const Address& address);
-    Territory(const std::string name);
-    Territory(const std::string name, const Address& address);
+const std::string Indoor::DEFAULT_VALUE = "";
 
-    // Destructors
-    ~Territory();
+Indoor::Indoor() : room(), unit(), floor() {
 
-    // Operator overloading
-    bool operator==(const Territory& peer) const;
-    Territory operator+(const Territory& peer) const;
-    Territory operator-(const Territory& peer) const;
-    Territory operator*(const Territory& peer) const;
-    Territory operator/(const Territory& peer) const;
-    Territory operator%(const Territory& peer) const;
+}
 
-    // Getters
-    Address getAddress() const { return address; }
+Indoor::~Indoor() {
 
-    // Setters
-    void setAddress(const Address& place) { address = place; }
+}
 
-    // Additional methods
-    virtual Point copy();
-    virtual void clear();
-    virtual std::string print();
-};
+bool Indoor::operator==(const Indoor& peer) const {
+    return (room == peer.room)
+        && (unit == peer.unit)
+        && (floor == peer.floor);
+}
 
-typedef std::vector<Territory > TerritoryArray;
+Indoor Indoor::copy() {
+    Indoor fresh;
+    return fresh;
+}
+
+void Indoor::clear() {
+    setRoom(DEFAULT_VALUE);
+    setUnit(DEFAULT_VALUE);
+    setFloor(DEFAULT_VALUE);
+    return;
+}
+
+std::string Indoor::print() {
+    std::stringstream result;
+    result << "(r:";
+    result << room << ",u:";
+    result << unit << ",flr:";
+    result << floor << ")";
+	return result.str();
+}
 
 } // namespace gis
-
-#endif //GIS_TERRITORY_H

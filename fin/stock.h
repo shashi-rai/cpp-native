@@ -21,20 +21,25 @@
 #ifndef FIN_STOCK_H
 #define FIN_STOCK_H
 
-#include <sstream>
-#include <string>
-#include <vector>
-#include "../act/item.h"
+#include "../act/asset.h"
+#include "../act/currency.h"
 
 namespace fin {
 
-class Stock : public act::Item {
-
+class Stock : public act::Asset {
+    float earningPerShare;
+    float priceToEarning;
+    float priceEarningGrowth;
+    float priceToBook;
+    float returnOnEquity;
+    float debtToEquity;
+    float dividendYield;
+    float operatingProfitMargin;
 public:
     // Constructors
     Stock();
-    Stock(std::string name);
-    Stock(std::string name, const shp::Quantity& quantity);
+    Stock(const std::string name);
+    Stock(const std::string name, const act::Currency& currency);
 
     // Destructors
     ~Stock();
@@ -48,11 +53,27 @@ public:
     Stock operator%(const Stock& peer) const;
 
     // Getters
+    float getEarningPerShare() const { return earningPerShare; }
+    float getPriceToEarning() const { return priceToEarning; }
+    float getPriceEarningGrowth() const { return priceEarningGrowth; }
+    float getPriceToBook() const { return priceToBook; }
+    float getReturnOnEquity() const { return returnOnEquity; }
+    float getDebtToEquity() const { return debtToEquity; }
+    float getDividendYield() const { return dividendYield; }
+    float getOperatingProfitMargin() const { return operatingProfitMargin; }
 
     // Setters
+    void setEarningPerShare(const float value) { this->earningPerShare = value; }
+    void setPriceToEarning(const float value) { this->priceToEarning = value; }
+    void setPriceEarningGrowth(const float value) { this->priceEarningGrowth = value; }
+    void setPriceToBook(const float value) { this->priceToBook = value; }
+    void setReturnOnEquity(const float value) { this->returnOnEquity = value; }
+    void setDebtToEquity(const float value) { this->debtToEquity = value; }
+    void setDividendYield(const float value) { this->dividendYield = value; }
+    void setOperatingProfitMargin(const float value) { this->operatingProfitMargin = value; }
 
     // Additional methods
-    virtual act::Item copy();
+    virtual act::Amount copy();
     virtual void clear();
     virtual std::string print();
 public:

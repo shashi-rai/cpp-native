@@ -21,9 +21,6 @@
 #ifndef ACT_LIABILITY_H
 #define ACT_LIABILITY_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "amount.h"
 #include "interest.h"
 #include "../doc/document.h"
@@ -38,14 +35,14 @@ public:
     // Constructors
     Liability();
     Liability(const float value);
-    Liability(std::string name);
+    Liability(const std::string name);
     Liability(const doc::Document& registration);
-    Liability(std::string name, const doc::Document& registration);
-    Liability(std::string name, const float value);
-    Liability(std::string name, std::string remarks);
-    Liability(std::string name, const Currency& currency, std::string remarks);
-    Liability(std::string name, const float value, const Currency& currency, std::string remarks);
-    Liability(std::string name, const long datetime, const float value, const Currency& currency, std::string remarks);
+    Liability(const std::string name, const doc::Document& registration);
+    Liability(const std::string name, const float value);
+    Liability(const std::string name, const std::string remarks);
+    Liability(const std::string name, const Currency& currency, const std::string remarks);
+    Liability(const std::string name, const float value, const Currency& currency, const std::string remarks);
+    Liability(const std::string name, const long datetime, const float value, const Currency& currency, const std::string remarks);
 
     // Destructors
     ~Liability();
@@ -64,7 +61,7 @@ public:
     Interest getInterest() const { return interest; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setName(const std::string name) { this->name = name; }
     void setRegistration(const doc::Document& document) { this->registration = document; }
     void setInterest(const Interest& payable) { this->interest = payable; }
 

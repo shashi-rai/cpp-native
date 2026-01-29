@@ -62,42 +62,42 @@ Freight::Freight(const Demand& demand, const Supply& supply, const Population& p
 
 }
 
-Freight::Freight(std::string name)
+Freight::Freight(const std::string name)
         : Market(name) {
 
 }
 
-Freight::Freight(std::string name, const Demand& demand)
+Freight::Freight(const std::string name, const Demand& demand)
         : Market(name, demand) {
 
 }
 
-Freight::Freight(std::string name, const Supply& supply)
+Freight::Freight(const std::string name, const Supply& supply)
         : Market(name, supply) {
 
 }
 
-Freight::Freight(std::string name, const Population& population)
+Freight::Freight(const std::string name, const Population& population)
         : Market(name, population) {
 
 }
 
-Freight::Freight(std::string name, const Demand& demand, const Supply& supply)
+Freight::Freight(const std::string name, const Demand& demand, const Supply& supply)
         : Market(name, demand, supply) {
 
 }
 
-Freight::Freight(std::string name, const Demand& demand, const Population& population)
+Freight::Freight(const std::string name, const Demand& demand, const Population& population)
         : Market(name, demand, population) {
 
 }
 
-Freight::Freight(std::string name, const Supply& supply, const Population& population)
+Freight::Freight(const std::string name, const Supply& supply, const Population& population)
         : Market(name, supply, population) {
 
 }
 
-Freight::Freight(std::string name, const Demand& demand, const Supply& supply, const Population& population)
+Freight::Freight(const std::string name, const Demand& demand, const Supply& supply, const Population& population)
         : Market(name, demand, supply, population) {
 
 }

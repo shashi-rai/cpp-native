@@ -47,12 +47,16 @@ clean-libs: clean-custom
 $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/address.o \
 		$(OBJFOLDR)/earth.o \
+		$(OBJFOLDR)/indoor.o \
 		$(OBJFOLDR)/location.o \
+		$(OBJFOLDR)/outdoor.o \
 		$(OBJFOLDR)/territory.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
 		$(OBJFOLDR)/address.o \
+		$(OBJFOLDR)/indoor.o \
 		$(OBJFOLDR)/earth.o \
 		$(OBJFOLDR)/location.o \
+		$(OBJFOLDR)/outdoor.o \
 		$(OBJFOLDR)/territory.o
 
 $(OBJFOLDR)/address.o: address.cpp
@@ -61,8 +65,14 @@ $(OBJFOLDR)/address.o: address.cpp
 $(OBJFOLDR)/earth.o: earth.cpp
 	$(CPPTOOL) -c earth.cpp -o $(OBJFOLDR)/earth.o $(CXXFLAGS)
 
+$(OBJFOLDR)/indoor.o: indoor.cpp
+	$(CPPTOOL) -c indoor.cpp -o $(OBJFOLDR)/indoor.o $(CXXFLAGS)
+
 $(OBJFOLDR)/location.o: location.cpp
 	$(CPPTOOL) -c location.cpp -o $(OBJFOLDR)/location.o $(CXXFLAGS)
+
+$(OBJFOLDR)/outdoor.o: outdoor.cpp
+	$(CPPTOOL) -c outdoor.cpp -o $(OBJFOLDR)/outdoor.o $(CXXFLAGS)
 
 $(OBJFOLDR)/territory.o: territory.cpp
 	$(CPPTOOL) -c territory.cpp -o $(OBJFOLDR)/territory.o $(CXXFLAGS)

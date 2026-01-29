@@ -21,9 +21,6 @@
 #ifndef ECO_INDUSTRY_H
 #define ECO_INDUSTRY_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "freight.h"
 #include "labour.h"
 #include "material.h"
@@ -45,14 +42,14 @@ public:
     Industry(const Labour& labour, const Freight& freight);
     Industry(const Material& material, const Freight& freight);
     Industry(const Labour& labour, const Material& material, const Freight& freight);
-    Industry(std::string name);
-    Industry(std::string name, const Labour& labour);
-    Industry(std::string name, const Material& material);
-    Industry(std::string name, const Freight& freight);
-    Industry(std::string name, const Labour& labour, const Material& material);
-    Industry(std::string name, const Labour& labour, const Freight& freight);
-    Industry(std::string name, const Material& material, const Freight& freight);
-    Industry(std::string name, const Labour& labour, const Material& material, const Freight& freight);
+    Industry(const std::string name);
+    Industry(const std::string name, const Labour& labour);
+    Industry(const std::string name, const Material& material);
+    Industry(const std::string name, const Freight& freight);
+    Industry(const std::string name, const Labour& labour, const Material& material);
+    Industry(const std::string name, const Labour& labour, const Freight& freight);
+    Industry(const std::string name, const Material& material, const Freight& freight);
+    Industry(const std::string name, const Labour& labour, const Material& material, const Freight& freight);
 
     // Destructors
     ~Industry();
@@ -67,7 +64,7 @@ public:
     Freight getFreight() const { return freight; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setName(const std::string name) { this->name = name; }
     void setLabour(const Labour& object) { this->labour = object; }
     void setMaterial(const Material& object) { this->material = object; }
     void setFreight(const Freight& object) { this->freight = object; }

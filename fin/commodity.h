@@ -21,9 +21,6 @@
 #ifndef FIN_COMMODITY_H
 #define FIN_COMMODITY_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "../act/item.h"
 
 namespace fin {
@@ -33,8 +30,8 @@ class Commodity : public act::Item {
 public:
     // Constructors
     Commodity();
-    Commodity(std::string name);
-    Commodity(std::string name, const shp::Quantity& quantity);
+    Commodity(const std::string name);
+    Commodity(const std::string name, const shp::Quantity& quantity);
 
     // Destructors
     ~Commodity();

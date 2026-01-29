@@ -21,9 +21,6 @@
 #ifndef ACT_EQUITY_H
 #define ACT_EQUITY_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "amount.h"
 #include "currency.h"
 #include "dividend.h"
@@ -39,14 +36,14 @@ public:
     // Constructors
     Equity();
     Equity(const float value);
-    Equity(std::string name);
+    Equity(const std::string name);
     Equity(const doc::Document& registration);
-    Equity(std::string name, const doc::Document& registration);
-    Equity(std::string name, const float value);
-    Equity(std::string name, std::string remarks);
-    Equity(std::string name, const Currency& currency, std::string remarks);
-    Equity(std::string name, const float value, const Currency& currency, std::string remarks);
-    Equity(std::string name, const long datetime, const float value, const Currency& currency, std::string remarks);
+    Equity(const std::string name, const doc::Document& registration);
+    Equity(const std::string name, const float value);
+    Equity(const std::string name, const std::string remarks);
+    Equity(const std::string name, const Currency& currency, const std::string remarks);
+    Equity(const std::string name, const float value, const Currency& currency, const std::string remarks);
+    Equity(const std::string name, const long datetime, const float value, const Currency& currency, const std::string remarks);
 
     // Destructors
     ~Equity();
@@ -65,7 +62,7 @@ public:
     Dividend getDividend() const { return dividend; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setName(const std::string name) { this->name = name; }
     void setRegistration(const doc::Document& document) { this->registration = document; }
     void setDividend(const Dividend& offered) { this->dividend = offered; }
 

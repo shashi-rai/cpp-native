@@ -31,7 +31,7 @@ Liability::Liability(const float value)
 
 }
 
-Liability::Liability(std::string name)
+Liability::Liability(const std::string name)
         : Amount(), name(name), registration(), interest() {
 
 }
@@ -41,35 +41,35 @@ Liability::Liability(const doc::Document& registration)
 
 }
 
-Liability::Liability(std::string name, const doc::Document& registration)
+Liability::Liability(const std::string name, const doc::Document& registration)
         : Amount(), name(name), registration(registration), interest() {
 
 }
 
-Liability::Liability(std::string name, const float value)
+Liability::Liability(const std::string name, const float value)
         : Amount(value), name(name), registration(), interest() {
 
 }
 
-Liability::Liability(std::string name, std::string remarks)
+Liability::Liability(const std::string name, const std::string remarks)
         : Amount(remarks), name(name), registration(), interest() {
 
 }
 
-Liability::Liability(std::string name,
-        const Currency& currency, std::string remarks)
+Liability::Liability(const std::string name,
+        const Currency& currency, const std::string remarks)
         : Amount(currency, remarks), name(name), registration(), interest() {
 
 }
 
-Liability::Liability(std::string name,
-        const float value, const Currency& currency, std::string remarks)
+Liability::Liability(const std::string name,
+        const float value, const Currency& currency, const std::string remarks)
         : Amount(value, currency, remarks), name(name), registration(), interest() {
 
 }
 
-Liability::Liability(std::string name, const long datetime,
-        const float value, const Currency& currency, std::string remarks)
+Liability::Liability(const std::string name, const long datetime,
+        const float value, const Currency& currency, const std::string remarks)
         : Amount(datetime, value, currency, remarks), name(name), registration(), interest() {
 
 }

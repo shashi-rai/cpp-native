@@ -21,9 +21,6 @@
 #ifndef ECO_LABOUR_H
 #define ECO_LABOUR_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "market.h"
 
 namespace eco {
@@ -40,14 +37,14 @@ public:
     Labour(const Demand& demand, const Population& population);
     Labour(const Supply& supply, const Population& population);
     Labour(const Demand& demand, const Supply& supply, const Population& population);
-    Labour(std::string name);
-    Labour(std::string name, const Demand& demand);
-    Labour(std::string name, const Supply& supply);
-    Labour(std::string name, const Population& population);
-    Labour(std::string name, const Demand& demand, const Supply& supply);
-    Labour(std::string name, const Demand& demand, const Population& population);
-    Labour(std::string name, const Supply& supply, const Population& population);
-    Labour(std::string name, const Demand& demand, const Supply& supply, const Population& population);
+    Labour(const std::string name);
+    Labour(const std::string name, const Demand& demand);
+    Labour(const std::string name, const Supply& supply);
+    Labour(const std::string name, const Population& population);
+    Labour(const std::string name, const Demand& demand, const Supply& supply);
+    Labour(const std::string name, const Demand& demand, const Population& population);
+    Labour(const std::string name, const Supply& supply, const Population& population);
+    Labour(const std::string name, const Demand& demand, const Supply& supply, const Population& population);
 
     // Destructors
     ~Labour();

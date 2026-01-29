@@ -68,43 +68,43 @@ Population::Population(const float quantity, const short int scaling,
 
 }
 
-Population::Population(std::string name)
+Population::Population(const std::string name)
         : shp::Quantity(), name(name), growth(), geography() {
 
 }
 
-Population::Population(std::string name, const gis::Territory& geography)
+Population::Population(const std::string name, const gis::Territory& geography)
         : shp::Quantity(), name(name), growth(), geography(geography) {
 
 }
 
-Population::Population(std::string name,const float quantity)
+Population::Population(const std::string name,const float quantity)
         : shp::Quantity(quantity), name(name), growth(), geography() {
 
 }
 
-Population::Population(std::string name, const float quantity, const short int scaling)
+Population::Population(const std::string name, const float quantity, const short int scaling)
         : shp::Quantity(quantity, scaling), name(name), growth(), geography() {
 
 }
 
-Population::Population(std::string name, const float quantity, const shp::Unit& unit)
+Population::Population(const std::string name, const float quantity, const shp::Unit& unit)
         : shp::Quantity(quantity, unit), name(name), growth(), geography() {
 
 }
 
-Population::Population(std::string name, const float quantity, const short int scaling, const shp::Unit& unit)
+Population::Population(const std::string name, const float quantity, const short int scaling, const shp::Unit& unit)
         : shp::Quantity(quantity, scaling, unit), name(name), growth(), geography() {
 
 }
 
-Population::Population(std::string name, const float quantity, const short int scaling,
+Population::Population(const std::string name, const float quantity, const short int scaling,
         const shp::Unit& unit, const gis::Territory& geography)
         : shp::Quantity(quantity, scaling, unit), name(name), growth(), geography(geography) {
 
 }
 
-Population::Population(std::string name, const float quantity, const short int scaling,
+Population::Population(const std::string name, const float quantity, const short int scaling,
         const shp::Unit& unit, const Growth& growth, const gis::Territory& geography)
         : shp::Quantity(quantity, scaling, unit), name(name), growth(growth), geography(geography) {
 

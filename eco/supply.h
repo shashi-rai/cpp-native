@@ -21,9 +21,6 @@
 #ifndef ECO_SUPPLY_H
 #define ECO_SUPPLY_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "growth.h"
 
 namespace eco {
@@ -40,13 +37,13 @@ public:
     Supply(const float quantity, const shp::Unit& unit);
     Supply(const float quantity, const short int scaling, const shp::Unit& unit);
     Supply(const float quantity, const short int scaling, const shp::Unit& unit, const Growth& growth);
-    Supply(std::string name);
-    Supply(std::string name, const float quantity);
-    Supply(std::string name, const float quantity, const short int scaling);
-    Supply(std::string name, const float quantity, const shp::Unit& unit);
-    Supply(std::string name, const float quantity, const short int scaling, const shp::Unit& unit);
-    Supply(std::string name, const Growth& growth);
-    Supply(std::string name, const float quantity, const short int scaling, const shp::Unit& unit, const Growth& growth);
+    Supply(const std::string name);
+    Supply(const std::string name, const float quantity);
+    Supply(const std::string name, const float quantity, const short int scaling);
+    Supply(const std::string name, const float quantity, const shp::Unit& unit);
+    Supply(const std::string name, const float quantity, const short int scaling, const shp::Unit& unit);
+    Supply(const std::string name, const Growth& growth);
+    Supply(const std::string name, const float quantity, const short int scaling, const shp::Unit& unit, const Growth& growth);
 
     // Destructors
     ~Supply();
@@ -64,7 +61,7 @@ public:
     Growth getGrowth() const { return growth; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setName(const std::string name) { this->name = name; }
     void setGrowth(const Growth& object) { this->growth = object; }
 
     // Additional methods

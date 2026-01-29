@@ -18,51 +18,49 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef GIS_EARTH_H
-#define GIS_EARTH_H
+#ifndef GIS_INDOOR_H
+#define GIS_INDOOR_H
 
-#include "territory.h"
-#include "../grt/planet.h"
+#include <sstream>
+#include <vector>
 
 namespace gis {
 
-class Earth : public grt::Planet {
-    TerritoryArray territories;
+class Indoor {
+    std::string room;
+    std::string unit;
+    std::string floor;
 public:
     // Constructors
-    Earth();
-    Earth(const std::string name);
-    Earth(const std::string name, const TerritoryArray& objects);
+    Indoor();
 
     // Destructors
-    ~Earth();
+    ~Indoor();
 
     // Operator overloading
-    bool operator==(const Earth& peer) const;
-    Earth operator+(const Earth& peer) const;
-    Earth operator-(const Earth& peer) const;
-
-    // Access operator
-    Territory operator()(const int x) { return territories[x]; }
-    const Territory operator()(const int x) const { return territories[x]; }
+    bool operator==(const Indoor& peer) const;
 
     // Getters
-    TerritoryArray getTerritories() const { return territories; }
+    std::string getRoom() const { return room; }
+    std::string getUnit() const { return unit; }
+    std::string getFloor() const { return floor; }
 
     // Setters
-    void setTerritories(const TerritoryArray& objects) { this->territories = objects; }
+    void setRoom(const std::string name) { this->room = name; }
+    void setUnit(const std::string name) { this->unit = name; }
+    void setFloor(const std::string name) { this->floor = name; }
 
     // Additional methods
-    int getTerritoryCount() const;
-    Territory get(const int index) const;
-    void set(const int index, const Territory& object);
-    virtual Celestial copy();
+    virtual Indoor copy();
     virtual void clear();
     virtual std::string print();
+
+public:
+    static const std::string DEFAULT_VALUE;
 };
 
-typedef std::vector<Earth > EarthArray;
+typedef std::vector<Indoor > IndoorArray;
 
 } // namespace gis
 
-#endif //GIS_EARTH_H
+#endif //GIS_INDOOR_H

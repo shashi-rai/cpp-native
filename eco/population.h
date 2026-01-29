@@ -21,9 +21,6 @@
 #ifndef ECO_POPULATION_H
 #define ECO_POPULATION_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "growth.h"
 #include "../gis/territory.h"
 
@@ -44,14 +41,14 @@ public:
     Population(const float quantity, const shp::Unit& unit);
     Population(const float quantity, const short int scaling, const shp::Unit& unit);
     Population(const float quantity, const short int scaling, const shp::Unit& unit, const gis::Territory& geography);
-    Population(std::string name);
-    Population(std::string name, const float quantity);
-    Population(std::string name, const float quantity, const short int scaling);
-    Population(std::string name, const float quantity, const shp::Unit& unit);
-    Population(std::string name, const float quantity, const short int scaling, const shp::Unit& unit);
-    Population(std::string name, const gis::Territory& geography);
-    Population(std::string name, const float quantity, const short int scaling, const shp::Unit& unit, const gis::Territory& geography);
-    Population(std::string name, const float quantity, const short int scaling, const shp::Unit& unit, const Growth& growth, const gis::Territory& geography);
+    Population(const std::string name);
+    Population(const std::string name, const float quantity);
+    Population(const std::string name, const float quantity, const short int scaling);
+    Population(const std::string name, const float quantity, const shp::Unit& unit);
+    Population(const std::string name, const float quantity, const short int scaling, const shp::Unit& unit);
+    Population(const std::string name, const gis::Territory& geography);
+    Population(const std::string name, const float quantity, const short int scaling, const shp::Unit& unit, const gis::Territory& geography);
+    Population(const std::string name, const float quantity, const short int scaling, const shp::Unit& unit, const Growth& growth, const gis::Territory& geography);
 
     // Destructors
     ~Population();
@@ -70,7 +67,7 @@ public:
     gis::Territory getGeography() const { return geography; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setName(const std::string name) { this->name = name; }
     void setGrowth(const Growth& object) { this->growth = object; }
     void setGeography(const gis::Territory& object) { this->geography = object; }
 

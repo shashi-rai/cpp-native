@@ -21,9 +21,6 @@
 #ifndef ECO_MARKET_H
 #define ECO_MARKET_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "demand.h"
 #include "supply.h"
 #include "population.h"
@@ -45,14 +42,14 @@ public:
     Market(const Demand& demand, const Population& population);
     Market(const Supply& supply, const Population& population);
     Market(const Demand& demand, const Supply& supply, const Population& population);
-    Market(std::string name);
-    Market(std::string name, const Demand& demand);
-    Market(std::string name, const Supply& supply);
-    Market(std::string name, const Population& population);
-    Market(std::string name, const Demand& demand, const Supply& supply);
-    Market(std::string name, const Demand& demand, const Population& population);
-    Market(std::string name, const Supply& supply, const Population& population);
-    Market(std::string name, const Demand& demand, const Supply& supply, const Population& population);
+    Market(const std::string name);
+    Market(const std::string name, const Demand& demand);
+    Market(const std::string name, const Supply& supply);
+    Market(const std::string name, const Population& population);
+    Market(const std::string name, const Demand& demand, const Supply& supply);
+    Market(const std::string name, const Demand& demand, const Population& population);
+    Market(const std::string name, const Supply& supply, const Population& population);
+    Market(const std::string name, const Demand& demand, const Supply& supply, const Population& population);
 
     // Destructors
     ~Market();
@@ -67,7 +64,7 @@ public:
     Population getPopulation() const { return population; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setName(const std::string name) { this->name = name; }
     void setDemand(const Demand& object) { this->demand = object; }
     void setSupply(const Supply& object) { this->supply = object; }
     void setPopulation(const Population& object) { this->population = object; }

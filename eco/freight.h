@@ -21,9 +21,6 @@
 #ifndef ECO_FREIGHT_H
 #define ECO_FREIGHT_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "market.h"
 
 namespace eco {
@@ -40,14 +37,14 @@ public:
     Freight(const Demand& demand, const Population& population);
     Freight(const Supply& supply, const Population& population);
     Freight(const Demand& demand, const Supply& supply, const Population& population);
-    Freight(std::string name);
-    Freight(std::string name, const Demand& demand);
-    Freight(std::string name, const Supply& supply);
-    Freight(std::string name, const Population& population);
-    Freight(std::string name, const Demand& demand, const Supply& supply);
-    Freight(std::string name, const Demand& demand, const Population& population);
-    Freight(std::string name, const Supply& supply, const Population& population);
-    Freight(std::string name, const Demand& demand, const Supply& supply, const Population& population);
+    Freight(const std::string name);
+    Freight(const std::string name, const Demand& demand);
+    Freight(const std::string name, const Supply& supply);
+    Freight(const std::string name, const Population& population);
+    Freight(const std::string name, const Demand& demand, const Supply& supply);
+    Freight(const std::string name, const Demand& demand, const Population& population);
+    Freight(const std::string name, const Supply& supply, const Population& population);
+    Freight(const std::string name, const Demand& demand, const Supply& supply, const Population& population);
 
     // Destructors
     ~Freight();

@@ -36,67 +36,67 @@ Item::Item(const shp::Quantity& quantity)
 
 }
 
-Item::Item(std::string name)
+Item::Item(const std::string name)
         : name(name), code(), cost(), sale(), batch(), quantity() {
 
 }
 
-Item::Item(std::string name, const float quantity)
+Item::Item(const std::string name, const float quantity)
         : name(name), code(), cost(), sale(), batch(), quantity(quantity) {
 
 }
 
-Item::Item(std::string name, const shp::Quantity& quantity)
+Item::Item(const std::string name, const shp::Quantity& quantity)
         : name(name), code(), cost(), sale(), batch(), quantity(quantity) {
 
 }
 
-Item::Item(std::string name, std::string code)
+Item::Item(const std::string name, const std::string code)
         : name(name), code(code), cost(), sale(), batch(), quantity() {
 
 }
 
-Item::Item(std::string name, std::string code, const float quantity)
+Item::Item(const std::string name, const std::string code, const float quantity)
         : name(name), code(code), cost(), sale(), batch(), quantity(quantity) {
 
 }
 
-Item::Item(std::string name, std::string code, const shp::Quantity& quantity)
+Item::Item(const std::string name, const std::string code, const shp::Quantity& quantity)
         : name(name), code(code), cost(), sale(), batch(), quantity(quantity) {
 
 }
 
-Item::Item(std::string name, std::string code, const Batch& batch, const shp::Quantity& quantity)
+Item::Item(const std::string name, const std::string code, const Batch& batch, const shp::Quantity& quantity)
         : name(name), code(code), cost(), sale(), batch(batch), quantity(quantity) {
 
 }
 
-Item::Item(std::string name, std::string code, const shp::Quantity& quantity, const Cost& cost)
+Item::Item(const std::string name, const std::string code, const shp::Quantity& quantity, const Cost& cost)
         : name(name), code(code), cost(cost), sale(), batch(), quantity(quantity) {
 
 }
 
-Item::Item(std::string name, std::string code, const shp::Quantity& quantity, const Sale& sale)
+Item::Item(const std::string name, const std::string code, const shp::Quantity& quantity, const Sale& sale)
         : name(name), code(code), cost(), sale(sale), batch(), quantity(quantity) {
 
 }
 
-Item::Item(std::string name, std::string code, const shp::Quantity& quantity, const Cost& cost, const Sale& sale)
+Item::Item(const std::string name, const std::string code, const shp::Quantity& quantity, const Cost& cost, const Sale& sale)
         : name(name), code(code), cost(cost), sale(sale), batch(), quantity(quantity) {
 
 }
 
-Item::Item(std::string name, std::string code, const Batch& batch, const shp::Quantity& quantity, const Cost& cost)
+Item::Item(const std::string name, const std::string code, const Batch& batch, const shp::Quantity& quantity, const Cost& cost)
         : name(name), code(code), cost(cost), sale(), batch(batch), quantity(quantity) {
 
 }
 
-Item::Item(std::string name, std::string code, const Batch& batch, const shp::Quantity& quantity, const Sale& sale)
+Item::Item(const std::string name, const std::string code, const Batch& batch, const shp::Quantity& quantity, const Sale& sale)
         : name(name), code(code), cost(), sale(sale), batch(batch), quantity(quantity) {
 
 }
 
-Item::Item(std::string name, std::string code, const Batch& batch, const shp::Quantity& quantity, const Cost& cost, const Sale& sale)
+Item::Item(const std::string name, const std::string code, const Batch& batch, const shp::Quantity& quantity, const Cost& cost, const Sale& sale)
         : name(name), code(code), cost(cost), sale(sale), batch(batch), quantity(quantity) {
 
 }

@@ -21,9 +21,6 @@
 #ifndef FIN_INDEX_H
 #define FIN_INDEX_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "../act/asset.h"
 
 namespace fin {
@@ -33,11 +30,11 @@ class Index : public act::Asset {
 public:
     // Constructors
     Index();
-    Index(std::string name);
-    Index(std::string name, const float value);
+    Index(const std::string name);
+    Index(const std::string name, const float value);
     Index(const act::AssetArray& assets);
-    Index(std::string name, const act::AssetArray& assets);
-    Index(std::string name, const float value, const act::AssetArray& assets);
+    Index(const std::string name, const act::AssetArray& assets);
+    Index(const std::string name, const float value, const act::AssetArray& assets);
 
     // Destructors
     ~Index();
@@ -48,8 +45,8 @@ public:
     Index operator-(const Index& peer) const;
 
     // Access operator
-    act::Asset& operator()(int x) { return assets[x]; }
-    const act::Asset& operator()(int x) const { return assets[x]; }
+    act::Asset& operator()(const int x) { return assets[x]; }
+    const act::Asset& operator()(const int x) const { return assets[x]; }
 
     // Getters
     act::AssetArray getAssets() const { return assets; }
@@ -59,8 +56,8 @@ public:
 
     // Additional methods
     int getAssetCount() const;
-    act::Asset get(int index) const;
-    void set(int index, const act::Asset& object);
+    act::Asset get(const int index) const;
+    void set(const int index, const act::Asset& object);
     virtual act::Amount copy();
     virtual void clear();
     virtual std::string print();

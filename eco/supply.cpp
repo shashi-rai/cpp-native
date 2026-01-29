@@ -57,37 +57,37 @@ Supply::Supply(const float quantity, const short int scaling,
 
 }
 
-Supply::Supply(std::string name)
+Supply::Supply(const std::string name)
         : shp::Quantity(), name(name), growth() {
 
 }
 
-Supply::Supply(std::string name, const Growth& growth)
+Supply::Supply(const std::string name, const Growth& growth)
         : shp::Quantity(), name(name), growth(growth) {
 
 }
 
-Supply::Supply(std::string name,const float quantity)
+Supply::Supply(const std::string name,const float quantity)
         : shp::Quantity(quantity), name(name), growth() {
 
 }
 
-Supply::Supply(std::string name, const float quantity, const short int scaling)
+Supply::Supply(const std::string name, const float quantity, const short int scaling)
         : shp::Quantity(quantity, scaling), name(name), growth() {
 
 }
 
-Supply::Supply(std::string name, const float quantity, const shp::Unit& unit)
+Supply::Supply(const std::string name, const float quantity, const shp::Unit& unit)
         : shp::Quantity(quantity, unit), name(name), growth() {
 
 }
 
-Supply::Supply(std::string name, const float quantity, const short int scaling, const shp::Unit& unit)
+Supply::Supply(const std::string name, const float quantity, const short int scaling, const shp::Unit& unit)
         : shp::Quantity(quantity, scaling, unit), name(name), growth() {
 
 }
 
-Supply::Supply(std::string name, const float quantity, const short int scaling,
+Supply::Supply(const std::string name, const float quantity, const short int scaling,
         const shp::Unit& unit, const Growth& growth)
         : shp::Quantity(quantity, scaling, unit), name(name), growth(growth) {
 

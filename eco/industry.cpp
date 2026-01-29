@@ -62,42 +62,42 @@ Industry::Industry(const Labour& labour, const Material& material, const Freight
 
 }
 
-Industry::Industry(std::string name)
+Industry::Industry(const std::string name)
         : name(name), labour(), material(), freight() {
 
 }
 
-Industry::Industry(std::string name, const Labour& labour)
+Industry::Industry(const std::string name, const Labour& labour)
         : name(name), labour(labour), material(), freight() {
 
 }
 
-Industry::Industry(std::string name, const Material& material)
+Industry::Industry(const std::string name, const Material& material)
         : name(name), labour(), material(material), freight() {
 
 }
 
-Industry::Industry(std::string name, const Freight& freight)
+Industry::Industry(const std::string name, const Freight& freight)
         : name(name), labour(), material(), freight(freight) {
 
 }
 
-Industry::Industry(std::string name, const Labour& labour, const Material& material)
+Industry::Industry(const std::string name, const Labour& labour, const Material& material)
         : name(name), labour(labour), material(material), freight() {
 
 }
 
-Industry::Industry(std::string name, const Labour& labour, const Freight& freight)
+Industry::Industry(const std::string name, const Labour& labour, const Freight& freight)
         : name(name), labour(labour), material(), freight(freight) {
 
 }
 
-Industry::Industry(std::string name, const Material& material, const Freight& freight)
+Industry::Industry(const std::string name, const Material& material, const Freight& freight)
         : name(name), labour(), material(material), freight(freight) {
 
 }
 
-Industry::Industry(std::string name, const Labour& labour, const Material& material, const Freight& freight)
+Industry::Industry(const std::string name, const Labour& labour, const Material& material, const Freight& freight)
         : name(name), labour(labour), material(material), freight(freight) {
 
 }

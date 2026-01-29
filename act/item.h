@@ -21,9 +21,6 @@
 #ifndef ACT_ITEM_H
 #define ACT_ITEM_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "batch.h"
 #include "cost.h"
 #include "sale.h"
@@ -43,19 +40,19 @@ public:
     Item();
     Item(const float quantity);
     Item(const shp::Quantity& quantity);
-    Item(std::string name);
-    Item(std::string name, const float quantity);
-    Item(std::string name, const shp::Quantity& quantity);
-    Item(std::string name, std::string code);
-    Item(std::string name, std::string code, const float quantity);
-    Item(std::string name, std::string code, const shp::Quantity& quantity);
-    Item(std::string name, std::string code, const Batch& batch, const shp::Quantity& quantity);
-    Item(std::string name, std::string code, const shp::Quantity& quantity, const Cost& cost);
-    Item(std::string name, std::string code, const shp::Quantity& quantity, const Sale& sale);
-    Item(std::string name, std::string code, const shp::Quantity& quantity, const Cost& cost, const Sale& sale);
-    Item(std::string name, std::string code, const Batch& batch, const shp::Quantity& quantity, const Cost& cost);
-    Item(std::string name, std::string code, const Batch& batch, const shp::Quantity& quantity, const Sale& sale);
-    Item(std::string name, std::string code, const Batch& batch, const shp::Quantity& quantity, const Cost& cost, const Sale& sale);
+    Item(const std::string name);
+    Item(const std::string name, const float quantity);
+    Item(const std::string name, const shp::Quantity& quantity);
+    Item(const std::string name, const std::string code);
+    Item(const std::string name, const std::string code, const float quantity);
+    Item(const std::string name, const std::string code, const shp::Quantity& quantity);
+    Item(const std::string name, const std::string code, const Batch& batch, const shp::Quantity& quantity);
+    Item(const std::string name, const std::string code, const shp::Quantity& quantity, const Cost& cost);
+    Item(const std::string name, const std::string code, const shp::Quantity& quantity, const Sale& sale);
+    Item(const std::string name, const std::string code, const shp::Quantity& quantity, const Cost& cost, const Sale& sale);
+    Item(const std::string name, const std::string code, const Batch& batch, const shp::Quantity& quantity, const Cost& cost);
+    Item(const std::string name, const std::string code, const Batch& batch, const shp::Quantity& quantity, const Sale& sale);
+    Item(const std::string name, const std::string code, const Batch& batch, const shp::Quantity& quantity, const Cost& cost, const Sale& sale);
 
     // Destructors
     ~Item();
@@ -77,8 +74,8 @@ public:
     shp::Quantity getQuantity() const { return quantity; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
-    void setCode(const std::string& number) { this->code = number; }
+    void setName(const std::string name) { this->name = name; }
+    void setCode(const std::string number) { this->code = number; }
     void setCost(const Cost& object) { this->cost = object; }
     void setSale(const Sale& object) { this->sale = object; }
     void setBatch(const Batch& object) { this->batch = object; }

@@ -21,8 +21,6 @@
 #ifndef FIN_FUTURE_H
 #define FIN_FUTURE_H
 
-#include <string>
-#include <vector>
 #include "securities.h"
 #include "../act/asset.h"
 #include "../act/price.h"
@@ -35,7 +33,7 @@ class Future : public Securities {
 public:
     // Constructors
     Future();
-    Future(std::string name);
+    Future(const std::string name);
     Future(const act::Contract& contract);
     Future(const act::Asset& underlying);
     Future(const act::Price& strike);
@@ -43,13 +41,13 @@ public:
     Future(const act::Contract& contract, const act::Asset& underlying);
     Future(const act::Contract& contract, const act::Price& strike);
     Future(const act::Contract& contract, const act::Asset& underlying, const act::Price& strike);
-    Future(std::string name, const act::Contract& contract);
-    Future(std::string name, const act::Asset& underlying);
-    Future(std::string name, const act::Price& strike);
-    Future(std::string name, const act::Asset& underlying, const act::Price& strike);
-    Future(std::string name, const act::Contract& contract, const act::Asset& underlying);
-    Future(std::string name, const act::Contract& contract, const act::Price& strike);
-    Future(std::string name, const act::Contract& contract, const act::Asset& underlying, const act::Price& strike);
+    Future(const std::string name, const act::Contract& contract);
+    Future(const std::string name, const act::Asset& underlying);
+    Future(const std::string name, const act::Price& strike);
+    Future(const std::string name, const act::Asset& underlying, const act::Price& strike);
+    Future(const std::string name, const act::Contract& contract, const act::Asset& underlying);
+    Future(const std::string name, const act::Contract& contract, const act::Price& strike);
+    Future(const std::string name, const act::Contract& contract, const act::Asset& underlying, const act::Price& strike);
 
     // Destructors
     ~Future();

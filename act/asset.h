@@ -21,9 +21,6 @@
 #ifndef ACT_ASSET_H
 #define ACT_ASSET_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "amount.h"
 #include "depreciation.h"
 #include "../doc/document.h"
@@ -38,14 +35,14 @@ public:
     // Constructors
     Asset();
     Asset(const float value);
-    Asset(std::string name);
+    Asset(const std::string name);
     Asset(const doc::Document& registration);
-    Asset(std::string name, const doc::Document& registration);
-    Asset(std::string name, const float value);
-    Asset(std::string name, std::string remarks);
-    Asset(std::string name, const Currency& currency, std::string remarks);
-    Asset(std::string name, const float value, const Currency& currency, std::string remarks);
-    Asset(std::string name, const long datetime, const float value, const Currency& currency, std::string remarks);
+    Asset(const std::string name, const doc::Document& registration);
+    Asset(const std::string name, const float value);
+    Asset(const std::string name, const std::string remarks);
+    Asset(const std::string name, const Currency& currency, const std::string remarks);
+    Asset(const std::string name, const float value, const Currency& currency, const std::string remarks);
+    Asset(const std::string name, const long datetime, const float value, const Currency& currency, const std::string remarks);
 
     // Destructors
     ~Asset();
@@ -64,7 +61,7 @@ public:
     Depreciation getDepreciation() const { return depreciation; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setName(const std::string name) { this->name = name; }
     void setRegistration(const doc::Document& document) { this->registration = document; }
     void setDepreciation(const Depreciation& valued) { this->depreciation = valued; }
 

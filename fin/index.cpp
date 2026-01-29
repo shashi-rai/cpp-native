@@ -26,12 +26,12 @@ Index::Index() : act::Asset(), assets() {
 
 }
 
-Index::Index(std::string name)
+Index::Index(const std::string name)
         : act::Asset(name), assets() {
 
 }
 
-Index::Index(std::string name, const float value)
+Index::Index(const std::string name, const float value)
         : act::Asset(name, value), assets() {
 
 }
@@ -41,12 +41,12 @@ Index::Index(const act::AssetArray& assets)
 
 }
 
-Index::Index(std::string name, const act::AssetArray& assets)
+Index::Index(const std::string name, const act::AssetArray& assets)
         : act::Asset(name), assets(assets) {
 
 }
 
-Index::Index(std::string name, const float value, const act::AssetArray& assets)
+Index::Index(const std::string name, const float value, const act::AssetArray& assets)
         : act::Asset(name, value), assets(assets) {
 
 }
@@ -81,7 +81,7 @@ int Index::getAssetCount() const {
     return assets.size();
 }
 
-act::Asset Index::get(int index) const {
+act::Asset Index::get(const int index) const {
     act::Asset result;
     if (index < 0) {
         return result;
@@ -92,7 +92,7 @@ act::Asset Index::get(int index) const {
     return assets[index];
 }
 
-void Index::set(int index, const act::Asset& object) {
+void Index::set(const int index, const act::Asset& object) {
     if (index < 0) {
         return;
     }

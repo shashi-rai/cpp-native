@@ -26,11 +26,11 @@ Earth::Earth() : grt::Planet(), territories() {
 
 }
 
-Earth::Earth(std::string name) : grt::Planet(name), territories() {
+Earth::Earth(const std::string name) : grt::Planet(name), territories() {
 
 }
 
-Earth::Earth(std::string name, const TerritoryArray& territories)
+Earth::Earth(const std::string name, const TerritoryArray& territories)
         : grt::Planet(name), territories(territories) {
 
 }
@@ -64,7 +64,7 @@ int Earth::getTerritoryCount() const {
     return territories.size();
 }
 
-Territory Earth::get(int index) const {
+Territory Earth::get(const int index) const {
     Territory result;
     if (index < 0) {
         return result;
@@ -75,7 +75,7 @@ Territory Earth::get(int index) const {
     return territories[index];
 }
 
-void Earth::set(int index, const Territory& object) {
+void Earth::set(const int index, const Territory& object) {
     if (index < 0) {
         return;
     }

@@ -21,9 +21,6 @@
 #ifndef ECO_DEMAND_H
 #define ECO_DEMAND_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "growth.h"
 
 namespace eco {
@@ -40,13 +37,13 @@ public:
     Demand(const float quantity, const shp::Unit& unit);
     Demand(const float quantity, const short int scaling, const shp::Unit& unit);
     Demand(const float quantity, const short int scaling, const shp::Unit& unit, const Growth& growth);
-    Demand(std::string name);
-    Demand(std::string name, const float quantity);
-    Demand(std::string name, const float quantity, const short int scaling);
-    Demand(std::string name, const float quantity, const shp::Unit& unit);
-    Demand(std::string name, const float quantity, const short int scaling, const shp::Unit& unit);
-    Demand(std::string name, const Growth& growth);
-    Demand(std::string name, const float quantity, const short int scaling, const shp::Unit& unit, const Growth& growth);
+    Demand(const std::string name);
+    Demand(const std::string name, const float quantity);
+    Demand(const std::string name, const float quantity, const short int scaling);
+    Demand(const std::string name, const float quantity, const shp::Unit& unit);
+    Demand(const std::string name, const float quantity, const short int scaling, const shp::Unit& unit);
+    Demand(const std::string name, const Growth& growth);
+    Demand(const std::string name, const float quantity, const short int scaling, const shp::Unit& unit, const Growth& growth);
 
     // Destructors
     ~Demand();
@@ -64,7 +61,7 @@ public:
     Growth getGrowth() const { return growth; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setName(const std::string name) { this->name = name; }
     void setGrowth(const Growth& object) { this->growth = object; }
 
     // Additional methods

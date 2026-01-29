@@ -62,42 +62,42 @@ Economy::Economy(const Demand& demand, const Supply& supply, const Population& p
 
 }
 
-Economy::Economy(std::string name)
+Economy::Economy(const std::string name)
         : Market(name), currency() {
 
 }
 
-Economy::Economy(std::string name, const Demand& demand)
+Economy::Economy(const std::string name, const Demand& demand)
         : Market(name, demand), currency() {
 
 }
 
-Economy::Economy(std::string name, const Supply& supply)
+Economy::Economy(const std::string name, const Supply& supply)
         : Market(name, supply), currency() {
 
 }
 
-Economy::Economy(std::string name, const Population& population)
+Economy::Economy(const std::string name, const Population& population)
         : Market(name, population), currency() {
 
 }
 
-Economy::Economy(std::string name, const Demand& demand, const Supply& supply)
+Economy::Economy(const std::string name, const Demand& demand, const Supply& supply)
         : Market(name, demand, supply), currency() {
 
 }
 
-Economy::Economy(std::string name, const Demand& demand, const Population& population)
+Economy::Economy(const std::string name, const Demand& demand, const Population& population)
         : Market(name, demand, population), currency() {
 
 }
 
-Economy::Economy(std::string name, const Supply& supply, const Population& population)
+Economy::Economy(const std::string name, const Supply& supply, const Population& population)
         : Market(name, supply, population), currency() {
 
 }
 
-Economy::Economy(std::string name, const Demand& demand, const Supply& supply, const Population& population)
+Economy::Economy(const std::string name, const Demand& demand, const Supply& supply, const Population& population)
         : Market(name, demand, supply, population), currency() {
 
 }

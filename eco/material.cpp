@@ -62,42 +62,42 @@ Material::Material(const Demand& demand, const Supply& supply, const Population&
 
 }
 
-Material::Material(std::string name)
+Material::Material(const std::string name)
         : Market(name) {
 
 }
 
-Material::Material(std::string name, const Demand& demand)
+Material::Material(const std::string name, const Demand& demand)
         : Market(name, demand) {
 
 }
 
-Material::Material(std::string name, const Supply& supply)
+Material::Material(const std::string name, const Supply& supply)
         : Market(name, supply) {
 
 }
 
-Material::Material(std::string name, const Population& population)
+Material::Material(const std::string name, const Population& population)
         : Market(name, population) {
 
 }
 
-Material::Material(std::string name, const Demand& demand, const Supply& supply)
+Material::Material(const std::string name, const Demand& demand, const Supply& supply)
         : Market(name, demand, supply) {
 
 }
 
-Material::Material(std::string name, const Demand& demand, const Population& population)
+Material::Material(const std::string name, const Demand& demand, const Population& population)
         : Market(name, demand, population) {
 
 }
 
-Material::Material(std::string name, const Supply& supply, const Population& population)
+Material::Material(const std::string name, const Supply& supply, const Population& population)
         : Market(name, supply, population) {
 
 }
 
-Material::Material(std::string name, const Demand& demand, const Supply& supply, const Population& population)
+Material::Material(const std::string name, const Demand& demand, const Supply& supply, const Population& population)
         : Market(name, demand, supply, population) {
 
 }

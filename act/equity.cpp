@@ -31,7 +31,7 @@ Equity::Equity(const float value)
 
 }
 
-Equity::Equity(std::string name)
+Equity::Equity(const std::string name)
         : Amount(), name(name), registration(), dividend() {
 
 }
@@ -41,35 +41,35 @@ Equity::Equity(const doc::Document& registration)
 
 }
 
-Equity::Equity(std::string name, const doc::Document& registration)
+Equity::Equity(const std::string name, const doc::Document& registration)
         : Amount(), name(name), registration(registration), dividend() {
 
 }
 
-Equity::Equity(std::string name, const float value)
+Equity::Equity(const std::string name, const float value)
         : Amount(value), name(name), registration(), dividend() {
 
 }
 
-Equity::Equity(std::string name, std::string remarks)
+Equity::Equity(const std::string name, const std::string remarks)
         : Amount(remarks), name(name), registration(), dividend() {
 
 }
 
-Equity::Equity(std::string name,
-        const Currency& currency, std::string remarks)
+Equity::Equity(const std::string name,
+        const Currency& currency, const std::string remarks)
         : Amount(currency, remarks), name(name), registration(), dividend() {
 
 }
 
-Equity::Equity(std::string name, const float value,
-        const Currency& currency, std::string remarks)
+Equity::Equity(const std::string name, const float value,
+        const Currency& currency, const std::string remarks)
         : Amount(value, currency, remarks), name(name), registration(), dividend() {
 
 }
 
-Equity::Equity(std::string name, const long datetime, const float value,
-        const Currency& currency, std::string remarks)
+Equity::Equity(const std::string name, const long datetime, const float value,
+        const Currency& currency, const std::string remarks)
         : Amount(datetime, value, currency, remarks), name(name), registration(), dividend() {
 
 }

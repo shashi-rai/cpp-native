@@ -34,9 +34,9 @@ class Location {
 public:
     // Constructors
     Location();
-    Location(double latitude, double longitude);
-    Location(double latitude, double longitude, long timestamp);
-    Location(double latitude, double longitude, double altitude, long updated);
+    Location(const double latitude, const double longitude);
+    Location(const double latitude, const double longitude, const long timestamp);
+    Location(const double latitude, const double longitude, const double altitude, const long updated);
 
     // Destructors
     ~Location();
@@ -53,10 +53,10 @@ public:
     long getUpdated() const { return updated; }
 
     // Setters
-    void setLatitude(double value) { latitude = value; }
-    void setLongitude(double value) { longitude = value; }
-    void setAltitude(double value) { altitude = value; }
-    void setUpdated(long timestamp) { updated = timestamp; }
+    void setLatitude(const double value) { this->latitude = value; }
+    void setLongitude(const double value) { this->longitude = value; }
+    void setAltitude(const double value) { this->altitude = value; }
+    void setUpdated(const long timestamp) { this->updated = timestamp; }
 
     // Additional methods
     virtual Location copy();

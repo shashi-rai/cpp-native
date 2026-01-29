@@ -21,9 +21,6 @@
 #ifndef ECO_MATERIAL_H
 #define ECO_MATERIAL_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "market.h"
 
 namespace eco {
@@ -40,14 +37,14 @@ public:
     Material(const Demand& demand, const Population& population);
     Material(const Supply& supply, const Population& population);
     Material(const Demand& demand, const Supply& supply, const Population& population);
-    Material(std::string name);
-    Material(std::string name, const Demand& demand);
-    Material(std::string name, const Supply& supply);
-    Material(std::string name, const Population& population);
-    Material(std::string name, const Demand& demand, const Supply& supply);
-    Material(std::string name, const Demand& demand, const Population& population);
-    Material(std::string name, const Supply& supply, const Population& population);
-    Material(std::string name, const Demand& demand, const Supply& supply, const Population& population);
+    Material(const std::string name);
+    Material(const std::string name, const Demand& demand);
+    Material(const std::string name, const Supply& supply);
+    Material(const std::string name, const Population& population);
+    Material(const std::string name, const Demand& demand, const Supply& supply);
+    Material(const std::string name, const Demand& demand, const Population& population);
+    Material(const std::string name, const Supply& supply, const Population& population);
+    Material(const std::string name, const Demand& demand, const Supply& supply, const Population& population);
 
     // Destructors
     ~Material();

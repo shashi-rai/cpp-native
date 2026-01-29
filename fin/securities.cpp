@@ -27,7 +27,7 @@ Securities::Securities()
 
 }
 
-Securities::Securities(std::string name)
+Securities::Securities(const std::string name)
         : act::Item(name), contract(), maturity(), coupons() {
 
 }
@@ -52,22 +52,22 @@ Securities::Securities(const act::DateTime& maturity, const act::CouponArray& co
 
 }
 
-Securities::Securities(std::string name, const act::Contract& contract)
+Securities::Securities(const std::string name, const act::Contract& contract)
         : act::Item(name), contract(contract), maturity(), coupons() {
 
 }
 
-Securities::Securities(std::string name, const act::DateTime& maturity)
+Securities::Securities(const std::string name, const act::DateTime& maturity)
         : act::Item(name), contract(), maturity(maturity), coupons() {
 
 }
 
-Securities::Securities(std::string name, const act::CouponArray& coupons)
+Securities::Securities(const std::string name, const act::CouponArray& coupons)
         : act::Item(name), contract(), maturity(), coupons(coupons) {
 
 }
 
-Securities::Securities(std::string name, const act::DateTime& maturity,
+Securities::Securities(const std::string name, const act::DateTime& maturity,
         const act::CouponArray& coupons)
         : act::Item(name), contract(), maturity(maturity), coupons(coupons) {
 
@@ -89,17 +89,17 @@ Securities::Securities(const act::Contract& contract, const act::DateTime& matur
 
 }
 
-Securities::Securities(std::string name, const act::Contract& contract, const act::DateTime& maturity)
+Securities::Securities(const std::string name, const act::Contract& contract, const act::DateTime& maturity)
         : act::Item(name), contract(contract), maturity(maturity), coupons() {
 
 }
 
-Securities::Securities(std::string name, const act::Contract& contract, const act::CouponArray& coupons)
+Securities::Securities(const std::string name, const act::Contract& contract, const act::CouponArray& coupons)
         : act::Item(name), contract(contract), maturity(), coupons(coupons) {
 
 }
 
-Securities::Securities(std::string name, const act::Contract& contract, const act::DateTime& maturity,
+Securities::Securities(const std::string name, const act::Contract& contract, const act::DateTime& maturity,
         const act::CouponArray& coupons)
         : act::Item(name), contract(contract), maturity(maturity), coupons(coupons) {
 
@@ -137,7 +137,7 @@ int Securities::getCouponCount() const {
     return coupons.size();
 }
 
-act::Coupon Securities::get(int index) const {
+act::Coupon Securities::get(const int index) const {
     act::Coupon result;
     if (index < 0) {
         return result;
@@ -148,7 +148,7 @@ act::Coupon Securities::get(int index) const {
     return coupons[index];
 }
 
-void Securities::set(int index, const act::Coupon& object) {
+void Securities::set(const int index, const act::Coupon& object) {
     if (index < 0) {
         return;
     }

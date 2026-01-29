@@ -31,19 +31,19 @@ Location::Location()
 
 }
 
-Location::Location(double latitude, double longitude)
+Location::Location(const double latitude, const double longitude)
     : latitude(latitude), longitude(longitude), altitude(DEFAULT_VALUE),
     updated(DEFAULT_TIME) {
 
 }
 
-Location::Location(double latitude, double longitude, long updated)
+Location::Location(const double latitude, const double longitude, const long updated)
     : latitude(latitude), longitude(longitude), altitude(DEFAULT_VALUE),
     updated(updated) {
 
 }
 
-Location::Location(double latitude, double longitude, double altitude, long updated)
+Location::Location(const double latitude, const double longitude, const double altitude, const long updated)
     : latitude(latitude), longitude(longitude), altitude(altitude), updated(updated) {
 
 }

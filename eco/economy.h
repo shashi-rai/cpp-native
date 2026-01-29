@@ -21,9 +21,6 @@
 #ifndef ECO_ECONOMY_H
 #define ECO_ECONOMY_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "market.h"
 #include "../act/currency.h"
 
@@ -41,14 +38,14 @@ public:
     Economy(const Demand& demand, const Population& population);
     Economy(const Supply& supply, const Population& population);
     Economy(const Demand& demand, const Supply& supply, const Population& population);
-    Economy(std::string name);
-    Economy(std::string name, const Demand& demand);
-    Economy(std::string name, const Supply& supply);
-    Economy(std::string name, const Population& population);
-    Economy(std::string name, const Demand& demand, const Supply& supply);
-    Economy(std::string name, const Demand& demand, const Population& population);
-    Economy(std::string name, const Supply& supply, const Population& population);
-    Economy(std::string name, const Demand& demand, const Supply& supply, const Population& population);
+    Economy(const std::string name);
+    Economy(const std::string name, const Demand& demand);
+    Economy(const std::string name, const Supply& supply);
+    Economy(const std::string name, const Population& population);
+    Economy(const std::string name, const Demand& demand, const Supply& supply);
+    Economy(const std::string name, const Demand& demand, const Population& population);
+    Economy(const std::string name, const Supply& supply, const Population& population);
+    Economy(const std::string name, const Demand& demand, const Supply& supply, const Population& population);
 
     // Destructors
     ~Economy();

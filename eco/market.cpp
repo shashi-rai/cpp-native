@@ -62,42 +62,42 @@ Market::Market(const Demand& demand, const Supply& supply, const Population& pop
 
 }
 
-Market::Market(std::string name)
+Market::Market(const std::string name)
         : name(name), demand(), supply(), population() {
 
 }
 
-Market::Market(std::string name, const Demand& demand)
+Market::Market(const std::string name, const Demand& demand)
         : name(name), demand(demand), supply(), population() {
 
 }
 
-Market::Market(std::string name, const Supply& supply)
+Market::Market(const std::string name, const Supply& supply)
         : name(name), demand(), supply(supply), population() {
 
 }
 
-Market::Market(std::string name, const Population& population)
+Market::Market(const std::string name, const Population& population)
         : name(name), demand(), supply(), population(population) {
 
 }
 
-Market::Market(std::string name, const Demand& demand, const Supply& supply)
+Market::Market(const std::string name, const Demand& demand, const Supply& supply)
         : name(name), demand(demand), supply(supply), population() {
 
 }
 
-Market::Market(std::string name, const Demand& demand, const Population& population)
+Market::Market(const std::string name, const Demand& demand, const Population& population)
         : name(name), demand(demand), supply(), population(population) {
 
 }
 
-Market::Market(std::string name, const Supply& supply, const Population& population)
+Market::Market(const std::string name, const Supply& supply, const Population& population)
         : name(name), demand(), supply(supply), population(population) {
 
 }
 
-Market::Market(std::string name, const Demand& demand, const Supply& supply, const Population& population)
+Market::Market(const std::string name, const Demand& demand, const Supply& supply, const Population& population)
         : name(name), demand(demand), supply(supply), population(population) {
 
 }

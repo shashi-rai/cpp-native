@@ -67,37 +67,37 @@ Option::Option(const act::Contract& contract, const act::Asset& underlying,
 
 }
 
-Option::Option(std::string name, const act::Contract& contract)
+Option::Option(const std::string name, const act::Contract& contract)
         : Securities(name, contract), underlying(), strike() {
 
 }
 
-Option::Option(std::string name, const act::Asset& underlying)
+Option::Option(const std::string name, const act::Asset& underlying)
         : Securities(name), underlying(underlying), strike() {
 
 }
 
-Option::Option(std::string name, const act::Price& strike)
+Option::Option(const std::string name, const act::Price& strike)
         : Securities(name), underlying(), strike(strike) {
 
 }
 
-Option::Option(std::string name, const act::Asset& underlying, const act::Price& strike)
+Option::Option(const std::string name, const act::Asset& underlying, const act::Price& strike)
         : Securities(name), underlying(underlying), strike(strike) {
 
 }
 
-Option::Option(std::string name, const act::Contract& contract, const act::Asset& underlying)
+Option::Option(const std::string name, const act::Contract& contract, const act::Asset& underlying)
         : Securities(name, contract), underlying(underlying), strike() {
 
 }
 
-Option::Option(std::string name, const act::Contract& contract, const act::Price& strike)
+Option::Option(const std::string name, const act::Contract& contract, const act::Price& strike)
         : Securities(name, contract), underlying(), strike(strike) {
 
 }
 
-Option::Option(std::string name, const act::Contract& contract, const act::Asset& underlying,
+Option::Option(const std::string name, const act::Contract& contract, const act::Asset& underlying,
         const act::Price& strike)
         : Securities(name, contract), underlying(underlying), strike(strike) {
 

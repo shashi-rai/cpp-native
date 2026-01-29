@@ -62,42 +62,42 @@ Labour::Labour(const Demand& demand, const Supply& supply, const Population& pop
 
 }
 
-Labour::Labour(std::string name)
+Labour::Labour(const std::string name)
         : Market(name) {
 
 }
 
-Labour::Labour(std::string name, const Demand& demand)
+Labour::Labour(const std::string name, const Demand& demand)
         : Market(name, demand) {
 
 }
 
-Labour::Labour(std::string name, const Supply& supply)
+Labour::Labour(const std::string name, const Supply& supply)
         : Market(name, supply) {
 
 }
 
-Labour::Labour(std::string name, const Population& population)
+Labour::Labour(const std::string name, const Population& population)
         : Market(name, population) {
 
 }
 
-Labour::Labour(std::string name, const Demand& demand, const Supply& supply)
+Labour::Labour(const std::string name, const Demand& demand, const Supply& supply)
         : Market(name, demand, supply) {
 
 }
 
-Labour::Labour(std::string name, const Demand& demand, const Population& population)
+Labour::Labour(const std::string name, const Demand& demand, const Population& population)
         : Market(name, demand, population) {
 
 }
 
-Labour::Labour(std::string name, const Supply& supply, const Population& population)
+Labour::Labour(const std::string name, const Supply& supply, const Population& population)
         : Market(name, supply, population) {
 
 }
 
-Labour::Labour(std::string name, const Demand& demand, const Supply& supply, const Population& population)
+Labour::Labour(const std::string name, const Demand& demand, const Supply& supply, const Population& population)
         : Market(name, demand, supply, population) {
 
 }

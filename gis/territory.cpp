@@ -32,12 +32,12 @@ Territory::Territory(const Address& address)
 
 }
 
-Territory::Territory(std::string name)
+Territory::Territory(const std::string name)
         : Point(name), address() {
 
 }
 
-Territory::Territory(std::string name, const Address& address)
+Territory::Territory(const std::string name, const Address& address)
         : Point(name), address(address) {
 
 }

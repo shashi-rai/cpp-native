@@ -27,7 +27,7 @@ Future::Future()
 
 }
 
-Future::Future(std::string name)
+Future::Future(const std::string name)
         : Securities(name), underlying(), strike() {
 
 }
@@ -68,37 +68,37 @@ Future::Future(const act::Contract& contract, const act::Asset& underlying,
 
 }
 
-Future::Future(std::string name, const act::Contract& contract)
+Future::Future(const std::string name, const act::Contract& contract)
         : Securities(name, contract), underlying(), strike() {
 
 }
 
-Future::Future(std::string name, const act::Asset& underlying)
+Future::Future(const std::string name, const act::Asset& underlying)
         : Securities(name), underlying(underlying), strike() {
 
 }
 
-Future::Future(std::string name, const act::Price& strike)
+Future::Future(const std::string name, const act::Price& strike)
         : Securities(name), underlying(), strike(strike) {
 
 }
 
-Future::Future(std::string name, const act::Asset& underlying, const act::Price& strike)
+Future::Future(const std::string name, const act::Asset& underlying, const act::Price& strike)
         : Securities(name), underlying(underlying), strike(strike) {
 
 }
 
-Future::Future(std::string name, const act::Contract& contract, const act::Asset& underlying)
+Future::Future(const std::string name, const act::Contract& contract, const act::Asset& underlying)
         : Securities(name, contract), underlying(underlying), strike() {
 
 }
 
-Future::Future(std::string name, const act::Contract& contract, const act::Price& strike)
+Future::Future(const std::string name, const act::Contract& contract, const act::Price& strike)
         : Securities(name, contract), underlying(), strike(strike) {
 
 }
 
-Future::Future(std::string name, const act::Contract& contract, const act::Asset& underlying,
+Future::Future(const std::string name, const act::Contract& contract, const act::Asset& underlying,
         const act::Price& strike)
         : Securities(name, contract), underlying(underlying), strike(strike) {
 
