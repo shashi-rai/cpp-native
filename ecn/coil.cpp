@@ -216,7 +216,7 @@ Coil Coil::operator%(const Coil& peer) const {
 }
 
 shp::Potential Coil::getVoltage() const {
-	shp::Quantity current = getCurrent().getAngularTotal();
+	shp::Signal current = getCurrent().getInductance();
     float total = (loopcount * current.getMagnitude());
     short int scaling = current.getScaling();
     shp::Potential fresh(total, shp::Quantity::DEFAULT_VALUE,

@@ -97,12 +97,17 @@ public:
     shp::Quantity getElectrons() const;
     void setElectrons(const int count);
     void changeFlowSpeed(const float motion);
+    void changeFlowSpeed(const float motion, const short int scale);
     void changeDirection(const float degree);
     shp::Signal getVoltage() const;
+    shp::Signal getPower(const Time& interval) const;
     shp::Signal getForce(const Time& interval) const;
     shp::Signal getPotential() const;
+    shp::Signal getPotential(const shp::Signal& motion) const;
     shp::Signal getChargeFlow() const;
+    shp::Signal getChargeFlow(const shp::Signal& motion) const;
     shp::Signal getInductance() const;
+    shp::Signal getInductance(const shp::Signal& motion) const;
     shp::Signal getElectricPower() const;
     shp::Signal getElectroKinetic() const;
     shp::Signal getMagneticPower() const;

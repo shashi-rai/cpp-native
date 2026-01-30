@@ -31,12 +31,12 @@ const float Current::ELECTRON_FLOW_RATE = 6.241509f;    // 6.241509x10^18 electr
 const short int Current::ELECTRON_FLOW_SCALE = 18;      // 10^18
 
 Current::Current()
-        : qft::Charge(UNIT), velocity() {
+        : qft::Charge(), velocity() {
 
 }
 
 Current::Current(const std::string name)
-        : qft::Charge(UNIT), velocity(name) {
+        : qft::Charge(), velocity(name) {
 
 }
 
@@ -47,7 +47,7 @@ Current::Current(const qft::Charge& charge)
 }
 
 Current::Current(const float charge)
-        : qft::Charge(charge, UNIT), velocity() {
+        : qft::Charge(charge), velocity() {
 
 }
 
@@ -62,7 +62,7 @@ Current::Current(const float charge, const shp::Unit& unit)
 }
 
 Current::Current(const float charge, const short int scaling)
-        : qft::Charge(charge, scaling, UNIT), velocity() {
+        : qft::Charge(charge, scaling), velocity() {
 
 }
 
@@ -77,7 +77,7 @@ Current::Current(const float charge, const short int scaling, const shp::Unit& u
 }
 
 Current::Current(const qft::Velocity& velocity)
-        : qft::Charge(UNIT), velocity(velocity) {
+        : qft::Charge(), velocity(velocity) {
 
 }
 
@@ -87,7 +87,7 @@ Current::Current(const std::string name, const qft::Charge& charge)
 }
 
 Current::Current(const std::string name, const float charge)
-        : qft::Charge(charge, UNIT), velocity(name) {
+        : qft::Charge(charge), velocity(name) {
 
 }
 
@@ -102,7 +102,7 @@ Current::Current(const std::string name, const float charge, const shp::Unit& un
 }
 
 Current::Current(const std::string name, const float charge, const short int scaling)
-        : qft::Charge(charge, scaling, UNIT), velocity(name) {
+        : qft::Charge(charge, scaling), velocity(name) {
 
 }
 
@@ -296,6 +296,10 @@ void Current::changeFlowSpeed(const float motion) {
     velocity.setChangeMagnitude(motion);
 }
 
+void Current::changeFlowSpeed(const float motion, const short int scale) {
+    velocity.setChangeMagnitude(motion, scale);
+}
+
 void Current::changeDirection(const float degree) {
     velocity.setChangeDirection(degree);
 }
@@ -303,40 +307,80 @@ void Current::changeDirection(const float degree) {
 shp::Signal Current::getVoltage() const {
     Charge charge = *this;
     shp::Signal result = charge.getPotential().getDifference();
+    result.setUnit(shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_POTENTIAL));
+    return result;
+}
+
+shp::Signal Current::getPower(const Time& interval) const {
+    shp::Signal result = (this->getForce(interval) * this->getVelocity().getTotal());
+    result.setUnit(shp::Unit::getDerivedSymbol(shp::Unit::POWER));
     return result;
 }
 
 shp::Signal Current::getForce(const Time& interval) const {
     shp::Signal result = (this->getRateOfChange() / interval.getMagnitude());
+    result.setUnit(shp::Unit::getDerivedSymbol(shp::Unit::FORCE));
     return result;
 }
 
 shp::Signal Current::getPotential() const {
-    Charge charge = *this;      // electric charge non-accelerating only
+    Charge charge = *this;      // non-moving electric charge only
     charge.setSpatialDrift(velocity.getDisplacement().getAmplitude(), velocity.getScaling(), velocity.getDirection());
     shp::Signal current = charge.getPhaseSpace();
-    shp::Signal result(-current.getMagnitude(), current.getScaling(), UNIT); result.adjustScaling();
+    shp::Signal result(current.getOrientation(), -current.getMagnitude(), current.getScaling(), current.getUnit());
+    result.adjustScaling();
+    return result;
+}
+
+shp::Signal Current::getPotential(const shp::Signal& motion) const {
+    Charge charge = *this;      // electric charge in a moving reference frame
+    charge.setSpatialDrift(velocity.getDisplacement().getAmplitude(), velocity.getScaling(), velocity.getDirection());
+    shp::Signal current = charge.getPhaseConvergence(motion);
+    shp::Signal result(current.getOrientation(), -current.getMagnitude(), current.getScaling(), current.getUnit());
+    result.adjustScaling();
     return result;
 }
 
 shp::Signal Current::getChargeFlow() const {
-    Charge charge = *this;      // electric charge non-accelerating only
+    Charge charge = *this;      // electric charge linearly moving, but non-accelerating
     charge.setSpatialDrift(velocity.getDisplacement().getAmplitude(), velocity.getScaling(), velocity.getDirection());
     shp::Signal current = charge.getLinearSpace();
-    shp::Signal result(-current.getMagnitude(), current.getScaling(), UNIT); result.adjustScaling();
+    shp::Signal result(current.getOrientation(), -current.getMagnitude(), current.getScaling(), UNIT);
+    result.adjustScaling();
+    return result;
+}
+
+shp::Signal Current::getChargeFlow(const shp::Signal& motion) const {
+    Charge charge = *this;      // linearly moving electric charge in non-accelerating conductor
+    charge.setSpatialDrift(velocity.getDisplacement().getAmplitude(), velocity.getScaling(), velocity.getDirection());
+    shp::Signal current = charge.getLinearConvergence(motion);
+    shp::Signal result(current.getOrientation(), -current.getMagnitude(), current.getScaling(), UNIT);
+    result.adjustScaling();
     return result;
 }
 
 shp::Signal Current::getInductance() const {
-    Charge charge = *this;      // electric charge in motion only
+    Charge charge = *this;      // loop electric charge within a field
     charge.setSpatialDrift(velocity.getDisplacement().getAmplitude(), velocity.getScaling(), velocity.getDirection());
     shp::Signal current = charge.getCurvedSpace();
-    shp::Signal result(-current.getMagnitude(), current.getScaling(), UNIT); result.adjustScaling();
+    shp::Signal result(current.getOrientation(), -current.getMagnitude(), current.getScaling(), UNIT);
+    result.adjustScaling();
+    return result;
+}
+
+shp::Signal Current::getInductance(const shp::Signal& motion) const {
+    Charge charge = *this;      // loop electric charge carrying body moving in a field
+    charge.setSpatialDrift(velocity.getDisplacement().getAmplitude(), velocity.getScaling(), velocity.getDirection());
+    shp::Signal current = charge.getCurvedConvergence(motion);
+    shp::Signal result(current.getOrientation(),
+        -current.getMagnitude(), current.getScaling(), shp::Unit::getDerivedSymbol(shp::Unit::ENERGY));
+    result.adjustScaling();
     return result;
 }
 
 shp::Signal Current::getElectricPower() const {
     shp::Signal result = (this->getVoltage() * this->getChargeFlow());
+    result.setUnit(shp::Unit::getDerivedSymbol(shp::Unit::POWER));
     return result;
 }
 
@@ -344,11 +388,13 @@ shp::Signal Current::getElectroKinetic() const {
     Charge charge = *this; shp::Signal current = getChargeFlow();
     shp::Temporal total = (charge + charge);
     shp::Signal result = ((current * current) / total.getMagnitude());
+    result.setUnit(shp::Unit::getDerivedSymbol(shp::Unit::FORCE));
     return result;
 }
 
 shp::Signal Current::getMagneticPower() const {
     shp::Signal result = (this->getVoltage() * this->getInductance());
+    result.setUnit(shp::Unit::getDerivedSymbol(shp::Unit::POWER));
     return result;
 }
 
@@ -356,6 +402,7 @@ shp::Signal Current::getMagnetoKinetic() const {
     Charge charge = *this; shp::Signal current = getInductance();
     shp::Temporal total = (charge + charge);
     shp::Signal result = ((current * current) / total.getMagnitude());
+    result.setUnit(shp::Unit::getDerivedSymbol(shp::Unit::FORCE));
     return result;
 }
 

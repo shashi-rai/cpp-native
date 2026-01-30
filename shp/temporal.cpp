@@ -558,6 +558,26 @@ Signal Temporal::getPhaseSpace() const {
     return result;
 }
 
+Signal Temporal::getPhaseConvergence(const Signal& signal) const {
+    Signal self = *this, result = self.getLinearConvergence(signal);
+    return result;
+}
+
+Signal Temporal::getPhaseConvergenceAmplified(const Signal& signal) const {
+    Signal self = *this, result = self.getSquareConvergence(signal);
+    return result;
+}
+
+Signal Temporal::getPhaseDivergence(const Signal& signal) const {
+    Signal self = *this, result = self.getLinearDivergence(signal);
+    return result;
+}
+
+Signal Temporal::getPhaseDivergenceAmplified(const Signal& signal) const {
+    Signal self = *this, result = self.getSquareDivergence(signal);
+    return result;
+}
+
 Signal Temporal::getLinearSpace() const {
     Signal self = *this; Signal propagation = self.getDotProduct(modulation);
     Signal result(propagation.getOrientation(), propagation.getMagnitude(),
@@ -565,8 +585,64 @@ Signal Temporal::getLinearSpace() const {
     return result;
 }
 
+Signal Temporal::getLinearConvergence(const Signal& signal) const {
+    Signal self = *this; Signal propagation = self.getDotProduct(modulation).getLinearConvergence(signal);
+    Signal result(propagation.getOrientation(), propagation.getMagnitude(),
+        propagation.getScaling(), self.getUnit());
+    return result;
+}
+
+Signal Temporal::getLinearConvergenceAmplified(const Signal& signal) const {
+    Signal self = *this; Signal propagation = self.getDotProduct(modulation).getSquareConvergence(signal);
+    Signal result(propagation.getOrientation(), propagation.getMagnitude(),
+        propagation.getScaling(), self.getUnit());
+    return result;
+}
+
+Signal Temporal::getLinearDivergence(const Signal& signal) const {
+    Signal self = *this; Signal propagation = self.getDotProduct(modulation).getLinearDivergence(signal);
+    Signal result(propagation.getOrientation(), propagation.getMagnitude(),
+        propagation.getScaling(), self.getUnit());
+    return result;
+}
+
+Signal Temporal::getLinearDivergenceAmplified(const Signal& signal) const {
+    Signal self = *this; Signal propagation = self.getDotProduct(modulation).getSquareDivergence(signal);
+    Signal result(propagation.getOrientation(), propagation.getMagnitude(),
+        propagation.getScaling(), self.getUnit());
+    return result;
+}
+
 Signal Temporal::getCurvedSpace() const {
     Signal self = *this; Signal propagation = self.getCrossProduct(modulation);
+    Signal result(propagation.getOrientation(), propagation.getMagnitude(),
+        propagation.getScaling(), self.getUnit());
+    return result;
+}
+
+Signal Temporal::getCurvedConvergence(const Signal& signal) const {
+    Signal self = *this; Signal propagation = self.getCrossProduct(modulation).getLinearConvergence(signal);
+    Signal result(propagation.getOrientation(), propagation.getMagnitude(),
+        propagation.getScaling(), self.getUnit());
+    return result;
+}
+
+Signal Temporal::getCurvedConvergenceAmplified(const Signal& signal) const {
+    Signal self = *this; Signal propagation = self.getCrossProduct(modulation).getSquareConvergence(signal);
+    Signal result(propagation.getOrientation(), propagation.getMagnitude(),
+        propagation.getScaling(), self.getUnit());
+    return result;
+}
+
+Signal Temporal::getCurvedDivergence(const Signal& signal) const {
+    Signal self = *this; Signal propagation = self.getCrossProduct(modulation).getLinearDivergence(signal);
+    Signal result(propagation.getOrientation(), propagation.getMagnitude(),
+        propagation.getScaling(), self.getUnit());
+    return result;
+}
+
+Signal Temporal::getCurvedDivergenceAmplified(const Signal& signal) const {
+    Signal self = *this; Signal propagation = self.getCrossProduct(modulation).getSquareDivergence(signal);
     Signal result(propagation.getOrientation(), propagation.getMagnitude(),
         propagation.getScaling(), self.getUnit());
     return result;

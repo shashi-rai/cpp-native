@@ -560,6 +560,26 @@ Signal Frequency::getPhaseSpace() const {
     return result;
 }
 
+Signal Frequency::getPhaseConvergence(const Signal& signal) const {
+    Signal self = *this, result = self.getLinearConvergence(signal);
+    return result;
+}
+
+Signal Frequency::getPhaseConvergenceAmplified(const Signal& signal) const {
+    Signal self = *this, result = self.getSquareConvergence(signal);
+    return result;
+}
+
+Signal Frequency::getPhaseDivergence(const Signal& signal) const {
+    Signal self = *this, result = self.getLinearDivergence(signal);
+    return result;
+}
+
+Signal Frequency::getPhaseDivergenceAmplified(const Signal& signal) const {
+    Signal self = *this, result = self.getSquareDivergence(signal);
+    return result;
+}
+
 Signal Frequency::getLinearSpace() const {
     Signal self = *this; Signal propagation = self.getDotProduct(modulation);
     Signal result(propagation.getOrientation(), propagation.getMagnitude(),
@@ -567,8 +587,64 @@ Signal Frequency::getLinearSpace() const {
     return result;
 }
 
+Signal Frequency::getLinearConvergence(const Signal& signal) const {
+    Signal self = *this; Signal propagation = self.getDotProduct(modulation).getLinearConvergence(signal);
+    Signal result(propagation.getOrientation(), propagation.getMagnitude(),
+        propagation.getScaling(), self.getUnit());
+    return result;
+}
+
+Signal Frequency::getLinearConvergenceAmplified(const Signal& signal) const {
+    Signal self = *this; Signal propagation = self.getDotProduct(modulation).getSquareConvergence(signal);
+    Signal result(propagation.getOrientation(), propagation.getMagnitude(),
+        propagation.getScaling(), self.getUnit());
+    return result;
+}
+
+Signal Frequency::getLinearDivergence(const Signal& signal) const {
+    Signal self = *this; Signal propagation = self.getDotProduct(modulation).getLinearDivergence(signal);
+    Signal result(propagation.getOrientation(), propagation.getMagnitude(),
+        propagation.getScaling(), self.getUnit());
+    return result;
+}
+
+Signal Frequency::getLinearDivergenceAmplified(const Signal& signal) const {
+    Signal self = *this; Signal propagation = self.getDotProduct(modulation).getSquareDivergence(signal);
+    Signal result(propagation.getOrientation(), propagation.getMagnitude(),
+        propagation.getScaling(), self.getUnit());
+    return result;
+}
+
 Signal Frequency::getCurvedSpace() const {
     Signal self = *this; Signal propagation = self.getCrossProduct(modulation);
+    Signal result(propagation.getOrientation(), propagation.getMagnitude(),
+        propagation.getScaling(), self.getUnit());
+    return result;
+}
+
+Signal Frequency::getCurvedConvergence(const Signal& signal) const {
+    Signal self = *this; Signal propagation = self.getCrossProduct(modulation).getLinearConvergence(signal);
+    Signal result(propagation.getOrientation(), propagation.getMagnitude(),
+        propagation.getScaling(), self.getUnit());
+    return result;
+}
+
+Signal Frequency::getCurvedConvergenceAmplified(const Signal& signal) const {
+    Signal self = *this; Signal propagation = self.getCrossProduct(modulation).getSquareConvergence(signal);
+    Signal result(propagation.getOrientation(), propagation.getMagnitude(),
+        propagation.getScaling(), self.getUnit());
+    return result;
+}
+
+Signal Frequency::getCurvedDivergence(const Signal& signal) const {
+    Signal self = *this; Signal propagation = self.getCrossProduct(modulation).getLinearDivergence(signal);
+    Signal result(propagation.getOrientation(), propagation.getMagnitude(),
+        propagation.getScaling(), self.getUnit());
+    return result;
+}
+
+Signal Frequency::getCurvedDivergenceAmplified(const Signal& signal) const {
+    Signal self = *this; Signal propagation = self.getCrossProduct(modulation).getSquareDivergence(signal);
     Signal result(propagation.getOrientation(), propagation.getMagnitude(),
         propagation.getScaling(), self.getUnit());
     return result;

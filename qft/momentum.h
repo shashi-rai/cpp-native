@@ -97,13 +97,17 @@ public:
     shp::Quantity getParticles() const;
     void setParticles(const int count);
     void changeFlowSpeed(const float motion);
+    void changeFlowSpeed(const float motion, const short int scale);
     void changeDirection(const float degree);
     shp::Signal getDifference() const;
     shp::Signal getPower(const Time& interval) const;
     shp::Signal getForce(const Time& interval) const;
     shp::Signal getPotential() const;
+    shp::Signal getPotential(const shp::Signal& motion) const;
     shp::Signal getMatterFlow() const;
+    shp::Signal getMatterFlow(const shp::Signal& motion) const;
     shp::Signal getGravitation() const;
+    shp::Signal getGravitation(const shp::Signal& motion) const;
     shp::Signal getMatterPower() const;
     shp::Signal getMatterKinetic() const;
     shp::Signal getGravityPower() const;

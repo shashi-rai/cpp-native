@@ -259,16 +259,22 @@ void Charge::clear() {
 std::string Charge::print() const {
     std::stringstream result;
     result << "q:";
-    result << shp::Temporal::print() << ",";
-    result << (isOwned() ? field->print() : "");
+    result << shp::Temporal::print();
+    if (isOwned()) {
+        result << ",";
+        result << field->print();
+    }
 	return result.str();
 }
 
 std::string Charge::printRadians() const {
     std::stringstream result;
     result << "q:";
-    result << shp::Temporal::printRadians() << ",";
-    result << (isOwned() ? field->printRadians() : "");
+    result << shp::Temporal::printRadians();
+    if (isOwned()) {
+        result << ",";
+        result << field->printRadians();
+    }
 	return result.str();
 }
 

@@ -166,8 +166,8 @@ void Conductor::setCharge(const qft::Charge& electric) {
 }
 
 shp::Quantity Conductor::getVoltage() const {
-	shp::Quantity chargeflow = current.getLinearTotal();
-	shp::Quantity potential = (chargeflow * resistance);
+	shp::Signal chargeflow = current.getChargeFlow();
+	shp::Signal potential = (chargeflow * resistance);
 	short int scaling = (chargeflow.getScaling() + resistance.getScaling());
 	shp::Quantity result(potential.getMagnitude(),
 		scaling, shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_POTENTIAL));

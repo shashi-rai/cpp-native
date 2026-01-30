@@ -30,12 +30,12 @@ const float Momentum::ELECTRON_FLOW_RATE = 6.241509f;   // 6.241509x10^18 electr
 const short int Momentum::ELECTRON_FLOW_SCALE = 18;     // 10^18
 
 Momentum::Momentum()
-        : qft::Mass(UNIT), velocity() {
+        : qft::Mass(), velocity() {
 
 }
 
 Momentum::Momentum(const std::string name)
-        : qft::Mass(UNIT), velocity(name) {
+        : qft::Mass(), velocity(name) {
 
 }
 
@@ -46,7 +46,7 @@ Momentum::Momentum(const qft::Mass& mass)
 }
 
 Momentum::Momentum(const float mass)
-        : qft::Mass(mass, UNIT), velocity() {
+        : qft::Mass(mass), velocity() {
 
 }
 
@@ -61,7 +61,7 @@ Momentum::Momentum(const float mass, const shp::Unit& unit)
 }
 
 Momentum::Momentum(const float mass, const short int scaling)
-        : qft::Mass(mass, scaling, UNIT), velocity() {
+        : qft::Mass(mass, scaling), velocity() {
 
 }
 
@@ -76,7 +76,7 @@ Momentum::Momentum(const float mass, const short int scaling, const shp::Unit& u
 }
 
 Momentum::Momentum(const qft::Velocity& velocity)
-        : qft::Mass(UNIT), velocity(velocity) {
+        : qft::Mass(), velocity(velocity) {
 
 }
 
@@ -87,7 +87,7 @@ Momentum::Momentum(const std::string name, const qft::Mass& mass)
 }
 
 Momentum::Momentum(const std::string name, const float mass)
-        : qft::Mass(mass, UNIT), velocity(name) {
+        : qft::Mass(mass), velocity(name) {
 
 }
 
@@ -102,7 +102,7 @@ Momentum::Momentum(const std::string name, const float mass, const shp::Unit& un
 }
 
 Momentum::Momentum(const std::string name, const float mass, const short int scaling)
-        : qft::Mass(mass, scaling, UNIT), velocity(name) {
+        : qft::Mass(mass, scaling), velocity(name) {
 
 }
 
@@ -117,12 +117,12 @@ Momentum::Momentum(const std::string name, const float mass, const short int sca
 }
 
 Momentum::Momentum(const std::string name, const float mass, const float velocity)
-        : qft::Mass(mass, UNIT), velocity(name, velocity) {
+        : qft::Mass(mass), velocity(name, velocity) {
 
 }
 
 Momentum::Momentum(const float mass, const float velocity)
-        : qft::Mass(mass, UNIT), velocity(velocity) {
+        : qft::Mass(mass), velocity(velocity) {
 
 }
 
@@ -296,52 +296,90 @@ void Momentum::changeFlowSpeed(const float motion) {
     velocity.setChangeMagnitude(motion);
 }
 
+void Momentum::changeFlowSpeed(const float motion, const short int scale) {
+    velocity.setChangeMagnitude(motion, scale);
+}
+
 void Momentum::changeDirection(const float degree) {
     velocity.setChangeDirection(degree);
 }
 
 shp::Signal Momentum::getDifference() const {
     Mass mass = *this;
-    shp::Signal result = mass.getPotential().getDifference();
+    shp::Signal result = mass.getPotential().getDifference(); result.setUnit(UNIT);
     return result;
 }
 
 shp::Signal Momentum::getPower(const Time& interval) const {
     shp::Signal result = (this->getForce(interval) * this->getVelocity().getTotal());
+    result.setUnit(shp::Unit::getDerivedSymbol(shp::Unit::POWER));
     return result;
 }
 
 shp::Signal Momentum::getForce(const Time& interval) const {
     shp::Signal result = (this->getRateOfChange() / interval.getMagnitude());
+    result.setUnit(shp::Unit::getDerivedSymbol(shp::Unit::FORCE));
     return result;
 }
 
 shp::Signal Momentum::getPotential() const {
-    Mass mass = *this;      // matter non-accelerating only
+    Mass mass = *this;      // non-moving material substance only
     mass.setSpatialDrift(velocity.getDisplacement().getAmplitude(), velocity.getScaling(), velocity.getDirection());
     shp::Signal flow = mass.getPhaseSpace();
-    shp::Signal result(-flow.getMagnitude(), flow.getScaling(), UNIT); result.adjustScaling();
+    shp::Signal result(flow.getOrientation(), flow.getMagnitude(), flow.getScaling(), flow.getUnit());
+    result.adjustScaling();
+    return result;
+}
+
+shp::Signal Momentum::getPotential(const shp::Signal& motion) const {
+    Mass mass = *this;      // material substance in a moving reference frame
+    mass.setSpatialDrift(velocity.getDisplacement().getAmplitude(), velocity.getScaling(), velocity.getDirection());
+    shp::Signal flow = mass.getPhaseConvergence(motion);
+    shp::Signal result(flow.getOrientation(), flow.getMagnitude(), flow.getScaling(), flow.getUnit());
+    result.adjustScaling();
     return result;
 }
 
 shp::Signal Momentum::getMatterFlow() const {
-    Mass mass = *this;      // matter non-accelerating only
+    Mass mass = *this;      // material substance linearly moving, but non-accelerating
     mass.setSpatialDrift(velocity.getDisplacement().getAmplitude(), velocity.getScaling(), velocity.getDirection());
     shp::Signal flow = mass.getLinearSpace();
-    shp::Signal result(-flow.getMagnitude(), flow.getScaling(), UNIT); result.adjustScaling();
+    shp::Signal result(flow.getOrientation(), flow.getMagnitude(), flow.getScaling(), UNIT);
+    result.adjustScaling();
+    return result;
+}
+
+shp::Signal Momentum::getMatterFlow(const shp::Signal& motion) const {
+    Mass mass = *this;      // linearly moving material in a non-accelerating reference frame
+    mass.setSpatialDrift(velocity.getDisplacement().getAmplitude(), velocity.getScaling(), velocity.getDirection());
+    shp::Signal flow = mass.getLinearConvergence(motion);
+    shp::Signal result(flow.getOrientation(), flow.getMagnitude(), flow.getScaling(), UNIT);
+    result.adjustScaling();
     return result;
 }
 
 shp::Signal Momentum::getGravitation() const {
-    Mass mass = *this;      // matter in motion only
+    Mass mass = *this;      // material body orbiting within a field
     mass.setSpatialDrift(velocity.getDisplacement().getAmplitude(), velocity.getScaling(), velocity.getDirection());
     shp::Signal flow = mass.getCurvedSpace();
-    shp::Signal result(-flow.getMagnitude(), flow.getScaling(), UNIT); result.adjustScaling();
+    shp::Signal result(flow.getOrientation(), flow.getMagnitude(), flow.getScaling(), UNIT);
+    result.adjustScaling();
+    return result;
+}
+
+shp::Signal Momentum::getGravitation(const shp::Signal& motion) const {
+    Mass mass = *this;      // material body accelerating in a field
+    mass.setSpatialDrift(velocity.getDisplacement().getAmplitude(), velocity.getScaling(), velocity.getDirection());
+    shp::Signal flow = mass.getCurvedConvergence(motion);
+    shp::Signal result(flow.getOrientation(),
+        flow.getMagnitude(), flow.getScaling(), shp::Unit::getDerivedSymbol(shp::Unit::ENERGY));
+    result.adjustScaling();
     return result;
 }
 
 shp::Signal Momentum::getMatterPower() const {
     shp::Signal result = (this->getDifference() * this->getMatterFlow());
+    result.setUnit(shp::Unit::getDerivedSymbol(shp::Unit::POWER));
     return result;
 }
 
@@ -349,11 +387,13 @@ shp::Signal Momentum::getMatterKinetic() const {
     Mass mass = *this; shp::Signal momentum = this->getMatterFlow();
     shp::Frequency total = (mass + mass);
     shp::Signal result = ((momentum * momentum) / total.getMagnitude());
+    result.setUnit(shp::Unit::getDerivedSymbol(shp::Unit::FORCE));
     return result;
 }
 
 shp::Signal Momentum::getGravityPower() const {
     shp::Signal result = (this->getDifference() * this->getGravitation());
+    result.setUnit(shp::Unit::getDerivedSymbol(shp::Unit::POWER));
     return result;
 }
 
@@ -361,6 +401,7 @@ shp::Signal Momentum::getGravityKinetic() const {
     Mass mass = *this; shp::Signal momentum = this->getGravitation();
     shp::Frequency total = (mass + mass);
     shp::Signal result = ((momentum * momentum) / total.getMagnitude());
+    result.setUnit(shp::Unit::getDerivedSymbol(shp::Unit::FORCE));
     return result;
 }
 
@@ -412,19 +453,19 @@ void Momentum::clear() {
 
 std::string Momentum::print() const {
     std::stringstream result;
-    result << "Π:";
+    result << "Π{";
     result << Mass::print() << ",";
     result << velocity.print();
-    result << UNIT;
+    result << UNIT << "}";
 	return result.str();
 }
 
 std::string Momentum::printRadians() const {
     std::stringstream result;
-    result << "Π:";
+    result << "Π{";
     result << Mass::printRadians() << ",";
     result << velocity.printRadians();
-    result << UNIT;
+    result << UNIT << "}";
 	return result.str();
 }
 

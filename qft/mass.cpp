@@ -254,16 +254,22 @@ void Mass::clear() {
 std::string Mass::print() const {
     std::stringstream result;
     result << shp::Unit::getBaseDimension(shp::Unit::MASS) << ":";
-    result << shp::Frequency::print() << ",";
-    result << (isOwned() ? field->print() : "");
+    result << shp::Frequency::print();
+    if (isOwned()) {
+        result << ",";
+        result << field->print();
+    }
 	return result.str();
 }
 
 std::string Mass::printRadians() const {
     std::stringstream result;
     result << shp::Unit::getBaseDimension(shp::Unit::MASS) << ":";
-    result << shp::Frequency::printRadians() << ",";
-    result << (isOwned() ? field->printRadians() : "");
+    result << shp::Frequency::printRadians();
+    if (isOwned()) {
+        result << ",";
+        result << field->printRadians();
+    }
 	return result.str();
 }
 
