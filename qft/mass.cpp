@@ -171,6 +171,31 @@ Mass Mass::operator%(const Mass& peer) const {
     return Mass(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
 }
 
+Mass Mass::operator+(const shp::Quantity& peer) const {
+    shp::Frequency self = *this; shp::Signal result = (self.getTotal() + peer);
+    return Mass(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
+}
+
+Mass Mass::operator-(const shp::Quantity& peer) const {
+    shp::Frequency self = *this; shp::Signal result = (self.getTotal() - peer);
+    return Mass(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
+}
+
+Mass Mass::operator*(const shp::Quantity& peer) const {
+    shp::Frequency self = *this; shp::Signal result = (self.getTotal() * peer);
+    return Mass(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
+}
+
+Mass Mass::operator/(const shp::Quantity& peer) const {
+    shp::Frequency self = *this; shp::Signal result = (self.getTotal() / peer);
+    return Mass(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
+}
+
+Mass Mass::operator%(const shp::Quantity& peer) const {
+    shp::Frequency self = *this; shp::Signal result = (self.getTotal() % peer);
+    return Mass(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
+}
+
 Force Mass::operator()(const Mass& peer, const shp::Distance separation,
         const shp::Distance& position) const {
     if (isOwned()) {
@@ -191,7 +216,7 @@ bool Mass::isOwned() const {
     return (field != nullptr);
 }
 
-shp::Distance Mass::getRadius() const {
+shp::Distance Mass::getFieldRadius() const {
     shp::Distance result;
     if (isOwned()) {
         result = field->getRadius();
@@ -199,9 +224,33 @@ shp::Distance Mass::getRadius() const {
     return result;
 }
 
-void Mass::setRadius(const shp::Distance& length) {
+void Mass::setFieldRadius(const shp::Distance& length) {
+    if (isOwned()) {
+        field->setRadius(length.getMagnitude(), length.getScaling(), length.getUnit());
+    }
+}
+
+void Mass::setFieldRadius(const float length) {
     if (isOwned()) {
         field->setRadius(length);
+    }
+}
+
+void Mass::setFieldRadius(const float length, const short int scale) {
+    if (isOwned()) {
+        field->setRadius(length, scale);
+    }
+}
+
+void Mass::setFieldRadius(const float length, const short int scale, const std::string unit) {
+    if (isOwned()) {
+        field->setRadius(length, scale, unit);
+    }
+}
+
+void Mass::setFieldRadius(const float length, const short int scale, const shp::Unit& unit) {
+    if (isOwned()) {
+        field->setRadius(length, scale, unit);
     }
 }
 
@@ -240,7 +289,7 @@ Force Mass::getForce(const shp::Angular& coordinates) const {
 }
 
 std::shared_ptr<Field> Mass::getOriginField() const {
-    std::shared_ptr<Field> result = Field::shareable(Mass::GRAVITY_FIELD);
+    std::shared_ptr<Field> result = Field::shareable(Mass::GRAVITY_FIELD, getMagnitude(), getScaling());
     result->setPotential(shp::Potential(getMagnitude(), shp::Quantity::DEFAULT_VALUE,
         getScaling(), getUnit(), shp::Angular(Energy::getPlanckLength())));
     return result;
@@ -281,8 +330,7 @@ std::string Mass::printRadians() const {
 }
 
 shp::Frequency Mass::getFluctuation(const float phase) const {
-    shp::Frequency self = *this;
-    shp::Frequency intensity = self.getMagnitude();
+    shp::Frequency self = *this, intensity = self.getMagnitude();
     intensity.setIntensityDrift(phase);
 	return shp::Frequency(intensity.getMagnitude(), intensity.getScaling(), intensity.getUnit());
 }

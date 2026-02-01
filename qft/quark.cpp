@@ -262,7 +262,7 @@ std::string Quark::print() {
 
 void Quark::initialize() {
     Energy self = getEnergy();
-    self.setRadius(shp::Distance(RADIUS, RADIUS_SCALE));
+    self.setMassFieldChange(shp::Distance(RADIUS, RADIUS_SCALE));
 }
 
 } // namespace qft

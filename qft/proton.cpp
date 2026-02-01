@@ -177,14 +177,11 @@ std::string Proton::print() {
 
 void Proton::initialize() {
     Energy self = getEnergy();
-    self.setRadius(shp::Distance(RADIUS, RADIUS_SCALE));
+    self.setMassFieldChange(shp::Distance(RADIUS, RADIUS_SCALE));
     self.setWavelength(shp::Distance(COMPTON_WAVELENGTH, WAVELENGTH_SCALE));
 
-    std::shared_ptr<qft::Field> mfield = Field::shareable("G");
-    mfield->setTemporalChange(Mass::PROTON, Mass::ATOMIC_SCALE);
-
-    std::shared_ptr<qft::Field> efield = Field::shareable("E");
-    efield->setTemporalChange(Charge::PROTON, Charge::ATOMIC_SCALE);
+    std::shared_ptr<qft::Field> mfield = qft::Field::shareable("G", Mass::PROTON, Mass::ATOMIC_SCALE);
+    std::shared_ptr<qft::Field> efield = qft::Field::shareable("E", Charge::PROTON, Charge::ATOMIC_SCALE);
 
     up[0] = Quark("u", Quark::getComptonWavelength(Quark::UP),
         Quark::getMassLow(Quark::UP, mfield), Quark::getElectricCharge(Quark::UP, efield));

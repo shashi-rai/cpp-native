@@ -24,7 +24,6 @@
 #include "energy.h"
 #include "isospin.h"
 #include "spin.h"
-#include "../shp/point.h"
 #include "../shp/wave.h"
 
 namespace qft {
@@ -38,37 +37,36 @@ class Neutron;
 class Electron;
 
 class Particle : public shp::Wave {
-    std::shared_ptr<shp::Shape> physical;
     Isospin isospin;
     Spin spin;
     Energy energy;
 public:
     // Constructors
     Particle();
+    Particle(const std::string name);
     Particle(const float spin);
     Particle(const Spin& spin);
-    Particle(const std::string name);
     Particle(const std::string name, const float spin);
     Particle(const std::string name, const Spin& spin);
+    Particle(const Isospin& isospin);
+    Particle(const std::string name, const Isospin& isospin);
+    Particle(const std::string name, const Isospin& isospin, const Spin& spin);
     Particle(const Energy& energy);
     Particle(const std::string name, const Energy& energy);
     Particle(const Spin& spin, const Energy& energy);
     Particle(const std::string name, const float spin, const float energy);
     Particle(const std::string name, const Spin& spin, const Energy& energy);
+    Particle(const Isospin& isospin, const Energy& energy);
+    Particle(const std::string name, const Isospin& isospin, const Energy& energy);
+    Particle(const Isospin& isospin, const Spin& spin, const Energy& energy);
     Particle(const std::string name, const Isospin& isospin, const Spin& spin, const Energy& energy);
     Particle(const Mass& mass, const Charge& charge);
     Particle(const std::string name, const Mass& mass, const Charge& charge);
     Particle(const Spin& spin, const Mass& mass, const Charge& charge);
     Particle(const std::string name, const float spin, const float mass, const float energy);
     Particle(const std::string name, const Spin& spin, const Mass& mass, const Charge& charge);
-    Particle(const std::shared_ptr<shp::Shape> wave);
-    Particle(const std::string name, const std::shared_ptr<shp::Shape> wave);
-    Particle(const std::string name, const std::shared_ptr<shp::Shape> wave, const Spin& spin);
-    Particle(const std::string name, const std::shared_ptr<shp::Shape> wave, const Spin& spin, const Energy& energy);
-    Particle(const std::string name, const std::shared_ptr<shp::Shape> wave, const Isospin& isospin, const Spin& spin, const Energy& energy);
-    Particle(const std::shared_ptr<shp::Shape> wave, const Spin& spin, const Energy& energy);
-    Particle(const std::shared_ptr<shp::Shape> wave, const Spin& spin, const Mass& mass, const Charge& charge);
-    Particle(const std::string name, const std::shared_ptr<shp::Shape> wave, const Spin& spin, const Mass& mass, const Charge& charge);
+    Particle(const std::string name, const Isospin& isospin, const Mass& mass, const Charge& charge);
+    Particle(const std::string name, const Isospin& isospin, const Spin& spin, const Mass& mass, const Charge& charge);
 
     // Destructors
     ~Particle();
@@ -86,31 +84,42 @@ public:
     Particle operator%(const Particle& peer) const;
 
     // Getters
-    std::shared_ptr<shp::Shape> getPhysical() const { return physical; }
     Isospin getIsospin() const { return isospin; }
     Spin getSpin() const { return spin; }
     Energy getEnergy() const { return energy; }
 
     // Setters
-    void setPhysical(std::shared_ptr<shp::Shape> description) { this->physical = description; }
     void setIsospin(const Isospin& value) { isospin = value; }
     void setSpin(const Spin& value) { spin = value; }
     void setEnergy(const Energy& value) { energy = value; }
 
     // Additional methods
-    Mass getMass() const { return energy.getMass(); }
-    Charge getCharge() const { return energy.getCharge(); }
-    void setMass(const Mass& value) { energy.setMass(value); }
-    void setCharge(const Charge& value) { energy.setCharge(value); }
+    Mass getMass() const;
+    void setMass(const Mass& value);
+    Charge getCharge() const;
+    void setCharge(const Charge& value);
+    Temperature getTemperature() const;
+    void setTemperature(const Temperature& value);
     shp::Signal getFrequency() const;
     shp::Signal getWavelength() const;
-    bool isStructured() const;
-    shp::Distance getRadius() const;
-    void setRadius(const shp::Distance& length);
+    shp::Distance getMassFieldRadius() const;
+    void setMassFieldRadius(const shp::Distance& radius);
+    void setMassFluxChange(const shp::Azimuth& shift);
+    void setMassFlowChange(const shp::Signal& motion);
+    shp::Distance getChargeFieldRadius() const;
+    void setChargeFieldRadius(const shp::Distance& radius);
+    void setChargeFluxChange(const shp::Azimuth& shift);
+    void setChargeFlowChange(const shp::Signal& motion);
+    shp::Distance getThermalFieldRadius() const;
+    void setThermalFieldRadius(const shp::Distance& radius);
+    void setThermalFluxChange(const shp::Azimuth& shift);
+    void setThermalFlowChange(const shp::Signal& motion);
     std::shared_ptr<Field> getMassField() const;
     void setMassField(const std::shared_ptr<Field> field);
     std::shared_ptr<Field> getChargeField() const;
     void setChargeField(const std::shared_ptr<Field> field);
+    std::shared_ptr<Field> getThermalField() const;
+    void setThermalField(const std::shared_ptr<Field> field);
     shp::Signal getTotal() const;
     virtual shp::Point copy();
     virtual void clear();

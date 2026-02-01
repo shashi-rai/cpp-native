@@ -180,6 +180,31 @@ Temperature Temperature::operator%(const Temperature& peer) const {
     return Temperature(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
 }
 
+Temperature Temperature::operator+(const shp::Quantity& peer) const {
+    shp::Temporal self = *this; shp::Signal result = (self.getTotal() + peer);
+    return Temperature(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
+}
+
+Temperature Temperature::operator-(const shp::Quantity& peer) const {
+    shp::Temporal self = *this; shp::Signal result = (self.getTotal() - peer);
+    return Temperature(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
+}
+
+Temperature Temperature::operator*(const shp::Quantity& peer) const {
+    shp::Temporal self = *this; shp::Signal result = (self.getTotal() * peer);
+    return Temperature(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
+}
+
+Temperature Temperature::operator/(const shp::Quantity& peer) const {
+    shp::Temporal self = *this; shp::Signal result = (self.getTotal() / peer);
+    return Temperature(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
+}
+
+Temperature Temperature::operator%(const shp::Quantity& peer) const {
+    shp::Temporal self = *this; shp::Signal result = (self.getTotal() % peer);
+    return Temperature(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
+}
+
 Force Temperature::operator()(const Temperature& peer, const shp::Distance separation,
         const shp::Distance position) const {
     if (isOwned()) {
@@ -200,7 +225,7 @@ bool Temperature::isOwned() const {
     return (field != nullptr);
 }
 
-shp::Distance Temperature::getRadius() const {
+shp::Distance Temperature::getFieldRadius() const {
     shp::Distance result;
     if (isOwned()) {
         result = field->getRadius();
@@ -208,9 +233,33 @@ shp::Distance Temperature::getRadius() const {
     return result;
 }
 
-void Temperature::setRadius(const shp::Distance& length) {
+void Temperature::setFieldRadius(const shp::Distance& length) {
+    if (isOwned()) {
+        field->setRadius(length.getMagnitude(), length.getScaling(), length.getUnit());
+    }
+}
+
+void Temperature::setFieldRadius(const float length) {
     if (isOwned()) {
         field->setRadius(length);
+    }
+}
+
+void Temperature::setFieldRadius(const float length, const short int scale) {
+    if (isOwned()) {
+        field->setRadius(length, scale);
+    }
+}
+
+void Temperature::setFieldRadius(const float length, const short int scale, const std::string unit) {
+    if (isOwned()) {
+        field->setRadius(length, scale, unit);
+    }
+}
+
+void Temperature::setFieldRadius(const float length, const short int scale, const shp::Unit& unit) {
+    if (isOwned()) {
+        field->setRadius(length, scale, unit);
     }
 }
 
@@ -249,7 +298,7 @@ Force Temperature::getForce(const shp::Angular& coordinates) const {
 }
 
 std::shared_ptr<Field> Temperature::getOriginField() const {
-    std::shared_ptr<Field> result = Field::shareable(Temperature::THERMAL_FIELD);
+    std::shared_ptr<Field> result = Field::shareable(Temperature::THERMAL_FIELD, getMagnitude(), getScaling());
     result->setPotential(shp::Potential(getMagnitude(), shp::Quantity::DEFAULT_VALUE,
         getScaling(), getUnit(), shp::Angular(Energy::getPlanckLength())));
     return result;
@@ -350,8 +399,7 @@ std::string Temperature::printFahrenheit() const {
 }
 
 shp::Temporal Temperature::getFluctuation(const float phase) const {
-    shp::Temporal self = *this;
-    shp::Temporal intensity = self.getMagnitude();
+    shp::Temporal self = *this, intensity = self.getMagnitude();
     intensity.setIntensityDrift(phase);
 	return shp::Temporal(intensity.getMagnitude(), intensity.getScaling(), intensity.getUnit());
 }

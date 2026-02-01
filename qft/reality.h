@@ -24,6 +24,7 @@
 #include "colour.h"
 #include "current.h"
 #include "field.h"
+#include "heat.h"
 #include "momentum.h"
 
 namespace qft {
@@ -34,6 +35,8 @@ class Reality {
 
     // Generic Fields
     std::shared_ptr<qft::Field> gravity;
+    std::shared_ptr<qft::Field> thermal;
+    std::shared_ptr<qft::Field> diffusion;
     std::shared_ptr<qft::Field> electric;
     std::shared_ptr<qft::Field> magnetic;
 
@@ -77,6 +80,8 @@ public:
 
     // Operator overloading
     bool operator==(const Reality& peer) const;
+    std::shared_ptr<qft::Field> operator()(const Temperature& cause);
+    std::shared_ptr<qft::Field> operator()(const Heat& cause);
     std::shared_ptr<qft::Field> operator()(const Charge& cause);
     std::shared_ptr<qft::Field> operator()(const Current& cause);
     std::shared_ptr<qft::Field> operator()(const Colour& cause);
@@ -86,6 +91,8 @@ public:
     // Getters
     std::shared_ptr<qft::Time> getClock() const { return clock; }
     std::shared_ptr<qft::Field> getGravity() const { return gravity; }
+    std::shared_ptr<qft::Field> getThermal() const { return thermal; }
+    std::shared_ptr<qft::Field> getDiffusion() const { return diffusion; }
     std::shared_ptr<qft::Field> getElectric() const { return electric; }
     std::shared_ptr<qft::Field> getMagnetic() const { return magnetic; }
     std::shared_ptr<qft::Field> getUp() const { return up; }
@@ -109,6 +116,8 @@ public:
     // Setters
     void setClock(const std::shared_ptr<qft::Time> domain) { this->clock = domain; }
     void setGravity(const std::shared_ptr<qft::Field> field) { this->gravity = field; }
+    void setThermal(const std::shared_ptr<qft::Field> field) { this->thermal = field; }
+    void setDiffusion(const std::shared_ptr<qft::Field> field) { this->diffusion = field; }
     void setElectric(const std::shared_ptr<qft::Field> field) { this->electric = field; }
     void setMagnetic(const std::shared_ptr<qft::Field> field) { this->magnetic = field; }
     void setUp(const std::shared_ptr<qft::Field> field) { this->up = field; }
@@ -137,6 +146,8 @@ public:
 private:
     void initializeTimeDomain();
     void initializeGravityField(const Mass& mass);
+    void initializeThermalField(const Temperature& temperature);
+    void initializeDiffusionField(const Temperature& temperature);
     void initializeElectricField(const Charge& charge);
     void initializeMagneticField(const Charge& charge);
     void initializeUpField(const Colour& colour);
@@ -153,7 +164,7 @@ private:
     void initializeTauNeutrinoField(const Charge& charge);
     void initializePhotonField(const Mass& mass, const Charge& charge);
     void initializeGluonField(const Colour& colour);
-    void initializeStrongField(const Charge& charge);
+    void initializeStrongField(const Colour& colour);
     void initializeWeakField(const Charge& charge);
     void initializeHiggsField(const Mass& mass);
 public:

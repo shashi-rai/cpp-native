@@ -30,7 +30,7 @@ namespace qft {
 class Charge;
 class Mass;
 
-class Field : protected Time {
+class Field : protected qft::Time {
     shp::Potential potential;
 public:
     // Constructors
@@ -39,93 +39,215 @@ public:
     Field(const shp::Potential& potential);
     Field(const shp::Distance& radius);
     Field(const shp::Azimuth& azimuth);
+    Field(const shp::Distance& radius, const shp::Azimuth& azimuth);
     Field(const shp::Polar& polar);
+    Field(const shp::Distance& radius, const shp::Polar& polar);
     Field(const shp::Polar& polar, const shp::Azimuth& azimuth);
     Field(const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth);
     Field(const shp::Angular& origin);
     Field(const float magnitude);
+    Field(const float magnitude, const std::string unit);
     Field(const float magnitude, const shp::Unit& unit);
-    Field(const float magnitude, const shp::Unit& unit, const shp::Potential& potential);
-    Field(const float magnitude, const shp::Unit& unit, const shp::Distance& radius);
-    Field(const float magnitude, const shp::Unit& unit, const shp::Azimuth& azimuth);
-    Field(const float magnitude, const shp::Unit& unit, const shp::Polar& polar);
-    Field(const float magnitude, const shp::Unit& unit, const shp::Polar& polar, const shp::Azimuth& azimuth);
-    Field(const float magnitude, const shp::Unit& unit, const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth);
-    Field(const float magnitude, const shp::Unit& unit, const shp::Angular& origin);
+    Field(const float magnitude, const shp::Unit& unit,
+        const shp::Potential& potential);
+    Field(const float magnitude, const shp::Unit& unit,
+        const shp::Distance& radius);
+    Field(const float magnitude, const shp::Unit& unit,
+        const shp::Azimuth& azimuth);
+    Field(const float magnitude, const shp::Unit& unit,
+        const shp::Distance& radius, const shp::Azimuth& azimuth);
+    Field(const float magnitude, const shp::Unit& unit,
+        const shp::Polar& polar);
+    Field(const float magnitude, const shp::Unit& unit,
+        const shp::Distance& radius, const shp::Polar& polar);
+    Field(const float magnitude, const shp::Unit& unit,
+        const shp::Polar& polar, const shp::Azimuth& azimuth);
+    Field(const float magnitude, const shp::Unit& unit,
+        const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth);
+    Field(const float magnitude, const shp::Unit& unit,
+        const shp::Angular& origin);
     Field(const float magnitude, const short int scaling);
+    Field(const float magnitude, const short int scaling, const std::string unit);
     Field(const float magnitude, const short int scaling, const shp::Unit& unit);
-    Field(const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Potential& potential);
-    Field(const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Distance& radius);
-    Field(const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Azimuth& azimuth);
-    Field(const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Polar& polar);
-    Field(const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Polar& polar, const shp::Azimuth& azimuth);
-    Field(const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth);
-    Field(const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Angular& origin);
+    Field(const float magnitude, const short int scaling, const shp::Unit& unit,
+        const shp::Potential& potential);
+    Field(const float magnitude, const short int scaling, const shp::Unit& unit,
+        const shp::Distance& radius);
+    Field(const float magnitude, const short int scaling, const shp::Unit& unit,
+        const shp::Azimuth& azimuth);
+    Field(const float magnitude, const short int scaling, const shp::Unit& unit,
+        const shp::Distance& radius, const shp::Azimuth& azimuth);
+    Field(const float magnitude, const short int scaling, const shp::Unit& unit,
+        const shp::Polar& polar);
+    Field(const float magnitude, const short int scaling, const shp::Unit& unit,
+        const shp::Distance& radius, const shp::Polar& polar);
+    Field(const float magnitude, const short int scaling, const shp::Unit& unit,
+        const shp::Polar& polar, const shp::Azimuth& azimuth);
+    Field(const float magnitude, const short int scaling, const shp::Unit& unit,
+        const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth);
+    Field(const float magnitude, const short int scaling, const shp::Unit& unit,
+        const shp::Angular& origin);
     Field(const shp::Signal& modulation);
+    Field(const shp::Signal& modulation, const std::string unit);
+    Field(const shp::Signal& modulation, const shp::Unit& unit);
     Field(const shp::Signal& modulation, const float magnitude);
+    Field(const shp::Signal& modulation, const float magnitude, const std::string unit);
     Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit);
-    Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Potential& potential);
-    Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Distance& radius);
-    Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Azimuth& azimuth);
-    Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Polar& polar);
-    Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Polar& polar, const shp::Azimuth& azimuth);
-    Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth);
-    Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Angular& origin);
+    Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit,
+        const shp::Potential& potential);
+    Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit,
+        const shp::Distance& radius);
+    Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit,
+        const shp::Azimuth& azimuth);
+    Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit,
+        const shp::Distance& radius, const shp::Azimuth& azimuth);
+    Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit,
+        const shp::Polar& polar);
+    Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit,
+        const shp::Distance& radius, const shp::Polar& polar);
+    Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit,
+        const shp::Polar& polar, const shp::Azimuth& azimuth);
+    Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit,
+        const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth);
+    Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit,
+        const shp::Angular& origin);
     Field(const shp::Signal& modulation, const float magnitude, const short int scaling);
-    Field(const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit);
-    Field(const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Potential& potential);
-    Field(const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Distance& radius);
-    Field(const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Azimuth& azimuth);
-    Field(const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Polar& polar);
-    Field(const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Polar& polar, const shp::Azimuth& azimuth);
-    Field(const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth);
-    Field(const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Angular& origin);
+    Field(const shp::Signal& modulation, const float magnitude, const short int scaling,
+        const std::string unit);
+    Field(const shp::Signal& modulation, const float magnitude, const short int scaling,
+        const shp::Unit& unit);
+    Field(const shp::Signal& modulation, const float magnitude, const short int scaling,
+        const shp::Unit& unit, const shp::Potential& potential);
+    Field(const shp::Signal& modulation, const float magnitude, const short int scaling,
+        const shp::Unit& unit, const shp::Distance& radius);
+    Field(const shp::Signal& modulation, const float magnitude, const short int scaling,
+        const shp::Unit& unit, const shp::Azimuth& azimuth);
+    Field(const shp::Signal& modulation, const float magnitude, const short int scaling,
+        const shp::Unit& unit, const shp::Distance& radius, const shp::Azimuth& azimuth);
+    Field(const shp::Signal& modulation, const float magnitude, const short int scaling,
+        const shp::Unit& unit, const shp::Polar& polar);
+    Field(const shp::Signal& modulation, const float magnitude, const short int scaling,
+        const shp::Unit& unit, const shp::Distance& radius, const shp::Polar& polar);
+    Field(const shp::Signal& modulation, const float magnitude, const short int scaling,
+        const shp::Unit& unit, const shp::Polar& polar, const shp::Azimuth& azimuth);
+    Field(const shp::Signal& modulation, const float magnitude, const short int scaling,
+        const shp::Unit& unit, const shp::Distance& radius, const shp::Polar& polar,
+        const shp::Azimuth& azimuth);
+    Field(const shp::Signal& modulation, const float magnitude, const short int scaling,
+        const shp::Unit& unit, const shp::Angular& origin);
     Field(const std::string name);
+    Field(const std::string name, const std::string unit);
     Field(const std::string name, const shp::Unit& unit);
     Field(const std::string name, const shp::Potential& potential);
     Field(const std::string name, const shp::Distance& radius);
     Field(const std::string name, const shp::Azimuth& azimuth);
+    Field(const std::string name, const shp::Distance& radius, const shp::Azimuth& azimuth);
     Field(const std::string name, const shp::Polar& polar);
+    Field(const std::string name, const shp::Distance& radius, const shp::Polar& polar);
     Field(const std::string name, const shp::Polar& polar, const shp::Azimuth& azimuth);
-    Field(const std::string name, const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth);
+    Field(const std::string name, const shp::Distance& radius,
+        const shp::Polar& polar, const shp::Azimuth& azimuth);
     Field(const std::string name, const shp::Angular& origin);
     Field(const std::string name, const float magnitude);
+    Field(const std::string name, const float magnitude, const std::string unit);
     Field(const std::string name, const float magnitude, const shp::Unit& unit);
-    Field(const std::string name, const float magnitude, const shp::Unit& unit, const shp::Potential& potential);
-    Field(const std::string name, const float magnitude, const shp::Unit& unit, const shp::Distance& radius);
-    Field(const std::string name, const float magnitude, const shp::Unit& unit, const shp::Azimuth& azimuth);
-    Field(const std::string name, const float magnitude, const shp::Unit& unit, const shp::Polar& polar);
-    Field(const std::string name, const float magnitude, const shp::Unit& unit, const shp::Polar& polar, const shp::Azimuth& azimuth);
-    Field(const std::string name, const float magnitude, const shp::Unit& unit, const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth);
-    Field(const std::string name, const float magnitude, const shp::Unit& unit, const shp::Angular& origin);
+    Field(const std::string name, const float magnitude, const shp::Unit& unit,
+        const shp::Potential& potential);
+    Field(const std::string name, const float magnitude, const shp::Unit& unit,
+        const shp::Distance& radius);
+    Field(const std::string name, const float magnitude, const shp::Unit& unit,
+        const shp::Azimuth& azimuth);
+    Field(const std::string name, const float magnitude, const shp::Unit& unit,
+        const shp::Distance& radius, const shp::Azimuth& azimuth);
+    Field(const std::string name, const float magnitude, const shp::Unit& unit,
+        const shp::Polar& polar);
+    Field(const std::string name, const float magnitude, const shp::Unit& unit,
+        const shp::Distance& radius, const shp::Polar& polar);
+    Field(const std::string name, const float magnitude, const shp::Unit& unit,
+        const shp::Polar& polar, const shp::Azimuth& azimuth);
+    Field(const std::string name, const float magnitude, const shp::Unit& unit,
+        const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth);
+    Field(const std::string name, const float magnitude, const shp::Unit& unit,
+        const shp::Angular& origin);
     Field(const std::string name, const float magnitude, const short int scaling);
-    Field(const std::string name, const float magnitude, const short int scaling, const shp::Unit& unit);
-    Field(const std::string name, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Potential& potential);
-    Field(const std::string name, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Distance& radius);
-    Field(const std::string name, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Azimuth& azimuth);
-    Field(const std::string name, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Polar& polar);
-    Field(const std::string name, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Polar& polar, const shp::Azimuth& azimuth);
-    Field(const std::string name, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth);
-    Field(const std::string name, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Angular& origin);
+    Field(const std::string name, const float magnitude, const short int scaling,
+        const std::string unit);
+    Field(const std::string name, const float magnitude, const short int scaling,
+        const shp::Unit& unit);
+    Field(const std::string name, const float magnitude, const short int scaling,
+        const shp::Unit& unit, const shp::Potential& potential);
+    Field(const std::string name, const float magnitude, const short int scaling,
+        const shp::Unit& unit, const shp::Distance& radius);
+    Field(const std::string name, const float magnitude, const short int scaling,
+        const shp::Unit& unit, const shp::Azimuth& azimuth);
+    Field(const std::string name, const float magnitude, const short int scaling,
+        const shp::Unit& unit, const shp::Distance& radius, const shp::Azimuth& azimuth);
+    Field(const std::string name, const float magnitude, const short int scaling,
+        const shp::Unit& unit, const shp::Polar& polar);
+    Field(const std::string name, const float magnitude, const short int scaling,
+        const shp::Unit& unit, const shp::Distance& radius, const shp::Polar& polar);
+    Field(const std::string name, const float magnitude, const short int scaling,
+        const shp::Unit& unit, const shp::Polar& polar, const shp::Azimuth& azimuth);
+    Field(const std::string name, const float magnitude, const short int scaling,
+        const shp::Unit& unit, const shp::Distance& radius, const shp::Polar& polar,
+        const shp::Azimuth& azimuth);
+    Field(const std::string name, const float magnitude, const short int scaling,
+        const shp::Unit& unit, const shp::Angular& origin);
     Field(const std::string name, const shp::Signal& modulation);
+    Field(const std::string name, const shp::Signal& modulation, const std::string unit);
+    Field(const std::string name, const shp::Signal& modulation, const shp::Unit& unit);
     Field(const std::string name, const shp::Signal& modulation, const float magnitude);
-    Field(const std::string name, const shp::Signal& modulation, const float magnitude, const shp::Unit& unit);
-    Field(const std::string name, const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Potential& potential);
-    Field(const std::string name, const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Distance& radius);
-    Field(const std::string name, const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Azimuth& azimuth);
-    Field(const std::string name, const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Polar& polar);
-    Field(const std::string name, const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Polar& polar, const shp::Azimuth& azimuth);
-    Field(const std::string name, const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth);
-    Field(const std::string name, const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Angular& origin);
-    Field(const std::string name, const shp::Signal& modulation, const float magnitude, const short int scaling);
-    Field(const std::string name, const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit);
-    Field(const std::string name, const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Potential& potential);
-    Field(const std::string name, const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Distance& radius);
-    Field(const std::string name, const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Azimuth& azimuth);
-    Field(const std::string name, const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Polar& polar);
-    Field(const std::string name, const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Polar& polar, const shp::Azimuth& azimuth);
-    Field(const std::string name, const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth);
-    Field(const std::string name, const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Angular& origin);
+    Field(const std::string name, const shp::Signal& modulation, const float magnitude,
+        const std::string unit);
+    Field(const std::string name, const shp::Signal& modulation, const float magnitude,
+        const shp::Unit& unit);
+    Field(const std::string name, const shp::Signal& modulation, const float magnitude,
+        const shp::Unit& unit, const shp::Potential& potential);
+    Field(const std::string name, const shp::Signal& modulation, const float magnitude,
+        const shp::Unit& unit, const shp::Distance& radius);
+    Field(const std::string name, const shp::Signal& modulation, const float magnitude,
+        const shp::Unit& unit, const shp::Azimuth& azimuth);
+    Field(const std::string name, const shp::Signal& modulation, const float magnitude,
+        const shp::Unit& unit, const shp::Distance& radius, const shp::Azimuth& azimuth);
+    Field(const std::string name, const shp::Signal& modulation, const float magnitude,
+        const shp::Unit& unit, const shp::Polar& polar);
+    Field(const std::string name, const shp::Signal& modulation, const float magnitude,
+        const shp::Unit& unit, const shp::Distance& radius, const shp::Polar& polar);
+    Field(const std::string name, const shp::Signal& modulation, const float magnitude,
+        const shp::Unit& unit, const shp::Polar& polar, const shp::Azimuth& azimuth);
+    Field(const std::string name, const shp::Signal& modulation, const float magnitude,
+        const shp::Unit& unit, const shp::Distance& radius, const shp::Polar& polar,
+        const shp::Azimuth& azimuth);
+    Field(const std::string name, const shp::Signal& modulation, const float magnitude,
+        const shp::Unit& unit, const shp::Angular& origin);
+    Field(const std::string name, const shp::Signal& modulation, const float magnitude,
+        const short int scaling);
+    Field(const std::string name, const shp::Signal& modulation, const float magnitude,
+        const short int scaling, const std::string unit);
+    Field(const std::string name, const shp::Signal& modulation, const float magnitude,
+        const short int scaling, const shp::Unit& unit);
+    Field(const std::string name, const shp::Signal& modulation, const float magnitude,
+        const short int scaling, const shp::Unit& unit, const shp::Potential& potential);
+    Field(const std::string name, const shp::Signal& modulation, const float magnitude,
+        const short int scaling, const shp::Unit& unit, const shp::Distance& radius);
+    Field(const std::string name, const shp::Signal& modulation, const float magnitude,
+        const short int scaling, const shp::Unit& unit, const shp::Azimuth& azimuth);
+    Field(const std::string name, const shp::Signal& modulation, const float magnitude,
+        const short int scaling, const shp::Unit& unit, const shp::Distance& radius,
+        const shp::Azimuth& azimuth);
+    Field(const std::string name, const shp::Signal& modulation, const float magnitude,
+        const short int scaling, const shp::Unit& unit, const shp::Polar& polar);
+    Field(const std::string name, const shp::Signal& modulation, const float magnitude,
+        const short int scaling, const shp::Unit& unit, const shp::Distance& radius,
+        const shp::Polar& polar);
+    Field(const std::string name, const shp::Signal& modulation, const float magnitude,
+        const short int scaling, const shp::Unit& unit, const shp::Polar& polar,
+        const shp::Azimuth& azimuth);
+    Field(const std::string name, const shp::Signal& modulation, const float magnitude,
+        const short int scaling, const shp::Unit& unit, const shp::Distance& radius,
+        const shp::Polar& polar, const shp::Azimuth& azimuth);
+    Field(const std::string name, const shp::Signal& modulation, const float magnitude,
+        const short int scaling, const shp::Unit& unit, const shp::Angular& origin);
 
     // Destructors
     ~Field();
@@ -190,7 +312,8 @@ public:
     virtual std::string printRadians() const;
     Time getFluctuation(const float phase) const;
 public:
-    static std::shared_ptr<qft::Field> shareable(const std::string name);
+    static const std::shared_ptr<qft::Field> shareable(const std::string name,
+        const float magnitude, const short int scaling);
 };
 
 typedef std::vector<Field > FieldArray;

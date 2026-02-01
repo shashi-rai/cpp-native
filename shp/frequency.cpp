@@ -346,6 +346,36 @@ Frequency Frequency::operator%(const Frequency& peer) const {
         signal.getAmplitude(), signal.getScaling(), signal.getUnit());
 }
 
+Frequency Frequency::operator+(const shp::Quantity& peer) const {
+    Signal self = *this, signal = (self + peer); signal.adjustScaling();
+    return Frequency(modulation, signal.getOrientation(),
+        signal.getMagnitude(), signal.getScaling(), signal.getUnit());
+}
+
+Frequency Frequency::operator-(const shp::Quantity& peer) const {
+    Signal self = *this, signal = (self - peer); signal.adjustScaling();
+    return Frequency(modulation, signal.getOrientation(),
+        signal.getMagnitude(), signal.getScaling(), signal.getUnit());
+}
+
+Frequency Frequency::operator*(const shp::Quantity& peer) const {
+    Signal self = *this, signal = (self * peer); signal.adjustScaling();
+    return Frequency(modulation, signal.getOrientation(),
+        signal.getMagnitude(), signal.getScaling(), signal.getUnit());
+}
+
+Frequency Frequency::operator/(const shp::Quantity& peer) const {
+    Signal self = *this, signal = (self / peer); signal.adjustScaling();
+    return Frequency(modulation, signal.getOrientation(),
+        signal.getMagnitude(), signal.getScaling(), signal.getUnit());
+}
+
+Frequency Frequency::operator%(const shp::Quantity& peer) const {
+    Signal self = *this, signal = (self % peer); signal.adjustScaling();
+    return Frequency(modulation, signal.getOrientation(),
+        signal.getMagnitude(), signal.getScaling(), signal.getUnit());
+}
+
 Frequency Frequency::getCarrierScalar(const float coefficient) const {
     Signal self = *this; Signal carrier = self(coefficient);
     return Frequency(this->modulation, carrier.getOrientation(),

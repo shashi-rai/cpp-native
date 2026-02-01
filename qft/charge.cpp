@@ -177,6 +177,31 @@ Charge Charge::operator%(const Charge& peer) const {
     return Charge(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
 }
 
+Charge Charge::operator+(const shp::Quantity& peer) const {
+    shp::Temporal self = *this; shp::Signal result = (self.getTotal() + peer);
+    return Charge(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
+}
+
+Charge Charge::operator-(const shp::Quantity& peer) const {
+    shp::Temporal self = *this; shp::Signal result = (self.getTotal() - peer);
+    return Charge(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
+}
+
+Charge Charge::operator*(const shp::Quantity& peer) const {
+    shp::Temporal self = *this; shp::Signal result = (self.getTotal() * peer);
+    return Charge(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
+}
+
+Charge Charge::operator/(const shp::Quantity& peer) const {
+    shp::Temporal self = *this; shp::Signal result = (self.getTotal() / peer);
+    return Charge(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
+}
+
+Charge Charge::operator%(const shp::Quantity& peer) const {
+    shp::Temporal self = *this; shp::Signal result = (self.getTotal() % peer);
+    return Charge(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
+}
+
 Force Charge::operator()(const Charge& peer, const shp::Distance separation,
         const shp::Distance position) const {
     if (isOwned()) {
@@ -197,7 +222,7 @@ bool Charge::isOwned() const {
     return (field != nullptr);
 }
 
-shp::Distance Charge::getRadius() const {
+shp::Distance Charge::getFieldRadius() const {
     shp::Distance result;
     if (isOwned()) {
         result = field->getRadius();
@@ -205,9 +230,33 @@ shp::Distance Charge::getRadius() const {
     return result;
 }
 
-void Charge::setRadius(const shp::Distance& length) {
+void Charge::setFieldRadius(const shp::Distance& length) {
+    if (isOwned()) {
+        field->setRadius(length.getMagnitude(), length.getScaling(), length.getUnit());
+    }
+}
+
+void Charge::setFieldRadius(const float length) {
     if (isOwned()) {
         field->setRadius(length);
+    }
+}
+
+void Charge::setFieldRadius(const float length, const short int scale) {
+    if (isOwned()) {
+        field->setRadius(length, scale);
+    }
+}
+
+void Charge::setFieldRadius(const float length, const short int scale, const std::string unit) {
+    if (isOwned()) {
+        field->setRadius(length, scale, unit);
+    }
+}
+
+void Charge::setFieldRadius(const float length, const short int scale, const shp::Unit& unit) {
+    if (isOwned()) {
+        field->setRadius(length, scale, unit);
     }
 }
 
@@ -246,7 +295,7 @@ Force Charge::getForce(const shp::Angular& coordinates) const {
 }
 
 std::shared_ptr<Field> Charge::getOriginField() const {
-    std::shared_ptr<Field> result = Field::shareable(Charge::ELECTRIC_FIELD);
+    std::shared_ptr<Field> result = Field::shareable(Charge::ELECTRIC_FIELD, getMagnitude(), getScaling());
     result->setPotential(shp::Potential(getMagnitude(), shp::Quantity::DEFAULT_VALUE,
         getScaling(), getUnit(), shp::Angular(Energy::getPlanckLength())));
     return result;
@@ -287,8 +336,7 @@ std::string Charge::printRadians() const {
 }
 
 shp::Temporal Charge::getFluctuation(const float phase) const {
-    shp::Temporal self = *this;
-    shp::Temporal intensity = self.getMagnitude();
+    shp::Temporal self = *this, intensity = self.getMagnitude();
     intensity.setIntensityDrift(phase);
 	return shp::Temporal(intensity.getMagnitude(), intensity.getScaling(), intensity.getUnit());
 }

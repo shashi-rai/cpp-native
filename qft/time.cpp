@@ -50,6 +50,13 @@ Time::Time(const shp::Unit& unit)
 
 }
 
+Time::Time(const std::string name, const std::string unit)
+        : shp::Temporal(shp::Quantity::DEFAULT_VALUE,
+            shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, unit),
+		name(name) {
+
+}
+
 Time::Time(const std::string name, const shp::Unit& unit)
         : shp::Temporal(shp::Quantity::DEFAULT_VALUE,
             shp::Quantity::DEFAULT_VALUE, ATOMIC_SCALE, unit),
@@ -667,7 +674,7 @@ std::string Time::printRadians() const {
 
 std::shared_ptr<qft::Time> Time::shareable(const std::string name,
         const float ticking, const short int scaling) {
-    std::shared_ptr<qft::Time> result = std::make_shared<qft::Time> (name, ticking, scaling);
+    std::shared_ptr<qft::Time> result = std::make_shared<qft::Time>(name, ticking, scaling);
     return result;
 }
 

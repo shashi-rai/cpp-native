@@ -421,7 +421,7 @@ std::shared_ptr<Field> Heat::getThermalField() const {
 
 std::shared_ptr<Field> Heat::getDiffusionField() const {
     Temperature temperature = *this;
-    std::shared_ptr<Field> field = Field::shareable(Heat::DIFFUSION_FIELD);
+    std::shared_ptr<Field> field = Field::shareable(Heat::DIFFUSION_FIELD, getMagnitude(), getScaling());
     shp::Signal motion = getRateOfChange();
     if (motion.checkNonZero()) {
         field->setPotential(shp::Potential(motion.getMagnitude(),

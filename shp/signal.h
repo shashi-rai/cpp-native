@@ -82,6 +82,20 @@ public:
     Signal operator/(const Signal& peer) const;
     Signal operator%(const Signal& peer) const;
 
+    // Quantity operator
+    Signal operator+(const float coefficient) const;
+    Signal operator-(const float coefficient) const;
+    Signal operator*(const float coefficient) const;
+    Signal operator/(const float coefficient) const;
+    Signal operator%(const float coefficient) const;
+
+    // Quantity operator
+    Signal operator+(const Quantity& peer) const;
+    Signal operator-(const Quantity& peer) const;
+    Signal operator*(const Quantity& peer) const;
+    Signal operator/(const Quantity& peer) const;
+    Signal operator%(const Quantity& peer) const;
+
     // Multiple operator
     Signal operator()(const float scaleup) const;
 

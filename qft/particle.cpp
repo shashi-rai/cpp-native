@@ -24,145 +24,141 @@ namespace qft {
 
 Particle::Particle()
         : Wave(), isospin(), spin(), energy() {
-    setPhysical(nullptr);
+
+}
+
+
+Particle::Particle(const std::string name)
+        : Wave(name), isospin(), spin(), energy() {
+
 }
 
 Particle::Particle(const float spin)
         : Wave(), isospin(), spin(spin), energy() {
-    setPhysical(nullptr);
+
 }
 
 Particle::Particle(const Spin& spin)
         : Wave(), isospin(), spin(spin), energy() {
-    setPhysical(nullptr);
-}
 
-Particle::Particle(const std::string name)
-        : Wave(name), isospin(), spin(), energy() {
-    setPhysical(nullptr);
 }
 
 Particle::Particle(const std::string name, const float spin)
         : Wave(name), isospin(), spin(spin), energy() {
-    setPhysical(nullptr);
+
 }
 
 Particle::Particle(const std::string name, const Spin& spin)
         : Wave(name), isospin(), spin(spin), energy() {
-    setPhysical(nullptr);
+
+}
+
+Particle::Particle(const Isospin& isospin)
+        : Wave(), isospin(isospin), spin(), energy() {
+
+}
+
+Particle::Particle(const std::string name, const Isospin& isospin)
+        : Wave(name), isospin(isospin), spin(), energy() {
+
+}
+
+Particle::Particle(const std::string name, const Isospin& isospin, const Spin& spin)
+        : Wave(name), isospin(isospin), spin(spin), energy() {
+
 }
 
 Particle::Particle(const Energy& energy)
         : Wave(), isospin(), spin(), energy(energy) {
-    setPhysical(nullptr);
+
 }
 
 Particle::Particle(const std::string name, const Energy& energy)
         : Wave(name), isospin(), spin(), energy(energy) {
-    setPhysical(nullptr);
+
 }
 
 Particle::Particle(const Spin& spin, const Energy& energy)
         : Wave(), isospin(), spin(spin), energy(energy) {
-    setPhysical(nullptr);
+
 }
 
 Particle::Particle(const std::string name, const float spin, const float energy)
         : Wave(name), isospin(), spin(spin), energy(energy) {
-    setPhysical(nullptr);
+
 }
 
 Particle::Particle(const std::string name, const Spin& spin, const Energy& energy)
         : Wave(name), isospin(), spin(spin), energy(energy) {
-    setPhysical(nullptr);
+
+}
+
+Particle::Particle(const Isospin& isospin, const Energy& energy)
+        : Wave(), isospin(isospin), spin(), energy(energy) {
+
+}
+
+Particle::Particle(const std::string name, const Isospin& isospin, const Energy& energy)
+        : Wave(name), isospin(isospin), spin(), energy(energy) {
+
+}
+
+Particle::Particle(const Isospin& isospin, const Spin& spin, const Energy& energy)
+        : Wave(), isospin(isospin), spin(spin), energy(energy) {
+
 }
 
 Particle::Particle(const std::string name, const Isospin& isospin, const Spin& spin, const Energy& energy)
         : Wave(name), isospin(isospin), spin(spin), energy(energy) {
-    setPhysical(nullptr);
+
 }
 
 Particle::Particle(const Mass& mass, const Charge& charge)
         : Wave(), isospin(), spin(), energy(Mass(mass), Charge(charge)) {
-    setPhysical(nullptr);
+
 }
 
 Particle::Particle(const std::string name, const Mass& mass, const Charge& charge)
         : Wave(name), isospin(), spin(), energy(Mass(mass), Charge(charge)) {
-    setPhysical(nullptr);
+
 }
 
 Particle::Particle(const Spin& spin, const Mass& mass, const Charge& charge)
         : Wave(), isospin(), spin(spin), energy(Mass(mass), Charge(charge)) {
-    setPhysical(nullptr);
+
 }
 
 Particle::Particle(const std::string name, const float spin,
         const float mass, const float charge)
         : Wave(name), isospin(), spin(spin), energy(Mass(mass), Charge(charge)) {
-    setPhysical(nullptr);
+
 }
 
 Particle::Particle(const std::string name, const Spin& spin,
         const Mass& mass, const Charge& charge)
         : Wave(name), isospin(), spin(spin), energy(Mass(mass), Charge(charge)) {
-    setPhysical(nullptr);
+
 }
 
-Particle::Particle(std::shared_ptr<shp::Shape> description)
-        : Wave(), isospin(), spin(), energy() {
-    setPhysical(description);
+Particle::Particle(const std::string name, const Isospin& isospin,
+        const Mass& mass, const Charge& charge)
+        : Wave(name), isospin(isospin), spin(), energy(Mass(mass), Charge(charge)) {
+
 }
 
-Particle::Particle(const std::string name, std::shared_ptr<shp::Shape> description)
-        : Wave(name), isospin(), spin(), energy() {
-    setPhysical(description);
-}
+Particle::Particle(const std::string name, const Isospin& isospin, const Spin& spin,
+        const Mass& mass, const Charge& charge)
+        : Wave(name), isospin(isospin), spin(spin), energy(Mass(mass), Charge(charge)) {
 
-Particle::Particle(const std::string name, std::shared_ptr<shp::Shape> description,
-        const Spin& spin)
-        : Wave(name), isospin(), spin(spin), energy() {
-    setPhysical(description);
-}
-
-Particle::Particle(const std::string name, std::shared_ptr<shp::Shape> description,
-        const Spin& spin, const Energy& energy)
-        : Wave(name), isospin(), spin(spin), energy(energy) {
-    setPhysical(description);
-}
-
-Particle::Particle(const std::string name, std::shared_ptr<shp::Shape> description,
-        const Isospin& isospin, const Spin& spin, const Energy& energy)
-        : Wave(name), isospin(isospin), spin(spin), energy(energy) {
-    setPhysical(description);
-}
-
-Particle::Particle(std::shared_ptr<shp::Shape> description,
-        const Spin& spin, const Energy& energy)
-        : Wave(), isospin(), spin(spin), energy(energy) {
-    setPhysical(description);
-}
-
-Particle::Particle(std::shared_ptr<shp::Shape> description,
-        const Spin& spin, const Mass& mass, const Charge& charge)
-        : Wave(), isospin(), spin(spin), energy(mass, charge) {
-    setPhysical(description);
-}
-
-Particle::Particle(const std::string name, std::shared_ptr<shp::Shape> description,
-        const Spin& spin, const Mass& mass, const Charge& charge)
-        : Wave(name), isospin(), spin(spin), energy(mass, charge) {
-    setPhysical(description);
 }
 
 Particle::~Particle() {
-    setPhysical(nullptr);
+
 }
 
 bool Particle::operator==(const Particle& peer) const {
     return (static_cast<const Wave&>(*this) == static_cast<const Wave&>(peer))
-        && (energy == peer.energy) && (isospin == peer.isospin) && (spin == peer.spin)
-        && (physical == peer.physical);
+        && (energy == peer.energy) && (isospin == peer.isospin) && (spin == peer.spin);
 }
 
 bool Particle::operator<(const Particle& peer) const {
@@ -220,8 +216,28 @@ Particle Particle::operator%(const Particle& peer) const {
     return Particle("%", newisospin, newspin, newenergy);
 }
 
-shp::Signal Particle::getTotal() const {
-    return energy.getTotal();
+Mass Particle::getMass() const {
+    return energy.getMass();
+}
+
+void Particle::setMass(const Mass& value) {
+    energy.setMass(value);
+}
+
+Charge Particle::getCharge() const {
+    return energy.getCharge();
+}
+
+void Particle::setCharge(const Charge& value) {
+    energy.setCharge(value);
+}
+
+Temperature Particle::getTemperature() const {
+    return energy.getTemperature();
+}
+
+void Particle::setTemperature(const Temperature& value) {
+    energy.setTemperature(value);
 }
 
 shp::Signal Particle::getFrequency() const {
@@ -232,16 +248,52 @@ shp::Signal Particle::getWavelength() const {
     return energy.getWavelength().getMagnitude();
 }
 
-bool Particle::isStructured() const {
-    return physical != nullptr;
+shp::Distance Particle::getMassFieldRadius() const {
+    return energy.getMassFieldRadius();
 }
 
-shp::Distance Particle::getRadius() const {
-    return energy.getRadius().getMagnitude();
+void Particle::setMassFieldRadius(const shp::Distance& radius) {
+    energy.setMassFieldChange(radius);
 }
 
-void Particle::setRadius(const shp::Distance& length) {
-    energy.setRadius(length);
+void Particle::setMassFluxChange(const shp::Azimuth& shift) {
+    energy.setMassFluxChange(shift);
+}
+
+void Particle::setMassFlowChange(const shp::Signal& motion) {
+    energy.setMassFlowChange(motion);
+}
+
+shp::Distance Particle::getChargeFieldRadius() const {
+    return energy.getChargeFieldRadius();
+}
+
+void Particle::setChargeFieldRadius(const shp::Distance& radius) {
+    energy.setChargeFieldChange(radius);
+}
+
+void Particle::setChargeFluxChange(const shp::Azimuth& shift) {
+    energy.setChargeFluxChange(shift);
+}
+
+void Particle::setChargeFlowChange(const shp::Signal& motion) {
+    energy.setChargeFlowChange(motion);
+}
+
+shp::Distance Particle::getThermalFieldRadius() const {
+    return energy.getThermalFieldRadius();
+}
+
+void Particle::setThermalFieldRadius(const shp::Distance& radius) {
+    energy.setThermalFieldChange(radius);
+}
+
+void Particle::setThermalFluxChange(const shp::Azimuth& shift) {
+    energy.setThermalFluxChange(shift);
+}
+
+void Particle::setThermalFlowChange(const shp::Signal& motion) {
+    energy.setThermalFlowChange(motion);
 }
 
 std::shared_ptr<Field> Particle::getMassField() const {
@@ -260,14 +312,25 @@ void Particle::setChargeField(const std::shared_ptr<Field> field) {
     energy.setChargeField(field);
 }
 
+std::shared_ptr<Field> Particle::getThermalField() const {
+    return energy.getThermalField();
+}
+
+void Particle::setThermalField(const std::shared_ptr<Field> field) {
+    energy.setThermalField(field);
+}
+
+shp::Signal Particle::getTotal() const {
+    return energy.getTotal();
+}
+
 shp::Point Particle::copy() {
-    Particle fresh(this->getName(), physical, isospin, spin, energy);
+    Particle fresh(shp::Wave::getName(), this->isospin, this->spin, this->energy);
     return fresh;
 }
 
 void Particle::clear() {
     Wave::clear();
-    setPhysical(nullptr);
     isospin.clear();
     spin.clear();
     energy.clear();
@@ -280,8 +343,7 @@ std::string Particle::print() const {
     result << Wave::print() << ",";
     result << energy.print() << ",";
     result << isospin.print() << ",";
-    result << spin.print() << ",";
-    result << (physical != nullptr ? physical->print() : "");
+    result << spin.print();
     result << "]";
 	return result.str();
 }
@@ -292,8 +354,7 @@ std::string Particle::printRadians() const {
     result << Wave::printRadians() << ",";
     result << energy.printRadians() << ",";
     result << isospin.print() << ",";
-    result << spin.print() << ",";
-    result << (physical != nullptr ? physical->print() : "");
+    result << spin.print();
     result << "]";
 	return result.str();
 }

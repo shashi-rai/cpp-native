@@ -348,6 +348,36 @@ Temporal Temporal::operator%(const Temporal& peer) const {
         signal.getAmplitude(), signal.getScaling(), signal.getUnit());
 }
 
+Temporal Temporal::operator+(const shp::Quantity& peer) const {
+    Signal self = *this, signal = (self + peer); signal.adjustScaling();
+    return Temporal(modulation, signal.getOrientation(),
+        signal.getMagnitude(), signal.getScaling(), signal.getUnit());
+}
+
+Temporal Temporal::operator-(const shp::Quantity& peer) const {
+    Signal self = *this, signal = (self - peer); signal.adjustScaling();
+    return Temporal(modulation, signal.getOrientation(),
+        signal.getMagnitude(), signal.getScaling(), signal.getUnit());
+}
+
+Temporal Temporal::operator*(const shp::Quantity& peer) const {
+    Signal self = *this, signal = (self * peer); signal.adjustScaling();
+    return Temporal(modulation, signal.getOrientation(),
+        signal.getMagnitude(), signal.getScaling(), signal.getUnit());
+}
+
+Temporal Temporal::operator/(const shp::Quantity& peer) const {
+    Signal self = *this, signal = (self / peer); signal.adjustScaling();
+    return Temporal(modulation, signal.getOrientation(),
+        signal.getMagnitude(), signal.getScaling(), signal.getUnit());
+}
+
+Temporal Temporal::operator%(const shp::Quantity& peer) const {
+    Signal self = *this, signal = (self % peer); signal.adjustScaling();
+    return Temporal(modulation, signal.getOrientation(),
+        signal.getMagnitude(), signal.getScaling(), signal.getUnit());
+}
+
 Temporal Temporal::getCarrierScalar(const float coefficient) const {
     Signal self = *this; Signal carrier = self(coefficient);
     return Temporal(this->modulation, carrier.getOrientation(),

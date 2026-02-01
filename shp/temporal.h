@@ -120,6 +120,13 @@ public:
     Temporal operator/(const Temporal& peer) const;
     Temporal operator%(const Temporal& peer) const;
 
+    // Quantity operator
+    Temporal operator+(const shp::Quantity& peer) const;
+    Temporal operator-(const shp::Quantity& peer) const;
+    Temporal operator*(const shp::Quantity& peer) const;
+    Temporal operator/(const shp::Quantity& peer) const;
+    Temporal operator%(const shp::Quantity& peer) const;
+
     // Getters
 protected:
     Signal getModulation() const { return modulation; }

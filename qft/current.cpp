@@ -419,7 +419,7 @@ std::shared_ptr<Field> Current::getElectricField() const {
 
 std::shared_ptr<Field> Current::getMagneticField() const {
     Charge charge = *this;
-    std::shared_ptr<Field> field = Field::shareable(Current::MAGNETIC_FIELD);
+    std::shared_ptr<Field> field = Field::shareable(Current::MAGNETIC_FIELD, getMagnitude(), getScaling());
     shp::Signal motion = getRateOfChange();
     if (motion.checkNonZero()) {
         field->setPotential(shp::Potential(motion.getMagnitude(),

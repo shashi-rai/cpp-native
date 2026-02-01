@@ -33,6 +33,7 @@ public:
     Time();
     Time(const std::string name);
     Time(const shp::Unit& unit);
+    Time(const  std::string name, const std::string unit);
     Time(const  std::string name, const shp::Unit& unit);
     Time(const float duration);
     Time(const float duration, const std::string unit);

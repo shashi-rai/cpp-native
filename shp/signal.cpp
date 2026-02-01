@@ -255,6 +255,71 @@ Signal Signal::operator%(const Signal& peer) const {
     return Signal(result.imag(), result.real(), self.getScaling(), self.getUnit());
 }
 
+Signal Signal::operator+(const float coefficient) const {
+    Signal self = *this, other(coefficient, self.getScaling(), self.getUnit());
+    Signal result = (self + other); result.adjustScaling();
+    return Signal(result.getOrientation(),
+        result.getMagnitude(), result.getScaling(), result.getUnit());
+}
+
+Signal Signal::operator-(const float coefficient) const {
+    Signal self = *this, other(coefficient, self.getScaling(), self.getUnit());
+    Signal result = (self - other); result.adjustScaling();
+    return Signal(result.getOrientation(),
+        result.getMagnitude(), result.getScaling(), result.getUnit());
+}
+
+Signal Signal::operator*(const float coefficient) const {
+    Signal self = *this, other(coefficient, self.getScaling(), self.getUnit());
+    Signal result = (self * other); result.adjustScaling();
+    return Signal(result.getOrientation(),
+        result.getMagnitude(), result.getScaling(), result.getUnit());
+}
+
+Signal Signal::operator/(const float coefficient) const {
+    Signal self = *this, other(coefficient, self.getScaling(), self.getUnit());
+    Signal result = (self / other); result.adjustScaling();
+    return Signal(result.getOrientation(),
+        result.getMagnitude(), result.getScaling(), result.getUnit());
+}
+
+Signal Signal::operator%(const float coefficient) const {
+    Signal self = *this, other(coefficient, self.getScaling(), self.getUnit());
+    Signal result = (self % other); result.adjustScaling();
+    return Signal(result.getOrientation(),
+        result.getMagnitude(), result.getScaling(), result.getUnit());
+}
+
+Signal Signal::operator+(const shp::Quantity& peer) const {
+    Signal self = *this, result = (self + peer); result.adjustScaling();
+    return Signal(result.getOrientation(),
+        result.getMagnitude(), result.getScaling(), result.getUnit());
+}
+
+Signal Signal::operator-(const shp::Quantity& peer) const {
+    Signal self = *this, result = (self - peer); result.adjustScaling();
+    return Signal(result.getOrientation(),
+        result.getMagnitude(), result.getScaling(), result.getUnit());
+}
+
+Signal Signal::operator*(const shp::Quantity& peer) const {
+    Signal self = *this, result = (self * peer); result.adjustScaling();
+    return Signal(result.getOrientation(),
+        result.getMagnitude(), result.getScaling(), result.getUnit());
+}
+
+Signal Signal::operator/(const shp::Quantity& peer) const {
+    Signal self = *this, result = (self / peer); result.adjustScaling();
+    return Signal(result.getOrientation(),
+        result.getMagnitude(), result.getScaling(), result.getUnit());
+}
+
+Signal Signal::operator%(const shp::Quantity& peer) const {
+    Signal self = *this, result = (self % peer); result.adjustScaling();
+    return Signal(result.getOrientation(),
+        result.getMagnitude(), result.getScaling(), result.getUnit());
+}
+
 Signal Signal::operator()(const float scaleup) const {
     Quantity self = *this;
     Quantity product = self.getMultiple(scaleup);

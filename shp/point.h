@@ -96,7 +96,7 @@ public:
     // Additional methods
     float getAmplitude() const;
     float getMagnitude() const;
-    void setMagnitude(const float magnitudet);
+    void setMagnitude(const float magnitude);
     void setMagnitude(const float magnitude, const short int scaling);
     void setMagnitude(const float magnitude, const short int scaling, const std::string unit);
     void setMagnitude(const float magnitude, const short int scaling, const Unit& unit);

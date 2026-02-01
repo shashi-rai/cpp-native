@@ -292,7 +292,7 @@ std::string Electron::print() {
 
 void Electron::initialize() {
     Energy self = getEnergy();
-    self.setRadius(shp::Distance(RADIUS, RADIUS_SCALE));
+    self.setMassFieldChange(shp::Distance(RADIUS, RADIUS_SCALE));
 	self.setWavelength(shp::Distance(COMPTON_WAVELENGTH, WAVELENGTH_SCALE));
 }
 

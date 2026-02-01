@@ -67,6 +67,13 @@ public:
     Temperature operator/(const Temperature& peer) const;
     Temperature operator%(const Temperature& peer) const;
 
+    // Quantity operator
+    Temperature operator+(const shp::Quantity& peer) const;
+    Temperature operator-(const shp::Quantity& peer) const;
+    Temperature operator*(const shp::Quantity& peer) const;
+    Temperature operator/(const shp::Quantity& peer) const;
+    Temperature operator%(const shp::Quantity& peer) const;
+
     // Access operator
     Force operator()(const Temperature& peer, const shp::Distance separation,
         const shp::Distance position) const;
@@ -79,8 +86,12 @@ public:
 
     // Additional methods
     bool isOwned() const;
-    shp::Distance getRadius() const;
-    void setRadius(const shp::Distance& length);
+    shp::Distance getFieldRadius() const;
+    void setFieldRadius(const shp::Distance& length);
+    void setFieldRadius(const float length);
+    void setFieldRadius(const float length, const short int scale);
+    void setFieldRadius(const float length, const short int scale, const std::string unit);
+    void setFieldRadius(const float length, const short int scale, const shp::Unit& unit);
     shp::Potential getPotential() const;
     shp::Signal getVelocity() const;
     void setVelocity(const qft::Velocity& velocity);

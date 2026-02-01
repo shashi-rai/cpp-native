@@ -57,7 +57,7 @@ Boson::Boson(const std::string name)
 
 Boson::Boson(const std::string name,
         const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
-        : Particle(name, GUAGE_SPIN1, mass, charge), handed() {
+        : Particle(name, Spin(GUAGE_SPIN1), mass, charge), handed() {
 
 }
 
@@ -93,13 +93,13 @@ Boson::Boson(const std::string name, const float wavelength)
 
 Boson::Boson(const std::string name, const float wavelength,
         const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge)
-        : Particle(name, GUAGE_SPIN1, mass, charge), handed() {
+        : Particle(name, Spin(GUAGE_SPIN1), mass, charge), handed() {
     Energy energy = getEnergy();
     energy.setWavelength(wavelength);
 }
 
 Boson::Boson(const std::string name, const Energy& energy)
-        : Particle(name, GUAGE_SPIN1, energy), handed() {
+        : Particle(name, Spin(GUAGE_SPIN1), energy), handed() {
 
 }
 

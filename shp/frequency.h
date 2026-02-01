@@ -121,6 +121,13 @@ public:
     Frequency operator/(const Frequency& peer) const;
     Frequency operator%(const Frequency& peer) const;
 
+    // Quantity operator
+    Frequency operator+(const shp::Quantity& peer) const;
+    Frequency operator-(const shp::Quantity& peer) const;
+    Frequency operator*(const shp::Quantity& peer) const;
+    Frequency operator/(const shp::Quantity& peer) const;
+    Frequency operator%(const shp::Quantity& peer) const;
+
     // Getters
 protected:
     Signal getModulation() const { return modulation; }

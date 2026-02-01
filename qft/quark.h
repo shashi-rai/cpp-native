@@ -22,7 +22,6 @@
 #define QFT_QUARK_H
 
 #include "colour.h"
-#include "energy.h"
 #include "handed.h"
 #include "particle.h"
 

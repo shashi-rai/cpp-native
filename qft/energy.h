@@ -22,10 +22,8 @@
 #define QFT_ENERGY_H
 
 #include "charge.h"
-#include "density.h"
 #include "mass.h"
-#include "time.h"
-#include "../shp/distance.h"
+#include "temperature.h"
 #include "../shp/phase.h"
 
 namespace qft {
@@ -35,6 +33,7 @@ class Energy : public shp::Phase {
     shp::Distance wavelength;       // Kinetic Energy as Planck wave
     qft::Mass mass;                 // Potential Energy as conserved
     qft::Charge charge;             // Cause of Kinetic Energy
+    qft::Temperature temperature;   // Cause of Heat Energy
 public:
     // Constructors
     Energy();
@@ -43,15 +42,15 @@ public:
     Energy(const std::string name, const std::shared_ptr<Field> mass, const std::shared_ptr<Field> charge);
     Energy(const float gradient);
     Energy(const std::string name, const float gradient);
-    Energy(const float amplitude, const float gradient);
-    Energy(const std::string name, const float amplitude, const float gradient);
-    Energy(const float amplitude, const float gradient,
+    Energy(const float magnitude, const float gradient);
+    Energy(const std::string name, const float magnitude, const float gradient);
+    Energy(const float magnitude, const float gradient,
         const float wavelength);
-    Energy(const float amplitude, const float gradient,
+    Energy(const float magnitude, const float gradient,
         const float wavelength, const short int scaling);
-    Energy(const std::string name, const float amplitude, const float gradient,
+    Energy(const std::string name, const float magnitude, const float gradient,
         const float wavelength);
-    Energy(const std::string name, const float amplitude, const float gradient,
+    Energy(const std::string name, const float magnitude, const float gradient,
         const float wavelength, const short int scaling);
     Energy(const float wavelength,
         const shp::Unit& unit);
@@ -65,6 +64,8 @@ public:
     Energy(const Mass& mass, const shp::Unit& unit);
     Energy(const Charge& charge);
     Energy(const Charge& charge, const shp::Unit& unit);
+    Energy(const Temperature& temperature);
+    Energy(const Temperature& temperature, const shp::Unit& unit);
     Energy(const Mass& mass, const Charge& charge);
     Energy(const Mass& mass, const Charge& charge,
         const shp::Unit& unit);
@@ -75,8 +76,8 @@ public:
     Energy(const std::string name, const Mass& mass);
     Energy(const std::string name, const Mass& mass,
         const shp::Unit& unit);
-    Energy(std::string name, const Charge& charge);
-    Energy(std::string name, const Charge& charge,
+    Energy(const std::string name, const Charge& charge);
+    Energy(const std::string name, const Charge& charge,
         const shp::Unit& unit);
     Energy(const float wavelength, const Mass& mass);
     Energy(const float wavelength, const Charge& charge);
@@ -117,45 +118,45 @@ public:
         const Mass& mass, const Charge& charge);
     Energy(std::string name, const float wavelength, const short int scaling,
         const Mass& mass, const Charge& charge, const shp::Unit& unit);
-    Energy(const float amplitude, const float gradient, const float wavelength,
+    Energy(const float magnitude, const float gradient, const float wavelength,
         const float mass, const shp::Unit& unit);
-    Energy(const float amplitude, const float gradient, const float wavelength,
+    Energy(const float magnitude, const float gradient, const float wavelength,
         const Mass& mass, const shp::Unit& unit);
-    Energy(const float amplitude, const float gradient, const float wavelength,
+    Energy(const float magnitude, const float gradient, const float wavelength,
         const Charge& charge, const shp::Unit& unit);
-    Energy(const float amplitude, const float gradient, const float wavelength,
+    Energy(const float magnitude, const float gradient, const float wavelength,
         const Mass& mass, const Charge& charge);
-    Energy(const float amplitude, const float gradient, const float wavelength,
+    Energy(const float magnitude, const float gradient, const float wavelength,
         const Mass& mass, const Charge& charge, const shp::Unit& unit);
-    Energy(const float amplitude, const float gradient, const float wavelength,
+    Energy(const float magnitude, const float gradient, const float wavelength,
         const short int scaling, float mass, const shp::Unit& unit);
-    Energy(const float amplitude, const float gradient, const float wavelength,
+    Energy(const float magnitude, const float gradient, const float wavelength,
         const short int scaling, const Mass& mass, const shp::Unit& unit);
-    Energy(const float amplitude, const float gradient, const float wavelength,
+    Energy(const float magnitude, const float gradient, const float wavelength,
         const short int scaling, const Charge& charge, const shp::Unit& unit);
-    Energy(const std::string name, const float amplitude, const float gradient, const float wavelength,
+    Energy(const std::string name, const float magnitude, const float gradient, const float wavelength,
         const Mass& mass);
-    Energy(const std::string name, const float amplitude, const float gradient, const float wavelength,
+    Energy(const std::string name, const float magnitude, const float gradient, const float wavelength,
         const Charge& charge);
-    Energy(const std::string name, const float amplitude, const float gradient, const float wavelength,
+    Energy(const std::string name, const float magnitude, const float gradient, const float wavelength,
         const Mass& mass, const Charge& charge);
-    Energy(const std::string name, const float amplitude, const float gradient, const float wavelength,
+    Energy(const std::string name, const float magnitude, const float gradient, const float wavelength,
         const short int scaling, const Mass& mass, const Charge& charge);
-    Energy(std::string name, const float amplitude, const float gradient, const float wavelength,
+    Energy(const std::string name, const float magnitude, const float gradient, const float wavelength,
         const Mass& mass, const Charge& charge, const shp::Unit& unit);
-    Energy(const std::string name, const float amplitude, const float gradient, const float wavelength,
+    Energy(const std::string name, const float magnitude, const float gradient, const float wavelength,
         const float mass, const shp::Unit& unit);
-    Energy(const std::string name, const float amplitude, const float gradient, const float wavelength,
+    Energy(const std::string name, const float magnitude, const float gradient, const float wavelength,
         const Mass& mass, const shp::Unit& unit);
-    Energy(const std::string name, const float amplitude, const float gradient, const float wavelength,
+    Energy(const std::string name, const float magnitude, const float gradient, const float wavelength,
         const Charge& charge, const shp::Unit& unit);
-    Energy(const std::string name, const float amplitude, const float gradient, const float wavelength,
+    Energy(const std::string name, const float magnitude, const float gradient, const float wavelength,
         const short int scaling, const float mass, const shp::Unit& unit);
-    Energy(const std::string name, const float amplitude, const float gradient, const float wavelength,
+    Energy(const std::string name, const float magnitude, const float gradient, const float wavelength,
         const short int scaling, const Mass& mass, const shp::Unit& unit);
-    Energy(const std::string name, const float amplitude, const float gradient, const float wavelength,
+    Energy(const std::string name, const float magnitude, const float gradient, const float wavelength,
         const short int scaling, const Charge& charge, const shp::Unit& unit);
-    Energy(const std::string name, const float amplitude, const float gradient, const float wavelength,
+    Energy(const std::string name, const float magnitude, const float gradient, const float wavelength,
         const short int scaling, const Mass& mass, const Charge& charge, const shp::Unit& unit);
 
     // Destructors
@@ -173,29 +174,65 @@ public:
     Energy operator/(const Energy& peer) const;
     Energy operator%(const Energy& peer) const;
 
+    // Mass operator
+    Energy operator+(const Mass& peer) const;
+    Energy operator-(const Mass& peer) const;
+    Energy operator*(const Mass& peer) const;
+    Energy operator/(const Mass& peer) const;
+    Energy operator%(const Mass& peer) const;
+
+    // Mass operator
+    Energy operator+(const Charge& peer) const;
+    Energy operator-(const Charge& peer) const;
+    Energy operator*(const Charge& peer) const;
+    Energy operator/(const Charge& peer) const;
+    Energy operator%(const Charge& peer) const;
+
+    // Mass operator
+    Energy operator+(const Temperature& peer) const;
+    Energy operator-(const Temperature& peer) const;
+    Energy operator*(const Temperature& peer) const;
+    Energy operator/(const Temperature& peer) const;
+    Energy operator%(const Temperature& peer) const;
+
     // Getters
     shp::Unit getUnit() const { return unit; }
     shp::Distance getWavelength() const { return wavelength; }
     qft::Mass getMass() const { return mass; }
     qft::Charge getCharge() const { return charge; }
+    qft::Temperature getTemperature() const { return temperature; }
 
     // Setters
     void setUnit(const shp::Unit& value) { this->unit = value; }
     void setWavelength(const shp::Distance& length) { this->wavelength = length; }
-    void setMass(const qft::Mass& amount) { this->mass = amount; }
-    void setCharge(const qft::Charge& quantum) { charge = quantum; }
+    void setMass(const qft::Mass& quantum) { this->mass = quantum; }
+    void setCharge(const qft::Charge& quantum) { this->charge = quantum; }
+    void setTemperature(const qft::Temperature& quantum) { this->temperature = quantum; }
 
     // Additional methods
-    shp::Distance getRadius() const;
-    void setRadius(const shp::Distance& length);
+    shp::Distance getMassFieldRadius() const;
+    void setMassFieldChange(const shp::Distance& radius);
+    void setMassFluxChange(const shp::Azimuth& shift);
+    void setMassFlowChange(const shp::Signal& motion);
+    shp::Distance getChargeFieldRadius() const;
+    void setChargeFieldChange(const shp::Distance& radius);
+    void setChargeFluxChange(const shp::Azimuth& shift);
+    void setChargeFlowChange(const shp::Signal& motion);
+    shp::Distance getThermalFieldRadius() const;
+    void setThermalFieldChange(const shp::Distance& radius);
+    void setThermalFluxChange(const shp::Azimuth& shift);
+    void setThermalFlowChange(const shp::Signal& motion);
     std::shared_ptr<Field> getMassField() const;
     void setMassField(const std::shared_ptr<Field> field);
     std::shared_ptr<Field> getChargeField() const;
     void setChargeField(const std::shared_ptr<Field> field);
+    std::shared_ptr<Field> getThermalField() const;
+    void setThermalField(const std::shared_ptr<Field> field);
     shp::Signal getTotal() const;
     Density getDensity(const shp::Volume& volume) const;
     shp::Signal getPotential() const;
     shp::Signal getKinetic() const;
+    shp::Signal getThermal() const;
     shp::Signal getFrequency() const;
     shp::Distance getDivergence(const float modulation) const;
     qft::Time getPerpetuity(const float modulation) const;

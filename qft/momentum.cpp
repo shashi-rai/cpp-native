@@ -418,7 +418,7 @@ std::shared_ptr<Field> Momentum::getMatterField() const {
 
 std::shared_ptr<Field> Momentum::getGravityField() const {
     Mass mass = *this;
-    std::shared_ptr<Field> field = Field::shareable(Momentum::GRAVITY_FIELD);
+    std::shared_ptr<Field> field = Field::shareable(Momentum::GRAVITY_FIELD, getMagnitude(), getScaling());
     shp::Signal motion = this->getRateOfChange();
     if (motion.checkNonZero()) {
         field->setPotential(shp::Potential(motion.getMagnitude(),
