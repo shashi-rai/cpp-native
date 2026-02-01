@@ -23,428 +23,477 @@
 namespace qft {
 
 Field::Field()
-        : shp::Temporal(), potential(), orientation() {
-    setPhysical(nullptr);
+        : Time(), potential() {
+
 }
 
-Field::Field(const std::string name)
-        : shp::Temporal(), potential(), orientation() {
-    setPhysical(nullptr);
-    setFieldLabel(name);
+Field::Field(const shp::Unit& unit)
+        : Time(unit), potential() {
+
 }
 
-Field::Field(const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(), potential(), orientation() {
-    setPhysical(physical);
+Field::Field(const shp::Potential& potential)
+        : Time(), potential(potential) {
+
 }
 
-Field::Field(const std::string name, const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(), potential(), orientation() {
-    setPhysical(physical);
-    setFieldLabel(name);
-}
+Field::Field(const shp::Distance& radius)
+        : Time(), potential(radius) {
 
-Field::Field(const shp::Potential potential)
-        : shp::Temporal(potential.getHigh()), potential(potential), orientation() {
-    setPhysical(nullptr);
-}
-
-Field::Field(const shp::Potential potential,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(potential.getHigh()), potential(potential), orientation() {
-    setPhysical(physical);
-}
-
-Field::Field(const float azimuth)
-        : shp::Temporal(), potential(), orientation(azimuth) {
-    setPhysical(nullptr);
-}
-
-Field::Field(const float azimuth,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(), potential(), orientation(azimuth) {
-    setPhysical(physical);
 }
 
 Field::Field(const shp::Azimuth& azimuth)
-        : shp::Temporal(), potential(), orientation(azimuth) {
-    setPhysical(nullptr);
-}
+        : Time(), potential(azimuth) {
 
-Field::Field(const shp::Azimuth& azimuth,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(), potential(), orientation(azimuth) {
-    setPhysical(physical);
 }
 
 Field::Field(const shp::Polar& polar)
-        : shp::Temporal(), potential(), orientation(polar) {
-    setPhysical(nullptr);
-}
+        : Time(), potential(polar) {
 
-Field::Field(const shp::Polar& polar,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(), potential(), orientation(polar) {
-    setPhysical(physical);
 }
 
 Field::Field(const shp::Polar& polar, const shp::Azimuth& azimuth)
-        : shp::Temporal(), potential(), orientation(polar, azimuth) {
-    setPhysical(nullptr);
+        : Time(), potential(polar, azimuth) {
+
 }
 
-Field::Field(const shp::Polar& polar, const shp::Azimuth& azimuth,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(), potential(), orientation(polar, azimuth) {
-    setPhysical(physical);
+Field::Field(const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth)
+        : Time(), potential(radius, polar, azimuth) {
+
 }
 
-Field::Field(const shp::Angular& orientation)
-        : shp::Temporal(), potential(), orientation(orientation) {
-    setPhysical(nullptr);
+Field::Field(const shp::Angular& origin)
+        : Time(), potential(origin) {
+
 }
 
-Field::Field(const shp::Angular& orientation,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(), potential(), orientation(orientation) {
-    setPhysical(physical);
+Field::Field(const float magnitude)
+        : Time(magnitude), potential() {
+
 }
 
-Field::Field(const float potential, const float azimuth)
-        : shp::Temporal(potential), potential(potential), orientation(azimuth) {
-    setPhysical(nullptr);
+Field::Field(const float magnitude, const shp::Unit& unit)
+        : Time(magnitude, unit), potential() {
+
 }
 
-Field::Field(const float potential, const float azimuth,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(potential), potential(potential), orientation(azimuth) {
-    setPhysical(physical);
+Field::Field(const float magnitude, const shp::Unit& unit, const shp::Potential& potential)
+        : Time(magnitude, unit), potential(potential) {
+
 }
 
-Field::Field(const shp::Potential& potential, const shp::Azimuth& azimuth)
-        : shp::Temporal(potential.getHigh()), potential(potential), orientation(azimuth) {
-    setPhysical(nullptr);
+Field::Field(const float magnitude, const shp::Unit& unit, const shp::Distance& radius)
+        : Time(magnitude, unit), potential(radius) {
+
 }
 
-Field::Field(const shp::Potential& potential, const shp::Azimuth& azimuth,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(potential.getHigh()), potential(potential), orientation(azimuth) {
-    setPhysical(physical);
+Field::Field(const float magnitude, const shp::Unit& unit, const shp::Azimuth& azimuth)
+        : Time(magnitude, unit), potential(azimuth) {
+
 }
 
-Field::Field(const shp::Potential& potential, const shp::Polar& polar)
-        : shp::Temporal(potential.getHigh()), potential(potential), orientation(polar) {
-    setPhysical(nullptr);
+Field::Field(const float magnitude, const shp::Unit& unit, const shp::Polar& polar)
+        : Time(magnitude, unit), potential(polar) {
+
 }
 
-Field::Field(const shp::Potential& potential, const shp::Polar& polar,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(potential.getHigh()), potential(potential), orientation(polar) {
-    setPhysical(physical);
+Field::Field(const float magnitude, const shp::Unit& unit, const shp::Polar& polar, const shp::Azimuth& azimuth)
+        : Time(magnitude, unit), potential(polar, azimuth) {
+
 }
 
-Field::Field(const shp::Potential& potential, const shp::Polar& polar, const shp::Azimuth& azimuth)
-        : shp::Temporal(potential.getHigh()), potential(potential), orientation(polar, azimuth) {
-    setPhysical(nullptr);
+Field::Field(const float magnitude, const shp::Unit& unit, const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth)
+        : Time(magnitude, unit), potential(radius, polar, azimuth) {
+
 }
 
-Field::Field(const shp::Potential& potential, const shp::Polar& polar, const shp::Azimuth& azimuth,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(potential.getHigh()), potential(potential), orientation(polar, azimuth) {
-    setPhysical(physical);
+Field::Field(const float magnitude, const shp::Unit& unit, const shp::Angular& origin)
+        : Time(magnitude, unit), potential(origin) {
+
 }
 
-Field::Field(const shp::Potential& potential, const shp::Angular& orientation)
-        : shp::Temporal(potential.getHigh()), potential(potential), orientation(orientation) {
-    setPhysical(nullptr);
+Field::Field(const float magnitude, const short int scaling)
+        : Time(magnitude, scaling), potential() {
+
 }
 
-Field::Field(const shp::Potential& potential, const shp::Angular& orientation,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(potential.getHigh()), potential(potential), orientation(orientation) {
-    setPhysical(physical);
+Field::Field(const float magnitude, const short int scaling, const shp::Unit& unit)
+        : Time(magnitude, scaling, unit), potential() {
+
 }
 
-Field::Field(const shp::Signal& modulation,
-        const shp::Potential& potential, const shp::Angular& orientation,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(modulation, potential.getHigh()),
-        potential(potential), orientation(orientation) {
-    setPhysical(physical);
+Field::Field(const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Potential& potential)
+        : Time(magnitude,scaling, unit), potential(potential) {
+
 }
 
-Field::Field(const shp::Signal& modulation, const shp::Azimuth& phase,
-        const shp::Potential& potential, const shp::Angular& orientation,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(modulation, phase, potential.getHigh()),
-        potential(potential), orientation(orientation) {
-    setPhysical(physical);
+Field::Field(const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Distance& radius)
+        : Time(magnitude,scaling, unit), potential(radius) {
+
 }
 
-Field::Field(const shp::Unit& unit,
-        const shp::Potential& potential, const shp::Angular& orientation,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(potential.getHigh(), unit),
-        potential(potential), orientation(orientation) {
-    setPhysical(physical);
+Field::Field(const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Azimuth& azimuth)
+        : Time(magnitude,scaling, unit), potential(azimuth) {
+
 }
 
-Field::Field(const float magnitude, const shp::Unit& unit,
-        const shp::Potential& potential, const shp::Angular& orientation,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(magnitude, unit),
-        potential(potential), orientation(orientation) {
-    setPhysical(physical);
+Field::Field(const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Polar& polar)
+        : Time(magnitude, scaling, unit), potential(polar) {
+
 }
 
-Field::Field(const float magnitude, const short int scaling, const shp::Unit& unit,
-        const shp::Potential& potential, const shp::Angular& orientation,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(magnitude, scaling, unit),
-        potential(potential), orientation(orientation) {
-    setPhysical(physical);
+Field::Field(const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Polar& polar, const shp::Azimuth& azimuth)
+        : Time(magnitude, scaling, unit), potential(polar, azimuth) {
+
 }
 
-Field::Field(const shp::Azimuth& phase,
-        const float magnitude, const short int scaling, const shp::Unit& unit,
-        const shp::Potential& potential, const shp::Angular& orientation,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(phase, magnitude, scaling, unit),
-        potential(potential), orientation(orientation) {
-    setPhysical(physical);
+Field::Field(const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth)
+        : Time(magnitude, scaling, unit), potential(radius, polar, azimuth) {
+
 }
 
-Field::Field(const shp::Signal& modulation, const shp::Azimuth& phase,
-        const float magnitude, const short int scaling, const shp::Unit& unit,
-        const shp::Potential& potential, const shp::Angular& orientation,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(modulation, phase, magnitude, scaling, unit),
-        potential(potential), orientation(orientation) {
-    setPhysical(physical);
+Field::Field(const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Angular& origin)
+        : Time(magnitude, scaling, unit), potential(origin) {
+
 }
 
-Field::Field(const std::string name, const shp::Potential potential)
-        : shp::Temporal(potential.getHigh()), potential(potential), orientation() {
-    setPhysical(nullptr);
-    setFieldLabel(name);
+Field::Field(const shp::Signal& modulation)
+        : Time(modulation), potential() {
+
 }
 
-Field::Field(const std::string name, const shp::Potential potential,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(potential.getHigh()), potential(potential), orientation() {
-    setPhysical(physical);
-    setFieldLabel(name);
+Field::Field(const shp::Signal& modulation, const float magnitude)
+        : Time(modulation, magnitude), potential() {
+
 }
 
-Field::Field(const std::string name, const float azimuth)
-        : shp::Temporal(), potential(), orientation(azimuth) {
-    setPhysical(nullptr);
-    setFieldLabel(name);
+Field::Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit)
+        : Time(modulation, magnitude, unit), potential() {
+
+}
+
+Field::Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Potential& potential)
+        : Time(modulation, magnitude, unit), potential(potential) {
+
+}
+
+Field::Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Distance& radius)
+        : Time(modulation, magnitude, unit), potential(radius) {
+
+}
+
+Field::Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Azimuth& azimuth)
+        : Time(modulation, magnitude, unit), potential(azimuth) {
+
+}
+
+Field::Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Polar& polar)
+        : Time(modulation, magnitude, unit), potential(polar) {
+
+}
+
+Field::Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Polar& polar, const shp::Azimuth& azimuth)
+        : Time(modulation, magnitude, unit), potential(polar, azimuth) {
+
+}
+
+Field::Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth)
+        : Time(modulation, magnitude, unit), potential(radius, polar, azimuth) {
+
+}
+
+Field::Field(const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Angular& origin)
+        : Time(modulation, magnitude, unit), potential(origin) {
+
+}
+
+Field::Field(const shp::Signal& modulation, const float magnitude, const short int scaling)
+        : Time(modulation, magnitude, scaling), potential() {
+
+}
+
+Field::Field(const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit)
+        : Time(modulation, magnitude, scaling, unit), potential() {
+
+}
+
+Field::Field(const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Potential& potential)
+        : Time(modulation, magnitude,scaling, unit), potential(potential) {
+
+}
+
+Field::Field(const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Distance& radius)
+        : Time(modulation, magnitude,scaling, unit), potential(radius) {
+
+}
+
+Field::Field(const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Azimuth& azimuth)
+        : Time(modulation, magnitude,scaling, unit), potential(azimuth) {
+
+}
+
+Field::Field(const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Polar& polar)
+        : Time(modulation, magnitude, scaling, unit), potential(polar) {
+
+}
+
+Field::Field(const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Polar& polar, const shp::Azimuth& azimuth)
+        : Time(modulation, magnitude, scaling, unit), potential(polar, azimuth) {
+
+}
+
+Field::Field(const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth)
+        : Time(modulation, magnitude, scaling, unit), potential(radius, polar, azimuth) {
+
+}
+
+Field::Field(const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Angular& origin)
+        : Time(modulation, magnitude, scaling, unit), potential(origin) {
+
+}
+
+Field::Field(const std::string name, const shp::Unit& unit)
+        : Time(name, unit), potential() {
+
+}
+
+Field::Field(const std::string name, const shp::Potential& potential)
+        : Time(name), potential(potential) {
+
+}
+
+Field::Field(const std::string name, const shp::Distance& radius)
+        : Time(name), potential(radius) {
+
 }
 
 Field::Field(const std::string name, const shp::Azimuth& azimuth)
-        : shp::Temporal(), potential(), orientation(azimuth) {
-    setPhysical(nullptr);
-    setFieldLabel(name);
+        : Time(name), potential(azimuth) {
+
 }
 
 Field::Field(const std::string name, const shp::Polar& polar)
-        : shp::Temporal(), potential(), orientation(polar) {
-    setPhysical(nullptr);
-    setFieldLabel(name);
+        : Time(name), potential(polar) {
+
 }
 
 Field::Field(const std::string name, const shp::Polar& polar, const shp::Azimuth& azimuth)
-        : shp::Temporal(), potential(), orientation(polar, azimuth) {
-    setPhysical(nullptr);
-    setFieldLabel(name);
+        : Time(name), potential(polar, azimuth) {
+
 }
 
-Field::Field(const std::string name, const float azimuth,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(), potential(), orientation(azimuth) {
-    setPhysical(physical);
-    setFieldLabel(name);
+Field::Field(const std::string name, const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth)
+        : Time(name), potential(radius, polar, azimuth) {
+
 }
 
-Field::Field(const std::string name, const shp::Azimuth& azimuth,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(), potential(), orientation(azimuth) {
-    setPhysical(physical);
-    setFieldLabel(name);
+Field::Field(const std::string name, const shp::Angular& origin)
+        : Time(name), potential(origin) {
+
 }
 
-Field::Field(const std::string name, const shp::Polar& polar,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(), potential(), orientation(polar) {
-    setPhysical(physical);
-    setFieldLabel(name);
+Field::Field(const std::string name, const float magnitude)
+        : Time(name, magnitude), potential() {
+
 }
 
-Field::Field(const std::string name, const shp::Polar& polar, const shp::Azimuth& azimuth,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(), potential(), orientation(polar, azimuth) {
-    setPhysical(physical);
-    setFieldLabel(name);
+Field::Field(const std::string name, const float magnitude, const shp::Unit& unit)
+        : Time(name, magnitude, unit), potential() {
+
 }
 
-Field::Field(const std::string name, const float potential, const float azimuth)
-        : shp::Temporal(potential), potential(potential), orientation(azimuth) {
-    setPhysical(nullptr);
-    setFieldLabel(name);
+Field::Field(const std::string name, const float magnitude, const shp::Unit& unit, const shp::Potential& potential)
+        : Time(name, magnitude, unit), potential(potential) {
+
 }
 
-Field::Field(const std::string name, const shp::Potential& potential,
-        const shp::Azimuth& azimuth)
-        : shp::Temporal(potential.getHigh()), potential(potential), orientation(azimuth) {
-    setPhysical(nullptr);
-    setFieldLabel(name);
+Field::Field(const std::string name, const float magnitude, const shp::Unit& unit, const shp::Distance& radius)
+        : Time(name, magnitude, unit), potential(radius) {
+
 }
 
-Field::Field(const std::string name, const shp::Potential& potential,
-        const shp::Polar& polar)
-        : shp::Temporal(potential.getHigh()), potential(potential), orientation(polar) {
-    setPhysical(nullptr);
-    setFieldLabel(name);
+Field::Field(const std::string name, const float magnitude, const shp::Unit& unit, const shp::Azimuth& azimuth)
+        : Time(name, magnitude, unit), potential(azimuth) {
+
 }
 
-Field::Field(const std::string name, const shp::Potential& potential,
-        const shp::Polar& polar, const shp::Azimuth& azimuth)
-        : shp::Temporal(potential.getHigh()), potential(potential), orientation(polar, azimuth) {
-    setPhysical(nullptr);
-    setFieldLabel(name);
+Field::Field(const std::string name, const float magnitude, const shp::Unit& unit, const shp::Polar& polar)
+        : Time(name, magnitude, unit), potential(polar) {
+
 }
 
-Field::Field(const std::string name, const float potential, const float azimuth,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(potential), potential(potential), orientation(azimuth) {
-    setPhysical(physical);
-    setFieldLabel(name);
+Field::Field(const std::string name, const float magnitude, const shp::Unit& unit, const shp::Polar& polar, const shp::Azimuth& azimuth)
+        : Time(name, magnitude, unit), potential(polar, azimuth) {
+
 }
 
-Field::Field(const std::string name, const shp::Potential& potential,
-        const shp::Azimuth& azimuth, const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(potential.getHigh()), potential(potential), orientation(azimuth) {
-    setPhysical(physical);
-    setFieldLabel(name);
+Field::Field(const std::string name, const float magnitude, const shp::Unit& unit, const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth)
+        : Time(name, magnitude, unit), potential(radius, polar, azimuth) {
+
 }
 
-Field::Field(const std::string name, const shp::Potential& potential,
-        const shp::Polar& polar, const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(potential.getHigh()), potential(potential), orientation(polar) {
-    setPhysical(physical);
-    setFieldLabel(name);
+Field::Field(const std::string name, const float magnitude, const shp::Unit& unit, const shp::Angular& origin)
+        : Time(name, magnitude, unit), potential(origin) {
+
 }
 
-Field::Field(const std::string name, const shp::Potential& potential,
-        const shp::Polar& polar, const shp::Azimuth& azimuth, const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(potential.getHigh()), potential(potential), orientation(polar, azimuth) {
-    setPhysical(physical);
-    setFieldLabel(name);
+Field::Field(const std::string name, const float magnitude, const short int scaling)
+        : Time(name, magnitude, scaling), potential() {
+
 }
 
-Field::Field(const std::string name, const shp::Potential& potential,
-        const shp::Angular& orientation)
-        : shp::Temporal(potential.getHigh()), potential(potential), orientation(orientation) {
-    setPhysical(nullptr);
-    setFieldLabel(name);
+Field::Field(const std::string name, const float magnitude, const short int scaling, const shp::Unit& unit)
+        : Time(name, magnitude, scaling, unit), potential() {
+
 }
 
-Field::Field(const std::string name, const shp::Potential& potential,
-        const shp::Angular& orientation, const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(potential.getHigh()), potential(potential), orientation(orientation) {
-    setPhysical(physical);
-    setFieldLabel(name);
+Field::Field(const std::string name, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Potential& potential)
+        : Time(name, magnitude,scaling, unit), potential(potential) {
+
 }
 
-Field::Field(const std::string name, const shp::Signal& modulation,
-        const shp::Potential& potential, const shp::Angular& orientation,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(modulation, potential.getHigh()),
-        potential(potential), orientation(orientation) {
-    setPhysical(physical);
-    setFieldLabel(name);
+Field::Field(const std::string name, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Distance& radius)
+        : Time(name, magnitude,scaling, unit), potential(radius) {
+
 }
 
-Field::Field(const std::string name, const shp::Signal& modulation, const shp::Azimuth& phase,
-        const shp::Potential& potential, const shp::Angular& orientation,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(modulation, phase, potential.getHigh()),
-        potential(potential), orientation(orientation) {
-    setPhysical(physical);
-    setFieldLabel(name);
+Field::Field(const std::string name, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Azimuth& azimuth)
+        : Time(name, magnitude,scaling, unit), potential(azimuth) {
+
 }
 
-Field::Field(const std::string name, const shp::Unit& unit,
-        const shp::Potential& potential, const shp::Angular& orientation,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(potential.getHigh(), unit),
-        potential(potential), orientation(orientation) {
-    setPhysical(physical);
-    setFieldLabel(name);
+Field::Field(const std::string name, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Polar& polar)
+        : Time(name, magnitude, scaling, unit), potential(polar) {
+
 }
 
-Field::Field(const std::string name,
-        const float magnitude, const shp::Unit& unit,
-        const shp::Potential& potential, const shp::Angular& orientation,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(magnitude, unit),
-        potential(potential), orientation(orientation) {
-    setPhysical(physical);
-    setFieldLabel(name);
+Field::Field(const std::string name, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Polar& polar, const shp::Azimuth& azimuth)
+        : Time(name, magnitude, scaling, unit), potential(polar, azimuth) {
+
 }
 
-Field::Field(const std::string name,
-        const float magnitude, const short int scaling, const shp::Unit& unit,
-        const shp::Potential& potential, const shp::Angular& orientation,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(magnitude, scaling, unit),
-        potential(potential), orientation(orientation) {
-    setPhysical(physical);
-    setFieldLabel(name);
+Field::Field(const std::string name, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth)
+        : Time(name, magnitude, scaling, unit), potential(radius, polar, azimuth) {
+
 }
 
-Field::Field(const std::string name, const shp::Azimuth& phase,
-        const float magnitude, const short int scaling, const shp::Unit& unit,
-        const shp::Potential& potential, const shp::Angular& orientation,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(phase, magnitude, scaling, unit),
-        potential(potential), orientation(orientation) {
-    setPhysical(physical);
-    setFieldLabel(name);
+Field::Field(const std::string name, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Angular& origin)
+        : Time(name, magnitude, scaling, unit), potential(origin) {
+
 }
 
-Field::Field(const std::string name, const shp::Signal& modulation, const shp::Azimuth& phase,
-        const float magnitude, const short int scaling, const shp::Unit& unit,
-        const shp::Potential& potential, const shp::Angular& orientation,
-        const std::shared_ptr<shp::Cellular> physical)
-        : shp::Temporal(modulation, phase, magnitude, scaling, unit),
-        potential(potential), orientation(orientation) {
-    setPhysical(physical);
-    setFieldLabel(name);
+Field::Field(const std::string name, const shp::Signal& modulation)
+        : Time(name, modulation), potential() {
+
+}
+
+Field::Field(const std::string name, const shp::Signal& modulation, const float magnitude)
+        : Time(name, modulation, magnitude), potential() {
+
+}
+
+Field::Field(const std::string name, const shp::Signal& modulation, const float magnitude, const shp::Unit& unit)
+        : Time(name, modulation, magnitude, unit), potential() {
+
+}
+
+Field::Field(const std::string name, const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Potential& potential)
+        : Time(name, modulation, magnitude, unit), potential(potential) {
+
+}
+
+Field::Field(const std::string name, const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Distance& radius)
+        : Time(name, modulation, magnitude, unit), potential(radius) {
+
+}
+
+Field::Field(const std::string name, const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Azimuth& azimuth)
+        : Time(name, modulation, magnitude, unit), potential(azimuth) {
+
+}
+
+Field::Field(const std::string name, const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Polar& polar)
+        : Time(name, modulation, magnitude, unit), potential(polar) {
+
+}
+
+Field::Field(const std::string name, const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Polar& polar, const shp::Azimuth& azimuth)
+        : Time(name, modulation, magnitude, unit), potential(polar, azimuth) {
+
+}
+
+Field::Field(const std::string name, const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth)
+        : Time(name, modulation, magnitude, unit), potential(radius, polar, azimuth) {
+
+}
+
+Field::Field(const std::string name, const shp::Signal& modulation, const float magnitude, const shp::Unit& unit, const shp::Angular& origin)
+        : Time(name, modulation, magnitude, unit), potential(origin) {
+
+}
+
+Field::Field(const std::string name, const shp::Signal& modulation, const float magnitude, const short int scaling)
+        : Time(name, modulation, magnitude, scaling), potential() {
+
+}
+
+Field::Field(const std::string name, const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit)
+        : Time(name, modulation, magnitude, scaling, unit), potential() {
+
+}
+
+Field::Field(const std::string name, const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Potential& potential)
+        : Time(name, modulation, magnitude,scaling, unit), potential(potential) {
+
+}
+
+Field::Field(const std::string name, const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Distance& radius)
+        : Time(name, modulation, magnitude,scaling, unit), potential(radius) {
+
+}
+
+Field::Field(const std::string name, const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Azimuth& azimuth)
+        : Time(name, modulation, magnitude,scaling, unit), potential(azimuth) {
+
+}
+
+Field::Field(const std::string name, const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Polar& polar)
+        : Time(name, modulation, magnitude, scaling, unit), potential(polar) {
+
+}
+
+Field::Field(const std::string name, const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Polar& polar, const shp::Azimuth& azimuth)
+        : Time(name, modulation, magnitude, scaling, unit), potential(polar, azimuth) {
+
+}
+
+Field::Field(const std::string name, const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Distance& radius, const shp::Polar& polar, const shp::Azimuth& azimuth)
+        : Time(name, modulation, magnitude, scaling, unit), potential(radius, polar, azimuth) {
+
+}
+
+Field::Field(const std::string name, const shp::Signal& modulation, const float magnitude, const short int scaling, const shp::Unit& unit, const shp::Angular& origin)
+        : Time(name, modulation, magnitude, scaling, unit), potential(origin) {
+
 }
 
 Field::~Field() {
-    setPhysical(nullptr);
+
 }
 
 bool Field::operator==(const Field& peer) const {
-    return (static_cast<const shp::Temporal&>(*this) == static_cast<const shp::Temporal&>(peer))
-        && (physical == peer.physical)
-        && (potential == peer.potential)
-        && (orientation == peer.orientation);
+    return (static_cast<const Time&>(*this) == static_cast<const Time&>(peer))
+        && (potential == peer.potential);
 }
 
 bool Field::operator<(const Field& peer) const {
-    return (static_cast<const shp::Temporal&>(*this) < static_cast<const shp::Temporal&>(peer))
-        && (potential < peer.potential)
-        && (orientation < peer.orientation);
+    return (static_cast<const Time&>(*this) < static_cast<const Time&>(peer))
+        && (potential < peer.potential);
 }
 
 bool Field::operator>(const Field& peer) const {
-    return (static_cast<const shp::Temporal&>(*this) > static_cast<const shp::Temporal&>(peer))
-        && (potential > peer.potential)
-        && (orientation > peer.orientation);
+    return (static_cast<const Time&>(*this) > static_cast<const Time&>(peer))
+        && (potential > peer.potential);
 }
 
 bool Field::operator<=(const Field& peer) const {
@@ -458,69 +507,38 @@ bool Field::operator>=(const Field& peer) const {
 }
 
 Field Field::operator+(const Field& peer) const {
-    shp::Temporal self = *this, other = peer;
+    Time self = *this, other = peer, temporal = (self + other);
     shp::Potential newpotential = (potential + peer.potential);
-    shp::Angular neworientation = (orientation + peer.orientation);
-    shp::Temporal field = (self + other);
-    return Field("+", field.getSpatialDrift(), field.getIntensityDrift(),
-        field.getMagnitude(), field.getScaling(), field.getUnit(),
-        newpotential, neworientation, this->physical);
+    return Field("+", temporal.getEntropy(), temporal.getMagnitude(), temporal.getScaling(), temporal.getUnit(),
+        newpotential);
 }
 
 Field Field::operator-(const Field& peer) const {
-    shp::Temporal self = *this, other = peer;
+    Time self = *this, other = peer, temporal = (self - other);
     shp::Potential newpotential = (potential - peer.potential);
-    shp::Angular neworientation = (orientation - peer.orientation);
-    shp::Temporal field = (self - other);
-    return Field("-", field.getSpatialDrift(), field.getIntensityDrift(),
-        field.getMagnitude(), field.getScaling(), field.getUnit(),
-        newpotential, neworientation, this->physical);
+    return Field("-", temporal.getEntropy(), temporal.getMagnitude(), temporal.getScaling(), temporal.getUnit(),
+        newpotential);
 }
 
 Field Field::operator*(const Field& peer) const {
-    shp::Temporal self = *this, other = peer;
+    Time self = *this, other = peer, temporal = (self * other);
     shp::Potential newpotential = (potential * peer.potential);
-    shp::Angular neworientation = (orientation * peer.orientation);
-    shp::Temporal field = (self * other);
-    return Field("*", field.getSpatialDrift(), field.getIntensityDrift(),
-        field.getMagnitude(), field.getScaling(), field.getUnit(),
-        newpotential, neworientation, this->physical);
+    return Field("*", temporal.getEntropy(), temporal.getMagnitude(), temporal.getScaling(), temporal.getUnit(),
+        newpotential);
 }
 
 Field Field::operator/(const Field& peer) const {
-    shp::Temporal self = *this, other = peer;
+    Time self = *this, other = peer, temporal = (self / other);
     shp::Potential newpotential = (potential / peer.potential);
-    shp::Angular neworientation = (orientation / peer.orientation);
-    shp::Temporal field = (self / other);
-    return Field("/", field.getSpatialDrift(), field.getIntensityDrift(),
-        field.getMagnitude(), field.getScaling(), field.getUnit(),
-        newpotential, neworientation, this->physical);
+    return Field("/", temporal.getEntropy(), temporal.getMagnitude(), temporal.getScaling(), temporal.getUnit(),
+        newpotential);
 }
 
 Field Field::operator%(const Field& peer) const {
-    shp::Temporal self = *this, other = peer;
+    Time self = *this, other = peer, temporal = (self % other);
     shp::Potential newpotential = (potential % peer.potential);
-    shp::Angular neworientation = (orientation % peer.orientation);
-    shp::Temporal field = (self % other);
-    return Field("%", field.getSpatialDrift(), field.getIntensityDrift(),
-        field.getMagnitude(), field.getScaling(), field.getUnit(),
-        newpotential, neworientation, this->physical);
-}
-
-shp::Point Field::operator()(const int x, const int y, const int z) {
-    shp::Point result;
-    if (isStructured()) {
-        result = physical->get(x).get(y).get(z);
-    }
-    return result;
-}
-
-const shp::Point Field::operator()(const int x, const int y, const int z) const {
-    shp::Point result;
-    if (isStructured()) {
-        result = physical->get(x).get(y).get(z);
-    }
-    return result;
+    return Field("%", temporal.getEntropy(), temporal.getMagnitude(), temporal.getScaling(), temporal.getUnit(),
+        newpotential);
 }
 
 shp::Signal Field::operator()(const Field& peer,
@@ -531,52 +549,114 @@ shp::Signal Field::operator()(const Field& peer,
 }
 
 shp::Signal Field::operator()(const Field& peerX, const Field& peerY,
-    const shp::Distance& separationX, const shp::Distance& separationY) const {
+        const shp::Distance& separationX, const shp::Distance& separationY) const {
     shp::Signal result = potential(peerX.getPotential(), peerY.getPotential(), separationX, separationY);
     result.adjustScaling();
     return result;
 }
 
-std::string Field::getFieldLabel() const {
-    std::string result;
-    if (isStructured()) {
-        result = physical->getName();
-    }
-    return result;
+shp::Azimuth Field::getSpatialChange() const {
+    return Time::getDopplerShift();
 }
 
-void Field::setFieldLabel(const std::string name) {
-    if (isStructured()) {
-        physical->setName(name);
-    }
+void Field::setSpatialChange(const shp::Azimuth& curvature) {
+    Time::setDopplerShift(curvature);
 }
 
-bool Field::isStructured() const {
-    return (physical != nullptr);
+void Field::setSpatialChange(const float motion, const shp::Azimuth& curvature) {
+    Time::setDopplerShift(motion, curvature);
+}
+
+
+void Field::setSpatialChange(const float motion, const short int scale,
+        const shp::Azimuth& curvature) {
+    Time::setDopplerShift(motion, scale, curvature);
+}
+
+void Field::setSpatialChange(const float motion, const short int scale, const std::string unit,
+        const shp::Azimuth& curvature) {
+    Time::setDopplerShift(motion, scale, unit, curvature);
+}
+
+void Field::setSpatialChange(const float motion, const short int scale, const shp::Unit& unit,
+        const shp::Azimuth& curvature) {
+    Time::setDopplerShift(motion, scale, unit, curvature);
+}
+
+shp::Azimuth Field::getTemporalChange() const {
+    return Time::getPeriodDrift();
+}
+
+void Field::setTemporalChange(const shp::Azimuth& phase) {
+    Time::setPeriodDrift(phase);
+}
+
+void Field::setTemporalChange(const float magnitude) {
+    Time::setMagnitude(magnitude);
+}
+
+void Field::setTemporalChange(const shp::Signal& signal) {
+    Time::setEntropy(signal);
+}
+
+void Field::setTemporalChange(const float magnitude, const short int scale) {
+    Time::setMagnitude(magnitude, scale);
+}
+
+void Field::setTemporalChange(const float magnitude, const short int scale, const std::string unit) {
+    Time::setMagnitude(magnitude, scale, unit);
+}
+
+void Field::setTemporalChange(const float magnitude, const short int scale, const shp::Unit& unit) {
+    Time::setMagnitude(magnitude, scale, unit);
+}
+
+shp::Angular Field::getOrigin() const {
+    return potential.getOrigin();
+}
+
+void Field::setOrigin(const shp::Angular& source) {
+    potential.setOrigin(source);
 }
 
 shp::Distance Field::getRadius() const {
-    return orientation.getRadius();
+    return potential.getRadius();
 }
 
 void Field::setRadius(const shp::Distance& length) {
-    orientation.setRadius(length);
+    potential.setRadius(length.getMagnitude(), length.getScaling(), length.getUnit());
 }
 
-shp::Direction Field::getLinear() const {
-    return orientation.getAzimuth();
+void Field::setRadius(const float length) {
+    potential.setRadius(length);
 }
 
-void Field::setLinear(const shp::Direction& azimuth) {
-    this->orientation.setAzimuth(azimuth);
+void Field::setRadius(const float length, const short int scale) {
+    potential.setRadius(length, scale);
 }
 
-shp::Direction Field::getCircular() const {
-    return orientation.getPolar();
+void Field::setRadius(const float length, const short int scale, const std::string unit) {
+    potential.setRadius(length, scale, unit);
 }
 
-void Field::setCircular(const shp::Direction& azimuth) {
-    this->orientation.setPolar(azimuth);
+void Field::setRadius(const float length, const short int scale, const shp::Unit& unit) {
+    potential.setRadius(length, scale, unit);
+}
+
+shp::Azimuth Field::getLinear() const {
+    return potential.getAzimuthOrientation();
+}
+
+void Field::setLinear(const shp::Azimuth& orientation) {
+    this->potential.setAzimuthOrientation(orientation);
+}
+
+shp::Polar Field::getCircular() const {
+    return potential.getPolarOrientation();
+}
+
+void Field::setCircular(const shp::Polar& orientation) {
+    this->potential.setPolarOrientation(orientation);
 }
 
 void Field::changePoint(const Action& action) {
@@ -587,9 +667,6 @@ void Field::changePoint(const Action& action) {
 
     // simply replace the existing Point found at specific coordinates
     // with a new Point received from the Action item
-    if (isStructured()) {
-        physical->get(x.getMagnitude()).get(y.getMagnitude()).set(z.getMagnitude(), received);
-    }
     return;
 }
 
@@ -608,24 +685,20 @@ std::shared_ptr<Particle> Field::getConvergence(const Action& action) const {
 }
 
 shp::Temporal Field::getTotal() const {
-    shp::Signal difference = potential.getDifference();
-    shp::Temporal result(difference.getMagnitude(), difference.getScaling(), difference.getUnit());
-    return result;
+	Time self = *this, difference = potential.getDifference();
+    return shp::Temporal(difference.getPeriodDrift(), difference.getMagnitude(), difference.getScaling(), difference.getUnit());
 }
 
-shp::Temporal Field::copy() {
-    shp::Temporal self = *this;
-    Field fresh(this->getFieldLabel(), self.getSpatialDrift(), self.getIntensityDrift(),
-        self.getMagnitude(), self.getScaling(), self.getUnit(),
-        this->potential, this->orientation, this->physical);
+Time Field::copy() {
+    Time self = *this;
+    Field fresh(Time::getName(), self.getEntropy(), self.getMagnitude(), self.getScaling(), self.getUnit(),
+        this->potential);
     return fresh;
 }
 
 void Field::clear() {
-    shp::Temporal::clear();
+    Time::clear();
     potential.clear();
-    orientation.clear();
-    setPhysical(nullptr);
     return;
 }
 
@@ -633,8 +706,7 @@ std::string Field::print() const {
     std::stringstream result;
     result << "≡";
     result << potential.print() << ",";
-    result << orientation.print() << ",";
-    result << shp::Temporal::print();
+    result << Time::print();
 	return result.str();
 }
 
@@ -642,15 +714,14 @@ std::string Field::printRadians() const {
     std::stringstream result;
     result << "≡";
     result << potential.printRadians() << ",";
-    result << orientation.printRadians() << ",";
-    result << shp::Temporal::printRadians();
+    result << Time::printRadians();
 	return result.str();
 }
 
-shp::Temporal Field::getFluctuation(const float phase) const {
-	shp::Temporal intensity = this->getTotal();
-    intensity.setIntensityDrift(phase);
-	return shp::Temporal(intensity.getMagnitude(), intensity.getScaling(), intensity.getUnit());
+Time Field::getFluctuation(const float phase) const {
+	shp::Temporal temporal = this->getTotal();
+    temporal.setIntensityDrift(shp::Azimuth(phase));
+	return Time(Time::getName(), temporal.getMagnitude(), temporal.getScaling(), temporal.getUnit());
 }
 
 std::shared_ptr<qft::Field> Field::shareable(const std::string name) {

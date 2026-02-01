@@ -112,16 +112,23 @@ Mass::~Mass() {
 }
 
 bool Mass::operator==(const Mass& peer) const {
-    return (static_cast<const shp::Frequency&>(*this) == static_cast<const shp::Frequency&>(peer))
-        && (field == peer.field);
+    return (static_cast<const shp::Frequency&>(*this) == static_cast<const shp::Frequency&>(peer));
 }
 
 bool Mass::operator<(const Mass& peer) const {
-    return (static_cast<const shp::Frequency&>(*this) < static_cast<const shp::Frequency&>(peer));
+    Mass self = *this; bool result = false;
+    if (static_cast<const shp::Frequency&>(*this) < static_cast<const shp::Frequency&>(peer)) {
+        result = true;
+    }
+    return result;
 }
 
 bool Mass::operator>(const Mass& peer) const {
-    return (static_cast<const shp::Frequency&>(*this) < static_cast<const shp::Frequency&>(peer));
+    Mass self = *this; bool result = false;
+    if (static_cast<const shp::Frequency&>(*this) > static_cast<const shp::Frequency&>(peer)) {
+        result = true;
+    }
+    return result;
 }
 
 bool Mass::operator<=(const Mass& peer) const {
@@ -171,7 +178,7 @@ Force Mass::operator()(const Mass& peer, const shp::Distance separation,
         shp::Potential other = peer.field->getPotential();
         shp::Signal factor = self(other, separation, position);
         shp::Signal force = (factor * (*this).getMagnitude());
-        Gravity result(force.getMagnitude(), self.getAzimuth().toRadians(), force.getScaling(), field);
+        Gravity result(force.getMagnitude(), self.getAzimuthOrientation().toRadians(), force.getScaling(), field);
         result.adjustScaling();
         return result;
     } else {

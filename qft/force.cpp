@@ -27,6 +27,7 @@ namespace qft {
 const std::string Force::UNIT = "N";                    // System International
 const float Force::COULOMB_CONSTANT = 8.99f;            // 8.99 x 10^9 N.m^2.C^2
 const short int Force::COULOMB_SCALE = 9;               // 10^9 N.m^2.C^2
+const short int Force::KELVIN_SCALE = 0;                // 10^0 N.m^2.K^2
 const float Force::GRAVITATIONAL_CONSTANT = 6.6743f;    // 6.6743 x 10^-11 m^3.kg^-1.s^-2
 const short int Force::GRAVITATIONAL_SCALE = -11;       // 10^-11 m^3.kg^-1.s^-2
 

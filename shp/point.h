@@ -23,7 +23,6 @@
 
 #include "angular.h"
 #include "shape.h"
-#include "signal.h"
 
 namespace shp {
 

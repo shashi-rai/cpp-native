@@ -193,11 +193,11 @@ void Nucleus::initialize() {
     setGravity(qft::Field::shareable("G"));
 	std::shared_ptr<qft::Field> mfield = getGravity();
 	float nuclear_mass = ((qft::Mass::PROTON * proton) + (qft::Mass::NEUTRON * neutron));
-    mfield->setMagnitude(nuclear_mass, qft::Mass::ATOMIC_SCALE);
+    mfield->setTemporalChange(nuclear_mass, qft::Mass::ATOMIC_SCALE);
 
     setElectric(qft::Field::shareable("E"));
 	std::shared_ptr<qft::Field> efield = getElectric();
-    efield->setMagnitude((qft::Charge::PROTON * proton), qft::Charge::ATOMIC_SCALE);
+    efield->setTemporalChange((qft::Charge::PROTON * proton), qft::Charge::ATOMIC_SCALE);
 }
 
 } // namespace che

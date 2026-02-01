@@ -22,7 +22,6 @@
 #define SHP_PHASE_H
 
 #include <chrono>
-#include "angular.h"
 #include "point.h"
 
 namespace shp {

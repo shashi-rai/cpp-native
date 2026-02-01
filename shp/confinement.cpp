@@ -225,20 +225,20 @@ Confinement Confinement::operator+(const Confinement& peer) const {
 	Potential self = *this;
     shp::Direction phase = (this->getPhase() + peer.getPhase());
     float newhigh = (self.getHigh() + (peer.getHigh() /
-        std::pow(shp::Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+        std::pow(shp::Quantity::DECIMAL_SCALE, (self.getPotentialScaling() - peer.getPotentialScaling()))));
     float newlow = (self.getLow() + (peer.getLow() /
-        std::pow(shp::Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
-    return Confinement(phase.toRadians(), newlow, newhigh, self.getScaling(), self.getUnit());
+        std::pow(shp::Quantity::DECIMAL_SCALE, (self.getKineticScaling() - peer.getKineticScaling()))));
+    return Confinement(phase.toRadians(), newlow, newhigh, self.getPotentialScaling(), self.getPotentialUnit());
 }
 
 Confinement Confinement::operator-(const Confinement& peer) const {
 	Potential self = *this;
     shp::Direction phase = (this->getPhase() - peer.getPhase());
     float newhigh = (self.getHigh() - (peer.getHigh() /
-        std::pow(shp::Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+        std::pow(shp::Quantity::DECIMAL_SCALE, (self.getPotentialScaling() - peer.getPotentialScaling()))));
     float newlow = (self.getLow() - (peer.getLow() /
-        std::pow(shp::Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
-    return Confinement(phase.toRadians(), newlow, newhigh, self.getScaling(), self.getUnit());
+        std::pow(shp::Quantity::DECIMAL_SCALE, (self.getKineticScaling() - peer.getKineticScaling()))));
+    return Confinement(phase.toRadians(), newlow, newhigh, self.getPotentialScaling(), self.getPotentialUnit());
 }
 
 Confinement Confinement::operator*(const Confinement& peer) const {
@@ -247,7 +247,7 @@ Confinement Confinement::operator*(const Confinement& peer) const {
     float newhigh = (self.getHigh() * peer.getHigh());
     float newlow = (self.getLow() * peer.getLow());
     return Confinement(phase.toRadians(), newlow, newhigh,
-        (self.getScaling() + peer.getScaling()), self.getUnit());
+        (self.getPotentialScaling() + peer.getScaling()), self.getPotentialUnit());
 }
 
 Confinement Confinement::operator/(const Confinement& peer) const {
@@ -261,7 +261,7 @@ Confinement Confinement::operator/(const Confinement& peer) const {
 		newlow = (self.getLow() / peer.getLow());
 	}
     return Confinement(phase.toRadians(), newlow, newhigh,
-        (self.getScaling() - peer.getScaling()), self.getUnit());
+        (self.getPotentialScaling() - peer.getPotentialScaling()), self.getPotentialUnit());
 }
 
 Confinement Confinement::operator%(const Confinement& peer) const {
@@ -270,13 +270,13 @@ Confinement Confinement::operator%(const Confinement& peer) const {
     float newhigh = shp::Quantity::DEFAULT_VALUE, newlow = shp::Quantity::DEFAULT_VALUE;
 	if (peer.getHigh() != shp::Quantity::DEFAULT_VALUE) {
     	newhigh = fmod(self.getHigh(), (peer.getHigh() /
-            std::pow(shp::Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+            std::pow(shp::Quantity::DECIMAL_SCALE, (self.getPotentialScaling() - peer.getPotentialScaling()))));
 	}
 	if (peer.getLow() != shp::Quantity::DEFAULT_VALUE) {
 		newlow = fmod(self.getLow(), (peer.getLow() /
-            std::pow(shp::Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
+            std::pow(shp::Quantity::DECIMAL_SCALE, (self.getKineticScaling() - peer.getKineticScaling()))));
 	}
-    return Confinement(phase.toRadians(), newlow, newhigh, self.getScaling(), self.getUnit());
+    return Confinement(phase.toRadians(), newlow, newhigh, self.getPotentialScaling(), self.getPotentialUnit());
 }
 
 Signal Confinement::operator()(const Confinement& peer,
@@ -286,7 +286,7 @@ Signal Confinement::operator()(const Confinement& peer,
     Signal coefficient = closure(peer.getClosure(), separation, position);
     Signal signal = distribution.getSquareConvergence(coefficient); signal.adjustScaling();
     shp::Signal result(distribution.getOrientation(), signal.getMagnitude(),
-		(distribution.getScaling() + signal.getScaling()), self.getUnit());
+		(distribution.getScaling() + signal.getScaling()), self.getPotentialUnit());
     return result;
 }
 
@@ -297,16 +297,16 @@ Signal Confinement::operator()(const Confinement& peerX, const Confinement& peer
     Signal coefficient = closure(peerX.getClosure(),  peerY.getClosure(), separationX, separationY);
     Signal signal = distribution.getSquareConvergence(coefficient); signal.adjustScaling();
     Signal result(distribution.getOrientation(), signal.getMagnitude(),
-		(distribution.getScaling() + signal.getScaling()), self.getUnit());
+		(distribution.getScaling() + signal.getScaling()), self.getPotentialUnit());
     return result;
 }
 
 float Confinement::getHigh() const {
-    return Potential::getHigh();
+    return Potential::getPotential();
 }
 
 void Confinement::setHigh(const float value) {
-	Potential::setHigh(value); 
+	Potential::setPotential(value); 
 }
 
 float Confinement::getLow() const {
@@ -314,31 +314,47 @@ float Confinement::getLow() const {
 }
 
 void Confinement::setLow(const float value) {
-	Potential::setLow(value);
+	Potential::setKinetic(value);
 }
 
 void Confinement::setRange(const float high, const float low) {
-	Potential::setHigh(high); Potential::setLow(low);
+	Potential::setPotential(high); Potential::setKinetic(low);
 }
 
 void Confinement::setRange(const float high, const float low, const short int scale) {
-	Potential::setHigh(high); Potential::setLow(low); Potential::setScaling(scale);
+	Potential::setPotential(high); Potential::setKinetic(low); Potential::setScaling(scale);
 }
 
-short int Confinement::getScaling() const {
-	return Signal::getScaling();
+short int Confinement::getKineticScaling() const {
+	return Potential::getKineticScaling();
 }
 
-void Confinement::setScaling(const short int factor) {
-	Signal::setScaling(factor);
+void Confinement::setKineticScaling(const short int factor) {
+	Potential::setKineticScaling(factor);
 }
 
-Unit Confinement::getUnit() const {
-	return Signal::getUnit();
+Unit Confinement::getKineticUnit() const {
+	return Potential::getKineticUnit();
 }
 
-void Confinement::setUnit(const Unit& object) {
-	Signal::setUnit(object);
+void Confinement::setKineticUnit(const Unit& object) {
+	Potential::setKineticUnit(object);
+}
+
+short int Confinement::getPotentialScaling() const {
+	return Potential::getPotentialScaling();
+}
+
+void Confinement::setPotentialScaling(const short int factor) {
+	Potential::setPotentialScaling(factor);
+}
+
+Unit Confinement::getPotentialUnit() const {
+	return Potential::getPotentialUnit();
+}
+
+void Confinement::setPotentialUnit(const Unit& object) {
+	Potential::setPotentialUnit(object);
 }
 
 Angular Confinement::getClosure() const {
@@ -373,7 +389,8 @@ void Confinement::setAzimuth(const Azimuth& angle) {
 
 Signal Confinement::getConvergence() const {
 	Potential self = *this;
-    Signal result((self.getLow() - self.getHigh()), self.getScaling(), self.getUnit());
+    Signal result((self.getLow() - self.getHigh()),
+		self.getPotentialScaling(), self.getPotentialUnit());
     return result;
 }
 
@@ -382,7 +399,7 @@ Signal Confinement::getRelative(const Distance& location) const {
     Signal coefficient = getClosure().getRelative(location);
     Signal signal = distribution.getSquareConvergence(coefficient); signal.adjustScaling();
     Signal result(distribution.getOrientation(), signal.getMagnitude(),
-        (distribution.getScaling() + signal.getScaling()), self.getUnit());
+        (distribution.getScaling() + signal.getScaling()), self.getPotentialUnit());
     return result;
 }
 
@@ -391,7 +408,7 @@ Signal Confinement::getRelativeX(const Distance& location) const {
     Signal coefficient = getClosure().getLinearX(location);
     Signal signal = distribution.getSquareConvergence(coefficient); signal.adjustScaling();
     Signal result(distribution.getOrientation(), signal.getMagnitude(),
-		(distribution.getScaling() + signal.getScaling()), self.getUnit());
+		(distribution.getScaling() + signal.getScaling()), self.getPotentialUnit());
     return result;
 }
 
@@ -400,7 +417,7 @@ Signal Confinement::getRelativeY(const Distance& location) const {
     Signal coefficient = getClosure().getLinearY(location);
     Signal signal = distribution.getSquareConvergence(coefficient); signal.adjustScaling();
     Signal result(distribution.getOrientation(), signal.getMagnitude(),
-		(distribution.getScaling() + signal.getScaling()), self.getUnit());
+		(distribution.getScaling() + signal.getScaling()), self.getPotentialUnit());
     return result;
 }
 
@@ -409,13 +426,13 @@ Signal Confinement::getRelativeZ(const Distance& location) const {
     Signal coefficient = getClosure().getLinearZ(location);
     Signal signal = distribution.getSquareConvergence(coefficient); signal.adjustScaling();
     Signal result(distribution.getOrientation(), signal.getMagnitude(),
-		(distribution.getScaling() + signal.getScaling()), self.getUnit());
+		(distribution.getScaling() + signal.getScaling()), self.getPotentialUnit());
     return result;
 }
 
 Signal Confinement::copy() const {
 	Potential self = *this;
-    Confinement fresh(self.getHigh(), self.getLow(), self.getScaling(), self.getUnit());
+    Confinement fresh(self.getHigh(), self.getLow(), self.getPotentialScaling(), self.getPotentialUnit());
     return fresh;
 }
 

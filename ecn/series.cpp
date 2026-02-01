@@ -130,7 +130,8 @@ shp::Potential Series::getPotential() const {
     for (int i = 0; i < elements.size(); i++) {
         result = (result + elements[i].getVoltage());
     }
-    shp::Potential fresh(result.getHigh(), result.getLow(), result.getScaling(), result.getUnit());
+    shp::Potential fresh(result.getHigh(), result.getLow(),
+        result.getPotentialScaling(), result.getPotentialUnit());
     return fresh;
 }
 

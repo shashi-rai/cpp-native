@@ -27,46 +27,74 @@ namespace shp {
 
 /*
  * Divergent fields could be represented with Potential
+ * Low ~ High retains a range for potential difference
+ * A spatial representation exists in the Angular class
  */
 class Potential : protected Signal {
-    float low;
-    Angular origin;
+    Signal kinetic;     // high value exists in the parent class
+    Angular origin;     // spatial description of field potential
 public:
     // Constructors
     Potential();
-    Potential(const Azimuth& phase);
     Potential(const Angular& origin);
-    Potential(const Azimuth& phase, const Angular& origin);
+    Potential(const Polar& polar);
+    Potential(const Polar& polar, const Azimuth& azimuth);
+    Potential(const Distance& radius);
+    Potential(const Distance& radius, const Polar& polar);
+    Potential(const Distance& radius, const Azimuth& azimuth);
+    Potential(const Distance& radius, const Polar& polar, const Azimuth& azimuth);
+    Potential(const Azimuth& potential);
+    Potential(const Azimuth& potential, const Angular& origin);
+    Potential(const Azimuth& potential, const Azimuth& kinetic);
+    Potential(const Azimuth& potential, const Angular& origin, const Azimuth& kinetic);
     Potential(const float high);
     Potential(const float high, const Angular& origin);
-    Potential(const Azimuth& phase, const float high, const Angular& origin);
+    Potential(const float high, const Angular& origin, const Azimuth& kinetic);
+    Potential(const Azimuth& potential, const float high, const Angular& origin);
+    Potential(const Azimuth& potential, const float high, const Angular& origin, const Azimuth& kinetic);
     Potential(const float high, const float low);
     Potential(const float high, const float low, const Angular& origin);
-    Potential(const Azimuth& phase, const float high, const float low, const Angular& origin);
+    Potential(const float high, const float low, const Angular& origin, const Azimuth& kinetic);
+    Potential(const Azimuth& potential, const float high, const float low, const Angular& origin);
+    Potential(const Azimuth& potential, const float high, const float low, const Angular& origin, const Azimuth& kinetic);
     Potential(const std::string unit);
     Potential(const Unit& unit);
     Potential(const Unit& unit, const Angular& origin);
-    Potential(const Azimuth& phase, const Unit& unit, const Angular& origin);
+    Potential(const Azimuth& potential, const Unit& unit, const Angular& origin);
+    Potential(const Azimuth& potential, const Unit& unit, const Angular& origin, const Azimuth& kinetic);
     Potential(const short int scaling, const std::string unit);
     Potential(const short int scaling, const Unit& unit);
     Potential(const short int scaling, const Unit& unit, const Angular& origin);
-    Potential(const Azimuth& phase, const short int scaling, const Unit& unit, const Angular& origin);
+    Potential(const Azimuth& potential, const short int scaling, const Unit& unit, const Angular& origin);
+    Potential(const Azimuth& potential, const short int scaling, const Unit& unit, const Angular& origin, const Azimuth& kinetic);
     Potential(const float high, const std::string unit, const Angular& origin);
-    Potential(const Azimuth& phase, const float high, const std::string unit, const Angular& origin);
+    Potential(const float high, const std::string unit, const Angular& origin, const Azimuth& kinetic);
+    Potential(const Azimuth& potential, const float high, const std::string unit, const Angular& origin);
+    Potential(const Azimuth& potential, const float high, const std::string unit, const Angular& origin, const Azimuth& kinetic);
     Potential(const float high, const float low, const std::string unit);
     Potential(const float high, const float low, const std::string unit, const Angular& origin);
-    Potential(const Azimuth& phase, const float high, const float low, const std::string unit, const Angular& origin);
+    Potential(const float high, const float low, const std::string unit, const Angular& origin, const Azimuth& kinetic);
+    Potential(const Azimuth& potential, const float high, const float low, const std::string unit, const Angular& origin);
+    Potential(const Azimuth& potential, const float high, const float low, const std::string unit, const Angular& origin, const Azimuth& kinetic);
     Potential(const float high, const float low, const Unit& unit);
     Potential(const float high, const float low, const Unit& unit, const Angular& origin);
-    Potential(const Azimuth& phase, const float high, const float low, const Unit& unit, const Angular& origin);
+    Potential(const float high, const float low, const Unit& unit, const Angular& origin, const Azimuth& kinetic);
+    Potential(const Azimuth& potential, const float high, const float low, const Unit& unit, const Angular& origin);
+    Potential(const Azimuth& potential, const float high, const float low, const Unit& unit, const Angular& origin, const Azimuth& kinetic);
     Potential(const float high, const float low, const short int scaling);
     Potential(const float high, const float low, const short int scaling, const std::string unit);
     Potential(const float high, const float low, const short int scaling, const Unit& unit);
-    Potential(const float phase, const float high, const float low, const short int scaling, const Unit& unit);
-    Potential(const Azimuth& phase, const float high, const float low, const short int scaling, const Unit& unit);
+    Potential(const float potential, const float high, const float low, const short int scaling, const Unit& unit);
+    Potential(const float potential, const float high, const float low, const short int scaling, const Unit& unit, const float kinetic);
+    Potential(const float potential, const float high, const float low, const short int scaling, const Unit& unit, const Azimuth& kinetic);
+    Potential(const Azimuth& potential, const float high, const float low, const short int scaling, const Unit& unit);
+    Potential(const Azimuth& potential, const float high, const float low, const short int scaling, const Unit& unit, const Azimuth& kinetic);
     Potential(const float high, const float low, const short int scaling, const Unit& unit, const Angular& origin);
-    Potential(const float phase, const float high, const float low, const short int scaling, const Unit& unit, const Angular& origin);
-    Potential(const Azimuth& phase, const float high, const float low, const short int scaling, const Unit& unit, const Angular& origin);
+    Potential(const float high, const float low, const short int scaling, const Unit& unit, const Angular& origin, const Azimuth& kinetic);
+    Potential(const float potential, const float high, const float low, const short int scaling, const Unit& unit, const Angular& origin);
+    Potential(const float potential, const float high, const float low, const short int scaling, const Unit& unit, const Angular& origin, const Azimuth& kinetic);
+    Potential(const Azimuth& potential, const float high, const float low, const short int scaling, const Unit& unit, const Angular& origin);
+    Potential(const Azimuth& potential, const float high, const float low, const short int scaling, const Unit& unit, const Angular& origin, const Azimuth& kinetic);
 
     // Destructors
     ~Potential();
@@ -90,11 +118,11 @@ public:
         const Distance& separationX, const Distance& separationY) const;
 
     // Getters
-    float getLow() const { return low; }
+    Signal getKinetic() const { return kinetic; }
     Angular getOrigin() const { return origin; }
 
     // Setters
-    void setLow(const float value) { this->low = value; }
+    void setKinetic(const Signal& action) { this->kinetic = action; }
     void setOrigin(const Angular& position) { this->origin = position; }
 
     // Additional methods
@@ -134,18 +162,42 @@ public:
         const Distance& separationX, const Distance& separationY) const;
     Signal getPolarDivergence(const Potential& peerX, const Potential& peerY,
         const Distance& separationX, const Distance& separationY) const;
+    float getKineticAmplitude() const;
+    float getLow() const;
+    void setKinetic(const float value);
+    void setKinetic(const float value, const short int scale);
+    void setKinetic(const float value, const short int scale, const std::string unit);
+    void setKinetic(const float value, const short int scale, const Unit& unit);
+    short int getKineticScaling() const;
+    void setKineticScaling(const short int factor);
+    Unit getKineticUnit() const;
+    void setKineticUnit(const Unit& object);
+    float getPotentialAmplitude() const;
     float getHigh() const;
-    void setHigh(const float value);
+    float getPotential() const;
+    void setPotential(const float value);
+    void setPotential(const float value, const short int scale);
+    void setPotential(const float value, const short int scale, const std::string unit);
+    void setPotential(const float value, const short int scale, const Unit& unit);
+    short int getPotentialScaling() const;
+    void setPotentialScaling(const short int factor);
+    Unit getPotentialUnit() const;
+    void setPotentialUnit(const Unit& object);
     void setRange(const float high, const float low);
     void setRange(const float high, const float low, const short int scale);
-    short int getScaling() const;
-    void setScaling(const short int factor);
-    Unit getUnit() const;
-    void setUnit(const Unit& object);
-    Polar getPolar() const;
-    void setPolar(const Polar& angle);
-    Azimuth getAzimuth() const;
-    void setAzimuth(const Azimuth& angle);
+    float getRadius() const;
+    void setRadius(const float length);
+    void setRadius(const float length, const short int scale);
+    void setRadius(const float length, const short int scale, const std::string unit);
+    void setRadius(const float length, const short int scale, const Unit& unit);
+    Azimuth getKineticPhase() const;
+    void setKineticPhase(const Azimuth& orientation);
+    Azimuth getPotentialPhase() const;
+    void setPotentialPhase(const Azimuth& orientation);
+    Polar getPolarOrientation() const;
+    void setPolarOrientation(const Polar& angle);
+    Azimuth getAzimuthOrientation() const;
+    void setAzimuthOrientation(const Azimuth& angle);
     Signal getDifference() const;
     Signal getDivergence() const;
     Signal getRelative(const Distance& location) const;
@@ -157,7 +209,7 @@ public:
     virtual std::string print() const;
     virtual std::string printRadians() const;
 protected:
-    float getSpread() const;
+    Signal getSpreadActive() const;
 };
 
 typedef std::vector<Potential > PotentialArray;

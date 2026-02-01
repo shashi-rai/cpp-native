@@ -16,194 +16,330 @@
 // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.const float high, const float low, const std::string unit, const Angular& origin
+// THE SOFTWARE.
 
 #include "potential.h"
 
 namespace shp {
 
 Potential::Potential()
-        : Signal(), low(), origin() {
-
-}
-
-Potential::Potential(const Azimuth& phase)
-        : Signal(phase), low(), origin() {
+        : Signal(), kinetic(), origin() {
 
 }
 
 Potential::Potential(const Angular& origin)
-        : Signal(), low(), origin(origin) {
+        : Signal(), kinetic(), origin(origin) {
 
 }
 
-Potential::Potential(const Azimuth& phase, const Angular& origin)
-        : Signal(phase), low(), origin(origin) {
+Potential::Potential(const Polar& polar)
+        : Signal(), kinetic(), origin(polar) {
+
+}
+
+Potential::Potential(const Polar& polar, const Azimuth& azimuth)
+        : Signal(), kinetic(), origin(polar, azimuth) {
+
+}
+
+Potential::Potential(const Distance& radius)
+        : Signal(), kinetic(), origin(radius) {
+
+}
+
+Potential::Potential(const Distance& radius, const Polar& polar)
+        : Signal(), kinetic(), origin(radius, polar) {
+
+}
+
+Potential::Potential(const Distance& radius, const Azimuth& azimuth)
+        : Signal(), kinetic(), origin(radius, azimuth) {
+
+}
+
+Potential::Potential(const Distance& radius, const Polar& polar, const Azimuth& azimuth)
+        : Signal(), kinetic(), origin(radius, polar, azimuth) {
+
+}
+
+Potential::Potential(const Azimuth& potential)
+        : Signal(potential), kinetic(), origin() {
+
+}
+
+Potential::Potential(const Azimuth& potential, const Angular& origin)
+        : Signal(potential), kinetic(), origin(origin) {
+
+}
+
+Potential::Potential(const Azimuth& potential, const Azimuth& kinetic)
+        : Signal(potential), kinetic(kinetic), origin() {
+
+}
+
+Potential::Potential(const Azimuth& potential, const Angular& origin, const Azimuth& kinetic)
+        : Signal(potential), kinetic(kinetic), origin(origin) {
 
 }
 
 Potential::Potential(const float high)
-        : Signal(high), low(), origin() {
+        : Signal(high), kinetic(), origin() {
 
 }
 
 Potential::Potential(const float high, const Angular& origin)
-        : Signal(high), low(), origin(origin) {
+        : Signal(high), kinetic(), origin(origin) {
+
 }
 
-Potential::Potential(const Azimuth& phase, const float high, const Angular& origin)
-        : Signal(phase, high), low(), origin(origin) {
+Potential::Potential(const float high, const Angular& origin, const Azimuth& kinetic)
+        : Signal(high), kinetic(kinetic), origin(origin) {
+
+}
+
+Potential::Potential(const Azimuth& potential, const float high, const Angular& origin)
+        : Signal(potential, high), kinetic(), origin(origin) {
+
+}
+
+Potential::Potential(const Azimuth& potential, const float high, const Angular& origin,
+        const Azimuth& kinetic)
+        : Signal(potential, high), kinetic(kinetic), origin(origin) {
+
 }
 
 Potential::Potential(const float high, const float low)
-        : Signal(high), low(low), origin() {
+        : Signal(high), kinetic(low), origin() {
 
 }
 
-Potential::Potential(const float high, const float low,
-		const Angular& origin)
-        : Signal(high), low(low), origin(origin) {
+Potential::Potential(const float high, const float low, const Angular& origin)
+        : Signal(high), kinetic(low), origin(origin) {
 
 }
 
-Potential::Potential(const Azimuth& phase, const float high, const float low,
+Potential::Potential(const float high, const float low, const Angular& origin,
+        const Azimuth& kinetic)
+        : Signal(high), kinetic(kinetic, low), origin(origin) {
+
+}
+
+Potential::Potential(const Azimuth& potential, const float high, const float low,
 		const Angular& origin)
-        : Signal(phase, high), low(low), origin(origin) {
+        : Signal(potential, high), kinetic(low), origin(origin) {
+
+}
+
+Potential::Potential(const Azimuth& potential, const float high, const float low,
+		const Angular& origin, const Azimuth& kinetic)
+        : Signal(potential, high), kinetic(kinetic, low), origin(origin) {
 
 }
 
 Potential::Potential(const std::string unit)
-        : Signal(unit), low(), origin() {
+        : Signal(unit), kinetic(unit), origin() {
 
 }
 
 Potential::Potential(const Unit& unit)
-        : Signal(unit), low(), origin() {
+        : Signal(unit), kinetic(unit), origin() {
 }
 
 Potential::Potential(const Unit& unit, const Angular& origin)
-        : Signal(unit), low(), origin(origin) {
+        : Signal(unit), kinetic(unit), origin(origin) {
 }
 
-Potential::Potential(const Azimuth& phase, const Unit& unit, const Angular& origin)
-        : Signal(phase, unit), low(), origin(origin) {
+Potential::Potential(const Azimuth& potential, const Unit& unit, const Angular& origin)
+        : Signal(potential, unit), kinetic(unit), origin(origin) {
+}
+
+Potential::Potential(const Azimuth& potential, const Unit& unit, const Angular& origin,
+        const Azimuth& kinetic)
+        : Signal(potential, unit), kinetic(kinetic, unit), origin(origin) {
 }
 
 Potential::Potential(const short int scaling, const std::string unit)
-        : Signal(scaling, unit), low(), origin() {
+        : Signal(scaling, unit), kinetic(scaling, unit), origin() {
 
 }
 
 Potential::Potential(const short int scaling, const Unit& unit)
-        : Signal(scaling, unit), low(), origin() {
+        : Signal(scaling, unit), kinetic(scaling, unit), origin() {
 
 }
 
-Potential::Potential(const short int scaling,
-		const Unit& unit, const Angular& origin)
-        : Signal(scaling, unit), low(), origin(origin) {
+Potential::Potential(const short int scaling, const Unit& unit, const Angular& origin)
+        : Signal(scaling, unit), kinetic(scaling, unit), origin(origin) {
 
 }
 
-Potential::Potential(const Azimuth& phase, const short int scaling,
-		const Unit& unit, const Angular& origin)
-        : Signal(phase, scaling, unit), low(), origin(origin) {
+Potential::Potential(const Azimuth& potential, const short int scaling,
+        const Unit& unit, const Angular& origin)
+        : Signal(potential, scaling, unit), kinetic(), origin(origin) {
 
 }
 
-Potential::Potential(const float high,
+Potential::Potential(const Azimuth& potential, const short int scaling,
+		const Unit& unit, const Angular& origin, const Azimuth& kinetic)
+        : Signal(potential, scaling, unit), kinetic(kinetic, scaling, unit), origin(origin) {
+
+}
+
+Potential::Potential(const float high, const std::string unit, const Angular& origin)
+        : Signal(high, unit), kinetic(unit), origin(origin) {
+
+}
+
+Potential::Potential(const float high, const std::string unit, const Angular& origin,
+        const Azimuth& kinetic)
+        : Signal(high, unit), kinetic(kinetic, unit), origin(origin) {
+
+}
+
+Potential::Potential(const Azimuth& potential, const float high, const std::string unit,
+        const Angular& origin)
+        : Signal(potential, high, unit), kinetic(unit), origin(origin) {
+
+}
+
+Potential::Potential(const Azimuth& potential, const float high, const std::string unit,
+        const Angular& origin, const Azimuth& kinetic)
+        : Signal(potential, high, unit), kinetic(kinetic, unit), origin(origin) {
+
+}
+
+Potential::Potential(const float high, const float low, const std::string unit)
+        : Signal(high, unit), kinetic(low, unit), origin() {
+
+}
+
+Potential::Potential(const float high, const float low, const std::string unit,
+        const Angular& origin)
+        : Signal(high, unit), kinetic(low, unit), origin(origin) {
+
+}
+
+Potential::Potential(const float high, const float low, const std::string unit,
+        const Angular& origin, const Azimuth& kinetic)
+        : Signal(high, unit), kinetic(kinetic, low, unit), origin(origin) {
+
+}
+
+Potential::Potential(const Azimuth& potential, const float high, const float low,
 		const std::string unit, const Angular& origin)
-        : Signal(high, unit), low(), origin(origin) {
+        : Signal(potential, high, unit), kinetic(low, unit), origin(origin) {
 
 }
 
-Potential::Potential(const Azimuth& phase, const float high,
-		const std::string unit, const Angular& origin)
-        : Signal(phase, high, unit), low(), origin(origin) {
+Potential::Potential(const Azimuth& potential, const float high, const float low,
+		const std::string unit, const Angular& origin, const Azimuth& kinetic)
+        : Signal(potential, high, unit), kinetic(kinetic, low, unit), origin(origin) {
 
 }
 
-Potential::Potential(const float high, const float low,
-		const std::string unit)
-        : Signal(high, unit), low(low), origin() {
+Potential::Potential(const float high, const float low, const Unit& unit)
+        : Signal(high, unit), kinetic(low, unit), origin() {
 
 }
 
-Potential::Potential(const float high, const float low,
-		const std::string unit, const Angular& origin)
-        : Signal(high, unit), low(low), origin(origin) {
+Potential::Potential(const float high, const float low, const Unit& unit,
+        const Angular& origin)
+        : Signal(high, unit), kinetic(low, unit), origin(origin) {
 
 }
 
-Potential::Potential(const Azimuth& phase, const float high, const float low,
-		const std::string unit, const Angular& origin)
-        : Signal(phase, high, unit), low(low), origin(origin) {
+Potential::Potential(const float high, const float low, const Unit& unit,
+        const Angular& origin, const Azimuth& kinetic)
+        : Signal(high, unit), kinetic(kinetic, low, unit), origin(origin) {
 
 }
 
-Potential::Potential(const float high, const float low,
-		const Unit& unit)
-        : Signal(high, unit), low(low), origin() {
-
-}
-
-Potential::Potential(const float high, const float low,
+Potential::Potential(const Azimuth& potential, const float high, const float low,
 		const Unit& unit, const Angular& origin)
-        : Signal(high, unit), low(low), origin(origin) {
+        : Signal(potential, high, unit), kinetic(low, unit), origin(origin) {
 
 }
 
-Potential::Potential(const Azimuth& phase, const float high, const float low,
-		const Unit& unit, const Angular& origin)
-        : Signal(phase, high, unit), low(low), origin(origin) {
+Potential::Potential(const Azimuth& potential, const float high, const float low,
+		const Unit& unit, const Angular& origin, const Azimuth& kinetic)
+        : Signal(potential, high, unit), kinetic(kinetic, low, unit), origin(origin) {
 
 }
 
-Potential::Potential(const float high, const float low,
-		const short int scaling)
-        : Signal(high, scaling), low(low), origin() {
+Potential::Potential(const float high, const float low, const short int scaling)
+        : Signal(high, scaling), kinetic(low, scaling), origin() {
 
 }
 
-Potential::Potential(const float high, const float low,
-		const short int scaling, const std::string unit)
-        : Signal(high, scaling, unit), low(low), origin() {
+Potential::Potential(const float high, const float low, const short int scaling,
+        const std::string unit)
+        : Signal(high, scaling, unit), kinetic(low, scaling, unit), origin() {
 
 }
 
-Potential::Potential(const float high, const float low,
+Potential::Potential(const float high, const float low, const short int scaling,
+        const Unit& unit)
+        : Signal(high, scaling, unit), kinetic(low, scaling, unit), origin() {
+
+}
+
+Potential::Potential(const float potential, const float high, const float low,
 		const short int scaling, const Unit& unit)
-        : Signal(high, scaling, unit), low(low), origin() {
+        : Signal(potential, high, scaling, unit), kinetic(low, scaling, unit), origin() {
 
 }
 
-Potential::Potential(const float phase, const float high, const float low,
+Potential::Potential(const float potential, const float high, const float low,
+		const short int scaling, const Unit& unit, const float kinetic)
+        : Signal(potential, high, scaling, unit), kinetic(kinetic, low, scaling, unit), origin() {
+
+}
+
+Potential::Potential(const float potential, const float high, const float low,
+		const short int scaling, const Unit& unit, const Azimuth& kinetic)
+        : Signal(potential, high, scaling, unit), kinetic(kinetic, low, scaling, unit), origin() {
+
+}
+
+Potential::Potential(const Azimuth& potential, const float high, const float low,
 		const short int scaling, const Unit& unit)
-        : Signal(phase, high, scaling, unit), low(low), origin() {
+        : Signal(potential, high, scaling, unit), kinetic(low, scaling, unit), origin() {
 
 }
 
-Potential::Potential(const Azimuth& phase, const float high, const float low,
-		const short int scaling, const Unit& unit)
-        : Signal(phase, high, scaling, unit), low(low), origin() {
+Potential::Potential(const float high, const float low, const short int scaling,
+        const Unit& unit, const Angular& origin)
+        : Signal(high, scaling, unit), kinetic(low, scaling, unit), origin(origin) {
 
 }
 
-Potential::Potential(const float high, const float low,
+Potential::Potential(const float high, const float low, const short int scaling,
+        const Unit& unit, const Angular& origin, const Azimuth& kinetic)
+        : Signal(high, scaling, unit), kinetic(kinetic, low, scaling, unit), origin(origin) {
+
+}
+
+Potential::Potential(const float potential, const float high, const float low,
 		const short int scaling, const Unit& unit, const Angular& origin)
-        : Signal(high, scaling, unit), low(low), origin(origin) {
+        : Signal(potential, high, scaling, unit), kinetic(low, scaling, unit), origin(origin) {
 
 }
 
-Potential::Potential(const float phase, const float high, const float low,
-		const short int scaling, const Unit& unit, const Angular& origin)
-        : Signal(phase, high, scaling, unit), low(low), origin(origin) {
+Potential::Potential(const float potential, const float high, const float low,
+		const short int scaling, const Unit& unit, const Angular& origin, const Azimuth& kinetic)
+        : Signal(potential, high, scaling, unit), kinetic(kinetic, low, scaling, unit), origin(origin) {
 
 }
 
-Potential::Potential(const Azimuth& phase, const float high, const float low,
+Potential::Potential(const Azimuth& potential, const float high, const float low,
 		const short int scaling, const Unit& unit, const Angular& origin)
-        : Signal(phase, high, scaling, unit), low(low), origin(origin) {
+        : Signal(potential, high, scaling, unit), kinetic(low, scaling, unit), origin(origin) {
+
+}
+
+Potential::Potential(const Azimuth& potential, const float high, const float low,
+		const short int scaling, const Unit& unit, const Angular& origin, const Azimuth& kinetic)
+        : Signal(potential, high, scaling, unit), kinetic(kinetic, low, scaling, unit), origin(origin) {
 
 }
 
@@ -213,14 +349,14 @@ Potential::~Potential() {
 
 bool Potential::operator==(const Potential& peer) const {
     return (static_cast<const Signal&>(*this) == static_cast<const Signal&>(peer))
-        && (low == peer.low) && (origin == peer.origin);
+        && (kinetic == peer.kinetic) && (origin == peer.origin);
 }
 
 bool Potential::operator<(const Potential& peer) const {
     Potential self = *this; bool result = false;
     if (static_cast<const Signal&>(*this) < static_cast<const Signal&>(peer)) {
         result = true;
-    } else if (self.getSpread() < peer.getSpread()) {
+    } else if (self.getSpreadActive() < peer.getSpreadActive()) {
         result = true;
     } else if (origin < peer.origin) {
         result = true;
@@ -232,7 +368,7 @@ bool Potential::operator>(const Potential& peer) const {
     Potential self = *this; bool result = false;
     if (static_cast<const Signal&>(*this) > static_cast<const Signal&>(peer)) {
         result = true;
-    } else if (self.getSpread() > peer.getSpread()) {
+    } else if (self.getSpreadActive() > peer.getSpreadActive()) {
         result = true;
     } else if (origin > peer.origin) {
         result = true;
@@ -258,7 +394,7 @@ Potential Potential::operator+(const Potential& peer) const {
     float newlow = (self.getLow() + (peer.getLow() /
 		std::pow(shp::Quantity::DECIMAL_SCALE, (self.getScaling() - peer.getScaling()))));
     return Potential(phase.toRadians(), newhigh, newlow,
-		self.getScaling(), self.getUnit());
+        self.getScaling(), self.getUnit());
 }
 
 Potential Potential::operator-(const Potential& peer) const {
@@ -500,51 +636,148 @@ Signal Potential::getPolarDivergence(const Potential& peerX, const Potential& pe
     return result;
 }
 
+float Potential::getKineticAmplitude() const {
+    return kinetic.getAmplitude();
+}
+
+float Potential::getLow() const {
+	return kinetic.getMagnitude();
+}
+
+void Potential::setKinetic(const float value) {
+	kinetic.setMagnitude(value);
+}
+
+void Potential::setKinetic(const float value, const short int scale) {
+	kinetic.setMagnitude(value, scale);
+}
+
+void Potential::setKinetic(const float value, const short int scale, const std::string unit) {
+	kinetic.setMagnitude(value, scale, unit);
+}
+
+void Potential::setKinetic(const float value, const short int scale, const Unit& unit) {
+	kinetic.setMagnitude(value, scale, unit);
+}
+
+short int Potential::getKineticScaling() const {
+	return kinetic.getScaling();
+}
+
+void Potential::setKineticScaling(const short int factor) {
+	kinetic.setScaling(factor);
+}
+
+Unit Potential::getKineticUnit() const {
+	return kinetic.getUnit();
+}
+
+void Potential::setKineticUnit(const Unit& object) {
+	kinetic.setUnit(object);
+}
+
+float Potential::getPotentialAmplitude() const {
+    return Signal::getAmplitude();
+}
+
 float Potential::getHigh() const {
-	return this->getMagnitude();
+	return Signal::getMagnitude();
 }
 
-void Potential::setHigh(const float value) {
-	this->setMagnitude(value);
+float Potential::getPotential() const {
+	return Signal::getMagnitude();
 }
 
-void Potential::setRange(const float high, const float low) {
-	this->setHigh(high); this->setLow(low);
+void Potential::setPotential(const float value) {
+	Signal::setMagnitude(value);
 }
 
-void Potential::setRange(const float high, const float low, const short int scale) {
-	this->setHigh(high); this->setLow(low); this->setScaling(scale);
+void Potential::setPotential(const float value, const short int scale) {
+	Signal::setMagnitude(value, scale);
 }
 
-short int Potential::getScaling() const {
+void Potential::setPotential(const float value, const short int scale, const std::string unit) {
+	Signal::setMagnitude(value, scale, unit);
+}
+
+void Potential::setPotential(const float value, const short int scale, const Unit& unit) {
+	Signal::setMagnitude(value, scale, unit);
+}
+
+short int Potential::getPotentialScaling() const {
 	return Signal::getScaling();
 }
 
-void Potential::setScaling(const short int factor) {
+void Potential::setPotentialScaling(const short int factor) {
 	Signal::setScaling(factor);
 }
 
-Unit Potential::getUnit() const {
+Unit Potential::getPotentialUnit() const {
 	return Signal::getUnit();
 }
 
-void Potential::setUnit(const Unit& object) {
+void Potential::setPotentialUnit(const Unit& object) {
 	Signal::setUnit(object);
 }
 
-Polar Potential::getPolar() const {
+void Potential::setRange(const float high, const float low) {
+	this->setPotential(high); this->setKinetic(low);
+}
+
+void Potential::setRange(const float high, const float low, const short int scale) {
+	this->setPotential(high); this->setPotentialScaling(scale);
+    this->setKinetic(low); this->setKineticScaling(scale);
+}
+
+float Potential::getRadius() const {
+    return Signal::getMagnitude();
+}
+
+void Potential::setRadius(const float length) {
+    Signal::setMagnitude(length);
+}
+
+void Potential::setRadius(const float length, const short int scale) {
+    Signal::setMagnitude(length, scale);
+}
+
+void Potential::setRadius(const float length, const short int scale, const std::string unit) {
+    Signal::setMagnitude(length, scale, unit);
+}
+
+void Potential::setRadius(const float length, const short int scale, const Unit& unit) {
+    Signal::setMagnitude(length, scale, unit);
+}
+
+Azimuth Potential::getKineticPhase() const {
+    return kinetic.getOrientation();
+}
+
+void Potential::setKineticPhase(const Azimuth& orientation) {
+    kinetic.setOrientation(orientation.toRadians());
+}
+
+Azimuth Potential::getPotentialPhase() const {
+    return Signal::getOrientation();
+}
+
+void Potential::setPotentialPhase(const Azimuth& orientation) {
+    Signal::setOrientation(orientation.toRadians());
+}
+
+Polar Potential::getPolarOrientation() const {
     return origin.getPolar();
 }
 
-void Potential::setPolar(const Polar& angle) {
+void Potential::setPolarOrientation(const Polar& angle) {
     this->origin.setPolar(angle);
 }
 
-Azimuth Potential::getAzimuth() const {
+Azimuth Potential::getAzimuthOrientation() const {
     return origin.getAzimuth();
 }
 
-void Potential::setAzimuth(const Azimuth& angle) {
+void Potential::setAzimuthOrientation(const Azimuth& angle) {
     this->origin.setAzimuth(angle);
 }
 
@@ -553,8 +786,8 @@ Signal Potential::getDifference() const {
 }
 
 Signal Potential::getDivergence() const {
-	Potential self = *this;
-    Signal result(self.getOrientation(), self.getSpread(), self.getScaling(), self.getUnit());
+	Potential self = *this; Signal distribution = self.getSpreadActive();
+    Signal result(self.getOrientation(), distribution.getAmplitude(), self.getScaling(), self.getUnit());
     return result;
 }
 
@@ -596,15 +829,15 @@ Signal Potential::getRelativeZ(const Distance& location) const {
 
 Signal Potential::copy() const {
 	Potential self = *this;
-    Potential fresh(self.getOrientation(), self.getHigh(), self.getLow(),
-		self.getScaling(), self.getUnit());
+    Potential fresh(self.getOrientation(), self.getHigh(), self.getLow(), self.getScaling(),
+        self.getUnit(), self.getOrigin(), kinetic.getOrientation());
     return fresh;
 }
 
 void Potential::clear() {
     Signal::clear();
+    kinetic.clear();
     origin.clear();
-    low = shp::Quantity::DEFAULT_VALUE;
     return;
 }
 
@@ -630,9 +863,9 @@ std::string Potential::printRadians() const {
 	return result.str();
 }
 
-float Potential::getSpread() const {
-    Potential self = *this;
-    return (self.getHigh() - self.getLow());
+Signal Potential::getSpreadActive() const {
+    Signal potential = *this;
+    return (potential - kinetic);
 }
 
 } // namespace shp

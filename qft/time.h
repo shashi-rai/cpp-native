@@ -151,7 +151,7 @@ public:
     std::string getName() const { return name; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setName(const std::string name) { this->name = name; }
 
     // Additional methods
     shp::Signal getEntropy() const;

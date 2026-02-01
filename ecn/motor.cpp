@@ -139,7 +139,7 @@ float Motor::getLowVoltageRatio() const {
 shp::Potential Motor::getRotorVoltage() const {
     float ratio = rotor.getLoopCount() / stator.getLoopCount();
     shp::Potential input = stator.getVoltage();
-    short int scaling = input.getScaling();
+    short int scaling = input.getPotentialScaling();
     shp::Potential fresh((input.getHigh() * ratio * slip), (input.getLow() * ratio * slip),
         scaling, shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_POTENTIAL));
     return fresh;

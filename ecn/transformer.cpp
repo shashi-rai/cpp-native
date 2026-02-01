@@ -109,7 +109,7 @@ float Transformer::getLowVoltageRatio() const {
 shp::Potential Transformer::getSecondaryVoltage() const {
     float ratio = secondary.getLoopCount() / primary.getLoopCount();
     shp::Potential input = primary.getVoltage();
-    short int scaling = input.getScaling();
+    short int scaling = input.getPotentialScaling();
     shp::Potential fresh((input.getHigh() * ratio), (input.getLow() * ratio),
         scaling, shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_POTENTIAL));
     return fresh;

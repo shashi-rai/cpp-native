@@ -134,7 +134,7 @@ bool Reality::operator==(const Reality& peer) const {
 std::shared_ptr<qft::Field> Reality::operator()(const Charge& cause) {
     if (electric != nullptr) {
         electric->setRadius(cause.getRadius());
-        electric->setMagnitude(cause.getMagnitude());
+        electric->setTemporalChange(cause.getMagnitude());
     } else {
         initializeElectricField(cause);
     }
@@ -145,7 +145,7 @@ std::shared_ptr<qft::Field> Reality::operator()(const Current& cause) {
     if (magnetic != nullptr) {
         shp::Signal total = cause.getChargeFlow();
         magnetic->setRadius(cause.getCharge().getRadius());
-        magnetic->setMagnitude(total.getMagnitude());
+        magnetic->setTemporalChange(total.getMagnitude());
     } else {
         initializeMagneticField(cause.getCharge());
     }
@@ -155,7 +155,7 @@ std::shared_ptr<qft::Field> Reality::operator()(const Current& cause) {
 std::shared_ptr<qft::Field> Reality::operator()(const Colour& cause) {
     if (gluon != nullptr) {
         gluon->setRadius(cause.getRadius());
-        gluon->setMagnitude(cause.getMagnitude());
+        gluon->setTemporalChange(cause.getMagnitude());
     } else {
         initializeGluonField(cause);
     }
@@ -165,7 +165,7 @@ std::shared_ptr<qft::Field> Reality::operator()(const Colour& cause) {
 std::shared_ptr<qft::Field> Reality::operator()(const Mass& cause) {
     if (higgs != nullptr) {
         higgs->setRadius(cause.getRadius());
-        higgs->setMagnitude(cause.getMagnitude());
+        higgs->setTemporalChange(cause.getMagnitude());
     } else {
         initializeHiggsField(cause);
     }
@@ -175,7 +175,7 @@ std::shared_ptr<qft::Field> Reality::operator()(const Mass& cause) {
 std::shared_ptr<qft::Field> Reality::operator()(const Momentum& cause) {
     if (gravity != nullptr) {
         gravity->setRadius(cause.getMass().getRadius());
-        gravity->setMagnitude(cause.getMass().getMagnitude());
+        gravity->setTemporalChange(cause.getMass().getMagnitude());
     } else {
         initializeGravityField(cause.getMass());
     }
@@ -291,83 +291,83 @@ void Reality::initializeTimeDomain() {
 }
 
 void Reality::initializeGravityField(const Mass& mass) {
-    gravity = qft::Field::shareable("Gravity"); gravity->setMagnitude(mass.getMagnitude());
+    gravity = qft::Field::shareable("Gravity"); gravity->setTemporalChange(mass.getMagnitude());
 }
 
 void Reality::initializeElectricField(const Charge& charge) {
-    electric = qft::Field::shareable("Electric"); electric->setMagnitude(charge.getMagnitude());
+    electric = qft::Field::shareable("Electric"); electric->setTemporalChange(charge.getMagnitude());
 }
 
 void Reality::initializeMagneticField(const Charge& charge) {
-    magnetic = qft::Field::shareable("Magnetic"); magnetic->setMagnitude(charge.getMagnitude());
+    magnetic = qft::Field::shareable("Magnetic"); magnetic->setTemporalChange(charge.getMagnitude());
 }
 
 void Reality::initializeUpField(const Colour& colour) {
-    up = qft::Field::shareable("Up"); up->setMagnitude(colour.getMagnitude());
+    up = qft::Field::shareable("Up"); up->setTemporalChange(colour.getMagnitude());
 }
 
 void Reality::initializeDownField(const Colour& colour) {
-    down = qft::Field::shareable("Down"); down->setMagnitude(colour.getMagnitude());
+    down = qft::Field::shareable("Down"); down->setTemporalChange(colour.getMagnitude());
 }
 
 void Reality::initializeCharmField(const Colour& colour) {
-    charm = qft::Field::shareable("Charm"); charm->setMagnitude(colour.getMagnitude());
+    charm = qft::Field::shareable("Charm"); charm->setTemporalChange(colour.getMagnitude());
 }
 
 void Reality::initializeStrangeField(const Colour& colour) {
-    strange = qft::Field::shareable("Strange"); strange->setMagnitude(colour.getMagnitude());
+    strange = qft::Field::shareable("Strange"); strange->setTemporalChange(colour.getMagnitude());
 }
 
 void Reality::initializeTopField(const Colour& colour) {
-    top = qft::Field::shareable("Top"); top->setMagnitude(colour.getMagnitude());
+    top = qft::Field::shareable("Top"); top->setTemporalChange(colour.getMagnitude());
 }
 
 void Reality::initializeBottomField(const Colour& colour) {
-    bottom = qft::Field::shareable("Bottom"); bottom->setMagnitude(colour.getMagnitude());
+    bottom = qft::Field::shareable("Bottom"); bottom->setTemporalChange(colour.getMagnitude());
 }
 
 void Reality::initializeElectronField(const Charge& charge) {
-    electron = qft::Field::shareable("Electron"); electron->setMagnitude(charge.getMagnitude());
+    electron = qft::Field::shareable("Electron"); electron->setTemporalChange(charge.getMagnitude());
 }
 
 void Reality::initializeElectronNeutrinoField(const Charge& charge) {
-    electronNeutrino = qft::Field::shareable("Electron Neutrino"); electronNeutrino->setMagnitude(charge.getMagnitude());
+    electronNeutrino = qft::Field::shareable("Electron Neutrino"); electronNeutrino->setTemporalChange(charge.getMagnitude());
 }
 
 void Reality::initializeMuonField(const Charge& charge) {
-    muon = qft::Field::shareable("Muon"); muon->setMagnitude(charge.getMagnitude());
+    muon = qft::Field::shareable("Muon"); muon->setTemporalChange(charge.getMagnitude());
 }
 
 void Reality::initializeMuonNeutrinoField(const Charge& charge) {
-    muonNeutrino = qft::Field::shareable("Muon Neutrino"); muonNeutrino->setMagnitude(charge.getMagnitude());
+    muonNeutrino = qft::Field::shareable("Muon Neutrino"); muonNeutrino->setTemporalChange(charge.getMagnitude());
 }
 
 void Reality::initializeTauField(const Charge& charge) {
-    tau = qft::Field::shareable("Tau"); tau->setMagnitude(charge.getMagnitude());
+    tau = qft::Field::shareable("Tau"); tau->setTemporalChange(charge.getMagnitude());
 }
 
 void Reality::initializeTauNeutrinoField(const Charge& charge) {
-    tauNeutrino = qft::Field::shareable("Tau Neutrino"); tauNeutrino->setMagnitude(charge.getMagnitude());
+    tauNeutrino = qft::Field::shareable("Tau Neutrino"); tauNeutrino->setTemporalChange(charge.getMagnitude());
 }
 
 void Reality::initializePhotonField(const Mass& mass, const Charge& charge) {
-    photon = qft::Field::shareable("Photon"); photon->setMagnitude(charge.getMagnitude());
+    photon = qft::Field::shareable("Photon"); photon->setTemporalChange(charge.getMagnitude());
 }
 
 void Reality::initializeGluonField(const Colour& colour) {
-    gluon = qft::Field::shareable("Gluon"); gluon->setMagnitude(colour.getMagnitude());
+    gluon = qft::Field::shareable("Gluon"); gluon->setTemporalChange(colour.getMagnitude());
 }
 
 void Reality::initializeStrongField(const Charge& charge) {
-    strong = qft::Field::shareable("Strong"); strong->setMagnitude(charge.getMagnitude());
+    strong = qft::Field::shareable("Strong"); strong->setTemporalChange(charge.getMagnitude());
 }
 
 void Reality::initializeWeakField(const Charge& charge) {
-    weak = qft::Field::shareable("Weak"); weak->setMagnitude(charge.getMagnitude());
+    weak = qft::Field::shareable("Weak"); weak->setTemporalChange(charge.getMagnitude());
 }
 
 void Reality::initializeHiggsField(const Mass& mass) {
-    higgs = qft::Field::shareable("Higgs"); higgs->setMagnitude(mass.getMagnitude());
+    higgs = qft::Field::shareable("Higgs"); higgs->setTemporalChange(mass.getMagnitude());
 }
 
 } // namespace qft

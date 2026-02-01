@@ -122,11 +122,19 @@ bool Charge::operator==(const Charge& peer) const {
 }
 
 bool Charge::operator<(const Charge& peer) const {
-    return (static_cast<const shp::Temporal&>(*this) < static_cast<const shp::Temporal&>(peer));
+    Charge self = *this; bool result = false;
+    if (static_cast<const shp::Temporal&>(*this) < static_cast<const shp::Temporal&>(peer)) {
+        result = true;
+    }
+    return result;
 }
 
 bool Charge::operator>(const Charge& peer) const {
-    return (static_cast<const shp::Temporal&>(*this) < static_cast<const shp::Temporal&>(peer));
+    Charge self = *this; bool result = false;
+    if (static_cast<const shp::Temporal&>(*this) > static_cast<const shp::Temporal&>(peer)) {
+        result = true;
+    }
+    return result;
 }
 
 bool Charge::operator<=(const Charge& peer) const {
@@ -176,7 +184,7 @@ Force Charge::operator()(const Charge& peer, const shp::Distance separation,
         shp::Potential other = peer.field->getPotential();
         shp::Signal factor = self(other, separation, position);
         shp::Signal force(factor * (*this).getMagnitude());
-        Electric result(force.getMagnitude(), self.getAzimuth().toRadians(), force.getScaling(), field);
+        Electric result(force.getMagnitude(), self.getAzimuthOrientation().toRadians(), force.getScaling(), field);
         result.adjustScaling();
         return result;
     } else {

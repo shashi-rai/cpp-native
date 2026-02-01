@@ -61,6 +61,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/gluon.o \
 		$(OBJFOLDR)/gravity.o \
 		$(OBJFOLDR)/handed.o \
+		$(OBJFOLDR)/heat.o \
 		$(OBJFOLDR)/higgs.o \
 		$(OBJFOLDR)/isospin.o \
 		$(OBJFOLDR)/magnetic.o \
@@ -79,6 +80,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/spin.o \
 		$(OBJFOLDR)/strong.o \
 		$(OBJFOLDR)/temperature.o \
+		$(OBJFOLDR)/thermal.o \
 		$(OBJFOLDR)/time.o \
 		$(OBJFOLDR)/velocity.o \
 		$(OBJFOLDR)/weak.o
@@ -99,6 +101,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/gluon.o \
 		$(OBJFOLDR)/gravity.o \
 		$(OBJFOLDR)/handed.o \
+		$(OBJFOLDR)/heat.o \
 		$(OBJFOLDR)/higgs.o \
 		$(OBJFOLDR)/isospin.o \
 		$(OBJFOLDR)/magnetic.o \
@@ -117,6 +120,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/spin.o \
 		$(OBJFOLDR)/strong.o \
 		$(OBJFOLDR)/temperature.o \
+		$(OBJFOLDR)/thermal.o \
 		$(OBJFOLDR)/time.o \
 		$(OBJFOLDR)/velocity.o \
 		$(OBJFOLDR)/weak.o
@@ -168,6 +172,9 @@ $(OBJFOLDR)/gravity.o: gravity.cpp
 
 $(OBJFOLDR)/handed.o: handed.cpp
 	$(CPPTOOL) -c handed.cpp -o $(OBJFOLDR)/handed.o $(CXXFLAGS)
+
+$(OBJFOLDR)/heat.o: heat.cpp
+	$(CPPTOOL) -c heat.cpp -o $(OBJFOLDR)/heat.o $(CXXFLAGS)
 
 $(OBJFOLDR)/higgs.o: higgs.cpp
 	$(CPPTOOL) -c higgs.cpp -o $(OBJFOLDR)/higgs.o $(CXXFLAGS)
@@ -222,6 +229,9 @@ $(OBJFOLDR)/strong.o: strong.cpp
 
 $(OBJFOLDR)/temperature.o: temperature.cpp
 	$(CPPTOOL) -c temperature.cpp -o $(OBJFOLDR)/temperature.o $(CXXFLAGS)
+
+$(OBJFOLDR)/thermal.o: thermal.cpp
+	$(CPPTOOL) -c thermal.cpp -o $(OBJFOLDR)/thermal.o $(CXXFLAGS)
 
 $(OBJFOLDR)/time.o: time.cpp
 	$(CPPTOOL) -c time.cpp -o $(OBJFOLDR)/time.o $(CXXFLAGS)

@@ -181,10 +181,10 @@ void Neutron::initialize() {
     self.setWavelength(shp::Distance(COMPTON_WAVELENGTH, WAVELENGTH_SCALE));
 
     std::shared_ptr<qft::Field> mfield = Field::shareable("G");
-    mfield->setMagnitude(Mass::PROTON, Mass::ATOMIC_SCALE);
+    mfield->setTemporalChange(Mass::PROTON, Mass::ATOMIC_SCALE);
 
     std::shared_ptr<qft::Field> efield = Field::shareable("E");
-    efield->setMagnitude(Charge::PROTON, Charge::ATOMIC_SCALE);
+    efield->setTemporalChange(Charge::PROTON, Charge::ATOMIC_SCALE);
 
     up = Quark("u", Quark::getComptonWavelength(Quark::UP),
         Quark::getMassLow(Quark::UP, mfield), Quark::getElectricCharge(Quark::UP, efield));

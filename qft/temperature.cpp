@@ -19,146 +19,114 @@
 // THE SOFTWARE.
 
 #include "temperature.h"
+#include "thermal.h"
 
 namespace qft {
 
 const std::string Temperature::UNIT = "K";                              // System International
-const float Temperature::BASE_VALUE = 273.15f;                          // 0.0K
+const std::string Temperature::THERMAL_FIELD = "Thermal";               // Thermal Field
+const short int Temperature::THERMAL_SCALE = 0;                         // 10^0 K
+const float Temperature::QGP = 150;                                     // 150 MeV
+const short int Temperature::QGP_SCALE = 6;                             // 10^6 eV
+const float Temperature::BASE_VALUE = 273.15f;                          // 0.0 K
 const short int Temperature::DEFAULT_SCALE = 0;                         // 10^0 K
 const float Temperature::DEFAULT_VALUE = shp::Quantity::DEFAULT_VALUE;  // 0.0 K
 const float Temperature::BOLTZMANN_CONSTANT = 1.380649f;                // 1.380649fx10^-23 J/K
 const short int Temperature::BOLTZMANN_SCALE = -23;                     // 10^-23 J/K
 
 Temperature::Temperature()
-        : shp::Quantity(shp::Quantity::DEFAULT_VALUE, DEFAULT_SCALE,
-            shp::Unit::getBaseSymbol(shp::Unit::TEMPERATURE)),
-        change(shp::Direction::DEFAULT_RADIANS) {
+        : shp::Temporal(shp::Quantity::DEFAULT_VALUE, THERMAL_SCALE,
+            shp::Unit::getBaseSymbol(shp::Unit::TEMPERATURE)) {
+    setField(nullptr);
+}
 
+Temperature::Temperature(const std::shared_ptr<Field> field)
+        : shp::Temporal(shp::Quantity::DEFAULT_VALUE, THERMAL_SCALE,
+            shp::Unit::getBaseSymbol(shp::Unit::TEMPERATURE)) {
+    setField(field);
 }
 
 Temperature::Temperature(const std::string unit)
-        : shp::Quantity(shp::Quantity::DEFAULT_VALUE, DEFAULT_SCALE, unit),
-        change(shp::Direction::DEFAULT_RADIANS) {
-
+        : shp::Temporal(shp::Quantity::DEFAULT_VALUE, THERMAL_SCALE, std::string(unit)) {
+    setField(nullptr);
 }
 
 Temperature::Temperature(const shp::Unit& unit)
-        : shp::Quantity(shp::Quantity::DEFAULT_VALUE, DEFAULT_SCALE, unit),
-        change(shp::Direction::DEFAULT_RADIANS) {
-
+        : shp::Temporal(shp::Quantity::DEFAULT_VALUE, THERMAL_SCALE, unit) {
+    setField(nullptr);
 }
 
-Temperature::Temperature(const float quantity)
-        : shp::Quantity(quantity, DEFAULT_SCALE,
-            shp::Unit::getBaseSymbol(shp::Unit::TEMPERATURE)),
-        change(shp::Direction::DEFAULT_RADIANS) {
-
+Temperature::Temperature(const shp::Unit& unit, const std::shared_ptr<Field> field)
+        : shp::Temporal(shp::Quantity::DEFAULT_VALUE, THERMAL_SCALE, unit) {
+    setField(field);
 }
 
-Temperature::Temperature(const float quantity, const std::string unit)
-        : shp::Quantity(quantity, DEFAULT_SCALE, unit),
-        change(shp::Direction::DEFAULT_RADIANS) {
-
+Temperature::Temperature(const float magnitude)
+        : shp::Temporal(magnitude, THERMAL_SCALE,
+            shp::Unit::getBaseSymbol(shp::Unit::TEMPERATURE)) {
+    setField(nullptr);
 }
 
-Temperature::Temperature(const float quantity, const shp::Unit& unit)
-        : shp::Quantity(quantity, DEFAULT_SCALE, unit),
-        change(shp::Direction::DEFAULT_RADIANS) {
-
+Temperature::Temperature(const float magnitude, const std::shared_ptr<Field> field)
+        : shp::Temporal(magnitude, THERMAL_SCALE,
+            shp::Unit::getBaseSymbol(shp::Unit::TEMPERATURE)) {
+    setField(field);
 }
 
-Temperature::Temperature(const float quantity, const short int scaling)
-        : shp::Quantity(quantity, scaling,
-            shp::Unit::getBaseSymbol(shp::Unit::TEMPERATURE)),
-        change(shp::Direction::DEFAULT_RADIANS) {
-
+Temperature::Temperature(const float magnitude, const std::string unit)
+        : shp::Temporal(magnitude, THERMAL_SCALE, shp::Unit(unit)) {
+    setField(nullptr);
 }
 
-Temperature::Temperature(const float quantity, const short int scaling, const std::string unit)
-        : shp::Quantity(quantity, scaling, unit),
-        change(shp::Direction::DEFAULT_RADIANS) {
-
+Temperature::Temperature(const float magnitude, const shp::Unit& unit)
+        : shp::Temporal(magnitude, THERMAL_SCALE, unit) {
+    setField(nullptr);
 }
 
-Temperature::Temperature(const float quantity, const short int scaling, const shp::Unit& unit)
-        : shp::Quantity(quantity, scaling, unit),
-        change(shp::Direction::DEFAULT_RADIANS) {
-
+Temperature::Temperature(const float magnitude, const shp::Unit& unit, const std::shared_ptr<Field> field)
+        : shp::Temporal(magnitude, THERMAL_SCALE, unit) {
+    setField(field);
 }
 
-Temperature::Temperature(const shp::Direction& change)
-        : shp::Quantity(shp::Quantity::DEFAULT_VALUE, DEFAULT_SCALE,
-            shp::Unit::getBaseSymbol(shp::Unit::TEMPERATURE)),
-        change(change) {
-
+Temperature::Temperature(const float magnitude, const short int scaling)
+        : shp::Temporal(magnitude, scaling,
+            shp::Unit::getBaseSymbol(shp::Unit::TEMPERATURE)) {
+    setField(nullptr);
 }
 
-Temperature::Temperature(const std::string unit, const shp::Direction& change)
-        : shp::Quantity(shp::Quantity::DEFAULT_VALUE, DEFAULT_SCALE, unit),
-        change(change) {
-
+Temperature::Temperature(const float magnitude, const short int scaling, const std::shared_ptr<Field> field)
+        : shp::Temporal(magnitude, scaling,
+            shp::Unit::getBaseSymbol(shp::Unit::TEMPERATURE)) {
+    setField(field);
 }
 
-Temperature::Temperature(const shp::Unit& unit, const shp::Direction& change)
-        : shp::Quantity(shp::Quantity::DEFAULT_VALUE, DEFAULT_SCALE, unit),
-        change(change) {
-
+Temperature::Temperature(const float magnitude, const short int scaling, const std::string unit)
+        : shp::Temporal(magnitude, scaling, shp::Unit(unit)) {
+    setField(nullptr);
 }
 
-Temperature::Temperature(const float quantity, const shp::Direction& change)
-        : shp::Quantity(quantity, DEFAULT_SCALE,
-            shp::Unit::getBaseSymbol(shp::Unit::TEMPERATURE)),
-        change(change) {
-
+Temperature::Temperature(const float magnitude, const short int scaling, const shp::Unit& unit)
+        : shp::Temporal(magnitude, scaling, unit) {
+    setField(nullptr);
 }
 
-Temperature::Temperature(const float quantity, const std::string unit, const shp::Direction& change)
-        : shp::Quantity(quantity, DEFAULT_SCALE, unit),
-        change(change) {
-
-}
-
-Temperature::Temperature(const float quantity, const shp::Unit& unit, const shp::Direction& change)
-        : shp::Quantity(quantity, DEFAULT_SCALE, unit),
-        change(change) {
-
-}
-
-Temperature::Temperature(const float quantity, const short int scaling, const shp::Direction& change)
-        : shp::Quantity(quantity, scaling,
-            shp::Unit::getBaseSymbol(shp::Unit::TEMPERATURE)),
-        change(change) {
-
-}
-
-Temperature::Temperature(const float quantity, const short int scaling, const std::string unit,
-        const shp::Direction& change)
-        : shp::Quantity(quantity, scaling, unit),
-        change(change) {
-
-}
-
-Temperature::Temperature(const float quantity, const short int scaling, const shp::Unit& unit,
-        const shp::Direction& change)
-        : shp::Quantity(quantity, scaling, unit),
-        change(change) {
-
+Temperature::Temperature(const float magnitude, const short int scaling, const shp::Unit& unit,
+        const std::shared_ptr<Field> field)
+        : shp::Temporal(magnitude, scaling, unit) {
+    setField(field);
 }
 
 Temperature::~Temperature() {
-
+    setField(nullptr);
 }
 
 bool Temperature::operator==(const Temperature& peer) const {
-    return (static_cast<const shp::Quantity&>(*this) == static_cast<const shp::Quantity&>(peer))
-        && (change == peer.change);
+    return (static_cast<const shp::Temporal&>(*this) == static_cast<const shp::Temporal&>(peer));
 }
 
 bool Temperature::operator<(const Temperature& peer) const {
     Temperature self = *this; bool result = false;
-    if (static_cast<const shp::Quantity&>(*this) < static_cast<const shp::Quantity&>(peer)) {
-        result = true;
-    } else if (change < peer.change) {
+    if (static_cast<const shp::Temporal&>(*this) < static_cast<const shp::Temporal&>(peer)) {
         result = true;
     }
     return result;
@@ -166,9 +134,7 @@ bool Temperature::operator<(const Temperature& peer) const {
 
 bool Temperature::operator>(const Temperature& peer) const {
     Temperature self = *this; bool result = false;
-    if (static_cast<const shp::Quantity&>(*this) > static_cast<const shp::Quantity&>(peer)) {
-        result = true;
-    } else if (change > peer.change) {
+    if (static_cast<const shp::Temporal&>(*this) > static_cast<const shp::Temporal&>(peer)) {
         result = true;
     }
     return result;
@@ -185,42 +151,107 @@ bool Temperature::operator>=(const Temperature& peer) const {
 }
 
 Temperature Temperature::operator+(const Temperature& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity temperature = (self + other);
-    shp::Direction direction = (this->change + peer.change);
-    return Temperature(temperature.getMagnitude(), temperature.getScaling(), temperature.getUnit(), direction);
+    shp::Temporal self = *this, other = peer;
+    shp::Temporal result = (self + other);
+    return Temperature(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
 }
 
 Temperature Temperature::operator-(const Temperature& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity temperature = (self - other);
-    shp::Direction direction = (this->change - peer.change);
-    return Temperature(temperature.getMagnitude(), temperature.getScaling(), temperature.getUnit(), direction);
+    shp::Temporal self = *this, other = peer;
+    shp::Temporal result = (self - other);
+    return Temperature(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
 }
 
 Temperature Temperature::operator*(const Temperature& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity temperature = (self * other);
-    shp::Direction direction = (this->change * peer.change);
-    return Temperature(temperature.getMagnitude(), temperature.getScaling(), temperature.getUnit(), direction);
+    shp::Temporal self = *this, other = peer;
+    shp::Temporal result = (self * other);
+    return Temperature(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
 }
 
 Temperature Temperature::operator/(const Temperature& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity temperature = (self / other);
-    shp::Direction direction = (this->change / peer.change);
-    return Temperature(temperature.getMagnitude(), temperature.getScaling(), temperature.getUnit(), direction);
+    shp::Temporal self = *this, other = peer;
+    shp::Temporal result = (self / other);
+    return Temperature(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
 }
 
 Temperature Temperature::operator%(const Temperature& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity temperature = (self % other);
-    shp::Direction direction = (this->change % peer.change);
-    return Temperature(temperature.getMagnitude(), temperature.getScaling(), temperature.getUnit(), direction);
+    shp::Temporal self = *this, other = peer;
+    shp::Temporal result = (self % other);
+    return Temperature(result.getMagnitude(), result.getScaling(), result.getUnit(), field);
 }
 
-shp::Quantity Temperature::getTotal() const {
-    shp::Quantity result(getMagnitude(), getScaling(), getUnit());
+Force Temperature::operator()(const Temperature& peer, const shp::Distance separation,
+        const shp::Distance position) const {
+    if (isOwned()) {
+        shp::Potential self = field->getPotential();
+        shp::Potential other = peer.field->getPotential();
+        shp::Signal factor = self(other, separation, position);
+        shp::Signal force(factor * (*this).getMagnitude());
+        Thermal result(force.getMagnitude(), self.getAzimuthOrientation().toRadians(), force.getScaling(), field);
+        result.adjustScaling();
+        return result;
+    } else {
+        float quantum = shp::Quantity::DEFAULT_VALUE; shp::Direction direction(quantum);
+        return Thermal(quantum, direction.toRadians(), Force::KELVIN_SCALE, field);
+    }
+}
+
+bool Temperature::isOwned() const {
+    return (field != nullptr);
+}
+
+shp::Distance Temperature::getRadius() const {
+    shp::Distance result;
+    if (isOwned()) {
+        result = field->getRadius();
+    }
+    return result;
+}
+
+void Temperature::setRadius(const shp::Distance& length) {
+    if (isOwned()) {
+        field->setRadius(length);
+    }
+}
+
+shp::Potential Temperature::getPotential() const {
+    shp::Potential result;
+    if (isOwned()) {
+        result = field->getPotential();
+    }
+    return result;
+}
+
+shp::Signal Temperature::getVelocity() const {
+    return shp::Temporal::getModulation();
+}
+
+void Temperature::setVelocity(const qft::Velocity& velocity) {
+    shp::Temporal::setModulation(velocity.getTotal());
+}
+
+Density Temperature::getDensity(const shp::Volume& volume) const {
+    shp::Temporal self = *this;
+    return Density(self.getMagnitude(), self.getScaling(), self.getUnit(), volume);
+}
+
+Force Temperature::getForce(const shp::Angular& coordinates) const {
+    if (isOwned()) {
+        shp::Temporal force = (field->getTotal() * (*this));
+        shp::Direction direction = field->getLinear();
+        Thermal result(force.getMagnitude(), direction.toRadians(), force.getScaling(), field);
+        result.adjustScaling();
+        return result;
+    } else {
+        float quantum = shp::Quantity::DEFAULT_VALUE; shp::Direction direction(quantum);
+        return Thermal(quantum, direction.toRadians(), Force::COULOMB_SCALE, field);
+    }
+}
+
+std::shared_ptr<Field> Temperature::getOriginField() const {
+    std::shared_ptr<Field> result = Field::shareable(Temperature::THERMAL_FIELD);
+    result->setPotential(shp::Potential(getMagnitude(), shp::Quantity::DEFAULT_VALUE,
+        getScaling(), getUnit(), shp::Angular(Energy::getPlanckLength())));
     return result;
 }
 
@@ -245,30 +276,37 @@ float Temperature::toKelvin() const {
     return getMagnitude();
 }
 
-Temperature Temperature::copy() {
-    Temperature fresh(getMagnitude(), getScaling(), getUnit(), change);
-    return fresh;
+shp::Signal Temperature::copy() const {
+    shp::Temporal self = *this;
+    Temperature fresh(self.getMagnitude(), self.getScaling(), self.getUnit(), field);
+    return fresh.getTotal();
 }
 
 void Temperature::clear() {
-    shp::Quantity::clear();
-    change.clear();
+    shp::Temporal::clear();
+    setField(nullptr);
     return;
 }
 
 std::string Temperature::print() const {
     std::stringstream result;
     result << shp::Unit::getBaseDimension(shp::Unit::TEMPERATURE) << ":";
-    result << shp::Quantity::print();
-    result << change.print();
+    result << shp::Temporal::print();
+    if (isOwned()) {
+        result << ",";
+        result << field->print();
+    }
 	return result.str();
 }
 
 std::string Temperature::printRadians() const {
     std::stringstream result;
     result << shp::Unit::getBaseDimension(shp::Unit::TEMPERATURE) << ":";
-    result << shp::Quantity::print();
-    result << change.printRadians();
+    result << shp::Temporal::printRadians();
+    if (isOwned()) {
+        result << ",";
+        result << field->printRadians();
+    }
 	return result.str();
 }
 
@@ -276,9 +314,12 @@ std::string Temperature::printKelvin() const {
     std::stringstream result;
     result << shp::Unit::getBaseDimension(shp::Unit::TEMPERATURE) << ":";
     result << toKelvin() << "ₑ";
-    result << shp::Quantity::getScaling();
+    result << shp::Temporal::getScaling();
     result << "°K,";
-    result << change.print();
+    if (isOwned()) {
+        result << ",";
+        result << field->print();
+    }
 	return result.str();
 }
 
@@ -286,9 +327,12 @@ std::string Temperature::printCelsius() const {
     std::stringstream result;
     result << shp::Unit::getBaseDimension(shp::Unit::TEMPERATURE) << ":";
     result << toCelsius() << "ₑ";
-    result << shp::Quantity::getScaling();
+    result << shp::Temporal::getScaling();
     result << "°C,";
-    result << change.print();
+    if (isOwned()) {
+        result << ",";
+        result << field->print();
+    }
 	return result.str();
 }
 
@@ -296,22 +340,20 @@ std::string Temperature::printFahrenheit() const {
     std::stringstream result;
     result << shp::Unit::getBaseDimension(shp::Unit::TEMPERATURE) << ":";
     result << toFahrenheit() << "ₑ";
-    result << shp::Quantity::getScaling();
+    result << shp::Temporal::getScaling();
     result << "°F,";
-    result << change.print();
+    if (isOwned()) {
+        result << ",";
+        result << field->print();
+    }
 	return result.str();
 }
 
-float Temperature::getCosComponent(const float phase) const {
-    return Quantity::getCosComponent(phase);
-}
-
-float Temperature::getSinComponent(const float phase) const {
-    return Quantity::getSinComponent(phase);
-}
-
-const std::complex<float> Temperature::getComplex(const float value, const float direction) {
-    return Quantity::getComplex(value, direction);
+shp::Temporal Temperature::getFluctuation(const float phase) const {
+    shp::Temporal self = *this;
+    shp::Temporal intensity = self.getMagnitude();
+    intensity.setIntensityDrift(phase);
+	return shp::Temporal(intensity.getMagnitude(), intensity.getScaling(), intensity.getUnit());
 }
 
 const shp::Quantity Temperature::getBoltzmannConstant() {

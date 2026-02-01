@@ -97,10 +97,14 @@ public:
     void setLow(const float value);
     void setRange(const float high, const float low);
     void setRange(const float high, const float low, const short int scale);
-    short int getScaling() const;
-    void setScaling(const short int factor);
-    Unit getUnit() const;
-    void setUnit(const Unit& object);
+    short int getKineticScaling() const;
+    void setKineticScaling(const short int factor);
+    Unit getKineticUnit() const;
+    void setKineticUnit(const Unit& object);
+    short int getPotentialScaling() const;
+    void setPotentialScaling(const short int factor);
+    Unit getPotentialUnit() const;
+    void setPotentialUnit(const Unit& object);
     Angular getClosure() const;
     void setClosure(const Angular& position);
     Polar getPolar() const;

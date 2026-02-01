@@ -110,6 +110,7 @@ public:
     };
     static const float COULOMB_CONSTANT;
     static const short int COULOMB_SCALE;
+    static const short int KELVIN_SCALE;
     static const float GRAVITATIONAL_CONSTANT;
     static const short int GRAVITATIONAL_SCALE;
 };
