@@ -87,12 +87,16 @@ public:
     int getOrbitalCount() const;
     Polygon get(const int index) const;
     void set(const int index, const Polygon& object);
+    void setMultiPhase();
+    void setRotation(const float degree);
     virtual Point copy();
     virtual void clear();
     virtual std::string print() const;
     virtual std::string printRadians() const;
     virtual std::string printOrbitals() const;
     virtual std::string printOrbitalRadians() const;
+protected:
+    Direction getLoopAngle() const;
 public:
     static const int DEFAULT_LIMIT;
 };

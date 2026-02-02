@@ -232,6 +232,27 @@ void Polygon::set(const int index, const Wave& object) {
     return;
 }
 
+void Polygon::setMultiPhase() {
+    Polygon self = *this; waves.clear();  // cleanup past allocations
+    if (limit > 0) {
+        Direction angle = Direction::getSectorAngle(limit);
+        for (int index=0; index < limit; index++) {
+            std::string name = "S" + std::to_string(index+1);
+            shp::Wave side(name, self.getMagnitude(), self.getScaling(), Azimuth(index * angle.toRadians()));
+            this->set(index, side);
+        }
+    }
+}
+
+void Polygon::setRotation(const float degree) {
+    int index = 0;
+    for (WaveArray::const_iterator it = waves.begin(); it != waves.end(); ++it, index++) {
+        Wave wave = (*it);
+        wave.setAzimuthal((wave.getAzimuthal() + (Direction::DEGREE_001 * degree)));
+        this->set(index, wave);
+    }
+}
+
 Point Polygon::copy() {
     Point self = *this;
     Polygon fresh(self.getName(), this->waves, self.getGradient(), this->limit);
@@ -291,6 +312,14 @@ std::string Polygon::printWaveRadians() const {
         result << "}";
     }
 	return result.str();
+}
+
+Direction Polygon::getLoopAngle() const {
+    Direction result; int size = waves.size();
+    if (size > 0) {
+        result = Direction::getSectorAngle(size);
+    }
+    return result;
 }
 
 } // namespace shp

@@ -126,6 +126,65 @@ Coordinate Coordinate::operator%(const Coordinate& peer) const {
     return Coordinate((x % peer.x), (y % peer.y), (z % peer.z));
 }
 
+Coordinate Coordinate::operator+(const float scalar) const {
+    return Coordinate((x + scalar), (y + scalar), (z + scalar));
+}
+
+Coordinate Coordinate::operator-(const float scalar) const {
+    return Coordinate((x - scalar), (y - scalar), (z - scalar));
+}
+
+Coordinate Coordinate::operator*(const float scalar) const {
+    return Coordinate((x * scalar), (y * scalar), (z * scalar));
+}
+
+Coordinate Coordinate::operator/(const float scalar) const {
+    return Coordinate((x / scalar), (y / scalar), (z / scalar));
+}
+
+Coordinate Coordinate::operator%(const float scalar) const {
+    return Coordinate((x % scalar), (y % scalar), (z % scalar));
+}
+
+Coordinate Coordinate::operator+(const Quantity& scalar) const {
+    return Coordinate((x + scalar), (y + scalar), (z + scalar));
+}
+
+Coordinate Coordinate::operator-(const Quantity& scalar) const {
+    return Coordinate((x - scalar), (y - scalar), (z - scalar));
+}
+
+Coordinate Coordinate::operator*(const Quantity& scalar) const {
+    return Coordinate((x * scalar), (y * scalar), (z * scalar));
+}
+
+Coordinate Coordinate::operator/(const Quantity& scalar) const {
+    return Coordinate((x / scalar), (y / scalar), (z / scalar));
+}
+
+Coordinate Coordinate::operator%(const Quantity& scalar) const {
+    return Coordinate((x % scalar), (y % scalar), (z % scalar));
+}
+
+Coordinate Coordinate::operator+(const Distance& scalar) const {
+    return Coordinate((x + scalar), (y + scalar), (z + scalar));
+}
+
+Coordinate Coordinate::operator-(const Distance& scalar) const {
+    return Coordinate((x - scalar), (y - scalar), (z - scalar));
+}
+
+Coordinate Coordinate::operator*(const Distance& scalar) const {
+    return Coordinate((x * scalar), (y * scalar), (z * scalar));
+}
+
+Coordinate Coordinate::operator/(const Distance& scalar) const {
+    return Coordinate((x / scalar), (y / scalar), (z / scalar));
+}
+
+Coordinate Coordinate::operator%(const Distance& scalar) const {
+    return Coordinate((x % scalar), (y % scalar), (z % scalar));
+}
 
 void Coordinate::setX(const float length) {
     x.setMagnitude(length);
@@ -361,6 +420,33 @@ Coordinate Coordinate::shiftY(const float step) const {
 
 Coordinate Coordinate::shiftZ(const float step) const {
     return Coordinate(x, y, (z + step));
+}
+
+Distance Coordinate::getDotProduct(const Coordinate& peer) const {
+    Distance result = (x * peer.x) + (y * peer.y) + (z * peer.z);
+    return result;
+}
+
+Coordinate Coordinate::getCrossProduct(const Coordinate& peer) const {
+    Coordinate result;
+    result = Coordinate((y * peer.z - z * peer.y), (z * peer.x - x * peer.z), (x * peer.y - y * peer.x));
+    return result;
+}
+
+Coordinate Coordinate::getRotation(const Coordinate& v, const Coordinate& axis, const float angle) const {
+    Coordinate result;
+    float cos_theta = std::cos(angle), sin_theta = std::sin(angle);
+    float one_minus_cos = (1.0f - cos_theta);
+    result.x = v.x * ((axis.x * axis.x * one_minus_cos) + cos_theta)
+                + v.y * ((axis.x * axis.y * one_minus_cos) - (axis.z * sin_theta))
+                + v.z * ((axis.x * axis.z * one_minus_cos) + (axis.y * sin_theta));
+    result.y = v.x * ((axis.y * axis.x * one_minus_cos) + (axis.z * sin_theta))
+                + v.y * ((axis.y * axis.y * one_minus_cos) + cos_theta)
+                + v.z * ((axis.y * axis.z * one_minus_cos) - (axis.x * sin_theta));
+    result.z = v.x * ((axis.z * axis.x * one_minus_cos) - (axis.y * sin_theta))
+                + v.y * ((axis.z * axis.y * one_minus_cos) + (axis.x * sin_theta))
+                + v.z * ((axis.z * axis.z * one_minus_cos) + cos_theta);
+    return result;
 }
 
 Coordinate Coordinate::copy() {

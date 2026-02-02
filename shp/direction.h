@@ -124,6 +124,7 @@ public:
     static const float getFraction(const Direction& x, const Direction& y);
     static const bool checkTranslation(const Direction& x, const Direction& y);
     static const bool checkRotation(const Direction& x, const Direction& y);
+    static const Direction getSectorAngle(const float divisor);
 public:
     static const float get90minus(const float radians);
     static const float get90plus(const float radians);

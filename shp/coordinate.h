@@ -54,6 +54,27 @@ public:
     Coordinate operator/(const Coordinate& peer) const;
     Coordinate operator%(const Coordinate& peer) const;
 
+    // Scalar operator
+    Coordinate operator+(const float scalar) const;
+    Coordinate operator-(const float scalar) const;
+    Coordinate operator*(const float scalar) const;
+    Coordinate operator/(const float scalar) const;
+    Coordinate operator%(const float scalar) const;
+
+    // Scalar Quantity operator
+    Coordinate operator+(const Quantity& scalar) const;
+    Coordinate operator-(const Quantity& scalar) const;
+    Coordinate operator*(const Quantity& scalar) const;
+    Coordinate operator/(const Quantity& scalar) const;
+    Coordinate operator%(const Quantity& scalar) const;
+
+    // Scalar Distance operator
+    Coordinate operator+(const Distance& scalar) const;
+    Coordinate operator-(const Distance& scalar) const;
+    Coordinate operator*(const Distance& scalar) const;
+    Coordinate operator/(const Distance& scalar) const;
+    Coordinate operator%(const Distance& scalar) const;
+
     // Getters
     Distance getX() const { return x; }
     Distance getY() const { return y; }
@@ -120,6 +141,9 @@ public:
     Coordinate shiftX(const float step) const;
     Coordinate shiftY(const float step) const;
     Coordinate shiftZ(const float step) const;
+    Distance getDotProduct(const Coordinate& peer) const;
+    Coordinate getCrossProduct(const Coordinate& peer) const;
+    Coordinate getRotation(const Coordinate& v, const Coordinate& axis, const float angle) const;
     Coordinate copy();
     void clear();
     virtual std::string print() const;

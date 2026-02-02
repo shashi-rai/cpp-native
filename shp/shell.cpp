@@ -232,6 +232,27 @@ void Shell::set(const int index, const Polygon& object) {
     return;
 }
 
+void Shell::setMultiPhase() {
+    Shell self = *this; orbitals.clear();  // cleanup past allocations
+    if (limit > 0) {
+        Direction angle = Direction::getSectorAngle(limit);
+        for (int index=0; index < limit; index++) {
+            std::string name = "S" + std::to_string(index+1);
+            shp::Polygon side(name, self.getMagnitude(), self.getScaling(), Azimuth(index * angle.toRadians()));
+            this->set(index, side);
+        }
+    }
+}
+
+void Shell::setRotation(const float degree) {
+    int index = 0;
+    for (OrbitalArray::const_iterator it = orbitals.begin(); it != orbitals.end(); ++it, index++) {
+        Polygon orbital = (*it);
+        orbital.setAzimuthal((orbital.getAzimuthal() + (Direction::DEGREE_001 * degree)));
+        this->set(index, orbital);
+    }
+}
+
 Point Shell::copy() {
     Point self = *this;
     Shell fresh(self.getName(), this->orbitals, self.getGradient(), this->limit);
@@ -291,6 +312,14 @@ std::string Shell::printOrbitalRadians() const {
         result << "}";
     }
 	return result.str();
+}
+
+Direction Shell::getLoopAngle() const {
+    Direction result; int size = orbitals.size();
+    if (size > 0) {
+        result = Direction::getSectorAngle(size);
+    }
+    return result;
 }
 
 } // namespace shp

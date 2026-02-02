@@ -520,6 +520,13 @@ const bool Direction::checkRotation(const Direction& x, const Direction& y) {
     return Direction::getDifference(x.toRadians(), y.toRadians()).checkNonZero();
 }
 
+const Direction Direction::getSectorAngle(const float divisor) {
+    if (divisor > Direction::DEFAULT_RADIANS)
+        return Direction(Direction::DEGREE_360 / divisor);
+    else
+        return Direction(Direction::DEGREE_360);
+}
+
 /*
  * Used for converting degrees between 0 ~ 360
  */
