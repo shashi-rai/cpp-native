@@ -26,18 +26,36 @@
 namespace shp {
 
 class Planar : public Point {
+    int limit;
     LinearArray lines;
 public:
     // Constructors
     Planar();
-    Planar(const float gradient);
     Planar(const Azimuth& gradient);
+    Planar(const float magnitude);
+    Planar(const float magnitude, const short int scaling);
+    Planar(const float magnitude, const short int scaling, const std::string unit);
+    Planar(const float magnitude, const short int scaling, const Unit& unit);
+    Planar(const float magnitude, const Azimuth& gradient);
+    Planar(const float magnitude, const short int scaling, const Azimuth& gradient);
+    Planar(const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient);
+    Planar(const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient);
     Planar(const std::string name);
-    Planar(const std::string name, const float gradient);
     Planar(const std::string name, const Azimuth& gradient);
+    Planar(const std::string name, const float magnitude);
+    Planar(const std::string name, const float magnitude, const short int scaling);
+    Planar(const std::string name, const float magnitude, const short int scaling, const std::string unit);
+    Planar(const std::string name, const float magnitude, const short int scaling, const Unit& unit);
+    Planar(const std::string name, const float magnitude, const Azimuth& gradient);
+    Planar(const std::string name, const float magnitude, const short int scaling, const Azimuth& gradient);
+    Planar(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient);
+    Planar(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient);
+    Planar(const std::string name, const Azimuth& gradient, const int limit);
     Planar(const std::string name, const LinearArray& lines);
     Planar(const std::string name, const LinearArray& lines, const float gradient);
     Planar(const std::string name, const LinearArray& lines, const Azimuth& gradient);
+    Planar(const std::string name, const LinearArray& lines, const float gradient, const int limit);
+    Planar(const std::string name, const LinearArray& lines, const Azimuth& gradient, const int limit);
 
     // Destructors
     ~Planar();
@@ -58,9 +76,11 @@ public:
 	const Point operator()(const int x, const int y) const { return lines[x](y); }
 
     // Getters
+    int getLimit() const { return limit; }
     LinearArray getLines() const { return lines; }
 
     // Setters
+    void setLimit(const int value) { this->limit = value; }
     void setLines(const LinearArray& objects) { this->lines = objects; }
 
     // Additional methods
@@ -71,6 +91,10 @@ public:
     virtual void clear();
     virtual std::string print() const;
     virtual std::string printRadians() const;
+    virtual std::string printLines() const;
+    virtual std::string printLineRadians() const;
+public:
+    static const int DEFAULT_LIMIT;
 };
 
 typedef std::vector<Planar > PlanarArray;

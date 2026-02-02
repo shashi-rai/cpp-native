@@ -21,11 +21,7 @@
 #ifndef CHE_NUCLEUS_H
 #define CHE_NUCLEUS_H
 
-#include <string>
-#include <vector>
-#include "../qft/charge.h"
 #include "../qft/energy.h"
-#include "../qft/mass.h"
 
 namespace che {
 
@@ -42,17 +38,17 @@ public:
     Nucleus();
     Nucleus(const short int proton);
     Nucleus(const short int proton, const short int neutron);
-    Nucleus(std::string symbol);
-    Nucleus(std::string symbol, const short int proton);
-    Nucleus(std::string symbol, const short int proton, const short int neutron);
-    Nucleus(std::string symbol, const short int proton, const short int neutron,
-        qft::Mass& mass);
-    Nucleus(std::string symbol, const short int proton, const short int neutron,
-        qft::Charge& charge);
-    Nucleus(std::string symbol, const short int proton, const short int neutron,
-        qft::Mass& mass, qft::Charge& charge);
-    Nucleus(std::string symbol, const short int proton, const short int neutron,
-        qft::Energy& energy);
+    Nucleus(const std::string symbol);
+    Nucleus(const std::string symbol, const short int proton);
+    Nucleus(const std::string symbol, const short int proton, const short int neutron);
+    Nucleus(const std::string symbol, const short int proton, const short int neutron,
+        const qft::Mass& mass);
+    Nucleus(const std::string symbol, const short int proton, const short int neutron,
+        const qft::Charge& charge);
+    Nucleus(const std::string symbol, const short int proton, const short int neutron,
+        const qft::Mass& mass, const qft::Charge& charge);
+    Nucleus(const std::string symbol, const short int proton, const short int neutron,
+        const qft::Energy& energy);
 
     // Destructors
     ~Nucleus();
@@ -71,7 +67,7 @@ public:
     qft::Energy getEnergy() const { return energy; }
 
     // Setters
-    void setSymbol(const std::string& name) { this->symbol = name; }
+    void setSymbol(const std::string name) { this->symbol = name; }
     void setProton(const short int number) { this->proton = number; }
     void setNeutron(const short int number) { this->neutron = number; }
     void setMass(const qft::Mass& amount) { this->energy.setMass(amount); }
@@ -90,8 +86,8 @@ public:
 private:
     void initialize();
 public:
-    static const std::string getSymbol(short int number);
-    static const std::string getName(short int number);
+    static const std::string getSymbol(const short int number);
+    static const std::string getName(const short int number);
 public:
     static const int PROTON_MIN_LIMIT;
     static const int PROTON_MAX_LIMIT;

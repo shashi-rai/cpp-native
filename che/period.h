@@ -21,8 +21,6 @@
 #ifndef CHE_PERIOD_H
 #define CHE_PERIOD_H
 
-#include <string>
-#include <vector>
 #include "orbital.h"
 #include "../qft/electron.h"
 #include "../shp/shell.h"
@@ -34,9 +32,9 @@ class Period : public shp::Shell {
 public:
     // Constructors
     Period();
-    Period(std::string name);
-    Period(std::string name, int limit);
-    Period(std::string name, float gradient, int limit);
+    Period(const std::string name);
+    Period(const std::string name, const short int limit);
+    Period(const std::string name, const float gradient, const short int limit);
 
     // Destructors
     ~Period();
@@ -45,10 +43,10 @@ public:
     bool operator==(const Period& peer) const;
 
     // Access operator
-    Orbital operator()(int x) { return getOrbital(x); }
-    const Orbital operator()(int x) const { return getOrbital(x); }
-    qft::Electron operator()(int x, int y) { return getOrbital(x).getElectron(y); }
-    const qft::Electron operator()(int x, int y) const { return getOrbital(x).getElectron(y); }
+    Orbital operator()(const int x) { return getOrbital(x); }
+    const Orbital operator()(const int x) const { return getOrbital(x); }
+    qft::Electron operator()(const int x, const int y) { return getOrbital(x).getElectron(y); }
+    const qft::Electron operator()(const int x, const int y) const { return getOrbital(x).getElectron(y); }
 
     // Getters
     Orbital getS() const;
@@ -63,10 +61,10 @@ public:
     void setF(const std::vector<std::shared_ptr<che::Orbital> >& object);
 
     // Additional methods
-    Orbital getOrbital(int azimuthal) const;
-    void setOrbital(int azimuthal, const std::shared_ptr<che::Orbital> object);
-    qft::Electron getElectron(int azimuthal, int magnetic) const;
-    void setElectron(int azimuthal, int magnetic, const std::shared_ptr<qft::Electron> object);
+    Orbital getOrbital(const short int azimuthal) const;
+    void setOrbital(const short int azimuthal, const std::shared_ptr<che::Orbital> object);
+    qft::Electron getElectron(const short int azimuthal, const short int magnetic) const;
+    void setElectron(const short int azimuthal, const short int magnetic, const std::shared_ptr<qft::Electron> object);
     virtual void clear();
     virtual std::string print();
 public:

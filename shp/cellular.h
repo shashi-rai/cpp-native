@@ -26,18 +26,36 @@
 namespace shp {
 
 class Cellular : public Point {
+    int limit;
     ShellArray shells;
 public:
     // Constructors
     Cellular();
-    Cellular(const float gradient);
     Cellular(const Azimuth& gradient);
+    Cellular(const float magnitude);
+    Cellular(const float magnitude, const short int scaling);
+    Cellular(const float magnitude, const short int scaling, const std::string unit);
+    Cellular(const float magnitude, const short int scaling, const Unit& unit);
+    Cellular(const float magnitude, const Azimuth& gradient);
+    Cellular(const float magnitude, const short int scaling, const Azimuth& gradient);
+    Cellular(const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient);
+    Cellular(const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient);
     Cellular(const std::string name);
-    Cellular(const std::string name, const float gradient);
     Cellular(const std::string name, const Azimuth& gradient);
-    Cellular(const std::string name, const ShellArray& shells);
-    Cellular(const std::string name, const ShellArray& shells, const float gradient);
-    Cellular(const std::string name, const ShellArray& shells, const Azimuth& gradient);
+    Cellular(const std::string name, const float magnitude);
+    Cellular(const std::string name, const float magnitude, const short int scaling);
+    Cellular(const std::string name, const float magnitude, const short int scaling, const std::string unit);
+    Cellular(const std::string name, const float magnitude, const short int scaling, const Unit& unit);
+    Cellular(const std::string name, const float magnitude, const Azimuth& gradient);
+    Cellular(const std::string name, const float magnitude, const short int scaling, const Azimuth& gradient);
+    Cellular(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient);
+    Cellular(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient);
+    Cellular(const std::string name, const Azimuth& gradient, const int limit);
+    Cellular(const std::string name, const ShellArray& waves);
+    Cellular(const std::string name, const ShellArray& waves, const float gradient);
+    Cellular(const std::string name, const ShellArray& waves, const Azimuth& gradient);
+    Cellular(const std::string name, const ShellArray& waves, const float gradient, const int limit);
+    Cellular(const std::string name, const ShellArray& waves, const Azimuth& gradient, const int limit);
 
     // Destructors
     ~Cellular();
@@ -60,9 +78,11 @@ public:
 	const Wave operator()(const int x, const int y, const int z) const { return shells[x](y)(z); }
 
     // Getters
+    int getLimit() const { return limit; }
     ShellArray getShells() const { return shells; }
 
     // Setters
+    void setLimit(const int value) { this->limit = value; }
     void setShells(const ShellArray& objects) { this->shells = objects; }
 
     // Additional methods
@@ -73,6 +93,10 @@ public:
     virtual void clear();
     virtual std::string print() const;
     virtual std::string printRadians() const;
+    virtual std::string printShells() const;
+    virtual std::string printShellRadians() const;
+public:
+    static const int DEFAULT_LIMIT;
 };
 
 typedef std::vector<Cellular > CellularArray;

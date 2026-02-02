@@ -26,11 +26,11 @@ Chain::Chain() : Molecule(), atoms() {
 
 }
 
-Chain::Chain(std::string name) : Molecule(name), atoms() {
+Chain::Chain(const std::string name) : Molecule(name), atoms() {
 
 }
 
-Chain::Chain(std::string name, const AtomArray& atoms)
+Chain::Chain(const std::string name, const AtomArray& atoms)
         : Molecule(name), atoms(atoms) {
 
 }
@@ -64,7 +64,7 @@ int Chain::getAtomCount() const {
     return atoms.size();
 }
 
-Atom Chain::get(int index) const {
+Atom Chain::get(const int index) const {
     Atom result;
     if (index < 0) {
         return result;
@@ -75,7 +75,7 @@ Atom Chain::get(int index) const {
     return atoms[index];
 }
 
-void Chain::set(int index, const Atom& object) {
+void Chain::set(const int index, const Atom& object) {
     if (index < 0) {
         return;
     }

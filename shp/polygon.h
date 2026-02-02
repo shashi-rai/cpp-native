@@ -31,13 +31,25 @@ class Polygon : public Point {
 public:
     // Constructors
     Polygon();
-    Polygon(const float gradient);
     Polygon(const Azimuth& gradient);
+    Polygon(const float magnitude);
+    Polygon(const float magnitude, const short int scaling);
+    Polygon(const float magnitude, const short int scaling, const std::string unit);
+    Polygon(const float magnitude, const short int scaling, const Unit& unit);
+    Polygon(const float magnitude, const Azimuth& gradient);
+    Polygon(const float magnitude, const short int scaling, const Azimuth& gradient);
+    Polygon(const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient);
+    Polygon(const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient);
     Polygon(const std::string name);
-    Polygon(const std::string name, const int limit);
-    Polygon(const std::string name, const float gradient);
     Polygon(const std::string name, const Azimuth& gradient);
-    Polygon(const std::string name, const float gradient, const int limit);
+    Polygon(const std::string name, const float magnitude);
+    Polygon(const std::string name, const float magnitude, const short int scaling);
+    Polygon(const std::string name, const float magnitude, const short int scaling, const std::string unit);
+    Polygon(const std::string name, const float magnitude, const short int scaling, const Unit& unit);
+    Polygon(const std::string name, const float magnitude, const Azimuth& gradient);
+    Polygon(const std::string name, const float magnitude, const short int scaling, const Azimuth& gradient);
+    Polygon(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient);
+    Polygon(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient);
     Polygon(const std::string name, const Azimuth& gradient, const int limit);
     Polygon(const std::string name, const WaveArray& waves);
     Polygon(const std::string name, const WaveArray& waves, const float gradient);
@@ -77,7 +89,8 @@ public:
     virtual void clear();
     virtual std::string print() const;
     virtual std::string printRadians() const;
-
+    virtual std::string printWaves() const;
+    virtual std::string printWaveRadians() const;
 public:
     static const int DEFAULT_LIMIT;
 };

@@ -22,49 +22,107 @@
 
 namespace shp {
 
+const std::string Shape::DEFAULT_TEXT = "";  // Empty
+
 Shape::Shape()
-        : name("") {
-    setOwner(nullptr);
+        : name(Shape::DEFAULT_TEXT) {
+    setPhysical(nullptr);
 }
 
 Shape::Shape(const std::string name)
         : name(name) {
-    setOwner(nullptr);
+    setPhysical(nullptr);
 }
 
-Shape::Shape(const std::shared_ptr<Shape> parent)
-        : name("") {
-    setOwner(parent);
+Shape::Shape(const std::shared_ptr<Angular> geometry)
+        : name(Shape::DEFAULT_TEXT) {
+    setPhysical(geometry);
 }
 
-Shape::Shape(const std::string name, const std::shared_ptr<Shape> parent)
+Shape::Shape(const std::string name, const std::shared_ptr<Angular> geometry)
         : name(name) {
-    setOwner(parent);
+    setPhysical(geometry);
 }
 
 Shape::~Shape() {
-    setOwner(nullptr);
+    setPhysical(nullptr);
 }
 
 bool Shape::operator==(const Shape& peer) const {
-    return (owner == peer.owner) && (name == peer.name);
+    bool result = false;
+    if (name == peer.name) {
+        result = true;
+    }
+    if (isStructured()) {
+        if (physical == peer.physical) {
+            result = true;
+        }
+    }
+    return result;
 }
 
-bool Shape::isOwned() const {
-    return (owner != nullptr);
+Shape Shape::operator+(const Shape& peer) const {
+    Angular self = *this->physical, other = *peer.physical;
+    Angular shape = (self + other);
+    std::shared_ptr<Angular> result = std::make_shared<Angular>(
+        shape.getRadius(), shape.getPolar(), shape.getAzimuth());
+    return Shape("+", result);
+}
+
+Shape Shape::operator-(const Shape& peer) const {
+    Angular self = *this->physical, other = *peer.physical;
+    Angular shape = (self - other);
+    std::shared_ptr<Angular> result = std::make_shared<Angular>(
+        shape.getRadius(), shape.getPolar(), shape.getAzimuth());
+    return Shape("-", result);
+}
+
+Shape Shape::operator*(const Shape& peer) const {
+    Angular self = *this->physical, other = *peer.physical;
+    Angular shape = (self * other);
+    std::shared_ptr<Angular> result = std::make_shared<Angular>(
+        shape.getRadius(), shape.getPolar(), shape.getAzimuth());
+    return Shape("*", result);
+}
+
+Shape Shape::operator/(const Shape& peer) const {
+    Angular self = *this->physical, other = *peer.physical;
+    Angular shape = (self / other);
+    std::shared_ptr<Angular> result = std::make_shared<Angular>(
+        shape.getRadius(), shape.getPolar(), shape.getAzimuth());
+    return Shape("/", result);
+}
+
+Shape Shape::operator%(const Shape& peer) const {
+    Angular self = *this->physical, other = *peer.physical;
+    Angular shape = (self % other);
+    std::shared_ptr<Angular> result = std::make_shared<Angular>(
+        shape.getRadius(), shape.getPolar(), shape.getAzimuth());
+    return Shape("%", result);
+}
+
+bool Shape::isStructured() const {
+    return (physical != nullptr);
 }
 
 void Shape::clear() {
-    setOwner(nullptr); setName("");
+    setPhysical(nullptr);
+    name.clear();
     return;
 }
 
 std::string Shape::print() const {
     std::stringstream result;
-    result << "(";
-    result << name << ",o:";
-    result << (isOwned() ? owner->print() : "");
-    result << ")";
+    result << name;
+	return result.str();
+}
+
+std::string Shape::printGeometry() const {
+    std::stringstream result;
+    if (isStructured()) {
+        result << ",o:";
+        result << physical->print();
+    }
 	return result.str();
 }
 

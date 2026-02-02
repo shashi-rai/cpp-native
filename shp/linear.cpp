@@ -22,48 +22,135 @@
 
 namespace shp {
 
+const int Linear::DEFAULT_LIMIT = 0;
+
 Linear::Linear()
-        : Point(), points() {
-
-}
-
-Linear::Linear(const float gradient)
-        : Point(gradient), points() {
+        : Point(Direction::DEFAULT_RADIANS), points(), limit(DEFAULT_LIMIT) {
 
 }
 
 Linear::Linear(const Azimuth& gradient)
-        : Point(gradient), points() {
+        : Point(gradient), points(), limit(DEFAULT_LIMIT) {
+
+}
+
+Linear::Linear(const float magnitude)
+        : Point(magnitude, Direction::DEFAULT_RADIANS), points(), limit(DEFAULT_LIMIT) {
+
+}
+
+Linear::Linear(const float magnitude, const short int scaling)
+        : Point(magnitude, scaling, Direction::DEFAULT_RADIANS), points(), limit(DEFAULT_LIMIT) {
+
+}
+
+Linear::Linear(const float magnitude, const short int scaling, const std::string unit)
+        : Point(magnitude, scaling, unit), points(), limit(DEFAULT_LIMIT) {
+
+}
+
+Linear::Linear(const float magnitude, const short int scaling, const Unit& unit)
+        : Point(magnitude, scaling, unit), points(), limit(DEFAULT_LIMIT) {
+
+}
+
+Linear::Linear(const float magnitude, const Azimuth& gradient)
+        : Point(magnitude, gradient), points(), limit(DEFAULT_LIMIT) {
+
+}
+
+Linear::Linear(const float magnitude, const short int scaling, const Azimuth& gradient)
+        : Point(magnitude, scaling, gradient), points(), limit(DEFAULT_LIMIT) {
+
+}
+
+Linear::Linear(const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient)
+        : Point(magnitude, scaling, unit, gradient), points(), limit(DEFAULT_LIMIT) {
+
+}
+
+Linear::Linear(const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient)
+        : Point(magnitude, scaling, unit, gradient), points(), limit(DEFAULT_LIMIT) {
 
 }
 
 Linear::Linear(const std::string name)
-        : Point(name), points() {
-
-}
-
-Linear::Linear(const std::string name, const float gradient)
-        : Point(name, gradient), points() {
+        : Point(name), points(), limit(DEFAULT_LIMIT) {
 
 }
 
 Linear::Linear(const std::string name, const Azimuth& gradient)
-        : Point(name, gradient), points() {
+        : Point(name, gradient), points(), limit(0) {
 
 }
 
-Linear::Linear(const std::string name, const PointArray& objects)
-        : Point(name), points(objects) {
+Linear::Linear(const std::string name, const float magnitude)
+        : Point(name, magnitude, Direction::DEFAULT_RADIANS), points(), limit(DEFAULT_LIMIT) {
 
 }
 
-Linear::Linear(const std::string name, const PointArray& objects, const float gradient)
-        : Point(name, gradient), points(objects) {
+Linear::Linear(const std::string name, const float magnitude, const short int scaling)
+        : Point(name, magnitude, scaling), points(), limit(DEFAULT_LIMIT) {
 
 }
 
-Linear::Linear(const std::string name, const PointArray& objects, const Azimuth& gradient)
-        : Point(name, gradient), points(objects) {
+Linear::Linear(const std::string name, const float magnitude, const short int scaling, const std::string unit)
+        : Point(name, magnitude, scaling, unit), points(), limit(DEFAULT_LIMIT) {
+
+}
+
+Linear::Linear(const std::string name, const float magnitude, const short int scaling, const Unit& unit)
+        : Point(name, magnitude, scaling, unit), points(), limit(DEFAULT_LIMIT) {
+
+}
+
+Linear::Linear(const std::string name, const float magnitude, const Azimuth& gradient)
+        : Point(name, magnitude, gradient), points(), limit(DEFAULT_LIMIT) {
+
+}
+
+Linear::Linear(const std::string name, const float magnitude, const short int scaling, const Azimuth& gradient)
+        : Point(name, magnitude, scaling, gradient), points(), limit(DEFAULT_LIMIT) {
+
+}
+
+Linear::Linear(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient)
+        : Point(name, magnitude, scaling, unit, gradient), points(), limit(DEFAULT_LIMIT) {
+
+}
+
+Linear::Linear(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient)
+        : Point(name, magnitude, scaling, unit, gradient), points(), limit(DEFAULT_LIMIT) {
+
+}
+
+Linear::Linear(const std::string name, const Azimuth& gradient, const int limit)
+        : Point(name, gradient), points(), limit(limit) {
+
+}
+
+Linear::Linear(const std::string name, const PointArray& points)
+        : Point(name), points(points), limit(DEFAULT_LIMIT) {
+
+}
+
+Linear::Linear(const std::string name, const PointArray& points, const float gradient)
+        : Point(name, gradient), points(points), limit(DEFAULT_LIMIT) {
+
+}
+
+Linear::Linear(const std::string name, const PointArray& points, const Azimuth& gradient)
+        : Point(name, gradient), points(points), limit(DEFAULT_LIMIT) {
+
+}
+
+Linear::Linear(const std::string name, const PointArray& points, const float gradient, const int limit)
+        : Point(name, gradient), points(points), limit(limit) {
+
+}
+
+Linear::Linear(const std::string name, const PointArray& points, const Azimuth& gradient, const int limit)
+        : Point(name, gradient), points(points), limit(limit) {
 
 }
 
@@ -73,17 +160,17 @@ Linear::~Linear() {
 
 bool Linear::operator==(const Linear& peer) const {
     return (static_cast<const Point&>(*this) == static_cast<const Point&>(peer))
-        && (points == peer.points);
+        && (limit == peer.limit) && (points == peer.points);
 }
 
 bool Linear::operator<(const Linear& peer) const {
     return (static_cast<const Point&>(*this) < static_cast<const Point&>(peer))
-        && (points < peer.points);
+        && (limit < peer.limit) && (points < peer.points);
 }
 
 bool Linear::operator>(const Linear& peer) const {
     return (static_cast<const Point&>(*this) > static_cast<const Point&>(peer))
-        && (points > peer.points);
+        && (limit > peer.limit) && (points > peer.points);
 }
 
 bool Linear::operator<=(const Linear& peer) const {
@@ -99,7 +186,7 @@ bool Linear::operator>=(const Linear& peer) const {
 Linear Linear::operator+(const Linear& peer) const {
     PointArray result(points);
     result.insert(result.end(), peer.points.begin(), peer.points.end());
-    return Linear("+", result, (getGradient() + peer.getGradient()));
+    return Linear("+", result, (getGradient() + peer.getGradient()), limit);
 }
 
 Linear Linear::operator-(const Linear& peer) const {
@@ -110,7 +197,7 @@ Linear Linear::operator-(const Linear& peer) const {
             result.erase(found);
         }
     }
-    return Linear("-", result, (getGradient() - peer.getGradient()));
+    return Linear("-", result, (getGradient() - peer.getGradient()), limit);
 }
 
 int Linear::getPointCount() const {
@@ -129,7 +216,7 @@ Point Linear::get(const int index) const {
 }
 
 void Linear::set(const int index, const Point& object) {
-    if (index < 0) {
+    if (index < 0 || index >= limit) {
         return;
     }
     if (index < static_cast<int>(points.size())) {
@@ -147,29 +234,62 @@ void Linear::set(const int index, const Point& object) {
 
 Point Linear::copy() {
     Point self = *this;
-    Linear fresh(self.getName(), this->points, self.getGradient());
+    Linear fresh(self.getName(), this->points, self.getGradient(), this->limit);
     return fresh;
 }
 
 void Linear::clear() {
     Point::clear();
+    limit = DEFAULT_LIMIT;
     points.clear();
     return;
 }
 
 std::string Linear::print() const {
     std::stringstream result;
-    result << "{li";
-	result << Point::print() << ",sz:";
-	result << points.size() << "}";
+    result << "{｜";
+	result << Point::print() << "→";
+    result << limit;
+	result << "}";
+    result << printPoints();
 	return result.str();
 }
 
 std::string Linear::printRadians() const {
     std::stringstream result;
-    result << "{li";
-	result << Point::printRadians() << ",sz:";
-	result << points.size() << "}";
+    result << "{｜";
+	result << Point::printRadians() << "→";
+    result << limit;
+	result << "}";
+    result << printPointRadians();
+	return result.str();
+}
+
+std::string Linear::printPoints() const {
+    std::stringstream result; int size = points.size();
+    if (size > 0) {
+        result << ",sz:";
+	    result << points.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << points[i].print() << std::endl;
+        }
+        result << "}";
+    }
+	return result.str();
+}
+
+std::string Linear::printPointRadians() const {
+    std::stringstream result; int size = points.size();
+    if (size > 0) {
+        result << ",sz:";
+	    result << points.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << points[i].printRadians() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

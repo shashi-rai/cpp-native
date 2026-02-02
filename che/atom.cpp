@@ -47,45 +47,45 @@ Atom::Atom() : Cellular(""), nucleus(), valency(0) {
 
 }
 
-Atom::Atom(short number)
+Atom::Atom(const short int number)
 	: Cellular(getName(number)), nucleus(getSymbol(number), number), valency(0) {
 
 }
 
-Atom::Atom(short number, std::string name)
+Atom::Atom(const short int number, const std::string name)
 	: Cellular(name), nucleus(getSymbol(number), number), valency(0) {
 }
 
-Atom::Atom(std::string name) : Cellular(name), nucleus(name), valency(0) {
+Atom::Atom(const std::string name) : Cellular(name), nucleus(name), valency(0) {
 
 }
 
-Atom::Atom(std::string symbol, std::string name)
+Atom::Atom(const std::string symbol, const std::string name)
 	: Cellular(name), nucleus(symbol), valency(0) {
 
 }
 
-Atom::Atom(std::string name, float gradient)
+Atom::Atom(const std::string name, const float gradient)
         : Cellular(name, gradient), nucleus(name), valency(0) {
 
 }
 
-Atom::Atom(std::string name, Nucleus& nucleus)
+Atom::Atom(const std::string name, const Nucleus& nucleus)
         : Cellular(name), nucleus(nucleus), valency(0) {
 
 }
 
-Atom::Atom(std::string name, float gradient, Nucleus& nucleus)
+Atom::Atom(const std::string name, const float gradient, const Nucleus& nucleus)
         : Cellular(name, gradient), nucleus(nucleus), valency(0) {
 
 }
 
-Atom::Atom(std::string name, Nucleus& nucleus, short valency)
+Atom::Atom(const std::string name, const Nucleus& nucleus, const short int valency)
         : Cellular(name), nucleus(nucleus), valency(valency) {
 
 }
 
-Atom::Atom(std::string name, float gradient, Nucleus& nucleus, short valency)
+Atom::Atom(const std::string name, const float gradient, Nucleus& nucleus, const  short int valency)
         : Cellular(name, gradient), nucleus(nucleus), valency(valency) {
 
 }
@@ -102,7 +102,7 @@ std::string Atom::getElementName() const {
 	return nucleus.getElementName();
 }
 
-Period Atom::getPeriod(int primary) const {
+Period Atom::getPeriod(const short int primary) const {
 	Period result;
 	shp::ShellArray shells = this->getShells();
 	if (this->getShellCount() > 0) {
@@ -111,12 +111,12 @@ Period Atom::getPeriod(int primary) const {
 	return result;
 }
 
-void Atom::setPeriod(int primary, const std::shared_ptr<che::Period> object) {
+void Atom::setPeriod(const short int primary, const std::shared_ptr<che::Period> object) {
 	Cellular::set(primary, *object);
 	return;
 }
 
-Orbital Atom::getOrbital(int primary, int azimuthal) const {
+Orbital Atom::getOrbital(const short int primary, const short int azimuthal) const {
 	Orbital result;
 	shp::ShellArray shells = this->getShells();
 	if (this->getShellCount() > 0) {
@@ -129,12 +129,12 @@ Orbital Atom::getOrbital(int primary, int azimuthal) const {
 	return result;
 }
 
-void Atom::setOrbital(int primary, int azimuthal, const std::shared_ptr<che::Orbital> object) {
+void Atom::setOrbital(const short int primary, const short int azimuthal, const std::shared_ptr<che::Orbital> object) {
 	this->getPeriod(primary).setOrbital(azimuthal, object);
 	return;
 }
 
-qft::Electron Atom::getElectron(int primary, int azimuthal, int magnetic) const {
+qft::Electron Atom::getElectron(const short int primary, const short int azimuthal, const short int magnetic) const {
 	qft::Electron result;
 	shp::ShellArray shells = this->getShells();
 	if (this->getShellCount() > 0) {
@@ -150,7 +150,7 @@ qft::Electron Atom::getElectron(int primary, int azimuthal, int magnetic) const 
 	return result;
 }
 
-void Atom::setElectron(int primary, int azimuthal, int magnetic, const std::shared_ptr<qft::Electron> object) {
+void Atom::setElectron(const short int primary, const short int azimuthal, const short int magnetic, const std::shared_ptr<qft::Electron> object) {
 	this->getPeriod(primary).getOrbital(azimuthal).setElectron(magnetic, object);
 	return;
 }
@@ -169,18 +169,18 @@ std::string Atom::print() {
 	return result.str();
 }
 
-const std::string Atom::getSymbol(short int number) {
+const std::string Atom::getSymbol(const short int number) {
 	return Nucleus::getSymbol(number);
 }
 
-const std::string Atom::getName(short int number) {
+const std::string Atom::getName(const short int number) {
 	return Nucleus::getName(number);
 }
 
 /*
  * Allocate (periods + orbitals) using Atomic Number
  */
-std::shared_ptr<che::Atom> Atom::initialize(short number, std::string name) {
+std::shared_ptr<che::Atom> Atom::initialize(const short int number, std::string name) {
 	std::shared_ptr<che::Atom> peer = std::make_shared<che::Atom>(number, name);
 	short int remaining = number;
 	for (short int period = 0; (remaining > 0) && (period < Period::MAX_LIMIT); period++) {
@@ -201,7 +201,7 @@ std::shared_ptr<che::Atom> Atom::initialize(short number, std::string name) {
 }
 
 void Atom::createPeriods(std::shared_ptr<che::Period> peer, std::string prefix,
-		short int period, short int capacity) {
+		const short int period, const short int capacity) {
 	short int remaining = capacity;
 	for (short int orbital = 0; (remaining > 0) && (orbital < 4); orbital++) {
 		std::stringstream orbid; orbid << (period + 1) << Orbital::NAME[orbital];
@@ -217,7 +217,7 @@ void Atom::createPeriods(std::shared_ptr<che::Period> peer, std::string prefix,
 }
 
 void Atom::createOrbitals(std::shared_ptr<che::Period> peer, std::string prefix,
-		short int period, short int starting, short int capacity) {
+		const short int period, const short int starting, const short int capacity) {
 	for (short int index = 0; index < capacity; index++) {
 		std::stringstream orbid; orbid << prefix << index;
 		std::shared_ptr<che::Orbital> orbital =

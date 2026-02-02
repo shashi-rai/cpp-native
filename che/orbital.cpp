@@ -30,7 +30,7 @@ Orbital::Orbital() : Polygon("", ELECTRON_MAX_LIMIT) {
 
 }
 
-Orbital::Orbital(std::string name) : Polygon(name, ELECTRON_MAX_LIMIT) {
+Orbital::Orbital(const std::string name) : Polygon(name, ELECTRON_MAX_LIMIT) {
 
 }
 
@@ -42,16 +42,16 @@ Orbital::Orbital(
     setRightSpinor(right);
 }
 
-Orbital::Orbital(std::string name, int limit) : Polygon(name, limit) {
+Orbital::Orbital(const std::string name, const short int limit) : Polygon(name, limit) {
 
 }
 
-Orbital::Orbital(std::string name, float gradient, int limit)
+Orbital::Orbital(const std::string name, const float gradient, const short int limit)
     : Polygon(name, gradient, limit) {
 
 }
 
-Orbital::Orbital(std::string name, int limit,
+Orbital::Orbital(const std::string name, const short int limit,
         const std::shared_ptr<qft::Electron> left,
         const std::shared_ptr<qft::Electron> right)
         : Polygon(name, limit) {
@@ -101,7 +101,7 @@ int Orbital::getParticleCount() const {
     return this->getWaveCount();
 }
 
-qft::Electron Orbital::getElectron(int magnetic) const {
+qft::Electron Orbital::getElectron(const int magnetic) const {
 	qft::Electron result;
 	shp::WaveArray electrons = this->getWaves();
 	if (this->getParticleCount() > 0) {
@@ -110,7 +110,7 @@ qft::Electron Orbital::getElectron(int magnetic) const {
 	return result;
 }
 
-void Orbital::setElectron(int magnetic, const std::shared_ptr<qft::Electron> object) {
+void Orbital::setElectron(const int magnetic, const std::shared_ptr<qft::Electron> object) {
 	Polygon::set(magnetic, *object);
 	return;
 }

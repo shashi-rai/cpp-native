@@ -21,8 +21,6 @@
 #ifndef CHE_REACTION_H
 #define CHE_REACTION_H
 
-#include <string>
-#include <vector>
 #include "molecule.h"
 #include "../qft/energy.h"
 
@@ -35,13 +33,13 @@ class Reaction : public shp::Point {
 public:
     // Constructors
     Reaction();
-    Reaction(float gradient);
-    Reaction(float amplitude, float gradient);
-    Reaction(std::string name);
-    Reaction(std::string name, float gradient);
-    Reaction(std::string name, float amplitude, float gradient);
-    Reaction(std::string name,
-        MoleculeArray& reactants, MoleculeArray& products, qft::Energy& change);
+    Reaction(const float gradient);
+    Reaction(const float amplitude, const float gradient);
+    Reaction(const std::string name);
+    Reaction(const std::string name, const float gradient);
+    Reaction(const std::string name, const float amplitude, const float gradient);
+    Reaction(const std::string name,
+        const MoleculeArray& reactants, const MoleculeArray& products, const qft::Energy& change);
 
     // Destructors
     ~Reaction();

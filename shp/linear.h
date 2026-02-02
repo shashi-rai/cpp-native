@@ -26,18 +26,36 @@
 namespace shp {
 
 class Linear : public Point {
+    int limit;
     PointArray points;
 public:
     // Constructors
     Linear();
-    Linear(const float gradient);
     Linear(const Azimuth& gradient);
+    Linear(const float magnitude);
+    Linear(const float magnitude, const short int scaling);
+    Linear(const float magnitude, const short int scaling, const std::string unit);
+    Linear(const float magnitude, const short int scaling, const Unit& unit);
+    Linear(const float magnitude, const Azimuth& gradient);
+    Linear(const float magnitude, const short int scaling, const Azimuth& gradient);
+    Linear(const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient);
+    Linear(const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient);
     Linear(const std::string name);
-    Linear(const std::string name, const float gradient);
     Linear(const std::string name, const Azimuth& gradient);
-    Linear(const std::string name, const PointArray& objects);
-    Linear(const std::string name, const PointArray& objects, const float gradient);
-    Linear(const std::string name, const PointArray& objects, const Azimuth& gradient);
+    Linear(const std::string name, const float magnitude);
+    Linear(const std::string name, const float magnitude, const short int scaling);
+    Linear(const std::string name, const float magnitude, const short int scaling, const std::string unit);
+    Linear(const std::string name, const float magnitude, const short int scaling, const Unit& unit);
+    Linear(const std::string name, const float magnitude, const Azimuth& gradient);
+    Linear(const std::string name, const float magnitude, const short int scaling, const Azimuth& gradient);
+    Linear(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient);
+    Linear(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient);
+    Linear(const std::string name, const Azimuth& gradient, const int limit);
+    Linear(const std::string name, const PointArray& points);
+    Linear(const std::string name, const PointArray& points, const float gradient);
+    Linear(const std::string name, const PointArray& points, const Azimuth& gradient);
+    Linear(const std::string name, const PointArray& points, const float gradient, const int limit);
+    Linear(const std::string name, const PointArray& points, const Azimuth& gradient, const int limit);
 
     // Destructors
     ~Linear();
@@ -56,9 +74,11 @@ public:
     const Point operator()(const int x) const { return points[x]; }
 
     // Getters
+    int getLimit() const { return limit; }
     PointArray getPoints() const { return points; }
 
     // Setters
+    void setLimit(const int value) { this->limit = value; }
     void setPoints(const PointArray& objects) { this->points = objects; }
 
     // Additional methods
@@ -69,6 +89,10 @@ public:
     virtual void clear();
     virtual std::string print() const;
     virtual std::string printRadians() const;
+    virtual std::string printPoints() const;
+    virtual std::string printPointRadians() const;
+public:
+    static const int DEFAULT_LIMIT;
 };
 
 typedef std::vector<Linear > LinearArray;

@@ -31,15 +31,15 @@ Period::Period() : Shell("", ORBITAL_MAX_LIMIT) {
 
 }
 
-Period::Period(std::string name) : Shell(name, ORBITAL_MAX_LIMIT) {
+Period::Period(const std::string name) : Shell(name, ORBITAL_MAX_LIMIT) {
 
 }
 
-Period::Period(std::string name, int limit) : Shell(name, limit) {
+Period::Period(const std::string name, const short int limit) : Shell(name, limit) {
 
 }
 
-Period::Period(std::string name, float gradient, int limit)
+Period::Period(const std::string name, const float gradient, const short int limit)
     : Shell(name, gradient, limit) {
 
 }
@@ -109,7 +109,7 @@ void Period::setF(const std::vector<std::shared_ptr<che::Orbital> >& objects) {
 	}
 }
 
-Orbital Period::getOrbital(int azimuthal) const {
+Orbital Period::getOrbital(const short int azimuthal) const {
 	Orbital result;
 	shp::OrbitalArray orbitals = this->getOrbitals();
 	if (this->getOrbitalCount() > 0) {
@@ -118,12 +118,12 @@ Orbital Period::getOrbital(int azimuthal) const {
 	return result;
 }
 
-void Period::setOrbital(int azimuthal, const std::shared_ptr<che::Orbital> object) {
+void Period::setOrbital(const short int azimuthal, const std::shared_ptr<che::Orbital> object) {
 	Shell::set(azimuthal, *object);
 	return;
 }
 
-qft::Electron Period::getElectron(int azimuthal, int magnetic) const {
+qft::Electron Period::getElectron(const short int azimuthal, const short int magnetic) const {
 	qft::Electron result;
 	shp::OrbitalArray orbitals = this->getOrbitals();
 	if (this->getOrbitalCount() > 0) {
@@ -136,7 +136,7 @@ qft::Electron Period::getElectron(int azimuthal, int magnetic) const {
 	return result;
 }
 
-void Period::setElectron(int azimuthal, int magnetic, const std::shared_ptr<qft::Electron> object) {
+void Period::setElectron(const short int azimuthal, const short int magnetic, const std::shared_ptr<qft::Electron> object) {
 	this->getOrbital(azimuthal).setElectron(magnetic, object);
 	return;
 }

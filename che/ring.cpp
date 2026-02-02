@@ -26,11 +26,11 @@ Ring::Ring() : Molecule(), atoms() {
 
 }
 
-Ring::Ring(std::string name) : Molecule(name), atoms() {
+Ring::Ring(const std::string name) : Molecule(name), atoms() {
 
 }
 
-Ring::Ring(std::string name, const AtomArray& atoms)
+Ring::Ring(const std::string name, const AtomArray& atoms)
         : Molecule(name), atoms(atoms) {
 
 }
@@ -64,7 +64,7 @@ int Ring::getAtomCount() const {
     return atoms.size();
 }
 
-Atom Ring::get(int index) const {
+Atom Ring::get(const int index) const {
     Atom result;
     if (index < 0) {
         return result;
@@ -75,7 +75,7 @@ Atom Ring::get(int index) const {
     return atoms[index];
 }
 
-void Ring::set(int index, const Atom& object) {
+void Ring::set(const int index, const Atom& object) {
     if (index < 0) {
         return;
     }

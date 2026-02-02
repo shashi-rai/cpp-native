@@ -22,48 +22,135 @@
 
 namespace shp {
 
+const int Frame::DEFAULT_LIMIT = 0;
+
 Frame::Frame()
-        : Point(), planes() {
-
-}
-
-Frame::Frame(const float gradient)
-        : Point(gradient), planes() {
+        : Point(Direction::DEFAULT_RADIANS), planes(), limit(DEFAULT_LIMIT) {
 
 }
 
 Frame::Frame(const Azimuth& gradient)
-        : Point(gradient), planes() {
+        : Point(gradient), planes(), limit(DEFAULT_LIMIT) {
+
+}
+
+Frame::Frame(const float magnitude)
+        : Point(magnitude, Direction::DEFAULT_RADIANS), planes(), limit(DEFAULT_LIMIT) {
+
+}
+
+Frame::Frame(const float magnitude, const short int scaling)
+        : Point(magnitude, scaling, Direction::DEFAULT_RADIANS), planes(), limit(DEFAULT_LIMIT) {
+
+}
+
+Frame::Frame(const float magnitude, const short int scaling, const std::string unit)
+        : Point(magnitude, scaling, unit), planes(), limit(DEFAULT_LIMIT) {
+
+}
+
+Frame::Frame(const float magnitude, const short int scaling, const Unit& unit)
+        : Point(magnitude, scaling, unit), planes(), limit(DEFAULT_LIMIT) {
+
+}
+
+Frame::Frame(const float magnitude, const Azimuth& gradient)
+        : Point(magnitude, gradient), planes(), limit(DEFAULT_LIMIT) {
+
+}
+
+Frame::Frame(const float magnitude, const short int scaling, const Azimuth& gradient)
+        : Point(magnitude, scaling, gradient), planes(), limit(DEFAULT_LIMIT) {
+
+}
+
+Frame::Frame(const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient)
+        : Point(magnitude, scaling, unit, gradient), planes(), limit(DEFAULT_LIMIT) {
+
+}
+
+Frame::Frame(const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient)
+        : Point(magnitude, scaling, unit, gradient), planes(), limit(DEFAULT_LIMIT) {
 
 }
 
 Frame::Frame(const std::string name)
-        : Point(name), planes() {
-
-}
-
-Frame::Frame(const std::string name, const float gradient)
-        : Point(name, gradient), planes() {
+        : Point(name), planes(), limit(DEFAULT_LIMIT) {
 
 }
 
 Frame::Frame(const std::string name, const Azimuth& gradient)
-        : Point(name, gradient), planes() {
+        : Point(name, gradient), planes(), limit(0) {
+
+}
+
+Frame::Frame(const std::string name, const float magnitude)
+        : Point(name, magnitude, Direction::DEFAULT_RADIANS), planes(), limit(DEFAULT_LIMIT) {
+
+}
+
+Frame::Frame(const std::string name, const float magnitude, const short int scaling)
+        : Point(name, magnitude, scaling), planes(), limit(DEFAULT_LIMIT) {
+
+}
+
+Frame::Frame(const std::string name, const float magnitude, const short int scaling, const std::string unit)
+        : Point(name, magnitude, scaling, unit), planes(), limit(DEFAULT_LIMIT) {
+
+}
+
+Frame::Frame(const std::string name, const float magnitude, const short int scaling, const Unit& unit)
+        : Point(name, magnitude, scaling, unit), planes(), limit(DEFAULT_LIMIT) {
+
+}
+
+Frame::Frame(const std::string name, const float magnitude, const Azimuth& gradient)
+        : Point(name, magnitude, gradient), planes(), limit(DEFAULT_LIMIT) {
+
+}
+
+Frame::Frame(const std::string name, const float magnitude, const short int scaling, const Azimuth& gradient)
+        : Point(name, magnitude, scaling, gradient), planes(), limit(DEFAULT_LIMIT) {
+
+}
+
+Frame::Frame(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient)
+        : Point(name, magnitude, scaling, unit, gradient), planes(), limit(DEFAULT_LIMIT) {
+
+}
+
+Frame::Frame(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient)
+        : Point(name, magnitude, scaling, unit, gradient), planes(), limit(DEFAULT_LIMIT) {
+
+}
+
+Frame::Frame(const std::string name, const Azimuth& gradient, const int limit)
+        : Point(name, gradient), planes(), limit(limit) {
 
 }
 
 Frame::Frame(const std::string name, const PlanarArray& planes)
-        : Point(name), planes(planes) {
+        : Point(name), planes(planes), limit(DEFAULT_LIMIT) {
 
 }
 
 Frame::Frame(const std::string name, const PlanarArray& planes, const float gradient)
-        : Point(name, gradient), planes(planes) {
+        : Point(name, gradient), planes(planes), limit(DEFAULT_LIMIT) {
 
 }
 
 Frame::Frame(const std::string name, const PlanarArray& planes, const Azimuth& gradient)
-        : Point(name, gradient), planes(planes) {
+        : Point(name, gradient), planes(planes), limit(DEFAULT_LIMIT) {
+
+}
+
+Frame::Frame(const std::string name, const PlanarArray& planes, const float gradient, const int limit)
+        : Point(name, gradient), planes(planes), limit(limit) {
+
+}
+
+Frame::Frame(const std::string name, const PlanarArray& planes, const Azimuth& gradient, const int limit)
+        : Point(name, gradient), planes(planes), limit(limit) {
 
 }
 
@@ -73,17 +160,17 @@ Frame::~Frame() {
 
 bool Frame::operator==(const Frame& peer) const {
     return (static_cast<const Point&>(*this) == static_cast<const Point&>(peer))
-        && (planes == peer.planes);
+        && (limit == peer.limit) && (planes == peer.planes);
 }
 
 bool Frame::operator<(const Frame& peer) const {
     return (static_cast<const Point&>(*this) < static_cast<const Point&>(peer))
-        && (planes < peer.planes);
+        && (limit < peer.limit) && (planes < peer.planes);
 }
 
 bool Frame::operator>(const Frame& peer) const {
     return (static_cast<const Point&>(*this) > static_cast<const Point&>(peer))
-        && (planes > peer.planes);
+        && (limit > peer.limit) && (planes > peer.planes);
 }
 
 bool Frame::operator<=(const Frame& peer) const {
@@ -99,7 +186,7 @@ bool Frame::operator>=(const Frame& peer) const {
 Frame Frame::operator+(const Frame& peer) const {
     PlanarArray result(planes);
     result.insert(result.end(), peer.planes.begin(), peer.planes.end());
-    return Frame("+", result, (getGradient() + peer.getGradient()));
+    return Frame("+", result, (getGradient() + peer.getGradient()), limit);
 }
 
 Frame Frame::operator-(const Frame& peer) const {
@@ -110,7 +197,7 @@ Frame Frame::operator-(const Frame& peer) const {
             result.erase(found);
         }
     }
-    return Frame("-", result, (getGradient() - peer.getGradient()));
+    return Frame("-", result, (getGradient() - peer.getGradient()), limit);
 }
 
 int Frame::getPlaneCount() const {
@@ -129,7 +216,7 @@ Planar Frame::get(const int index) const {
 }
 
 void Frame::set(const int index, const Planar& object) {
-    if (index < 0) {
+    if (index < 0 || index >= limit) {
         return;
     }
     if (index < static_cast<int>(planes.size())) {
@@ -147,29 +234,60 @@ void Frame::set(const int index, const Planar& object) {
 
 Point Frame::copy() {
     Point self = *this;
-    Frame fresh(self.getName(), this->planes, self.getGradient());
+    Frame fresh(self.getName(), this->planes, self.getGradient(), this->limit);
     return fresh;
 }
 
 void Frame::clear() {
     Point::clear();
+    limit = DEFAULT_LIMIT;
     planes.clear();
     return;
 }
 
 std::string Frame::print() const {
     std::stringstream result;
-    result << "{fr";
-	result << Point::print() << ",sz:";
-	result << planes.size() << "}";
+    result << "{※";
+	result << Point::print();
+    result << "}";
+	result << printPlanes();
 	return result.str();
 }
 
 std::string Frame::printRadians() const {
     std::stringstream result;
-    result << "{fr";
-	result << Point::printRadians() << ",sz:";
-	result << planes.size() << "}";
+    result << "{※";
+	result << Point::printRadians();
+    result << "}";
+	result << printPlaneRadians();
+	return result.str();
+}
+
+std::string Frame::printPlanes() const {
+    std::stringstream result; int size = planes.size();
+    if (size > 0) {
+        result << ",sz:";
+	    result << planes.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << planes[i].print() << std::endl;
+        }
+        result << "}";
+    }
+	return result.str();
+}
+
+std::string Frame::printPlaneRadians() const {
+    std::stringstream result; int size = planes.size();
+    if (size > 0) {
+        result << ",sz:";
+	    result << planes.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << planes[i].printRadians() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

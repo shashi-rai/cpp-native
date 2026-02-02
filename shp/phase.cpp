@@ -29,12 +29,6 @@ Phase::Phase()
 
 }
 
-Phase::Phase(const float gradient)
-        : Point(gradient), polarization(Direction::DEFAULT_RADIANS),
-        timestamp(DEFAULT_TIME) {
-
-}
-
 Phase::Phase(const Azimuth& gradient)
         : Point(gradient), polarization(Direction::DEFAULT_RADIANS),
         timestamp(DEFAULT_TIME) {
@@ -145,12 +139,6 @@ Phase::Phase(const std::string name)
 
 }
 
-Phase::Phase(const std::string name, const float gradient)
-        : Point(name, gradient), polarization(Direction::DEFAULT_RADIANS),
-        timestamp(DEFAULT_TIME) {
-
-}
-
 Phase::Phase(const std::string name, const Azimuth& gradient)
         : Point(name, gradient), polarization(Direction::DEFAULT_RADIANS),
         timestamp(DEFAULT_TIME) {
@@ -257,7 +245,6 @@ Phase::Phase(const std::string name, const float magnitude, const short int scal
         timestamp(DEFAULT_TIME) {
 
 }
-
 
 Phase::Phase(const std::string name, const std::time_t timestamp)
         : Point(name), polarization(Direction::DEFAULT_RADIANS), timestamp(timestamp) {
@@ -504,6 +491,66 @@ Phase Phase::operator%(const Phase& peer) const {
     return result;
 }
 
+Phase Phase::operator+(const Azimuth& rotation) const {
+	Phase self = *this; Azimuth direction(self.getAzimuthal() + rotation.toRadians());
+	return Phase("+", self.getMagnitude(), self.getScaling(), self.getUnit(),
+		self.getPolarization(), direction, self.timestamp);
+}
+
+Phase Phase::operator-(const Azimuth& rotation) const {
+	Phase self = *this; Azimuth direction(self.getAzimuthal() - rotation.toRadians());
+	return Phase("-", self.getMagnitude(), self.getScaling(), self.getUnit(),
+		self.getPolarization(), direction, self.timestamp);
+}
+
+Phase Phase::operator*(const Azimuth& rotation) const {
+	Phase self = *this; Azimuth direction(self.getAzimuthal() * rotation.toRadians());
+	return Phase("*", self.getMagnitude(), self.getScaling(), self.getUnit(),
+		self.getPolarization(), direction, self.timestamp);
+}
+
+Phase Phase::operator/(const Azimuth& rotation) const {
+	Phase self = *this; Azimuth direction(self.getAzimuthal() / rotation.toRadians());
+	return Phase("/", self.getMagnitude(), self.getScaling(), self.getUnit(),
+		self.getPolarization(), direction, self.timestamp);
+}
+
+Phase Phase::operator%(const Azimuth& rotation) const {
+	Phase self = *this; Azimuth direction(fmod(self.getAzimuthal(), rotation.toRadians()));
+	return Phase("%", self.getMagnitude(), self.getScaling(), self.getUnit(),
+		self.getPolarization(), direction, self.timestamp);
+}
+
+Phase Phase::operator+(const Polar& rotation) const {
+	Phase self = *this; Polar direction(self.getPolarization() + rotation.toRadians());
+	return Phase("+", self.getMagnitude(), self.getScaling(), self.getUnit(),
+		direction, self.getAzimuthal(), self.timestamp);
+}
+
+Phase Phase::operator-(const Polar& rotation) const {
+	Phase self = *this; Polar direction(self.getPolarization() - rotation.toRadians());
+	return Phase("-", self.getMagnitude(), self.getScaling(), self.getUnit(),
+		direction, self.getAzimuthal(), self.timestamp);
+}
+
+Phase Phase::operator*(const Polar& rotation) const {
+	Phase self = *this; Polar direction(self.getPolarization() * rotation.toRadians());
+	return Phase("*", self.getMagnitude(), self.getScaling(), self.getUnit(),
+		direction, self.getAzimuthal(), self.timestamp);
+}
+
+Phase Phase::operator/(const Polar& rotation) const {
+	Phase self = *this; Polar direction(self.getPolarization() / rotation.toRadians());
+	return Phase("/", self.getMagnitude(), self.getScaling(), self.getUnit(),
+		direction, self.getAzimuthal(), self.timestamp);
+}
+
+Phase Phase::operator%(const Polar& rotation) const {
+	Phase self = *this; Polar direction(fmod(self.getPolarization(), rotation.toRadians()));
+	return Phase("%", self.getMagnitude(), self.getScaling(), self.getUnit(),
+		direction, self.getAzimuthal(), self.timestamp);
+}
+
 void Phase::setPolarization(const Direction& orientation) {
     polarization = orientation.toRadians();
 }
@@ -533,27 +580,28 @@ void Phase::clear() {
 
 std::string Phase::print() const {
     std::stringstream result;
-    result << "[Φ:";
-	result << Point::print() << ",𝜃:";
-    result << Polar(polarization).print() << ",t:";
+    result << "{Φ";
+	result << Point::print() << ",";
+    result << Polar(polarization).print();
     if (timestamp != DEFAULT_TIME) {
+		result << ",t:";
         result << std::put_time(std::localtime(&timestamp), "[%Y-%m-%d %H:%M:%S]");
     }
-    result << "]:";
+    result << "}";
 	return result.str();
 }
 
 std::string Phase::printRadians() const {
     std::stringstream result;
-    result << "[Φ:";
+    result << "{Φ";
 	result << Point::printRadians() << ",𝜃:";
     result << std::setfill('0') <<  std::setprecision(8)
         << polarization << shp::Unit::getDerivedSymbol(shp::Unit::PLANE_ANGLE);
-	result << ",t:";
     if (timestamp != DEFAULT_TIME) {
+		result << ",t:";
         result << std::put_time(std::localtime(&timestamp), "[%Y-%m-%d %H:%M:%S]");
     }
-    result << "]:";
+    result << "}";
 	return result.str();
 }
 

@@ -26,18 +26,36 @@
 namespace shp {
 
 class Frame : public Point {
+    int limit;
     PlanarArray planes;
 public:
     // Constructors
     Frame();
-    Frame(const float gradient);
     Frame(const Azimuth& gradient);
+    Frame(const float magnitude);
+    Frame(const float magnitude, const short int scaling);
+    Frame(const float magnitude, const short int scaling, const std::string unit);
+    Frame(const float magnitude, const short int scaling, const Unit& unit);
+    Frame(const float magnitude, const Azimuth& gradient);
+    Frame(const float magnitude, const short int scaling, const Azimuth& gradient);
+    Frame(const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient);
+    Frame(const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient);
     Frame(const std::string name);
-    Frame(const std::string name, const float gradient);
     Frame(const std::string name, const Azimuth& gradient);
+    Frame(const std::string name, const float magnitude);
+    Frame(const std::string name, const float magnitude, const short int scaling);
+    Frame(const std::string name, const float magnitude, const short int scaling, const std::string unit);
+    Frame(const std::string name, const float magnitude, const short int scaling, const Unit& unit);
+    Frame(const std::string name, const float magnitude, const Azimuth& gradient);
+    Frame(const std::string name, const float magnitude, const short int scaling, const Azimuth& gradient);
+    Frame(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient);
+    Frame(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient);
+    Frame(const std::string name, const Azimuth& gradient, const int limit);
     Frame(const std::string name, const PlanarArray& planes);
     Frame(const std::string name, const PlanarArray& planes, const float gradient);
     Frame(const std::string name, const PlanarArray& planes, const Azimuth& gradient);
+    Frame(const std::string name, const PlanarArray& planes, const float gradient, const int limit);
+    Frame(const std::string name, const PlanarArray& planes, const Azimuth& gradient, const int limit);
 
     // Destructors
     ~Frame();
@@ -60,9 +78,11 @@ public:
 	const Point operator()(const int x, const int y, const int z) const { return planes[x](y)(z); }
 
     // Getters
+    int getLimit() const { return limit; }
     PlanarArray getPlanes() const { return planes; }
 
     // Setters
+    void setLimit(const int value) { this->limit = value; }
     void setPlanes(const PlanarArray& objects) { this->planes = objects; }
 
     // Additional methods
@@ -73,6 +93,10 @@ public:
     virtual void clear();
     virtual std::string print() const;
     virtual std::string printRadians() const;
+    virtual std::string printPlanes() const;
+    virtual std::string printPlaneRadians() const;
+public:
+    static const int DEFAULT_LIMIT;
 };
 
 typedef std::vector<Frame > FrameArray;

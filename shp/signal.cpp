@@ -320,6 +320,36 @@ Signal Signal::operator%(const shp::Quantity& peer) const {
         result.getMagnitude(), result.getScaling(), result.getUnit());
 }
 
+Signal Signal::operator+(const shp::Direction& peer) const {
+    shp::Direction self = shp::Direction(this->orientation), result = (self + peer);
+    return Signal(result.toRadians(),
+        Quantity::getMagnitude(), Quantity::getScaling(), Quantity::getUnit());
+}
+
+Signal Signal::operator-(const shp::Direction& peer) const {
+    shp::Direction self = shp::Direction(this->orientation), result = (self - peer);
+    return Signal(result.toRadians(),
+        Quantity::getMagnitude(), Quantity::getScaling(), Quantity::getUnit());
+}
+
+Signal Signal::operator*(const shp::Direction& peer) const {
+    shp::Direction self = shp::Direction(this->orientation), result = (self * peer);
+    return Signal(result.toRadians(),
+        Quantity::getMagnitude(), Quantity::getScaling(), Quantity::getUnit());
+}
+
+Signal Signal::operator/(const shp::Direction& peer) const {
+    shp::Direction self = shp::Direction(this->orientation), result = (self / peer);
+    return Signal(result.toRadians(),
+        Quantity::getMagnitude(), Quantity::getScaling(), Quantity::getUnit());
+}
+
+Signal Signal::operator%(const shp::Direction& peer) const {
+    shp::Direction self = shp::Direction(this->orientation), result = (self % peer);
+    return Signal(result.toRadians(),
+        Quantity::getMagnitude(), Quantity::getScaling(), Quantity::getUnit());
+}
+
 Signal Signal::operator()(const float scaleup) const {
     Quantity self = *this;
     Quantity product = self.getMultiple(scaleup);
@@ -489,6 +519,10 @@ float Signal::getAmplitude() const {
     return Quantity::getCosComponent(orientation);
 }
 
+float Signal::getImaginary() const {
+    return Quantity::getSinComponent(orientation);
+}
+
 Direction Signal::getPhase() const {
     return Direction(orientation);
 }
@@ -603,6 +637,22 @@ Signal Signal::getCrossFractionSquare() const {
     return result;
 }
 
+Signal Signal::getCrossFractionSquare(const float direction, const float factor) const {
+    Signal self = *this, other(direction, factor), fraction = (self / other);
+    std::complex<float> component = Quantity::getComplex(fraction.getMagnitude(), fraction.orientation);
+    std::complex<float> total = (component * component);
+    Signal result(total.imag(), total.real(), (self.getScaling() * 2), self.getUnit().getSquare()); 
+    return result;
+}
+
+Signal Signal::getCrossFractionSquare(const float direction, const float factor, const short int scale) const {
+    Signal self = *this, other(direction, factor, scale), fraction = (self / other);
+    std::complex<float> component = Quantity::getComplex(fraction.getMagnitude(), fraction.orientation);
+    std::complex<float> total = (component * component);
+    Signal result(total.imag(), total.real(), (self.getScaling() * 2), self.getUnit().getSquare()); 
+    return result;
+}
+
 Signal Signal::getDotProductSquareRoot() const {
     Quantity self = *this, root = Quantity::getSquareRoot();
     Signal result(Direction::DEFAULT_RADIANS, root.getMagnitude(), root.getScaling(), root.getUnit());
@@ -706,7 +756,7 @@ std::string Signal::printRadians() const {
     std::stringstream result;
     result << "∿";
     result << Quantity::print() << ",φ";
-    result << std::setfill('0') <<  std::setprecision(8)
+    result << std::setfill('0') << std::setprecision(8)
         << orientation << shp::Unit::getDerivedSymbol(shp::Unit::PLANE_ANGLE);
 	return result.str();
 }

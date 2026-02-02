@@ -26,31 +26,31 @@ Reaction::Reaction() : Point(), reactants(), products(), change() {
 
 }
 
-Reaction::Reaction(float gradient) : Point(), reactants(), products(), change() {
+Reaction::Reaction(const float gradient) : Point(), reactants(), products(), change() {
 
 }
 
-Reaction::Reaction(float amplitude, float gradient)
+Reaction::Reaction(const float amplitude, const float gradient)
 		: Point(amplitude, gradient), reactants(), products(), change()  {
 
 }
 
-Reaction::Reaction(std::string name) : Point(name), reactants(), products(), change() {
+Reaction::Reaction(const std::string name) : Point(name), reactants(), products(), change() {
 
 }
 
-Reaction::Reaction(std::string name, float gradient)
+Reaction::Reaction(const std::string name, const float gradient)
 		: Point(name, gradient), reactants(), products(), change() {
 
 }
 
-Reaction::Reaction(std::string name, float amplitude, float gradient)
+Reaction::Reaction(const std::string name, const float amplitude, const float gradient)
 		: Point(name, amplitude, gradient), reactants(), products(), change() {
 
 }
 
-Reaction::Reaction(std::string name,
-		MoleculeArray& reactants, MoleculeArray& products, qft::Energy& change)
+Reaction::Reaction(const std::string name,
+		const MoleculeArray& reactants, const MoleculeArray& products, const qft::Energy& change)
         : Point(name), reactants(reactants), products(products), change(change) {
 
 }

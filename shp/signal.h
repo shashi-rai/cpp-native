@@ -82,19 +82,26 @@ public:
     Signal operator/(const Signal& peer) const;
     Signal operator%(const Signal& peer) const;
 
-    // Quantity operator
+    // Magnitude operator
     Signal operator+(const float coefficient) const;
     Signal operator-(const float coefficient) const;
     Signal operator*(const float coefficient) const;
     Signal operator/(const float coefficient) const;
     Signal operator%(const float coefficient) const;
 
-    // Quantity operator
+    // Magnitude operator
     Signal operator+(const Quantity& peer) const;
     Signal operator-(const Quantity& peer) const;
     Signal operator*(const Quantity& peer) const;
     Signal operator/(const Quantity& peer) const;
     Signal operator%(const Quantity& peer) const;
+
+    // Direction operator
+    Signal operator+(const Direction& peer) const;
+    Signal operator-(const Direction& peer) const;
+    Signal operator*(const Direction& peer) const;
+    Signal operator/(const Direction& peer) const;
+    Signal operator%(const Direction& peer) const;
 
     // Multiple operator
     Signal operator()(const float scaleup) const;
@@ -132,6 +139,7 @@ public:
     void setMagnitude(const float value, const short int scale, const std::string unit);
     void setMagnitude(const float value, const short int scale, const Unit& unit);
     float getAmplitude() const;
+    float getImaginary() const;
     Direction getPhase() const;
     void setPhase(const Direction& direction);
     short int getScaling() const;
@@ -152,6 +160,8 @@ public:
     Signal getDotFractionSquare(const float factor, const short int scale) const;
     Signal getCrossProductSquare() const;
     Signal getCrossFractionSquare() const;
+    Signal getCrossFractionSquare(const float direction, const float factor) const;
+    Signal getCrossFractionSquare(const float direction, const float factor, const short int scale) const;
     Signal getDotProductSquareRoot() const;
     Signal getDotProductCube() const;
     Signal getDotFractionCube() const;

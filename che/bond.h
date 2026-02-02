@@ -21,13 +21,9 @@
 #ifndef CHE_BOND_H
 #define CHE_BOND_H
 
-#include <string>
-#include <vector>
 #include "atom.h"
 #include "../qft/electron.h"
 #include "../qft/energy.h"
-#include "../shp/angular.h"
-#include "../shp/distance.h"
 #include "../shp/point.h"
 
 namespace che {
@@ -41,37 +37,37 @@ class Bond : public shp::Point {
 public:
     // Constructors
     Bond();
-    Bond(float gradient);
-    Bond(float amplitude, float gradient);
-    Bond(std::string name);
-    Bond(std::string name, float gradient);
-    Bond(std::string name, float amplitude, float gradient);
+    Bond(const float gradient);
+    Bond(const float amplitude, const float gradient);
+    Bond(const std::string name);
+    Bond(const std::string name, const float gradient);
+    Bond(const std::string name, const float amplitude, const float gradient);
     Bond(const std::shared_ptr<che::Orbital> left,
         const std::shared_ptr<che::Orbital> right);
     Bond(const std::shared_ptr<che::Orbital> left,
-        const std::shared_ptr<che::Orbital> right, qft::Energy& energy);
+        const std::shared_ptr<che::Orbital> right, const qft::Energy& energy);
     Bond(const std::shared_ptr<che::Orbital> left,
-        const std::shared_ptr<che::Orbital> right, qft::Energy& energy,
-        shp::Distance length);
+        const std::shared_ptr<che::Orbital> right, const qft::Energy& energy,
+        const shp::Distance& length);
     Bond(const std::shared_ptr<che::Orbital> left,
-        const std::shared_ptr<che::Orbital> right, qft::Energy& energy,
-        shp::Angular angle);
+        const std::shared_ptr<che::Orbital> right, const qft::Energy& energy,
+        const shp::Angular& angle);
     Bond(const std::shared_ptr<che::Orbital> left,
-        const std::shared_ptr<che::Orbital> right, qft::Energy& energy,
-        shp::Distance length, shp::Angular angle);
-    Bond(std::string name, const std::shared_ptr<che::Orbital> left,
+        const std::shared_ptr<che::Orbital> right, const qft::Energy& energy,
+        const shp::Distance& length, const shp::Angular& angle);
+    Bond(const std::string name, const std::shared_ptr<che::Orbital> left,
         const std::shared_ptr<che::Orbital> right);
-    Bond(std::string name, const std::shared_ptr<che::Orbital> left,
-        const std::shared_ptr<che::Orbital> right, qft::Energy& energy);
-    Bond(std::string name, const std::shared_ptr<che::Orbital> left,
-        const std::shared_ptr<che::Orbital> right, qft::Energy& energy,
-        shp::Distance length);
-    Bond(std::string name, const std::shared_ptr<che::Orbital> left,
-        const std::shared_ptr<che::Orbital> right, qft::Energy& energy,
-        shp::Angular angle);
-    Bond(std::string name, const std::shared_ptr<che::Orbital> left,
-        const std::shared_ptr<che::Orbital> right, qft::Energy& energy,
-        shp::Distance length, shp::Angular angle);
+    Bond(const std::string name, const std::shared_ptr<che::Orbital> left,
+        const std::shared_ptr<che::Orbital> right, const qft::Energy& energy);
+    Bond(const std::string name, const std::shared_ptr<che::Orbital> left,
+        const std::shared_ptr<che::Orbital> right, const qft::Energy& energy,
+        const shp::Distance& length);
+    Bond(const std::string name, const std::shared_ptr<che::Orbital> left,
+        const std::shared_ptr<che::Orbital> right, const qft::Energy& energy,
+        const shp::Angular& angle);
+    Bond(const std::string name, const std::shared_ptr<che::Orbital> left,
+        const std::shared_ptr<che::Orbital> right, const qft::Energy& energy,
+        const shp::Distance& length, const shp::Angular& angle);
 
     // Destructors
     ~Bond();
@@ -87,8 +83,8 @@ public:
     void setLeft(const std::shared_ptr<che::Orbital> orbital) { this->left = orbital; }
     void setRight(const std::shared_ptr<che::Orbital>orbital) { this->right = orbital; }
     void setEnergy(const qft::Energy& value) { this->energy = value; }
-    void setLength(shp::Distance value) { this->length = value; }
-    void setAngle(shp::Angular value) { this->angle = value; }
+    void setLength(const shp::Distance& value) { this->length = value; }
+    void setAngle(const shp::Angular& value) { this->angle = value; }
 
     // Additional methods
     virtual Point copy();

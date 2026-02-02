@@ -34,15 +34,21 @@ Point::Point(const Unit& unit)
 
 }
 
-Point::Point(const float gradient)
+Point::Point(const Azimuth& gradient)
         : Shape(),
         signal(gradient, Quantity::DEFAULT_VALUE) {
 
 }
 
-Point::Point(const Azimuth& gradient)
+Point::Point(const Unit& unit, const Azimuth& gradient)
         : Shape(),
-        signal(gradient, Quantity::DEFAULT_VALUE) {
+        signal(gradient, Quantity::DEFAULT_VALUE, unit) {
+
+}
+
+Point::Point(const float magnitude)
+        : Shape(),
+        signal(Direction::DEFAULT_RADIANS, magnitude) {
 
 }
 
@@ -158,15 +164,33 @@ Point::Point(const std::string name)
 
 }
 
-Point::Point(const std::string name, const float gradient)
+Point::Point(const std::string name, const std::string unit)
         : Shape(name),
-        signal(gradient, Quantity::DEFAULT_VALUE) {
+        signal(Direction::DEFAULT_RADIANS, Quantity::DEFAULT_VALUE, unit) {
+
+}
+
+Point::Point(const std::string name, const Unit& unit)
+        : Shape(name),
+        signal(Direction::DEFAULT_RADIANS, Quantity::DEFAULT_VALUE, unit) {
 
 }
 
 Point::Point(const std::string name, const Azimuth& gradient)
         : Shape(name),
         signal(gradient, Quantity::DEFAULT_VALUE) {
+
+}
+
+Point::Point(const std::string name, const Unit& unit, const Azimuth& gradient)
+        : Shape(name),
+        signal(gradient, Quantity::DEFAULT_VALUE, unit) {
+
+}
+
+Point::Point(const std::string name, const float magnitude)
+        : Shape(name),
+        signal(Direction::DEFAULT_RADIANS, magnitude) {
 
 }
 
@@ -352,6 +376,10 @@ float Point::getAmplitude() const {
 	return signal.getAmplitude();
 }
 
+float Point::getImaginary() const {
+	return signal.getImaginary();
+}
+
 float Point::getMagnitude() const {
 	return signal.getMagnitude();
 }
@@ -369,7 +397,7 @@ void Point::setMagnitude(const float magnitude, const short int scaling, const s
 }
 
 void Point::setMagnitude(const float magnitude, const short int scaling, const Unit& unit) {
-	signal.setMagnitude(magnitude, scaling, unit.getName());
+	signal.setMagnitude(magnitude, scaling, unit);
 }
 
 short int Point::getScaling() const {
@@ -396,7 +424,7 @@ void Point::setAzimuthal(const float radians) {
     signal.setOrientation(radians);
 }
 
-void Point::setAzimuthal(const Direction& orientation) {
+void Point::setAzimuthal(const Azimuth& orientation) {
     signal.setOrientation(orientation.toRadians());
 }
 
@@ -434,17 +462,19 @@ void Point::clear() {
 
 std::string Point::print() const {
     std::stringstream result;
-    result << "{p:";
+    result << "(";
 	result << Shape::print() << ",";
-    result << signal.print() << "}";
+    result << signal.print();
+	result << ")";
 	return result.str();
 }
 
 std::string Point::printRadians() const {
     std::stringstream result;
-    result << "{p:";
+    result << "(";
 	result << Shape::print() << ",";
-    result << signal.printRadians() << "}";
+    result << signal.printRadians();
+	result << ")";
 	return result.str();
 }
 

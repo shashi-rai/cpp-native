@@ -21,8 +21,6 @@
 #ifndef CHE_POLYMER_H
 #define CHE_POLYMER_H
 
-#include <string>
-#include <vector>
 #include "molecule.h"
 
 namespace che {
@@ -32,12 +30,12 @@ class Polymer : public shp::Point {
 public:
     // Constructors
     Polymer();
-    Polymer(float gradient);
-    Polymer(float amplitude, float gradient);
-    Polymer(std::string name);
-    Polymer(std::string name, float gradient);
-    Polymer(std::string name, float amplitude, float gradient);
-    Polymer(std::string name, const MoleculeArray& monomers);
+    Polymer(const float gradient);
+    Polymer(const float amplitude, const float gradient);
+    Polymer(const std::string name);
+    Polymer(const std::string name, const float gradient);
+    Polymer(const std::string name, const float amplitude, const float gradient);
+    Polymer(const std::string name, const MoleculeArray& monomers);
 
     // Destructors
     ~Polymer();
@@ -55,8 +53,8 @@ public:
 
     // Additional methods
     int getMoleculeCount() const;
-    Molecule get(int index) const;
-    void set(int index, const Molecule& object);
+    Molecule get(const int index) const;
+    void set(const int index, const Molecule& object);
     virtual shp::Point copy();
     virtual void clear();
     virtual std::string print();

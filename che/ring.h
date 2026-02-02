@@ -21,8 +21,6 @@
 #ifndef CHE_RING_H
 #define CHE_RING_H
 
-#include <string>
-#include <vector>
 #include "atom.h"
 #include "molecule.h"
 
@@ -33,8 +31,8 @@ class Ring : public Molecule {
 public:
     // Constructors
     Ring();
-    Ring(std::string name);
-    Ring(std::string name, const AtomArray& atoms);
+    Ring(const std::string name);
+    Ring(const std::string name, const AtomArray& atoms);
 
     // Destructors
     ~Ring();
@@ -45,8 +43,8 @@ public:
     Ring operator-(const Ring& peer) const;
 
     // Access operator
-    Atom& operator()(int x) { return atoms[x]; }
-    const Atom& operator()(int x) const { return atoms[x]; }
+    Atom& operator()(const int x) { return atoms[x]; }
+    const Atom& operator()(const int x) const { return atoms[x]; }
 
     // Getters
     AtomArray getAtoms() const { return atoms; }
@@ -56,8 +54,8 @@ public:
 
     // Additional methods
     int getAtomCount() const;
-    Atom get(int index) const;
-    void set(int index, const Atom& object);
+    Atom get(const int index) const;
+    void set(const int index, const Atom& object);
     virtual Molecule copy();
     virtual void clear();
     virtual std::string print();

@@ -32,7 +32,6 @@ class Phase : public Point {
 public:
     // Constructors
     Phase();
-    Phase(const float gradient);
     Phase(const Azimuth& gradient);
     Phase(const Polar& polarization);
     Phase(const float magnitude, const float gradient);
@@ -59,7 +58,6 @@ public:
     Phase(const float magnitude, const short int scaling, const Unit& unit,
         const Polar& polarization, const Azimuth& azimuthal);
     Phase(const std::string name);
-    Phase(const std::string name, const float gradient);
     Phase(const std::string name, const Azimuth& gradient);
     Phase(const std::string name, const Polar& polarization);
     Phase(const std::string name, const float magnitude,
@@ -138,6 +136,20 @@ public:
     Phase operator*(const Phase& peer) const;
     Phase operator/(const Phase& peer) const;
     Phase operator%(const Phase& peer) const;
+
+    // Azimuthal operator
+    Phase operator+(const Azimuth& rotation) const;
+    Phase operator-(const Azimuth& rotation) const;
+    Phase operator*(const Azimuth& rotation) const;
+    Phase operator/(const Azimuth& rotation) const;
+    Phase operator%(const Azimuth& rotation) const;
+
+    // Polarization operator
+    Phase operator+(const Polar& rotation) const;
+    Phase operator-(const Polar& rotation) const;
+    Phase operator*(const Polar& rotation) const;
+    Phase operator/(const Polar& rotation) const;
+    Phase operator%(const Polar& rotation) const;
 
     // Getters
     float getPolarization() const { return polarization; }

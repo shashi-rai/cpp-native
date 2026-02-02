@@ -22,48 +22,135 @@
 
 namespace shp {
 
+const int Planar::DEFAULT_LIMIT = 0;
+
 Planar::Planar()
-        : Point(), lines() {
-
-}
-
-Planar::Planar(const float gradient)
-        : Point(gradient), lines() {
+        : Point(Direction::DEFAULT_RADIANS), lines(), limit(DEFAULT_LIMIT) {
 
 }
 
 Planar::Planar(const Azimuth& gradient)
-        : Point(gradient), lines() {
+        : Point(gradient), lines(), limit(DEFAULT_LIMIT) {
+
+}
+
+Planar::Planar(const float magnitude)
+        : Point(magnitude, Direction::DEFAULT_RADIANS), lines(), limit(DEFAULT_LIMIT) {
+
+}
+
+Planar::Planar(const float magnitude, const short int scaling)
+        : Point(magnitude, scaling, Direction::DEFAULT_RADIANS), lines(), limit(DEFAULT_LIMIT) {
+
+}
+
+Planar::Planar(const float magnitude, const short int scaling, const std::string unit)
+        : Point(magnitude, scaling, unit), lines(), limit(DEFAULT_LIMIT) {
+
+}
+
+Planar::Planar(const float magnitude, const short int scaling, const Unit& unit)
+        : Point(magnitude, scaling, unit), lines(), limit(DEFAULT_LIMIT) {
+
+}
+
+Planar::Planar(const float magnitude, const Azimuth& gradient)
+        : Point(magnitude, gradient), lines(), limit(DEFAULT_LIMIT) {
+
+}
+
+Planar::Planar(const float magnitude, const short int scaling, const Azimuth& gradient)
+        : Point(magnitude, scaling, gradient), lines(), limit(DEFAULT_LIMIT) {
+
+}
+
+Planar::Planar(const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient)
+        : Point(magnitude, scaling, unit, gradient), lines(), limit(DEFAULT_LIMIT) {
+
+}
+
+Planar::Planar(const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient)
+        : Point(magnitude, scaling, unit, gradient), lines(), limit(DEFAULT_LIMIT) {
 
 }
 
 Planar::Planar(const std::string name)
-        : Point(name), lines() {
-
-}
-
-Planar::Planar(const std::string name, const float gradient)
-        : Point(name, gradient), lines() {
+        : Point(name), lines(), limit(DEFAULT_LIMIT) {
 
 }
 
 Planar::Planar(const std::string name, const Azimuth& gradient)
-        : Point(name, gradient), lines() {
+        : Point(name, gradient), lines(), limit(0) {
+
+}
+
+Planar::Planar(const std::string name, const float magnitude)
+        : Point(name, magnitude, Direction::DEFAULT_RADIANS), lines(), limit(DEFAULT_LIMIT) {
+
+}
+
+Planar::Planar(const std::string name, const float magnitude, const short int scaling)
+        : Point(name, magnitude, scaling), lines(), limit(DEFAULT_LIMIT) {
+
+}
+
+Planar::Planar(const std::string name, const float magnitude, const short int scaling, const std::string unit)
+        : Point(name, magnitude, scaling, unit), lines(), limit(DEFAULT_LIMIT) {
+
+}
+
+Planar::Planar(const std::string name, const float magnitude, const short int scaling, const Unit& unit)
+        : Point(name, magnitude, scaling, unit), lines(), limit(DEFAULT_LIMIT) {
+
+}
+
+Planar::Planar(const std::string name, const float magnitude, const Azimuth& gradient)
+        : Point(name, magnitude, gradient), lines(), limit(DEFAULT_LIMIT) {
+
+}
+
+Planar::Planar(const std::string name, const float magnitude, const short int scaling, const Azimuth& gradient)
+        : Point(name, magnitude, scaling, gradient), lines(), limit(DEFAULT_LIMIT) {
+
+}
+
+Planar::Planar(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient)
+        : Point(name, magnitude, scaling, unit, gradient), lines(), limit(DEFAULT_LIMIT) {
+
+}
+
+Planar::Planar(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient)
+        : Point(name, magnitude, scaling, unit, gradient), lines(), limit(DEFAULT_LIMIT) {
+
+}
+
+Planar::Planar(const std::string name, const Azimuth& gradient, const int limit)
+        : Point(name, gradient), lines(), limit(limit) {
 
 }
 
 Planar::Planar(const std::string name, const LinearArray& lines)
-        : Point(name), lines(lines) {
+        : Point(name), lines(lines), limit(DEFAULT_LIMIT) {
 
 }
 
 Planar::Planar(const std::string name, const LinearArray& lines, const float gradient)
-        : Point(name, gradient), lines(lines) {
+        : Point(name, gradient), lines(lines), limit(DEFAULT_LIMIT) {
 
 }
 
 Planar::Planar(const std::string name, const LinearArray& lines, const Azimuth& gradient)
-        : Point(name, gradient), lines(lines) {
+        : Point(name, gradient), lines(lines), limit(DEFAULT_LIMIT) {
+
+}
+
+Planar::Planar(const std::string name, const LinearArray& lines, const float gradient, const int limit)
+        : Point(name, gradient), lines(lines), limit(limit) {
+
+}
+
+Planar::Planar(const std::string name, const LinearArray& lines, const Azimuth& gradient, const int limit)
+        : Point(name, gradient), lines(lines), limit(limit) {
 
 }
 
@@ -73,17 +160,17 @@ Planar::~Planar() {
 
 bool Planar::operator==(const Planar& peer) const {
     return (static_cast<const Point&>(*this) == static_cast<const Point&>(peer))
-        && (lines == peer.lines);
+        && (limit == peer.limit) && (lines == peer.lines);
 }
 
 bool Planar::operator<(const Planar& peer) const {
     return (static_cast<const Point&>(*this) < static_cast<const Point&>(peer))
-        && (lines < peer.lines);
+        && (limit < peer.limit) && (lines < peer.lines);
 }
 
 bool Planar::operator>(const Planar& peer) const {
     return (static_cast<const Point&>(*this) > static_cast<const Point&>(peer))
-        && (lines > peer.lines);
+        && (limit > peer.limit) && (lines > peer.lines);
 }
 
 bool Planar::operator<=(const Planar& peer) const {
@@ -99,7 +186,7 @@ bool Planar::operator>=(const Planar& peer) const {
 Planar Planar::operator+(const Planar& peer) const {
     LinearArray result(lines);
     result.insert(result.end(), peer.lines.begin(), peer.lines.end());
-    return Planar("+", result, (getGradient() + peer.getGradient()));
+    return Planar("+", result, (getGradient() + peer.getGradient()), limit);
 }
 
 Planar Planar::operator-(const Planar& peer) const {
@@ -110,7 +197,7 @@ Planar Planar::operator-(const Planar& peer) const {
             result.erase(found);
         }
     }
-    return Planar("-", result, (getGradient() - peer.getGradient()));
+    return Planar("-", result, (getGradient() - peer.getGradient()), limit);
 }
 
 int Planar::getLineCount() const {
@@ -129,7 +216,7 @@ Linear Planar::get(const int index) const {
 }
 
 void Planar::set(const int index, const Linear& object) {
-    if (index < 0) {
+    if (index < 0 || index >= limit) {
         return;
     }
     if (index < static_cast<int>(lines.size())) {
@@ -146,29 +233,63 @@ void Planar::set(const int index, const Linear& object) {
 }
 
 Point Planar::copy() {
-    Planar fresh(getName(), lines, getGradient());
+    Point self = *this;
+    Planar fresh(self.getName(), this->lines, self.getGradient(), this->limit);
     return fresh;
 }
 
 void Planar::clear() {
     Point::clear();
+    limit = DEFAULT_LIMIT;
     lines.clear();
     return;
 }
 
 std::string Planar::print() const {
     std::stringstream result;
-    result << "{pl";
-	result << Point::print() << ",sz:";
-	result << lines.size() << "}";
+    result << "{□";
+	result << Point::print() << "→";
+    result << limit;
+	result << "}";
+    result << printLines();
 	return result.str();
 }
 
 std::string Planar::printRadians() const {
     std::stringstream result;
-    result << "{pl";
-	result << Point::printRadians() << ",sz:";
-	result << lines.size() << "}";
+    result << "{□";
+	result << Point::printRadians() << "→";
+    result << limit;
+	result << "}";
+    result << printLineRadians();
+	return result.str();
+}
+
+std::string Planar::printLines() const {
+    std::stringstream result; int size = lines.size();
+    if (size > 0) {
+        result << ",sz:";
+	    result << lines.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << lines[i].print() << std::endl;
+        }
+        result << "}";
+    }
+	return result.str();
+}
+
+std::string Planar::printLineRadians() const {
+    std::stringstream result; int size = lines.size();
+    if (size > 0) {
+        result << ",sz:";
+	    result << lines.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << lines[i].printRadians() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

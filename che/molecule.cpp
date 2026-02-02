@@ -27,7 +27,7 @@ Molecule::Molecule()
 
 }
 
-Molecule::Molecule(std::string name)
+Molecule::Molecule(const std::string name)
         : Shape(name), formulae(), potential(), bonds() {
 
 }
@@ -37,32 +37,32 @@ Molecule::Molecule(const float potential)
 
 }
 
-Molecule::Molecule(std::string name, std::string formulae)
+Molecule::Molecule(const std::string name, const std::string formulae)
         : Shape(name), formulae(formulae), potential(), bonds() {
 
 }
 
-Molecule::Molecule(std::string name, std::string formulae, const float potential)
+Molecule::Molecule(const std::string name, const std::string formulae, const float potential)
         : Shape(name), formulae(formulae), potential(potential), bonds() {
 
 }
 
-Molecule::Molecule(BondArray& bonds)
+Molecule::Molecule(const BondArray& bonds)
         : Shape(), formulae(), potential(), bonds(bonds) {
 
 }
 
-Molecule::Molecule(std::string name, BondArray& bonds)
+Molecule::Molecule(const std::string name, const BondArray& bonds)
         : Shape(name), formulae(), potential(), bonds(bonds) {
 
 }
 
-Molecule::Molecule(std::string name, const float potential, BondArray& bonds)
+Molecule::Molecule(const std::string name, const float potential, const BondArray& bonds)
         : Shape(name), formulae(), potential(potential), bonds(bonds) {
 
 }
 
-Molecule::Molecule(std::string name, std::string formulae, const float potential, BondArray& bonds)
+Molecule::Molecule(const std::string name, const std::string formulae, const float potential, const BondArray& bonds)
         : Shape(name), formulae(formulae), potential(potential), bonds(bonds) {
 
 }
@@ -98,7 +98,7 @@ int Molecule::getBondCount() const {
     return bonds.size();
 }
 
-Bond Molecule::get(int index) const {
+Bond Molecule::get(const int index) const {
     Bond result;
     if (index < 0) {
         return result;
@@ -109,7 +109,7 @@ Bond Molecule::get(int index) const {
     return bonds[index];
 }
 
-void Molecule::set(int index, const Bond& object) {
+void Molecule::set(const int index, const Bond& object) {
     if (index < 0) {
         return;
     }

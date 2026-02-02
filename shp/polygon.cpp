@@ -25,12 +25,7 @@ namespace shp {
 const int Polygon::DEFAULT_LIMIT = 0;
 
 Polygon::Polygon()
-        : Point(), waves(), limit(DEFAULT_LIMIT) {
-
-}
-
-Polygon::Polygon(const float gradient)
-        : Point(gradient), waves(), limit(DEFAULT_LIMIT) {
+        : Point(Direction::DEFAULT_RADIANS), waves(), limit(DEFAULT_LIMIT) {
 
 }
 
@@ -39,18 +34,48 @@ Polygon::Polygon(const Azimuth& gradient)
 
 }
 
+Polygon::Polygon(const float magnitude)
+        : Point(magnitude, Direction::DEFAULT_RADIANS), waves(), limit(DEFAULT_LIMIT) {
+
+}
+
+Polygon::Polygon(const float magnitude, const short int scaling)
+        : Point(magnitude, scaling, Direction::DEFAULT_RADIANS), waves(), limit(DEFAULT_LIMIT) {
+
+}
+
+Polygon::Polygon(const float magnitude, const short int scaling, const std::string unit)
+        : Point(magnitude, scaling, unit), waves(), limit(DEFAULT_LIMIT) {
+
+}
+
+Polygon::Polygon(const float magnitude, const short int scaling, const Unit& unit)
+        : Point(magnitude, scaling, unit), waves(), limit(DEFAULT_LIMIT) {
+
+}
+
+Polygon::Polygon(const float magnitude, const Azimuth& gradient)
+        : Point(magnitude, gradient), waves(), limit(DEFAULT_LIMIT) {
+
+}
+
+Polygon::Polygon(const float magnitude, const short int scaling, const Azimuth& gradient)
+        : Point(magnitude, scaling, gradient), waves(), limit(DEFAULT_LIMIT) {
+
+}
+
+Polygon::Polygon(const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient)
+        : Point(magnitude, scaling, unit, gradient), waves(), limit(DEFAULT_LIMIT) {
+
+}
+
+Polygon::Polygon(const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient)
+        : Point(magnitude, scaling, unit, gradient), waves(), limit(DEFAULT_LIMIT) {
+
+}
+
 Polygon::Polygon(const std::string name)
         : Point(name), waves(), limit(DEFAULT_LIMIT) {
-
-}
-
-Polygon::Polygon(const std::string name, const int limit)
-        : Point(name), waves(), limit(limit) {
-
-}
-
-Polygon::Polygon(const std::string name, const float gradient)
-        : Point(name, gradient), waves(), limit(0) {
 
 }
 
@@ -59,13 +84,48 @@ Polygon::Polygon(const std::string name, const Azimuth& gradient)
 
 }
 
-Polygon::Polygon(const std::string name, const float gradient, const int limit)
-    : Point(name, gradient), waves(), limit(limit) {
+Polygon::Polygon(const std::string name, const float magnitude)
+        : Point(name, magnitude, Direction::DEFAULT_RADIANS), waves(), limit(DEFAULT_LIMIT) {
+
+}
+
+Polygon::Polygon(const std::string name, const float magnitude, const short int scaling)
+        : Point(name, magnitude, scaling), waves(), limit(DEFAULT_LIMIT) {
+
+}
+
+Polygon::Polygon(const std::string name, const float magnitude, const short int scaling, const std::string unit)
+        : Point(name, magnitude, scaling, unit), waves(), limit(DEFAULT_LIMIT) {
+
+}
+
+Polygon::Polygon(const std::string name, const float magnitude, const short int scaling, const Unit& unit)
+        : Point(name, magnitude, scaling, unit), waves(), limit(DEFAULT_LIMIT) {
+
+}
+
+Polygon::Polygon(const std::string name, const float magnitude, const Azimuth& gradient)
+        : Point(name, magnitude, gradient), waves(), limit(DEFAULT_LIMIT) {
+
+}
+
+Polygon::Polygon(const std::string name, const float magnitude, const short int scaling, const Azimuth& gradient)
+        : Point(name, magnitude, scaling, gradient), waves(), limit(DEFAULT_LIMIT) {
+
+}
+
+Polygon::Polygon(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient)
+        : Point(name, magnitude, scaling, unit, gradient), waves(), limit(DEFAULT_LIMIT) {
+
+}
+
+Polygon::Polygon(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient)
+        : Point(name, magnitude, scaling, unit, gradient), waves(), limit(DEFAULT_LIMIT) {
 
 }
 
 Polygon::Polygon(const std::string name, const Azimuth& gradient, const int limit)
-    : Point(name, gradient), waves(), limit(limit) {
+        : Point(name, gradient), waves(), limit(limit) {
 
 }
 
@@ -187,27 +247,49 @@ void Polygon::clear() {
 
 std::string Polygon::print() const {
     std::stringstream result;
-    result << "{ψ:";
-	result << Point::print() << ",l:";
-    result << limit << ",sz:";
-	result << waves.size() << "}\n{";
-    for (int i = 0; i < waves.size(); i++) {
-        result << "\t" << waves[i].print() << std::endl;
-    }
-    result << "}";
+    result << "[ψ";
+	result << Point::print() << "→";
+    result << limit;
+	result << "]";
+    result << printWaves();
 	return result.str();
 }
 
 std::string Polygon::printRadians() const {
     std::stringstream result;
-    result << "{ψ:";
-	result << Point::printRadians() << ",l:";
-    result << limit << ",sz:";
-	result << waves.size() << "}\n{";
-    for (int i = 0; i < waves.size(); i++) {
-        result << "\t" << waves[i].print() << std::endl;
+    result << "[ψ";
+	result << Point::printRadians() << "→";
+    result << limit;
+	result << "]";
+    result << printWaveRadians();
+	return result.str();
+}
+
+std::string Polygon::printWaves() const {
+    std::stringstream result; int size = waves.size();
+    if (size > 0) {
+        result << ",sz:";
+	    result << waves.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << waves[i].print() << std::endl;
+        }
+        result << "}";
     }
-    result << "}";
+	return result.str();
+}
+
+std::string Polygon::printWaveRadians() const {
+    std::stringstream result; int size = waves.size();
+    if (size > 0) {
+        result << ",sz:";
+	    result << waves.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << waves[i].printRadians() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

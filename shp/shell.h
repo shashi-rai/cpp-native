@@ -31,13 +31,25 @@ class Shell : public Point {
 public:
     // Constructors
     Shell();
-    Shell(const float gradient);
     Shell(const Azimuth& gradient);
+    Shell(const float magnitude);
+    Shell(const float magnitude, const short int scaling);
+    Shell(const float magnitude, const short int scaling, const std::string unit);
+    Shell(const float magnitude, const short int scaling, const Unit& unit);
+    Shell(const float magnitude, const Azimuth& gradient);
+    Shell(const float magnitude, const short int scaling, const Azimuth& gradient);
+    Shell(const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient);
+    Shell(const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient);
     Shell(const std::string name);
-    Shell(const std::string name, const int limit);
-    Shell(const std::string name, const float gradient);
     Shell(const std::string name, const Azimuth& gradient);
-    Shell(const std::string name, const float gradient, const int limit);
+    Shell(const std::string name, const float magnitude);
+    Shell(const std::string name, const float magnitude, const short int scaling);
+    Shell(const std::string name, const float magnitude, const short int scaling, const std::string unit);
+    Shell(const std::string name, const float magnitude, const short int scaling, const Unit& unit);
+    Shell(const std::string name, const float magnitude, const Azimuth& gradient);
+    Shell(const std::string name, const float magnitude, const short int scaling, const Azimuth& gradient);
+    Shell(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient);
+    Shell(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient);
     Shell(const std::string name, const Azimuth& gradient, const int limit);
     Shell(const std::string name, const OrbitalArray& orbitals);
     Shell(const std::string name, const OrbitalArray& orbitals, const float gradient);
@@ -79,7 +91,8 @@ public:
     virtual void clear();
     virtual std::string print() const;
     virtual std::string printRadians() const;
-
+    virtual std::string printOrbitals() const;
+    virtual std::string printOrbitalRadians() const;
 public:
     static const int DEFAULT_LIMIT;
 };

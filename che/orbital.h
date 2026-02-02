@@ -21,8 +21,6 @@
 #ifndef CHE_ORBITAL_H
 #define CHE_ORBITAL_H
 
-#include <string>
-#include <vector>
 #include "../qft/electron.h"
 #include "../shp/polygon.h"
 
@@ -33,12 +31,12 @@ class Orbital : public shp::Polygon {
 public:
     // Constructors
     Orbital();
-    Orbital(std::string name);
+    Orbital(const std::string name);
     Orbital(const std::shared_ptr<qft::Electron> left,
         const std::shared_ptr<qft::Electron> right);
-    Orbital(std::string name, int limit);
-    Orbital(std::string name, float gradient, int limit);
-    Orbital(std::string name, int limit,
+    Orbital(const std::string name, const short int limit);
+    Orbital(const std::string name, const float gradient, const short int limit);
+    Orbital(const std::string name, const short int limit,
         const std::shared_ptr<qft::Electron> left,
         const std::shared_ptr<qft::Electron> right);
 
@@ -51,8 +49,8 @@ public:
     Orbital operator-(const Orbital& peer) const;
 
     // Access operator
-    qft::Electron operator()(int x) { return getElectron(x); }
-    const qft::Electron operator()(int x) const { return getElectron(x); }
+    qft::Electron operator()(const int x) { return getElectron(x); }
+    const qft::Electron operator()(const int x) const { return getElectron(x); }
 
     // Getters
     qft::Electron getLeftSpinor() const { return this->getElectron(0); }
@@ -64,8 +62,8 @@ public:
 
     // Additional methods
     int getParticleCount() const;
-    qft::Electron getElectron(int magnetic) const;
-    void setElectron(int magnetic, const std::shared_ptr<qft::Electron> object);
+    qft::Electron getElectron(const int magnetic) const;
+    void setElectron(const int magnetic, const std::shared_ptr<qft::Electron> object);
     virtual void clear();
     virtual std::string print();
 public:

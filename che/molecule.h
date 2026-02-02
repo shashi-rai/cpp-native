@@ -21,8 +21,6 @@
 #ifndef CHE_MOLECULE_H
 #define CHE_MOLECULE_H
 
-#include <string>
-#include <vector>
 #include "bond.h"
 #include "../shp/shape.h"
 
@@ -35,14 +33,14 @@ class Molecule : public shp::Shape {
 public:
     // Constructors
     Molecule();
-    Molecule(std::string name);
+    Molecule(const std::string name);
     Molecule(const float potential);
-    Molecule(std::string name, std::string formulae);
-    Molecule(std::string name, std::string formulae, const float potential);
-    Molecule(BondArray& bonds);
-    Molecule(std::string name, BondArray& bonds);
-    Molecule(std::string name, const float potential, BondArray& bonds);
-    Molecule(std::string name, std::string formulae, const float potential, BondArray& bonds);
+    Molecule(const std::string name, const std::string formulae);
+    Molecule(const std::string name, const std::string formulae, const float potential);
+    Molecule(const BondArray& bonds);
+    Molecule(const std::string name, const BondArray& bonds);
+    Molecule(const std::string name, const float potential, const BondArray& bonds);
+    Molecule(const std::string name, const std::string formulae, const float potential, const BondArray& bonds);
 
     // Destructors
     ~Molecule();
@@ -53,8 +51,8 @@ public:
     Molecule operator-(const Molecule& peer) const;
 
     // Access operator
-    Bond& operator()(int x) { return bonds[x]; }
-    const Bond& operator()(int x) const { return bonds[x]; }
+    Bond& operator()(const int x) { return bonds[x]; }
+    const Bond& operator()(const int x) const { return bonds[x]; }
 
     // Getters
     std::string getFormulae() const { return formulae; }
@@ -62,14 +60,14 @@ public:
     BondArray getBonds() const { return bonds; }
 
     // Setters
-    void setFormulae(const std::string& expression) { this->formulae = expression; }
+    void setFormulae(const std::string expression) { this->formulae = expression; }
     void setPotential(const float difference) { this->potential = difference; }
     void setBonds(const BondArray& objects) { this->bonds = objects; }
 
     // Additional methods
     int getBondCount() const;
-    Bond get(int index) const;
-    void set(int index, const Bond& object);
+    Bond get(const int index) const;
+    void set(const int index, const Bond& object);
     virtual Molecule copy();
     virtual void clear();
     virtual std::string print();

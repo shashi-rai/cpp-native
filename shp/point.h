@@ -21,7 +21,6 @@
 #ifndef SHP_POINT_H
 #define SHP_POINT_H
 
-#include "angular.h"
 #include "shape.h"
 
 namespace shp {
@@ -32,8 +31,9 @@ public:
     // Constructors
     Point();
     Point(const Unit& unit);
-    Point(const float gradient);
     Point(const Azimuth& gradient);
+    Point(const Unit& unit, const Azimuth& gradient);
+    Point(const float magnitude);
     Point(const float magnitude, const float gradient);
     Point(const float magnitude, const Azimuth& gradient);
     Point(const float magnitude, const std::string unit);
@@ -52,8 +52,11 @@ public:
     Point(const float magnitude, const short int scaling, const Unit& unit, const float gradient);
     Point(const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient);
     Point(const std::string name);
-    Point(const std::string name, const float gradient);
+    Point(const std::string name, const std::string unit);
+    Point(const std::string name, const Unit& unit);
     Point(const std::string name, const Azimuth& gradient);
+    Point(const std::string name, const Unit& unit, const Azimuth& gradient);
+    Point(const std::string name, const float magnitude);
     Point(const std::string name, const float magnitude, const float gradient);
     Point(const std::string name, const float magnitude, const Azimuth& gradient);
     Point(const std::string name, const float magnitude, const std::string unit);
@@ -95,6 +98,7 @@ public:
 
     // Additional methods
     float getAmplitude() const;
+    float getImaginary() const;
     float getMagnitude() const;
     void setMagnitude(const float magnitude);
     void setMagnitude(const float magnitude, const short int scaling);
@@ -106,7 +110,7 @@ public:
     void setUnit(const Unit& unit);
     float getAzimuthal() const;
     void setAzimuthal(const float radians);
-    void setAzimuthal(const Direction& orientation);
+    void setAzimuthal(const Azimuth& orientation);
     float getGradient() const;
     void setGradient(const float radians);
     void setGradient(const Direction& orientation);

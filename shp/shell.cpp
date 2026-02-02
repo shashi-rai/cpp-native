@@ -29,13 +29,48 @@ Shell::Shell()
 
 }
 
-Shell::Shell(const float gradient)
+Shell::Shell(const Azimuth& gradient)
         : Point(gradient), orbitals(), limit(DEFAULT_LIMIT) {
 
 }
 
-Shell::Shell(const Azimuth& gradient)
-        : Point(gradient), orbitals(), limit(DEFAULT_LIMIT) {
+Shell::Shell(const float magnitude)
+        : Point(magnitude, Direction::DEFAULT_RADIANS), orbitals(), limit(DEFAULT_LIMIT) {
+
+}
+
+Shell::Shell(const float magnitude, const short int scaling)
+        : Point(magnitude, scaling, Direction::DEFAULT_RADIANS), orbitals(), limit(DEFAULT_LIMIT) {
+
+}
+
+Shell::Shell(const float magnitude, const short int scaling, const std::string unit)
+        : Point(magnitude, scaling, unit), orbitals(), limit(DEFAULT_LIMIT) {
+
+}
+
+Shell::Shell(const float magnitude, const short int scaling, const Unit& unit)
+        : Point(magnitude, scaling, unit), orbitals(), limit(DEFAULT_LIMIT) {
+
+}
+
+Shell::Shell(const float magnitude, const Azimuth& gradient)
+        : Point(magnitude, gradient), orbitals(), limit(DEFAULT_LIMIT) {
+
+}
+
+Shell::Shell(const float magnitude, const short int scaling, const Azimuth& gradient)
+        : Point(magnitude, scaling, gradient), orbitals(), limit(DEFAULT_LIMIT) {
+
+}
+
+Shell::Shell(const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient)
+        : Point(magnitude, scaling, unit, gradient), orbitals(), limit(DEFAULT_LIMIT) {
+
+}
+
+Shell::Shell(const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient)
+        : Point(magnitude, scaling, unit, gradient), orbitals(), limit(DEFAULT_LIMIT) {
 
 }
 
@@ -44,23 +79,48 @@ Shell::Shell(const std::string name)
 
 }
 
-Shell::Shell(const std::string name, const int limit)
-        : Point(name), orbitals(), limit(limit) {
-
-}
-
-Shell::Shell(const std::string name, const float gradient)
-        : Point(name, gradient), orbitals(), limit(DEFAULT_LIMIT) {
-
-}
-
 Shell::Shell(const std::string name, const Azimuth& gradient)
         : Point(name, gradient), orbitals(), limit(DEFAULT_LIMIT) {
 
 }
 
-Shell::Shell(const std::string name, const float gradient, const int limit)
-        : Point(name, gradient), orbitals(), limit(limit) {
+Shell::Shell(const std::string name, const float magnitude)
+        : Point(name, magnitude, Direction::DEFAULT_RADIANS), orbitals(), limit(DEFAULT_LIMIT) {
+
+}
+
+Shell::Shell(const std::string name, const float magnitude, const short int scaling)
+        : Point(name, magnitude, scaling), orbitals(), limit(DEFAULT_LIMIT) {
+
+}
+
+Shell::Shell(const std::string name, const float magnitude, const short int scaling, const std::string unit)
+        : Point(name, magnitude, scaling, unit), orbitals(), limit(DEFAULT_LIMIT) {
+
+}
+
+Shell::Shell(const std::string name, const float magnitude, const short int scaling, const Unit& unit)
+        : Point(name, magnitude, scaling, unit), orbitals(), limit(DEFAULT_LIMIT) {
+
+}
+
+Shell::Shell(const std::string name, const float magnitude, const Azimuth& gradient)
+        : Point(name, magnitude, gradient), orbitals(), limit(DEFAULT_LIMIT) {
+
+}
+
+Shell::Shell(const std::string name, const float magnitude, const short int scaling, const Azimuth& gradient)
+        : Point(name, magnitude, scaling, gradient), orbitals(), limit(DEFAULT_LIMIT) {
+
+}
+
+Shell::Shell(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient)
+        : Point(name, magnitude, scaling, unit, gradient), orbitals(), limit(DEFAULT_LIMIT) {
+
+}
+
+Shell::Shell(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient)
+        : Point(name, magnitude, scaling, unit, gradient), orbitals(), limit(DEFAULT_LIMIT) {
 
 }
 
@@ -187,27 +247,49 @@ void Shell::clear() {
 
 std::string Shell::print() const {
     std::stringstream result;
-    result << "{sh:";
-	result << Point::print() << ",l:";
-    result << limit << ",sz:";
-	result << orbitals.size() << "}\n{";
-    for (int i = 0; i < orbitals.size(); i++) {
-        result << "\t" << orbitals[i].print() << std::endl;
-    }
+    result << "{⚛";
+	result << Point::print() << "→:";
+    result << limit;
     result << "}";
+    result << printOrbitals();
 	return result.str();
 }
 
 std::string Shell::printRadians() const {
     std::stringstream result;
-    result << "{sh:";
-	result << Point::printRadians() << ",l:";
-    result << limit << ",sz:";
-	result << orbitals.size() << "}\n{";
-    for (int i = 0; i < orbitals.size(); i++) {
-        result << "\t" << orbitals[i].print() << std::endl;
-    }
+    result << "{⚛";
+	result << Point::printRadians() << "→";
+    result << limit;
     result << "}";
+    result << printOrbitalRadians();
+	return result.str();
+}
+
+std::string Shell::printOrbitals() const {
+    std::stringstream result; int size = orbitals.size();
+    if (size > 0) {
+        result << ",sz:";
+	    result << orbitals.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << orbitals[i].print() << std::endl;
+        }
+        result << "}";
+    }
+	return result.str();
+}
+
+std::string Shell::printOrbitalRadians() const {
+    std::stringstream result; int size = orbitals.size();
+    if (size > 0) {
+        result << ",sz:";
+	    result << orbitals.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << orbitals[i].printRadians() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

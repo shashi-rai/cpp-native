@@ -21,8 +21,6 @@
 #ifndef CHE_ATOM_H
 #define CHE_ATOM_H
 
-#include <string>
-#include <vector>
 #include "nucleus.h"
 #include "orbital.h"
 #include "period.h"
@@ -36,15 +34,15 @@ class Atom : public shp::Cellular {
 public:
     // Constructors
     Atom();
-    Atom(short number);
-    Atom(short number, std::string name);
-    Atom(std::string name);
-    Atom(std::string symbol, std::string name);
-    Atom(std::string name, float gradient);
-    Atom(std::string name, Nucleus& nucleus);
-    Atom(std::string name, float gradient, Nucleus& nucleus);
-    Atom(std::string name, Nucleus& nucleus, short valency);
-    Atom(std::string name, float gradient, Nucleus& nucleus, short valency);
+    Atom(const short int number);
+    Atom(const short int number, const std::string name);
+    Atom(const std::string name);
+    Atom(const std::string symbol, const std::string name);
+    Atom(const std::string name, const float gradient);
+    Atom(const std::string name, const Nucleus& nucleus);
+    Atom(const std::string name, const float gradient, const Nucleus& nucleus);
+    Atom(const std::string name, const Nucleus& nucleus, const short int valency);
+    Atom(const std::string name, const float gradient, Nucleus& nucleus, const short int valency);
 
     // Destructors
     ~Atom();
@@ -53,12 +51,12 @@ public:
     bool operator==(const Atom& peer) const;
 
     // Access operator
-    Period operator()(int x) { return getPeriod(x); }
-    const Period operator()(int x) const { return getPeriod(x); }
-    Orbital operator()(int x, int y) { return getPeriod(x).getOrbital(y); }
-    const Orbital operator()(int x, int y) const { return getPeriod(x).getOrbital(y); }
-    qft::Electron operator()(int x, int y, int z) { return getPeriod(x).getOrbital(y).getElectron(z); }
-    const qft::Electron operator()(int x, int y, int z) const { return getPeriod(x).getOrbital(y).getElectron(z); }
+    Period operator()(const int x) { return getPeriod(x); }
+    const Period operator()(const int x) const { return getPeriod(x); }
+    Orbital operator()(const int x, const int y) { return getPeriod(x).getOrbital(y); }
+    const Orbital operator()(const int x, const int y) const { return getPeriod(x).getOrbital(y); }
+    qft::Electron operator()(const int x, const int y, const int z) { return getPeriod(x).getOrbital(y).getElectron(z); }
+    const qft::Electron operator()(const int x, const int y, const int z) const { return getPeriod(x).getOrbital(y).getElectron(z); }
 
     // Getters
     Nucleus getNucleus() const { return nucleus; }
@@ -70,23 +68,23 @@ public:
 
     // Additional methods
     std::string getElementName() const;
-    Period getPeriod(int primary) const;
-    void setPeriod(int primary, const std::shared_ptr<che::Period> object);
-    Orbital getOrbital(int primary, int azimuthal) const;
-    void setOrbital(int primary, int azimuthal, const std::shared_ptr<che::Orbital> object);
-    qft::Electron getElectron(int primary, int azimuthal, int magnetic) const;
-    void setElectron(int primary, int azimuthal, int magnetic, const std::shared_ptr<qft::Electron> object);
+    Period getPeriod(const short int primary) const;
+    void setPeriod(const short int primary, const std::shared_ptr<che::Period> object);
+    Orbital getOrbital(const short int primary, const short int azimuthal) const;
+    void setOrbital(const short int primary, const short int azimuthal, const std::shared_ptr<che::Orbital> object);
+    qft::Electron getElectron(const short int primary, const short int azimuthal, const short int magnetic) const;
+    void setElectron(const short int primary, const short int azimuthal, const short int magnetic, const std::shared_ptr<qft::Electron> object);
     virtual void clear();
     virtual std::string print();
 public:
-    static const std::string getSymbol(short int number);
-    static const std::string getName(short int number);
+    static const std::string getSymbol(const short int number);
+    static const std::string getName(const short int number);
     static std::shared_ptr<che::Atom> initialize(short number, std::string name);
 private:
     static void createPeriods(std::shared_ptr<che::Period> peer,
-        std::string prefix, short int period, short int capacity);
+        std::string prefix, short int period, const short int capacity);
     static void createOrbitals(std::shared_ptr<che::Period> peer,
-        std::string prefix, short int period, short int starting, short int capacity);
+        std::string prefix, const short int period, const short int starting, const short int capacity);
 public:
     static const int ELEMENT_MIN_LIMIT;
     static const int ELEMENT_MAX_LIMIT;

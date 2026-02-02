@@ -22,48 +22,135 @@
 
 namespace shp {
 
+const int Cellular::DEFAULT_LIMIT = 0;
+
 Cellular::Cellular()
-        : Point(), shells() {
-
-}
-
-Cellular::Cellular(const float gradient)
-        : Point(gradient), shells() {
+        : Point(Direction::DEFAULT_RADIANS), shells(), limit(DEFAULT_LIMIT) {
 
 }
 
 Cellular::Cellular(const Azimuth& gradient)
-        : Point(gradient), shells() {
+        : Point(gradient), shells(), limit(DEFAULT_LIMIT) {
+
+}
+
+Cellular::Cellular(const float magnitude)
+        : Point(magnitude, Direction::DEFAULT_RADIANS), shells(), limit(DEFAULT_LIMIT) {
+
+}
+
+Cellular::Cellular(const float magnitude, const short int scaling)
+        : Point(magnitude, scaling, Direction::DEFAULT_RADIANS), shells(), limit(DEFAULT_LIMIT) {
+
+}
+
+Cellular::Cellular(const float magnitude, const short int scaling, const std::string unit)
+        : Point(magnitude, scaling, unit), shells(), limit(DEFAULT_LIMIT) {
+
+}
+
+Cellular::Cellular(const float magnitude, const short int scaling, const Unit& unit)
+        : Point(magnitude, scaling, unit), shells(), limit(DEFAULT_LIMIT) {
+
+}
+
+Cellular::Cellular(const float magnitude, const Azimuth& gradient)
+        : Point(magnitude, gradient), shells(), limit(DEFAULT_LIMIT) {
+
+}
+
+Cellular::Cellular(const float magnitude, const short int scaling, const Azimuth& gradient)
+        : Point(magnitude, scaling, gradient), shells(), limit(DEFAULT_LIMIT) {
+
+}
+
+Cellular::Cellular(const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient)
+        : Point(magnitude, scaling, unit, gradient), shells(), limit(DEFAULT_LIMIT) {
+
+}
+
+Cellular::Cellular(const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient)
+        : Point(magnitude, scaling, unit, gradient), shells(), limit(DEFAULT_LIMIT) {
 
 }
 
 Cellular::Cellular(const std::string name)
-        : Point(name), shells() {
-
-}
-
-Cellular::Cellular(const std::string name, const float gradient)
-        : Point(name, gradient), shells() {
+        : Point(name), shells(), limit(DEFAULT_LIMIT) {
 
 }
 
 Cellular::Cellular(const std::string name, const Azimuth& gradient)
-        : Point(name, gradient), shells() {
+        : Point(name, gradient), shells(), limit(0) {
+
+}
+
+Cellular::Cellular(const std::string name, const float magnitude)
+        : Point(name, magnitude, Direction::DEFAULT_RADIANS), shells(), limit(DEFAULT_LIMIT) {
+
+}
+
+Cellular::Cellular(const std::string name, const float magnitude, const short int scaling)
+        : Point(name, magnitude, scaling), shells(), limit(DEFAULT_LIMIT) {
+
+}
+
+Cellular::Cellular(const std::string name, const float magnitude, const short int scaling, const std::string unit)
+        : Point(name, magnitude, scaling, unit), shells(), limit(DEFAULT_LIMIT) {
+
+}
+
+Cellular::Cellular(const std::string name, const float magnitude, const short int scaling, const Unit& unit)
+        : Point(name, magnitude, scaling, unit), shells(), limit(DEFAULT_LIMIT) {
+
+}
+
+Cellular::Cellular(const std::string name, const float magnitude, const Azimuth& gradient)
+        : Point(name, magnitude, gradient), shells(), limit(DEFAULT_LIMIT) {
+
+}
+
+Cellular::Cellular(const std::string name, const float magnitude, const short int scaling, const Azimuth& gradient)
+        : Point(name, magnitude, scaling, gradient), shells(), limit(DEFAULT_LIMIT) {
+
+}
+
+Cellular::Cellular(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient)
+        : Point(name, magnitude, scaling, unit, gradient), shells(), limit(DEFAULT_LIMIT) {
+
+}
+
+Cellular::Cellular(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient)
+        : Point(name, magnitude, scaling, unit, gradient), shells(), limit(DEFAULT_LIMIT) {
+
+}
+
+Cellular::Cellular(const std::string name, const Azimuth& gradient, const int limit)
+        : Point(name, gradient), shells(), limit(limit) {
 
 }
 
 Cellular::Cellular(const std::string name, const ShellArray& shells)
-        : Point(name), shells(shells) {
+        : Point(name), shells(shells), limit(DEFAULT_LIMIT) {
 
 }
 
 Cellular::Cellular(const std::string name, const ShellArray& shells, const float gradient)
-        : Point(name, gradient), shells(shells) {
+        : Point(name, gradient), shells(shells), limit(DEFAULT_LIMIT) {
 
 }
 
 Cellular::Cellular(const std::string name, const ShellArray& shells, const Azimuth& gradient)
-        : Point(name, gradient), shells(shells) {
+        : Point(name, gradient), shells(shells), limit(DEFAULT_LIMIT) {
+
+}
+
+Cellular::Cellular(const std::string name, const ShellArray& shells, const float gradient, const int limit)
+        : Point(name, gradient), shells(shells), limit(limit) {
+
+}
+
+Cellular::Cellular(const std::string name, const ShellArray& shells, const Azimuth& gradient, const int limit)
+        : Point(name, gradient), shells(shells), limit(limit) {
 
 }
 
@@ -73,17 +160,17 @@ Cellular::~Cellular() {
 
 bool Cellular::operator==(const Cellular& peer) const {
     return (static_cast<const Point&>(*this) == static_cast<const Point&>(peer))
-        && (shells == peer.shells);
+        && (limit == peer.limit) && (shells == peer.shells);
 }
 
 bool Cellular::operator<(const Cellular& peer) const {
     return (static_cast<const Point&>(*this) < static_cast<const Point&>(peer))
-        && (shells < peer.shells);
+        && (limit < peer.limit) && (shells < peer.shells);
 }
 
 bool Cellular::operator>(const Cellular& peer) const {
     return (static_cast<const Point&>(*this) > static_cast<const Point&>(peer))
-        && (shells > peer.shells);
+        && (limit > peer.limit) && (shells > peer.shells);
 }
 
 bool Cellular::operator<=(const Cellular& peer) const {
@@ -99,7 +186,7 @@ bool Cellular::operator>=(const Cellular& peer) const {
 Cellular Cellular::operator+(const Cellular& peer) const {
     ShellArray result(shells);
     result.insert(result.end(), peer.shells.begin(), peer.shells.end());
-    return Cellular("+", result, (getGradient() + peer.getGradient()));
+    return Cellular("+", result, (getGradient() + peer.getGradient()), limit);
 }
 
 Cellular Cellular::operator-(const Cellular& peer) const {
@@ -110,7 +197,7 @@ Cellular Cellular::operator-(const Cellular& peer) const {
             result.erase(found);
         }
     }
-    return Cellular("-", result, (getGradient() - peer.getGradient()));
+    return Cellular("-", result, (getGradient() - peer.getGradient()), limit);
 }
 
 int Cellular::getShellCount() const {
@@ -129,7 +216,7 @@ Shell Cellular::get(const int index) const {
 }
 
 void Cellular::set(const int index, const Shell& object) {
-    if (index < 0) {
+    if (index < 0 || index >= limit) {
         return;
     }
     if (index < static_cast<int>(shells.size())) {
@@ -147,38 +234,61 @@ void Cellular::set(const int index, const Shell& object) {
 
 Point Cellular::copy() {
     Point self = *this;
-    Cellular fresh(self.getName(), this->shells, self.getGradient());
+    Cellular fresh(self.getName(), this->shells, self.getGradient(), this->limit);
     return fresh;
 }
 
 void Cellular::clear() {
     Point::clear();
+    limit = DEFAULT_LIMIT;
     shells.clear();
     return;
 }
 
 std::string Cellular::print() const {
     std::stringstream result;
-    result << "{ce";
-	result << Point::print() << ",sz:";
-	result << shells.size() << "}{";
-    for (int i = 0; i < shells.size(); i++) {
-        result << "\t" << shells[i].print() << std::endl;
-    }
+    result << "{◌";
+	result << Point::print();
     result << "}";
+	result << printShells();
     return result.str();
 }
 
 std::string Cellular::printRadians() const {
     std::stringstream result;
-    result << "{ce";
-	result << Point::printRadians() << ",sz:";
-	result << shells.size() << "}{";
-    for (int i = 0; i < shells.size(); i++) {
-        result << "\t" << shells[i].print() << std::endl;
-    }
+    result << "{◌";
+	result << Point::printRadians();
     result << "}";
+	result << printShellRadians();
     return result.str();
+}
+
+std::string Cellular::printShells() const {
+    std::stringstream result; int size = shells.size();
+    if (size > 0) {
+        result << ",sz:";
+	    result << shells.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << shells[i].print() << std::endl;
+        }
+        result << "}";
+    }
+	return result.str();
+}
+
+std::string Cellular::printShellRadians() const {
+    std::stringstream result; int size = shells.size();
+    if (size > 0) {
+        result << ",sz:";
+	    result << shells.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << shells[i].printRadians() << std::endl;
+        }
+        result << "}";
+    }
+	return result.str();
 }
 
 } // namespace shp

@@ -26,30 +26,30 @@ Polymer::Polymer() : Point(), monomers() {
 
 }
 
-Polymer::Polymer(float gradient) : Point(), monomers() {
+Polymer::Polymer(const float gradient) : Point(), monomers() {
 
 }
 
-Polymer::Polymer(float amplitude, float gradient)
+Polymer::Polymer(const float amplitude, const float gradient)
 		: Point(amplitude, gradient), monomers()  {
 
 }
 
-Polymer::Polymer(std::string name) : Point(name), monomers() {
+Polymer::Polymer(const std::string name) : Point(name), monomers() {
 
 }
 
-Polymer::Polymer(std::string name, float gradient)
+Polymer::Polymer(const std::string name, const float gradient)
 		: Point(name, gradient), monomers() {
 
 }
 
-Polymer::Polymer(std::string name, float amplitude, float gradient)
+Polymer::Polymer(const std::string name, const float amplitude, const float gradient)
 		: Point(name, amplitude, gradient), monomers() {
 
 }
 
-Polymer::Polymer(std::string name, const MoleculeArray& monomers)
+Polymer::Polymer(const std::string name, const MoleculeArray& monomers)
         : Point(name), monomers(monomers) {
 
 }
@@ -83,7 +83,7 @@ int Polymer::getMoleculeCount() const {
     return monomers.size();
 }
 
-Molecule Polymer::get(int index) const {
+Molecule Polymer::get(const int index) const {
     Molecule result;
     if (index < 0) {
         return result;
@@ -94,7 +94,7 @@ Molecule Polymer::get(int index) const {
     return monomers[index];
 }
 
-void Polymer::set(int index, const Molecule& object) {
+void Polymer::set(const int index, const Molecule& object) {
     if (index < 0) {
         return;
     }
