@@ -801,7 +801,7 @@ std::string Angular::print() const {
 std::string Angular::printRadians() const {
     std::stringstream result;
     result << "{";
-    result << Distance::print() << ",";
+    result << Distance::printRadians() << ",";
     result << polar.printRadians() << ",";
     result << azimuth.printRadians() << "}";
 	return result.str();
@@ -814,6 +814,21 @@ std::string Angular::printEuler() const {
     result << polar.printEuler() << ",";
     result << azimuth.printEuler() << "}";
 	return result.str();
+}
+
+const Angular Angular::getWedgeAngle(const float azimuthal, const float polar) {
+    Angular result;
+    if (azimuthal > Direction::DEFAULT_RADIANS) {
+        result.setAzimuth(Azimuth(Direction::DEGREE_360 / azimuthal));
+    } else {
+        result.setAzimuth(Azimuth(Direction::DEGREE_360));
+    }
+    if (polar > Direction::DEFAULT_RADIANS) {
+        result.setPolar(Polar(Direction::DEGREE_360 / polar));
+    } else {
+        result.setPolar(Polar(Direction::DEGREE_360));
+    }
+    return result;
 }
 
 } // namespace shp

@@ -59,6 +59,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/frame.o \
 		$(OBJFOLDR)/frequency.o \
 		$(OBJFOLDR)/linear.o \
+		$(OBJFOLDR)/medium.o \
 		$(OBJFOLDR)/phase.o \
 		$(OBJFOLDR)/planar.o \
 		$(OBJFOLDR)/point.o \
@@ -89,6 +90,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/frame.o \
 		$(OBJFOLDR)/frequency.o \
 		$(OBJFOLDR)/linear.o \
+		$(OBJFOLDR)/medium.o \
 		$(OBJFOLDR)/phase.o \
 		$(OBJFOLDR)/planar.o \
 		$(OBJFOLDR)/point.o \
@@ -146,6 +148,9 @@ $(OBJFOLDR)/frequency.o: frequency.cpp
 
 $(OBJFOLDR)/linear.o: linear.cpp
 	$(CPPTOOL) -c linear.cpp -o $(OBJFOLDR)/linear.o $(CXXFLAGS)
+
+$(OBJFOLDR)/medium.o: medium.cpp
+	$(CPPTOOL) -c medium.cpp -o $(OBJFOLDR)/medium.o $(CXXFLAGS)
 
 $(OBJFOLDR)/phase.o: phase.cpp
 	$(CPPTOOL) -c phase.cpp -o $(OBJFOLDR)/phase.o $(CXXFLAGS)

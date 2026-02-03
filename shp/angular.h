@@ -209,6 +209,8 @@ public:
     virtual std::string printRadians() const;
     virtual std::string printEuler() const;
 public:
+    static const Angular getWedgeAngle(const float azimuthal, const float polar);
+public:
     static const float DEFAULT_RADIUS;
     static const float DEFAULT_POLARITY;
     static const float DEFAULT_AZIMUTHAL;

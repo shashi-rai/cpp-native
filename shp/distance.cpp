@@ -73,13 +73,18 @@ Distance::Distance(const float length, const short int scaling, const Unit& unit
 }
 
 Distance::Distance(const Azimuth& orientation)
-        : Signal(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+        : Signal(orientation, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         modulation(Direction::DEFAULT_RADIANS) {
 
 }
 
 Distance::Distance(const Polar& modulation)
         : Signal(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)), modulation(modulation) {
+
+}
+
+Distance::Distance(const Polar& modulation, const Azimuth& orientation)
+        : Signal(orientation, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)), modulation(modulation) {
 
 }
 
@@ -115,6 +120,12 @@ Distance::Distance(const float length, const Polar& modulation)
 
 }
 
+Distance::Distance(const float length, const Polar& modulation, const Azimuth& orientation)
+        : Signal(orientation, length, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+        modulation(modulation) {
+
+}
+
 Distance::Distance(const float length, const std::string unit, const float orientation)
         : Signal(orientation, length, unit), modulation(Direction::DEFAULT_RADIANS) {
 
@@ -145,6 +156,12 @@ Distance::Distance(const float length, const Unit& unit, const Polar& modulation
 
 }
 
+Distance::Distance(const float length, const Unit& unit, const Polar& modulation,
+        const Azimuth& orientation)
+        : Signal(orientation, length, unit), modulation(modulation) {
+
+}
+
 Distance::Distance(const float length, const short int scaling, const float orientation)
         : Signal(orientation, length, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         modulation(Direction::DEFAULT_RADIANS) {
@@ -159,6 +176,13 @@ Distance::Distance(const float length, const short int scaling, const Azimuth& o
 
 Distance::Distance(const float length, const short int scaling, const Polar& modulation)
         : Signal(length, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+        modulation(modulation) {
+
+}
+
+Distance::Distance(const float length, const short int scaling, const Polar& modulation,
+        const Azimuth& orientation)
+        : Signal(orientation, length, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
         modulation(modulation) {
 
 }
