@@ -79,7 +79,7 @@ Energy::Energy(const std::string name, const std::shared_ptr<Field> mfield, cons
 }
 
 Energy::Energy(const float gradient)
-        : Phase(gradient),
+        : Phase(shp::Azimuth(gradient)),
 		wavelength(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
 		mass(shp::Quantity::DEFAULT_VALUE),

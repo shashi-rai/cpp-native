@@ -25,73 +25,73 @@ namespace ecn {
 const std::string Capacitance::UNIT = "F";
 
 Capacitance::Capacitance()
-        : shp::Quantity(UNIT), positive(), negative() {
+        : shp::Signal(UNIT), positive(), negative() {
 
 }
 
 Capacitance::Capacitance(const Conductor& positive, const Conductor& negative)
-        : shp::Quantity(UNIT), positive(positive), negative(negative) {
+        : shp::Signal(UNIT), positive(positive), negative(negative) {
 
 }
 
 Capacitance::Capacitance(const float magnitude)
-        : shp::Quantity(magnitude, UNIT), positive(), negative() {
+        : shp::Signal(magnitude, UNIT), positive(), negative() {
 
 }
 
 Capacitance::Capacitance(const short int scaling)
-        : shp::Quantity(scaling, UNIT), positive(), negative() {
+        : shp::Signal(scaling, UNIT), positive(), negative() {
 
 }
 
 Capacitance::Capacitance(const std::string unit)
-        : shp::Quantity(unit), positive(), negative() {
+        : shp::Signal(unit), positive(), negative() {
 
 }
 
 Capacitance::Capacitance(const short int scaling, const std::string unit)
-        : shp::Quantity(scaling, unit), positive(), negative() {
+        : shp::Signal(scaling, unit), positive(), negative() {
 
 }
 
 Capacitance::Capacitance(const shp::Unit& unit)
-        : shp::Quantity(unit), positive(), negative() {
+        : shp::Signal(unit), positive(), negative() {
 
 }
 
 Capacitance::Capacitance(const short int scaling, const shp::Unit& unit)
-        : shp::Quantity(scaling, unit), positive(), negative() {
+        : shp::Signal(scaling, unit), positive(), negative() {
 
 }
 
 Capacitance::Capacitance(const float magnitude, const std::string unit)
-        : shp::Quantity(magnitude, unit), positive(), negative() {
+        : shp::Signal(magnitude, unit), positive(), negative() {
 
 }
 
 Capacitance::Capacitance(const float magnitude, const shp::Unit& unit)
-        : shp::Quantity(magnitude, unit), positive(), negative() {
+        : shp::Signal(magnitude, unit), positive(), negative() {
 
 }
 
 Capacitance::Capacitance(const float magnitude, const short int scaling)
-        : shp::Quantity(magnitude, scaling, UNIT), positive(), negative() {
+        : shp::Signal(magnitude, scaling, UNIT), positive(), negative() {
 
 }
 
 Capacitance::Capacitance(const float magnitude, const short int scaling, const std::string unit)
-        : shp::Quantity(magnitude, scaling, unit), positive(), negative() {
+        : shp::Signal(magnitude, scaling, unit), positive(), negative() {
 
 }
 
 Capacitance::Capacitance(const float magnitude, const short int scaling, const shp::Unit& unit)
-        : shp::Quantity(magnitude, scaling, unit), positive(), negative() {
+        : shp::Signal(magnitude, scaling, unit), positive(), negative() {
 
 }
 
 Capacitance::Capacitance(const float magnitude, const short int scaling, const shp::Unit& unit,
         const Conductor& positive, const Conductor& negative)
-        : shp::Quantity(magnitude, scaling, unit), positive(positive), negative(negative) {
+        : shp::Signal(magnitude, scaling, unit), positive(positive), negative(negative) {
 
 }
 
@@ -100,41 +100,41 @@ Capacitance::~Capacitance() {
 }
 
 bool Capacitance::operator==(const Capacitance& peer) const {
-    return (static_cast<const shp::Quantity&>(*this) == static_cast<const shp::Quantity&>(peer))
+    return (static_cast<const shp::Signal&>(*this) == static_cast<const shp::Signal&>(peer))
         && (positive == peer.positive) && (negative == peer.negative);
 }
 
 Capacitance Capacitance::operator+(const Capacitance& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity capacitance = (self + other);
+    shp::Signal self = *this, other = peer;
+    shp::Signal capacitance = (self + other);
     return Capacitance(capacitance.getMagnitude(), capacitance.getScaling(), capacitance.getUnit(),
         (positive + peer.positive), (negative + peer.negative));
 }
 
 Capacitance Capacitance::operator-(const Capacitance& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity capacitance = (self - other);
+    shp::Signal self = *this, other = peer;
+    shp::Signal capacitance = (self - other);
     return Capacitance(capacitance.getMagnitude(), capacitance.getScaling(), capacitance.getUnit(),
         (positive - peer.positive), (negative - peer.negative));
 }
 
 Capacitance Capacitance::operator*(const Capacitance& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity capacitance = (self * other);
+    shp::Signal self = *this, other = peer;
+    shp::Signal capacitance = (self * other);
     return Capacitance(capacitance.getMagnitude(), capacitance.getScaling(), capacitance.getUnit(),
         (positive * peer.positive), (negative * peer.negative));
 }
 
 Capacitance Capacitance::operator/(const Capacitance& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity capacitance = (self / other);
+    shp::Signal self = *this, other = peer;
+    shp::Signal capacitance = (self / other);
     return Capacitance(capacitance.getMagnitude(), capacitance.getScaling(), capacitance.getUnit(),
         (positive / peer.positive), (negative / peer.negative));
 }
 
 Capacitance Capacitance::operator%(const Capacitance& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity capacitance = (self % other);
+    shp::Signal self = *this, other = peer;
+    shp::Signal capacitance = (self % other);
     return Capacitance(capacitance.getMagnitude(), capacitance.getScaling(), capacitance.getUnit(),
         (positive % peer.positive), (negative % peer.negative));
 }
@@ -148,20 +148,20 @@ shp::Potential Capacitance::getThreshold() const {
 }
 
 Capacitance Capacitance::copy() {
-    Capacitance fresh(getMagnitude(), getScaling(), getUnit(), positive, negative);
+    Capacitance fresh(getMagnitude(), getScaling(), getUnit(), this->positive, this->negative);
     return fresh;
 }
 
 void Capacitance::clear() {
-    shp::Quantity::clear();
+    shp::Signal::clear();
     positive.clear();
     negative.clear();
     return;
 }
 
-std::string Capacitance::print() {
+std::string Capacitance::print() const {
     std::stringstream result;
-    result << shp::Quantity::print() << ",+:";
+    result << shp::Signal::print() << ",+:";
     result << positive.print() << ",-:";
     result << negative.print();
 	return result.str();

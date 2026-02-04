@@ -21,10 +21,8 @@
 #ifndef ECN_TRANSISTOR_H
 #define ECN_TRANSISTOR_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "conductor.h"
+#include "element.h"
 
 namespace ecn {
 
@@ -36,8 +34,8 @@ public:
     // Constructors
     Transistor();
     Transistor(const Conductor& emitter, const Conductor& base, const Conductor& collector);
-    Transistor(std::string name);
-    Transistor(std::string name, const Conductor& emitter, const Conductor& base, const Conductor& collector);
+    Transistor(const std::string name);
+    Transistor(const std::string name, const Conductor& emitter, const Conductor& base, const Conductor& collector);
 
     // Destructors
     ~Transistor();

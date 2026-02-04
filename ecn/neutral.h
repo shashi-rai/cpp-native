@@ -21,10 +21,8 @@
 #ifndef ECN_NEUTRAL_H
 #define ECN_NEUTRAL_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "conductor.h"
+#include "element.h"
 
 namespace ecn {
 
@@ -34,8 +32,8 @@ public:
     // Constructors
     Neutral();
     Neutral(const Conductor& ground);
-    Neutral(std::string name);
-    Neutral(std::string name, const Conductor& ground);
+    Neutral(const std::string name);
+    Neutral(const std::string name, const Conductor& ground);
 
     // Destructors
     ~Neutral();
@@ -58,10 +56,10 @@ public:
     bool isCharged() const;
     qft::Charge getCharge() const;
     void setCharge(const qft::Charge& electric);
-    shp::Quantity getVoltage() const;
+    shp::Signal getVoltage() const;
     Neutral copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 };
 
 typedef std::vector<Neutral > NeutralArray;

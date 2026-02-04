@@ -21,9 +21,6 @@
 #ifndef ECN_ALTERNATING_H
 #define ECN_ALTERNATING_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "neutral.h"
 
 namespace ecn {
@@ -42,13 +39,13 @@ public:
         const Conductor& neutral);
     Alternating(const Conductor& line1, const Conductor& line2, const Conductor& line3,
         const Conductor& neutral);
-    Alternating(std::string name);
-    Alternating(std::string name, const Conductor& line1);
-    Alternating(std::string name, const Conductor& line1,
+    Alternating(const std::string name);
+    Alternating(const std::string name, const Conductor& line1);
+    Alternating(const std::string name, const Conductor& line1,
         const Conductor& neutral);
-    Alternating(std::string name, const Conductor& line1, const Conductor& line2,
+    Alternating(const std::string name, const Conductor& line1, const Conductor& line2,
         const Conductor& neutral);
-    Alternating(std::string name, const Conductor& line1, const Conductor& line2, const Conductor& line3,
+    Alternating(const std::string name, const Conductor& line1, const Conductor& line2, const Conductor& line3,
         const Conductor& neutral);
 
     // Destructors

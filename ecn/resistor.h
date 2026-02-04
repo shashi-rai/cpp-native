@@ -21,9 +21,6 @@
 #ifndef ECN_RESISTOR_H
 #define ECN_RESISTOR_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "element.h"
 #include "resistance.h"
 
@@ -35,8 +32,8 @@ public:
     // Constructors
     Resistor();
     Resistor(const Resistance& resistance);
-    Resistor(std::string name);
-    Resistor(std::string name, const Resistance& resistance);
+    Resistor(const std::string name);
+    Resistor(const std::string name, const Resistance& resistance);
 
     // Destructors
     ~Resistor();

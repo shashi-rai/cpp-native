@@ -26,7 +26,7 @@ Element::Element() : name() {
 
 }
 
-Element::Element(std::string name) : name(name) {
+Element::Element(const std::string name) : name(name) {
 
 }
 
@@ -69,7 +69,7 @@ void Element::clear() {
     return;
 }
 
-std::string Element::print() {
+std::string Element::print() const {
     std::stringstream result;
 	result << name;
 	return result.str();

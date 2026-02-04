@@ -21,9 +21,6 @@
 #ifndef ECN_SOURCE_H
 #define ECN_SOURCE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "neutral.h"
 #include "../shp/potential.h"
 
@@ -36,9 +33,9 @@ public:
     Source();
     Source(const Conductor& positive);
     Source(const Conductor& positive, const Conductor& negative);
-    Source(std::string name);
-    Source(std::string name, const Conductor& positive);
-    Source(std::string name, const Conductor& positive, const Conductor& negative);
+    Source(const std::string name);
+    Source(const std::string name, const Conductor& positive);
+    Source(const std::string name, const Conductor& positive, const Conductor& negative);
 
     // Destructors
     ~Source();

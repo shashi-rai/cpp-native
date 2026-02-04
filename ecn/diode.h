@@ -21,9 +21,6 @@
 #ifndef ECN_DIODE_H
 #define ECN_DIODE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "switch.h"
 
 namespace ecn {
@@ -42,15 +39,15 @@ public:
     Diode(const bool status, const Conductor& positive, const Conductor& negative);
     Diode(const bool status, const Conductor& positive, const Conductor& negative,
         const shp::Potential& threshold);
-    Diode(std::string name);
-    Diode(std::string name, const bool status);
-    Diode(std::string name, const shp::Potential& threshold);
-    Diode(std::string name, const Conductor& positive, const Conductor& negative);
-    Diode(std::string name, const Conductor& positive, const Conductor& negative,
+    Diode(const std::string name);
+    Diode(const std::string name, const bool status);
+    Diode(const std::string name, const shp::Potential& threshold);
+    Diode(const std::string name, const Conductor& positive, const Conductor& negative);
+    Diode(const std::string name, const Conductor& positive, const Conductor& negative,
         const shp::Potential& threshold);
-    Diode(std::string name, const bool status, const shp::Potential& threshold);
-    Diode(std::string name, const bool status, const Conductor& positive, const Conductor& negative);
-    Diode(std::string name, const bool status, const Conductor& positive, const Conductor& negative,
+    Diode(const std::string name, const bool status, const shp::Potential& threshold);
+    Diode(const std::string name, const bool status, const Conductor& positive, const Conductor& negative);
+    Diode(const std::string name, const bool status, const Conductor& positive, const Conductor& negative,
         const shp::Potential& threshold);
 
     // Destructors

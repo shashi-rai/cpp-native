@@ -50,29 +50,29 @@ Alternating::Alternating(const Conductor& line1, const Conductor& line2, const C
 
 }
 
-Alternating::Alternating(std::string name)
+Alternating::Alternating(const std::string name)
         : Neutral(name), line1(), line2(), line3() {
 
 }
 
-Alternating::Alternating(std::string name, const Conductor& line1)
+Alternating::Alternating(const std::string name, const Conductor& line1)
         : Neutral(name), line1(line1), line2(), line3() {
 
 }
 
-Alternating::Alternating(std::string name, const Conductor& line1,
+Alternating::Alternating(const std::string name, const Conductor& line1,
         const Conductor& neutral)
         : Neutral(name, neutral), line1(line1), line2(), line3() {
 
 }
 
-Alternating::Alternating(std::string name, const Conductor& line1, const Conductor& line2,
+Alternating::Alternating(const std::string name, const Conductor& line1, const Conductor& line2,
         const Conductor& neutral)
         : Neutral(name, neutral), line1(line1), line2(line2), line3() {
 
 }
 
-Alternating::Alternating(std::string name, const Conductor& line1, const Conductor& line2,
+Alternating::Alternating(const std::string name, const Conductor& line1, const Conductor& line2,
         const Conductor& line3, const Conductor& neutral)
         : Neutral(name, neutral), line1(line1), line2(line2), line3(line3) {
 
@@ -158,7 +158,7 @@ shp::Potential Alternating::getVoltageL3() const {
 }
 
 Alternating Alternating::copy() {
-    Alternating fresh(getName(), line1, line2, line3, getNeutral());
+    Alternating fresh(Neutral::getName(), this->line1, this->line2, this->line3, this->getNeutral());
     return fresh;
 }
 

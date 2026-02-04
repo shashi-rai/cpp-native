@@ -37,17 +37,17 @@ Source::Source(const Conductor& positive, const Conductor& negative)
 
 }
 
-Source::Source(std::string name)
+Source::Source(const std::string name)
         : Neutral(name), positive() {
 
 }
 
-Source::Source(std::string name, const Conductor& positive)
+Source::Source(const std::string name, const Conductor& positive)
         : Neutral(name), positive(positive) {
 
 }
 
-Source::Source(std::string name, const Conductor& positive, const Conductor& negative)
+Source::Source(const std::string name, const Conductor& positive, const Conductor& negative)
         : Neutral(name, negative), positive(positive) {
 
 }

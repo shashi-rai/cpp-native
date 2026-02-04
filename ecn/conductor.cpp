@@ -65,45 +65,45 @@ Conductor::Conductor(const qft::Current& current, const Reluctance& reluctance,
 
 }
 
-Conductor::Conductor(std::string name)
+Conductor::Conductor(const std::string name)
         : Core(name), current(UNIT), resistance() {
 
 }
 
-Conductor::Conductor(std::string name, const qft::Current& current)
+Conductor::Conductor(const std::string name, const qft::Current& current)
         : Core(name), current(current), resistance() {
 
 }
 
-Conductor::Conductor(std::string name, const Resistance& resistance)
+Conductor::Conductor(const std::string name, const Resistance& resistance)
         : Core(name), current(UNIT), resistance(resistance) {
 
 }
 
-Conductor::Conductor(std::string name, const qft::Current& current,
+Conductor::Conductor(const std::string name, const qft::Current& current,
 		const Resistance& resistance)
         : Core(name), current(current), resistance(resistance) {
 
 }
 
-Conductor::Conductor(std::string name, const Reluctance& reluctance)
+Conductor::Conductor(const std::string name, const Reluctance& reluctance)
         : Core(name, reluctance), current(UNIT), resistance() {
 
 }
 
-Conductor::Conductor(std::string name, const qft::Current& current,
+Conductor::Conductor(const std::string name, const qft::Current& current,
 		const Reluctance& reluctance)
         : Core(name, reluctance), current(current), resistance() {
 
 }
 
-Conductor::Conductor(std::string name,
+Conductor::Conductor(const std::string name,
         const Reluctance& reluctance, const Resistance& resistance)
         : Core(name, reluctance), current(UNIT), resistance(resistance) {
 
 }
 
-Conductor::Conductor(std::string name, const qft::Current& current,
+Conductor::Conductor(const std::string name, const qft::Current& current,
         const Reluctance& reluctance, const Resistance& resistance)
         : Core(name, reluctance), current(current), resistance(resistance) {
 
@@ -165,17 +165,17 @@ void Conductor::setCharge(const qft::Charge& electric) {
 	current.setCharge(electric);
 }
 
-shp::Quantity Conductor::getVoltage() const {
+shp::Signal Conductor::getVoltage() const {
 	shp::Signal chargeflow = current.getChargeFlow();
-	shp::Signal potential = (chargeflow * resistance);
-	short int scaling = (chargeflow.getScaling() + resistance.getScaling());
-	shp::Quantity result(potential.getMagnitude(),
-		scaling, shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_POTENTIAL));
+	shp::Signal potential = chargeflow.getDotProduct(resistance);
+	shp::Signal result(potential.getOrientation(), potential.getMagnitude(), potential.getScaling(),
+		shp::Unit::getDerivedSymbol(shp::Unit::ELECTRIC_POTENTIAL));
 	return result;
 }
 
-Conductor Conductor::copy() {
-    Conductor fresh(getName(), current, getReluctance(), resistance);
+shp::Distance Conductor::copy() {
+	Conductor self = *this;
+    Conductor fresh(Core::getName(), self.current, Core::getReluctance(), self.resistance);
     return fresh;
 }
 
@@ -186,7 +186,7 @@ void Conductor::clear() {
     return;
 }
 
-std::string Conductor::print() {
+std::string Conductor::print() const {
     std::stringstream result;
 	result << Core::print() << ",R:";
     result << resistance.print() << ",I:";

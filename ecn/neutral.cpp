@@ -32,12 +32,12 @@ Neutral::Neutral(const Conductor& ground)
 
 }
 
-Neutral::Neutral(std::string name)
+Neutral::Neutral(const std::string name)
         : Element(name), line() {
 
 }
 
-Neutral::Neutral(std::string name, const Conductor& ground)
+Neutral::Neutral(const std::string name, const Conductor& ground)
         : Element(name), line(ground) {
 
 }
@@ -83,7 +83,7 @@ void Neutral::setCharge(const qft::Charge& electric) {
     line.setCharge(electric);
 }
 
-shp::Quantity Neutral::getVoltage() const {
+shp::Signal Neutral::getVoltage() const {
     return line.getVoltage();
 }
 
@@ -98,7 +98,7 @@ void Neutral::clear() {
     return;
 }
 
-std::string Neutral::print() {
+std::string Neutral::print() const {
     std::stringstream result;
     result << Element::print() << ",-:";
     result << line.print();

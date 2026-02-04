@@ -37,7 +37,7 @@ Inductor::Inductor(const std::string name)
 
 }
 
-Inductor::Inductor(std::string name, const Inductance& inductance)
+Inductor::Inductor(const std::string name, const Inductance& inductance)
         : Element(name), inductance(inductance) {
 
 }

@@ -21,10 +21,8 @@
 #ifndef ECN_TRANSFORMER_H
 #define ECN_TRANSFORMER_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "coil.h"
+#include "element.h"
 
 namespace ecn {
 

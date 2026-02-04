@@ -21,15 +21,12 @@
 #ifndef ECN_CAPACITANCE_H
 #define ECN_CAPACITANCE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "conductor.h"
 #include "../shp/potential.h"
 
 namespace ecn {
 
-class Capacitance : public shp::Quantity {
+class Capacitance : public shp::Signal {
     Conductor positive;
     Conductor negative;
 public:
@@ -73,7 +70,7 @@ public:
     shp::Potential getThreshold() const;
     Capacitance copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 public:
     static const std::string UNIT;
 };

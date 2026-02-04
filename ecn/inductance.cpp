@@ -25,73 +25,73 @@ namespace ecn {
 const std::string Inductance::UNIT = "H";
 
 Inductance::Inductance()
-        : shp::Quantity(UNIT), threshold() {
+        : shp::Signal(UNIT), threshold() {
 
 }
 
 Inductance::Inductance(const shp::Potential& threshold)
-        : shp::Quantity(UNIT), threshold(threshold) {
+        : shp::Signal(UNIT), threshold(threshold) {
 
 }
 
 Inductance::Inductance(const float magnitude)
-        : shp::Quantity(magnitude, UNIT), threshold() {
+        : shp::Signal(magnitude, UNIT), threshold() {
 
 }
 
 Inductance::Inductance(const short int scaling)
-        : shp::Quantity(scaling, UNIT), threshold() {
+        : shp::Signal(scaling, UNIT), threshold() {
 
 }
 
 Inductance::Inductance(const std::string unit)
-        : shp::Quantity(unit), threshold() {
+        : shp::Signal(unit), threshold() {
 
 }
 
 Inductance::Inductance(const short int scaling, const std::string unit)
-        : shp::Quantity(scaling, unit), threshold() {
+        : shp::Signal(scaling, unit), threshold() {
 
 }
 
 Inductance::Inductance(const shp::Unit& unit)
-        : shp::Quantity(unit), threshold() {
+        : shp::Signal(unit), threshold() {
 
 }
 
 Inductance::Inductance(const short int scaling, const shp::Unit& unit)
-        : shp::Quantity(scaling, unit), threshold() {
+        : shp::Signal(scaling, unit), threshold() {
 
 }
 
 Inductance::Inductance(const float magnitude, const std::string unit)
-        : shp::Quantity(magnitude, unit), threshold() {
+        : shp::Signal(magnitude, unit), threshold() {
 
 }
 
 Inductance::Inductance(const float magnitude, const shp::Unit& unit)
-        : shp::Quantity(magnitude, unit), threshold() {
+        : shp::Signal(magnitude, unit), threshold() {
 
 }
 
 Inductance::Inductance(const float magnitude, const short int scaling)
-        : shp::Quantity(magnitude, scaling, UNIT), threshold() {
+        : shp::Signal(magnitude, scaling, UNIT), threshold() {
 
 }
 
 Inductance::Inductance(const float magnitude, const short int scaling, const std::string unit)
-        : shp::Quantity(magnitude, scaling, unit), threshold() {
+        : shp::Signal(magnitude, scaling, unit), threshold() {
 
 }
 
 Inductance::Inductance(const float magnitude, const short int scaling, const shp::Unit& unit)
-        : shp::Quantity(magnitude, scaling, unit), threshold() {
+        : shp::Signal(magnitude, scaling, unit), threshold() {
 
 }
 
 Inductance::Inductance(const float magnitude, const short int scaling, const shp::Unit& unit,
         const shp::Potential& threshold)
-        : shp::Quantity(magnitude, scaling, unit), threshold(threshold) {
+        : shp::Signal(magnitude, scaling, unit), threshold(threshold) {
 
 }
 
@@ -100,59 +100,59 @@ Inductance::~Inductance() {
 }
 
 bool Inductance::operator==(const Inductance& peer) const {
-    return (static_cast<const shp::Quantity&>(*this) == static_cast<const shp::Quantity&>(peer))
+    return (static_cast<const shp::Signal&>(*this) == static_cast<const shp::Signal&>(peer))
 		&& (threshold == peer.threshold);
 }
 
 Inductance Inductance::operator+(const Inductance& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity inductance = (self + other);
+    shp::Signal self = *this, other = peer;
+    shp::Signal inductance = (self + other);
     return Inductance(inductance.getMagnitude(), inductance.getScaling(), inductance.getUnit(),
         (threshold + peer.threshold));
 }
 
 Inductance Inductance::operator-(const Inductance& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity inductance = (self - other);
+    shp::Signal self = *this, other = peer;
+    shp::Signal inductance = (self - other);
     return Inductance(inductance.getMagnitude(), inductance.getScaling(), inductance.getUnit(),
         (threshold - peer.threshold));
 }
 
 Inductance Inductance::operator*(const Inductance& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity inductance = (self * other);
+    shp::Signal self = *this, other = peer;
+    shp::Signal inductance = (self * other);
     return Inductance(inductance.getMagnitude(), inductance.getScaling(), inductance.getUnit(),
         (threshold * peer.threshold));
 }
 
 Inductance Inductance::operator/(const Inductance& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity inductance = (self / other);
+    shp::Signal self = *this, other = peer;
+    shp::Signal inductance = (self / other);
     return Inductance(inductance.getMagnitude(), inductance.getScaling(), inductance.getUnit(),
         (threshold / peer.threshold));
 }
 
 Inductance Inductance::operator%(const Inductance& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity inductance = (self % other);
+    shp::Signal self = *this, other = peer;
+    shp::Signal inductance = (self % other);
     return Inductance(inductance.getMagnitude(), inductance.getScaling(), inductance.getUnit(),
         (threshold % peer.threshold));
 }
 
 Inductance Inductance::copy() {
-    Inductance fresh(getMagnitude(), getScaling(), getUnit(), threshold);
+    Inductance fresh(getMagnitude(), getScaling(), getUnit(), this->threshold);
     return fresh;
 }
 
 void Inductance::clear() {
-	shp::Quantity::clear();
+	shp::Signal::clear();
     threshold.clear();
     return;
 }
 
-std::string Inductance::print() {
+std::string Inductance::print() const {
     std::stringstream result;
-	result << shp::Quantity::print() << ",t:";
+	result << shp::Signal::print() << ",t:";
     result << threshold.print();
 	return result.str();
 }

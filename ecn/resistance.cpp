@@ -25,73 +25,73 @@ namespace ecn {
 const std::string Resistance::UNIT = "Ω";
 
 Resistance::Resistance()
-        : shp::Quantity(UNIT), threshold() {
+        : shp::Signal(UNIT), threshold() {
 
 }
 
 Resistance::Resistance(const shp::Potential& threshold)
-        : shp::Quantity(UNIT), threshold(threshold) {
+        : shp::Signal(UNIT), threshold(threshold) {
 
 }
 
 Resistance::Resistance(const float magnitude)
-        : shp::Quantity(magnitude, UNIT), threshold() {
+        : shp::Signal(magnitude, UNIT), threshold() {
 
 }
 
 Resistance::Resistance(const short int scaling)
-        : shp::Quantity(scaling, UNIT), threshold() {
+        : shp::Signal(scaling, UNIT), threshold() {
 
 }
 
 Resistance::Resistance(const std::string unit)
-        : shp::Quantity(unit), threshold() {
+        : shp::Signal(unit), threshold() {
 
 }
 
 Resistance::Resistance(const short int scaling, const std::string unit)
-        : shp::Quantity(scaling, unit), threshold() {
+        : shp::Signal(scaling, unit), threshold() {
 
 }
 
 Resistance::Resistance(const shp::Unit& unit)
-        : shp::Quantity(unit), threshold() {
+        : shp::Signal(unit), threshold() {
 
 }
 
 Resistance::Resistance(const short int scaling, const shp::Unit& unit)
-        : shp::Quantity(scaling, unit), threshold() {
+        : shp::Signal(scaling, unit), threshold() {
 
 }
 
 Resistance::Resistance(const float magnitude, const std::string unit)
-        : shp::Quantity(magnitude, unit), threshold() {
+        : shp::Signal(magnitude, unit), threshold() {
 
 }
 
 Resistance::Resistance(const float magnitude, const shp::Unit& unit)
-        : shp::Quantity(magnitude, unit), threshold() {
+        : shp::Signal(magnitude, unit), threshold() {
 
 }
 
 Resistance::Resistance(const float magnitude, const short int scaling)
-        : shp::Quantity(magnitude, scaling, UNIT), threshold() {
+        : shp::Signal(magnitude, scaling, UNIT), threshold() {
 
 }
 
 Resistance::Resistance(const float magnitude, const short int scaling, const std::string unit)
-        : shp::Quantity(magnitude, scaling, unit), threshold() {
+        : shp::Signal(magnitude, scaling, unit), threshold() {
 
 }
 
 Resistance::Resistance(const float magnitude, const short int scaling, const shp::Unit& unit)
-        : shp::Quantity(magnitude, scaling, unit), threshold() {
+        : shp::Signal(magnitude, scaling, unit), threshold() {
 
 }
 
 Resistance::Resistance(const float magnitude, const short int scaling, const shp::Unit& unit,
         const shp::Potential& threshold)
-        : shp::Quantity(magnitude, scaling, unit), threshold(threshold) {
+        : shp::Signal(magnitude, scaling, unit), threshold(threshold) {
 
 }
 
@@ -100,59 +100,59 @@ Resistance::~Resistance() {
 }
 
 bool Resistance::operator==(const Resistance& peer) const {
-    return (static_cast<const shp::Quantity&>(*this) == static_cast<const shp::Quantity&>(peer))
+    return (static_cast<const shp::Signal&>(*this) == static_cast<const shp::Signal&>(peer))
         && (threshold == peer.threshold);
 }
 
 Resistance Resistance::operator+(const Resistance& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity resistance = (self + other);
+    shp::Signal self = *this, other = peer;
+    shp::Signal resistance = (self + other);
     return Resistance(resistance.getMagnitude(), resistance.getScaling(), resistance.getUnit(),
         (threshold + peer.threshold));
 }
 
 Resistance Resistance::operator-(const Resistance& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity resistance = (self - other);
+    shp::Signal self = *this, other = peer;
+    shp::Signal resistance = (self - other);
     return Resistance(resistance.getMagnitude(), resistance.getScaling(), resistance.getUnit(),
         (threshold - peer.threshold));
 }
 
 Resistance Resistance::operator*(const Resistance& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity resistance = (self * other);
+    shp::Signal self = *this, other = peer;
+    shp::Signal resistance = (self * other);
     return Resistance(resistance.getMagnitude(), resistance.getScaling(), resistance.getUnit(),
         (threshold * peer.threshold));
 }
 
 Resistance Resistance::operator/(const Resistance& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity resistance = (self / other);
+    shp::Signal self = *this, other = peer;
+    shp::Signal resistance = (self / other);
     return Resistance(resistance.getMagnitude(), resistance.getScaling(), resistance.getUnit(),
         (threshold / peer.threshold));
 }
 
 Resistance Resistance::operator%(const Resistance& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity resistance = (self % other);
+    shp::Signal self = *this, other = peer;
+    shp::Signal resistance = (self % other);
     return Resistance(resistance.getMagnitude(), resistance.getScaling(), resistance.getUnit(),
         (threshold % peer.threshold));
 }
 
 Resistance Resistance::copy() {
-    Resistance fresh(getMagnitude(), getScaling(), getUnit(), threshold);
+    Resistance fresh(getMagnitude(), getScaling(), getUnit(), this->threshold);
     return fresh;
 }
 
 void Resistance::clear() {
-    shp::Quantity::clear();
+    shp::Signal::clear();
     threshold.clear();
     return;
 }
 
-std::string Resistance::print() {
+std::string Resistance::print() const {
     std::stringstream result;
-    result << shp::Quantity::print() << ",t:";
+    result << shp::Signal::print() << ",t:";
     result << threshold.print();
 	return result.str();
 }

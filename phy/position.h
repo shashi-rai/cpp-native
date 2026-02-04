@@ -34,9 +34,9 @@ class Position {
 public:
     // Constructors
     Position();
-    Position(double x);
-    Position(double x, double y);
-    Position(double x, double y, double z);
+    Position(const double x);
+    Position(const double x, const double y);
+    Position(const double x, const double y, const double z);
 
     // Destructors
     ~Position();

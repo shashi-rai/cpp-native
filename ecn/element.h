@@ -32,7 +32,7 @@ class Element {
 public:
     // Constructors
     Element();
-    Element(std::string name);
+    Element(const std::string name);
 
     // Destructors
     ~Element();
@@ -49,12 +49,12 @@ public:
     std::string getName() const { return name; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setName(const std::string name) { this->name = name; }
 
     // Additional methods
     Element copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 };
 
 typedef std::vector<Element > ElementArray;

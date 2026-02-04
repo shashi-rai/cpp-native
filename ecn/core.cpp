@@ -23,22 +23,42 @@
 namespace ecn {
 
 Core::Core()
-        : Element(), reluctance() {
+        : qft::Density(), reluctance() {
 
 }
 
 Core::Core(const Reluctance& reluctance)
-        : Element(), reluctance(reluctance) {
+        : qft::Density(), reluctance(reluctance) {
 
 }
 
-Core::Core(std::string name)
-        : Element(name), reluctance() {
+Core::Core(const shp::Signal& modulation)
+        : qft::Density(modulation), reluctance() {
+
+}
+
+Core::Core(const Reluctance& reluctance, const shp::Signal& modulation)
+        : qft::Density(modulation), reluctance(reluctance) {
+
+}
+
+Core::Core(const std::string name)
+        : qft::Density(name), reluctance() {
 
 }
 
 Core::Core(std::string name, const Reluctance& reluctance)
-        : Element(name), reluctance(reluctance) {
+        : qft::Density(name), reluctance(reluctance) {
+
+}
+
+Core::Core(const std::string name, const shp::Signal& modulation)
+        : qft::Density(name, modulation), reluctance() {
+
+}
+
+Core::Core(const std::string name, const Reluctance& reluctance, const shp::Signal& modulation)
+        : qft::Density(name, modulation), reluctance(reluctance) {
 
 }
 
@@ -47,7 +67,7 @@ Core::~Core() {
 }
 
 bool Core::operator==(const Core& peer) const {
-    return (static_cast<const Element&>(*this) == static_cast<const Element&>(peer))
+    return (static_cast<const qft::Density&>(*this) == static_cast<const qft::Density&>(peer))
         && (reluctance == peer.reluctance);
 }
 
@@ -71,20 +91,43 @@ Core Core::operator%(const Core& peer) const {
     return Core("%", (reluctance % peer.reluctance));
 }
 
-Core Core::copy() {
-    Core fresh(getName(), reluctance);
+qft::Temperature Core::getTemperature() const {
+    shp::Signal thermal = qft::Density::getThermal();
+    qft::Temperature result(thermal.getMagnitude(), thermal.getScaling(), thermal.getUnit());
+    return result;
+}
+
+void Core::setTemprature(const qft::Temperature& temperature) {
+    qft::Density::setThermal(temperature.getTotal());
+}
+
+shp::Signal Core::getScalarFlux() {
+    return qft::Density::getScalarFlux();
+}
+
+shp::Signal Core::getVectorFlux() {
+    return qft::Density::getVectorFlux();
+}
+
+shp::Volume Core::getVolume() {
+    return qft::Density::getVolume();
+}
+
+shp::Distance Core::copy() {
+    shp::Signal self = qft::Density::getScalarTotal();
+    Core fresh(qft::Density::getName(), this->reluctance, qft::Density::getThermal());
     return fresh;
 }
 
 void Core::clear() {
-    Element::clear();
+    shp::Medium::clear();
     reluctance.clear();
     return;
 }
 
-std::string Core::print() {
+std::string Core::print() const {
     std::stringstream result;
-	result << Element::print() << ",ℜ:";
+	result << shp::Medium::print() << ",ℜ:";
     result << reluctance.print();
 	return result.str();
 }

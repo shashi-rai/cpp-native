@@ -21,14 +21,11 @@
 #ifndef ECN_INDUCTANCE_H
 #define ECN_INDUCTANCE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "../shp/potential.h"
 
 namespace ecn {
 
-class Inductance : public shp::Quantity {
+class Inductance : public shp::Signal {
     shp::Potential threshold;
 public:
     // Constructors
@@ -67,7 +64,7 @@ public:
     // Additional methods
     Inductance copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 public:
     static const std::string UNIT;
 };

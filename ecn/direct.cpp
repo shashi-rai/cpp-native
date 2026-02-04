@@ -37,17 +37,17 @@ Direct::Direct(const Conductor& positive, const Conductor& negative)
 
 }
 
-Direct::Direct(std::string name)
+Direct::Direct(const std::string name)
         : Source(name) {
 
 }
 
-Direct::Direct(std::string name, const Conductor& positive)
+Direct::Direct(const std::string name, const Conductor& positive)
         : Source(name, positive) {
 
 }
 
-Direct::Direct(std::string name, const Conductor& positive, const Conductor& negative)
+Direct::Direct(const std::string name, const Conductor& positive, const Conductor& negative)
         : Source(name, positive, negative) {
 
 }

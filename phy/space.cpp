@@ -22,35 +22,38 @@
 
 namespace phy {
 
-Space::Space() : energy(), location() {
+Space::Space()
+		: shp::Medium(), energy(), location() {
 
 }
 
 Space::Space(const qft::Energy& energy, const Position& location)
-        : energy(energy), location(location) {
+        : shp::Medium(), energy(energy), location(location) {
 
 }
 
-Space::Space(const qft::Energy& energy) : energy(energy), location() {
+Space::Space(const qft::Energy& energy)
+		: shp::Medium(), energy(energy), location() {
 
 }
 
-Space::Space(const Position& location) : energy(), location(location) {
+Space::Space(const Position& location)
+		: shp::Medium(), energy(), location(location) {
 
 }
 
-Space::Space(const qft::Energy& energy, double x)
-        : energy(energy), location(x) {
+Space::Space(const qft::Energy& energy, const double x)
+        : shp::Medium(), energy(energy), location(x) {
 
 }
 
-Space::Space(const qft::Energy& energy, double x, double y)
-        : energy(energy), location(x, y) {
+Space::Space(const qft::Energy& energy, const double x, const double y)
+        : shp::Medium(), energy(energy), location(x, y) {
 
 }
 
-Space::Space(const qft::Energy& energy, double x, double y, double z)
-        : energy(energy), location(x, y, z) {
+Space::Space(const qft::Energy& energy, const double x, const double y, const double z)
+        : shp::Medium(), energy(energy), location(x, y, z) {
 
 }
 
@@ -58,7 +61,7 @@ Space::~Space() {
 
 }
 
-Space Space::copy() {
+shp::Distance Space::copy() {
     Space fresh(energy, location);
     return fresh;
 }
@@ -72,6 +75,7 @@ void Space::clear() {
 std::string Space::print() {
     std::stringstream result;
     result << "(s:";
+	result << shp::Medium().print() << ",";
     result << energy.print() << "!";
     result << location.print() << ")";
 	return result.str();

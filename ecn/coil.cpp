@@ -94,73 +94,73 @@ Coil::Coil(const float turns, const Inductance& inductance, const Reluctance& re
 
 }
 
-Coil::Coil(std::string name)
+Coil::Coil(const std::string name)
         : Conductor(name), loopcount(shp::Quantity::DEFAULT_VALUE), inductance() {
 
 }
 
-Coil::Coil(std::string name, const float turns)
+Coil::Coil(const std::string name, const float turns)
         : Conductor(name), loopcount(turns), inductance() {
 
 }
 
-Coil::Coil(std::string name, const Inductance& inductance)
+Coil::Coil(const std::string name, const Inductance& inductance)
         : Conductor(name), loopcount(shp::Quantity::DEFAULT_VALUE), inductance(inductance) {
 
 }
 
-Coil::Coil(std::string name, const float turns, const Inductance& inductance)
+Coil::Coil(const std::string name, const float turns, const Inductance& inductance)
         : Conductor(name), loopcount(turns), inductance(inductance) {
 
 }
 
-Coil::Coil(std::string name, const Resistance& resistance)
+Coil::Coil(const std::string name, const Resistance& resistance)
         : Conductor(name, resistance), loopcount(shp::Quantity::DEFAULT_VALUE), inductance() {
 
 }
 
-Coil::Coil(std::string name, const float turns, const Resistance& resistance)
+Coil::Coil(const std::string name, const float turns, const Resistance& resistance)
         : Conductor(name, resistance), loopcount(turns), inductance() {
 
 }
 
-Coil::Coil(std::string name, const Reluctance& reluctance)
+Coil::Coil(const std::string name, const Reluctance& reluctance)
         : Conductor(name, reluctance), loopcount(shp::Quantity::DEFAULT_VALUE), inductance() {
 
 }
 
-Coil::Coil(std::string name, const float turns, const Reluctance& reluctance)
+Coil::Coil(const std::string name, const float turns, const Reluctance& reluctance)
         : Conductor(name, reluctance), loopcount(turns), inductance() {
 
 }
 
-Coil::Coil(std::string name, const Inductance& inductance, const Resistance& resistance)
+Coil::Coil(const std::string name, const Inductance& inductance, const Resistance& resistance)
         : Conductor(name, resistance), loopcount(shp::Quantity::DEFAULT_VALUE), inductance(inductance) {
 
 }
 
-Coil::Coil(std::string name, const float turns, const Inductance& inductance, const Resistance& resistance)
+Coil::Coil(const std::string name, const float turns, const Inductance& inductance, const Resistance& resistance)
         : Conductor(name, resistance), loopcount(turns), inductance(inductance) {
 
 }
 
-Coil::Coil(std::string name, const Inductance& inductance, const Reluctance& reluctance)
+Coil::Coil(const std::string name, const Inductance& inductance, const Reluctance& reluctance)
         : Conductor(name, reluctance), loopcount(shp::Quantity::DEFAULT_VALUE), inductance(inductance) {
 
 }
 
-Coil::Coil(std::string name, const float turns, const Inductance& inductance, const Reluctance& reluctance)
+Coil::Coil(const std::string name, const float turns, const Inductance& inductance, const Reluctance& reluctance)
         : Conductor(name, reluctance), loopcount(turns), inductance(inductance) {
 
 }
 
-Coil::Coil(std::string name, const Inductance& inductance, const Reluctance& reluctance,
+Coil::Coil(const std::string name, const Inductance& inductance, const Reluctance& reluctance,
         const Resistance& resistance)
         : Conductor(name, reluctance, resistance), loopcount(shp::Quantity::DEFAULT_VALUE), inductance(inductance) {
 
 }
 
-Coil::Coil(std::string name, const float turns, const Inductance& inductance, const Reluctance& reluctance,
+Coil::Coil(const std::string name, const float turns, const Inductance& inductance, const Reluctance& reluctance,
         const Resistance& resistance)
         : Conductor(name, reluctance, resistance), loopcount(turns), inductance(inductance) {
 
@@ -229,8 +229,8 @@ qft::Magnetic Coil::getForce() const {
 	return qft::Magnetic::getForce(unitary, loopcount);
 }
 
-Coil Coil::copy() {
-    Coil fresh(getName(), loopcount, inductance, getReluctance(), getResistance());
+shp::Distance Coil::copy() {
+    Coil fresh(getName(), this->loopcount, this->inductance, getReluctance(), getResistance());
     return fresh;
 }
 

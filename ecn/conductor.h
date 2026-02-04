@@ -21,9 +21,6 @@
 #ifndef ECN_CONDUCTOR_H
 #define ECN_CONDUCTOR_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "core.h"
 #include "resistance.h"
 #include "../qft/current.h"
@@ -43,14 +40,14 @@ public:
     Conductor(const qft::Current& current, const Reluctance& reluctance);
     Conductor(const Reluctance& reluctance, const Resistance& resistance);
     Conductor(const qft::Current& current, const Reluctance& reluctance, const Resistance& resistance);
-    Conductor(std::string name);
-    Conductor(std::string name, const qft::Current& current);
-    Conductor(std::string name, const Resistance& resistance);
-    Conductor(std::string name, const qft::Current& current, const Resistance& resistance);
-    Conductor(std::string name, const Reluctance& reluctance);
-    Conductor(std::string name, const qft::Current& current, const Reluctance& reluctance);
-    Conductor(std::string name, const Reluctance& reluctance, const Resistance& resistance);
-    Conductor(std::string name, const qft::Current& current, const Reluctance& reluctance, const Resistance& resistance);
+    Conductor(const std::string name);
+    Conductor(const std::string name, const qft::Current& current);
+    Conductor(const std::string name, const Resistance& resistance);
+    Conductor(const std::string name, const qft::Current& current, const Resistance& resistance);
+    Conductor(const std::string name, const Reluctance& reluctance);
+    Conductor(const std::string name, const qft::Current& current, const Reluctance& reluctance);
+    Conductor(const std::string name, const Reluctance& reluctance, const Resistance& resistance);
+    Conductor(const std::string name, const qft::Current& current, const Reluctance& reluctance, const Resistance& resistance);
 
     // Destructors
     ~Conductor();
@@ -75,10 +72,12 @@ public:
     bool isCharged() const;
     qft::Charge getCharge() const;
     void setCharge(const qft::Charge& electric);
-    shp::Quantity getVoltage() const;
-    Conductor copy();
+    shp::Signal getVoltage() const;
+    qft::Temperature getTemperature() const;
+    void setTemprature(const qft::Temperature& temperature);
+    shp::Distance copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 public:
     static const std::string UNIT;
 };

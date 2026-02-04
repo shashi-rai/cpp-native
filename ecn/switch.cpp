@@ -44,22 +44,22 @@ Switch::Switch(const bool status, const Conductor& positive, const Conductor& ne
 
 }
 
-Switch::Switch(std::string name)
+Switch::Switch(const std::string name)
         : Circuit(name), status(DEFAULT_FLAG) {
 
 }
 
-Switch::Switch(std::string name, const bool status)
+Switch::Switch(const std::string name, const bool status)
         : Circuit(name), status(status) {
 
 }
 
-Switch::Switch(std::string name, const Conductor& positive, const Conductor& negative)
+Switch::Switch(const std::string name, const Conductor& positive, const Conductor& negative)
         : Circuit(name, positive, negative), status(DEFAULT_FLAG) {
 
 }
 
-Switch::Switch(std::string name, const bool status, const Conductor& positive, const Conductor& negative)
+Switch::Switch(const std::string name, const bool status, const Conductor& positive, const Conductor& negative)
         : Circuit(name, positive, negative), status(status) {
 
 }
@@ -104,13 +104,13 @@ Switch Switch::operator%(const Switch& peer) const {
 }
 
 Circuit Switch::copy() {
-    Switch fresh(getName(), status, getPositive(), getNegative());
+    Switch fresh(getName(), this->status, getPositive(), getNegative());
     return fresh;
 }
 
 void Switch::clear() {
     Circuit::clear();
-    status = DEFAULT_FLAG;
+    status = Switch::DEFAULT_FLAG;
     return;
 }
 

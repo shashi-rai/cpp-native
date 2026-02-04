@@ -21,10 +21,8 @@
 #ifndef ECN_MOTOR_H
 #define ECN_MOTOR_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "coil.h"
+#include "element.h"
 
 namespace ecn {
 
@@ -40,13 +38,12 @@ public:
     Motor(const float slip, const Coil& stator);
     Motor(const Coil& stator, const Coil& rotor);
     Motor(const float slip, const Coil& stator, const Coil& rotor);
-
-    Motor(std::string name);
-    Motor(std::string name, const float slip);
-    Motor(std::string name, const Coil& stator);
-    Motor(std::string name, const float slip, const Coil& stator);
-    Motor(std::string name, const Coil& stator, const Coil& rotor);
-    Motor(std::string name, const float slip, const Coil& stator, const Coil& rotor);
+    Motor(const std::string name);
+    Motor(const std::string name, const float slip);
+    Motor(const std::string name, const Coil& stator);
+    Motor(const std::string name, const float slip, const Coil& stator);
+    Motor(const std::string name, const Coil& stator, const Coil& rotor);
+    Motor(const std::string name, const float slip, const Coil& stator, const Coil& rotor);
 
     // Destructors
     ~Motor();

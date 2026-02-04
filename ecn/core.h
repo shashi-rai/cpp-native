@@ -21,22 +21,23 @@
 #ifndef ECN_CORE_H
 #define ECN_CORE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
-#include "element.h"
 #include "reluctance.h"
+#include "../qft/temperature.h"
 
 namespace ecn {
 
-class Core : public Element {
+class Core : protected qft::Density {
     Reluctance reluctance;
 public:
     // Constructors
     Core();
     Core(const Reluctance& reluctance);
-    Core(std::string name);
-    Core(std::string name, const Reluctance& reluctance);
+    Core(const shp::Signal& modulation);
+    Core(const Reluctance& reluctance, const shp::Signal& modulation);
+    Core(const std::string name);
+    Core(const std::string name, const shp::Signal& modulation);
+    Core(const std::string name, const Reluctance& reluctance);
+    Core(const std::string name, const Reluctance& reluctance, const shp::Signal& modulation);
 
     // Destructors
     ~Core();
@@ -56,9 +57,14 @@ public:
     void setReluctance(const Reluctance& range) { this->reluctance = range; }
 
     // Additional methods
-    Core copy();
+    qft::Temperature getTemperature() const;
+    void setTemprature(const qft::Temperature& temperature);
+    shp::Signal getScalarFlux();
+    shp::Signal getVectorFlux();
+    shp::Volume getVolume();
+    virtual shp::Distance copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 };
 
 typedef std::vector<Core > CoreArray;

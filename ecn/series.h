@@ -21,9 +21,6 @@
 #ifndef ECN_SERIES_H
 #define ECN_SERIES_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "circuit.h"
 
 namespace ecn {
@@ -36,10 +33,10 @@ public:
     Series(const CircuitArray& elements);
     Series(const Conductor& positive, const Conductor& negative);
     Series(const Conductor& positive, const Conductor& negative, const CircuitArray& elements);
-    Series(std::string name);
-    Series(std::string name, const CircuitArray& elements);
-    Series(std::string name, const Conductor& positive, const Conductor& negative);
-    Series(std::string name, const Conductor& positive, const Conductor& negative, const CircuitArray& elements);
+    Series(const std::string name);
+    Series(const std::string name, const CircuitArray& elements);
+    Series(const std::string name, const Conductor& positive, const Conductor& negative);
+    Series(const std::string name, const Conductor& positive, const Conductor& negative, const CircuitArray& elements);
 
     // Destructors
     ~Series();

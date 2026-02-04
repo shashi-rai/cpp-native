@@ -21,9 +21,6 @@
 #ifndef ECN_PARALLEL_H
 #define ECN_PARALLEL_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "circuit.h"
 
 namespace ecn {
@@ -36,10 +33,10 @@ public:
     Parallel(const CircuitArray& elements);
     Parallel(const Conductor& positive, const Conductor& negative);
     Parallel(const Conductor& positive, const Conductor& negative, const CircuitArray& elements);
-    Parallel(std::string name);
-    Parallel(std::string name, const CircuitArray& elements);
-    Parallel(std::string name, const Conductor& positive, const Conductor& negative);
-    Parallel(std::string name, const Conductor& positive, const Conductor& negative, const CircuitArray& elements);
+    Parallel(const std::string name);
+    Parallel(const std::string name, const CircuitArray& elements);
+    Parallel(const std::string name, const Conductor& positive, const Conductor& negative);
+    Parallel(const std::string name, const Conductor& positive, const Conductor& negative, const CircuitArray& elements);
 
     // Destructors
     ~Parallel();

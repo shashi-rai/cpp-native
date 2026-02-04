@@ -25,73 +25,73 @@ namespace ecn {
 const std::string Reluctance::UNIT = "At/Wb";
 
 Reluctance::Reluctance()
-        : shp::Quantity(UNIT), threshold() {
+        : shp::Signal(UNIT), threshold() {
 
 }
 
 Reluctance::Reluctance(const shp::Potential& threshold)
-        : shp::Quantity(UNIT), threshold(threshold) {
+        : shp::Signal(UNIT), threshold(threshold) {
 
 }
 
 Reluctance::Reluctance(const float magnitude)
-        : shp::Quantity(magnitude, UNIT), threshold() {
+        : shp::Signal(magnitude, UNIT), threshold() {
 
 }
 
 Reluctance::Reluctance(const short int scaling)
-        : shp::Quantity(scaling, UNIT), threshold() {
+        : shp::Signal(scaling, UNIT), threshold() {
 
 }
 
 Reluctance::Reluctance(const std::string unit)
-        : shp::Quantity(unit), threshold() {
+        : shp::Signal(unit), threshold() {
 
 }
 
 Reluctance::Reluctance(const short int scaling, const std::string unit)
-        : shp::Quantity(scaling, unit), threshold() {
+        : shp::Signal(scaling, unit), threshold() {
 
 }
 
 Reluctance::Reluctance(const shp::Unit& unit)
-        : shp::Quantity(unit), threshold() {
+        : shp::Signal(unit), threshold() {
 
 }
 
 Reluctance::Reluctance(const short int scaling, const shp::Unit& unit)
-        : shp::Quantity(scaling, unit), threshold() {
+        : shp::Signal(scaling, unit), threshold() {
 
 }
 
 Reluctance::Reluctance(const float magnitude, const std::string unit)
-        : shp::Quantity(magnitude, unit), threshold() {
+        : shp::Signal(magnitude, unit), threshold() {
 
 }
 
 Reluctance::Reluctance(const float magnitude, const shp::Unit& unit)
-        : shp::Quantity(magnitude, unit), threshold() {
+        : shp::Signal(magnitude, unit), threshold() {
 
 }
 
 Reluctance::Reluctance(const float magnitude, const short int scaling)
-        : shp::Quantity(magnitude, scaling, UNIT), threshold() {
+        : shp::Signal(magnitude, scaling, UNIT), threshold() {
 
 }
 
 Reluctance::Reluctance(const float magnitude, const short int scaling, const std::string unit)
-        : shp::Quantity(magnitude, scaling, unit), threshold() {
+        : shp::Signal(magnitude, scaling, unit), threshold() {
 
 }
 
 Reluctance::Reluctance(const float magnitude, const short int scaling, const shp::Unit& unit)
-        : shp::Quantity(magnitude, scaling, unit), threshold() {
+        : shp::Signal(magnitude, scaling, unit), threshold() {
 
 }
 
 Reluctance::Reluctance(const float magnitude, const short int scaling, const shp::Unit& unit,
         const shp::Potential& threshold)
-        : shp::Quantity(magnitude, scaling, unit), threshold(threshold) {
+        : shp::Signal(magnitude, scaling, unit), threshold(threshold) {
 
 }
 
@@ -100,59 +100,59 @@ Reluctance::~Reluctance() {
 }
 
 bool Reluctance::operator==(const Reluctance& peer) const {
-    return (static_cast<const shp::Quantity&>(*this) == static_cast<const shp::Quantity&>(peer))
+    return (static_cast<const shp::Signal&>(*this) == static_cast<const shp::Signal&>(peer))
         && (threshold == peer.threshold);
 }
 
 Reluctance Reluctance::operator+(const Reluctance& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity reluctance = (self + other);
+    shp::Signal self = *this, other = peer;
+    shp::Signal reluctance = (self + other);
     return Reluctance(reluctance.getMagnitude(), reluctance.getScaling(), reluctance.getUnit(),
         (threshold + peer.threshold));
 }
 
 Reluctance Reluctance::operator-(const Reluctance& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity reluctance = (self - other);
+    shp::Signal self = *this, other = peer;
+    shp::Signal reluctance = (self - other);
     return Reluctance(reluctance.getMagnitude(), reluctance.getScaling(), reluctance.getUnit(),
         (threshold - peer.threshold));
 }
 
 Reluctance Reluctance::operator*(const Reluctance& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity reluctance = (self * other);
+    shp::Signal self = *this, other = peer;
+    shp::Signal reluctance = (self * other);
     return Reluctance(reluctance.getMagnitude(), reluctance.getScaling(), reluctance.getUnit(),
         (threshold * peer.threshold));
 }
 
 Reluctance Reluctance::operator/(const Reluctance& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity reluctance = (self / other);
+    shp::Signal self = *this, other = peer;
+    shp::Signal reluctance = (self / other);
     return Reluctance(reluctance.getMagnitude(), reluctance.getScaling(), reluctance.getUnit(),
         (threshold / peer.threshold));
 }
 
 Reluctance Reluctance::operator%(const Reluctance& peer) const {
-    shp::Quantity self = *this, other = peer;
-    shp::Quantity reluctance = (self % other);
+    shp::Signal self = *this, other = peer;
+    shp::Signal reluctance = (self % other);
     return Reluctance(reluctance.getMagnitude(), reluctance.getScaling(), reluctance.getUnit(),
         (threshold % peer.threshold));
 }
 
 Reluctance Reluctance::copy() {
-    Reluctance fresh(getMagnitude(), getScaling(), getUnit(), threshold);
+    Reluctance fresh(getMagnitude(), getScaling(), getUnit(), this->threshold);
     return fresh;
 }
 
 void Reluctance::clear() {
-    shp::Quantity::clear();
+    shp::Signal::clear();
     threshold.clear();
     return;
 }
 
-std::string Reluctance::print() {
+std::string Reluctance::print() const {
     std::stringstream result;
-    result << shp::Quantity::print() << ",t:";
+    result << shp::Signal::print() << ",t:";
     result << threshold.print();
 	return result.str();
 }

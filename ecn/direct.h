@@ -21,9 +21,6 @@
 #ifndef ECN_DIRECT_H
 #define ECN_DIRECT_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "source.h"
 
 namespace ecn {
@@ -35,9 +32,9 @@ public:
     Direct();
     Direct(const Conductor& positive);
     Direct(const Conductor& positive, const Conductor& neutral);
-    Direct(std::string name);
-    Direct(std::string name, const Conductor& positive);
-    Direct(std::string name, const Conductor& positive, const Conductor& neutral);
+    Direct(const std::string name);
+    Direct(const std::string name, const Conductor& positive);
+    Direct(const std::string name, const Conductor& positive, const Conductor& neutral);
 
     // Destructors
     ~Direct();

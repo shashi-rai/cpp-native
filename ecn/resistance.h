@@ -21,14 +21,11 @@
 #ifndef ECN_RESISTANCE_H
 #define ECN_RESISTANCE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "../shp/potential.h"
 
 namespace ecn {
 
-class Resistance : public shp::Quantity {
+class Resistance : public shp::Signal {
     shp::Potential threshold;
 public:
     // Constructors
@@ -67,7 +64,7 @@ public:
     // Additional methods
     Resistance copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 public:
     static const std::string UNIT;
 };

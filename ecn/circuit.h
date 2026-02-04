@@ -21,10 +21,8 @@
 #ifndef ECN_CIRCUIT_H
 #define ECN_CIRCUIT_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "conductor.h"
+#include "element.h"
 
 namespace ecn {
 
@@ -34,9 +32,11 @@ class Circuit : public Element {
 public:
     // Constructors
     Circuit();
+    Circuit(const Conductor& positive);
     Circuit(const Conductor& positive, const Conductor& negative);
-    Circuit(std::string name);
-    Circuit(std::string name, const Conductor& positive, const Conductor& negative);
+    Circuit(const std::string name);
+    Circuit(const std::string name, const Conductor& positive);
+    Circuit(const std::string name, const Conductor& positive, const Conductor& negative);
 
     // Destructors
     ~Circuit();

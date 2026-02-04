@@ -64,43 +64,43 @@ Diode::Diode(const bool status, const Conductor& positive, const Conductor& nega
 
 }
 
-Diode::Diode(std::string name)
+Diode::Diode(const std::string name)
         : Switch(name), threshold() {
 
 }
 
-Diode::Diode(std::string name, const bool status)
+Diode::Diode(const std::string name, const bool status)
         : Switch(name, status), threshold() {
 
 }
 
-Diode::Diode(std::string name, const shp::Potential& threshold)
+Diode::Diode(const std::string name, const shp::Potential& threshold)
         : Switch(name), threshold(threshold) {
 
 }
 
-Diode::Diode(std::string name, const Conductor& positive, const Conductor& negative)
+Diode::Diode(const std::string name, const Conductor& positive, const Conductor& negative)
         : Switch(name, positive, negative), threshold() {
 
 }
 
-Diode::Diode(std::string name, const Conductor& positive, const Conductor& negative,
+Diode::Diode(const std::string name, const Conductor& positive, const Conductor& negative,
         const shp::Potential& threshold)
         : Switch(name, positive, negative), threshold(threshold) {
 
 }
 
-Diode::Diode(std::string name, const bool status, const shp::Potential& threshold)
+Diode::Diode(const std::string name, const bool status, const shp::Potential& threshold)
         : Switch(name, status), threshold(threshold) {
 
 }
 
-Diode::Diode(std::string name, const bool status, const Conductor& positive, const Conductor& negative)
+Diode::Diode(const std::string name, const bool status, const Conductor& positive, const Conductor& negative)
         : Switch(name, status, positive, negative), threshold() {
 
 }
 
-Diode::Diode(std::string name, const bool status, const Conductor& positive, const Conductor& negative,
+Diode::Diode(const std::string name, const bool status, const Conductor& positive, const Conductor& negative,
         const shp::Potential& threshold)
         : Switch(name, status, positive, negative), threshold(threshold) {
 
@@ -151,7 +151,7 @@ Diode Diode::operator%(const Diode& peer) const {
 }
 
 Circuit Diode::copy() {
-    Diode fresh(getName(), getStatus(), getPositive(), getNegative(), threshold);
+    Diode fresh(getName(), getStatus(), getPositive(), getNegative(), this->threshold);
     return fresh;
 }
 

@@ -21,10 +21,8 @@
 #ifndef ECN_CAPACITOR_H
 #define ECN_CAPACITOR_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "capacitance.h"
+#include "element.h"
 
 namespace ecn {
 
@@ -34,8 +32,8 @@ public:
     // Constructors
     Capacitor();
     Capacitor(const Capacitance& capacitance);
-    Capacitor(std::string name);
-    Capacitor(std::string name, const Capacitance& capacitance);
+    Capacitor(const std::string name);
+    Capacitor(const std::string name, const Capacitance& capacitance);
 
     // Destructors
     ~Capacitor();

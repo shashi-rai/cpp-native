@@ -37,7 +37,7 @@ Resistor::Resistor(const std::string name)
 
 }
 
-Resistor::Resistor(std::string name, const Resistance& resistance)
+Resistor::Resistor(const std::string name, const Resistance& resistance)
         : Element(name), resistance(resistance) {
 
 }

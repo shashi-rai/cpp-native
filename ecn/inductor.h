@@ -21,9 +21,6 @@
 #ifndef ECN_INDUCTOR_H
 #define ECN_INDUCTOR_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "element.h"
 #include "inductance.h"
 
@@ -35,8 +32,8 @@ public:
     // Constructors
     Inductor();
     Inductor(const Inductance& inductance);
-    Inductor(std::string name);
-    Inductor(std::string name, const Inductance& inductance);
+    Inductor(const std::string name);
+    Inductor(const std::string name, const Inductance& inductance);
 
     // Destructors
     ~Inductor();

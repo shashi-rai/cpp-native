@@ -27,6 +27,11 @@ Circuit::Circuit()
 
 }
 
+Circuit::Circuit(const Conductor& positive)
+        : Element(), positive(positive), negative() {
+
+}
+
 Circuit::Circuit(const Conductor& positive, const Conductor& negative)
         : Element(), positive(positive), negative(negative) {
 
@@ -34,6 +39,11 @@ Circuit::Circuit(const Conductor& positive, const Conductor& negative)
 
 Circuit::Circuit(const std::string name)
         : Element(name), positive(), negative() {
+
+}
+
+Circuit::Circuit(const std::string name, const Conductor& positive)
+        : Element(name), positive(positive), negative() {
 
 }
 
@@ -90,7 +100,7 @@ shp::Potential Circuit::getVoltage() const {
 }
 
 Circuit Circuit::copy() {
-    Circuit fresh(getName(), positive, negative);
+    Circuit fresh(getName(), this->positive, this->negative);
     return fresh;
 }
 

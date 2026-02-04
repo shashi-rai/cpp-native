@@ -28,17 +28,17 @@ Position::Position() : x(ORIGIN), y(ORIGIN), z(ORIGIN) {
 
 }
 
-Position::Position(double x)
+Position::Position(const double x)
         : x(x), y(ORIGIN), z(ORIGIN) {
 
 }
 
-Position::Position(double x, double y)
+Position::Position(const double x, const double y)
         : x(x), y(y), z(ORIGIN) {
 
 }
 
-Position::Position(double x, double y, double z)
+Position::Position(const double x, const double y, const double z)
         : x(x), y(y), z(z) {
 
 }
@@ -80,7 +80,7 @@ Position Position::copy() {
 }
 
 void Position::clear() {
-    x = y = z = ORIGIN;
+    x = y = z = Position::ORIGIN;
     return;
 }
 

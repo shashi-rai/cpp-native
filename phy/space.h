@@ -21,13 +21,13 @@
 #ifndef PHY_SPACE_H
 #define PHY_SPACE_H
 
-#include <vector>
 #include "position.h"
 #include "../qft/energy.h"
+#include "../shp/medium.h"
 
 namespace phy {
 
-class Space {
+class Space : protected shp::Medium {
     qft::Energy energy;
     Position location;
 public:
@@ -36,9 +36,9 @@ public:
     Space(const qft::Energy& energy);
     Space(const qft::Energy& energy, const Position& location);
     Space(const Position& location);
-    Space(const qft::Energy& energy, double x);
-    Space(const qft::Energy& energy, double x, double y);
-    Space(const qft::Energy& energy, double x, double y, double z);
+    Space(const qft::Energy& energy, const double x);
+    Space(const qft::Energy& energy, const double x, const double y);
+    Space(const qft::Energy& energy, const double x, const double y, const double z);
 
     // Destructors
     ~Space();
@@ -58,7 +58,7 @@ public:
     void setX(const double value) { this->location.setX(value); }
     void setY(const double value) { this->location.setY(value); }
     void setZ(const double value) { this->location.setZ(value); }
-    virtual Space copy();
+    virtual shp::Distance copy();
     virtual void clear();
     virtual std::string print();
 };

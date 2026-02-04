@@ -21,9 +21,6 @@
 #ifndef ECN_SWITCH_H
 #define ECN_SWITCH_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "circuit.h"
 
 namespace ecn {
@@ -36,10 +33,10 @@ public:
     Switch(const bool status);
     Switch(const Conductor& positive, const Conductor& negative);
     Switch(const bool status, const Conductor& positive, const Conductor& negative);
-    Switch(std::string name);
-    Switch(std::string name, const bool status);
-    Switch(std::string name, const Conductor& positive, const Conductor& negative);
-    Switch(std::string name, const bool status, const Conductor& positive, const Conductor& negative);
+    Switch(const std::string name);
+    Switch(const std::string name, const bool status);
+    Switch(const std::string name, const Conductor& positive, const Conductor& negative);
+    Switch(const std::string name, const bool status, const Conductor& positive, const Conductor& negative);
 
     // Destructors
     ~Switch();

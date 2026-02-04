@@ -21,9 +21,6 @@
 #ifndef ECN_COIL_H
 #define ECN_COIL_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "conductor.h"
 #include "inductance.h"
 #include "../qft/magnetic.h"
@@ -49,20 +46,20 @@ public:
     Coil(const float turns, const Inductance& inductance, const Reluctance& reluctance);
     Coil(const Inductance& inductance, const Reluctance& reluctance, const Resistance& resistance);
     Coil(const float turns, const Inductance& inductance, const Reluctance& reluctance, const Resistance& resistance);
-    Coil(std::string name);
-    Coil(std::string name, const float turns);
-    Coil(std::string name, const Inductance& inductance);
-    Coil(std::string name, const float turns, const Inductance& inductance);
-    Coil(std::string name, const Resistance& resistance);
-    Coil(std::string name, const float turns, const Resistance& resistance);
-    Coil(std::string name, const Reluctance& reluctance);
-    Coil(std::string name, const float turns, const Reluctance& reluctance);
-    Coil(std::string name, const Inductance& inductance, const Resistance& resistance);
-    Coil(std::string name, const float turns, const Inductance& inductance, const Resistance& resistance);
-    Coil(std::string name, const Inductance& inductance, const Reluctance& reluctance);
-    Coil(std::string name, const float turns, const Inductance& inductance, const Reluctance& reluctance);
-    Coil(std::string name, const Inductance& inductance, const Reluctance& reluctance, const Resistance& resistance);
-    Coil(std::string name, const float turns, const Inductance& inductance, const Reluctance& reluctance, const Resistance& resistance);
+    Coil(const std::string name);
+    Coil(const std::string name, const float turns);
+    Coil(const std::string name, const Inductance& inductance);
+    Coil(const std::string name, const float turns, const Inductance& inductance);
+    Coil(const std::string name, const Resistance& resistance);
+    Coil(const std::string name, const float turns, const Resistance& resistance);
+    Coil(const std::string name, const Reluctance& reluctance);
+    Coil(const std::string name, const float turns, const Reluctance& reluctance);
+    Coil(const std::string name, const Inductance& inductance, const Resistance& resistance);
+    Coil(const std::string name, const float turns, const Inductance& inductance, const Resistance& resistance);
+    Coil(const std::string name, const Inductance& inductance, const Reluctance& reluctance);
+    Coil(const std::string name, const float turns, const Inductance& inductance, const Reluctance& reluctance);
+    Coil(const std::string name, const Inductance& inductance, const Reluctance& reluctance, const Resistance& resistance);
+    Coil(const std::string name, const float turns, const Inductance& inductance, const Reluctance& reluctance, const Resistance& resistance);
 
     // Destructors
     ~Coil();
@@ -86,7 +83,7 @@ public:
     // Additional methods
     shp::Potential getVoltage() const;
     qft::Magnetic getForce() const;
-    Coil copy();
+    shp::Distance copy();
     virtual void clear();
     virtual std::string print();
 };
