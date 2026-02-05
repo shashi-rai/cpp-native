@@ -581,6 +581,20 @@ void Distance::setChangeCurvature(const float degree) {
     }
 }
 
+shp::Direction Distance::getCurvatureCurrent() const {
+    return modulation.getCurrent();
+}
+
+shp::Direction Distance::getCurvatureShiftRate() const {
+    return modulation.getShifting();
+}
+
+void Distance::setCurvatureShiftRate(const shp::Direction& angular) {
+    if (angular.checkNonZero()) {
+        modulation.setShifting(angular);
+    }
+}
+
 bool Distance::checkNonZero() const {
     return Signal::checkNonZero();
 }

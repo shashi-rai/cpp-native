@@ -674,12 +674,12 @@ void Angular::setPolarRotation(const short int degree) {
 
 Direction Angular::getPolarChange() const {
     Angular self = *this;
-    return self.polar.getChange();
+    return self.polar.getShifting();
 }
 
 void Angular::setPolarChange(const Direction& orientation) {
     Angular self = *this;
-    self.polar.setChange(orientation);
+    self.polar.setShifting(orientation);
 }
 
 float Angular::getPolarFraction(const Polar& peer) const {
@@ -713,12 +713,12 @@ void Angular::setAzimuthRotation(const short int degree) {
 
 Direction Angular::getAzimuthChange() const {
     Angular self = *this;
-    return self.azimuth.getChange();
+    return self.azimuth.getShifting();
 }
 
 void Angular::setAzimuthChange(const Direction& orientation) {
     Angular self = *this;
-    self.azimuth.setChange(orientation);
+    self.azimuth.setShifting(orientation);
 }
 
 float Angular::getAzimuthFraction(const Azimuth& peer) const {

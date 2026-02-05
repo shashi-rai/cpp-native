@@ -23,63 +23,63 @@
 namespace shp {
 
 Azimuth::Azimuth()
-        : Direction(), change(shp::Direction::DEFAULT_RADIANS) {
+        : Direction(), shifting(shp::Direction::DEFAULT_RADIANS) {
 
 }
 
 Azimuth::Azimuth(const float radians)
-        : Direction(radians), change(shp::Direction::DEFAULT_RADIANS) {
+        : Direction(radians), shifting(shp::Direction::DEFAULT_RADIANS) {
 
 }
 
 Azimuth::Azimuth(const std::complex<float> polar)
-        : Direction(polar), change(shp::Direction::DEFAULT_RADIANS) {
+        : Direction(polar), shifting(shp::Direction::DEFAULT_RADIANS) {
 
 }
 
 Azimuth::Azimuth(const short int degrees)
-        : Direction(degrees), change(shp::Direction::DEFAULT_RADIANS) {
+        : Direction(degrees), shifting(shp::Direction::DEFAULT_RADIANS) {
 
 }
 
 Azimuth::Azimuth(const short int degrees, const short int minutes)
-        : Direction(degrees, minutes), change(shp::Direction::DEFAULT_RADIANS) {
+        : Direction(degrees, minutes), shifting(shp::Direction::DEFAULT_RADIANS) {
 
 }
 
 Azimuth::Azimuth(const short int degrees, const short int minutes, const short int seconds)
-        : Direction(degrees, minutes, seconds), change(shp::Direction::DEFAULT_RADIANS) {
+        : Direction(degrees, minutes, seconds), shifting(shp::Direction::DEFAULT_RADIANS) {
 
 }
 
 Azimuth::Azimuth(const Direction& change)
-        : Direction(), change(change) {
+        : Direction(), shifting(change) {
 
 }
 
 Azimuth::Azimuth(const float radians, const Direction& change)
-        : Direction(radians), change(change) {
+        : Direction(radians), shifting(change) {
 
 }
 
 Azimuth::Azimuth(const std::complex<float> polar, const Direction& change)
-        : Direction(polar), change(change) {
+        : Direction(polar), shifting(change) {
 
 }
 
 Azimuth::Azimuth(const short int degrees, const Direction& change)
-        : Direction(degrees), change(change) {
+        : Direction(degrees), shifting(change) {
 
 }
 
 Azimuth::Azimuth(const short int degrees, const short int minutes, const Direction& change)
-        : Direction(degrees, minutes), change(change) {
+        : Direction(degrees, minutes), shifting(change) {
 
 }
 
 Azimuth::Azimuth(const short int degrees, const short int minutes, const short int seconds,
         const Direction& change)
-        : Direction(degrees, minutes, seconds), change(change) {
+        : Direction(degrees, minutes, seconds), shifting(change) {
 
 }
 
@@ -89,14 +89,14 @@ Azimuth::~Azimuth() {
 
 bool Azimuth::operator==(const Azimuth& peer) const {
     return (static_cast<const Direction&>(*this) == static_cast<const Direction&>(peer))
-        && (change == peer.change);
+        && (shifting == peer.shifting);
 }
 
 bool Azimuth::operator<(const Azimuth& peer) const {
     Azimuth self = *this; bool result = false;
     if (static_cast<const Direction&>(*this) < static_cast<const Direction&>(peer)) {
         result = true;
-    } else if (change < peer.change) {
+    } else if (shifting < peer.shifting) {
         result = true;
     }
     return result;
@@ -106,7 +106,7 @@ bool Azimuth::operator>(const Azimuth& peer) const {
     Azimuth self = *this; bool result = false;
     if (static_cast<const Direction&>(*this) > static_cast<const Direction&>(peer)) {
         result = true;
-    } else if (change > peer.change) {
+    } else if (shifting > peer.shifting) {
         result = true;
     }
     return result;
@@ -125,42 +125,47 @@ bool Azimuth::operator>=(const Azimuth& peer) const {
 Azimuth Azimuth::operator+(const Direction& peer) const {
     Direction self = *this, other = peer;
     Direction azimuth = (self + other);
-    return Azimuth(azimuth.getDegrees(), azimuth.getMinutes(), azimuth.getSeconds(), change);
+    return Azimuth(azimuth.getDegrees(), azimuth.getMinutes(), azimuth.getSeconds(), shifting);
 }
 
 Azimuth Azimuth::operator-(const Direction& peer) const {
     Direction self = *this, other = peer;
     Direction azimuth = (self - other);
-    return Azimuth(azimuth.getDegrees(), azimuth.getMinutes(), azimuth.getSeconds(), change);
+    return Azimuth(azimuth.getDegrees(), azimuth.getMinutes(), azimuth.getSeconds(), shifting);
 }
 
 Azimuth Azimuth::operator*(const Direction& peer) const {
     Direction self = *this, other = peer;
     Direction azimuth = (self * other);
-    return Azimuth(azimuth.getDegrees(), azimuth.getMinutes(), azimuth.getSeconds(), change);
+    return Azimuth(azimuth.getDegrees(), azimuth.getMinutes(), azimuth.getSeconds(), shifting);
 }
 
 Azimuth Azimuth::operator/(const Direction& peer) const {
     Direction self = *this, other = peer;
     Direction azimuth = (self / other);
-    return Azimuth(azimuth.getDegrees(), azimuth.getMinutes(), azimuth.getSeconds(), change);
+    return Azimuth(azimuth.getDegrees(), azimuth.getMinutes(), azimuth.getSeconds(), shifting);
 }
 
 Azimuth Azimuth::operator%(const Direction& peer) const {
     Direction self = *this, other = peer;
     Direction azimuth = (self % other);
-    return Azimuth(azimuth.getDegrees(), azimuth.getMinutes(), azimuth.getSeconds(), change);
+    return Azimuth(azimuth.getDegrees(), azimuth.getMinutes(), azimuth.getSeconds(), shifting);
+}
+
+Direction Azimuth::getCurrent() const {
+    Direction result(Direction::toRadians() + shifting.toRadians());
+    return result;
 }
 
 Direction Azimuth::copy() const {
     Direction self = *this;
-    Azimuth fresh(self.getDegrees(), self.getMinutes(), self.getSeconds(), change);
+    Azimuth fresh(self.getDegrees(), self.getMinutes(), self.getSeconds(), shifting);
     return fresh;
 }
 
 void Azimuth::clear() {
     Direction::clear();
-    change.clear();
+    shifting.clear();
     return;
 }
 
@@ -168,7 +173,7 @@ std::string Azimuth::print() const {
     std::stringstream result;
     result << "𝜙";
     result << Direction::print() << "δ";
-	result << change.print();
+	result << shifting.print();
 	return result.str();
 }
 
@@ -176,7 +181,7 @@ std::string Azimuth::printRadians() const {
     std::stringstream result;
     result << "𝜙";
     result << Direction::printRadians() << "δ";
-	result << change.printRadians();
+	result << shifting.printRadians();
 	return result.str();
 }
 
@@ -184,7 +189,7 @@ std::string Azimuth::printEuler() const {
     std::stringstream result;
     result << "𝜙";
     result << Direction::printEuler() << "δ";
-	result << change.printEuler();
+	result << shifting.printEuler();
 	return result.str();
 }
 

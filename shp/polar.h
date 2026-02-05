@@ -26,7 +26,7 @@
 namespace shp {
 
 class Polar : public Direction {
-    Direction change;
+    Direction shifting;
 public:
     // Constructors
     Polar();
@@ -58,12 +58,13 @@ public:
     Polar operator%(const Direction& peer) const;
 
     // Getters
-    Direction getChange() const { return change; }
+    Direction getShifting() const { return shifting; }
 
     // Setters
-    void setChange(const Direction& orientation) { this->change = orientation; }
+    void setShifting(const Direction& angular) { this->shifting = angular; }
 
     // Additional methods
+    Direction getCurrent() const;
     virtual Direction copy() const;
     virtual void clear();
     virtual std::string print() const;

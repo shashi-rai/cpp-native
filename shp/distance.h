@@ -147,6 +147,9 @@ public:
     void setChangeMagnitude(const float motion, const short int scale);
     void setChangeDirection(const float degree);
     void setChangeCurvature(const float degree);
+    shp::Direction getCurvatureCurrent() const;
+    shp::Direction getCurvatureShiftRate() const;
+    void setCurvatureShiftRate(const shp::Direction& angular);
     void adjustNumeric();
     void adjustScaling();
     bool checkNonZero() const;

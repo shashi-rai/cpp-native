@@ -755,23 +755,32 @@ void Medium::setParameter(const float length, const short int scaling, const Uni
 }
 
 Direction Medium::getDiffusionFactor() const {
-    return Distance::getAzimuth();
+    return Distance::getAzimuth().getCurrent();
 }
 
-void Medium::setDiffusionFactor(const float orientation) {
-    Distance::setAzimuth(orientation);
+void Medium::setDiffusionFactor(const float degree) {
+    Distance::setChangeDirection(degree);
 }
 
 void Medium::setDiffusionFactor(const Azimuth& orientation) {
     Distance::setAzimuth(orientation);
 }
 
-Direction Medium::getThresholdShift() const {
-    return Distance::getModulation();
+Direction Medium::getThresholdCurrent() const {
+    return Distance::getModulation().getCurrent();
 }
 
-void Medium::setThresholdShift(const float threshold) {
-    Distance::setModulation(threshold);
+Direction Medium::getThresholdShift() const {
+    return Distance::getModulation().getShifting();
+}
+
+void Medium::setThresholdShift(const Direction& orientation) {
+    Polar threshold = Distance::getModulation();
+    threshold.setShifting(orientation);
+}
+
+void Medium::setThresholdShift(const float degree) {
+    Distance::setChangeCurvature(degree);
 }
 
 void Medium::setThresholdShift(const Polar& threshold) {
@@ -786,27 +795,6 @@ float Medium::getThresholdTimePerCycle() const {
     return Distance::getModulation().getTimePerCycle();
 }
 
-Direction Medium::getThresholdTangent() const {
-    return Distance::getModulation().getNormal();
-}
-
-Direction Medium::getThresholdRotation(const short int degree) const {
-    return Distance::getModulation().getRotation(degree);
-}
-
-void Medium::setThresholdRotation(const short int degree) {
-    Distance::setChangeCurvature(degree);
-}
-
-Direction Medium::getThresholdChange() const {
-    return Distance::getModulation().getChange();
-}
-
-void Medium::setThresholdChange(const Direction& orientation) {
-    Polar threshold = Distance::getModulation();
-    threshold.setChange(orientation);
-}
-
 float Medium::getThresholdFraction(const Polar& peer) const {
     return Direction::getFraction(Distance::getModulation().toRadians(), peer.toRadians());
 }
@@ -819,25 +807,21 @@ float Medium::getParameterTimePerCycle() const {
     return Distance::getAzimuth().getTimePerCycle();
 }
 
-Direction Medium::getParameterTangent() const {
-    return Distance::getAzimuth().getNormal();
+Direction Medium::getParameterShift() const {
+    return Distance::getAzimuth().getShifting();
 }
 
-Direction Medium::getParameterRotation(const short int degree) const {
+void Medium::setParameterShift(const Direction& orientation) {
+    Azimuth direction = Distance::getAzimuth();
+    direction.setShifting(orientation);
+}
+
+Direction Medium::getParameterShift(const short int degree) const {
     return Distance::getAzimuth().getRotation(degree);
 }
 
-void Medium::setParameterRotation(const short int degree) {
+void Medium::setParameterShift(const short int degree) {
     Distance::setChangeDirection(degree);
-}
-
-Direction Medium::getParameterChange() const {
-    return Distance::getAzimuth().getChange();
-}
-
-void Medium::setParameterChange(const Direction& orientation) {
-    Azimuth direction = Distance::getAzimuth();
-    direction.setChange(orientation);
 }
 
 float Medium::getParameterFraction(const Azimuth& peer) const {

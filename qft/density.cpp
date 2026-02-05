@@ -26,42 +26,68 @@ const std::string Density::UNIT = "/m³";	// System International
 const float Density::DEFAULT_VOLUME = 1.0f;
 
 Density::Density()
-        : shp::Medium(UNIT), volume(DEFAULT_VOLUME) {
-
+        : shp::Medium(UNIT) {
+	this->setVolume(DEFAULT_VOLUME);
 }
 
 Density::Density(const float parameter)
-        : shp::Medium(parameter, UNIT), volume(DEFAULT_VOLUME) {
-
+        : shp::Medium(parameter, UNIT) {
+	this->setVolume(DEFAULT_VOLUME);
 }
 
 Density::Density(const float parameter, const shp::Signal& modulation)
-        : shp::Medium(parameter, UNIT, modulation), volume(DEFAULT_VOLUME) {
-
+        : shp::Medium(parameter, UNIT, modulation) {
+	this->setVolume(DEFAULT_VOLUME);
 }
 
 Density::Density(const float parameter, const std::string unit)
-        : shp::Medium(parameter, unit), volume(DEFAULT_VOLUME) {
+        : shp::Medium(parameter, unit) {
+	this->setVolume(DEFAULT_VOLUME);
+}
 
+Density::Density(const float parameter, const shp::Unit& unit)
+        : shp::Medium(parameter, unit) {
+	this->setVolume(DEFAULT_VOLUME);
 }
 
 Density::Density(const float parameter, const std::string unit, const shp::Signal& modulation)
-        : shp::Medium(parameter, unit, modulation), volume(DEFAULT_VOLUME) {
+        : shp::Medium(parameter, unit, modulation) {
+	this->setVolume(DEFAULT_VOLUME);
+}
 
+Density::Density(const float parameter, const shp::Unit& unit, const shp::Signal& modulation)
+        : shp::Medium(parameter, unit, modulation) {
+	this->setVolume(DEFAULT_VOLUME);
 }
 
 Density::Density(const float parameter, const short int scaling, const std::string unit)
-        : shp::Medium(parameter, scaling, unit), volume(DEFAULT_VOLUME) {
+        : shp::Medium(parameter, scaling, unit) {
+	this->setVolume(DEFAULT_VOLUME);
+}
 
+Density::Density(const float parameter, const short int scaling, const shp::Unit& unit)
+        : shp::Medium(parameter, scaling, unit) {
+	this->setVolume(DEFAULT_VOLUME);
 }
 
 Density::Density(const float parameter, const short int scaling, const std::string unit,
         const shp::Signal& modulation)
-        : shp::Medium(parameter, scaling, unit, modulation), volume(DEFAULT_VOLUME) {
+        : shp::Medium(parameter, scaling, unit, modulation) {
+	this->setVolume(DEFAULT_VOLUME);
+}
 
+Density::Density(const float parameter, const short int scaling, const shp::Unit& unit,
+        const shp::Signal& modulation)
+        : shp::Medium(parameter, scaling, unit, modulation) {
+	this->setVolume(DEFAULT_VOLUME);
 }
 
 Density::Density(const float parameter, const float volume)
+        : shp::Medium(parameter, UNIT) {
+	this->setVolume(volume);
+}
+
+Density::Density(const float parameter, const shp::Volume& volume)
         : shp::Medium(parameter, UNIT) {
 	this->setVolume(volume);
 }
@@ -71,7 +97,17 @@ Density::Density(const float parameter, const shp::Signal& modulation, const flo
 	this->setVolume(volume);
 }
 
+Density::Density(const float parameter, const shp::Signal& modulation, const shp::Volume& volume)
+        : shp::Medium(parameter, UNIT, modulation) {
+	this->setVolume(volume);
+}
+
 Density::Density(const float parameter, const short int scaling, const float volume)
+        : shp::Medium(parameter, scaling, UNIT) {
+	this->setVolume(volume);
+}
+
+Density::Density(const float parameter, const short int scaling, const shp::Volume& volume)
         : shp::Medium(parameter, scaling, UNIT) {
 	this->setVolume(volume);
 }
@@ -82,7 +118,28 @@ Density::Density(const float parameter, const short int scaling, const shp::Sign
 	this->setVolume(volume);
 }
 
+Density::Density(const float parameter, const short int scaling, const shp::Signal& modulation,
+        const shp::Volume& volume)
+        : shp::Medium(parameter, scaling, UNIT, modulation) {
+	this->setVolume(volume);
+}
+
 Density::Density(const float parameter, const std::string unit, const float volume)
+        : shp::Medium(parameter, unit) {
+	this->setVolume(volume);
+}
+
+Density::Density(const float parameter, const shp::Unit& unit, const float volume)
+        : shp::Medium(parameter, unit) {
+	this->setVolume(volume);
+}
+
+Density::Density(const float parameter, const std::string unit, const shp::Volume& volume)
+        : shp::Medium(parameter, unit) {
+	this->setVolume(volume);
+}
+
+Density::Density(const float parameter, const shp::Unit& unit, const shp::Volume& volume)
         : shp::Medium(parameter, unit) {
 	this->setVolume(volume);
 }
@@ -93,8 +150,38 @@ Density::Density(const float parameter, const std::string unit, const shp::Signa
 	this->setVolume(volume);
 }
 
+Density::Density(const float parameter, const std::string unit, const shp::Signal& modulation,
+        const shp::Volume& volume)
+        : shp::Medium(parameter, unit, modulation) {
+	this->setVolume(volume);
+}
+
+Density::Density(const float parameter, const shp::Unit& unit, const shp::Signal& modulation,
+        const shp::Volume& volume)
+        : shp::Medium(parameter, unit, modulation) {
+	this->setVolume(volume);
+}
+
 Density::Density(const float parameter, const short int scaling, const std::string unit,
         const float volume)
+        : shp::Medium(parameter, scaling, unit) {
+	this->setVolume(volume);
+}
+
+Density::Density(const float parameter, const short int scaling, const shp::Unit& unit,
+        const float volume)
+        : shp::Medium(parameter, scaling, unit) {
+	this->setVolume(volume);
+}
+
+Density::Density(const float parameter, const short int scaling, const std::string unit,
+        const shp::Volume& volume)
+        : shp::Medium(parameter, scaling, unit) {
+	this->setVolume(volume);
+}
+
+Density::Density(const float parameter, const short int scaling, const shp::Unit& unit,
+        const shp::Volume& volume)
         : shp::Medium(parameter, scaling, unit) {
 	this->setVolume(volume);
 }
@@ -105,21 +192,15 @@ Density::Density(const float parameter, const short int scaling, const std::stri
 	this->setVolume(volume);
 }
 
-Density::Density(const float parameter, const short int scaling, const std::string unit,
-        const shp::Volume& volume)
-        : shp::Medium(parameter, scaling, unit) {
+Density::Density(const float parameter, const short int scaling, const shp::Unit& unit,
+        const shp::Signal& modulation, const float volume)
+        : shp::Medium(parameter, scaling, unit, modulation) {
 	this->setVolume(volume);
 }
 
 Density::Density(const float parameter, const short int scaling, const std::string unit,
         const shp::Signal& modulation, const shp::Volume& volume)
         : shp::Medium(parameter, scaling, unit, modulation) {
-	this->setVolume(volume);
-}
-
-Density::Density(const float parameter, const short int scaling, const shp::Unit& unit,
-        const shp::Volume& volume)
-        : shp::Medium(parameter, scaling, unit) {
 	this->setVolume(volume);
 }
 
@@ -130,61 +211,99 @@ Density::Density(const float parameter, const short int scaling, const shp::Unit
 }
 
 Density::Density(const shp::Signal& modulation)
-        : shp::Medium(modulation), volume(DEFAULT_VOLUME) {
+        : shp::Medium(modulation) {
+	this->setVolume(DEFAULT_VOLUME);
+}
 
+Density::Density(const shp::Signal& modulation, const float volume)
+        : shp::Medium(modulation) {
+	this->setVolume(volume);
 }
 
 Density::Density(const shp::Signal& modulation, const shp::Volume& volume)
-        : shp::Medium(modulation), volume(volume) {
-
+        : shp::Medium(modulation) {
+	this->setVolume(volume);
 }
 
 Density::Density(const std::string name)
-        : shp::Medium(name, UNIT), volume(DEFAULT_VOLUME) {
+        : shp::Medium(name, UNIT) {
+	this->setVolume(DEFAULT_VOLUME);
+}
 
+Density::Density(const std::string name, const std::string unit)
+        : shp::Medium(name, unit) {
+	this->setVolume(DEFAULT_VOLUME);
 }
 
 Density::Density(const std::string name, const shp::Unit& unit)
-        : shp::Medium(name, unit), volume(DEFAULT_VOLUME) {
+        : shp::Medium(name, unit) {
+	this->setVolume(DEFAULT_VOLUME);
+}
 
+Density::Density(const std::string name, const short int scaling, const std::string unit)
+        : shp::Medium(name, scaling, unit) {
+	this->setVolume(DEFAULT_VOLUME);
 }
 
 Density::Density(const std::string name, const short int scaling, const shp::Unit& unit)
-        : shp::Medium(name, scaling, unit), volume(DEFAULT_VOLUME) {
-
+        : shp::Medium(name, scaling, unit) {
+	this->setVolume(DEFAULT_VOLUME);
 }
 
 Density::Density(const std::string name, const float parameter)
-        : shp::Medium(name, parameter, UNIT), volume(DEFAULT_VOLUME) {
-
+        : shp::Medium(name, parameter, UNIT) {
+	this->setVolume(DEFAULT_VOLUME);
 }
 
 Density::Density(const std::string name, const float parameter, const shp::Signal& modulation)
-        : shp::Medium(name, parameter, UNIT, modulation), volume(DEFAULT_VOLUME) {
-
+        : shp::Medium(name, parameter, UNIT, modulation) {
+	this->setVolume(DEFAULT_VOLUME);
 }
 
 Density::Density(const std::string name, const float parameter, const std::string unit)
-        : shp::Medium(name, parameter, unit), volume(DEFAULT_VOLUME) {
+        : shp::Medium(name, parameter, unit) {
+	this->setVolume(DEFAULT_VOLUME);
+}
 
+Density::Density(const std::string name, const float parameter, const shp::Unit& unit)
+        : shp::Medium(name, parameter, unit) {
+	this->setVolume(DEFAULT_VOLUME);
 }
 
 Density::Density(const std::string name, const float parameter, const std::string unit,
         const shp::Signal& modulation)
-        : shp::Medium(name, parameter, unit, modulation), volume(DEFAULT_VOLUME) {
-
+        : shp::Medium(name, parameter, unit, modulation) {
+	this->setVolume(DEFAULT_VOLUME);
 }
 
-Density::Density(const std::string name, const float parameter,
-        const short int scaling, const std::string unit)
-        : shp::Medium(name, parameter, scaling, unit), volume(DEFAULT_VOLUME) {
+Density::Density(const std::string name, const float parameter, const shp::Unit& unit,
+        const shp::Signal& modulation)
+        : shp::Medium(name, parameter, unit, modulation) {
+	this->setVolume(DEFAULT_VOLUME);
+}
 
+Density::Density(const std::string name, const float parameter, const short int scaling,
+        const std::string unit)
+        : shp::Medium(name, parameter, scaling, unit) {
+	this->setVolume(DEFAULT_VOLUME);
+}
+
+Density::Density(const std::string name, const float parameter, const short int scaling,
+        const shp::Unit& unit)
+        : shp::Medium(name, parameter, scaling, unit) {
+	this->setVolume(DEFAULT_VOLUME);
 }
 
 Density::Density(const std::string name, const float parameter, const short int scaling,
         const std::string unit, const shp::Signal& modulation)
-        : shp::Medium(name, parameter, scaling, unit, modulation), volume(DEFAULT_VOLUME) {
+        : shp::Medium(name, parameter, scaling, unit, modulation) {
+	this->setVolume(DEFAULT_VOLUME);
+}
 
+Density::Density(const std::string name, const float parameter, const short int scaling,
+        const shp::Unit& unit, const shp::Signal& modulation)
+        : shp::Medium(name, parameter, scaling, unit, modulation) {
+	this->setVolume(DEFAULT_VOLUME);
 }
 
 Density::Density(const std::string name, const float parameter, const float volume)
@@ -192,8 +311,19 @@ Density::Density(const std::string name, const float parameter, const float volu
 	this->setVolume(volume);
 }
 
+Density::Density(const std::string name, const float parameter, const shp::Volume& volume)
+        : shp::Medium(name, parameter, UNIT) {
+	this->setVolume(volume);
+}
+
 Density::Density(const std::string name, const float parameter, const shp::Signal& modulation,
         const float volume)
+        : shp::Medium(name, parameter, UNIT, modulation) {
+	this->setVolume(volume);
+}
+
+Density::Density(const std::string name, const float parameter, const shp::Signal& modulation,
+        const shp::Volume& volume)
         : shp::Medium(name, parameter, UNIT, modulation) {
 	this->setVolume(volume);
 }
@@ -205,7 +335,19 @@ Density::Density(const std::string name, const float parameter, const short int 
 }
 
 Density::Density(const std::string name, const float parameter, const short int scaling,
+        const shp::Volume& volume)
+        : shp::Medium(name, parameter, scaling, UNIT) {
+	this->setVolume(volume);
+}
+
+Density::Density(const std::string name, const float parameter, const short int scaling,
         const shp::Signal& modulation, const float volume)
+        : shp::Medium(name, parameter, scaling, UNIT, modulation) {
+	this->setVolume(volume);
+}
+
+Density::Density(const std::string name, const float parameter, const short int scaling,
+        const shp::Signal& modulation, const shp::Volume& volume)
         : shp::Medium(name, parameter, scaling, UNIT, modulation) {
 	this->setVolume(volume);
 }
@@ -216,8 +358,44 @@ Density::Density(const std::string name, const float parameter, const std::strin
 	this->setVolume(volume);
 }
 
+Density::Density(const std::string name, const float parameter, const shp::Unit& unit,
+        const float volume)
+        : shp::Medium(name, parameter, unit) {
+	this->setVolume(volume);
+}
+
+Density::Density(const std::string name, const float parameter, const std::string unit,
+        const shp::Volume& volume)
+        : shp::Medium(name, parameter, unit) {
+	this->setVolume(volume);
+}
+
+Density::Density(const std::string name, const float parameter, const shp::Unit& unit,
+        const shp::Volume& volume)
+        : shp::Medium(name, parameter, unit) {
+	this->setVolume(volume);
+}
+
 Density::Density(const std::string name, const float parameter, const std::string unit,
         const shp::Signal& modulation, const float volume)
+        : shp::Medium(name, parameter, unit, modulation) {
+	this->setVolume(volume);
+}
+
+Density::Density(const std::string name, const float parameter, const shp::Unit& unit,
+        const shp::Signal& modulation, const float volume)
+        : shp::Medium(name, parameter, unit, modulation) {
+	this->setVolume(volume);
+}
+
+Density::Density(const std::string name, const float parameter, const std::string unit,
+        const shp::Signal& modulation, const shp::Volume& volume)
+        : shp::Medium(name, parameter, unit, modulation) {
+	this->setVolume(volume);
+}
+
+Density::Density(const std::string name, const float parameter, const shp::Unit& unit,
+        const shp::Signal& modulation, const shp::Volume& volume)
         : shp::Medium(name, parameter, unit, modulation) {
 	this->setVolume(volume);
 }
@@ -229,8 +407,14 @@ Density::Density(const std::string name, const float parameter, const short int 
 }
 
 Density::Density(const std::string name, const float parameter, const short int scaling,
-        const std::string unit, const shp::Signal& modulation, const float volume)
-        : shp::Medium(name, parameter, scaling, unit, modulation) {
+        const shp::Unit& unit, const float volume)
+        : shp::Medium(name, parameter, scaling, unit) {
+	this->setVolume(volume);
+}
+
+Density::Density(const std::string name, const float parameter, const short int scaling,
+        const std::string unit, const shp::Volume& volume)
+        : shp::Medium(name, parameter, scaling, unit) {
 	this->setVolume(volume);
 }
 
@@ -241,19 +425,43 @@ Density::Density(const std::string name, const float parameter, const short int 
 }
 
 Density::Density(const std::string name, const float parameter, const short int scaling,
+        const std::string unit, const shp::Signal& modulation, const float volume)
+        : shp::Medium(name, parameter, scaling, unit, modulation) {
+	this->setVolume(volume);
+}
+
+Density::Density(const std::string name, const float parameter, const short int scaling,
+        const shp::Unit& unit, const shp::Signal& modulation, const float volume)
+        : shp::Medium(name, parameter, scaling, unit, modulation) {
+	this->setVolume(volume);
+}
+
+Density::Density(const std::string name, const float parameter, const short int scaling,
+        const std::string unit, const shp::Signal& modulation, const shp::Volume& volume)
+        : shp::Medium(name, parameter, scaling, unit, modulation) {
+	this->setVolume(volume);
+}
+
+Density::Density(const std::string name, const float parameter, const short int scaling,
         const shp::Unit& unit, const shp::Signal& modulation, const shp::Volume& volume)
         : shp::Medium(name, parameter, scaling, unit, modulation) {
 	this->setVolume(volume);
 }
 
 Density::Density(const std::string name, const shp::Signal& modulation)
-        : shp::Medium(name, modulation), volume(DEFAULT_VOLUME) {
+        : shp::Medium(name, modulation) {
+	this->setVolume(DEFAULT_VOLUME);
+}
+
+Density::Density(const std::string name, const shp::Signal& modulation, const float volume)
+        : shp::Medium(name, modulation) {
+	this->setVolume(volume);
 
 }
 
 Density::Density(const std::string name, const shp::Signal& modulation, const shp::Volume& volume)
-        : shp::Medium(name, modulation), volume(volume) {
-
+        : shp::Medium(name, modulation) {
+	this->setVolume(volume);
 }
 
 Density::~Density() {
@@ -301,7 +509,8 @@ Density Density::operator+(const Density& peer) const {
 	shp::Signal newIntrinsic = (self.getIntrinsic() + peer.getIntrinsic());
     shp::Signal newVolume = (volume.getScalarTotal() + peer.volume.getScalarTotal());
 	newVolume.adjustScaling();
-    return Density("+", density.getMagnitude(), density.getScaling(), density.getUnit(),  newIntrinsic, newVolume);
+    return Density("+", density.getMagnitude(), density.getScaling(), density.getUnit(), 
+		newIntrinsic, newVolume);
 }
 
 Density Density::operator-(const Density& peer) const {
@@ -310,7 +519,8 @@ Density Density::operator-(const Density& peer) const {
 	shp::Signal newIntrinsic = (self.getIntrinsic() - peer.getIntrinsic());
     shp::Signal newVolume = (volume.getScalarTotal() - peer.volume.getScalarTotal());
 	newVolume.adjustScaling();
-    return Density("-", density.getMagnitude(), density.getScaling(), density.getUnit(), newIntrinsic, newVolume);
+    return Density("-", density.getMagnitude(), density.getScaling(), density.getUnit(),
+		newIntrinsic, newVolume);
 }
 
 Density Density::operator*(const Density& peer) const {
@@ -319,7 +529,8 @@ Density Density::operator*(const Density& peer) const {
 	shp::Signal newIntrinsic = (self.getIntrinsic() * peer.getIntrinsic());
     shp::Signal newVolume = (volume.getScalarTotal() * peer.volume.getScalarTotal());
 	newVolume.adjustScaling();
-    return Density("*", density.getMagnitude(), density.getScaling(), density.getUnit(), newIntrinsic, newVolume);
+    return Density("*", density.getMagnitude(), density.getScaling(), density.getUnit(),
+		newIntrinsic, newVolume);
 }
 
 Density Density::operator/(const Density& peer) const {
@@ -328,7 +539,8 @@ Density Density::operator/(const Density& peer) const {
 	shp::Signal newIntrinsic = (self.getIntrinsic() / peer.getIntrinsic());
     shp::Signal newVolume = (volume.getScalarTotal() / peer.volume.getScalarTotal());
 	newVolume.adjustScaling();
-    return Density("/", density.getMagnitude(), density.getScaling(), density.getUnit(), newIntrinsic, newVolume);
+    return Density("/", density.getMagnitude(), density.getScaling(), density.getUnit(),
+		newIntrinsic, newVolume);
 }
 
 Density Density::operator%(const Density& peer) const {
@@ -337,7 +549,8 @@ Density Density::operator%(const Density& peer) const {
 	shp::Signal newIntrinsic = (self.getIntrinsic() % peer.getIntrinsic());
     shp::Signal newVolume = (volume.getScalarTotal() % peer.volume.getScalarTotal());
 	newVolume.adjustScaling();
-    return Density("%", density.getMagnitude(), density.getScaling(), density.getUnit(), newIntrinsic, newVolume);
+    return Density("%", density.getMagnitude(), density.getScaling(), density.getUnit(),
+		newIntrinsic, newVolume);
 }
 
 std::string Density::getName() const {
@@ -354,6 +567,34 @@ shp::Signal Density::getThermal() const {
 
 void Density::setThermal(const shp::Signal& temperature) {
     shp::Medium::setIntrinsic(temperature);
+}
+
+shp::Direction Density::getThermalDiffusion() {
+    return shp::Medium::getDiffusionFactor();
+}
+
+void Density::setThermalDiffusion(const float factor) {
+    shp::Medium::setDiffusionFactor(factor);
+}
+
+void Density::setThermalDiffusion(const shp::Azimuth& factor) {
+    shp::Medium::setDiffusionFactor(factor);
+}
+
+shp::Direction Density::getThermalThreshold() {
+    return shp::Medium::getThresholdShift();
+}
+
+void Density::setThermalThreshold(const float factor) {
+    shp::Medium::setThresholdShift(factor);
+}
+
+void Density::setThermalThreshold(const shp::Polar& factor) {
+    shp::Medium::setThresholdShift(factor);
+}
+
+float Density::getAmplitude() const {
+    return shp::Medium::getAmplitude();
 }
 
 float Density::getMagnitude() const {
@@ -396,6 +637,82 @@ void Density::setVolume(const float value) {
 	this->volume = shp::Volume(std::cbrt(value));
 }
 
+void Density::setVolume(const float value, const short int scale) {
+    float magnitude = (value * std::pow(shp::Quantity::DECIMAL_SCALE, scale));
+	this->volume = shp::Volume(std::cbrt(magnitude));
+}
+
+void Density::setChangeLength(const float value) {
+	this->volume.setLength(value);
+}
+
+void Density::setChangeLength(const float value, const short int scale) {
+	this->volume.setLength(value, scale);
+}
+
+void Density::setChangeLength(const float value, const short int scale, const std::string unit) {
+	this->volume.setLength(value, scale, unit);
+}
+
+void Density::setChangeLength(const float value, const short int scale, const shp::Unit& unit) {
+	this->volume.setLength(value, scale, unit);
+}
+
+void Density::setChangeLengthPhase(const float direction) {
+	this->volume.setLengthPhase(direction);
+}
+
+void Density::setChangeLengthPhase(const shp::Direction& direction) {
+	this->volume.setLengthPhase(direction);
+}
+
+void Density::setChangeBreadth(const float value) {
+	this->volume.setBreadth(value);
+}
+
+void Density::setChangeBreadth(const float value, const short int scale) {
+	this->volume.setBreadth(value, scale);
+}
+
+void Density::setChangeBreadth(const float value, const short int scale, const std::string unit) {
+	this->volume.setBreadth(value, scale, unit);
+}
+
+void Density::setChangeBreadth(const float value, const short int scale, const shp::Unit& unit) {
+	this->volume.setBreadth(value, scale, unit);
+}
+
+void Density::setChangeBreadthPhase(const float direction) {
+	this->volume.setBreadthPhase(direction);
+}
+
+void Density::setChangeBreadthPhase(const shp::Direction& direction) {
+	this->volume.setBreadthPhase(direction);
+}
+
+void Density::setChangeHeight(const float value) {
+	this->volume.setHeight(value);
+}
+
+void Density::setChangeHeight(const float value, const short int scale) {
+	this->volume.setHeight(value, scale);
+}
+
+void Density::setChangeHeight(const float value, const short int scale, const std::string unit) {
+	this->volume.setHeight(value, scale, unit);
+}
+
+void Density::setChangeHeight(const float value, const short int scale, const shp::Unit& unit) {
+	this->volume.setHeight(value, scale, unit);
+}
+
+void Density::setChangeHeightPhase(const float direction) {
+	this->volume.setHeightPhase(direction);
+}
+
+void Density::setChangeHeightPhase(const shp::Direction& direction) {
+	this->volume.setHeightPhase(direction);
+}
 
 shp::Signal Density::getScalarFlux() const {
     shp::Signal density = (shp::Medium::getScalarTotal() / volume.getScalarTotal());
