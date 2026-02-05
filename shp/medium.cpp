@@ -731,30 +731,30 @@ Distance Medium::getParameter() const {
         Distance::getAzimuth(), Distance::getModulation());
 }
 
-void Medium::setParameter(const Distance& length) {
+void Medium::setParameter(const Distance& value) {
     Medium self = *this;
-    self.setParameter(length.getMagnitude(), length.getScaling(), length.getUnit());
-    self.setDiffusionFactor(length.getAzimuth());
-    self.setThresholdShift(length.getModulation());
+    self.setParameter(value.getMagnitude(), value.getScaling(), value.getUnit());
+    self.setDiffusionFactor(value.getAzimuth());
+    self.setThresholdShift(value.getModulation());
 }
 
-void Medium::setParameter(const float length) {
-    Distance::setMagnitude(length);
+void Medium::setParameter(const float value) {
+    Distance::setMagnitude(value);
 }
 
-void Medium::setParameter(const float length, const short int scaling) {
-    Distance::setMagnitude(length, scaling);
+void Medium::setParameter(const float value, const short int scaling) {
+    Distance::setMagnitude(value, scaling);
 }
 
-void Medium::setParameter(const float length, const short int scaling, const std::string unit) {
-    Distance::setMagnitude(length, scaling, unit);
+void Medium::setParameter(const float value, const short int scaling, const std::string unit) {
+    Distance::setMagnitude(value, scaling, unit);
 }
 
-void Medium::setParameter(const float length, const short int scaling, const Unit& unit) {
-    Distance::setMagnitude(length, scaling, unit);
+void Medium::setParameter(const float value, const short int scaling, const Unit& unit) {
+    Distance::setMagnitude(value, scaling, unit);
 }
 
-Direction Medium::getDiffusionFactor() const {
+Direction Medium::getDiffusionCurrent() const {
     return Distance::getAzimuth().getCurrent();
 }
 
@@ -772,11 +772,6 @@ Direction Medium::getThresholdCurrent() const {
 
 Direction Medium::getThresholdShift() const {
     return Distance::getModulation().getShifting();
-}
-
-void Medium::setThresholdShift(const Direction& orientation) {
-    Polar threshold = Distance::getModulation();
-    threshold.setShifting(orientation);
 }
 
 void Medium::setThresholdShift(const float degree) {
@@ -799,32 +794,23 @@ float Medium::getThresholdFraction(const Polar& peer) const {
     return Direction::getFraction(Distance::getModulation().toRadians(), peer.toRadians());
 }
 
-float Medium::getParameterCyclingRate() const {
+float Medium::getDiffusionCyclingRate() const {
     return Distance::getAzimuth().getCyclingRate();
 }
 
-float Medium::getParameterTimePerCycle() const {
+float Medium::getDiffusionTimePerCycle() const {
     return Distance::getAzimuth().getTimePerCycle();
 }
 
-Direction Medium::getParameterShift() const {
+Direction Medium::getDiffusionShift() const {
     return Distance::getAzimuth().getShifting();
 }
 
-void Medium::setParameterShift(const Direction& orientation) {
-    Azimuth direction = Distance::getAzimuth();
-    direction.setShifting(orientation);
-}
-
-Direction Medium::getParameterShift(const short int degree) const {
-    return Distance::getAzimuth().getRotation(degree);
-}
-
-void Medium::setParameterShift(const short int degree) {
+void Medium::setDiffusionShift(const short int degree) {
     Distance::setChangeDirection(degree);
 }
 
-float Medium::getParameterFraction(const Azimuth& peer) const {
+float Medium::getDiffusionFraction(const Azimuth& peer) const {
     return Direction::getFraction(Distance::getAzimuth().toRadians(), peer.toRadians());
 }
 
@@ -878,15 +864,39 @@ shp::Signal Medium::getLinearZDivergence(const Distance& position) const {
     return separation.getOrthogonalDivergence(position, Distance::getModulation()); // Z component only;
 }
 
-shp::Signal Medium::getScalarTotal() const {
-    Distance self = *this; shp::Signal parameter = self.getTotal();
-    shp::Signal result = parameter.getDotFraction(this->intrinsic);
+shp::Signal Medium::getScalarParameter() const {
+    Distance self = *this; shp::Signal parameter = self.getScalarTotal();
+    shp::Signal result = parameter.getDotFraction(this->intrinsic.getVectorAbsolute());
     return result;
 }
 
-shp::Signal Medium::getVectorTotal() const {
-    Distance self = *this; shp::Signal parameter = self.getTotal();
-    shp::Signal result = parameter.getCrossFraction(this->intrinsic);
+shp::Signal Medium::getVectorParameter() const {
+    Distance self = *this; shp::Signal parameter = self.getVectorTotal();
+    shp::Signal result = parameter.getDotFraction(this->intrinsic.getVectorAbsolute());
+    return result;
+}
+
+shp::Signal Medium::getScalarFieldDrift() const {
+    Distance self = *this; shp::Signal parameter = self.getAngularDrift();
+    shp::Signal result = parameter.getDotFraction(this->intrinsic.getVectorAbsolute());
+    return result;
+}
+
+shp::Signal Medium::getScalarFieldTotal() const {
+    Distance self = *this; shp::Signal parameter = self.getAngularTotal();
+    shp::Signal result = parameter.getDotFraction(this->intrinsic.getVectorAbsolute());
+    return result;
+}
+
+shp::Signal Medium::getVectorFieldDrift() const {
+    Distance self = *this; shp::Signal parameter = self.getAngularDrift();
+    shp::Signal result = parameter.getCrossFraction(this->intrinsic.getVectorAbsolute());
+    return result;
+}
+
+shp::Signal Medium::getVectorFieldTotal() const {
+    Distance self = *this; shp::Signal parameter = self.getAngularTotal();
+    shp::Signal result = parameter.getCrossFraction(this->intrinsic.getVectorAbsolute());
     return result;
 }
 

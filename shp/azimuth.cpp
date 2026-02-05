@@ -152,6 +152,10 @@ Azimuth Azimuth::operator%(const Direction& peer) const {
     return Azimuth(azimuth.getDegrees(), azimuth.getMinutes(), azimuth.getSeconds(), shifting);
 }
 
+void Azimuth::setAngleShiftRate(const float degree) {
+    this->shifting.setRotation(degree);
+}
+
 Direction Azimuth::getCurrent() const {
     Direction result(Direction::toRadians() + shifting.toRadians());
     return result;

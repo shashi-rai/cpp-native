@@ -569,14 +569,14 @@ void Distance::setChangeMagnitude(const float motion, const short int scale) {
 }
 
 void Distance::setChangeDirection(const float degree) {
-    if (degree != shp::Quantity::DEFAULT_VALUE) {
+    if (degree != Direction::DEFAULT_RADIANS) {
         Signal direction = (*this + Azimuth(Direction::DEGREE_001 * degree));
         Signal::setOrientation(direction.getOrientation());
     }
 }
 
 void Distance::setChangeCurvature(const float degree) {
-    if (degree != shp::Quantity::DEFAULT_VALUE) {
+    if (degree != Direction::DEFAULT_RADIANS) {
         modulation.setRotation(degree);
     }
 }
@@ -587,6 +587,12 @@ shp::Direction Distance::getCurvatureCurrent() const {
 
 shp::Direction Distance::getCurvatureShiftRate() const {
     return modulation.getShifting();
+}
+
+void Distance::setCurvatureShiftRate(const float degree) {
+    if (degree != Direction::DEFAULT_RADIANS) {
+        modulation.setAngleShiftRate(degree);
+    }
 }
 
 void Distance::setCurvatureShiftRate(const shp::Direction& angular) {
@@ -727,10 +733,25 @@ Signal Distance::getOrthogonalDivergence(const Distance& peer, const Direction& 
     return result;
 }
 
-Signal Distance::getTotal() const {
+Signal Distance::getScalarTotal() const {
     Signal self = *this;
-    return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(),
-        self.getOrientation(), this->modulation);
+    return Signal(Direction::DEFAULT_RADIANS, self.getMagnitude(), self.getScaling(), self.getUnit());
+}
+
+Signal Distance::getVectorTotal() const {
+    Signal self = *this;
+    return Signal(self.getOrientation(), self.getMagnitude(), self.getScaling(), self.getUnit());
+}
+
+Signal Distance::getAngularDrift() const {
+    Signal self = *this; Direction current = this->modulation.getCurrent();
+    return Signal(current.toRadians(), self.getMagnitude(), self.getScaling(), self.getUnit());
+}
+
+Signal Distance::getAngularTotal() const {
+    Signal self = *this; float shift = this->modulation.getCurrent().toRadians();
+    Signal angular = self.getCosComponent(shift);
+    return Signal(shift, angular.getAmplitude(), angular.getScaling(), angular.getUnit());
 }
 
 Signal Distance::getRadial(const Direction& elevation) const {

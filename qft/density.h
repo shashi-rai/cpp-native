@@ -135,14 +135,18 @@ public:
     // Additional methods
     std::string getName() const;
     void setName(const std::string name);
-    shp::Signal getThermal() const;
-    void setThermal(const shp::Signal& temperature);
-    shp::Direction getThermalDiffusion();
-    void setThermalDiffusion(const float factor);
-    void setThermalDiffusion(const shp::Azimuth& factor);
-    shp::Direction getThermalThreshold();
-    void setThermalThreshold(const float factor);
-    void setThermalThreshold(const shp::Polar& factor);
+    shp::Direction getParameterDiffusion() const;
+    void setParameterDiffusion(const float factor);
+    void setParameterDiffusion(const shp::Azimuth& rate);
+    shp::Direction getParameterThreshold() const;
+    void setParameterThreshold(const float factor);
+    void setParameterThreshold(const shp::Polar& factor);
+    shp::Signal getThermalFactor() const;
+    void setThermalFactor(const shp::Signal& temperature);
+    shp::Signal getScalarThermalDrift();
+    shp::Signal getScalarThermalTotal();
+    shp::Signal getThermalFieldDrift();
+    shp::Signal getThermalFieldTotal();
     float getAmplitude() const;
     float getMagnitude() const;
     void setMagnitude(const float value);

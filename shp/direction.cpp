@@ -213,15 +213,15 @@ void Direction::fromRadians(const float radians) {
 }
 
 bool Direction::checkNonZero() const {
-    Direction self = *this; bool result = true;
+    Direction self = *this; bool result = false;
     if (self.seconds != Direction::SECONDS_MIN) {
-        result = false;
+        result = true;
     }
     if (self.minutes != Direction::MINUTES_MIN) {
-        result = false;
+        result = true;
     }
     if (self.degrees != Direction::DEGREES_MIN) {
-        result = false;
+        result = true;
     }
     return result;
 }

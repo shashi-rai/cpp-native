@@ -505,7 +505,7 @@ bool Density::operator>=(const Density& peer) const {
 
 Density Density::operator+(const Density& peer) const {
     Density self = *this, other = peer; shp::Medium medium = (self + other);
-    shp::Signal density = medium.getParameter().getTotal();
+    shp::Signal density = medium.getParameter().getAngularTotal();
 	shp::Signal newIntrinsic = (self.getIntrinsic() + peer.getIntrinsic());
     shp::Signal newVolume = (volume.getScalarTotal() + peer.volume.getScalarTotal());
 	newVolume.adjustScaling();
@@ -515,7 +515,7 @@ Density Density::operator+(const Density& peer) const {
 
 Density Density::operator-(const Density& peer) const {
     Density self = *this, other = peer; shp::Medium medium = (self - other);
-    shp::Signal density = medium.getParameter().getTotal();
+    shp::Signal density = medium.getParameter().getAngularTotal();
 	shp::Signal newIntrinsic = (self.getIntrinsic() - peer.getIntrinsic());
     shp::Signal newVolume = (volume.getScalarTotal() - peer.volume.getScalarTotal());
 	newVolume.adjustScaling();
@@ -525,7 +525,7 @@ Density Density::operator-(const Density& peer) const {
 
 Density Density::operator*(const Density& peer) const {
     Density self = *this, other = peer; shp::Medium medium = (self * other);
-    shp::Signal density = medium.getParameter().getTotal();
+    shp::Signal density = medium.getParameter().getAngularTotal();
 	shp::Signal newIntrinsic = (self.getIntrinsic() * peer.getIntrinsic());
     shp::Signal newVolume = (volume.getScalarTotal() * peer.volume.getScalarTotal());
 	newVolume.adjustScaling();
@@ -535,7 +535,7 @@ Density Density::operator*(const Density& peer) const {
 
 Density Density::operator/(const Density& peer) const {
     Density self = *this, other = peer; shp::Medium medium = (self / other);
-    shp::Signal density = medium.getParameter().getTotal();
+    shp::Signal density = medium.getParameter().getAngularTotal();
 	shp::Signal newIntrinsic = (self.getIntrinsic() / peer.getIntrinsic());
     shp::Signal newVolume = (volume.getScalarTotal() / peer.volume.getScalarTotal());
 	newVolume.adjustScaling();
@@ -545,7 +545,7 @@ Density Density::operator/(const Density& peer) const {
 
 Density Density::operator%(const Density& peer) const {
     Density self = *this, other = peer; shp::Medium medium = (self % other);
-    shp::Signal density = medium.getParameter().getTotal();
+    shp::Signal density = medium.getParameter().getAngularTotal();
 	shp::Signal newIntrinsic = (self.getIntrinsic() % peer.getIntrinsic());
     shp::Signal newVolume = (volume.getScalarTotal() % peer.volume.getScalarTotal());
 	newVolume.adjustScaling();
@@ -561,36 +561,52 @@ void Density::setName(const std::string name) {
     shp::Medium::setName(name);
 }
 
-shp::Signal Density::getThermal() const {
-    return shp::Medium::getIntrinsic();
+shp::Direction Density::getParameterDiffusion() const {
+    return shp::Medium::getDiffusionCurrent();
 }
 
-void Density::setThermal(const shp::Signal& temperature) {
-    shp::Medium::setIntrinsic(temperature);
-}
-
-shp::Direction Density::getThermalDiffusion() {
-    return shp::Medium::getDiffusionFactor();
-}
-
-void Density::setThermalDiffusion(const float factor) {
+void Density::setParameterDiffusion(const float factor) {
     shp::Medium::setDiffusionFactor(factor);
 }
 
-void Density::setThermalDiffusion(const shp::Azimuth& factor) {
-    shp::Medium::setDiffusionFactor(factor);
+void Density::setParameterDiffusion(const shp::Azimuth& rate) {
+    shp::Medium::setDiffusionFactor(rate);
 }
 
-shp::Direction Density::getThermalThreshold() {
+shp::Direction Density::getParameterThreshold() const {
     return shp::Medium::getThresholdShift();
 }
 
-void Density::setThermalThreshold(const float factor) {
+void Density::setParameterThreshold(const float factor) {
     shp::Medium::setThresholdShift(factor);
 }
 
-void Density::setThermalThreshold(const shp::Polar& factor) {
+void Density::setParameterThreshold(const shp::Polar& factor) {
     shp::Medium::setThresholdShift(factor);
+}
+
+shp::Signal Density::getThermalFactor() const {
+    return shp::Medium::getIntrinsic();
+}
+
+void Density::setThermalFactor(const shp::Signal& temperature) {
+    shp::Medium::setIntrinsic(temperature);
+}
+
+shp::Signal Density::getScalarThermalDrift() {
+    return shp::Medium::getScalarFieldDrift();
+}
+
+shp::Signal Density::getScalarThermalTotal() {
+    return shp::Medium::getScalarFieldTotal();
+}
+
+shp::Signal Density::getThermalFieldDrift() {
+    return shp::Medium::getVectorFieldDrift();
+}
+
+shp::Signal Density::getThermalFieldTotal() {
+    return shp::Medium::getVectorFieldTotal();
 }
 
 float Density::getAmplitude() const {

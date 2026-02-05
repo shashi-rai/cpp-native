@@ -751,7 +751,7 @@ void Velocity::setChangeMagnitude(const float motion, const short int scale) {
  * Its impossible to calculate linear velocity without referring to a time domain
  */
 shp::Signal Velocity::getTotal() const {
-	shp::Signal displacement = shp::Distance::getTotal(), interval, velocity;
+	shp::Signal displacement = shp::Distance::getVectorTotal(), interval, velocity;
 	if (isTimeBound()) {	// timeless domain cannot have a linear velocity
 		interval = temporal->getTotal();
 		velocity = (displacement / interval);

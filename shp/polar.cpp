@@ -152,6 +152,10 @@ Polar Polar::operator%(const Direction& peer) const {
     return Polar(polar.getDegrees(), polar.getMinutes(), polar.getSeconds(), shifting);
 }
 
+void Polar::setAngleShiftRate(const float degree) {
+    this->shifting.setRotation(degree);
+}
+
 Direction Polar::getCurrent() const {
     Direction result(Direction::toRadians() + shifting.toRadians());
     return result;

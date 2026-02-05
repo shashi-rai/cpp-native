@@ -64,6 +64,7 @@ public:
     void setShifting(const Direction& angular) { this->shifting = angular; }
 
     // Additional methods
+    void setAngleShiftRate(const float degree);
     Direction getCurrent() const;
     virtual Direction copy() const;
     virtual void clear();

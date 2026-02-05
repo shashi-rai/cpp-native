@@ -149,6 +149,7 @@ public:
     void setChangeCurvature(const float degree);
     shp::Direction getCurvatureCurrent() const;
     shp::Direction getCurvatureShiftRate() const;
+    void setCurvatureShiftRate(const float degree);
     void setCurvatureShiftRate(const shp::Direction& angular);
     void adjustNumeric();
     void adjustScaling();
@@ -176,7 +177,10 @@ public:
     Signal getOrthogonal(const Distance& peer, const Direction& elevation) const;
     Signal getOrthogonalConvergence(const Distance& peer, const Direction& elevation) const;
     Signal getOrthogonalDivergence(const Distance& peer, const Direction& elevation) const;
-    Signal getTotal() const;
+    Signal getScalarTotal() const;
+    Signal getVectorTotal() const;
+    Signal getAngularDrift() const;
+    Signal getAngularTotal() const;
     Signal getRadial(const Direction& elevation) const;
     Signal getRadialX(const Direction& elevation) const;
     Signal getRadialY(const Direction& elevation) const;
