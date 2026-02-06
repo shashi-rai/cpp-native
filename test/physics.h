@@ -18,10 +18,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "test/suite.h"
+#ifndef TEST_PHYSICS_H
+#define TEST_PHYSICS_H
 
-int main(int argc, char* argv[]) {
-    test::Suite s;
-    s.main(argc, argv);
-    return 0;
-}
+#include "../qft/density.h"
+
+namespace test {
+
+class Physics {
+
+public:
+    int main(int argc, char* argv[]);
+};
+
+} // namespace test
+
+#endif //TEST_PHYSICS_H

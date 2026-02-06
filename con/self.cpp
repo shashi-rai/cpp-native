@@ -18,10 +18,51 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "test/suite.h"
+#include "self.h"
 
-int main(int argc, char* argv[]) {
-    test::Suite s;
-    s.main(argc, argv);
-    return 0;
+namespace con {
+
+Self::Self()
+        : name() {
+
 }
+
+Self::Self(std::string name)
+        : name(name) {
+
+}
+
+Self::~Self() {
+
+}
+
+bool Self::operator==(const Self& peer) const {
+    return (name == peer.name);
+}
+
+Self Self::operator+(const Self& peer) const {
+    return Self("+");
+}
+
+Self Self::operator-(const Self& peer) const {
+    return Self("-");
+}
+
+Self Self::copy() {
+    Self fresh(getName());
+    return fresh;
+}
+
+void Self::clear() {
+    name.clear();
+    return;
+}
+
+std::string Self::print() {
+    std::stringstream result;
+    result << "s:";
+	result << name;
+	return result.str();
+}
+
+} // namespace con

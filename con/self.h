@@ -18,10 +18,45 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "test/suite.h"
+#ifndef CON_SELF_H
+#define CON_SELF_H
 
-int main(int argc, char* argv[]) {
-    test::Suite s;
-    s.main(argc, argv);
-    return 0;
-}
+#include <sstream>
+#include <string>
+#include <vector>
+
+namespace con {
+
+class Self {
+    std::string name;
+public:
+    // Constructors
+    Self();
+    Self(std::string name);
+
+    // Destructors
+    ~Self();
+
+    // Operator overloading
+    bool operator==(const Self& peer) const;
+    Self operator+(const Self& peer) const;
+    Self operator-(const Self& peer) const;
+
+    // Getters
+    std::string getName() const { return name; }
+
+    // Setters
+    void setName(const std::string& name) { this->name = name; }
+
+    // Additional methods
+    int getDocumentCount() const;
+    virtual Self copy();
+    virtual void clear();
+    virtual std::string print();
+};
+
+typedef std::vector<Self > SelfArray;
+
+} // namespace con
+
+#endif //CON_SELF_H

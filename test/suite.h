@@ -18,10 +18,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "test/suite.h"
+#ifndef TEST_SUITE_H
+#define TEST_SUITE_H
 
-int main(int argc, char* argv[]) {
-    test::Suite s;
-    s.main(argc, argv);
-    return 0;
-}
+#include "mathematics.h"
+#include "physics.h"
+#include "chemistry.h"
+#include "biology.h"
+#include "consciousness.h"
+
+namespace test {
+
+class Suite {
+
+public:
+    int main(int argc, char* argv[]);
+};
+
+} // namespace test
+
+#endif //TEST_SUITE_H

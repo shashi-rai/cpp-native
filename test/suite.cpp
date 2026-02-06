@@ -18,10 +18,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "test/suite.h"
+#include "suite.h"
 
-int main(int argc, char* argv[]) {
-    test::Suite s;
-    s.main(argc, argv);
+namespace test {
+
+int Suite::main(int argc, char* argv[]) {
+    test::Physics physics;
+    physics.main(argc, argv);
     return 0;
 }
+
+} // namespace test

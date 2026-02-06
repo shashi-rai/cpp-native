@@ -18,10 +18,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "test/suite.h"
+#include "physics.h"
 
-int main(int argc, char* argv[]) {
-    test::Suite s;
-    s.main(argc, argv);
+namespace test {
+
+int Physics::main(int argc, char* argv[]) {
+    std::cout << "Physics Testing: " << std::endl << std::endl;
+    for (int i=0; i < 3; i++) {
+        shp::Signal intrinsic(1.1f);
+        qft::Density a("M", 2.0f, 0, "C");
+        intrinsic.setOrientation(shp::Direction::DEGREE_001 * i); a.setThermalFactor(intrinsic);
+        a.setParameterThreshold(i+1);
+        std::cout << a.print()
+            << " S: " << a.getScalarFlux().print()
+            << " V: " << a.getVectorFlux().print()
+            << " A: " << a.getScalarThermalDrift().print()
+            << " D: " << a.getScalarThermalTotal().print()
+            << " A: " << a.getThermalFieldDrift().print()
+            << " D: " << a.getThermalFieldTotal().print()
+            << std::endl;
+    }
     return 0;
 }
+
+} // namespace test

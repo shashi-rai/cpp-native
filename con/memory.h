@@ -18,10 +18,44 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "test/suite.h"
+#ifndef CON_MEMORY_H
+#define CON_MEMORY_H
 
-int main(int argc, char* argv[]) {
-    test::Suite s;
-    s.main(argc, argv);
-    return 0;
-}
+#include <sstream>
+#include <string>
+#include <vector>
+
+namespace con {
+
+class Memory {
+    std::string name;
+public:
+    // Constructors
+    Memory();
+    Memory(std::string name);
+
+    // Destructors
+    ~Memory();
+
+    // Operator overloading
+    bool operator==(const Memory& peer) const;
+    Memory operator+(const Memory& peer) const;
+    Memory operator-(const Memory& peer) const;
+
+    // Getters
+    std::string getName() const { return name; }
+
+    // Setters
+    void setName(const std::string& name) { this->name = name; }
+
+    // Additional methods
+    virtual Memory copy();
+    virtual void clear();
+    virtual std::string print();
+};
+
+typedef std::vector<Memory > MemoryArray;
+
+} // namespace con
+
+#endif //CON_MEMORY_H

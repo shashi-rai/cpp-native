@@ -18,10 +18,51 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "test/suite.h"
+#include "memory.h"
 
-int main(int argc, char* argv[]) {
-    test::Suite s;
-    s.main(argc, argv);
-    return 0;
+namespace con {
+
+Memory::Memory()
+        : name() {
+
 }
+
+Memory::Memory(std::string name)
+        : name(name) {
+
+}
+
+Memory::~Memory() {
+
+}
+
+bool Memory::operator==(const Memory& peer) const {
+    return (name == peer.name);
+}
+
+Memory Memory::operator+(const Memory& peer) const {
+    return Memory("+");
+}
+
+Memory Memory::operator-(const Memory& peer) const {
+    return Memory("-");
+}
+
+Memory Memory::copy() {
+    Memory fresh(getName());
+    return fresh;
+}
+
+void Memory::clear() {
+    name.clear();
+    return;
+}
+
+std::string Memory::print() {
+    std::stringstream result;
+    result << "m:";
+	result << name;
+	return result.str();
+}
+
+} // namespace con

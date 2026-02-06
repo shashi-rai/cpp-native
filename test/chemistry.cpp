@@ -18,10 +18,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "test/suite.h"
+#include "chemistry.h"
 
-int main(int argc, char* argv[]) {
-    test::Suite s;
-    s.main(argc, argv);
+namespace test {
+
+int Chemistry::main(int argc, char* argv[]) {
     return 0;
 }
+
+} // namespace test

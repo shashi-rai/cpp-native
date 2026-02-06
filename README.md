@@ -1,4 +1,8 @@
-# Bhojpur C++ - Native Collections
+# Bhojpur C++ - Consciousness Programming Platform
+
+This software is designed to be self-conscious mimicking natural intelligence.
+It starts thinking about subject matter in a given context on its own to be
+able to respond without any kind of human intervention.
 
 This source code repository is designed to be used by Software Developers. It
 comprises of a collection of commonly used software __algorithms__ written in
@@ -24,23 +28,25 @@ The following folders serve specific purpose with regard to software development
 1. [inc](/inc/) - include header files
 2. [lib](/lib/) - pre-compiled library files
 3. [obj](/obj/) - pre-compiled object files
-4. [act](/act/) - financial accounting algorithms
-5. [bio](/bio/) - biological algorithms
-6. [bit](/bit/) - information theory algorithms
-7. [che](/che/) - chemical algorithms
-8. [doc](/doc/) - document assembly algorithms
-9. [dsa](/dsa/) - data structure algorithms
-10. [ecn](/ecn/) - electronic circuit algorithms
-11. [eco](/eco/) - economic model algorithms
-12. [fin](/fin/) - financial algorithms
-13. [gis](/gis/) - geospatial system algorithms
-14. [grt](/grt/) - general relativity algorithms
-15. [img](/img/) - digital imaging algorithms
-16. [law](/law/) - legal matter algorithms
-17. [phy](/phy/) - physical algorithms
-18. [qft](/qft/) - quantum field algorithms
-19. [shp](/shp/) - geometrical shape algorithms
-20. [web](/web/) - web development system
+4. [test](/test/) - functional testing source files
+5. [act](/act/) - financial accounting algorithms
+6. [bio](/bio/) - biological algorithms
+7. [bit](/bit/) - information theory algorithms
+8. [che](/che/) - chemical algorithms
+9. [con](/con/) - consciousness algorithms
+10. [doc](/doc/) - document assembly algorithms
+11. [dsa](/dsa/) - data structure algorithms
+12. [ecn](/ecn/) - electronic circuit algorithms
+13. [eco](/eco/) - economic model algorithms
+14. [fin](/fin/) - financial algorithms
+15. [gis](/gis/) - geospatial system algorithms
+16. [grt](/grt/) - general relativity algorithms
+17. [img](/img/) - digital imaging algorithms
+18. [law](/law/) - legal matter algorithms
+19. [phy](/phy/) - physical algorithms
+20. [qft](/qft/) - quantum field algorithms
+21. [shp](/shp/) - geometrical shape algorithms
+22. [web](/web/) - web development system
 
 ## Source Code Compilation
 
@@ -62,6 +68,13 @@ $ make app
 For example, the [bhojpur.app](bhojpur.app) is a custom application built from
 [main.cpp](main.cpp) in the root folder.
 
+In case, you would like to check the command sequence fired by __make__ build
+tool but without execution, then issue the following command in your terminal
+
+```bash
+$ make -n
+```
+
 ### Understanding Dependencies
 
 The microscropic realm phenomenon is modeled using the following native C++ libraries
@@ -75,6 +88,7 @@ The microscropic realm phenomenon is modeled using the following native C++ libr
 - then, compile [bio](/bio/) library that builds on [che](/che/) to model the Biology
 - then, compile [ecn](/ecn/) library that builds on [qft](/qft/) to model the Circuits
 - then, compile [bit](/bit/) library that builds on [qft](/qft/) to model the Information
+- then, compile [con](/con/) library that builds on [bio](/bio/) to model the Consciousness
 
 The macro-world phenomenon is modeled using the following native C++ libraries
 
@@ -91,6 +105,15 @@ The financial system is modeled using the following native C++ libraries
 - the [act](/act/) library could be compiled after [shp](/shp/) library is ready
 - the [eco](/eco/) library could be compiled after [act](/act/) library is ready
 - the [fin](/fin/) library could be compiled after [act](/act/) library is ready
+
+## Functional Testing Framework
+
+To test basic functioanl eatures of the libraries, simply issue the following
+command in your terminal
+
+```bash
+$ make test
+```
 
 ## Folder Cleanup
 

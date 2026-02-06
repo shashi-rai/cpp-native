@@ -18,10 +18,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "test/suite.h"
+#ifndef TEST_CONSCIOUSNESS_H
+#define TEST_CONSCIOUSNESS_H
 
-int main(int argc, char* argv[]) {
-    test::Suite s;
-    s.main(argc, argv);
-    return 0;
-}
+namespace test {
+
+class Consciousness {
+
+public:
+    int main(int argc, char* argv[]);
+};
+
+} // namespace test
+
+#endif //TEST_CONSCIOUSNESS_H
