@@ -21,18 +21,30 @@
 #ifndef CON_SELF_H
 #define CON_SELF_H
 
-#include <sstream>
-#include <string>
-#include <vector>
+#include "memory.h"
 
 namespace con {
 
-class Self {
-    std::string name;
+class Self : private Memory {
+    StimulusArray sensors;
 public:
     // Constructors
     Self();
-    Self(std::string name);
+    Self(const StimulusArray& sensors);
+    Self(const Stimulus& stimulus);
+    Self(const Stimulus& stimulus, const StimulusArray& sensors);
+    Self(const Response& response);
+    Self(const Response& response, const StimulusArray& sensors);
+    Self(const Stimulus& stimulus, const Response& response);
+    Self(const Stimulus& stimulus, const Response& response, const StimulusArray& sensors);
+    Self(const std::string name, const StimulusArray& sensors);
+    Self(const std::string name);
+    Self(const std::string name, const Stimulus& stimulus);
+    Self(const std::string name, const Stimulus& stimulus, const StimulusArray& sensors);
+    Self(const std::string name, const Response& response);
+    Self(const std::string name, const Response& response, const StimulusArray& sensors);
+    Self(const std::string name, const Stimulus& stimulus, const Response& response);
+    Self(const std::string name, const Stimulus& stimulus, const Response& response, const StimulusArray& sensors);
 
     // Destructors
     ~Self();
@@ -42,17 +54,30 @@ public:
     Self operator+(const Self& peer) const;
     Self operator-(const Self& peer) const;
 
+    // Access operator
+    Stimulus operator()(const int x) { return sensors[x]; }
+    const Stimulus operator()(const int x) const { return sensors[x]; }
+
     // Getters
-    std::string getName() const { return name; }
+    StimulusArray getSensors() const { return sensors; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setSensors(const StimulusArray& objects) { this->sensors = objects; }
 
     // Additional methods
-    int getDocumentCount() const;
-    virtual Self copy();
+    std::string getName() const;
+    void setName(const std::string name);
+    Stimulus getStimulus() const;
+    void setStimulus(const Stimulus& input);
+    Response getResponse() const;
+    void setResponse(const Response& output);
+    int getSensorCount() const;
+    Stimulus get(const int index) const;
+    void set(const int index, const Stimulus& object);
+    Self copy() const;
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printSensors() const;
 };
 
 typedef std::vector<Self > SelfArray;

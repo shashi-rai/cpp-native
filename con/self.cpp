@@ -23,12 +23,83 @@
 namespace con {
 
 Self::Self()
-        : name() {
+        : Memory(), sensors() {
 
 }
 
-Self::Self(std::string name)
-        : name(name) {
+Self::Self(const StimulusArray& sensors)
+        : Memory(), sensors(sensors) {
+
+}
+
+Self::Self(const Stimulus& stimulus)
+        : Memory(stimulus), sensors() {
+
+}
+
+Self::Self(const Stimulus& stimulus, const StimulusArray& sensors)
+        : Memory(stimulus), sensors(sensors) {
+
+}
+
+Self::Self(const Response& response)
+        : Memory(response), sensors() {
+
+}
+
+Self::Self(const Response& response, const StimulusArray& sensors)
+        : Memory(response), sensors(sensors) {
+
+}
+
+Self::Self(const Stimulus& stimulus, const Response& response)
+        : Memory(stimulus, response), sensors() {
+
+}
+
+Self::Self(const Stimulus& stimulus, const Response& response, const StimulusArray& sensors)
+        : Memory(stimulus, response), sensors(sensors) {
+
+}
+
+Self::Self(const std::string name)
+        : Memory(name), sensors() {
+
+}
+
+Self::Self(const std::string name, const StimulusArray& sensors)
+        : Memory(name), sensors(sensors) {
+
+}
+
+Self::Self(const std::string name, const Stimulus& stimulus)
+        : Memory(name, stimulus), sensors() {
+
+}
+
+Self::Self(const std::string name, const Stimulus& stimulus, const StimulusArray& sensors)
+        : Memory(name, stimulus), sensors(sensors) {
+
+}
+
+Self::Self(const std::string name, const Response& response)
+        : Memory(name, response), sensors() {
+
+}
+
+Self::Self(const std::string name, const Response& response, const StimulusArray& sensors)
+        : Memory(name, response), sensors(sensors) {
+
+}
+
+Self::Self(const std::string name, const Stimulus& stimulus, const Response& response)
+        : Memory(name, stimulus, response), sensors() {
+
+}
+
+Self::Self(const std::string name, const Stimulus& stimulus, const Response& response,
+        const StimulusArray& sensors)
+        : Memory(name, stimulus, response), sensors(sensors) {
 
 }
 
@@ -37,31 +108,114 @@ Self::~Self() {
 }
 
 bool Self::operator==(const Self& peer) const {
-    return (name == peer.name);
+    return (static_cast<const Memory&>(*this) == static_cast<const Memory&>(peer))
+        && (sensors == peer.sensors);
 }
 
 Self Self::operator+(const Self& peer) const {
-    return Self("+");
+    Memory self = *this, other = peer, memory = (self + other);
+    StimulusArray result(sensors);
+    result.insert(result.end(), peer.sensors.begin(), peer.sensors.end());
+    return Self("+", memory.getStimulus(), memory.getResponse(), result);
 }
 
 Self Self::operator-(const Self& peer) const {
-    return Self("-");
+    Memory self = *this, other = peer, memory = (self - other);
+    StimulusArray result(sensors);
+    for (StimulusArray::const_iterator it = peer.sensors.begin(); it != peer.sensors.end(); ++it) {
+        StimulusArray::iterator found = std::find(result.begin(), result.end(), *it);
+        if (found != result.end()) {
+            result.erase(found);
+        }
+    }
+    return Self("-", memory.getStimulus(), memory.getResponse(), result);
 }
 
-Self Self::copy() {
-    Self fresh(getName());
+std::string Self::getName() const {
+    return Memory::getName();
+}
+
+void Self::setName(const std::string name) {
+    Memory::setName(name);
+}
+
+Stimulus Self::getStimulus() const {
+    return Memory::getStimulus();
+}
+
+void Self::setStimulus(const Stimulus& input) {
+    Memory::setStimulus(input);
+}
+
+Response Self::getResponse() const {
+    return Memory::getResponse();
+}
+
+void Self::setResponse(const Response& output) {
+    Memory::setResponse(output);
+}
+
+int Self::getSensorCount() const {
+    return sensors.size();
+}
+
+Stimulus Self::get(const int index) const {
+    Stimulus result;
+    if (index < 0) {
+        return result;
+    }
+    if (index >= static_cast<int>(sensors.size())) {
+        return result;
+    }
+    return sensors[index];
+}
+
+void Self::set(const int index, const Stimulus& object) {
+    if (index < 0) {
+        return;
+    }
+    if (index < static_cast<int>(sensors.size())) {
+        // replace existing element
+        sensors[index] = object;
+    } else if (index == static_cast<int>(sensors.size())) {
+        // append at end
+        sensors.push_back(object);
+    } else {
+        // index beyond current size: append at end
+        sensors.push_back(object);
+    }
+    return;
+}
+
+Self Self::copy() const {
+    Self fresh(this->getName(), this->getStimulus(), this->getResponse(), this->sensors);
     return fresh;
 }
 
 void Self::clear() {
-    name.clear();
+    Memory::clear();
+    sensors.clear();
     return;
 }
 
-std::string Self::print() {
+std::string Self::print() const {
     std::stringstream result;
-    result << "s:";
-	result << name;
+	result << Memory::print();
+    result << printSensors();
+	return result.str();
+}
+
+std::string Self::printSensors() const {
+    std::stringstream result; int size = sensors.size();
+    if (size > 0) {
+        result << ",sz:";
+	    result << sensors.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << sensors[i].print() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

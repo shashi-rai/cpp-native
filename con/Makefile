@@ -45,14 +45,34 @@ clean-libs: clean-custom
 	${RMCLEAN} $(LIBFILES)
 
 $(LIBFOLDR)/$(LIBNAME): \
+		$(OBJFOLDR)/behaviour.o \
 		$(OBJFOLDR)/memory.o \
-		$(OBJFOLDR)/self.o
+		$(OBJFOLDR)/pattern.o \
+		$(OBJFOLDR)/response.o \
+		$(OBJFOLDR)/self.o \
+		$(OBJFOLDR)/stimulus.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
+		$(OBJFOLDR)/behaviour.o \
 		$(OBJFOLDR)/memory.o \
-		$(OBJFOLDR)/self.o
+		$(OBJFOLDR)/pattern.o \
+		$(OBJFOLDR)/response.o \
+		$(OBJFOLDR)/self.o \
+		$(OBJFOLDR)/stimulus.o
+
+$(OBJFOLDR)/behaviour.o: behaviour.cpp
+	$(CPPTOOL) -c behaviour.cpp -o $(OBJFOLDR)/behaviour.o $(CXXFLAGS)
 
 $(OBJFOLDR)/memory.o: memory.cpp
 	$(CPPTOOL) -c memory.cpp -o $(OBJFOLDR)/memory.o $(CXXFLAGS)
 
+$(OBJFOLDR)/pattern.o: pattern.cpp
+	$(CPPTOOL) -c pattern.cpp -o $(OBJFOLDR)/pattern.o $(CXXFLAGS)
+
+$(OBJFOLDR)/response.o: response.cpp
+	$(CPPTOOL) -c response.cpp -o $(OBJFOLDR)/response.o $(CXXFLAGS)
+
 $(OBJFOLDR)/self.o: self.cpp
 	$(CPPTOOL) -c self.cpp -o $(OBJFOLDR)/self.o $(CXXFLAGS)
+
+$(OBJFOLDR)/stimulus.o: stimulus.cpp
+	$(CPPTOOL) -c stimulus.cpp -o $(OBJFOLDR)/stimulus.o $(CXXFLAGS)

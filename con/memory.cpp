@@ -23,12 +23,83 @@
 namespace con {
 
 Memory::Memory()
-        : name() {
+        : Pattern(), patterns() {
 
 }
 
-Memory::Memory(std::string name)
-        : name(name) {
+Memory::Memory(const PatternArray& patterns)
+        : Pattern(), patterns(patterns) {
+
+}
+
+Memory::Memory(const Stimulus& stimulus)
+        : Pattern(stimulus), patterns() {
+
+}
+
+Memory::Memory(const Stimulus& stimulus, const PatternArray& patterns)
+        : Pattern(stimulus), patterns(patterns) {
+
+}
+
+Memory::Memory(const Response& response)
+        : Pattern(response), patterns() {
+
+}
+
+Memory::Memory(const Response& response, const PatternArray& patterns)
+        : Pattern(response), patterns(patterns) {
+
+}
+
+Memory::Memory(const Stimulus& stimulus, const Response& response)
+        : Pattern(stimulus, response), patterns() {
+
+}
+
+Memory::Memory(const Stimulus& stimulus, const Response& response, const PatternArray& patterns)
+        : Pattern(stimulus, response), patterns(patterns) {
+
+}
+
+Memory::Memory(const std::string name)
+        : Pattern(name), patterns() {
+
+}
+
+Memory::Memory(const std::string name, const PatternArray& patterns)
+        : Pattern(name), patterns(patterns) {
+
+}
+
+Memory::Memory(const std::string name, const Stimulus& stimulus)
+        : Pattern(name, stimulus), patterns() {
+
+}
+
+Memory::Memory(const std::string name, const Stimulus& stimulus, const PatternArray& patterns)
+        : Pattern(name, stimulus), patterns(patterns) {
+
+}
+
+Memory::Memory(const std::string name, const Response& response)
+        : Pattern(name, response), patterns() {
+
+}
+
+Memory::Memory(const std::string name, const Response& response, const PatternArray& patterns)
+        : Pattern(name, response), patterns(patterns) {
+
+}
+
+Memory::Memory(const std::string name, const Stimulus& stimulus, const Response& response)
+        : Pattern(name, stimulus, response), patterns() {
+
+}
+
+Memory::Memory(const std::string name, const Stimulus& stimulus, const Response& response,
+        const PatternArray& patterns)
+        : Pattern(name, stimulus, response), patterns(patterns) {
 
 }
 
@@ -37,31 +108,112 @@ Memory::~Memory() {
 }
 
 bool Memory::operator==(const Memory& peer) const {
-    return (name == peer.name);
+    return (static_cast<const Pattern&>(*this) == static_cast<const Pattern&>(peer))
+        && (patterns == peer.patterns);
 }
 
 Memory Memory::operator+(const Memory& peer) const {
-    return Memory("+");
+    PatternArray result(patterns);
+    result.insert(result.end(), peer.patterns.begin(), peer.patterns.end());
+    return Memory("+", result);
 }
 
 Memory Memory::operator-(const Memory& peer) const {
-    return Memory("-");
+    PatternArray result(patterns);
+    for (PatternArray::const_iterator it = peer.patterns.begin(); it != peer.patterns.end(); ++it) {
+        PatternArray::iterator found = std::find(result.begin(), result.end(), *it);
+        if (found != result.end()) {
+            result.erase(found);
+        }
+    }
+    return Memory("-", result);
 }
 
-Memory Memory::copy() {
-    Memory fresh(getName());
+std::string Memory::getName() const {
+    return Behaviour::getName();
+}
+
+void Memory::setName(const std::string name) {
+    Behaviour::setName(name);
+}
+
+Stimulus Memory::getStimulus() const {
+    return Pattern::getStimulus();
+}
+
+void Memory::setStimulus(const Stimulus& input) {
+    Pattern::setStimulus(input);
+}
+
+Response Memory::getResponse() const {
+    return Pattern::getResponse();
+}
+
+void Memory::setResponse(const Response& output) {
+    Pattern::setResponse(output);
+}
+
+int Memory::getPatternCount() const {
+    return patterns.size();
+}
+
+Pattern Memory::get(const int index) const {
+    Pattern result;
+    if (index < 0) {
+        return result;
+    }
+    if (index >= static_cast<int>(patterns.size())) {
+        return result;
+    }
+    return patterns[index];
+}
+
+void Memory::set(const int index, const Pattern& object) {
+    if (index < 0) {
+        return;
+    }
+    if (index < static_cast<int>(patterns.size())) {
+        // replace existing element
+        patterns[index] = object;
+    } else if (index == static_cast<int>(patterns.size())) {
+        // append at end
+        patterns.push_back(object);
+    } else {
+        // index beyond current size: append at end
+        patterns.push_back(object);
+    }
+    return;
+}
+
+Memory Memory::copy() const {
+    Memory fresh(this->getName(), this->patterns);
     return fresh;
 }
 
 void Memory::clear() {
-    name.clear();
+    Pattern::clear();
+    patterns.clear();
     return;
 }
 
-std::string Memory::print() {
+std::string Memory::print() const {
     std::stringstream result;
-    result << "m:";
-	result << name;
+	result << Pattern::print();
+    result << printPatterns();
+	return result.str();
+}
+
+std::string Memory::printPatterns() const {
+    std::stringstream result; int size = patterns.size();
+    if (size > 0) {
+        result << ",sz:";
+	    result << patterns.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << patterns[i].print() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

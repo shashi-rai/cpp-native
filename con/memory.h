@@ -21,18 +21,30 @@
 #ifndef CON_MEMORY_H
 #define CON_MEMORY_H
 
-#include <sstream>
-#include <string>
-#include <vector>
+#include "pattern.h"
 
 namespace con {
 
-class Memory {
-    std::string name;
+class Memory : private Pattern {
+    PatternArray patterns;
 public:
     // Constructors
     Memory();
-    Memory(std::string name);
+    Memory(const PatternArray& patterns);
+    Memory(const Stimulus& stimulus);
+    Memory(const Stimulus& stimulus, const PatternArray& patterns);
+    Memory(const Response& response);
+    Memory(const Response& response, const PatternArray& patterns);
+    Memory(const Stimulus& stimulus, const Response& response);
+    Memory(const Stimulus& stimulus, const Response& response, const PatternArray& patterns);
+    Memory(const std::string name);
+    Memory(const std::string name, const PatternArray& patterns);
+    Memory(const std::string name, const Stimulus& stimulus);
+    Memory(const std::string name, const Stimulus& stimulus, const PatternArray& patterns);
+    Memory(const std::string name, const Response& response);
+    Memory(const std::string name, const Response& response, const PatternArray& patterns);
+    Memory(const std::string name, const Stimulus& stimulus, const Response& response);
+    Memory(const std::string name, const Stimulus& stimulus, const Response& response, const PatternArray& patterns);
 
     // Destructors
     ~Memory();
@@ -42,16 +54,30 @@ public:
     Memory operator+(const Memory& peer) const;
     Memory operator-(const Memory& peer) const;
 
+    // Access operator
+    Pattern operator()(const int x) { return patterns[x]; }
+    const Pattern operator()(const int x) const { return patterns[x]; }
+
     // Getters
-    std::string getName() const { return name; }
+    PatternArray getPatterns() const { return patterns; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
+    void setPatterns(const PatternArray& objects) { this->patterns = objects; }
 
     // Additional methods
-    virtual Memory copy();
+    std::string getName() const;
+    void setName(const std::string name);
+    Stimulus getStimulus() const;
+    void setStimulus(const Stimulus& input);
+    Response getResponse() const;
+    void setResponse(const Response& output);
+    int getPatternCount() const;
+    Pattern get(const int index) const;
+    void set(const int index, const Pattern& object);
+    Memory copy() const;
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printPatterns() const;
 };
 
 typedef std::vector<Memory > MemoryArray;
