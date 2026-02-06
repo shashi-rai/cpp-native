@@ -71,6 +71,9 @@ public:
     void setStimulus(const Stimulus& input);
     Response getResponse() const;
     void setResponse(const Response& output);
+    bool isAware(const Stimulus& stimulus) const;
+    shp::Signal getBehaviour(const Stimulus& stimulus) const;
+    void setBehaviour(const Stimulus& stimulus, const Response& response);
     int getSensorCount() const;
     Stimulus get(const int index) const;
     void set(const int index, const Stimulus& object);

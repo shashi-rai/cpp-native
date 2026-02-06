@@ -151,6 +151,20 @@ Response Self::getResponse() const {
     return Memory::getResponse();
 }
 
+bool Self::isAware(const Stimulus& stimulus) const {
+    return Memory::isAware(stimulus);
+}
+
+shp::Signal Self::getBehaviour(const Stimulus& stimulus) const {
+    Stimulus input = stimulus;
+    Response response = Memory::getLearning(input);
+    return response.getOutput();
+}
+
+void Self::setBehaviour(const Stimulus& stimulus, const Response& response) {
+    Memory::setLearning(stimulus, response);
+}
+
 void Self::setResponse(const Response& output) {
     Memory::setResponse(output);
 }

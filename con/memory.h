@@ -26,25 +26,25 @@
 namespace con {
 
 class Memory : private Pattern {
-    PatternArray patterns;
+    PatternMap patterns;
 public:
     // Constructors
     Memory();
-    Memory(const PatternArray& patterns);
+    Memory(const PatternMap& patterns);
     Memory(const Stimulus& stimulus);
-    Memory(const Stimulus& stimulus, const PatternArray& patterns);
+    Memory(const Stimulus& stimulus, const PatternMap& patterns);
     Memory(const Response& response);
-    Memory(const Response& response, const PatternArray& patterns);
+    Memory(const Response& response, const PatternMap& patterns);
     Memory(const Stimulus& stimulus, const Response& response);
-    Memory(const Stimulus& stimulus, const Response& response, const PatternArray& patterns);
+    Memory(const Stimulus& stimulus, const Response& response, const PatternMap& patterns);
     Memory(const std::string name);
-    Memory(const std::string name, const PatternArray& patterns);
+    Memory(const std::string name, const PatternMap& patterns);
     Memory(const std::string name, const Stimulus& stimulus);
-    Memory(const std::string name, const Stimulus& stimulus, const PatternArray& patterns);
+    Memory(const std::string name, const Stimulus& stimulus, const PatternMap& patterns);
     Memory(const std::string name, const Response& response);
-    Memory(const std::string name, const Response& response, const PatternArray& patterns);
+    Memory(const std::string name, const Response& response, const PatternMap& patterns);
     Memory(const std::string name, const Stimulus& stimulus, const Response& response);
-    Memory(const std::string name, const Stimulus& stimulus, const Response& response, const PatternArray& patterns);
+    Memory(const std::string name, const Stimulus& stimulus, const Response& response, const PatternMap& patterns);
 
     // Destructors
     ~Memory();
@@ -55,14 +55,13 @@ public:
     Memory operator-(const Memory& peer) const;
 
     // Access operator
-    Pattern operator()(const int x) { return patterns[x]; }
-    const Pattern operator()(const int x) const { return patterns[x]; }
+    Pattern operator()(const std::string key) { return patterns[key]; }
 
     // Getters
-    PatternArray getPatterns() const { return patterns; }
+    PatternMap getPatterns() const;
 
     // Setters
-    void setPatterns(const PatternArray& objects) { this->patterns = objects; }
+    void setPatterns(const PatternMap& objects);
 
     // Additional methods
     std::string getName() const;
@@ -71,9 +70,12 @@ public:
     void setStimulus(const Stimulus& input);
     Response getResponse() const;
     void setResponse(const Response& output);
+    bool isAware(const Stimulus& stimulus) const;
+    Response getLearning(const Stimulus& stimulus) const;
+    void setLearning(const Stimulus& stimulus, const Response& response);
     int getPatternCount() const;
-    Pattern get(const int index) const;
-    void set(const int index, const Pattern& object);
+    Pattern get(const std::string key) const;
+    void set(const std::string key, const Pattern& object);
     Memory copy() const;
     virtual void clear();
     virtual std::string print() const;

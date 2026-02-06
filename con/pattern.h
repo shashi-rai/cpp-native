@@ -21,6 +21,7 @@
 #ifndef CON_PATTERN_H
 #define CON_PATTERN_H
 
+#include <map>
 #include "stimulus.h"
 #include "response.h"
 
@@ -67,7 +68,7 @@ public:
     virtual std::string print() const;
 };
 
-typedef std::vector<Pattern > PatternArray;
+typedef std::map<const std::string, Pattern > PatternMap;
 
 } // namespace con
 
