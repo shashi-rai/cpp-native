@@ -36,6 +36,8 @@ public:
     Chemistry(const std::string name, const test::CommandLine& object);
     ~Chemistry();
 public:
+    int run();
+    int run(const int argc, char* argv[]);
     int run(const test::CommandLine& object);
     void nucleus_concept();
     void orbital_concept();

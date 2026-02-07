@@ -18,67 +18,63 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "consciousness.h"
+#include "accounting.h"
 
 namespace test {
 
-const std::string Consciousness::DEFAULT_NAME = "Consciousness";
+const std::string Accounting::DEFAULT_NAME = "Accounting";
 
-Consciousness::Consciousness()
+Accounting::Accounting()
         : test::System(DEFAULT_NAME) {
 
 }
 
-Consciousness::Consciousness(const std::string name)
+Accounting::Accounting(const std::string name)
         : test::System(name) {
 
 }
 
-Consciousness::Consciousness(const int argc, char* argv[])
+Accounting::Accounting(const int argc, char* argv[])
         : test::System(DEFAULT_NAME) {
     test::System::setParameters(argc, argv);
 }
 
-Consciousness::Consciousness(const std::string name, const int argc, char* argv[])
+Accounting::Accounting(const std::string name, const int argc, char* argv[])
         : test::System(name) {
     test::System::setParameters(argc, argv);
 }
 
-Consciousness::Consciousness(const test::CommandLine& object)
+Accounting::Accounting(const test::CommandLine& object)
         : test::System(DEFAULT_NAME) {
     test::System::setParameters(object);
 }
 
-Consciousness::Consciousness(const std::string name, const test::CommandLine& object)
+Accounting::Accounting(const std::string name, const test::CommandLine& object)
         : test::System(name) {
     test::System::setParameters(object);
 }
 
-Consciousness::~Consciousness() {
+Accounting::~Accounting() {
 
 }
 
-int Consciousness::run() {
+int Accounting::run() {
     return run(test::System::getParameters());
 }
 
-int Consciousness::run(const int argc, char* argv[]) {
+int Accounting::run(const int argc, char* argv[]) {
     test::System::setParameters(argc, argv);
     return run(test::System::getParameters());
 }
 
-int Consciousness::run(const test::CommandLine& object) {
+int Accounting::run(const test::CommandLine& object) {
     test::System::printStartedMessage();
-    simple_training();
     test::System::printStoppedMessage();
     return 0;
 }
 
-void Consciousness::simple_training() {
-    con::Self self("M");
-    self.setBehaviour(con::Stimulus("A", 5), con::Response("B", 3));
-    shp::Signal output = self.getBehaviour(con::Stimulus("A"));
-    std::cout << output.print() << std::endl;
+void Accounting::cash_concept() {
+
 }
 
 } // namespace test

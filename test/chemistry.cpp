@@ -58,6 +58,15 @@ Chemistry::~Chemistry() {
 
 }
 
+int Chemistry::run() {
+    return run(test::System::getParameters());
+}
+
+int Chemistry::run(const int argc, char* argv[]) {
+    test::System::setParameters(argc, argv);
+    return run(test::System::getParameters());
+}
+
 int Chemistry::run(const test::CommandLine& object) {
     test::System::printStartedMessage();
     test::System::printStoppedMessage();

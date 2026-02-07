@@ -18,39 +18,28 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef TEST_MATHEMATICS_H
-#define TEST_MATHEMATICS_H
+#ifndef TEST_FINANCE_H
+#define TEST_FINANCE_H
 
 #include "../inc/testing.h"
 
 namespace test {
 
-class Mathematics : protected test::System {
+class Finance : protected test::System {
 
 public:
-    Mathematics();
-    Mathematics(const std::string name);
-    Mathematics(const int argc, char* argv[]);
-    Mathematics(const std::string name, const int argc, char* argv[]);
-    Mathematics(const test::CommandLine& object);
-    Mathematics(const std::string name, const test::CommandLine& object);
-    ~Mathematics();
+    Finance();
+    Finance(const std::string name);
+    Finance(const int argc, char* argv[]);
+    Finance(const std::string name, const int argc, char* argv[]);
+    Finance(const test::CommandLine& object);
+    Finance(const std::string name, const test::CommandLine& object);
+    ~Finance();
 public:
     int run();
     int run(const int argc, char* argv[]);
     int run(const test::CommandLine& object);
-    void quantity_concept();
-    void direction_concept();
-    void angular_concept();
-    void signal_concept();
-    void distance_concept();
-    void area_concept();
-    void volume_concept();
-    void medium_concept();
-    void temporal_concept();
-    void frequency_concept();
-    void potential_concept();
-    void confinement_concept();
+    void wealth_concept();
 
 public:
     static const std::string DEFAULT_NAME;
@@ -58,4 +47,4 @@ public:
 
 } // namespace test
 
-#endif //TEST_MATHEMATICS_H
+#endif //TEST_FINANCE_H

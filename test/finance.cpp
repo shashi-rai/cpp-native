@@ -18,67 +18,63 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "consciousness.h"
+#include "finance.h"
 
 namespace test {
 
-const std::string Consciousness::DEFAULT_NAME = "Consciousness";
+const std::string Finance::DEFAULT_NAME = "Finance";
 
-Consciousness::Consciousness()
+Finance::Finance()
         : test::System(DEFAULT_NAME) {
 
 }
 
-Consciousness::Consciousness(const std::string name)
+Finance::Finance(const std::string name)
         : test::System(name) {
 
 }
 
-Consciousness::Consciousness(const int argc, char* argv[])
+Finance::Finance(const int argc, char* argv[])
         : test::System(DEFAULT_NAME) {
     test::System::setParameters(argc, argv);
 }
 
-Consciousness::Consciousness(const std::string name, const int argc, char* argv[])
+Finance::Finance(const std::string name, const int argc, char* argv[])
         : test::System(name) {
     test::System::setParameters(argc, argv);
 }
 
-Consciousness::Consciousness(const test::CommandLine& object)
+Finance::Finance(const test::CommandLine& object)
         : test::System(DEFAULT_NAME) {
     test::System::setParameters(object);
 }
 
-Consciousness::Consciousness(const std::string name, const test::CommandLine& object)
+Finance::Finance(const std::string name, const test::CommandLine& object)
         : test::System(name) {
     test::System::setParameters(object);
 }
 
-Consciousness::~Consciousness() {
+Finance::~Finance() {
 
 }
 
-int Consciousness::run() {
+int Finance::run() {
     return run(test::System::getParameters());
 }
 
-int Consciousness::run(const int argc, char* argv[]) {
+int Finance::run(const int argc, char* argv[]) {
     test::System::setParameters(argc, argv);
     return run(test::System::getParameters());
 }
 
-int Consciousness::run(const test::CommandLine& object) {
+int Finance::run(const test::CommandLine& object) {
     test::System::printStartedMessage();
-    simple_training();
     test::System::printStoppedMessage();
     return 0;
 }
 
-void Consciousness::simple_training() {
-    con::Self self("M");
-    self.setBehaviour(con::Stimulus("A", 5), con::Response("B", 3));
-    shp::Signal output = self.getBehaviour(con::Stimulus("A"));
-    std::cout << output.print() << std::endl;
+void Finance::wealth_concept() {
+
 }
 
 } // namespace test

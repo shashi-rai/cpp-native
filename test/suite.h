@@ -43,7 +43,9 @@ public:
     Suite(const test::CommandLine& object);
     ~Suite();
 public:
+    int main();
     int main(const int argc, char* argv[]);
+    int main(const test::CommandLine& object);
     void mathematics_concept(const test::CommandLine& parameters);
     void physics_concept(const test::CommandLine& parameters);
     void chemistry_concept(const test::CommandLine& parameters);

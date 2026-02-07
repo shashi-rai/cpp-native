@@ -36,6 +36,8 @@ public:
     Biology(const std::string name, const test::CommandLine& object);
     ~Biology();
 public:
+    int run();
+    int run(const int argc, char* argv[]);
     int run(const test::CommandLine& object);
     void protein_concept();
     void rna_concept();

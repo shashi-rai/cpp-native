@@ -45,19 +45,30 @@ clean-libs: clean-custom
 	${RMCLEAN} $(LIBFILES)
 
 $(LIBFOLDR)/$(LIBNAME): \
+		$(OBJFOLDR)/accounting.o \
 		$(OBJFOLDR)/biology.o \
 		$(OBJFOLDR)/chemistry.o \
 		$(OBJFOLDR)/consciousness.o \
+		$(OBJFOLDR)/economics.o \
+		$(OBJFOLDR)/finance.o \
+		$(OBJFOLDR)/legal.o \
 		$(OBJFOLDR)/mathematics.o \
 		$(OBJFOLDR)/physics.o \
 		$(OBJFOLDR)/suite.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
+		$(OBJFOLDR)/accounting.o \
 		$(OBJFOLDR)/biology.o \
 		$(OBJFOLDR)/chemistry.o \
 		$(OBJFOLDR)/consciousness.o \
+		$(OBJFOLDR)/economics.o \
+		$(OBJFOLDR)/finance.o \
+		$(OBJFOLDR)/legal.o \
 		$(OBJFOLDR)/mathematics.o \
 		$(OBJFOLDR)/physics.o \
 		$(OBJFOLDR)/suite.o
+
+$(OBJFOLDR)/accounting.o: accounting.cpp
+	$(CPPTOOL) -c accounting.cpp -o $(OBJFOLDR)/accounting.o $(CXXFLAGS)
 
 $(OBJFOLDR)/biology.o: biology.cpp
 	$(CPPTOOL) -c biology.cpp -o $(OBJFOLDR)/biology.o $(CXXFLAGS)
@@ -67,6 +78,15 @@ $(OBJFOLDR)/chemistry.o: chemistry.cpp
 
 $(OBJFOLDR)/consciousness.o: consciousness.cpp
 	$(CPPTOOL) -c consciousness.cpp -o $(OBJFOLDR)/consciousness.o $(CXXFLAGS)
+
+$(OBJFOLDR)/economics.o: economics.cpp
+	$(CPPTOOL) -c economics.cpp -o $(OBJFOLDR)/economics.o $(CXXFLAGS)
+
+$(OBJFOLDR)/finance.o: finance.cpp
+	$(CPPTOOL) -c finance.cpp -o $(OBJFOLDR)/finance.o $(CXXFLAGS)
+
+$(OBJFOLDR)/legal.o: legal.cpp
+	$(CPPTOOL) -c legal.cpp -o $(OBJFOLDR)/legal.o $(CXXFLAGS)
 
 $(OBJFOLDR)/mathematics.o: mathematics.cpp
 	$(CPPTOOL) -c mathematics.cpp -o $(OBJFOLDR)/mathematics.o $(CXXFLAGS)

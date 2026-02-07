@@ -52,15 +52,22 @@ Suite::~Suite() {
 
 }
 
+int Suite::main() {
+    return main(test::System::getParameters());
+}
+
 int Suite::main(const int argc, char* argv[]) {
     test::System::setParameters(argc, argv);
-    CommandLine cmdline = test::System::getParameters();
+    return main(test::System::getParameters());
+}
+
+int Suite::main(const test::CommandLine& object) {
     test::System::printStartedMessage();
-    mathematics_concept(cmdline);
-    physics_concept(cmdline);
-    chemistry_concept(cmdline);
-    biology_concept(cmdline);
-    consciousness_concept(cmdline);
+    mathematics_concept(object);
+    physics_concept(object);
+    chemistry_concept(object);
+    biology_concept(object);
+    consciousness_concept(object);
     test::System::printStoppedMessage();
     return 0;
 }

@@ -58,6 +58,15 @@ Biology::~Biology() {
 
 }
 
+int Biology::run() {
+    return run(test::System::getParameters());
+}
+
+int Biology::run(const int argc, char* argv[]) {
+    test::System::setParameters(argc, argv);
+    return run(test::System::getParameters());
+}
+
 int Biology::run(const test::CommandLine& object) {
     test::System::printStartedMessage();
     test::System::printStoppedMessage();

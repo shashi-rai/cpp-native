@@ -92,13 +92,13 @@ Core Core::operator%(const Core& peer) const {
 }
 
 qft::Temperature Core::getTemperature() const {
-    shp::Signal thermal = qft::Density::getThermal();
+    shp::Signal thermal = qft::Density::getThermalFactor();
     qft::Temperature result(thermal.getMagnitude(), thermal.getScaling(), thermal.getUnit());
     return result;
 }
 
 void Core::setTemprature(const qft::Temperature& temperature) {
-    qft::Density::setThermal(temperature.getTotal());
+    qft::Density::setThermalFactor(temperature.getTotal());
 }
 
 shp::Signal Core::getScalarFlux() {
@@ -115,7 +115,7 @@ shp::Volume Core::getVolume() {
 
 shp::Distance Core::copy() {
     shp::Signal self = qft::Density::getScalarTotal();
-    Core fresh(qft::Density::getName(), this->reluctance, qft::Density::getThermal());
+    Core fresh(qft::Density::getName(), this->reluctance, qft::Density::getThermalFactor());
     return fresh;
 }
 

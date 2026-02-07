@@ -58,6 +58,15 @@ Physics::~Physics() {
 
 }
 
+int Physics::run() {
+    return run(test::System::getParameters());
+}
+
+int Physics::run(const int argc, char* argv[]) {
+    test::System::setParameters(argc, argv);
+    return run(test::System::getParameters());
+}
+
 int Physics::run(const test::CommandLine& object) {
     test::System::printStartedMessage();
     test::System::setParameters(object);
