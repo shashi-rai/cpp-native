@@ -25,7 +25,7 @@
 
 namespace shp {
 
-class Area {
+class Area : private Quantity {
     Signal length;
     Signal breadth;
 public:
@@ -33,21 +33,22 @@ public:
     Area();
     Area(const std::string unit);
     Area(const Unit& unit);
-    Area(const short int scaling, const std::string unit);
-    Area(const short int scaling, const Unit& unit);
-    Area(const float length);
-    Area(const float length, const std::string unit);
-    Area(const float length, const Unit& unit);
-    Area(const float length, const short int scaling, const std::string unit);
-    Area(const float length, const short int scaling, const Unit& unit);
-    Area(const float length, const float breadth);
-    Area(const float length, const float breadth, const std::string unit);
-    Area(const float length, const float breadth, const Unit& unit);
-    Area(const float length, const float breadth, const short int scaling);
-    Area(const float length, const float breadth, const short int scaling, const std::string unit);
-    Area(const float length, const float breadth, const short int scaling, const Unit& unit);
+    Area(const float magnitude);
+    Area(const float magnitude, const std::string unit);
+    Area(const float magnitude, const Unit& unit);
+    Area(const float magnitude, const short int scaling);
+    Area(const float magnitude, const short int scaling, const std::string unit);
+    Area(const float magnitude, const short int scaling, const Unit& unit);
     Area(const Signal& length);
+    Area(const float magnitude, const short int scaling, const std::string unit,
+        const Signal& length);
+    Area(const float magnitude, const short int scaling, const Unit& unit,
+        const Signal& length);
     Area(const Signal& length, const Signal& breadth);
+    Area(const float magnitude, const short int scaling, const std::string unit,
+        const Signal& length, const Signal& breadth);
+    Area(const float magnitude, const short int scaling, const Unit& unit,
+        const Signal& length, const Signal& breadth);
 
     // Destructors
     ~Area();

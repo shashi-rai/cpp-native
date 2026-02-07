@@ -22,197 +22,213 @@
 
 namespace shp {
 
-const std::string Volume::UNIT = "m";			// System International
+const std::string Volume::UNIT = "m³";          // System International
 const short int Volume::SCALING_FACTOR = 2;		// Mathematical Operator
 
 Volume::Volume()
-		: surface(), depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
+		: Quantity(UNIT),
+        surface(), depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
 Volume::Volume(const std::string unit)
-        : surface(unit), depth(unit) {
+        : Quantity(unit),
+        surface(unit), depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
 Volume::Volume(const Unit& unit)
-        : surface(unit), depth(unit) {
+        : Quantity(unit),
+        surface(), depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
-Volume::Volume(const short int scaling, const std::string unit)
-        : surface(scaling, unit), depth(scaling, unit) {
+Volume::Volume(const float magnitude)
+        : Quantity(magnitude, UNIT),
+        surface(), depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
-Volume::Volume(const short int scaling, const Unit& unit)
-        : surface(scaling, unit), depth(scaling, unit) {
+Volume::Volume(const float magnitude, const std::string unit)
+        : Quantity(magnitude, unit),
+        surface(), depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
-Volume::Volume(const Area& surface) : surface(surface),
-		depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
+Volume::Volume(const float magnitude, const Unit& unit)
+        : Quantity(magnitude, unit),
+        surface(), depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
-Volume::Volume(const Area& surface, const std::string unit)
-    : surface(surface), depth(unit) {
+Volume::Volume(const float magnitude, const short int scaling)
+        : Quantity(magnitude, scaling, UNIT),
+        surface(), depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
-Volume::Volume(const Area& surface, const Unit& unit)
-    : surface(surface), depth(unit) {
+Volume::Volume(const float magnitude, const short int scaling, const std::string unit)
+        : Quantity(magnitude, scaling, unit),
+        surface(), depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
-Volume::Volume(const Area& surface, const short int scaling, const std::string unit)
-    : surface(surface), depth(scaling, unit) {
+Volume::Volume(const float magnitude, const short int scaling, const Unit& unit)
+        : Quantity(magnitude, scaling, unit),
+        surface(), depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
-Volume::Volume(const Area& surface, const short int scaling, const Unit& unit)
-    : surface(surface), depth(scaling, unit) {
+Volume::Volume(const Area& surface)
+        : Quantity(UNIT),
+        surface(surface), depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
-Volume::Volume(const Area& surface, const float depth)
-        : surface(surface), depth(depth, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
+Volume::Volume(const std::string unit, const Area& surface)
+    : Quantity(unit),
+    surface(surface), depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
-Volume::Volume(const Area& surface, const float depth, const std::string unit)
-        : surface(surface), depth(depth, unit) {
+Volume::Volume(const Unit& unit, const Area& surface)
+    : Quantity(unit),
+    surface(surface), depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
-Volume::Volume(const Area& surface, const float depth, const Unit& unit)
-        : surface(surface), depth(depth, unit) {
+Volume::Volume(const float magnitude, const Area& surface)
+        : Quantity(magnitude, UNIT),
+        surface(surface), depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
-Volume::Volume(const Area& surface, const float depth, const short int scaling, const std::string unit)
-        : surface(surface), depth(depth, scaling, unit) {
+Volume::Volume(const float magnitude, const std::string unit, const Area& surface)
+        : Quantity(magnitude, UNIT),
+        surface(surface), depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
-Volume::Volume(const Area& surface, const float depth, const short int scaling, const Unit& unit)
-        : surface(surface), depth(depth, scaling, unit) {
+Volume::Volume(const float magnitude, const Unit& unit, const Area& surface)
+        : Quantity(magnitude, UNIT),
+        surface(surface), depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
+
+}
+
+Volume::Volume(const float magnitude, const short int scaling, const Area& surface)
+        : Quantity(magnitude, scaling, UNIT),
+        surface(surface), depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
+
+}
+
+Volume::Volume(const float magnitude, const short int scaling, const std::string unit, const Area& surface)
+        : Quantity(magnitude, scaling, UNIT),
+        surface(surface), depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
+
+}
+
+Volume::Volume(const float magnitude, const short int scaling, const Unit& unit, const Area& surface)
+        : Quantity(magnitude, scaling, UNIT),
+        surface(surface), depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
+
+}
+
+Volume::Volume(const Signal& depth)
+        : Quantity(UNIT), surface(), depth(depth) {
+
+}
+
+Volume::Volume(const std::string unit, const Signal& depth)
+    : Quantity(unit), surface(), depth(depth) {
+
+}
+
+Volume::Volume(const Unit& unit, const Signal& depth)
+    : Quantity(unit), surface(), depth(depth) {
+
+}
+
+Volume::Volume(const float magnitude, const Signal& depth)
+        : Quantity(magnitude, UNIT), surface(), depth(depth) {
+
+}
+
+Volume::Volume(const float magnitude, const std::string unit, const Signal& depth)
+        : Quantity(magnitude, UNIT), surface(), depth(depth) {
+
+}
+
+Volume::Volume(const float magnitude, const Unit& unit, const Signal& depth)
+        : Quantity(magnitude, UNIT), surface(), depth(depth) {
+
+}
+
+Volume::Volume(const float magnitude, const short int scaling, const Signal& depth)
+        : Quantity(magnitude, scaling, UNIT), surface(), depth(depth) {
+
+}
+
+Volume::Volume(const float magnitude, const short int scaling, const std::string unit, const Signal& depth)
+        : Quantity(magnitude, scaling, UNIT), surface(), depth(depth) {
+
+}
+
+Volume::Volume(const float magnitude, const short int scaling, const Unit& unit, const Signal& depth)
+        : Quantity(magnitude, scaling, UNIT), surface(), depth(depth) {
 
 }
 
 Volume::Volume(const Area& surface, const Signal& depth)
-        : surface(surface), depth(depth) {
+        : Quantity(UNIT), surface(surface), depth(depth) {
 
 }
 
-Volume::Volume(const float length)
-        : surface(length, length),
-		depth(length, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
+Volume::Volume(const float magnitude, const short int scaling, const std::string unit,
+        const Area& surface, const Signal& depth)
+        : Quantity(magnitude, scaling, unit), surface(surface), depth(depth) {
 
 }
 
-Volume::Volume(const float length, const std::string unit)
-        : surface(length, length, unit),
-		depth(length, unit) {
-
-}
-
-Volume::Volume(const float length, const Unit& unit)
-        : surface(length, length, unit),
-		depth(length, unit) {
-
-}
-
-Volume::Volume(const float length, const short int scaling, const std::string unit)
-        : surface(length, length, scaling, unit),
-		depth(length, scaling, unit) {
-
-}
-
-Volume::Volume(const float length, const short int scaling, const Unit& unit)
-        : surface(length, length, scaling, unit),
-		depth(length, scaling, unit) {
-
-}
-
-Volume::Volume(const float length, const float breadth)
-        : surface(length, breadth),
-		depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
-
-}
-
-Volume::Volume(const float length, const float breadth, const std::string unit)
-        : surface(length, breadth, unit), depth(unit) {
-
-}
-
-Volume::Volume(const float length, const float breadth, const Unit& unit)
-        : surface(length, breadth, unit), depth(unit) {
-
-}
-
-Volume::Volume(const float length, const float breadth, const short int scaling, const std::string unit)
-        : surface(length, breadth, scaling, unit), depth(scaling, unit) {
-
-}
-
-Volume::Volume(const float length, const float breadth, const short int scaling, const Unit& unit)
-        : surface(length, breadth, scaling, unit), depth(scaling, unit) {
-
-}
-
-Volume::Volume(const float length, const float breadth, const float height)
-        : surface(length, breadth),
-		depth(height, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
-
-}
-
-Volume::Volume(const float length, const float breadth, const float height,
-        const std::string unit)
-        : surface(length, breadth, unit), depth(height, unit) {
-
-}
-
-Volume::Volume(const float length, const float breadth, const float height,
-        const Unit& unit)
-        : surface(length, breadth, unit), depth(height, unit) {
-
-}
-
-Volume::Volume(const float length, const float breadth, const float height,
-        const short int scaling)
-        : surface(length, breadth, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
-		depth(height, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
-
-}
-
-Volume::Volume(const float length, const float breadth, const float height,
-        const short int scaling, const std::string unit)
-        : surface(length, breadth, scaling, unit),
-		depth(height, scaling, unit) {
-
-}
-
-Volume::Volume(const float length, const float breadth, const float height,
-        const short int scaling, const Unit& unit)
-        : surface(length, breadth, scaling, unit),
-		depth(height, scaling, unit) {
-
-}
-
-Volume::Volume(const Signal& length)
-        : surface(length, length), depth(length) {
+Volume::Volume(const float magnitude, const short int scaling, const Unit& unit,
+        const Area& surface, const Signal& depth)
+        : Quantity(magnitude, scaling, unit), surface(surface), depth(depth) {
 
 }
 
 Volume::Volume(const Signal& length, const Signal& breadth)
-        : surface(length, breadth),
+        : Quantity(UNIT), surface(length, breadth),
+		depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
+
+}
+
+Volume::Volume(const float magnitude, const short int scaling, const std::string unit,
+        const Signal& length, const Signal& breadth)
+        : Quantity(magnitude, scaling, unit), surface(length, breadth),
+		depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
+
+}
+
+Volume::Volume(const float magnitude, const short int scaling, const Unit& unit,
+        const Signal& length, const Signal& breadth)
+        : Quantity(magnitude, scaling, unit), surface(length, breadth),
 		depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
 Volume::Volume(const Signal& length, const Signal& breadth, const Signal& height)
-        : surface(length, breadth), depth(height) {
+        : Quantity(UNIT), surface(length, breadth), depth(height) {
+
+}
+
+Volume::Volume(const float magnitude, const short int scaling, const std::string unit,
+        const Signal& length, const Signal& breadth, const Signal& height)
+        : Quantity(magnitude, scaling, unit), surface(length, breadth), depth(height) {
+
+}
+
+Volume::Volume(const float magnitude, const short int scaling, const Unit& unit,
+        const Signal& length, const Signal& breadth, const Signal& height)
+        : Quantity(magnitude, scaling, unit), surface(length, breadth), depth(height) {
 
 }
 
@@ -221,11 +237,15 @@ Volume::~Volume() {
 }
 
 bool Volume::operator==(const Volume& peer) const {
-    return (surface == peer.surface) && (depth == peer.depth);
+    return (static_cast<const Quantity&>(*this) == static_cast<const Quantity&>(peer))
+        && (surface == peer.surface) && (depth == peer.depth);
 }
 
 bool Volume::operator<(const Volume& peer) const {
     Volume self = *this; bool result = false;
+    if (static_cast<const Quantity&>(*this) < static_cast<const Quantity&>(peer)) {
+        result = true;
+    } 
     if (surface < peer.surface) {
         result = true;
     }
@@ -237,6 +257,9 @@ bool Volume::operator<(const Volume& peer) const {
 
 bool Volume::operator>(const Volume& peer) const {
     Volume self = *this; bool result = false;
+    if (static_cast<const Quantity&>(*this) > static_cast<const Quantity&>(peer)) {
+        result = true;
+    } 
     if (surface > peer.surface) {
         result = true;
     }
@@ -257,53 +280,58 @@ bool Volume::operator>=(const Volume& peer) const {
 }
 
 Volume Volume::operator+(const Volume& peer) const {
-    Volume self = *this, other = peer;
-	Signal realvolume = (self.getScalarTotal() + other.getScalarTotal());
-    float part = std::cbrt(realvolume.getMagnitude());
-	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
-    return Volume(Signal(part, realvolume.getScaling(), surface.getLengthUnit()),
-			Signal(part, realvolume.getScaling(), surface.getBreadthUnit()),
-			Signal(part, realvolume.getScaling(), depth.getUnit()));
+    Quantity self = *this, other = peer, realpart = (self + other);
+	Signal signal = (this->getScalarTotal() + peer.getScalarTotal());
+    float part = std::cbrt(signal.getMagnitude());
+	signal.setScaling(signal.getScaling() / SCALING_FACTOR);
+    return Volume(realpart.getMagnitude(), realpart.getScaling(), realpart.getUnit(),
+            Signal(part, signal.getScaling(), surface.getLengthUnit()),
+			Signal(part, signal.getScaling(), surface.getBreadthUnit()),
+			Signal(part, signal.getScaling(), depth.getUnit()));
 }
 
 Volume Volume::operator-(const Volume& peer) const {
-    Volume self = *this, other = peer;
-	Signal realvolume = (self.getScalarTotal() - other.getScalarTotal());
-    float part = std::cbrt(realvolume.getMagnitude());
-	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
-    return Volume(Signal(part, realvolume.getScaling(), surface.getLengthUnit()),
-			Signal(part, realvolume.getScaling(), surface.getBreadthUnit()),
-			Signal(part, realvolume.getScaling(), depth.getUnit()));
+    Quantity self = *this, other = peer, realpart = (self - other);
+	Signal signal = (this->getScalarTotal() - peer.getScalarTotal());
+    float part = std::cbrt(signal.getMagnitude());
+	signal.setScaling(signal.getScaling() / SCALING_FACTOR);
+    return Volume(realpart.getMagnitude(), realpart.getScaling(), realpart.getUnit(),
+            Signal(part, signal.getScaling(), surface.getLengthUnit()),
+			Signal(part, signal.getScaling(), surface.getBreadthUnit()),
+			Signal(part, signal.getScaling(), depth.getUnit()));
 }
 
 Volume Volume::operator*(const Volume& peer) const {
-    Volume self = *this, other = peer;
-	Signal realvolume = (self.getScalarTotal() * other.getScalarTotal());
-    float part = std::cbrt(realvolume.getMagnitude());
-	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
-    return Volume(Signal(part, realvolume.getScaling(), surface.getLengthUnit()),
-			Signal(part, realvolume.getScaling(), surface.getBreadthUnit()),
-			Signal(part, realvolume.getScaling(), depth.getUnit()));
+    Quantity self = *this, other = peer, realpart = (self * other);
+	Signal signal = (this->getScalarTotal() * peer.getScalarTotal());
+    float part = std::cbrt(signal.getMagnitude());
+	signal.setScaling(signal.getScaling() / SCALING_FACTOR);
+    return Volume(realpart.getMagnitude(), realpart.getScaling(), realpart.getUnit(),
+            Signal(part, signal.getScaling(), surface.getLengthUnit()),
+			Signal(part, signal.getScaling(), surface.getBreadthUnit()),
+			Signal(part, signal.getScaling(), depth.getUnit()));
 }
 
 Volume Volume::operator/(const Volume& peer) const {
-    Volume self = *this, other = peer;
-	Signal realvolume = (self.getScalarTotal() / other.getScalarTotal());
-    float part = std::cbrt(realvolume.getMagnitude());
-	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
-    return Volume(Signal(part, realvolume.getScaling(), surface.getLengthUnit()),
-			Signal(part, realvolume.getScaling(), surface.getBreadthUnit()),
-			Signal(part, realvolume.getScaling(), depth.getUnit()));
+    Quantity self = *this, other = peer, realpart = (self / other);
+	Signal signal = (this->getScalarTotal() / peer.getScalarTotal());
+    float part = std::cbrt(signal.getMagnitude());
+	signal.setScaling(signal.getScaling() / SCALING_FACTOR);
+    return Volume(realpart.getMagnitude(), realpart.getScaling(), realpart.getUnit(),
+            Signal(part, signal.getScaling(), surface.getLengthUnit()),
+			Signal(part, signal.getScaling(), surface.getBreadthUnit()),
+			Signal(part, signal.getScaling(), depth.getUnit()));
 }
 
 Volume Volume::operator%(const Volume& peer) const {
-    Volume self = *this, other = peer;
-	Signal realvolume = (self.getScalarTotal() % other.getScalarTotal());
-    float part = std::cbrt(realvolume.getMagnitude());
-	realvolume.setScaling(realvolume.getScaling() / SCALING_FACTOR);
-    return Volume(Signal(part, realvolume.getScaling(), surface.getLengthUnit()),
-			Signal(part, realvolume.getScaling(), surface.getBreadthUnit()),
-			Signal(part, realvolume.getScaling(), depth.getUnit()));
+    Quantity self = *this, other = peer, realpart = (self % other);
+	Signal signal = (this->getScalarTotal() % peer.getScalarTotal());
+    float part = std::cbrt(signal.getMagnitude());
+	signal.setScaling(signal.getScaling() / SCALING_FACTOR);
+    return Volume(realpart.getMagnitude(), realpart.getScaling(), realpart.getUnit(),
+            Signal(part, signal.getScaling(), surface.getLengthUnit()),
+			Signal(part, signal.getScaling(), surface.getBreadthUnit()),
+			Signal(part, signal.getScaling(), depth.getUnit()));
 }
 
 Volume Volume::operator+(const Area& peer) const {
@@ -553,6 +581,7 @@ void Volume::clear() {
 
 std::string Volume::print() const {
     std::stringstream result;
+    result << Quantity::print() << ",a:";
     result << surface.print() << ",h:";
     result << depth.print();
 	return result.str();
@@ -560,6 +589,7 @@ std::string Volume::print() const {
 
 std::string Volume::printRadians() const {
     std::stringstream result;
+    result << Quantity::print() << ",a:";
     result << surface.printRadians() << ",h:";
     result << depth.printRadians();
 	return result.str();

@@ -22,6 +22,8 @@
 #define TEST_MATHEMATICS_H
 
 #include "../inc/testing.h"
+#include "../shp/area.h"
+#include "../shp/volume.h"
 
 namespace test {
 

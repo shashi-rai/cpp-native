@@ -69,6 +69,8 @@ int Mathematics::run(const int argc, char* argv[]) {
 
 int Mathematics::run(const cfg::CommandLine& object) {
     test::System::printStartedMessage();
+    area_concept();
+    volume_concept();
     test::System::printStoppedMessage();
     return 0;
 }
@@ -94,11 +96,31 @@ void Mathematics::distance_concept() {
 }
 
 void Mathematics::area_concept() {
-
+    shp::Area a1(3.0f, 0), a2(4.0f, 0);
+    a1.setLength(11.0f); a1.setBreadth(11.0f);
+    a2.setLength(12.0f); a2.setBreadth(12.0f);
+    std::cout << a1.print() << " " << a1.getScalarTotal().print() << " " << a1.getVectorTotal().print() << std::endl;
+    std::cout << a2.print() << " " << a2.getScalarTotal().print() << " " << a2.getVectorTotal().print() << std::endl;
+    std::cout << (a1+a2).print() << " " << (a1+a2).getScalarTotal().print() << " " << (a1+a2).getVectorTotal().print() << std::endl;
+    std::cout << (a1-a2).print() << " " << (a1-a2).getScalarTotal().print() << " " << (a1-a2).getVectorTotal().print() << std::endl;
+    std::cout << (a1*a2).print() << " " << (a1*a2).getScalarTotal().print() << " " << (a1*a2).getVectorTotal().print() << std::endl;
+    std::cout << (a1/a2).print() << " " << (a1/a2).getScalarTotal().print() << " " << (a1/a2).getVectorTotal().print() << std::endl;
+    std::cout << (a1%a2).print() << " " << (a1%a2).getScalarTotal().print() << " " << (a1%a2).getVectorTotal().print() << std::endl;
+    std::cout << std::endl;
 }
 
 void Mathematics::volume_concept() {
-
+    shp::Volume v1(3.0f, 0), v2(4.0f, 0);
+    v1.setLength(11.0f); v1.setBreadth(11.0f); v1.setHeight(11.0f);
+    v2.setLength(12.0f); v2.setBreadth(12.0f); v2.setHeight(12.0f);
+    std::cout << v1.print() << " " << v1.getScalarTotal().print() << " " << v1.getVectorTotal().print() << std::endl;
+    std::cout << v2.print() << " " << v2.getScalarTotal().print() << " " << v2.getVectorTotal().print() << std::endl;
+    std::cout << (v1+v2).print() << " " << (v1+v2).getScalarTotal().print() << " " << (v1+v2).getVectorTotal().print() << std::endl;
+    std::cout << (v1-v2).print() << " " << (v1-v2).getScalarTotal().print() << " " << (v1-v2).getVectorTotal().print() << std::endl;
+    std::cout << (v1*v2).print() << " " << (v1*v2).getScalarTotal().print() << " " << (v1*v2).getVectorTotal().print() << std::endl;
+    std::cout << (v1/v2).print() << " " << (v1/v2).getScalarTotal().print() << " " << (v1/v2).getVectorTotal().print() << std::endl;
+    std::cout << (v1%v2).print() << " " << (v1%v2).getScalarTotal().print() << " " << (v1%v2).getVectorTotal().print() << std::endl;
+    std::cout << std::endl;
 }
 
 void Mathematics::medium_concept() {

@@ -25,7 +25,7 @@
 
 namespace shp {
 
-class Volume {
+class Volume : private Quantity {
     Area surface;
     Signal depth;
 public:
@@ -33,38 +33,45 @@ public:
     Volume();
     Volume(const std::string unit);
     Volume(const Unit& unit);
-    Volume(const short int scaling, const std::string unit);
-    Volume(const short int scaling, const Unit& unit);
+    Volume(const float magnitude);
+    Volume(const float magnitude, const std::string unit);
+    Volume(const float magnitude, const Unit& unit);
+    Volume(const float magnitude, const short int scaling);
+    Volume(const float magnitude, const short int scaling, const std::string unit);
+    Volume(const float magnitude, const short int scaling, const Unit& unit);
     Volume(const Area& surface);
-    Volume(const Area& surface, const std::string unit);
-    Volume(const Area& surface, const Unit& unit);
-    Volume(const Area& surface, const short int scaling, const std::string unit);
-    Volume(const Area& surface, const short int scaling, const Unit& unit);
-    Volume(const Area& surface, const float depth);
-    Volume(const Area& surface, const float depth, const std::string unit);
-    Volume(const Area& surface, const float depth, const Unit& unit);
-    Volume(const Area& surface, const float depth, const short int scaling, const std::string unit);
-    Volume(const Area& surface, const float depth, const short int scaling, const Unit& unit);
+    Volume(const std::string unit, const Area& surface);
+    Volume(const Unit& unit, const Area& surface);
+    Volume(const float magnitude, const Area& surface);
+    Volume(const float magnitude, const std::string unit, const Area& surface);
+    Volume(const float magnitude, const Unit& unit, const Area& surface);
+    Volume(const float magnitude, const short int scaling, const Area& surface);
+    Volume(const float magnitude, const short int scaling, const std::string unit, const Area& surface);
+    Volume(const float magnitude, const short int scaling, const Unit& unit, const Area& surface);
+    Volume(const Signal& depth);
+    Volume(const std::string unit, const Signal& depth);
+    Volume(const Unit& unit, const Signal& depth);
+    Volume(const float magnitude, const Signal& depth);
+    Volume(const float magnitude, const std::string unit, const Signal& depth);
+    Volume(const float magnitude, const Unit& unit, const Signal& depth);
+    Volume(const float magnitude, const short int scaling, const Signal& depth);
+    Volume(const float magnitude, const short int scaling, const std::string unit, const Signal& depth);
+    Volume(const float magnitude, const short int scaling, const Unit& unit, const Signal& depth);
     Volume(const Area& surface, const Signal& depth);
-    Volume(const float length);
-    Volume(const float length, const std::string unit);
-    Volume(const float length, const Unit& unit);
-    Volume(const float length, const short int scaling, const std::string unit);
-    Volume(const float length, const short int scaling, const Unit& unit);
-    Volume(const float length, const float breadth);
-    Volume(const float length, const float breadth, const std::string unit);
-    Volume(const float length, const float breadth, const Unit& unit);
-    Volume(const float length, const float breadth, const short int scaling, const std::string unit);
-    Volume(const float length, const float breadth, const short int scaling, const Unit& unit);
-    Volume(const float length, const float breadth, const float height);
-    Volume(const float length, const float breadth, const float height, const std::string unit);
-    Volume(const float length, const float breadth, const float height, const Unit& unit);
-    Volume(const float length, const float breadth, const float height, const short int scaling);
-    Volume(const float length, const float breadth, const float height, const short int scaling, const std::string unit);
-    Volume(const float length, const float breadth, const float height, const short int scaling, const Unit& unit);
-    Volume(const Signal& length);
+    Volume(const float magnitude, const short int scaling, const std::string unit,
+        const Area& surface, const Signal& depth);
+    Volume(const float magnitude, const short int scaling, const Unit& unit,
+        const Area& surface, const Signal& depth);
     Volume(const Signal& length, const Signal& breadth);
+    Volume(const float magnitude, const short int scaling, const std::string unit,
+        const Signal& length, const Signal& breadth);
+    Volume(const float magnitude, const short int scaling, const Unit& unit,
+        const Signal& length, const Signal& breadth);
     Volume(const Signal& length, const Signal& breadth, const Signal& height);
+    Volume(const float magnitude, const short int scaling, const std::string unit,
+        const Signal& length, const Signal& breadth, const Signal& height);
+    Volume(const float magnitude, const short int scaling, const Unit& unit,
+        const Signal& length, const Signal& breadth, const Signal& height);
 
     // Destructors
     ~Volume();
