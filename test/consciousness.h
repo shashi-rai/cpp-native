@@ -21,12 +21,30 @@
 #ifndef TEST_CONSCIOUSNESS_H
 #define TEST_CONSCIOUSNESS_H
 
+#include "../inc/testing.h"
+#include "../shp/signal.h"
+#include "../con/response.h"
+#include "../con/stimulus.h"
+#include "../con/self.h"
+
 namespace test {
 
-class Consciousness {
+class Consciousness : protected test::System {
 
 public:
-    int main(int argc, char* argv[]);
+    Consciousness();
+    Consciousness(const std::string name);
+    Consciousness(const int argc, char* argv[]);
+    Consciousness(const std::string name, const int argc, char* argv[]);
+    Consciousness(const test::CommandLine& object);
+    Consciousness(const std::string name, const test::CommandLine& object);
+    ~Consciousness();
+public:
+    int run(const test::CommandLine& object);
+    void simple_training();
+
+public:
+    static const std::string DEFAULT_NAME;
 };
 
 } // namespace test

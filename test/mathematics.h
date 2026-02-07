@@ -21,12 +21,37 @@
 #ifndef TEST_MATHEMATICS_H
 #define TEST_MATHEMATICS_H
 
+#include "../inc/testing.h"
+
 namespace test {
 
-class Mathematics {
+class Mathematics : protected test::System {
 
 public:
-    int main(int argc, char* argv[]);
+    Mathematics();
+    Mathematics(const std::string name);
+    Mathematics(const int argc, char* argv[]);
+    Mathematics(const std::string name, const int argc, char* argv[]);
+    Mathematics(const test::CommandLine& object);
+    Mathematics(const std::string name, const test::CommandLine& object);
+    ~Mathematics();
+public:
+    int run(const test::CommandLine& object);
+    void quantity_concept();
+    void direction_concept();
+    void angular_concept();
+    void signal_concept();
+    void distance_concept();
+    void area_concept();
+    void volume_concept();
+    void medium_concept();
+    void temporal_concept();
+    void frequency_concept();
+    void potential_concept();
+    void confinement_concept();
+
+public:
+    static const std::string DEFAULT_NAME;
 };
 
 } // namespace test

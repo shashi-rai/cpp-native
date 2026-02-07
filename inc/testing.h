@@ -18,34 +18,45 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef TEST_CHEMISTRY_H
-#define TEST_CHEMISTRY_H
+#ifndef INC_TESTING_H
+#define INC_TESTING_H
 
-#include "../inc/testing.h"
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <vector>
 
 namespace test {
 
-class Chemistry : protected test::System {
+typedef std::vector<std::string > CommandLine;
+
+class System {
+    std::string name;
+    CommandLine parameters;
+public:
+    System();
+    System(const CommandLine& parameters);
+    System(const std::string name);
+    System(const std::string name, const CommandLine& parameters);
+    ~System();
+
+    // Getters
+    std::string getName() const;
+    CommandLine getParameters() const;
+
+    // Setters
+    void setName(const std::string name);
+    void setParameters(const CommandLine& object);
 
 public:
-    Chemistry();
-    Chemistry(const std::string name);
-    Chemistry(const int argc, char* argv[]);
-    Chemistry(const std::string name, const int argc, char* argv[]);
-    Chemistry(const test::CommandLine& object);
-    Chemistry(const std::string name, const test::CommandLine& object);
-    ~Chemistry();
-public:
-    int run(const test::CommandLine& object);
-    void nucleus_concept();
-    void orbital_concept();
-    void atom_concept();
-    void molecule_concept();
-
-public:
-    static const std::string DEFAULT_NAME;
+    std::string getParameter(const int index) const;
+    void setParameters(const int argc, char* argv[]);
+    void clear();
+    void printStartedMessage() const;
+    void printStoppedMessage() const;
+    std::string print() const;
 };
 
 } // namespace test
 
-#endif //TEST_CHEMISTRY_H
+#endif //INC_TESTING_H

@@ -22,10 +22,157 @@
 
 namespace test {
 
-int Suite::main(int argc, char* argv[]) {
-    test::Physics physics;
-    physics.main(argc, argv);
+const std::string Suite::DEFAULT_NAME = "Sanity";
+
+Suite::Suite()
+        : test::System(DEFAULT_NAME),
+        mathematics(), physics(), chemistry(), biology(), consciousness() {
+
+}
+
+Suite::Suite(const std::string name)
+        : test::System(name),
+        mathematics(), physics(), chemistry(), biology(), consciousness() {
+
+}
+
+Suite::Suite(const int argc, char* argv[])
+        : test::System(DEFAULT_NAME),
+        mathematics(), physics(), chemistry(), biology(), consciousness() {
+    test::System::setParameters(argc, argv);
+}
+
+Suite::Suite(const test::CommandLine& object)
+        : test::System(DEFAULT_NAME),
+        mathematics(), physics(), chemistry(), biology(), consciousness() {
+    test::System::setParameters(object);
+}
+
+Suite::~Suite() {
+
+}
+
+int Suite::main(const int argc, char* argv[]) {
+    test::System::setParameters(argc, argv);
+    CommandLine cmdline = test::System::getParameters();
+    test::System::printStartedMessage();
+    mathematics_concept(cmdline);
+    physics_concept(cmdline);
+    chemistry_concept(cmdline);
+    biology_concept(cmdline);
+    consciousness_concept(cmdline);
+    test::System::printStoppedMessage();
     return 0;
+}
+
+void Suite::mathematics_concept(const test::CommandLine& parameters) {
+    CommandLine cmdline = parameters;
+    mathematics.run(cmdline);
+}
+
+void Suite::physics_concept(const test::CommandLine& parameters) {
+    CommandLine cmdline = parameters;
+    physics.run(cmdline);
+}
+
+void Suite::chemistry_concept(const test::CommandLine& parameters) {
+    CommandLine cmdline = parameters;
+    chemistry.run(cmdline);
+}
+
+void Suite::biology_concept(const test::CommandLine& parameters) {
+    CommandLine cmdline = parameters;
+    biology.run(cmdline);
+}
+
+void Suite::consciousness_concept(const test::CommandLine& parameters) {
+    CommandLine cmdline = parameters;
+    consciousness.run(cmdline);
+}
+
+//#############################################################################
+// test::System definitions
+//#############################################################################
+
+System::System()
+        : name(), parameters() {
+
+}
+
+System::System(const CommandLine& parameters)
+        : name(), parameters(parameters) {
+
+}
+
+System::System(const std::string name)
+        : name(name), parameters() {
+
+}
+
+System::System(const std::string name, const CommandLine& parameters)
+        : name(name), parameters(parameters) {
+
+}
+
+System::~System() {
+
+}
+
+std::string System::getName() const {
+    return name;
+}
+
+CommandLine System::getParameters() const {
+    return parameters;
+}
+
+void System::setName(const std::string name) {
+    this->name = name;
+}
+
+void System::setParameters(const CommandLine& object) {
+    this->parameters = object;
+}
+
+std::string System::getParameter(const int index) const {
+    std::string result;
+    if (index >= 0) {
+        if (index < this->parameters.size()) {
+            result = this->parameters[index];
+        }
+    }
+    return result;
+}
+
+void System::setParameters(const int argc, char* argv[]) {
+    for (int index = 0; index < argc; index++) {
+        this->parameters.push_back(argv[index]);
+    }
+}
+
+void System::clear() {
+    this->name.clear();
+    this->parameters.clear();
+}
+
+void System::printStartedMessage() const {
+    std::cout << this->name << " test suite starting" << std::endl;
+}
+
+void System::printStoppedMessage() const {
+    std::cout << this->name << " test suite finished" << std::endl << std::endl;
+}
+
+std::string System::print() const {
+    std::stringstream result; int size = this->parameters.size();
+    if (size > 0) {
+        result << std::endl << "{";
+        for (int index = 0; index < size; index++) {
+            result << "\t" << this->parameters[index] << std::endl;
+        }
+        result << "}";
+    }
+	return result.str();
 }
 
 } // namespace test

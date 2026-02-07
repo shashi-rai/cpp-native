@@ -21,6 +21,7 @@
 #ifndef TEST_SUITE_H
 #define TEST_SUITE_H
 
+#include "../inc/testing.h"
 #include "mathematics.h"
 #include "physics.h"
 #include "chemistry.h"
@@ -29,10 +30,28 @@
 
 namespace test {
 
-class Suite {
+class Suite : protected test::System {
+    Mathematics mathematics;
+    Physics physics;
+    Chemistry chemistry;
+    Biology biology;
+    Consciousness consciousness;
+public:
+    Suite();
+    Suite(const std::string name);
+    Suite(const int argc, char* argv[]);
+    Suite(const test::CommandLine& object);
+    ~Suite();
+public:
+    int main(const int argc, char* argv[]);
+    void mathematics_concept(const test::CommandLine& parameters);
+    void physics_concept(const test::CommandLine& parameters);
+    void chemistry_concept(const test::CommandLine& parameters);
+    void biology_concept(const test::CommandLine& parameters);
+    void consciousness_concept(const test::CommandLine& parameters);
 
 public:
-    int main(int argc, char* argv[]);
+    static const std::string DEFAULT_NAME;
 };
 
 } // namespace test

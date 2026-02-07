@@ -22,8 +22,94 @@
 
 namespace test {
 
-int Mathematics::main(int argc, char* argv[]) {
+const std::string Mathematics::DEFAULT_NAME = "Mathematics";
+
+Mathematics::Mathematics()
+        : test::System(DEFAULT_NAME) {
+
+}
+
+Mathematics::Mathematics(const std::string name)
+        : test::System(name) {
+
+}
+
+Mathematics::Mathematics(const int argc, char* argv[])
+        : test::System(DEFAULT_NAME) {
+    test::System::setParameters(argc, argv);
+}
+
+Mathematics::Mathematics(const std::string name, const int argc, char* argv[])
+        : test::System(name) {
+    test::System::setParameters(argc, argv);
+}
+
+Mathematics::Mathematics(const test::CommandLine& object)
+        : test::System(DEFAULT_NAME) {
+    test::System::setParameters(object);
+}
+
+Mathematics::Mathematics(const std::string name, const test::CommandLine& object)
+        : test::System(name) {
+    test::System::setParameters(object);
+}
+
+Mathematics::~Mathematics() {
+
+}
+
+int Mathematics::run(const test::CommandLine& object) {
+    test::System::printStartedMessage();
+    test::System::printStoppedMessage();
     return 0;
+}
+
+void Mathematics::quantity_concept() {
+
+}
+
+void Mathematics::direction_concept() {
+
+}
+
+void Mathematics::angular_concept() {
+
+}
+
+void Mathematics::signal_concept() {
+
+}
+
+void Mathematics::distance_concept() {
+
+}
+
+void Mathematics::area_concept() {
+
+}
+
+void Mathematics::volume_concept() {
+
+}
+
+void Mathematics::medium_concept() {
+
+}
+
+void Mathematics::temporal_concept() {
+
+}
+
+void Mathematics::frequency_concept() {
+
+}
+
+void Mathematics::potential_concept() {
+
+}
+
+void Mathematics::confinement_concept() {
+
 }
 
 } // namespace test

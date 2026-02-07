@@ -22,8 +22,54 @@
 
 namespace test {
 
-int Consciousness::main(int argc, char* argv[]) {
+const std::string Consciousness::DEFAULT_NAME = "Consciousness";
+
+Consciousness::Consciousness()
+        : test::System(DEFAULT_NAME) {
+
+}
+
+Consciousness::Consciousness(const std::string name)
+        : test::System(name) {
+
+}
+
+Consciousness::Consciousness(const int argc, char* argv[])
+        : test::System(DEFAULT_NAME) {
+    test::System::setParameters(argc, argv);
+}
+
+Consciousness::Consciousness(const std::string name, const int argc, char* argv[])
+        : test::System(name) {
+    test::System::setParameters(argc, argv);
+}
+
+Consciousness::Consciousness(const test::CommandLine& object)
+        : test::System(DEFAULT_NAME) {
+    test::System::setParameters(object);
+}
+
+Consciousness::Consciousness(const std::string name, const test::CommandLine& object)
+        : test::System(name) {
+    test::System::setParameters(object);
+}
+
+Consciousness::~Consciousness() {
+
+}
+
+int Consciousness::run(const test::CommandLine& object) {
+    test::System::printStartedMessage();
+    simple_training();
+    test::System::printStoppedMessage();
     return 0;
+}
+
+void Consciousness::simple_training() {
+    con::Self self("M");
+    self.setBehaviour(con::Stimulus("A", 5), con::Response("B", 3));
+    shp::Signal output = self.getBehaviour(con::Stimulus("A"));
+    std::cout << output.print() << std::endl;
 }
 
 } // namespace test

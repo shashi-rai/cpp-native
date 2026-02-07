@@ -21,12 +21,30 @@
 #ifndef TEST_BIOLOGY_H
 #define TEST_BIOLOGY_H
 
+#include "../inc/testing.h"
+
 namespace test {
 
-class Biology {
+class Biology : protected test::System {
 
 public:
-    int main(int argc, char* argv[]);
+    Biology();
+    Biology(const std::string name);
+    Biology(const int argc, char* argv[]);
+    Biology(const std::string name, const int argc, char* argv[]);
+    Biology(const test::CommandLine& object);
+    Biology(const std::string name, const test::CommandLine& object);
+    ~Biology();
+public:
+    int run(const test::CommandLine& object);
+    void protein_concept();
+    void rna_concept();
+    void dna_concept();
+    void membrane_concept();
+    void cell_concept();
+
+public:
+    static const std::string DEFAULT_NAME;
 };
 
 } // namespace test

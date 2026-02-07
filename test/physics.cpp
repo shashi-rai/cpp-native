@@ -22,8 +22,91 @@
 
 namespace test {
 
-int Physics::main(int argc, char* argv[]) {
-    std::cout << "Physics Testing: " << std::endl << std::endl;
+const std::string Physics::DEFAULT_NAME = "Physics";
+
+Physics::Physics()
+        : test::System(DEFAULT_NAME) {
+
+}
+
+Physics::Physics(const std::string name)
+        : test::System(name) {
+
+}
+
+Physics::Physics(const int argc, char* argv[])
+        : test::System(DEFAULT_NAME) {
+    test::System::setParameters(argc, argv);
+}
+
+Physics::Physics(const std::string name, const int argc, char* argv[])
+        : test::System(name) {
+    test::System::setParameters(argc, argv);
+}
+
+Physics::Physics(const test::CommandLine& object)
+        : test::System(DEFAULT_NAME) {
+    test::System::setParameters(object);
+}
+
+Physics::Physics(const std::string name, const test::CommandLine& object)
+        : test::System(name) {
+    test::System::setParameters(object);
+}
+
+Physics::~Physics() {
+
+}
+
+int Physics::run(const test::CommandLine& object) {
+    test::System::printStartedMessage();
+    test::System::setParameters(object);
+    density_concept();
+    test::System::printStoppedMessage();
+    return 0;
+}
+
+void Physics::time_concept() {
+
+}
+
+void Physics::velocity_concept() {
+
+}
+
+void Physics::acceleration_concept() {
+
+}
+
+void Physics::charge_concept() {
+
+}
+
+void Physics::current_concept() {
+
+}
+
+void Physics::mass_concept() {
+
+}
+
+void Physics::momentum_concept() {
+
+}
+
+void Physics::temperature_concept() {
+
+}
+
+void Physics::heat_concept() {
+
+}
+
+void Physics::energy_concept() {
+
+}
+
+void Physics::density_concept() {
     for (int i=0; i < 3; i++) {
         shp::Signal intrinsic(1.1f);
         qft::Density a("M", 2.0f, 0, "C");
@@ -38,7 +121,30 @@ int Physics::main(int argc, char* argv[]) {
             << " D: " << a.getThermalFieldTotal().print()
             << std::endl;
     }
-    return 0;
+}
+
+void Physics::force_concept() {
+
+}
+
+void Physics::field_concept() {
+
+}
+
+void Physics::electricity_concept() {
+
+}
+
+void Physics::magnetism_concept() {
+
+}
+
+void Physics::thermal_concept() {
+
+}
+
+void Physics::particle_concept() {
+
 }
 
 } // namespace test

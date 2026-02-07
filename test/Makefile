@@ -48,12 +48,14 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/biology.o \
 		$(OBJFOLDR)/chemistry.o \
 		$(OBJFOLDR)/consciousness.o \
+		$(OBJFOLDR)/mathematics.o \
 		$(OBJFOLDR)/physics.o \
 		$(OBJFOLDR)/suite.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
 		$(OBJFOLDR)/biology.o \
 		$(OBJFOLDR)/chemistry.o \
 		$(OBJFOLDR)/consciousness.o \
+		$(OBJFOLDR)/mathematics.o \
 		$(OBJFOLDR)/physics.o \
 		$(OBJFOLDR)/suite.o
 
@@ -65,6 +67,9 @@ $(OBJFOLDR)/chemistry.o: chemistry.cpp
 
 $(OBJFOLDR)/consciousness.o: consciousness.cpp
 	$(CPPTOOL) -c consciousness.cpp -o $(OBJFOLDR)/consciousness.o $(CXXFLAGS)
+
+$(OBJFOLDR)/mathematics.o: mathematics.cpp
+	$(CPPTOOL) -c mathematics.cpp -o $(OBJFOLDR)/mathematics.o $(CXXFLAGS)
 
 $(OBJFOLDR)/physics.o: physics.cpp
 	$(CPPTOOL) -c physics.cpp -o $(OBJFOLDR)/physics.o $(CXXFLAGS)

@@ -22,8 +22,66 @@
 
 namespace test {
 
-int Biology::main(int argc, char* argv[]) {
+const std::string Biology::DEFAULT_NAME = "Biology";
+
+Biology::Biology()
+        : test::System(DEFAULT_NAME) {
+
+}
+
+Biology::Biology(const std::string name)
+        : test::System(name) {
+
+}
+
+Biology::Biology(const int argc, char* argv[])
+        : test::System(DEFAULT_NAME) {
+    test::System::setParameters(argc, argv);
+}
+
+Biology::Biology(const std::string name, const int argc, char* argv[])
+        : test::System(name) {
+    test::System::setParameters(argc, argv);
+}
+
+Biology::Biology(const test::CommandLine& object)
+        : test::System(DEFAULT_NAME) {
+    test::System::setParameters(object);
+}
+
+Biology::Biology(const std::string name, const test::CommandLine& object)
+        : test::System(name) {
+    test::System::setParameters(object);
+}
+
+Biology::~Biology() {
+
+}
+
+int Biology::run(const test::CommandLine& object) {
+    test::System::printStartedMessage();
+    test::System::printStoppedMessage();
     return 0;
+}
+
+void Biology::protein_concept() {
+
+}
+
+void Biology::rna_concept() {
+
+}
+
+void Biology::dna_concept() {
+
+}
+
+void Biology::membrane_concept() {
+
+}
+
+void Biology::cell_concept() {
+
 }
 
 } // namespace test

@@ -22,8 +22,62 @@
 
 namespace test {
 
-int Chemistry::main(int argc, char* argv[]) {
+const std::string Chemistry::DEFAULT_NAME = "Chemistry";
+
+Chemistry::Chemistry()
+        : test::System(DEFAULT_NAME) {
+
+}
+
+Chemistry::Chemistry(const std::string name)
+        : test::System(name) {
+
+}
+
+Chemistry::Chemistry(const int argc, char* argv[])
+        : test::System(DEFAULT_NAME) {
+    test::System::setParameters(argc, argv);
+}
+
+Chemistry::Chemistry(const std::string name, const int argc, char* argv[])
+        : test::System(name) {
+    test::System::setParameters(argc, argv);
+}
+
+Chemistry::Chemistry(const test::CommandLine& object)
+        : test::System(DEFAULT_NAME) {
+    test::System::setParameters(object);
+}
+
+Chemistry::Chemistry(const std::string name, const test::CommandLine& object)
+        : test::System(name) {
+    test::System::setParameters(object);
+}
+
+Chemistry::~Chemistry() {
+
+}
+
+int Chemistry::run(const test::CommandLine& object) {
+    test::System::printStartedMessage();
+    test::System::printStoppedMessage();
     return 0;
+}
+
+void Chemistry::nucleus_concept() {
+
+}
+
+void Chemistry::orbital_concept() {
+
+}
+
+void Chemistry::atom_concept() {
+
+}
+
+void Chemistry::molecule_concept() {
+
 }
 
 } // namespace test

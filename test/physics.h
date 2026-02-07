@@ -21,14 +21,43 @@
 #ifndef TEST_PHYSICS_H
 #define TEST_PHYSICS_H
 
+#include "../inc/testing.h"
 #include "../qft/density.h"
 
 namespace test {
 
-class Physics {
+class Physics : protected test::System {
 
 public:
-    int main(int argc, char* argv[]);
+    Physics();
+    Physics(const std::string name);
+    Physics(const int argc, char* argv[]);
+    Physics(const std::string name, const int argc, char* argv[]);
+    Physics(const test::CommandLine& object);
+    Physics(const std::string name, const test::CommandLine& object);
+    ~Physics();
+public:
+    int run(const test::CommandLine& object);
+    void time_concept();
+    void velocity_concept();
+    void acceleration_concept();
+    void charge_concept();
+    void current_concept();
+    void mass_concept();
+    void momentum_concept();
+    void temperature_concept();
+    void heat_concept();
+    void energy_concept();
+    void density_concept();
+    void force_concept();
+    void field_concept();
+    void electricity_concept();
+    void magnetism_concept();
+    void thermal_concept();
+    void particle_concept();
+
+public:
+    static const std::string DEFAULT_NAME;
 };
 
 } // namespace test
