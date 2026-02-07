@@ -24,29 +24,27 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <vector>
+#include "configuration.h"
 
 namespace test {
 
-typedef std::vector<std::string > CommandLine;
-
 class System {
     std::string name;
-    CommandLine parameters;
+    cfg::CommandLine parameters;
 public:
     System();
-    System(const CommandLine& parameters);
+    System(const cfg::CommandLine& parameters);
     System(const std::string name);
-    System(const std::string name, const CommandLine& parameters);
+    System(const std::string name, const cfg::CommandLine& parameters);
     ~System();
 
     // Getters
     std::string getName() const;
-    CommandLine getParameters() const;
+    cfg::CommandLine getParameters() const;
 
     // Setters
     void setName(const std::string name);
-    void setParameters(const CommandLine& object);
+    void setParameters(const cfg::CommandLine& object);
 
 public:
     std::string getParameter(const int index) const;

@@ -44,12 +44,12 @@ Consciousness::Consciousness(const std::string name, const int argc, char* argv[
     test::System::setParameters(argc, argv);
 }
 
-Consciousness::Consciousness(const test::CommandLine& object)
+Consciousness::Consciousness(const cfg::CommandLine& object)
         : test::System(DEFAULT_NAME) {
     test::System::setParameters(object);
 }
 
-Consciousness::Consciousness(const std::string name, const test::CommandLine& object)
+Consciousness::Consciousness(const std::string name, const cfg::CommandLine& object)
         : test::System(name) {
     test::System::setParameters(object);
 }
@@ -67,7 +67,7 @@ int Consciousness::run(const int argc, char* argv[]) {
     return run(test::System::getParameters());
 }
 
-int Consciousness::run(const test::CommandLine& object) {
+int Consciousness::run(const cfg::CommandLine& object) {
     test::System::printStartedMessage();
     simple_training();
     test::System::printStoppedMessage();

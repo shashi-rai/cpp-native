@@ -45,11 +45,16 @@ clean-libs: clean-custom
 	${RMCLEAN} $(LIBFILES)
 
 $(LIBFOLDR)/$(LIBNAME): \
+		$(OBJFOLDR)/logger.o \
 		$(OBJFOLDR)/matrix.o \
 		$(OBJFOLDR)/tensor.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
+		$(OBJFOLDR)/logger.o \
 		$(OBJFOLDR)/matrix.o \
 		$(OBJFOLDR)/tensor.o
+
+$(OBJFOLDR)/logger.o: logger.cpp
+	$(CPPTOOL) -c logger.cpp -o $(OBJFOLDR)/logger.o $(CXXFLAGS)
 
 $(OBJFOLDR)/matrix.o: matrix.cpp
 	$(CPPTOOL) -c matrix.cpp -o $(OBJFOLDR)/matrix.o $(CXXFLAGS)

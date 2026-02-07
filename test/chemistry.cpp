@@ -44,12 +44,12 @@ Chemistry::Chemistry(const std::string name, const int argc, char* argv[])
     test::System::setParameters(argc, argv);
 }
 
-Chemistry::Chemistry(const test::CommandLine& object)
+Chemistry::Chemistry(const cfg::CommandLine& object)
         : test::System(DEFAULT_NAME) {
     test::System::setParameters(object);
 }
 
-Chemistry::Chemistry(const std::string name, const test::CommandLine& object)
+Chemistry::Chemistry(const std::string name, const cfg::CommandLine& object)
         : test::System(name) {
     test::System::setParameters(object);
 }
@@ -67,7 +67,7 @@ int Chemistry::run(const int argc, char* argv[]) {
     return run(test::System::getParameters());
 }
 
-int Chemistry::run(const test::CommandLine& object) {
+int Chemistry::run(const cfg::CommandLine& object) {
     test::System::printStartedMessage();
     test::System::printStoppedMessage();
     return 0;

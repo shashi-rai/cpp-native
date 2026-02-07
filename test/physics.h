@@ -33,13 +33,13 @@ public:
     Physics(const std::string name);
     Physics(const int argc, char* argv[]);
     Physics(const std::string name, const int argc, char* argv[]);
-    Physics(const test::CommandLine& object);
-    Physics(const std::string name, const test::CommandLine& object);
+    Physics(const cfg::CommandLine& object);
+    Physics(const std::string name, const cfg::CommandLine& object);
     ~Physics();
 public:
     int run();
     int run(const int argc, char* argv[]);
-    int run(const test::CommandLine& object);
+    int run(const cfg::CommandLine& object);
     void time_concept();
     void velocity_concept();
     void acceleration_concept();

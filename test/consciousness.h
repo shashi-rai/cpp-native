@@ -36,13 +36,13 @@ public:
     Consciousness(const std::string name);
     Consciousness(const int argc, char* argv[]);
     Consciousness(const std::string name, const int argc, char* argv[]);
-    Consciousness(const test::CommandLine& object);
-    Consciousness(const std::string name, const test::CommandLine& object);
+    Consciousness(const cfg::CommandLine& object);
+    Consciousness(const std::string name, const cfg::CommandLine& object);
     ~Consciousness();
 public:
     int run();
     int run(const int argc, char* argv[]);
-    int run(const test::CommandLine& object);
+    int run(const cfg::CommandLine& object);
     void simple_training();
 
 public:

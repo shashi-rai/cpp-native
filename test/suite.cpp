@@ -42,7 +42,7 @@ Suite::Suite(const int argc, char* argv[])
     test::System::setParameters(argc, argv);
 }
 
-Suite::Suite(const test::CommandLine& object)
+Suite::Suite(const cfg::CommandLine& object)
         : test::System(DEFAULT_NAME),
         mathematics(), physics(), chemistry(), biology(), consciousness() {
     test::System::setParameters(object);
@@ -61,7 +61,7 @@ int Suite::main(const int argc, char* argv[]) {
     return main(test::System::getParameters());
 }
 
-int Suite::main(const test::CommandLine& object) {
+int Suite::main(const cfg::CommandLine& object) {
     test::System::printStartedMessage();
     mathematics_concept(object);
     physics_concept(object);
@@ -72,28 +72,28 @@ int Suite::main(const test::CommandLine& object) {
     return 0;
 }
 
-void Suite::mathematics_concept(const test::CommandLine& parameters) {
-    CommandLine cmdline = parameters;
+void Suite::mathematics_concept(const cfg::CommandLine& parameters) {
+    cfg::CommandLine cmdline = parameters;
     mathematics.run(cmdline);
 }
 
-void Suite::physics_concept(const test::CommandLine& parameters) {
-    CommandLine cmdline = parameters;
+void Suite::physics_concept(const cfg::CommandLine& parameters) {
+    cfg::CommandLine cmdline = parameters;
     physics.run(cmdline);
 }
 
-void Suite::chemistry_concept(const test::CommandLine& parameters) {
-    CommandLine cmdline = parameters;
+void Suite::chemistry_concept(const cfg::CommandLine& parameters) {
+    cfg::CommandLine cmdline = parameters;
     chemistry.run(cmdline);
 }
 
-void Suite::biology_concept(const test::CommandLine& parameters) {
-    CommandLine cmdline = parameters;
+void Suite::biology_concept(const cfg::CommandLine& parameters) {
+    cfg::CommandLine cmdline = parameters;
     biology.run(cmdline);
 }
 
-void Suite::consciousness_concept(const test::CommandLine& parameters) {
-    CommandLine cmdline = parameters;
+void Suite::consciousness_concept(const cfg::CommandLine& parameters) {
+    cfg::CommandLine cmdline = parameters;
     consciousness.run(cmdline);
 }
 
@@ -106,7 +106,7 @@ System::System()
 
 }
 
-System::System(const CommandLine& parameters)
+System::System(const cfg::CommandLine& parameters)
         : name(), parameters(parameters) {
 
 }
@@ -116,7 +116,7 @@ System::System(const std::string name)
 
 }
 
-System::System(const std::string name, const CommandLine& parameters)
+System::System(const std::string name, const cfg::CommandLine& parameters)
         : name(name), parameters(parameters) {
 
 }
@@ -129,7 +129,7 @@ std::string System::getName() const {
     return name;
 }
 
-CommandLine System::getParameters() const {
+cfg::CommandLine System::getParameters() const {
     return parameters;
 }
 
@@ -137,7 +137,7 @@ void System::setName(const std::string name) {
     this->name = name;
 }
 
-void System::setParameters(const CommandLine& object) {
+void System::setParameters(const cfg::CommandLine& object) {
     this->parameters = object;
 }
 

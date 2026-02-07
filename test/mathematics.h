@@ -32,13 +32,13 @@ public:
     Mathematics(const std::string name);
     Mathematics(const int argc, char* argv[]);
     Mathematics(const std::string name, const int argc, char* argv[]);
-    Mathematics(const test::CommandLine& object);
-    Mathematics(const std::string name, const test::CommandLine& object);
+    Mathematics(const cfg::CommandLine& object);
+    Mathematics(const std::string name, const cfg::CommandLine& object);
     ~Mathematics();
 public:
     int run();
     int run(const int argc, char* argv[]);
-    int run(const test::CommandLine& object);
+    int run(const cfg::CommandLine& object);
     void quantity_concept();
     void direction_concept();
     void angular_concept();

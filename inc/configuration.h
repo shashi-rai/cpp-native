@@ -18,33 +18,27 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef TEST_ECONOMICS_H
-#define TEST_ECONOMICS_H
+#ifndef INC_CONFIGURATION_H
+#define INC_CONFIGURATION_H
 
-#include "../inc/testing.h"
+#include <vector>
 
-namespace test {
+namespace cfg {
 
-class Economics : protected test::System {
+typedef std::vector<std::string > CommandLine;
 
-public:
-    Economics();
-    Economics(const std::string name);
-    Economics(const int argc, char* argv[]);
-    Economics(const std::string name, const int argc, char* argv[]);
-    Economics(const cfg::CommandLine& object);
-    Economics(const std::string name, const cfg::CommandLine& object);
-    ~Economics();
-public:
-    int run();
-    int run(const int argc, char* argv[]);
-    int run(const cfg::CommandLine& object);
-    void trade_concept();
-
-public:
-    static const std::string DEFAULT_NAME;
+enum Level {
+    NOLOG = 0,
+    FATAL = 1,
+    ERROR = 2,
+    WARN = 3,
+    INFO = 4,
+    DEBUG = 5,
+    TRACE = 6,
 };
 
-} // namespace test
+typedef Level Logging;
 
-#endif //TEST_ECONOMICS_H
+} // namespace cfg
+
+#endif //INC_CONFIGURATION_H

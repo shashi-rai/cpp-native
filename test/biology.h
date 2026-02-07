@@ -32,13 +32,13 @@ public:
     Biology(const std::string name);
     Biology(const int argc, char* argv[]);
     Biology(const std::string name, const int argc, char* argv[]);
-    Biology(const test::CommandLine& object);
-    Biology(const std::string name, const test::CommandLine& object);
+    Biology(const cfg::CommandLine& object);
+    Biology(const std::string name, const cfg::CommandLine& object);
     ~Biology();
 public:
     int run();
     int run(const int argc, char* argv[]);
-    int run(const test::CommandLine& object);
+    int run(const cfg::CommandLine& object);
     void protein_concept();
     void rna_concept();
     void dna_concept();

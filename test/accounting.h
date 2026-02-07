@@ -32,13 +32,13 @@ public:
     Accounting(const std::string name);
     Accounting(const int argc, char* argv[]);
     Accounting(const std::string name, const int argc, char* argv[]);
-    Accounting(const test::CommandLine& object);
-    Accounting(const std::string name, const test::CommandLine& object);
+    Accounting(const cfg::CommandLine& object);
+    Accounting(const std::string name, const cfg::CommandLine& object);
     ~Accounting();
 public:
     int run();
     int run(const int argc, char* argv[]);
-    int run(const test::CommandLine& object);
+    int run(const cfg::CommandLine& object);
     void cash_concept();
 
 public:

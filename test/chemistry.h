@@ -32,13 +32,13 @@ public:
     Chemistry(const std::string name);
     Chemistry(const int argc, char* argv[]);
     Chemistry(const std::string name, const int argc, char* argv[]);
-    Chemistry(const test::CommandLine& object);
-    Chemistry(const std::string name, const test::CommandLine& object);
+    Chemistry(const cfg::CommandLine& object);
+    Chemistry(const std::string name, const cfg::CommandLine& object);
     ~Chemistry();
 public:
     int run();
     int run(const int argc, char* argv[]);
-    int run(const test::CommandLine& object);
+    int run(const cfg::CommandLine& object);
     void nucleus_concept();
     void orbital_concept();
     void atom_concept();

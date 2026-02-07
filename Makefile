@@ -40,6 +40,12 @@ TESTOBJ  = $(OBJFOLDR)/suite.o
 TESTFOLDR = ./test
 TESTFILES = $(OBJFOLDR)/*.o
 
+# Test Application
+DATAPROG = bhojpur.app
+DATAOBJ  = $(OBJFOLDR)/logger.o
+DATAFOLDR = ./dsa
+DATAFILES = $(OBJFOLDR)/*.o
+
 # Shell Commands
 RMCLEAN	 = rm -f
 
@@ -70,6 +76,18 @@ TESTDIRS = shp img qft con test
 # Repeat make command in specified test folder
 testing:
 	for dir in $(TESTDIRS); do \
+		$(MAKE) -C $$dir; \
+	done
+
+# To build only dsa application
+data: all-before dataengg $(DATAPROG) all-after
+
+# Sequence of sub-folders to built
+DATADIRS = dsa
+
+# Repeat make command in specified test folder
+dataengg:
+	for dir in $(DATADIRS); do \
 		$(MAKE) -C $$dir; \
 	done
 

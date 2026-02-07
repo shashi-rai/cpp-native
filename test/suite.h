@@ -40,17 +40,17 @@ public:
     Suite();
     Suite(const std::string name);
     Suite(const int argc, char* argv[]);
-    Suite(const test::CommandLine& object);
+    Suite(const cfg::CommandLine& object);
     ~Suite();
 public:
     int main();
     int main(const int argc, char* argv[]);
-    int main(const test::CommandLine& object);
-    void mathematics_concept(const test::CommandLine& parameters);
-    void physics_concept(const test::CommandLine& parameters);
-    void chemistry_concept(const test::CommandLine& parameters);
-    void biology_concept(const test::CommandLine& parameters);
-    void consciousness_concept(const test::CommandLine& parameters);
+    int main(const cfg::CommandLine& object);
+    void mathematics_concept(const cfg::CommandLine& parameters);
+    void physics_concept(const cfg::CommandLine& parameters);
+    void chemistry_concept(const cfg::CommandLine& parameters);
+    void biology_concept(const cfg::CommandLine& parameters);
+    void consciousness_concept(const cfg::CommandLine& parameters);
 
 public:
     static const std::string DEFAULT_NAME;

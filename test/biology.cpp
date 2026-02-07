@@ -44,12 +44,12 @@ Biology::Biology(const std::string name, const int argc, char* argv[])
     test::System::setParameters(argc, argv);
 }
 
-Biology::Biology(const test::CommandLine& object)
+Biology::Biology(const cfg::CommandLine& object)
         : test::System(DEFAULT_NAME) {
     test::System::setParameters(object);
 }
 
-Biology::Biology(const std::string name, const test::CommandLine& object)
+Biology::Biology(const std::string name, const cfg::CommandLine& object)
         : test::System(name) {
     test::System::setParameters(object);
 }
@@ -67,7 +67,7 @@ int Biology::run(const int argc, char* argv[]) {
     return run(test::System::getParameters());
 }
 
-int Biology::run(const test::CommandLine& object) {
+int Biology::run(const cfg::CommandLine& object) {
     test::System::printStartedMessage();
     test::System::printStoppedMessage();
     return 0;

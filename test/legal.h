@@ -32,13 +32,13 @@ public:
     Legal(const std::string name);
     Legal(const int argc, char* argv[]);
     Legal(const std::string name, const int argc, char* argv[]);
-    Legal(const test::CommandLine& object);
-    Legal(const std::string name, const test::CommandLine& object);
+    Legal(const cfg::CommandLine& object);
+    Legal(const std::string name, const cfg::CommandLine& object);
     ~Legal();
 public:
     int run();
     int run(const int argc, char* argv[]);
-    int run(const test::CommandLine& object);
+    int run(const cfg::CommandLine& object);
     void petition_concept();
 
 public:

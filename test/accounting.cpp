@@ -44,12 +44,12 @@ Accounting::Accounting(const std::string name, const int argc, char* argv[])
     test::System::setParameters(argc, argv);
 }
 
-Accounting::Accounting(const test::CommandLine& object)
+Accounting::Accounting(const cfg::CommandLine& object)
         : test::System(DEFAULT_NAME) {
     test::System::setParameters(object);
 }
 
-Accounting::Accounting(const std::string name, const test::CommandLine& object)
+Accounting::Accounting(const std::string name, const cfg::CommandLine& object)
         : test::System(name) {
     test::System::setParameters(object);
 }
@@ -67,7 +67,7 @@ int Accounting::run(const int argc, char* argv[]) {
     return run(test::System::getParameters());
 }
 
-int Accounting::run(const test::CommandLine& object) {
+int Accounting::run(const cfg::CommandLine& object) {
     test::System::printStartedMessage();
     test::System::printStoppedMessage();
     return 0;

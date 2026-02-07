@@ -32,13 +32,13 @@ public:
     Finance(const std::string name);
     Finance(const int argc, char* argv[]);
     Finance(const std::string name, const int argc, char* argv[]);
-    Finance(const test::CommandLine& object);
-    Finance(const std::string name, const test::CommandLine& object);
+    Finance(const cfg::CommandLine& object);
+    Finance(const std::string name, const cfg::CommandLine& object);
     ~Finance();
 public:
     int run();
     int run(const int argc, char* argv[]);
-    int run(const test::CommandLine& object);
+    int run(const cfg::CommandLine& object);
     void wealth_concept();
 
 public:
