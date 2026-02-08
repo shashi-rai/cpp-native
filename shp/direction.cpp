@@ -316,7 +316,7 @@ std::string Direction::print() const {
 
 std::string Direction::printRadians() const {
     Direction self = *this; std::stringstream result;
-    result << std::setfill('0') << std::setprecision(8);
+    result << std::setfill('0') << std::setprecision(10);
     result << self.toRadians();
     result << shp::Unit::getDerivedSymbol(shp::Unit::PLANE_ANGLE);
 	return result.str();
@@ -326,6 +326,7 @@ std::string Direction::printEuler() const {
     Direction self = *this; std::stringstream result;
     std::complex<float> phase = self.getPhase();
     result << ":";
+    result << std::setfill('0') << std::setprecision(10);
     result << self.getTheta(phase) << "(";
     result << self.getCosine(phase) << "+𝑖";
     result << self.getSine(phase) << ")";

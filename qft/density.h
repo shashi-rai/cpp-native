@@ -137,7 +137,7 @@ public:
     void setName(const std::string name);
     shp::Direction getParameterDiffusion() const;
     void setParameterDiffusion(const float factor);
-    void setParameterDiffusion(const shp::Azimuth& rate);
+    void setParameterDiffusion(const shp::Intrinsic& rate);
     shp::Direction getParameterThreshold() const;
     void setParameterThreshold(const float factor);
     void setParameterThreshold(const shp::Polar& factor);

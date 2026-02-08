@@ -50,72 +50,72 @@ Acceleration::Acceleration(const shp::Unit& unit, const std::shared_ptr<Time> do
 }
 
 Acceleration::Acceleration(const float orientation)
-        : qft::Velocity(shp::Azimuth(orientation)),
+        : qft::Velocity(shp::Intrinsic(orientation)),
         change(shp::Quantity::DEFAULT_VALUE, qft::Velocity::UNIT) {
 
 }
 
-Acceleration::Acceleration(const shp::Azimuth& orientation)
+Acceleration::Acceleration(const shp::Intrinsic& orientation)
         : qft::Velocity(orientation), change(shp::Quantity::DEFAULT_VALUE, qft::Velocity::UNIT) {
 
 }
 
 Acceleration::Acceleration(const float orientation, const std::shared_ptr<Time> domain)
-        : qft::Velocity(shp::Azimuth(orientation), domain),
+        : qft::Velocity(shp::Intrinsic(orientation), domain),
         change(shp::Quantity::DEFAULT_VALUE, qft::Velocity::UNIT) {
 
 }
 
-Acceleration::Acceleration(const shp::Azimuth& orientation, const std::shared_ptr<Time> domain)
+Acceleration::Acceleration(const shp::Intrinsic& orientation, const std::shared_ptr<Time> domain)
         : qft::Velocity(orientation, domain),
         change(shp::Quantity::DEFAULT_VALUE, qft::Velocity::UNIT) {
 
 }
 
 Acceleration::Acceleration(const float orientation, const std::string unit)
-        : qft::Velocity(unit, shp::Azimuth(orientation)),
+        : qft::Velocity(unit, shp::Intrinsic(orientation)),
         change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const shp::Azimuth& orientation, const std::string unit)
+Acceleration::Acceleration(const shp::Intrinsic& orientation, const std::string unit)
         : qft::Velocity(unit, orientation), change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
 Acceleration::Acceleration(const float orientation, const std::string unit,
         const std::shared_ptr<Time> domain)
-        : qft::Velocity(unit, shp::Azimuth(orientation), domain),
+        : qft::Velocity(unit, shp::Intrinsic(orientation), domain),
         change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const shp::Azimuth& orientation, const std::string unit,
+Acceleration::Acceleration(const shp::Intrinsic& orientation, const std::string unit,
         const std::shared_ptr<Time> domain)
         : qft::Velocity(unit, orientation, domain), change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
 Acceleration::Acceleration(const float orientation, const shp::Unit& unit)
-        : qft::Velocity(shp::Azimuth(orientation)),
+        : qft::Velocity(shp::Intrinsic(orientation)),
         change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const shp::Azimuth& orientation, const shp::Unit& unit)
-        : qft::Velocity(shp::Azimuth(orientation)),
+Acceleration::Acceleration(const shp::Intrinsic& orientation, const shp::Unit& unit)
+        : qft::Velocity(shp::Intrinsic(orientation)),
         change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
 Acceleration::Acceleration(const float orientation, const shp::Unit& unit,
         const std::shared_ptr<Time> domain)
-        : qft::Velocity(shp::Azimuth(orientation), domain),
+        : qft::Velocity(shp::Intrinsic(orientation), domain),
         change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const shp::Azimuth& orientation, const shp::Unit& unit,
+Acceleration::Acceleration(const shp::Intrinsic& orientation, const shp::Unit& unit,
         const std::shared_ptr<Time> domain)
         : qft::Velocity(orientation, domain),
         change(shp::Quantity::DEFAULT_VALUE, unit) {
@@ -123,12 +123,12 @@ Acceleration::Acceleration(const shp::Azimuth& orientation, const shp::Unit& uni
 }
 
 Acceleration::Acceleration(const float orientation, const shp::Signal& change)
-        : qft::Velocity(shp::Azimuth(orientation)),
+        : qft::Velocity(shp::Intrinsic(orientation)),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), change.getUnit()) {
 
 }
 
-Acceleration::Acceleration(const shp::Azimuth& orientation, const shp::Signal& change)
+Acceleration::Acceleration(const shp::Intrinsic& orientation, const shp::Signal& change)
         : qft::Velocity(orientation),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), change.getUnit()) {
 
@@ -136,12 +136,12 @@ Acceleration::Acceleration(const shp::Azimuth& orientation, const shp::Signal& c
 
 Acceleration::Acceleration(const float orientation, const shp::Signal& change,
         const std::shared_ptr<Time> domain)
-        : qft::Velocity(shp::Azimuth(orientation), domain),
+        : qft::Velocity(shp::Intrinsic(orientation), domain),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), change.getUnit()) {
 
 }
 
-Acceleration::Acceleration(const shp::Azimuth& orientation, const shp::Signal& change,
+Acceleration::Acceleration(const shp::Intrinsic& orientation, const shp::Signal& change,
         const std::shared_ptr<Time> domain)
         : qft::Velocity(orientation, domain),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), change.getUnit()) {
@@ -150,12 +150,12 @@ Acceleration::Acceleration(const shp::Azimuth& orientation, const shp::Signal& c
 
 Acceleration::Acceleration(const float orientation, const shp::Signal& change,
         const std::string unit)
-        : qft::Velocity(unit, shp::Azimuth(orientation)),
+        : qft::Velocity(unit, shp::Intrinsic(orientation)),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
 
 }
 
-Acceleration::Acceleration(const shp::Azimuth& orientation, const shp::Signal& change,
+Acceleration::Acceleration(const shp::Intrinsic& orientation, const shp::Signal& change,
         const std::string unit)
         : qft::Velocity(unit, orientation),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
@@ -164,12 +164,12 @@ Acceleration::Acceleration(const shp::Azimuth& orientation, const shp::Signal& c
 
 Acceleration::Acceleration(const float orientation, const shp::Signal& change,
         const std::string unit, const std::shared_ptr<Time> domain)
-        : qft::Velocity(unit, shp::Azimuth(orientation), domain),
+        : qft::Velocity(unit, shp::Intrinsic(orientation), domain),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
 
 }
 
-Acceleration::Acceleration(const shp::Azimuth& orientation, const shp::Signal& change,
+Acceleration::Acceleration(const shp::Intrinsic& orientation, const shp::Signal& change,
         const std::string unit, const std::shared_ptr<Time> domain)
         : qft::Velocity(unit, orientation, domain),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
@@ -178,12 +178,12 @@ Acceleration::Acceleration(const shp::Azimuth& orientation, const shp::Signal& c
 
 Acceleration::Acceleration(const float orientation, const shp::Signal& change,
         const shp::Unit& unit)
-        : qft::Velocity(shp::Azimuth(orientation)),
+        : qft::Velocity(shp::Intrinsic(orientation)),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
 
 }
 
-Acceleration::Acceleration(const shp::Azimuth& orientation, const shp::Signal& change,
+Acceleration::Acceleration(const shp::Intrinsic& orientation, const shp::Signal& change,
         const shp::Unit& unit)
         : qft::Velocity(orientation),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
@@ -192,12 +192,12 @@ Acceleration::Acceleration(const shp::Azimuth& orientation, const shp::Signal& c
 
 Acceleration::Acceleration(const float orientation, const shp::Signal& change,
         const shp::Unit& unit, const std::shared_ptr<Time> domain)
-        : qft::Velocity(shp::Azimuth(orientation), domain),
+        : qft::Velocity(shp::Intrinsic(orientation), domain),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
 
 }
 
-Acceleration::Acceleration(const shp::Azimuth& orientation, const shp::Signal& change,
+Acceleration::Acceleration(const shp::Intrinsic& orientation, const shp::Signal& change,
         const shp::Unit& unit, const std::shared_ptr<Time> domain)
         : qft::Velocity(orientation, domain),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
@@ -259,12 +259,12 @@ Acceleration::Acceleration(const std::string name, const shp::Unit& unit,
 }
 
 Acceleration::Acceleration(const std::string name, const float orientation)
-        : qft::Velocity(name, shp::Azimuth(orientation)),
+        : qft::Velocity(name, shp::Intrinsic(orientation)),
 		change(shp::Quantity::DEFAULT_VALUE, qft::Velocity::UNIT) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation)
+Acceleration::Acceleration(const std::string name, const shp::Intrinsic& orientation)
         : qft::Velocity(name, orientation),
         change(shp::Quantity::DEFAULT_VALUE, qft::Velocity::UNIT) {
 
@@ -272,12 +272,12 @@ Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientati
 
 Acceleration::Acceleration(const std::string name, const float orientation,
         const std::shared_ptr<Time> domain)
-        : qft::Velocity(name, shp::Azimuth(orientation), domain),
+        : qft::Velocity(name, shp::Intrinsic(orientation), domain),
 		change(shp::Quantity::DEFAULT_VALUE, qft::Velocity::UNIT) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation,
+Acceleration::Acceleration(const std::string name, const shp::Intrinsic& orientation,
         const std::shared_ptr<Time> domain)
         : qft::Velocity(name, orientation, domain),
         change(shp::Quantity::DEFAULT_VALUE, qft::Velocity::UNIT) {
@@ -285,60 +285,60 @@ Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientati
 }
 
 Acceleration::Acceleration(const std::string name, const float orientation, const std::string unit)
-        : qft::Velocity(name, shp::Azimuth(orientation)),
+        : qft::Velocity(name, shp::Intrinsic(orientation)),
 		change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation, const std::string unit)
+Acceleration::Acceleration(const std::string name, const shp::Intrinsic& orientation, const std::string unit)
         : qft::Velocity(name, orientation), change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
 Acceleration::Acceleration(const std::string name, const float orientation, const std::string unit,
         const std::shared_ptr<Time> domain)
-        : qft::Velocity(name, shp::Azimuth(orientation), domain),
+        : qft::Velocity(name, shp::Intrinsic(orientation), domain),
 		change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation, const std::string unit,
+Acceleration::Acceleration(const std::string name, const shp::Intrinsic& orientation, const std::string unit,
         const std::shared_ptr<Time> domain)
         : qft::Velocity(name, orientation, domain), change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
 Acceleration::Acceleration(const std::string name, const float orientation, const shp::Unit& unit)
-        : qft::Velocity(name, shp::Azimuth(orientation)),
+        : qft::Velocity(name, shp::Intrinsic(orientation)),
 		change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation, const shp::Unit& unit)
+Acceleration::Acceleration(const std::string name, const shp::Intrinsic& orientation, const shp::Unit& unit)
         : qft::Velocity(name, orientation), change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
 Acceleration::Acceleration(const std::string name, const float orientation, const shp::Unit& unit,
         const std::shared_ptr<Time> domain)
-        : qft::Velocity(name, shp::Azimuth(orientation), domain),
+        : qft::Velocity(name, shp::Intrinsic(orientation), domain),
 		change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation, const shp::Unit& unit,
+Acceleration::Acceleration(const std::string name, const shp::Intrinsic& orientation, const shp::Unit& unit,
         const std::shared_ptr<Time> domain)
         : qft::Velocity(name, orientation, domain), change(shp::Quantity::DEFAULT_VALUE, unit) {
 
 }
 
 Acceleration::Acceleration(const std::string name, const float orientation, const shp::Signal& change)
-        : qft::Velocity(name, shp::Azimuth(orientation)),
+        : qft::Velocity(name, shp::Intrinsic(orientation)),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), change.getUnit()) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation, const shp::Signal& change)
+Acceleration::Acceleration(const std::string name, const shp::Intrinsic& orientation, const shp::Signal& change)
         : qft::Velocity(name, orientation),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), change.getUnit()) {
 
@@ -346,12 +346,12 @@ Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientati
 
 Acceleration::Acceleration(const std::string name, const float orientation, const shp::Signal& change,
         const std::shared_ptr<Time> domain)
-        : qft::Velocity(name, shp::Azimuth(orientation), domain),
+        : qft::Velocity(name, shp::Intrinsic(orientation), domain),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), change.getUnit()) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation, const shp::Signal& change,
+Acceleration::Acceleration(const std::string name, const shp::Intrinsic& orientation, const shp::Signal& change,
         const std::shared_ptr<Time> domain)
         : qft::Velocity(name, orientation, domain),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), change.getUnit()) {
@@ -360,12 +360,12 @@ Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientati
 
 Acceleration::Acceleration(const std::string name, const float orientation,
         const shp::Signal& change, const std::string unit)
-        : qft::Velocity(name, shp::Azimuth(orientation)),
+        : qft::Velocity(name, shp::Intrinsic(orientation)),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation,
+Acceleration::Acceleration(const std::string name, const shp::Intrinsic& orientation,
         const shp::Signal& change, const std::string unit)
         : qft::Velocity(name, orientation),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
@@ -374,12 +374,12 @@ Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientati
 
 Acceleration::Acceleration(const std::string name, const float orientation,
         const shp::Signal& change, const std::string unit, const std::shared_ptr<Time> domain)
-        : qft::Velocity(name, shp::Azimuth(orientation), domain),
+        : qft::Velocity(name, shp::Intrinsic(orientation), domain),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation,
+Acceleration::Acceleration(const std::string name, const shp::Intrinsic& orientation,
         const shp::Signal& change, const std::string unit, const std::shared_ptr<Time> domain)
         : qft::Velocity(name, orientation, domain),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
@@ -388,12 +388,12 @@ Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientati
 
 Acceleration::Acceleration(const std::string name, const float orientation,
         const shp::Signal& change, const shp::Unit& unit)
-        : qft::Velocity(name, shp::Azimuth(orientation)),
+        : qft::Velocity(name, shp::Intrinsic(orientation)),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation,
+Acceleration::Acceleration(const std::string name, const shp::Intrinsic& orientation,
         const shp::Signal& change, const shp::Unit& unit)
         : qft::Velocity(name, orientation),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
@@ -402,12 +402,12 @@ Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientati
 
 Acceleration::Acceleration(const std::string name, const float orientation,
         const shp::Signal& change, const shp::Unit& unit, const std::shared_ptr<Time> domain)
-        : qft::Velocity(name, shp::Azimuth(orientation), domain),
+        : qft::Velocity(name, shp::Intrinsic(orientation), domain),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
 
 }
 
-Acceleration::Acceleration(const std::string name, const shp::Azimuth& orientation,
+Acceleration::Acceleration(const std::string name, const shp::Intrinsic& orientation,
         const shp::Signal& change, const shp::Unit& unit, const std::shared_ptr<Time> domain)
         : qft::Velocity(name, orientation, domain),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
@@ -421,7 +421,7 @@ Acceleration::Acceleration(const shp::Signal& change, const qft::Velocity& veloc
 }
 
 Acceleration::Acceleration(const std::string name, const float displacement, const short int scale,
-        const std::string unit, const shp::Azimuth& orientation, const std::shared_ptr<Time> domain,
+        const std::string unit, const shp::Intrinsic& orientation, const std::shared_ptr<Time> domain,
         const shp::Signal& change)
         : qft::Velocity(name, displacement, scale),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
@@ -429,7 +429,7 @@ Acceleration::Acceleration(const std::string name, const float displacement, con
 }
 
 Acceleration::Acceleration(const std::string name, const float displacement, const short int scale,
-        const shp::Unit& unit, const shp::Azimuth& orientation, const std::shared_ptr<Time> domain,
+        const shp::Unit& unit, const shp::Intrinsic& orientation, const std::shared_ptr<Time> domain,
         const shp::Signal& change)
         : qft::Velocity(name, displacement, scale),
         change(change.getOrientation(), change.getMagnitude(), change.getScaling(), unit) {
@@ -605,32 +605,32 @@ Acceleration Acceleration::operator%(const Velocity& velocity) const {
     return Acceleration(this->change, newVelocity, UNIT);
 }
 
-Acceleration Acceleration::operator+(const shp::Azimuth& orientation) const {
-    Velocity self = *this; shp::Azimuth azimuth = (self.getDirection() + orientation);
+Acceleration Acceleration::operator+(const shp::Intrinsic& orientation) const {
+    Velocity self = *this; shp::Intrinsic azimuth = (self.getDirection() + orientation);
     return Acceleration("+", self.getDisplacement().getMagnitude(), self.getScaling(), self.getUnit(),
 		azimuth, self.getTemporal(), this->change);
 }
 
-Acceleration Acceleration::operator-(const shp::Azimuth& orientation) const {
-    Velocity self = *this; shp::Azimuth azimuth = (self.getDirection() - orientation);
+Acceleration Acceleration::operator-(const shp::Intrinsic& orientation) const {
+    Velocity self = *this; shp::Intrinsic azimuth = (self.getDirection() - orientation);
     return Acceleration("-", self.getDisplacement().getMagnitude(), self.getScaling(), self.getUnit(),
 		azimuth, self.getTemporal(), this->change);
 }
 
-Acceleration Acceleration::operator*(const shp::Azimuth& orientation) const {
-    Velocity self = *this; shp::Azimuth azimuth = (self.getDirection() * orientation);
+Acceleration Acceleration::operator*(const shp::Intrinsic& orientation) const {
+    Velocity self = *this; shp::Intrinsic azimuth = (self.getDirection() * orientation);
     return Acceleration("*", self.getDisplacement().getMagnitude(), self.getScaling(), self.getUnit(),
 		azimuth, self.getTemporal(), this->change);
 }
 
-Acceleration Acceleration::operator/(const shp::Azimuth& orientation) const {
-    Velocity self = *this; shp::Azimuth azimuth = (self.getDirection() / orientation);
+Acceleration Acceleration::operator/(const shp::Intrinsic& orientation) const {
+    Velocity self = *this; shp::Intrinsic azimuth = (self.getDirection() / orientation);
     return Acceleration("/", self.getDisplacement().getMagnitude(), self.getScaling(), self.getUnit(),
 		azimuth, self.getTemporal(), this->change);
 }
 
-Acceleration Acceleration::operator%(const shp::Azimuth& orientation) const {
-    Velocity self = *this; shp::Azimuth azimuth = (self.getDirection() % orientation);
+Acceleration Acceleration::operator%(const shp::Intrinsic& orientation) const {
+    Velocity self = *this; shp::Intrinsic azimuth = (self.getDirection() % orientation);
     return Acceleration("%", self.getDisplacement().getMagnitude(), self.getScaling(), self.getUnit(),
 		azimuth, self.getTemporal(), this->change);
 }
@@ -679,7 +679,7 @@ shp::Distance Acceleration::getDisplacement() const {
 	return Velocity::getDisplacement();
 }
 
-void Acceleration::setDisplacement(const shp::Quantity& distance, const shp::Azimuth& direction) {
+void Acceleration::setDisplacement(const shp::Quantity& distance, const shp::Intrinsic& direction) {
     Velocity::setDisplacement(distance, direction);
 }
 
@@ -700,7 +700,7 @@ void Acceleration::setDisplacement(const float distance, const short int scale) 
 }
 
 void Acceleration::setDisplacement(const float distance, const short int scale,
-        const shp::Azimuth& direction) {
+        const shp::Intrinsic& direction) {
 	Velocity::setMagnitude(distance, scale);
     Velocity::setDirection(direction);
 }
@@ -712,7 +712,7 @@ void Acceleration::setDisplacement(const float distance, const short int scale,
 }
 
 void Acceleration::setDisplacement(const float distance, const short int scale,
-        const shp::Azimuth& direction, const shp::Polar& curvature) {
+        const shp::Intrinsic& direction, const shp::Polar& curvature) {
 	Velocity::setMagnitude(distance, scale);
     Velocity::setDirection(direction);
     Velocity::setFieldCurvature(curvature);
@@ -723,7 +723,7 @@ void Acceleration::setDisplacement(const float distance, const short int scale, 
 }
 
 void Acceleration::setDisplacement(const float distance, const short int scale, const std::string unit,
-        const shp::Azimuth& direction) {
+        const shp::Intrinsic& direction) {
 	Velocity::setMagnitude(distance, scale, unit);
     Velocity::setDirection(direction);
 }
@@ -735,7 +735,7 @@ void Acceleration::setDisplacement(const float distance, const short int scale, 
 }
 
 void Acceleration::setDisplacement(const float distance, const short int scale, const std::string unit,
-        const shp::Azimuth& direction, const shp::Polar& curvature) {
+        const shp::Intrinsic& direction, const shp::Polar& curvature) {
 	Velocity::setMagnitude(distance, scale, unit);
     Velocity::setDirection(direction);
     Velocity::setFieldCurvature(curvature);
@@ -746,7 +746,7 @@ void Acceleration::setDisplacement(const float distance, const short int scale, 
 }
 
 void Acceleration::setDisplacement(const float distance, const short int scale, const shp::Unit& unit,
-        const shp::Azimuth& direction) {
+        const shp::Intrinsic& direction) {
 	Velocity::setMagnitude(distance, scale, unit);
     Velocity::setDirection(direction);
 }
@@ -758,7 +758,7 @@ void Acceleration::setDisplacement(const float distance, const short int scale, 
 }
 
 void Acceleration::setDisplacement(const float distance, const short int scale, const shp::Unit& unit,
-        const shp::Azimuth& direction, const shp::Polar& curvature) {
+        const shp::Intrinsic& direction, const shp::Polar& curvature) {
 	Velocity::setMagnitude(distance, scale, unit);
     Velocity::setDirection(direction);
     Velocity::setFieldCurvature(curvature);
@@ -772,7 +772,7 @@ void Acceleration::setScaling(const short int factor) {
     Velocity::setScaling(factor);
 }
 
-shp::Azimuth Acceleration::getDirection() const {
+shp::Intrinsic Acceleration::getDirection() const {
 	return Velocity::getDirection();
 }
 
@@ -780,7 +780,7 @@ void Acceleration::setDirection(const float direction) {
     Velocity::setDirection(direction);
 }
 
-void Acceleration::setDirection(const shp::Azimuth& direction) {
+void Acceleration::setDirection(const shp::Intrinsic& direction) {
     Velocity::setDirection(direction);
 }
 

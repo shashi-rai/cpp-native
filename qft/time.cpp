@@ -169,76 +169,76 @@ Time::Time(const shp::Signal& modulation, const float duration, const short int 
 
 }
 
-Time::Time(const shp::Azimuth& dilation)
+Time::Time(const shp::Intrinsic& dilation)
         : shp::Temporal(dilation), name() {
 
 }
 
-Time::Time(const shp::Azimuth& dilation, const std::string unit)
+Time::Time(const shp::Intrinsic& dilation, const std::string unit)
         : shp::Temporal(dilation, unit), name() {
 
 }
 
-Time::Time(const shp::Azimuth& dilation, const shp::Unit& unit)
+Time::Time(const shp::Intrinsic& dilation, const shp::Unit& unit)
         : shp::Temporal(dilation, unit), name() {
 
 }
 
-Time::Time(const shp::Azimuth& dilation, const float duration)
+Time::Time(const shp::Intrinsic& dilation, const float duration)
         : shp::Temporal(dilation, duration), name() {
 
 }
 
-Time::Time(const shp::Azimuth& dilation, const float duration, const std::string unit)
+Time::Time(const shp::Intrinsic& dilation, const float duration, const std::string unit)
         : shp::Temporal(dilation, duration, unit), name() {
 
 }
 
-Time::Time(const shp::Azimuth& dilation, const float duration, const shp::Unit& unit)
+Time::Time(const shp::Intrinsic& dilation, const float duration, const shp::Unit& unit)
         : shp::Temporal(dilation, duration, unit), name() {
 
 }
 
-Time::Time(const shp::Azimuth& dilation, const float duration, const short int scaling)
+Time::Time(const shp::Intrinsic& dilation, const float duration, const short int scaling)
         : shp::Temporal(dilation, duration, scaling), name() {
 
 }
 
-Time::Time(const shp::Azimuth& dilation, const float duration, const short int scaling,
+Time::Time(const shp::Intrinsic& dilation, const float duration, const short int scaling,
 		const std::string unit)
         : shp::Temporal(dilation, duration, scaling, unit), name() {
 
 }
 
-Time::Time(const shp::Azimuth& dilation, const float duration, const short int scaling,
+Time::Time(const shp::Intrinsic& dilation, const float duration, const short int scaling,
 		const shp::Unit& unit)
         : shp::Temporal(dilation, duration, scaling, unit), name() {
 
 }
 
-Time::Time(const shp::Signal& modulation, const shp::Azimuth& dilation)
+Time::Time(const shp::Signal& modulation, const shp::Intrinsic& dilation)
         : shp::Temporal(modulation, dilation, modulation.getUnit()), name() {
 
 }
 
-Time::Time(const shp::Signal& modulation, const shp::Azimuth& dilation, const float duration)
+Time::Time(const shp::Signal& modulation, const shp::Intrinsic& dilation, const float duration)
         : shp::Temporal(modulation, dilation, duration, modulation.getUnit()), name() {
 
 }
 
-Time::Time(const shp::Signal& modulation, const shp::Azimuth& dilation, const float duration,
+Time::Time(const shp::Signal& modulation, const shp::Intrinsic& dilation, const float duration,
         const short int scaling)
         : shp::Temporal(modulation, dilation, duration, scaling), name() {
 
 }
 
-Time::Time(const shp::Signal& modulation, const shp::Azimuth& dilation, const float duration,
+Time::Time(const shp::Signal& modulation, const shp::Intrinsic& dilation, const float duration,
         const short int scaling, const std::string unit)
         : shp::Temporal(modulation, dilation, duration, scaling, unit), name() {
 
 }
 
-Time::Time(const shp::Signal& modulation, const shp::Azimuth& dilation, const float duration,
+Time::Time(const shp::Signal& modulation, const shp::Intrinsic& dilation, const float duration,
         const short int scaling, const shp::Unit& unit)
         : shp::Temporal(modulation, dilation, duration, scaling, unit), name() {
 
@@ -303,51 +303,51 @@ Time::Time(const std::string name, const float modulation, const float duration,
 
 }
 
-Time::Time(const std::string name, const shp::Azimuth& dilation)
+Time::Time(const std::string name, const shp::Intrinsic& dilation)
         : shp::Temporal(dilation), name(name) {
 
 }
 
-Time::Time(const std::string name, const shp::Azimuth& dilation, const std::string unit)
+Time::Time(const std::string name, const shp::Intrinsic& dilation, const std::string unit)
         : shp::Temporal(dilation, unit), name(name) {
 
 }
 
-Time::Time(const std::string name, const shp::Azimuth& dilation, const shp::Unit& unit)
+Time::Time(const std::string name, const shp::Intrinsic& dilation, const shp::Unit& unit)
         : shp::Temporal(dilation, unit), name(name) {
 
 }
 
-Time::Time(const std::string name, const shp::Azimuth& dilation, const float duration)
+Time::Time(const std::string name, const shp::Intrinsic& dilation, const float duration)
         : shp::Temporal(dilation, duration), name(name) {
 
 }
 
-Time::Time(const std::string name, const shp::Azimuth& dilation, const float duration,
+Time::Time(const std::string name, const shp::Intrinsic& dilation, const float duration,
 		const std::string unit)
         : shp::Temporal(dilation, duration, unit), name(name) {
 
 }
 
-Time::Time(const std::string name, const shp::Azimuth& dilation, const float duration,
+Time::Time(const std::string name, const shp::Intrinsic& dilation, const float duration,
 		const shp::Unit& unit)
         : shp::Temporal(dilation, duration, unit), name(name) {
 
 }
 
-Time::Time(const std::string name, const shp::Azimuth& dilation,
+Time::Time(const std::string name, const shp::Intrinsic& dilation,
         const float duration, const short int scaling)
         : shp::Temporal(dilation, duration, scaling), name(name) {
 
 }
 
-Time::Time(const std::string name, const shp::Azimuth& dilation,
+Time::Time(const std::string name, const shp::Intrinsic& dilation,
         const float duration, const short int scaling, const std::string unit)
         : shp::Temporal(dilation, duration, scaling, unit), name(name) {
 
 }
 
-Time::Time(const std::string name, const shp::Azimuth& dilation,
+Time::Time(const std::string name, const shp::Intrinsic& dilation,
         const float duration, const short int scaling, const shp::Unit& unit)
         : shp::Temporal(dilation, duration, scaling, unit), name(name) {
 
@@ -397,30 +397,30 @@ Time::Time(const std::string name, const shp::Signal& modulation,
 
 }
 
-Time::Time(const std::string name, const shp::Signal& modulation, const shp::Azimuth& dilation)
+Time::Time(const std::string name, const shp::Signal& modulation, const shp::Intrinsic& dilation)
         : shp::Temporal(modulation, dilation), name(name) {
 
 }
 
-Time::Time(const std::string name, const shp::Signal& modulation, const shp::Azimuth& dilation,
+Time::Time(const std::string name, const shp::Signal& modulation, const shp::Intrinsic& dilation,
         const float duration)
         : shp::Temporal(modulation, dilation, duration), name(name) {
 
 }
 
-Time::Time(const std::string name, const shp::Signal& modulation, const shp::Azimuth& dilation,
+Time::Time(const std::string name, const shp::Signal& modulation, const shp::Intrinsic& dilation,
         const float duration, const short int scaling)
         : shp::Temporal(modulation, dilation, duration, scaling), name(name) {
 
 }
 
-Time::Time(const std::string name, const shp::Signal& modulation, const shp::Azimuth& dilation,
+Time::Time(const std::string name, const shp::Signal& modulation, const shp::Intrinsic& dilation,
         const float duration, const short int scaling, const std::string unit)
         : shp::Temporal(modulation, dilation, duration, scaling, unit), name(name) {
 
 }
 
-Time::Time(const std::string name, const shp::Signal& modulation, const shp::Azimuth& dilation,
+Time::Time(const std::string name, const shp::Signal& modulation, const shp::Intrinsic& dilation,
         const float duration, const short int scaling, const shp::Unit& unit)
         : shp::Temporal(modulation, dilation, duration, scaling, unit), name(name) {
 
@@ -524,7 +524,7 @@ float Time::getPeriodDrift() const {
     return shp::Temporal::getIntensityDrift();
 }
 
-void Time::setPeriodDrift(const shp::Azimuth& direction) {
+void Time::setPeriodDrift(const shp::Intrinsic& direction) {
     shp::Temporal::setIntensityDrift(direction.toRadians());
 }
 
@@ -532,27 +532,27 @@ float Time::getDopplerShift() const {
     return shp::Temporal::getSpatialDrift();
 }
 
-void Time::setDopplerShift(const shp::Azimuth& curvature) {
+void Time::setDopplerShift(const shp::Intrinsic& curvature) {
 	shp::Temporal::setSpatialDrift(curvature);
 }
 
 void Time::setDopplerShift(const float motion,
-        const shp::Azimuth& curvature) {
+        const shp::Intrinsic& curvature) {
 	shp::Temporal::setSpatialDrift(motion, curvature);
 }
 
 void Time::setDopplerShift(const float motion, const short int scale,
-        const shp::Azimuth& curvature) {
+        const shp::Intrinsic& curvature) {
 	shp::Temporal::setSpatialDrift(motion, scale, curvature);
 }
 
 void Time::setDopplerShift(const float motion, const short int scale, const std::string unit,
-        const shp::Azimuth& curvature) {
+        const shp::Intrinsic& curvature) {
 	shp::Temporal::setSpatialDrift(motion, scale, unit, curvature);
 }
 
 void Time::setDopplerShift(const float motion, const short int scale, const shp::Unit& unit,
-        const shp::Azimuth& curvature) {
+        const shp::Intrinsic& curvature) {
 	shp::Temporal::setSpatialDrift(motion, scale, unit, curvature);
 }
 

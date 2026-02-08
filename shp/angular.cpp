@@ -135,6 +135,12 @@ Angular::Angular(const float radius, const short int scaling, const Unit& unit,
 
 }
 
+Angular::Angular(const float radius, const short int scaling, const std::string unit,
+        const Polar& polar)
+		: Distance(radius, scaling, unit), polar(polar), azimuth(DEFAULT_AZIMUTHAL) {
+
+}
+
 Angular::Angular(const float radius, const short int scaling, const Unit& unit,
         const Polar& polar)
 		: Distance(radius, scaling, unit), polar(polar), azimuth(DEFAULT_AZIMUTHAL) {
@@ -792,7 +798,7 @@ void Angular::clear() {
 std::string Angular::print() const {
     std::stringstream result;
     result << "{";
-    result << Distance::print() << ",";
+    result << Distance::print() << "↺";
     result << polar.print() << ",";
     result << azimuth.print() << "}";
 	return result.str();
@@ -801,7 +807,7 @@ std::string Angular::print() const {
 std::string Angular::printRadians() const {
     std::stringstream result;
     result << "{";
-    result << Distance::printRadians() << ",";
+    result << Distance::printRadians() << "↺";
     result << polar.printRadians() << ",";
     result << azimuth.printRadians() << "}";
 	return result.str();
@@ -810,7 +816,7 @@ std::string Angular::printRadians() const {
 std::string Angular::printEuler() const {
     std::stringstream result;
     result << "{";
-    result << Distance::print() << ",";
+    result << Distance::print() << "↺";
     result << polar.printEuler() << ",";
     result << azimuth.printEuler() << "}";
 	return result.str();

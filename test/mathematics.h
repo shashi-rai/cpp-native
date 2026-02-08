@@ -22,6 +22,7 @@
 #define TEST_MATHEMATICS_H
 
 #include "../inc/testing.h"
+#include "../shp/angular.h"
 #include "../shp/area.h"
 #include "../shp/volume.h"
 

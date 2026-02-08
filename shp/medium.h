@@ -110,6 +110,8 @@ public:
     Medium(const std::string name, const std::string unit, const shp::Signal& transform);
     Medium(const std::string name, const Unit& unit, const shp::Signal& transform);
     Medium(const std::string name, const float parameter, const shp::Signal& transform);
+    Medium(const std::string name, const float parameter, const std::string unit, const shp::Signal& transform);
+    Medium(const std::string name, const float parameter, const Unit& unit, const shp::Signal& transform);
     Medium(const std::string name, const float parameter, const short int scaling);
     Medium(const std::string name, const float parameter, const short int scaling,
         const shp::Signal& transform);

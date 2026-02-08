@@ -104,15 +104,15 @@ public:
     shp::Signal getWavelength() const;
     shp::Distance getMassFieldRadius() const;
     void setMassFieldRadius(const shp::Distance& radius);
-    void setMassFluxChange(const shp::Azimuth& shift);
+    void setMassFluxChange(const shp::Intrinsic& shift);
     void setMassFlowChange(const shp::Signal& motion);
     shp::Distance getChargeFieldRadius() const;
     void setChargeFieldRadius(const shp::Distance& radius);
-    void setChargeFluxChange(const shp::Azimuth& shift);
+    void setChargeFluxChange(const shp::Intrinsic& shift);
     void setChargeFlowChange(const shp::Signal& motion);
     shp::Distance getThermalFieldRadius() const;
     void setThermalFieldRadius(const shp::Distance& radius);
-    void setThermalFluxChange(const shp::Azimuth& shift);
+    void setThermalFluxChange(const shp::Intrinsic& shift);
     void setThermalFlowChange(const shp::Signal& motion);
     std::shared_ptr<Field> getMassField() const;
     void setMassField(const std::shared_ptr<Field> field);

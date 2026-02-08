@@ -79,7 +79,7 @@ Energy::Energy(const std::string name, const std::shared_ptr<Field> mfield, cons
 }
 
 Energy::Energy(const float gradient)
-        : Phase(shp::Azimuth(gradient)),
+        : Phase(shp::Intrinsic(gradient)),
 		wavelength(shp::Quantity::DEFAULT_VALUE, PLANCK_SCALE,
             shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
 		mass(shp::Quantity::DEFAULT_VALUE),
@@ -852,7 +852,7 @@ void Energy::setMassFieldChange(const shp::Distance& radius) {
     mass.setFieldRadius(radius);
 }
 
-void Energy::setMassFluxChange(const shp::Azimuth& shift) {
+void Energy::setMassFluxChange(const shp::Intrinsic& shift) {
     mass.setIntensityDrift(shift);
 }
 
@@ -868,7 +868,7 @@ void Energy::setChargeFieldChange(const shp::Distance& radius) {
     charge.setFieldRadius(radius);
 }
 
-void Energy::setChargeFluxChange(const shp::Azimuth& shift) {
+void Energy::setChargeFluxChange(const shp::Intrinsic& shift) {
     charge.setIntensityDrift(shift);
 }
 
@@ -884,7 +884,7 @@ void Energy::setThermalFieldChange(const shp::Distance& radius) {
     temperature.setFieldRadius(radius);
 }
 
-void Energy::setThermalFluxChange(const shp::Azimuth& shift) {
+void Energy::setThermalFluxChange(const shp::Intrinsic& shift) {
     temperature.setIntensityDrift(shift);
 }
 
@@ -971,7 +971,7 @@ shp::Signal Energy::getFrequency() const {
  */
 shp::Distance Energy::getDivergence(const float modulation) const {
     shp::Signal lambda(wavelength.getMagnitude(), wavelength.getScaling(), wavelength.getUnit());
-    float coefficient = (lambda.getMagnitude() * Phase::getAzimuthCosComponent(modulation).getMagnitude());
+    float coefficient = (lambda.getMagnitude() * Phase::getIntrinsicCosComponent(modulation).getMagnitude());
     shp::Signal delta(lambda.getOrientation(), (getPhysicalLimit().getMagnitude() / coefficient),
             (lambda.getScaling() - Energy::PLANCK_SCALE), shp::Unit::getBaseSymbol(shp::Unit::LENGTH));
     delta.adjustScaling();

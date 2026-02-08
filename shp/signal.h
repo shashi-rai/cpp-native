@@ -37,10 +37,8 @@ public:
     Signal(const float quantity, const std::string unit);
     Signal(const float quantity, const shp::Unit& unit);
     Signal(const float quantity, const short int scaling);
-    Signal(const float quantity, const short int scaling,
-        const std::string unit);
-    Signal(const float quantity, const short int scaling,
-        const shp::Unit& unit);
+    Signal(const float quantity, const short int scaling, const std::string unit);
+    Signal(const float quantity, const short int scaling, const shp::Unit& unit);
     Signal(const Quantity& quantity);
     Signal(const Intrinsic& orientation);
     Signal(const Intrinsic& orientation, const Quantity& quantity);

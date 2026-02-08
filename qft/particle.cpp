@@ -256,7 +256,7 @@ void Particle::setMassFieldRadius(const shp::Distance& radius) {
     energy.setMassFieldChange(radius);
 }
 
-void Particle::setMassFluxChange(const shp::Azimuth& shift) {
+void Particle::setMassFluxChange(const shp::Intrinsic& shift) {
     energy.setMassFluxChange(shift);
 }
 
@@ -272,7 +272,7 @@ void Particle::setChargeFieldRadius(const shp::Distance& radius) {
     energy.setChargeFieldChange(radius);
 }
 
-void Particle::setChargeFluxChange(const shp::Azimuth& shift) {
+void Particle::setChargeFluxChange(const shp::Intrinsic& shift) {
     energy.setChargeFluxChange(shift);
 }
 
@@ -288,7 +288,7 @@ void Particle::setThermalFieldRadius(const shp::Distance& radius) {
     energy.setThermalFieldChange(radius);
 }
 
-void Particle::setThermalFluxChange(const shp::Azimuth& shift) {
+void Particle::setThermalFluxChange(const shp::Intrinsic& shift) {
     energy.setThermalFluxChange(shift);
 }
 

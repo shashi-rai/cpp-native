@@ -69,6 +69,11 @@ int Mathematics::run(const int argc, char* argv[]) {
 
 int Mathematics::run(const cfg::CommandLine& object) {
     test::System::printStartedMessage();
+    quantity_concept();
+    direction_concept();
+    angular_concept();
+    signal_concept();
+    distance_concept();
     area_concept();
     volume_concept();
     test::System::printStoppedMessage();
@@ -76,23 +81,102 @@ int Mathematics::run(const cfg::CommandLine& object) {
 }
 
 void Mathematics::quantity_concept() {
-
+    std::string unit = "kg"; short int scale = 0;
+    shp::Quantity q1(3.0f, scale, unit);
+    std::cout << q1.print() << std::endl;
+    shp::Quantity q2(4.0f, scale, unit);
+    std::cout << q2.print() << std::endl;
+    std::cout << (q1+q2).print() << std::endl;
+    std::cout << (q1-q2).print() << std::endl;
+    std::cout << (q1*q2).print() << std::endl;
+    std::cout << (q1/q2).print() << std::endl;
+    std::cout << (q1%q2).print() << std::endl;
+    std::cout << std::endl;
 }
 
 void Mathematics::direction_concept() {
-
+    for (int i=0; i < 5; i++) {
+        shp::Direction d(shp::Direction::DEGREE_001 * i);
+        std::cout << d.print() << " " << d.printRadians() << " " << d.printEuler() << std::endl;
+    }
+    std::cout << std::endl;
 }
 
 void Mathematics::angular_concept() {
-
+    std::string unit = "m"; short int scale = 0;
+    shp::Angular a1(5.0f, scale, unit,
+        shp::Azimuth(shp::Direction::DEGREE_030),
+        shp::Polar(shp::Direction::DEGREE_030));
+    shp::Angular a2(3.0f, scale, unit,
+        shp::Azimuth(shp::Direction::DEGREE_045),
+        shp::Polar(shp::Direction::DEGREE_045));
+    std::cout << "A1: " << a1.print() << std::endl << "A2: " << a2.print() << std::endl
+        << "\ta1 + a2: " << (a1+a2).print() << std::endl
+        << "\ta1 - a2: " << (a1-a2).print() << std::endl
+        << "\ta1 * a2: " << (a1*a2).print() << std::endl
+        << "\ta1 / a2: " << (a1/a2).print() << std::endl
+        << "\ta1 % a2: " << (a1%a2).print() << std::endl
+        << std::endl;
+    for (int i=0; i < 4; i++) {
+        a1.setStressFactor(shp::Direction::DEGREE_001 * i);
+        a1.setDopplerShift(shp::Direction::DEGREE_005 * i);
+        shp::Distance position(i, 1);
+        std::cout << "A1: " << a1.print() << std::endl
+            << "Stress: " << a1.getStressFactor().print()
+            << " Doppler: " << a1.getDopplerShift().print()
+            << " X1: " << a1.getLinearX(position).print()
+            << " Y1: " << a1.getLinearY(position).print()
+            << " Z1: " << a1.getLinearZ(position).print()
+            << std::endl << std::endl;;
+    }
+    std::cout << std::endl;
 }
 
 void Mathematics::signal_concept() {
-
+    std::string unit = "m"; short int scale = 0;
+    shp::Signal q1(shp::Intrinsic(shp::Direction::DEGREE_001 * 30), 5.0f, scale, unit);
+    for (int i=0; i < 6; i++) {
+        shp::Signal q2(shp::Intrinsic(shp::Direction::DEGREE_030 * i), 3.0f, scale, unit);
+        std::cout << "Q1: " << q1.print() << " Q2: " << q2.print() << " Amp: " << q2.getAmplitude()
+            << std::endl
+            << "\tDot: " << q2.getDotProduct(q1).print()
+            << "\tCross: " << q2.getCrossProduct(q1).print()
+            << std::endl
+            << "\tq1 + q2: " << (q1+q2).print() << std::endl
+            << "\tq1 - q2: " << (q1-q2).print() << std::endl
+            << "\tq1 * q2: " << (q1*q2).print() << std::endl
+            << "\tq1 / q2: " << (q1/q2).print() << std::endl
+            << "\tq1 % q2: " << (q1%q2).print() << std::endl
+            << std::endl;
+    }
+    std::cout << std::endl;
 }
 
 void Mathematics::distance_concept() {
-
+    std::string unit = "m"; short int scale = 0;
+    shp::Distance d1(5.0f, scale, unit,
+        shp::Azimuth(shp::Direction::DEGREE_030),
+        shp::Polar(shp::Direction::DEGREE_030));
+    shp::Distance d2(3.0f, scale, unit,
+        shp::Azimuth(shp::Direction::DEGREE_045),
+        shp::Polar(shp::Direction::DEGREE_045));
+    std::cout << "D1: " << d1.print() << std::endl << "D2: " << d2.print() << std::endl
+        << "\td1 + d2: " << (d1+d2).print() << std::endl
+        << "\td1 - d2: " << (d1-d2).print() << std::endl
+        << "\td1 * d2: " << (d1*d2).print() << std::endl
+        << "\td1 / d2: " << (d1/d2).print() << std::endl
+        << "\td1 % d2: " << (d1%d2).print() << std::endl
+        << std::endl;
+    for (int i=0; i < 4; i++) {
+        shp::Intrinsic elevation(shp::Direction::DEGREE_001 * 0);
+        shp::Distance position(i, 1); d1.setChangeIntrinsic(1.0f);
+        std::cout << "Ampl: " << d1.getAmplitude() << " D: " << d1.print() << std::endl
+            << "X1: " << d1.getRadialX(elevation).print()
+            << " Y1: " << d1.getRadialY(elevation).print()
+            << " Z1: " << d1.getRadialZ(elevation).print()
+            << std::endl << std::endl;
+    }
+    std::cout << std::endl;
 }
 
 void Mathematics::area_concept() {

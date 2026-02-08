@@ -56,12 +56,12 @@ Velocity::Velocity(const shp::Unit& unit,
 	setTemporal(domain);
 }
 
-Velocity::Velocity(const shp::Azimuth& direction)
+Velocity::Velocity(const shp::Intrinsic& direction)
         : shp::Distance(UNIT, direction), name() {
 	setTemporal(nullptr);
 }
 
-Velocity::Velocity(const shp::Azimuth& direction,
+Velocity::Velocity(const shp::Intrinsic& direction,
 		const std::shared_ptr<Time> domain)
         : shp::Distance(UNIT, direction), name() {
 	setTemporal(domain);
@@ -116,12 +116,12 @@ Velocity::Velocity(const float displacement, const float direction,
 	setTemporal(domain);
 }
 
-Velocity::Velocity(const float displacement, const shp::Azimuth& direction)
+Velocity::Velocity(const float displacement, const shp::Intrinsic& direction)
         : shp::Distance(displacement, UNIT, direction), name() {
 	setTemporal(nullptr);
 }
 
-Velocity::Velocity(const float displacement, const shp::Azimuth& direction,
+Velocity::Velocity(const float displacement, const shp::Intrinsic& direction,
 		const std::shared_ptr<Time> domain)
         : shp::Distance(displacement, UNIT, direction), name() {
 	setTemporal(domain);
@@ -138,23 +138,23 @@ Velocity::Velocity(const float displacement, const std::string unit, const float
 	setTemporal(domain);
 }
 
-Velocity::Velocity(const float displacement, const std::string unit, const shp::Azimuth& direction)
+Velocity::Velocity(const float displacement, const std::string unit, const shp::Intrinsic& direction)
         : shp::Distance(displacement, unit, direction), name() {
 	setTemporal(nullptr);
 }
 
-Velocity::Velocity(const float displacement, const std::string unit, const shp::Azimuth& direction,
+Velocity::Velocity(const float displacement, const std::string unit, const shp::Intrinsic& direction,
 		const std::shared_ptr<Time> domain)
         : shp::Distance(displacement, unit, direction), name() {
 	setTemporal(domain);
 }
 
-Velocity::Velocity(const float displacement, const shp::Unit& unit, const shp::Azimuth& direction)
+Velocity::Velocity(const float displacement, const shp::Unit& unit, const shp::Intrinsic& direction)
         : shp::Distance(displacement, unit, direction), name() {
 	setTemporal(nullptr);
 }
 
-Velocity::Velocity(const float displacement, const shp::Unit& unit, const shp::Azimuth& direction,
+Velocity::Velocity(const float displacement, const shp::Unit& unit, const shp::Intrinsic& direction,
 		const std::shared_ptr<Time> domain)
         : shp::Distance(displacement, unit, direction), name() {
 	setTemporal(domain);
@@ -193,12 +193,12 @@ Velocity::Velocity(const float displacement, const short int scaling, const floa
 	setTemporal(domain);
 }
 
-Velocity::Velocity(const float displacement, const short int scaling, const shp::Azimuth& direction)
+Velocity::Velocity(const float displacement, const short int scaling, const shp::Intrinsic& direction)
         : shp::Distance(displacement, scaling, UNIT, direction), name() {
 	setTemporal(nullptr);
 }
 
-Velocity::Velocity(const float displacement, const short int scaling, const shp::Azimuth& direction,
+Velocity::Velocity(const float displacement, const short int scaling, const shp::Intrinsic& direction,
 		const std::shared_ptr<Time> domain)
         : shp::Distance(displacement, scaling, UNIT, direction), name() {
 	setTemporal(domain);
@@ -217,13 +217,13 @@ Velocity::Velocity(const float displacement, const short int scaling, const std:
 }
 
 Velocity::Velocity(const float displacement, const short int scaling, const std::string unit,
-        const shp::Azimuth& direction)
+        const shp::Intrinsic& direction)
         : shp::Distance(displacement, scaling, unit, direction), name() {
 	setTemporal(nullptr);
 }
 
 Velocity::Velocity(const float displacement, const short int scaling, const std::string unit,
-        const shp::Azimuth& direction, const std::shared_ptr<Time> domain)
+        const shp::Intrinsic& direction, const std::shared_ptr<Time> domain)
         : shp::Distance(displacement, scaling, unit, direction), name() {
 	setTemporal(domain);
 }
@@ -250,12 +250,12 @@ Velocity::Velocity(const std::string name, const shp::Unit& unit,
 	setTemporal(domain);
 }
 
-Velocity::Velocity(const std::string name, const shp::Azimuth& direction)
+Velocity::Velocity(const std::string name, const shp::Intrinsic& direction)
         : shp::Distance(UNIT, direction), name(name) {
 	setTemporal(nullptr);
 }
 
-Velocity::Velocity(const std::string name, const shp::Azimuth& direction,
+Velocity::Velocity(const std::string name, const shp::Intrinsic& direction,
 		const std::shared_ptr<Time> domain)
         : shp::Distance(UNIT, direction), name(name) {
 	setTemporal(domain);
@@ -322,12 +322,12 @@ Velocity::Velocity(const std::string name, const float displacement, const float
 	setTemporal(domain);
 }
 
-Velocity::Velocity(const std::string name, const float displacement, const shp::Azimuth& direction)
+Velocity::Velocity(const std::string name, const float displacement, const shp::Intrinsic& direction)
         : shp::Distance(displacement, UNIT, direction), name(name) {
 	setTemporal(nullptr);
 }
 
-Velocity::Velocity(const std::string name, const float displacement, const shp::Azimuth& direction,
+Velocity::Velocity(const std::string name, const float displacement, const shp::Intrinsic& direction,
 		const std::shared_ptr<Time> domain)
         : shp::Distance(displacement, UNIT, direction), name(name) {
 	setTemporal(domain);
@@ -358,13 +358,13 @@ Velocity::Velocity(const std::string name, const float displacement, const shp::
 }
 
 Velocity::Velocity(const std::string name, const float displacement, const shp::Unit& unit,
-        const shp::Azimuth& direction)
+        const shp::Intrinsic& direction)
         : shp::Distance(displacement, unit, direction), name(name) {
 	setTemporal(nullptr);
 }
 
 Velocity::Velocity(const std::string name, const float displacement, const shp::Unit& unit,
-        const shp::Azimuth& direction, const std::shared_ptr<Time> domain)
+        const shp::Intrinsic& direction, const std::shared_ptr<Time> domain)
         : shp::Distance(displacement, unit, direction), name(name) {
 	setTemporal(domain);
 }
@@ -382,13 +382,13 @@ Velocity::Velocity(const std::string name, const float displacement, const short
 }
 
 Velocity::Velocity(const std::string name, const float displacement, const short int scaling,
-        const shp::Azimuth& direction)
+        const shp::Intrinsic& direction)
         : shp::Distance(displacement, scaling, UNIT, direction), name(name) {
 	setTemporal(nullptr);
 }
 
 Velocity::Velocity(const std::string name, const float displacement, const short int scaling,
-        const shp::Azimuth& direction, const std::shared_ptr<Time> domain)
+        const shp::Intrinsic& direction, const std::shared_ptr<Time> domain)
         : shp::Distance(displacement, scaling, UNIT, direction), name(name) {
 	setTemporal(domain);
 }
@@ -418,13 +418,13 @@ Velocity::Velocity(const std::string name, const float displacement, const short
 }
 
 Velocity::Velocity(const std::string name, const float displacement, const short int scaling,
-        const shp::Unit& unit, const shp::Azimuth& direction)
+        const shp::Unit& unit, const shp::Intrinsic& direction)
         : shp::Distance(displacement, scaling, unit, direction), name(name) {
 	setTemporal(nullptr);
 }
 
 Velocity::Velocity(const std::string name, const float displacement, const short int scaling,
-        const shp::Unit& unit, const shp::Azimuth& direction, const std::shared_ptr<Time> domain)
+        const shp::Unit& unit, const shp::Intrinsic& direction, const std::shared_ptr<Time> domain)
         : shp::Distance(displacement, scaling, unit, direction), name(name) {
 	setTemporal(domain);
 }
@@ -467,190 +467,190 @@ bool Velocity::operator>=(const Velocity& peer) const {
 Velocity Velocity::operator+(const Velocity& peer) const {
     shp::Distance self = *this, other = peer, velocity = (self + other);
     return Velocity("+", velocity.getMagnitude(), velocity.getScaling(), self.getUnit(),
-		velocity.getAzimuth(), this->temporal);
+		velocity.getIntrinsic(), this->temporal);
 }
 
 Velocity Velocity::operator-(const Velocity& peer) const {
     shp::Distance self = *this, other = peer, velocity = (self - other);
     return Velocity("-", velocity.getMagnitude(), velocity.getScaling(), self.getUnit(),
-		velocity.getAzimuth(), this->temporal);
+		velocity.getIntrinsic(), this->temporal);
 }
 
 Velocity Velocity::operator*(const Velocity& peer) const {
     shp::Distance self = *this, other = peer, velocity = (self * other);
     return Velocity("*", velocity.getMagnitude(), velocity.getScaling(), self.getUnit(),
-		velocity.getAzimuth(), this->temporal);
+		velocity.getIntrinsic(), this->temporal);
 }
 
 Velocity Velocity::operator/(const Velocity& peer) const {
     shp::Distance self = *this, other = peer, velocity = (self / other);
     return Velocity("/", velocity.getMagnitude(), velocity.getScaling(), self.getUnit(),
-		velocity.getAzimuth(), this->temporal);
+		velocity.getIntrinsic(), this->temporal);
 }
 
 Velocity Velocity::operator%(const Velocity& peer) const {
     shp::Distance self = *this, other = peer, velocity = (self % other);
     return Velocity("%", velocity.getMagnitude(), velocity.getScaling(), self.getUnit(),
-		velocity.getAzimuth(), this->temporal);
+		velocity.getIntrinsic(), this->temporal);
 }
 
 Velocity Velocity::operator+(const float distance) const {
     Velocity self = *this; shp::Distance displacement = (self + distance);
     return Velocity("+", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
-		displacement.getAzimuth(), self.temporal);
+		displacement.getIntrinsic(), self.temporal);
 }
 
 Velocity Velocity::operator-(const float distance) const {
     Velocity self = *this; shp::Distance displacement = (self - distance);
     return Velocity("-", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
-		displacement.getAzimuth(), self.temporal);
+		displacement.getIntrinsic(), self.temporal);
 }
 
 Velocity Velocity::operator*(const float distance) const {
     Velocity self = *this; shp::Distance displacement = (self * distance);
     return Velocity("*", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
-		displacement.getAzimuth(), self.temporal);
+		displacement.getIntrinsic(), self.temporal);
 }
 
 Velocity Velocity::operator/(const float distance) const {
     Velocity self = *this; shp::Distance displacement = (self / distance);
     return Velocity("/", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
-		displacement.getAzimuth(), self.temporal);
+		displacement.getIntrinsic(), self.temporal);
 }
 
 Velocity Velocity::operator%(const float distance) const {
     Velocity self = *this; shp::Distance displacement = (self % distance);
     return Velocity("%", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
-		displacement.getAzimuth(), self.temporal);
+		displacement.getIntrinsic(), self.temporal);
 }
 
 Velocity Velocity::operator+(const shp::Quantity& distance) const {
     Velocity self = *this; shp::Distance displacement = (self + distance);
     return Velocity("+", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
-		displacement.getAzimuth(), self.temporal);
+		displacement.getIntrinsic(), self.temporal);
 }
 
 Velocity Velocity::operator-(const shp::Quantity& distance) const {
     Velocity self = *this; shp::Distance displacement = (self - distance);
     return Velocity("-", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
-		displacement.getAzimuth(), self.temporal);
+		displacement.getIntrinsic(), self.temporal);
 }
 
 Velocity Velocity::operator*(const shp::Quantity& distance) const {
     Velocity self = *this; shp::Distance displacement = (self * distance);
     return Velocity("*", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
-		displacement.getAzimuth(), self.temporal);
+		displacement.getIntrinsic(), self.temporal);
 }
 
 Velocity Velocity::operator/(const shp::Quantity& distance) const {
     Velocity self = *this; shp::Distance displacement = (self / distance);
     return Velocity("/", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
-		displacement.getAzimuth(), self.temporal);
+		displacement.getIntrinsic(), self.temporal);
 }
 
 Velocity Velocity::operator%(const shp::Quantity& distance) const {
     Velocity self = *this; shp::Distance displacement = (self % distance);
     return Velocity("%", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
-		displacement.getAzimuth(), self.temporal);
+		displacement.getIntrinsic(), self.temporal);
 }
 
 Velocity Velocity::operator+(const shp::Distance& distance) const {
     Velocity self = *this; shp::Distance displacement = (self + distance);
     return Velocity("+", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
-		displacement.getAzimuth(), self.temporal);
+		displacement.getIntrinsic(), self.temporal);
 }
 
 Velocity Velocity::operator-(const shp::Distance& distance) const {
     Velocity self = *this; shp::Distance displacement = (self - distance);
     return Velocity("-", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
-		displacement.getAzimuth(), self.temporal);
+		displacement.getIntrinsic(), self.temporal);
 }
 
 Velocity Velocity::operator*(const shp::Distance& distance) const {
     Velocity self = *this; shp::Distance displacement = (self * distance);
     return Velocity("*", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
-		displacement.getAzimuth(), self.temporal);
+		displacement.getIntrinsic(), self.temporal);
 }
 
 Velocity Velocity::operator/(const shp::Distance& distance) const {
     Velocity self = *this; shp::Distance displacement = (self / distance);
     return Velocity("/", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
-		displacement.getAzimuth(), self.temporal);
+		displacement.getIntrinsic(), self.temporal);
 }
 
 Velocity Velocity::operator%(const shp::Distance& distance) const {
     Velocity self = *this; shp::Distance displacement = (self % distance);
     return Velocity("%", displacement.getMagnitude(), displacement.getScaling(), displacement.getUnit(),
-		displacement.getAzimuth(), self.temporal);
+		displacement.getIntrinsic(), self.temporal);
 }
 
-Velocity Velocity::operator+(const shp::Azimuth& orientation) const {
-    Velocity self = *this; shp::Azimuth newAzimuth = (self.getAzimuth() + orientation);
+Velocity Velocity::operator+(const shp::Intrinsic& orientation) const {
+    Velocity self = *this; shp::Intrinsic newIntrinsic = (self.getIntrinsic() + orientation);
     return Velocity("+", self.getMagnitude(), self.getScaling(), self.getUnit(),
-		newAzimuth, self.temporal);
+		newIntrinsic, self.temporal);
 }
 
-Velocity Velocity::operator-(const shp::Azimuth& orientation) const {
-    Velocity self = *this; shp::Azimuth newAzimuth = (self.getAzimuth() - orientation);
+Velocity Velocity::operator-(const shp::Intrinsic& orientation) const {
+    Velocity self = *this; shp::Intrinsic newIntrinsic = (self.getIntrinsic() - orientation);
     return Velocity("-", self.getMagnitude(), self.getScaling(), self.getUnit(),
-		newAzimuth, self.temporal);
+		newIntrinsic, self.temporal);
 }
 
-Velocity Velocity::operator*(const shp::Azimuth& orientation) const {
-    Velocity self = *this; shp::Azimuth newAzimuth = (self.getAzimuth() * orientation);
+Velocity Velocity::operator*(const shp::Intrinsic& orientation) const {
+    Velocity self = *this; shp::Intrinsic newIntrinsic = (self.getIntrinsic() * orientation);
     return Velocity("*", self.getMagnitude(), self.getScaling(), self.getUnit(),
-		newAzimuth, self.temporal);
+		newIntrinsic, self.temporal);
 }
 
-Velocity Velocity::operator/(const shp::Azimuth& orientation) const {
-    Velocity self = *this; shp::Azimuth newAzimuth = (self.getAzimuth() / orientation);
+Velocity Velocity::operator/(const shp::Intrinsic& orientation) const {
+    Velocity self = *this; shp::Intrinsic newIntrinsic = (self.getIntrinsic() / orientation);
     return Velocity("/", self.getMagnitude(), self.getScaling(), self.getUnit(),
-		newAzimuth, self.temporal);
+		newIntrinsic, self.temporal);
 }
 
-Velocity Velocity::operator%(const shp::Azimuth& orientation) const {
-    Velocity self = *this; shp::Azimuth newAzimuth = (self.getAzimuth() % orientation);
+Velocity Velocity::operator%(const shp::Intrinsic& orientation) const {
+    Velocity self = *this; shp::Intrinsic newIntrinsic = (self.getIntrinsic() % orientation);
     return Velocity("%", self.getMagnitude(), self.getScaling(), self.getUnit(),
-		newAzimuth, self.temporal);
+		newIntrinsic, self.temporal);
 }
 
 Velocity Velocity::operator+(const shp::Polar& curvature) const {
-    Velocity self = *this; shp::Polar newCurvature = (self.getModulation() + curvature);
+    Velocity self = *this; shp::Polar newCurvature = (self.getVertical() + curvature);
     Velocity result("+", self.getMagnitude(), self.getScaling(), self.getUnit(),
-		self.getAzimuth(), self.temporal);
-	result.setModulation(newCurvature);
+		self.getIntrinsic(), self.temporal);
+	result.setVertical(newCurvature);
 	return result;
 }
 
 Velocity Velocity::operator-(const shp::Polar& curvature) const {
-    Velocity self = *this; shp::Polar newCurvature = (self.getModulation() - curvature);
+    Velocity self = *this; shp::Polar newCurvature = (self.getVertical() - curvature);
     Velocity result("-", self.getMagnitude(), self.getScaling(), self.getUnit(),
-		self.getAzimuth(), self.temporal);
-	result.setModulation(newCurvature);
+		self.getIntrinsic(), self.temporal);
+	result.setVertical(newCurvature);
 	return result;
 }
 
 Velocity Velocity::operator*(const shp::Polar& curvature) const {
-    Velocity self = *this; shp::Polar newCurvature = (self.getModulation() * curvature);
+    Velocity self = *this; shp::Polar newCurvature = (self.getVertical() * curvature);
     Velocity result("*", self.getMagnitude(), self.getScaling(), self.getUnit(),
-		self.getAzimuth(), self.temporal);
-	result.setModulation(newCurvature);
+		self.getIntrinsic(), self.temporal);
+	result.setVertical(newCurvature);
 	return result;
 }
 
 Velocity Velocity::operator/(const shp::Polar& curvature) const {
-    Velocity self = *this; shp::Polar newCurvature = (self.getModulation() / curvature);
+    Velocity self = *this; shp::Polar newCurvature = (self.getVertical() / curvature);
     Velocity result("/", self.getMagnitude(), self.getScaling(), self.getUnit(),
-		self.getAzimuth(), self.temporal);
-	result.setModulation(newCurvature);
+		self.getIntrinsic(), self.temporal);
+	result.setVertical(newCurvature);
 	return result;
 }
 
 Velocity Velocity::operator%(const shp::Polar& curvature) const {
-    Velocity self = *this; shp::Polar newCurvature = (self.getModulation() % curvature);
+    Velocity self = *this; shp::Polar newCurvature = (self.getVertical() % curvature);
     Velocity result("%", self.getMagnitude(), self.getScaling(), self.getUnit(),
-		self.getAzimuth(), self.temporal);
-	result.setModulation(newCurvature);
+		self.getIntrinsic(), self.temporal);
+	result.setVertical(newCurvature);
 	return result;
 }
 
@@ -659,20 +659,21 @@ shp::Distance Velocity::getDisplacement() const {
 	return result;
 }
 
-void Velocity::setDisplacement(const shp::Quantity& distance, const shp::Azimuth& direction) {
+void Velocity::setDisplacement(const shp::Quantity& distance, const shp::Intrinsic& direction) {
 	shp::Distance::setMagnitude(distance.getMagnitude(), distance.getScaling(), distance.getUnit());
-	shp::Distance::setAzimuth(direction);
+	shp::Distance::setIntrinsic(direction);
 }
 
 void Velocity::setDisplacement(const shp::Quantity& distance, const shp::Polar& curvature) {
 	shp::Distance::setMagnitude(distance.getMagnitude(), distance.getScaling(), distance.getUnit());
-	shp::Distance::setModulation(curvature);
+	shp::Distance::setVertical(curvature);
 }
 
 void Velocity::setDisplacement(const shp::Distance& distance) {
 	shp::Distance::setMagnitude(distance.getMagnitude(), distance.getScaling(), distance.getUnit());
-	shp::Distance::setAzimuth(distance.getAzimuth());
-	shp::Distance::setModulation(distance.getModulation());
+	shp::Distance::setIntrinsic(distance.getIntrinsic());
+	shp::Distance::setHorizontal(distance.getHorizontal());
+	shp::Distance::setVertical(distance.getVertical());
 }
 
 void Velocity::setDisplacement(const float distance) {
@@ -707,36 +708,36 @@ void Velocity::setUnit(const shp::Unit& unit) {
 	shp::Distance::setUnit(unit);
 }
 
-shp::Azimuth Velocity::getDirection() const {
-	return shp::Distance::getAzimuth();
+shp::Intrinsic Velocity::getDirection() const {
+	return shp::Distance::getIntrinsic();
 }
 
 void Velocity::setDirection(const float orientation) {
-	shp::Distance::setAzimuth(orientation);
+	shp::Distance::setIntrinsic(orientation);
 }
 
-void Velocity::setDirection(const shp::Azimuth& orientation) {
-	shp::Distance::setAzimuth(orientation);
+void Velocity::setDirection(const shp::Intrinsic& orientation) {
+	shp::Distance::setIntrinsic(orientation);
 }
 
 void Velocity::setChangeDirection(const float degree) {
-	shp::Distance::setChangeDirection(degree);
+	shp::Distance::setChangeIntrinsic(degree);
 }
 
 shp::Polar Velocity::getFieldCurvature() const {
-	return shp::Distance::getModulation();
+	return shp::Distance::getVertical();
 }
 
 void Velocity::setFieldCurvature(const float curvature) {
-	shp::Distance::setModulation(curvature);
+	shp::Distance::setVertical(curvature);
 }
 
 void Velocity::setFieldCurvature(const shp::Polar& curvature) {
-	shp::Distance::setModulation(curvature);
+	shp::Distance::setVertical(curvature);
 }
 
 void Velocity::setChangeFieldCurvature(const float degree) {
-	shp::Distance::setChangeCurvature(degree);
+	shp::Distance::setChangeVerticalCurvature(degree);
 }
 
 void Velocity::setChangeMagnitude(const float motion) {
@@ -784,7 +785,7 @@ shp::Signal Velocity::getAngular() {
 
 shp::Signal Velocity::getAngular(const shp::Direction& theta) {
 	shp::Distance self = *this; shp::Quantity rotation;
-	shp::Azimuth displacement = self.getAzimuth();
+	shp::Intrinsic displacement = self.getIntrinsic();
 	if (isTimeBound()) {
 		rotation = temporal->getCurvature();
 		displacement.setRotation(rotation.getMagnitude() + theta.toRadians());
@@ -861,7 +862,7 @@ bool Velocity::isTimeBound() const {
 shp::Distance Velocity::copy() {
 	shp::Distance self = *this;
     Velocity fresh(getName(), self.getMagnitude(), self.getScaling(), self.getUnit(),
-		self.getAzimuth(), this->temporal);
+		self.getIntrinsic(), this->temporal);
     return fresh;
 }
 
@@ -916,26 +917,26 @@ shp::Signal Velocity::getSinComponent(const float phase) const {
 }
 
 shp::Direction Velocity::getAngularVelocity(const Time& interval) const {
-	float rate = (shp::Distance::getAzimuth().toRadians() / interval.getMagnitude());
+	float rate = (shp::Distance::getIntrinsic().toRadians() / interval.getMagnitude());
 	rate = std::isinf(rate) ? 0 : rate;		// if time interval = zero
 	shp::Direction result(rate * shp::Direction::DEGREE_001);
 	return result;
 }
 
 shp::Direction Velocity::getCurvedSpaceTime(const Time& interval) const {
-	float rate = (shp::Distance::getModulation().toRadians() / interval.getMagnitude());
+	float rate = (shp::Distance::getVertical().toRadians() / interval.getMagnitude());
 	rate = std::isinf(rate) ? 0 : rate;		// if time interval = zero
 	shp::Direction result(rate * shp::Direction::DEGREE_001);
 	return result;
 }
 
 shp::Direction Velocity::getAngularShiftRate() const {
-	shp::Direction result(shp::Distance::getAzimuth().toRadians() * shp::Direction::DEGREE_001);
+	shp::Direction result(shp::Distance::getIntrinsic().toRadians() * shp::Direction::DEGREE_001);
 	return result;
 }
 
 shp::Direction Velocity::getCurvatureShiftRate() const {
-	shp::Direction result(shp::Distance::getModulation().toRadians() * shp::Direction::DEGREE_001);
+	shp::Direction result(shp::Distance::getVertical().toRadians() * shp::Direction::DEGREE_001);
 	return result;
 }
 

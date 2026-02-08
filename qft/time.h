@@ -33,20 +33,17 @@ public:
     Time();
     Time(const std::string name);
     Time(const shp::Unit& unit);
-    Time(const  std::string name, const std::string unit);
-    Time(const  std::string name, const shp::Unit& unit);
+    Time(const std::string name, const std::string unit);
+    Time(const std::string name, const shp::Unit& unit);
     Time(const float duration);
     Time(const float duration, const std::string unit);
     Time(const float duration, const shp::Unit& unit);
     Time(const float duration, const short int scaling, const std::string unit);
     Time(const float duration, const short int scaling, const shp::Unit& unit);
     Time(const float modulation, const float duration);
-    Time(const float modulation, const float duration,
-        const short int scaling);
-    Time(const float modulation, const float duration,
-        const short int scaling, const std::string unit);
-    Time(const float modulation, const float duration,
-        const short int scaling, const shp::Unit& unit);
+    Time(const float modulation, const float duration, const short int scaling);
+    Time(const float modulation, const float duration, const short int scaling, const std::string unit);
+    Time(const float modulation, const float duration, const short int scaling, const shp::Unit& unit);
     Time(const shp::Signal& modulation);
     Time(const shp::Signal& modulation, const std::string unit);
     Time(const shp::Signal& modulation, const shp::Unit& unit);
@@ -59,28 +56,28 @@ public:
         const short int scaling, const std::string unit);
     Time(const shp::Signal& modulation, const float duration,
         const short int scaling, const shp::Unit& unit);
-    Time(const shp::Azimuth& dilation);
-    Time(const shp::Azimuth& dilation, const std::string unit);
-    Time(const shp::Azimuth& dilation, const shp::Unit& unit);
-    Time(const shp::Azimuth& dilation, const float duration);
-    Time(const shp::Azimuth& dilation, const float duration,
+    Time(const shp::Intrinsic& dilation);
+    Time(const shp::Intrinsic& dilation, const std::string unit);
+    Time(const shp::Intrinsic& dilation, const shp::Unit& unit);
+    Time(const shp::Intrinsic& dilation, const float duration);
+    Time(const shp::Intrinsic& dilation, const float duration,
         const std::string unit);
-    Time(const shp::Azimuth& dilation, const float duration,
+    Time(const shp::Intrinsic& dilation, const float duration,
         const shp::Unit& unit);
-    Time(const shp::Azimuth& dilation, const float duration,
+    Time(const shp::Intrinsic& dilation, const float duration,
         const short int scaling);  
-    Time(const shp::Azimuth& dilation, const float duration,
+    Time(const shp::Intrinsic& dilation, const float duration,
         const short int scaling, const std::string unit);
-    Time(const shp::Azimuth& dilation, const float duration,
+    Time(const shp::Intrinsic& dilation, const float duration,
         const short int scaling, const shp::Unit& unit);
-    Time(const shp::Signal& modulation, const shp::Azimuth& dilation);
-    Time(const shp::Signal& modulation, const shp::Azimuth& dilation,
+    Time(const shp::Signal& modulation, const shp::Intrinsic& dilation);
+    Time(const shp::Signal& modulation, const shp::Intrinsic& dilation,
         const float duration);
-    Time(const shp::Signal& modulation, const shp::Azimuth& dilation,
+    Time(const shp::Signal& modulation, const shp::Intrinsic& dilation,
         const float duration, const short int scaling);
-    Time(const shp::Signal& modulation, const shp::Azimuth& dilation,
+    Time(const shp::Signal& modulation, const shp::Intrinsic& dilation,
         const float duration, const short int scaling, const std::string unit);
-    Time(const shp::Signal& modulation, const shp::Azimuth& dilation,
+    Time(const shp::Signal& modulation, const shp::Intrinsic& dilation,
         const float duration, const short int scaling, const shp::Unit& unit);
     Time(const std::string name, const float duration);
     Time(const std::string name, const float duration, const std::string unit);
@@ -97,19 +94,19 @@ public:
         const short int scaling, const std::string unit);
     Time(const std::string name, const float modulation, const float duration,
         const short int scaling, const shp::Unit& unit);
-    Time(const std::string name, const shp::Azimuth& dilation);
-    Time(const std::string name, const shp::Azimuth& dilation, const std::string unit);
-    Time(const std::string name, const shp::Azimuth& dilation, const shp::Unit& unit);
-    Time(const std::string name, const shp::Azimuth& dilation, const float duration);
-    Time(const std::string name, const shp::Azimuth& dilation, const float duration,
+    Time(const std::string name, const shp::Intrinsic& dilation);
+    Time(const std::string name, const shp::Intrinsic& dilation, const std::string unit);
+    Time(const std::string name, const shp::Intrinsic& dilation, const shp::Unit& unit);
+    Time(const std::string name, const shp::Intrinsic& dilation, const float duration);
+    Time(const std::string name, const shp::Intrinsic& dilation, const float duration,
         const std::string unit);
-    Time(const std::string name, const shp::Azimuth& dilation, const float duration,
+    Time(const std::string name, const shp::Intrinsic& dilation, const float duration,
         const shp::Unit& unit);
-    Time(const std::string name, const shp::Azimuth& dilation, const float duration,
+    Time(const std::string name, const shp::Intrinsic& dilation, const float duration,
         const short int scaling);
-    Time(const std::string name, const shp::Azimuth& dilation, const float duration,
+    Time(const std::string name, const shp::Intrinsic& dilation, const float duration,
         const short int scaling, const std::string unit);
-    Time(const std::string name, const shp::Azimuth& dilation, const float duration,
+    Time(const std::string name, const shp::Intrinsic& dilation, const float duration,
         const short int scaling, const shp::Unit& unit);
     Time(const std::string name, const shp::Signal& modulation);
     Time(const std::string name, const shp::Signal& modulation, const std::string unit);
@@ -123,14 +120,14 @@ public:
         const short int scaling, const std::string unit);
     Time(const std::string name, const shp::Signal& modulation, const float duration,
         const short int scaling, const shp::Unit& unit);
-    Time(const std::string name, const shp::Signal& modulation, const shp::Azimuth& dilation);
-    Time(const std::string name, const shp::Signal& modulation, const shp::Azimuth& dilation,
+    Time(const std::string name, const shp::Signal& modulation, const shp::Intrinsic& dilation);
+    Time(const std::string name, const shp::Signal& modulation, const shp::Intrinsic& dilation,
         const float duration);
-    Time(const std::string name, const shp::Signal& modulation, const shp::Azimuth& dilation,
+    Time(const std::string name, const shp::Signal& modulation, const shp::Intrinsic& dilation,
         const float duration, const short int scaling);
-    Time(const std::string name, const shp::Signal& modulation, const shp::Azimuth& dilation,
+    Time(const std::string name, const shp::Signal& modulation, const shp::Intrinsic& dilation,
         const float duration, const short int scaling, const std::string unit);
-    Time(const std::string name, const shp::Signal& modulation, const shp::Azimuth& dilation,
+    Time(const std::string name, const shp::Signal& modulation, const shp::Intrinsic& dilation,
         const float duration, const short int scaling, const shp::Unit& unit);
 
     // Destructors
@@ -164,13 +161,13 @@ public:
     void setMagnitude(const float value, const short int scale, const shp::Unit& unit);
     float getPeriod() const;
     float getPeriodDrift() const;
-    void setPeriodDrift(const shp::Azimuth& direction);
+    void setPeriodDrift(const shp::Intrinsic& direction);
     float getDopplerShift() const;
-    void setDopplerShift(const shp::Azimuth& curvature);
-    void setDopplerShift(const float motion, const shp::Azimuth& curvature);
-    void setDopplerShift(const float motion, const short int scale, const shp::Azimuth& curvature);
-    void setDopplerShift(const float motion, const short int scale, const std::string unit, const shp::Azimuth& curvature);
-    void setDopplerShift(const float motion, const short int scale, const shp::Unit& unit, const shp::Azimuth& curvature);
+    void setDopplerShift(const shp::Intrinsic& curvature);
+    void setDopplerShift(const float motion, const shp::Intrinsic& curvature);
+    void setDopplerShift(const float motion, const short int scale, const shp::Intrinsic& curvature);
+    void setDopplerShift(const float motion, const short int scale, const std::string unit, const shp::Intrinsic& curvature);
+    void setDopplerShift(const float motion, const short int scale, const shp::Unit& unit, const shp::Intrinsic& curvature);
     short int getScaling() const;
     void setScaling(const short int factor);
     shp::Unit getUnit() const;
