@@ -31,42 +31,42 @@ class Wave : public Curvature {
 public:
     // Constructors
     Wave();
-    Wave(const Azimuth& azimuthal);
+    Wave(const Intrinsic& azimuthal);
     Wave(const Polar& polarization);
-    Wave(const Polar& polarization, const Azimuth& azimuthal);
+    Wave(const Polar& polarization, const Intrinsic& azimuthal);
     Wave(const float magnitude);
     Wave(const float magnitude, const short int scaling);
     Wave(const float magnitude, const short int scaling, const std::string unit);
     Wave(const float magnitude, const short int scaling, const Unit& unit);
     Wave(const float magnitude, const Polar& polarization,
-        const Azimuth& azimuthal);
+        const Intrinsic& azimuthal);
     Wave(const float magnitude, const short int scaling,
-        const Polar& polarization, const Azimuth& azimuthal);
+        const Polar& polarization, const Intrinsic& azimuthal);
     Wave(const float magnitude, const short int scaling, const std::string unit,
-        const Polar& polarization, const Azimuth& azimuthal);
+        const Polar& polarization, const Intrinsic& azimuthal);
     Wave(const float magnitude, const short int scaling, const Unit& unit,
-        const Polar& polarization, const Azimuth& azimuthal);
+        const Polar& polarization, const Intrinsic& azimuthal);
     Wave(const std::string name);
-    Wave(const std::string name, const Azimuth& azimuthal);
+    Wave(const std::string name, const Intrinsic& azimuthal);
     Wave(const std::string name, const Polar& polarization);
-    Wave(const std::string name, const Polar& polarization, const Azimuth& azimuthal);
+    Wave(const std::string name, const Polar& polarization, const Intrinsic& azimuthal);
     Wave(const std::string name, const float magnitude);
     Wave(const std::string name, const float magnitude, const short int scaling);
     Wave(const std::string name, const float magnitude, const short int scaling, const std::string unit);
     Wave(const std::string name, const float magnitude, const short int scaling, const Unit& unit);
     Wave(const std::string name, const float magnitude,
-        const Polar& polarization, const Azimuth& azimuthal);
+        const Polar& polarization, const Intrinsic& azimuthal);
     Wave(const std::string name, const float magnitude, const short int scaling,
-        const Polar& polarization, const Azimuth& azimuthal);
+        const Polar& polarization, const Intrinsic& azimuthal);
     Wave(const std::string name, const float magnitude, const short int scaling,
-		const std::string unit, const Polar& polarization, const Azimuth& azimuthal);
+		const std::string unit, const Polar& polarization, const Intrinsic& azimuthal);
     Wave(const std::string name, const float magnitude, const short int scaling,
-		const Unit& unit, const Polar& polarization, const Azimuth& azimuthal);
-    Wave(const std::string name, const Azimuth& gradient, const int limit);
+		const Unit& unit, const Polar& polarization, const Intrinsic& azimuthal);
+    Wave(const std::string name, const Intrinsic& gradient, const int limit);
 	Wave(const std::string name, const CurvatureArray& wavelets);
 	Wave(const std::string name, const CurvatureArray& wavelets, const int limit);
-    Wave(const std::string name, const CurvatureArray& wavelets, const Azimuth& azimuthal);
-	Wave(const std::string name, const CurvatureArray& wavelets, const Azimuth& azimuthal,
+    Wave(const std::string name, const CurvatureArray& wavelets, const Intrinsic& azimuthal);
+	Wave(const std::string name, const CurvatureArray& wavelets, const Intrinsic& azimuthal,
 		const int limit);
     Wave(const std::string name, const CurvatureArray& wavelets, const float polarization);
 	Wave(const std::string name, const CurvatureArray& wavelets, const float polarization,
@@ -79,13 +79,13 @@ public:
 	Wave(const std::string name, const CurvatureArray& wavelets, const float polarization,
 		const float azimuthal, const int limit);
     Wave(const std::string name, const CurvatureArray& wavelets, const Polar& polarization,
-		const Azimuth& azimuthal);
+		const Intrinsic& azimuthal);
 	Wave(const std::string name, const CurvatureArray& wavelets, const Polar& polarization,
-		const Azimuth& azimuthal, const int limit);
+		const Intrinsic& azimuthal, const int limit);
     Wave(const std::string name, const CurvatureArray& wavelets, const float magnitude,
-		const short int scaling, const Unit& unit, const Polar& polarization, const Azimuth& azimuthal);
+		const short int scaling, const Unit& unit, const Polar& polarization, const Intrinsic& azimuthal);
 	Wave(const std::string name, const CurvatureArray& wavelets, const float magnitude,
-		const short int scaling, const Unit& unit, const Polar& polarization, const Azimuth& azimuthal,
+		const short int scaling, const Unit& unit, const Polar& polarization, const Intrinsic& azimuthal,
 		const int limit);
 
     // Destructors

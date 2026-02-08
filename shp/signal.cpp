@@ -73,12 +73,12 @@ Signal::Signal(const Quantity& quantity)
 
 }
 
-Signal::Signal(const Azimuth& orientation)
+Signal::Signal(const Intrinsic& orientation)
         : Quantity(), orientation(orientation.toRadians()) {
 
 }
 
-Signal::Signal(const Azimuth& orientation, const Quantity& quantity)
+Signal::Signal(const Intrinsic& orientation, const Quantity& quantity)
         : Quantity(quantity.getMagnitude(), quantity.getScaling(), quantity.getUnit()),
         orientation(orientation.toRadians()) {
 
@@ -99,17 +99,17 @@ Signal::Signal(const float orientation, const float quantity, const Unit& unit)
 
 }
 
-Signal::Signal(const Azimuth& orientation, const float quantity)
+Signal::Signal(const Intrinsic& orientation, const float quantity)
         : Quantity(quantity), orientation(orientation.toRadians()) {
 
 }
 
-Signal::Signal(const Azimuth& orientation, const float quantity, const std::string unit)
+Signal::Signal(const Intrinsic& orientation, const float quantity, const std::string unit)
         : Quantity(quantity, unit), orientation(orientation.toRadians()) {
 
 }
 
-Signal::Signal(const Azimuth& orientation, const float quantity, const Unit& unit)
+Signal::Signal(const Intrinsic& orientation, const float quantity, const Unit& unit)
         : Quantity(quantity, unit), orientation(orientation.toRadians()) {
 
 }
@@ -119,7 +119,7 @@ Signal::Signal(const float orientation, const float quantity, const short int sc
 
 }
 
-Signal::Signal(const Azimuth& orientation, const float quantity, const short int scaling)
+Signal::Signal(const Intrinsic& orientation, const float quantity, const short int scaling)
         : Quantity(quantity, scaling), orientation(orientation.toRadians()) {
 
 }
@@ -130,7 +130,7 @@ Signal::Signal(const float orientation, const float quantity, const short int sc
 
 }
 
-Signal::Signal(const Azimuth& orientation, const float quantity, const short int scaling,
+Signal::Signal(const Intrinsic& orientation, const float quantity, const short int scaling,
 		const std::string unit)
         : Quantity(quantity, scaling, unit), orientation(orientation.toRadians()) {
 
@@ -142,7 +142,7 @@ Signal::Signal(const float orientation, const float quantity, const short int sc
 
 }
 
-Signal::Signal(const Azimuth& orientation, const float quantity, const short int scaling,
+Signal::Signal(const Intrinsic& orientation, const float quantity, const short int scaling,
 		const Unit& unit)
         : Quantity(quantity, scaling, unit), orientation(orientation.toRadians()) {
 
@@ -256,96 +256,96 @@ Signal Signal::operator%(const Signal& peer) const {
 }
 
 Signal Signal::operator+(const float coefficient) const {
-    Signal self = *this, other(coefficient, self.getScaling(), self.getUnit());
+    Quantity self = *this, other(coefficient, self.getScaling(), self.getUnit());
     Signal result = (self + other); result.adjustScaling();
     return Signal(result.getOrientation(),
         result.getMagnitude(), result.getScaling(), result.getUnit());
 }
 
 Signal Signal::operator-(const float coefficient) const {
-    Signal self = *this, other(coefficient, self.getScaling(), self.getUnit());
+    Quantity self = *this, other(coefficient, self.getScaling(), self.getUnit());
     Signal result = (self - other); result.adjustScaling();
     return Signal(result.getOrientation(),
         result.getMagnitude(), result.getScaling(), result.getUnit());
 }
 
 Signal Signal::operator*(const float coefficient) const {
-    Signal self = *this, other(coefficient, self.getScaling(), self.getUnit());
+    Quantity self = *this, other(coefficient, self.getScaling(), self.getUnit());
     Signal result = (self * other); result.adjustScaling();
     return Signal(result.getOrientation(),
         result.getMagnitude(), result.getScaling(), result.getUnit());
 }
 
 Signal Signal::operator/(const float coefficient) const {
-    Signal self = *this, other(coefficient, self.getScaling(), self.getUnit());
+    Quantity self = *this, other(coefficient, self.getScaling(), self.getUnit());
     Signal result = (self / other); result.adjustScaling();
     return Signal(result.getOrientation(),
         result.getMagnitude(), result.getScaling(), result.getUnit());
 }
 
 Signal Signal::operator%(const float coefficient) const {
-    Signal self = *this, other(coefficient, self.getScaling(), self.getUnit());
+    Quantity self = *this, other(coefficient, self.getScaling(), self.getUnit());
     Signal result = (self % other); result.adjustScaling();
     return Signal(result.getOrientation(),
         result.getMagnitude(), result.getScaling(), result.getUnit());
 }
 
 Signal Signal::operator+(const shp::Quantity& peer) const {
-    Signal self = *this, result = (self + peer); result.adjustScaling();
-    return Signal(result.getOrientation(),
+    Quantity self = *this, result = (self + peer); result.adjustScaling();
+    return Signal(this->getOrientation(),
         result.getMagnitude(), result.getScaling(), result.getUnit());
 }
 
 Signal Signal::operator-(const shp::Quantity& peer) const {
-    Signal self = *this, result = (self - peer); result.adjustScaling();
-    return Signal(result.getOrientation(),
+    Quantity self = *this, result = (self - peer); result.adjustScaling();
+    return Signal(this->getOrientation(),
         result.getMagnitude(), result.getScaling(), result.getUnit());
 }
 
 Signal Signal::operator*(const shp::Quantity& peer) const {
-    Signal self = *this, result = (self * peer); result.adjustScaling();
-    return Signal(result.getOrientation(),
+    Quantity self = *this, result = (self * peer); result.adjustScaling();
+    return Signal(this->getOrientation(),
         result.getMagnitude(), result.getScaling(), result.getUnit());
 }
 
 Signal Signal::operator/(const shp::Quantity& peer) const {
-    Signal self = *this, result = (self / peer); result.adjustScaling();
-    return Signal(result.getOrientation(),
+    Quantity self = *this, result = (self / peer); result.adjustScaling();
+    return Signal(this->getOrientation(),
         result.getMagnitude(), result.getScaling(), result.getUnit());
 }
 
 Signal Signal::operator%(const shp::Quantity& peer) const {
-    Signal self = *this, result = (self % peer); result.adjustScaling();
-    return Signal(result.getOrientation(),
+    Quantity self = *this, result = (self % peer); result.adjustScaling();
+    return Signal(this->getOrientation(),
         result.getMagnitude(), result.getScaling(), result.getUnit());
 }
 
-Signal Signal::operator+(const shp::Direction& peer) const {
-    shp::Direction self = shp::Direction(this->orientation), result = (self + peer);
+Signal Signal::operator+(const shp::Intrinsic& peer) const {
+    shp::Intrinsic self = shp::Intrinsic(this->orientation), result = (self + peer);
     return Signal(result.toRadians(),
         Quantity::getMagnitude(), Quantity::getScaling(), Quantity::getUnit());
 }
 
-Signal Signal::operator-(const shp::Direction& peer) const {
-    shp::Direction self = shp::Direction(this->orientation), result = (self - peer);
+Signal Signal::operator-(const shp::Intrinsic& peer) const {
+    shp::Intrinsic self = shp::Intrinsic(this->orientation), result = (self - peer);
     return Signal(result.toRadians(),
         Quantity::getMagnitude(), Quantity::getScaling(), Quantity::getUnit());
 }
 
-Signal Signal::operator*(const shp::Direction& peer) const {
-    shp::Direction self = shp::Direction(this->orientation), result = (self * peer);
+Signal Signal::operator*(const shp::Intrinsic& peer) const {
+    shp::Intrinsic self = shp::Intrinsic(this->orientation), result = (self * peer);
     return Signal(result.toRadians(),
         Quantity::getMagnitude(), Quantity::getScaling(), Quantity::getUnit());
 }
 
-Signal Signal::operator/(const shp::Direction& peer) const {
-    shp::Direction self = shp::Direction(this->orientation), result = (self / peer);
+Signal Signal::operator/(const shp::Intrinsic& peer) const {
+    shp::Intrinsic self = shp::Intrinsic(this->orientation), result = (self / peer);
     return Signal(result.toRadians(),
         Quantity::getMagnitude(), Quantity::getScaling(), Quantity::getUnit());
 }
 
-Signal Signal::operator%(const shp::Direction& peer) const {
-    shp::Direction self = shp::Direction(this->orientation), result = (self % peer);
+Signal Signal::operator%(const shp::Intrinsic& peer) const {
+    shp::Intrinsic self = shp::Intrinsic(this->orientation), result = (self % peer);
     return Signal(result.toRadians(),
         Quantity::getMagnitude(), Quantity::getScaling(), Quantity::getUnit());
 }
@@ -357,8 +357,8 @@ Signal Signal::operator()(const float scaleup) const {
 }
 
 Signal Signal::getRotation(const short int degree) const {
-    Quantity self = *this; Azimuth direction(this->orientation);
-    Azimuth phase = direction.getRotation(degree);
+    Quantity self = *this; Intrinsic direction(this->orientation);
+    Intrinsic phase = direction.getRotation(degree);
     return Signal(phase, self.getMagnitude(), self.getScaling(), self.getUnit());
 }
 
@@ -432,11 +432,11 @@ Signal Signal::getDotProduct(const Signal& peer) const {
 }
 
 Signal Signal::getCrossProduct(const Signal& peer) const {
-    Quantity self = *this, other = peer; Quantity product; Azimuth normal;
+    Quantity self = *this, other = peer; Quantity product; Intrinsic normal;
     float difference = (peer.orientation - this->orientation);
     if (difference != Direction::DEFAULT_RADIANS && difference != Direction::DEGREE_180) {
         Direction angle = Direction::getDifference(this->orientation, peer.orientation);
-        float radians = angle.toRadians(); normal = Azimuth(radians);
+        float radians = angle.toRadians(); normal = Intrinsic(radians);
         product = (self * other).getSinComponent(radians);
     } else if (difference == Direction::DEGREE_090 || difference == Direction::DEGREE_270) {
         product = (self * other);
@@ -467,11 +467,11 @@ Signal Signal::getDotFraction(const Signal& peer) const {
 }
 
 Signal Signal::getCrossFraction(const Signal& peer) const {
-    Quantity self = *this, other = peer; Quantity fraction; Azimuth infinitesimal;
+    Quantity self = *this, other = peer; Quantity fraction; Intrinsic infinitesimal;
     float difference = (peer.orientation - this->orientation);
     if (difference != Direction::DEFAULT_RADIANS && difference != Direction::DEGREE_180) {
         Direction delta = Direction::getFraction(this->orientation, peer.orientation);
-        float radians = delta.toRadians(); infinitesimal = Azimuth(radians);
+        float radians = delta.toRadians(); infinitesimal = Intrinsic(radians);
         fraction = (self / other).getSinComponent(radians);
     } else if (difference == Direction::DEGREE_090 || difference == Direction::DEGREE_270) {
         fraction = (self / other);
@@ -488,11 +488,11 @@ Signal Signal::getFrequency() const {
 }
 
 float Signal::getCyclingRate() const {
-    return Direction(orientation).getCyclingRate();
+    return Intrinsic(orientation).getCyclingRate();
 }
 
 float Signal::getTimePerCycle() const {
-    return Direction(orientation).getTimePerCycle();
+    return Intrinsic(orientation).getTimePerCycle();
 }
 
 float Signal::getMagnitude() const {
@@ -523,11 +523,11 @@ float Signal::getImaginary() const {
     return Quantity::getSinComponent(orientation);
 }
 
-Direction Signal::getPhase() const {
-    return Direction(orientation);
+Intrinsic Signal::getPhase() const {
+    return Intrinsic(orientation);
 }
 
-void Signal::setPhase(const Direction& direction) {
+void Signal::setPhase(const Intrinsic& direction) {
     this->orientation = direction.toRadians();
 }
 
@@ -747,17 +747,16 @@ void Signal::clear() {
 std::string Signal::print() const {
     std::stringstream result;
     result << "∿";
-    result << Quantity::print() << ",φ";
-    result << Direction(orientation).print();
+    result << Quantity::print() << ",";
+    result << Intrinsic(orientation).print();
 	return result.str();
 }
 
 std::string Signal::printRadians() const {
     std::stringstream result;
     result << "∿";
-    result << Quantity::print() << ",φ";
-    result << std::setfill('0') << std::setprecision(8)
-        << orientation << shp::Unit::getDerivedSymbol(shp::Unit::PLANE_ANGLE);
+    result << Quantity::print() << ",";
+    result << Intrinsic(orientation).printRadians();
 	return result.str();
 }
 

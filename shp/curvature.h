@@ -31,25 +31,25 @@ class Curvature : public Point {
 public:
     // Constructors
     Curvature();
-    Curvature(const Azimuth& azimuthal);
+    Curvature(const Intrinsic& intrinsic);
     Curvature(const Polar& polarization);
-    Curvature(const Polar& polarization, const Azimuth& azimuthal);
+    Curvature(const Polar& polarization, const Intrinsic& intrinsic);
     Curvature(const float magnitude);
     Curvature(const float magnitude, const short int scaling);
     Curvature(const float magnitude, const short int scaling, const std::string unit);
     Curvature(const float magnitude, const short int scaling, const Unit& unit);
-    Curvature(const float magnitude, const Polar& polarization, const Azimuth& azimuthal);
+    Curvature(const float magnitude, const Polar& polarization, const Intrinsic& intrinsic);
     Curvature(const float magnitude, const short int scaling,
-        const Polar& polarization, const Azimuth& azimuthal);
+        const Polar& polarization, const Intrinsic& intrinsic);
     Curvature(const float magnitude, const short int scaling, const std::string unit,
-        const Polar& polarization, const Azimuth& azimuthal);
+        const Polar& polarization, const Intrinsic& intrinsic);
     Curvature(const float magnitude, const short int scaling, const Unit& unit,
-        const Polar& polarization, const Azimuth& azimuthal);
+        const Polar& polarization, const Intrinsic& intrinsic);
     Curvature(const PhaseArray& deformations);
     Curvature(const std::string name);
-    Curvature(const std::string name, const Azimuth& azimuthal);
+    Curvature(const std::string name, const Intrinsic& intrinsic);
     Curvature(const std::string name, const Polar& polarization);
-    Curvature(const std::string name, const Polar& polarization, const Azimuth& azimuthal);
+    Curvature(const std::string name, const Polar& polarization, const Intrinsic& intrinsic);
     Curvature(const std::string name, const float magnitude);
     Curvature(const std::string name, const float magnitude, const short int scaling);
     Curvature(const std::string name, const float magnitude, const short int scaling,
@@ -57,27 +57,27 @@ public:
     Curvature(const std::string name, const float magnitude, const short int scaling,
         const Unit& unit);
     Curvature(const std::string name, const float magnitude,
-        const Polar& polarization, const Azimuth& azimuthal);
+        const Polar& polarization, const Intrinsic& intrinsic);
     Curvature(const std::string name, const float magnitude, const short int scaling,
-        const Polar& polarization, const Azimuth& azimuthal);
+        const Polar& polarization, const Intrinsic& intrinsic);
     Curvature(const std::string name, const float magnitude, const short int scaling,
-        const std::string unit, const Polar& polarization, const Azimuth& azimuthal);
+        const std::string unit, const Polar& polarization, const Intrinsic& intrinsic);
     Curvature(const std::string name, const float magnitude, const short int scaling,
-        const Unit& unit, const Polar& polarization, const Azimuth& azimuthal);
+        const Unit& unit, const Polar& polarization, const Intrinsic& intrinsic);
     Curvature(const std::string name, const PhaseArray& deformations);
     Curvature(const std::string name, const PhaseArray& deformations,
         const float polarization);
     Curvature(const std::string name, const PhaseArray& deformations,
-        const Azimuth& azimuthal);
+        const Intrinsic& intrinsic);
     Curvature(const std::string name, const PhaseArray& deformations,
         const Polar& polarization);
     Curvature(const std::string name, const PhaseArray& deformations,
-        const float polarization, const float azimuthal);
+        const float polarization, const float intrinsic);
     Curvature(const std::string name, const PhaseArray& deformations,
-        const Polar& polarization, const Azimuth& azimuthal);
+        const Polar& polarization, const Intrinsic& intrinsic);
     Curvature(const std::string name, const PhaseArray& deformations,
         const float magnitude, const short int scaling, const Unit& unit,
-        const Polar& polarization, const Azimuth& azimuthal);
+        const Polar& polarization, const Intrinsic& intrinsic);
 
     // Destructors
     ~Curvature();

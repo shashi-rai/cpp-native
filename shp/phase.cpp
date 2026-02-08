@@ -29,7 +29,7 @@ Phase::Phase()
 
 }
 
-Phase::Phase(const Azimuth& gradient)
+Phase::Phase(const Intrinsic& gradient)
         : Point(gradient), polarization(Direction::DEFAULT_RADIANS),
         timestamp(DEFAULT_TIME) {
 
@@ -47,28 +47,28 @@ Phase::Phase(const float magnitude, const float gradient)
 
 }
 
-Phase::Phase(const float magnitude, const Azimuth& gradient)
+Phase::Phase(const float magnitude, const Intrinsic& gradient)
         : Point(magnitude, gradient), polarization(Direction::DEFAULT_RADIANS),
         timestamp(DEFAULT_TIME) {
 
 }
 
 Phase::Phase(const float magnitude, const short int scaling,
-        const Azimuth& gradient)
+        const Intrinsic& gradient)
         : Point(magnitude, scaling, gradient), polarization(Direction::DEFAULT_RADIANS),
         timestamp(DEFAULT_TIME) {
 
 }
 
 Phase::Phase(const float magnitude, const short int scaling, const std::string unit,
-        const Azimuth& gradient)
+        const Intrinsic& gradient)
         : Point(magnitude, scaling, unit, gradient), polarization(Direction::DEFAULT_RADIANS),
         timestamp(DEFAULT_TIME) {
 
 }
 
 Phase::Phase(const float magnitude, const short int scaling, const Unit& unit,
-        const Azimuth& gradient)
+        const Intrinsic& gradient)
         : Point(magnitude, scaling, unit, gradient), polarization(Direction::DEFAULT_RADIANS),
         timestamp(DEFAULT_TIME) {
 
@@ -101,35 +101,35 @@ Phase::Phase(const float magnitude, const short int scaling, const Unit& unit,
 
 }
 
-Phase::Phase(const float magnitude, const float polarization, const float azimuthal)
-        : Point(magnitude, azimuthal), polarization(polarization),
+Phase::Phase(const float magnitude, const float polarization, const float intrinsic)
+        : Point(magnitude, intrinsic), polarization(polarization),
         timestamp(DEFAULT_TIME) {
 
 }
 
-Phase::Phase(const float magnitude, const Polar& polarization, const Azimuth& azimuthal)
-        : Point(magnitude, azimuthal), polarization(polarization.toRadians()),
+Phase::Phase(const float magnitude, const Polar& polarization, const Intrinsic& intrinsic)
+        : Point(magnitude, intrinsic), polarization(polarization.toRadians()),
         timestamp(DEFAULT_TIME) {
 
 }
 
 Phase::Phase(const float magnitude, const short int scaling,
-        const Polar& polarization, const Azimuth& azimuthal)
-        : Point(magnitude, scaling, azimuthal), polarization(polarization.toRadians()),
+        const Polar& polarization, const Intrinsic& intrinsic)
+        : Point(magnitude, scaling, intrinsic), polarization(polarization.toRadians()),
         timestamp(DEFAULT_TIME) {
 
 }
 
 Phase::Phase(const float magnitude, const short int scaling, const std::string unit,
-        const Polar& polarization, const Azimuth& azimuthal)
-        : Point(magnitude, scaling, unit, azimuthal), polarization(polarization.toRadians()),
+        const Polar& polarization, const Intrinsic& intrinsic)
+        : Point(magnitude, scaling, unit, intrinsic), polarization(polarization.toRadians()),
         timestamp(DEFAULT_TIME) {
 
 }
 
 Phase::Phase(const float magnitude, const short int scaling, const Unit& unit,
-        const Polar& polarization, const Azimuth& azimuthal)
-        : Point(magnitude, scaling, unit, azimuthal), polarization(polarization.toRadians()),
+        const Polar& polarization, const Intrinsic& intrinsic)
+        : Point(magnitude, scaling, unit, intrinsic), polarization(polarization.toRadians()),
         timestamp(DEFAULT_TIME) {
 
 }
@@ -139,7 +139,7 @@ Phase::Phase(const std::string name)
 
 }
 
-Phase::Phase(const std::string name, const Azimuth& gradient)
+Phase::Phase(const std::string name, const Intrinsic& gradient)
         : Point(name, gradient), polarization(Direction::DEFAULT_RADIANS),
         timestamp(DEFAULT_TIME) {
 
@@ -157,28 +157,28 @@ Phase::Phase(const std::string name, const float magnitude, const float gradient
 
 }
 
-Phase::Phase(const std::string name, const float magnitude, const Azimuth& gradient)
+Phase::Phase(const std::string name, const float magnitude, const Intrinsic& gradient)
         : Point(name, magnitude, gradient), polarization(Direction::DEFAULT_RADIANS),
         timestamp(DEFAULT_TIME) {
 
 }
 
 Phase::Phase(const std::string name, const float magnitude, const short int scaling,
-        const Azimuth& gradient)
+        const Intrinsic& gradient)
         : Point(name, magnitude, scaling, gradient), polarization(Direction::DEFAULT_RADIANS),
         timestamp(DEFAULT_TIME) {
 
 }
 
 Phase::Phase(const std::string name, const float magnitude, const short int scaling, const std::string unit,
-        const Azimuth& gradient)
+        const Intrinsic& gradient)
         : Point(name, magnitude, scaling, unit, gradient), polarization(Direction::DEFAULT_RADIANS),
         timestamp(DEFAULT_TIME) {
 
 }
 
 Phase::Phase(const std::string name, const float magnitude, const short int scaling, const Unit& unit,
-        const Azimuth& gradient)
+        const Intrinsic& gradient)
         : Point(name, magnitude, scaling, unit, gradient), polarization(Direction::DEFAULT_RADIANS),
         timestamp(DEFAULT_TIME) {
 
@@ -212,36 +212,36 @@ Phase::Phase(const std::string name, const float magnitude, const short int scal
 
 }
 
-Phase::Phase(const std::string name, const float magnitude, const float polarization, const float azimuthal)
-        : Point(name, magnitude, azimuthal), polarization(polarization),
+Phase::Phase(const std::string name, const float magnitude, const float polarization, const float intrinsic)
+        : Point(name, magnitude, intrinsic), polarization(polarization),
         timestamp(DEFAULT_TIME) {
 
 }
 
 Phase::Phase(const std::string name, const float magnitude,
-        const Polar& polarization, const Azimuth& azimuthal)
-        : Point(name, magnitude, azimuthal), polarization(polarization.toRadians()),
+        const Polar& polarization, const Intrinsic& intrinsic)
+        : Point(name, magnitude, intrinsic), polarization(polarization.toRadians()),
         timestamp(DEFAULT_TIME) {
 
 }
 
 Phase::Phase(const std::string name, const float magnitude, const short int scaling,
-        const Polar& polarization, const Azimuth& azimuthal)
-        : Point(name, magnitude, scaling, azimuthal), polarization(polarization.toRadians()),
+        const Polar& polarization, const Intrinsic& intrinsic)
+        : Point(name, magnitude, scaling, intrinsic), polarization(polarization.toRadians()),
         timestamp(DEFAULT_TIME) {
 
 }
 
 Phase::Phase(const std::string name, const float magnitude, const short int scaling, const std::string unit,
-        const Polar& polarization, const Azimuth& azimuthal)
-        : Point(name, magnitude, scaling, unit, azimuthal), polarization(polarization.toRadians()),
+        const Polar& polarization, const Intrinsic& intrinsic)
+        : Point(name, magnitude, scaling, unit, intrinsic), polarization(polarization.toRadians()),
         timestamp(DEFAULT_TIME) {
 
 }
 
 Phase::Phase(const std::string name, const float magnitude, const short int scaling, const Unit& unit,
-        const Polar& polarization, const Azimuth& azimuthal)
-        : Point(name, magnitude, scaling, unit, azimuthal), polarization(polarization.toRadians()),
+        const Polar& polarization, const Intrinsic& intrinsic)
+        : Point(name, magnitude, scaling, unit, intrinsic), polarization(polarization.toRadians()),
         timestamp(DEFAULT_TIME) {
 
 }
@@ -256,7 +256,7 @@ Phase::Phase(const std::string name, const float gradient, const std::time_t tim
 
 }
 
-Phase::Phase(const std::string name, const Azimuth& gradient, const std::time_t timestamp)
+Phase::Phase(const std::string name, const Intrinsic& gradient, const std::time_t timestamp)
         : Point(name, gradient), polarization(Direction::DEFAULT_RADIANS), timestamp(timestamp) {
 
 }
@@ -273,28 +273,28 @@ Phase::Phase(const std::string name, const float magnitude, const float gradient
 }
 
 Phase::Phase(const std::string name, const float magnitude,
-    const Azimuth& gradient, const std::time_t timestamp)
+    const Intrinsic& gradient, const std::time_t timestamp)
         : Point(name, magnitude, gradient), polarization(Direction::DEFAULT_RADIANS),
         timestamp(timestamp) {
 
 }
 
 Phase::Phase(const std::string name, const float magnitude, const short int scaling,
-    const Azimuth& gradient, const std::time_t timestamp)
+    const Intrinsic& gradient, const std::time_t timestamp)
         : Point(name, magnitude, scaling, gradient), polarization(Direction::DEFAULT_RADIANS),
         timestamp(timestamp) {
 
 }
 
 Phase::Phase(const std::string name, const float magnitude, const short int scaling, const std::string unit,
-    const Azimuth& gradient, const std::time_t timestamp)
+    const Intrinsic& gradient, const std::time_t timestamp)
         : Point(name, magnitude, scaling, unit, gradient), polarization(Direction::DEFAULT_RADIANS),
         timestamp(timestamp) {
 
 }
 
 Phase::Phase(const std::string name, const float magnitude, const short int scaling, const Unit& unit,
-    const Azimuth& gradient, const std::time_t timestamp)
+    const Intrinsic& gradient, const std::time_t timestamp)
         : Point(name, magnitude, scaling, unit, gradient), polarization(Direction::DEFAULT_RADIANS),
         timestamp(timestamp) {
 
@@ -329,36 +329,36 @@ Phase::Phase(const std::string name, const float magnitude,
 }
 
 Phase::Phase(const std::string name, const float magnitude,
-        const float polarization, const float azimuthal, const std::time_t timestamp)
-        : Point(name, magnitude, azimuthal), polarization(polarization),
+        const float polarization, const float intrinsic, const std::time_t timestamp)
+        : Point(name, magnitude, intrinsic), polarization(polarization),
         timestamp(timestamp) {
 
 }
 
 Phase::Phase(const std::string name, const float magnitude,
-        const Polar& polarization, const Azimuth& azimuthal, const std::time_t timestamp)
-        : Point(name, magnitude, azimuthal), polarization(polarization.toRadians()),
+        const Polar& polarization, const Intrinsic& intrinsic, const std::time_t timestamp)
+        : Point(name, magnitude, intrinsic), polarization(polarization.toRadians()),
         timestamp(timestamp) {
 
 }
 
 Phase::Phase(const std::string name, const float magnitude, const short int scaling,
-        const Polar& polarization, const Azimuth& azimuthal, const std::time_t timestamp)
-        : Point(name, magnitude, scaling, azimuthal), polarization(polarization.toRadians()),
+        const Polar& polarization, const Intrinsic& intrinsic, const std::time_t timestamp)
+        : Point(name, magnitude, scaling, intrinsic), polarization(polarization.toRadians()),
         timestamp(timestamp) {
 
 }
 
 Phase::Phase(const std::string name, const float magnitude, const short int scaling, const std::string unit,
-        const Polar& polarization, const Azimuth& azimuthal, const std::time_t timestamp)
-        : Point(name, magnitude, scaling, unit, azimuthal), polarization(polarization.toRadians()),
+        const Polar& polarization, const Intrinsic& intrinsic, const std::time_t timestamp)
+        : Point(name, magnitude, scaling, unit, intrinsic), polarization(polarization.toRadians()),
         timestamp(timestamp) {
 
 }
 
 Phase::Phase(const std::string name, const float magnitude, const short int scaling, const Unit& unit,
-        const Polar& polarization, const Azimuth& azimuthal, const std::time_t timestamp)
-        : Point(name, magnitude, scaling, unit, azimuthal), polarization(polarization.toRadians()),
+        const Polar& polarization, const Intrinsic& intrinsic, const std::time_t timestamp)
+        : Point(name, magnitude, scaling, unit, intrinsic), polarization(polarization.toRadians()),
         timestamp(timestamp) {
 
 }
@@ -395,8 +395,8 @@ bool Phase::operator>=(const Phase& peer) const {
 Phase Phase::operator+(const Phase& peer) const {
     Phase self = *this, other = peer;
     std::complex<float>
-        ap1 = self.toComplexAzimuth(self.getGradient()),
-        ap2 = other.toComplexAzimuth(other.getGradient());
+        ap1 = self.toComplexIntrinsic(self.getGradient()),
+        ap2 = other.toComplexIntrinsic(other.getGradient());
     std::complex<float> a_phasor = (ap1 + ap2);
     std::complex<float>
         pp1 = self.toComplexPolar(self.polarization),
@@ -410,8 +410,8 @@ Phase Phase::operator+(const Phase& peer) const {
 Phase Phase::operator-(const Phase& peer) const {
     Phase self = *this, other = peer;
     std::complex<float>
-        ap1 = self.toComplexAzimuth(self.getGradient()),
-        ap2 = other.toComplexAzimuth(other.getGradient());
+        ap1 = self.toComplexIntrinsic(self.getGradient()),
+        ap2 = other.toComplexIntrinsic(other.getGradient());
     std::complex<float> a_phasor = (ap1 - ap2);
     std::complex<float>
         pp1 = self.toComplexPolar(self.polarization),
@@ -425,8 +425,8 @@ Phase Phase::operator-(const Phase& peer) const {
 Phase Phase::operator*(const Phase& peer) const {
     Phase self = *this, other = peer;
     std::complex<float>
-        ap1 = self.toComplexAzimuth(self.getGradient()),
-        ap2 = other.toComplexAzimuth(other.getGradient());
+        ap1 = self.toComplexIntrinsic(self.getGradient()),
+        ap2 = other.toComplexIntrinsic(other.getGradient());
     std::complex<float> a_phasor = (ap1 * ap2);
     std::complex<float>
         pp1 = self.toComplexPolar(self.polarization),
@@ -440,8 +440,8 @@ Phase Phase::operator*(const Phase& peer) const {
 Phase Phase::operator/(const Phase& peer) const {
     Phase self = *this, other = peer;
     std::complex<float>
-        ap1 = self.toComplexAzimuth(self.getGradient()),
-        ap2 = other.toComplexAzimuth(other.getGradient());
+        ap1 = self.toComplexIntrinsic(self.getGradient()),
+        ap2 = other.toComplexIntrinsic(other.getGradient());
     std::complex<float> a_phasor;
 	if (ap2 == std::complex<float>(shp::Quantity::DEFAULT_VALUE, shp::Quantity::DEFAULT_VALUE)) {
 		a_phasor = std::complex<float>(shp::Quantity::DEFAULT_VALUE, shp::Quantity::DEFAULT_VALUE);
@@ -465,8 +465,8 @@ Phase Phase::operator/(const Phase& peer) const {
 Phase Phase::operator%(const Phase& peer) const {
     Phase self = *this, other = peer;
     std::complex<float>
-        ap1 = self.toComplexAzimuth(self.getGradient()),
-        ap2 = other.toComplexAzimuth(other.getGradient());
+        ap1 = self.toComplexIntrinsic(self.getGradient()),
+        ap2 = other.toComplexIntrinsic(other.getGradient());
     std::complex<float> a_phasor;
 	if (ap2 == std::complex<float>(shp::Quantity::DEFAULT_VALUE, shp::Quantity::DEFAULT_VALUE)) {
 		a_phasor = std::complex<float>(shp::Quantity::DEFAULT_VALUE, shp::Quantity::DEFAULT_VALUE);
@@ -491,32 +491,32 @@ Phase Phase::operator%(const Phase& peer) const {
     return result;
 }
 
-Phase Phase::operator+(const Azimuth& rotation) const {
-	Phase self = *this; Azimuth direction(self.getAzimuthal() + rotation.toRadians());
+Phase Phase::operator+(const Intrinsic& rotation) const {
+	Phase self = *this; Intrinsic direction(self.getIntrinsic() + rotation.toRadians());
 	return Phase("+", self.getMagnitude(), self.getScaling(), self.getUnit(),
 		self.getPolarization(), direction, self.timestamp);
 }
 
-Phase Phase::operator-(const Azimuth& rotation) const {
-	Phase self = *this; Azimuth direction(self.getAzimuthal() - rotation.toRadians());
+Phase Phase::operator-(const Intrinsic& rotation) const {
+	Phase self = *this; Intrinsic direction(self.getIntrinsic() - rotation.toRadians());
 	return Phase("-", self.getMagnitude(), self.getScaling(), self.getUnit(),
 		self.getPolarization(), direction, self.timestamp);
 }
 
-Phase Phase::operator*(const Azimuth& rotation) const {
-	Phase self = *this; Azimuth direction(self.getAzimuthal() * rotation.toRadians());
+Phase Phase::operator*(const Intrinsic& rotation) const {
+	Phase self = *this; Intrinsic direction(self.getIntrinsic() * rotation.toRadians());
 	return Phase("*", self.getMagnitude(), self.getScaling(), self.getUnit(),
 		self.getPolarization(), direction, self.timestamp);
 }
 
-Phase Phase::operator/(const Azimuth& rotation) const {
-	Phase self = *this; Azimuth direction(self.getAzimuthal() / rotation.toRadians());
+Phase Phase::operator/(const Intrinsic& rotation) const {
+	Phase self = *this; Intrinsic direction(self.getIntrinsic() / rotation.toRadians());
 	return Phase("/", self.getMagnitude(), self.getScaling(), self.getUnit(),
 		self.getPolarization(), direction, self.timestamp);
 }
 
-Phase Phase::operator%(const Azimuth& rotation) const {
-	Phase self = *this; Azimuth direction(fmod(self.getAzimuthal(), rotation.toRadians()));
+Phase Phase::operator%(const Intrinsic& rotation) const {
+	Phase self = *this; Intrinsic direction(fmod(self.getIntrinsic(), rotation.toRadians()));
 	return Phase("%", self.getMagnitude(), self.getScaling(), self.getUnit(),
 		self.getPolarization(), direction, self.timestamp);
 }
@@ -524,31 +524,31 @@ Phase Phase::operator%(const Azimuth& rotation) const {
 Phase Phase::operator+(const Polar& rotation) const {
 	Phase self = *this; Polar direction(self.getPolarization() + rotation.toRadians());
 	return Phase("+", self.getMagnitude(), self.getScaling(), self.getUnit(),
-		direction, self.getAzimuthal(), self.timestamp);
+		direction, self.getIntrinsic(), self.timestamp);
 }
 
 Phase Phase::operator-(const Polar& rotation) const {
 	Phase self = *this; Polar direction(self.getPolarization() - rotation.toRadians());
 	return Phase("-", self.getMagnitude(), self.getScaling(), self.getUnit(),
-		direction, self.getAzimuthal(), self.timestamp);
+		direction, self.getIntrinsic(), self.timestamp);
 }
 
 Phase Phase::operator*(const Polar& rotation) const {
 	Phase self = *this; Polar direction(self.getPolarization() * rotation.toRadians());
 	return Phase("*", self.getMagnitude(), self.getScaling(), self.getUnit(),
-		direction, self.getAzimuthal(), self.timestamp);
+		direction, self.getIntrinsic(), self.timestamp);
 }
 
 Phase Phase::operator/(const Polar& rotation) const {
 	Phase self = *this; Polar direction(self.getPolarization() / rotation.toRadians());
 	return Phase("/", self.getMagnitude(), self.getScaling(), self.getUnit(),
-		direction, self.getAzimuthal(), self.timestamp);
+		direction, self.getIntrinsic(), self.timestamp);
 }
 
 Phase Phase::operator%(const Polar& rotation) const {
 	Phase self = *this; Polar direction(fmod(self.getPolarization(), rotation.toRadians()));
 	return Phase("%", self.getMagnitude(), self.getScaling(), self.getUnit(),
-		direction, self.getAzimuthal(), self.timestamp);
+		direction, self.getIntrinsic(), self.timestamp);
 }
 
 void Phase::setPolarization(const Direction& orientation) {

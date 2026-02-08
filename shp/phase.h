@@ -32,16 +32,16 @@ class Phase : public Point {
 public:
     // Constructors
     Phase();
-    Phase(const Azimuth& gradient);
+    Phase(const Intrinsic& gradient);
     Phase(const Polar& polarization);
     Phase(const float magnitude, const float gradient);
     Phase(const float magnitude, const short int scaling,
-        const Azimuth& gradient);
+        const Intrinsic& gradient);
     Phase(const float magnitude, const short int scaling, const std::string unit,
-        const Azimuth& gradient);
+        const Intrinsic& gradient);
     Phase(const float magnitude, const short int scaling, const Unit& unit,
-        const Azimuth& gradient);
-    Phase(const float magnitude, const Azimuth& gradient);
+        const Intrinsic& gradient);
+    Phase(const float magnitude, const Intrinsic& gradient);
     Phase(const float magnitude, const Polar& polarization);
     Phase(const float magnitude, const short int scaling,
         const Polar& polarization);
@@ -49,27 +49,27 @@ public:
         const Polar& polarization);
     Phase(const float magnitude, const short int scaling, const Unit& unit,
         const Polar& polarization);
-    Phase(const float magnitude, const float polarization, const float azimuthal);
-    Phase(const float magnitude, const Polar& polarization, const Azimuth& azimuthal);
+    Phase(const float magnitude, const float polarization, const float intrinsic);
+    Phase(const float magnitude, const Polar& polarization, const Intrinsic& intrinsic);
     Phase(const float magnitude, const short int scaling,
-        const Polar& polarization, const Azimuth& azimuthal);
+        const Polar& polarization, const Intrinsic& intrinsic);
     Phase(const float magnitude, const short int scaling, const std::string unit,
-        const Polar& polarization, const Azimuth& azimuthal);
+        const Polar& polarization, const Intrinsic& intrinsic);
     Phase(const float magnitude, const short int scaling, const Unit& unit,
-        const Polar& polarization, const Azimuth& azimuthal);
+        const Polar& polarization, const Intrinsic& intrinsic);
     Phase(const std::string name);
-    Phase(const std::string name, const Azimuth& gradient);
+    Phase(const std::string name, const Intrinsic& gradient);
     Phase(const std::string name, const Polar& polarization);
     Phase(const std::string name, const float magnitude,
         const float gradient);
     Phase(const std::string name, const float magnitude,
-        const Azimuth& gradient);
+        const Intrinsic& gradient);
     Phase(const std::string name, const float magnitude,
-        const short int scaling, const Azimuth& gradient);
+        const short int scaling, const Intrinsic& gradient);
     Phase(const std::string name, const float magnitude,
-        const short int scaling, const std::string unit, const Azimuth& gradient);
+        const short int scaling, const std::string unit, const Intrinsic& gradient);
     Phase(const std::string name, const float magnitude,
-        const short int scaling, const Unit& unit, const Azimuth& gradient);
+        const short int scaling, const Unit& unit, const Intrinsic& gradient);
     Phase(const std::string name, const float magnitude,
         const Polar& polarization);
     Phase(const std::string name, const float magnitude,
@@ -79,30 +79,30 @@ public:
     Phase(const std::string name, const float magnitude,
         const short int scaling, const Unit& unit, const Polar& polarization);
     Phase(const std::string name, const float magnitude,
-        const float polarization, const float azimuthal);
+        const float polarization, const float intrinsic);
     Phase(const std::string name, const float magnitude,
-        const Polar& polarization, const Azimuth& azimuthal);
+        const Polar& polarization, const Intrinsic& intrinsic);
     Phase(const std::string name, const float magnitude, const short int scaling,
-        const Polar& polarization, const Azimuth& azimuthal);
+        const Polar& polarization, const Intrinsic& intrinsic);
     Phase(const std::string name, const float magnitude, const short int scaling, const std::string unit,
-        const Polar& polarization, const Azimuth& azimuthal);
+        const Polar& polarization, const Intrinsic& intrinsic);
     Phase(const std::string name, const float magnitude,
         const short int scaling, const Unit& unit,
-        const Polar& polarization, const Azimuth& azimuthal);
+        const Polar& polarization, const Intrinsic& intrinsic);
     Phase(const std::string name, const std::time_t timestamp);
     Phase(const std::string name, const float gradient, const std::time_t timestamp);
-    Phase(const std::string name, const Azimuth& gradient, const std::time_t timestamp);
+    Phase(const std::string name, const Intrinsic& gradient, const std::time_t timestamp);
     Phase(const std::string name, const Polar& polarization, const std::time_t timestamp);
     Phase(const std::string name, const float magnitude,
         const float gradient, const std::time_t timestamp);
     Phase(const std::string name, const float magnitude,
-        const Azimuth& gradient, const std::time_t timestamp);
+        const Intrinsic& gradient, const std::time_t timestamp);
     Phase(const std::string name, const float magnitude, const short int scaling,
-        const Azimuth& gradient, const std::time_t timestamp);
+        const Intrinsic& gradient, const std::time_t timestamp);
     Phase(const std::string name, const float magnitude, const short int scaling, const std::string unit,
-        const Azimuth& gradient, const std::time_t timestamp);
+        const Intrinsic& gradient, const std::time_t timestamp);
     Phase(const std::string name, const float magnitude, const short int scaling, const Unit& unit,
-        const Azimuth& gradient, const std::time_t timestamp);
+        const Intrinsic& gradient, const std::time_t timestamp);
     Phase(const std::string name, const float magnitude,
         const Polar& polarization, const std::time_t timestamp);
     Phase(const std::string name, const float magnitude, const short int scaling,
@@ -112,15 +112,15 @@ public:
     Phase(const std::string name, const float magnitude, const short int scaling, const Unit& unit,
         const Polar& polarization, const std::time_t timestamp);
     Phase(const std::string name, const float magnitude,
-        const float polarization, const float azimuthal, const std::time_t timestamp);
+        const float polarization, const float intrinsic, const std::time_t timestamp);
     Phase(const std::string name, const float magnitude,
-        const Polar& polarization, const Azimuth& azimuthal, const std::time_t timestamp);
+        const Polar& polarization, const Intrinsic& intrinsic, const std::time_t timestamp);
     Phase(const std::string name, const float magnitude, const short int scaling,
-        const Polar& polarization, const Azimuth& azimuthal, const std::time_t timestamp);
+        const Polar& polarization, const Intrinsic& intrinsic, const std::time_t timestamp);
     Phase(const std::string name, const float magnitude, const short int scaling, const std::string unit,
-        const Polar& polarization, const Azimuth& azimuthal, const std::time_t timestamp);
+        const Polar& polarization, const Intrinsic& intrinsic, const std::time_t timestamp);
     Phase(const std::string name, const float magnitude, const short int scaling, const Unit& unit,
-        const Polar& polarization, const Azimuth& azimuthal, const std::time_t timestamp);
+        const Polar& polarization, const Intrinsic& intrinsic, const std::time_t timestamp);
 
     // Destructors
     ~Phase();
@@ -137,12 +137,12 @@ public:
     Phase operator/(const Phase& peer) const;
     Phase operator%(const Phase& peer) const;
 
-    // Azimuthal operator
-    Phase operator+(const Azimuth& rotation) const;
-    Phase operator-(const Azimuth& rotation) const;
-    Phase operator*(const Azimuth& rotation) const;
-    Phase operator/(const Azimuth& rotation) const;
-    Phase operator%(const Azimuth& rotation) const;
+    // Intrinsic operator
+    Phase operator+(const Intrinsic& rotation) const;
+    Phase operator-(const Intrinsic& rotation) const;
+    Phase operator*(const Intrinsic& rotation) const;
+    Phase operator/(const Intrinsic& rotation) const;
+    Phase operator%(const Intrinsic& rotation) const;
 
     // Polarization operator
     Phase operator+(const Polar& rotation) const;

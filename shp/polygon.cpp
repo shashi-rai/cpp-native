@@ -29,7 +29,7 @@ Polygon::Polygon()
 
 }
 
-Polygon::Polygon(const Azimuth& gradient)
+Polygon::Polygon(const Intrinsic& gradient)
         : Point(gradient), waves(), limit(DEFAULT_LIMIT) {
 
 }
@@ -54,22 +54,22 @@ Polygon::Polygon(const float magnitude, const short int scaling, const Unit& uni
 
 }
 
-Polygon::Polygon(const float magnitude, const Azimuth& gradient)
+Polygon::Polygon(const float magnitude, const Intrinsic& gradient)
         : Point(magnitude, gradient), waves(), limit(DEFAULT_LIMIT) {
 
 }
 
-Polygon::Polygon(const float magnitude, const short int scaling, const Azimuth& gradient)
+Polygon::Polygon(const float magnitude, const short int scaling, const Intrinsic& gradient)
         : Point(magnitude, scaling, gradient), waves(), limit(DEFAULT_LIMIT) {
 
 }
 
-Polygon::Polygon(const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient)
+Polygon::Polygon(const float magnitude, const short int scaling, const std::string unit, const Intrinsic& gradient)
         : Point(magnitude, scaling, unit, gradient), waves(), limit(DEFAULT_LIMIT) {
 
 }
 
-Polygon::Polygon(const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient)
+Polygon::Polygon(const float magnitude, const short int scaling, const Unit& unit, const Intrinsic& gradient)
         : Point(magnitude, scaling, unit, gradient), waves(), limit(DEFAULT_LIMIT) {
 
 }
@@ -79,7 +79,7 @@ Polygon::Polygon(const std::string name)
 
 }
 
-Polygon::Polygon(const std::string name, const Azimuth& gradient)
+Polygon::Polygon(const std::string name, const Intrinsic& gradient)
         : Point(name, gradient), waves(), limit(0) {
 
 }
@@ -104,27 +104,27 @@ Polygon::Polygon(const std::string name, const float magnitude, const short int 
 
 }
 
-Polygon::Polygon(const std::string name, const float magnitude, const Azimuth& gradient)
+Polygon::Polygon(const std::string name, const float magnitude, const Intrinsic& gradient)
         : Point(name, magnitude, gradient), waves(), limit(DEFAULT_LIMIT) {
 
 }
 
-Polygon::Polygon(const std::string name, const float magnitude, const short int scaling, const Azimuth& gradient)
+Polygon::Polygon(const std::string name, const float magnitude, const short int scaling, const Intrinsic& gradient)
         : Point(name, magnitude, scaling, gradient), waves(), limit(DEFAULT_LIMIT) {
 
 }
 
-Polygon::Polygon(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient)
+Polygon::Polygon(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Intrinsic& gradient)
         : Point(name, magnitude, scaling, unit, gradient), waves(), limit(DEFAULT_LIMIT) {
 
 }
 
-Polygon::Polygon(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient)
+Polygon::Polygon(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Intrinsic& gradient)
         : Point(name, magnitude, scaling, unit, gradient), waves(), limit(DEFAULT_LIMIT) {
 
 }
 
-Polygon::Polygon(const std::string name, const Azimuth& gradient, const int limit)
+Polygon::Polygon(const std::string name, const Intrinsic& gradient, const int limit)
         : Point(name, gradient), waves(), limit(limit) {
 
 }
@@ -139,7 +139,7 @@ Polygon::Polygon(const std::string name, const WaveArray& waves, const float gra
 
 }
 
-Polygon::Polygon(const std::string name, const WaveArray& waves, const Azimuth& gradient)
+Polygon::Polygon(const std::string name, const WaveArray& waves, const Intrinsic& gradient)
         : Point(name, gradient), waves(waves), limit(DEFAULT_LIMIT) {
 
 }
@@ -149,7 +149,7 @@ Polygon::Polygon(const std::string name, const WaveArray& waves, const float gra
 
 }
 
-Polygon::Polygon(const std::string name, const WaveArray& waves, const Azimuth& gradient, const int limit)
+Polygon::Polygon(const std::string name, const WaveArray& waves, const Intrinsic& gradient, const int limit)
         : Point(name, gradient), waves(waves), limit(limit) {
 
 }
@@ -238,7 +238,7 @@ void Polygon::setMultiPhase() {
         Direction angle = Direction::getSectorAngle(limit);
         for (int index=0; index < limit; index++) {
             std::string name = "S" + std::to_string(index+1);
-            shp::Wave side(name, self.getMagnitude(), self.getScaling(), Azimuth(index * angle.toRadians()));
+            shp::Wave side(name, self.getMagnitude(), self.getScaling(), Intrinsic(index * angle.toRadians()));
             this->set(index, side);
         }
     }
@@ -248,7 +248,7 @@ void Polygon::setRotation(const float degree) {
     int index = 0;
     for (WaveArray::const_iterator it = waves.begin(); it != waves.end(); ++it, index++) {
         Wave wave = (*it);
-        wave.setAzimuthal((wave.getAzimuthal() + (Direction::DEGREE_001 * degree)));
+        wave.setIntrinsic((wave.getIntrinsic() + (Direction::DEGREE_001 * degree)));
         this->set(index, wave);
     }
 }

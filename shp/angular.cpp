@@ -598,14 +598,14 @@ shp::Signal Angular::getPolarDivergence(const Angular& peerX, const Angular& pee
 
 Distance Angular::getRadius() const {
     return Distance(Distance::getMagnitude(), Distance::getScaling(), Distance::getUnit(),
-        Distance::getAzimuth(), Distance::getModulation());
+        Distance::getIntrinsic(), Distance::getHorizontal(), Distance::getVertical());
 }
 
 void Angular::setRadius(const Distance& length) {
     Angular self = *this;
     self.setRadius(length.getMagnitude(), length.getScaling(), length.getUnit());
-    self.setStressFactor(length.getAzimuth());
-    self.setDopplerShift(length.getModulation());
+    self.setStressFactor(length.getIntrinsic());
+    self.setDopplerShift(length.getVertical());
 }
 
 void Angular::setRadius(const float length) {
@@ -625,27 +625,27 @@ void Angular::setRadius(const float length, const short int scaling, const Unit&
 }
 
 Direction Angular::getStressFactor() const {
-    return Distance::getAzimuth();
+    return Distance::getIntrinsic();
 }
 
 void Angular::setStressFactor(const float orientation) {
-    Distance::setAzimuth(orientation);
+    Distance::setIntrinsic(orientation);
 }
 
 void Angular::setStressFactor(const Azimuth& orientation) {
-    Distance::setAzimuth(orientation);
+    Distance::setIntrinsic(orientation);
 }
 
 Direction Angular::getDopplerShift() const {
-    return Distance::getModulation();
+    return Distance::getVertical();
 }
 
 void Angular::setDopplerShift(const float relativity) {
-    Distance::setModulation(relativity);
+    Distance::setVertical(relativity);
 }
 
 void Angular::setDopplerShift(const Polar& relativity) {
-    Distance::setModulation(relativity);
+    Distance::setVertical(relativity);
 }
 
 float Angular::getPolarCyclingRate() const {
@@ -728,7 +728,7 @@ float Angular::getAzimuthFraction(const Azimuth& peer) const {
 
 shp::Signal Angular::getRelative(const Distance& position) const {
     Angular self = *this; Distance radius = self.getRadius();
-    return radius(position, Direction::DEFAULT_RADIANS);        // radial, X, Y, Z combined;
+    return radius(position, Polar(Direction::DEFAULT_RADIANS)); // radial, X, Y, Z combined;
 }
 
 shp::Signal Angular::getLinearX(const Distance& position) const {

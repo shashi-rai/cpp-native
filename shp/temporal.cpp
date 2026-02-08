@@ -70,48 +70,48 @@ Temporal::Temporal(const float magnitude, const short int scaling, const Unit& u
 
 }
 
-Temporal::Temporal(const Azimuth& phase)
+Temporal::Temporal(const Intrinsic& phase)
         : Signal(phase), modulation(shp::Unit::getBaseSymbol(shp::Unit::TIME)) {
 
 }
 
-Temporal::Temporal(const Azimuth& phase, const std::string unit)
+Temporal::Temporal(const Intrinsic& phase, const std::string unit)
         : Signal(phase, unit), modulation(unit) {
 
 }
 
-Temporal::Temporal(const Azimuth& phase, const Unit& unit)
+Temporal::Temporal(const Intrinsic& phase, const Unit& unit)
         : Signal(phase, unit), modulation(unit) {
 
 }
 
-Temporal::Temporal(const Azimuth& phase, const float magnitude)
+Temporal::Temporal(const Intrinsic& phase, const float magnitude)
         : Signal(phase, magnitude), modulation(shp::Unit::getBaseSymbol(shp::Unit::TIME)) {
 
 }
 
-Temporal::Temporal(const Azimuth& phase, const float magnitude, const std::string unit)
+Temporal::Temporal(const Intrinsic& phase, const float magnitude, const std::string unit)
         : Signal(phase, magnitude, unit), modulation(unit) {
 
 }
 
-Temporal::Temporal(const Azimuth& phase, const float magnitude, const Unit& unit)
+Temporal::Temporal(const Intrinsic& phase, const float magnitude, const Unit& unit)
         : Signal(phase, magnitude, unit), modulation(unit) {
 
 }
 
-Temporal::Temporal(const Azimuth& phase, const float magnitude, const short int scaling)
+Temporal::Temporal(const Intrinsic& phase, const float magnitude, const short int scaling)
         : Signal(phase, magnitude, scaling), modulation(shp::Unit::getBaseSymbol(shp::Unit::TIME)) {
 
 }
 
-Temporal::Temporal(const Azimuth& phase, const float magnitude, const short int scaling,
+Temporal::Temporal(const Intrinsic& phase, const float magnitude, const short int scaling,
         const std::string unit)
         : Signal(phase, magnitude, scaling, unit), modulation(unit) {
 
 }
 
-Temporal::Temporal(const Azimuth& phase, const float magnitude, const short int scaling,
+Temporal::Temporal(const Intrinsic& phase, const float magnitude, const short int scaling,
         const Unit& unit)
         : Signal(phase, magnitude, scaling, unit), modulation(unit) {
 
@@ -127,12 +127,12 @@ Temporal::Temporal(const Signal& modulation, const shp::Quantity& magnitude)
 
 }
 
-Temporal::Temporal(const Signal& modulation, const Azimuth& phase)
+Temporal::Temporal(const Signal& modulation, const Intrinsic& phase)
         : Signal(phase, modulation.getUnit()), modulation(modulation) {
 
 }
 
-Temporal::Temporal(const Signal& modulation, const Azimuth& phase, const shp::Quantity& magnitude)
+Temporal::Temporal(const Signal& modulation, const Intrinsic& phase, const shp::Quantity& magnitude)
         : Signal(phase, magnitude), modulation(modulation) {
 
 }
@@ -176,19 +176,19 @@ Temporal::Temporal(const Signal& modulation, const float magnitude)
 
 }
 
-Temporal::Temporal(const Signal& modulation, const Azimuth& phase, const float magnitude)
+Temporal::Temporal(const Signal& modulation, const Intrinsic& phase, const float magnitude)
         : Signal(phase, magnitude, modulation.getUnit()),
 		modulation(modulation) {
 
 }
 
-Temporal::Temporal(const Signal& modulation, const Azimuth& phase, const float magnitude,
+Temporal::Temporal(const Signal& modulation, const Intrinsic& phase, const float magnitude,
         const std::string unit)
         : Signal(phase, magnitude, unit), modulation(modulation) {
 
 }
 
-Temporal::Temporal(const Signal& modulation, const Azimuth& phase, const float magnitude,
+Temporal::Temporal(const Signal& modulation, const Intrinsic& phase, const float magnitude,
         const Unit& unit)
         : Signal(phase, magnitude, unit), modulation(modulation) {
 
@@ -218,7 +218,7 @@ Temporal::Temporal(const Signal& modulation, const float phase, const float magn
 
 }
 
-Temporal::Temporal(const Signal& modulation, const Azimuth& phase, const float magnitude,
+Temporal::Temporal(const Signal& modulation, const Intrinsic& phase, const float magnitude,
         const short int scaling)
         : Signal(phase, magnitude, scaling, modulation.getUnit()), modulation(modulation) {
 
@@ -248,7 +248,7 @@ Temporal::Temporal(const Signal& modulation, const float phase, const float magn
 
 }
 
-Temporal::Temporal(const Signal& modulation, const Azimuth& phase, const float magnitude,
+Temporal::Temporal(const Signal& modulation, const Intrinsic& phase, const float magnitude,
         const short int scaling, const std::string unit)
         : Signal(phase, magnitude, scaling, unit), modulation(modulation) {
 
@@ -278,7 +278,7 @@ Temporal::Temporal(const Signal& modulation, const float phase, const float magn
 
 }
 
-Temporal::Temporal(const Signal& modulation, const Azimuth& phase, const float magnitude,
+Temporal::Temporal(const Signal& modulation, const Intrinsic& phase, const float magnitude,
         const short int scaling, const Unit& unit)
         : Signal(phase, magnitude, scaling, unit), modulation(modulation) {
 
@@ -391,15 +391,15 @@ Temporal Temporal::getOverlayScalar(const float coefficient) const {
 }
 
 Temporal Temporal::getCarrierRotation(const short int degree) const {
-    Signal self = *this; Azimuth carrier(self.getOrientation());
-    Azimuth phase = carrier.getRotation(degree);
+    Signal self = *this; Intrinsic carrier(self.getOrientation());
+    Intrinsic phase = carrier.getRotation(degree);
     return Temporal(this->modulation, phase,
 		self.getMagnitude(), self.getScaling(), self.getUnit());
 }
 
 Temporal Temporal::getOverlayRotation(const short int degree) const {
-    Signal self = *this; Azimuth overlay(modulation.getOrientation());
-    Azimuth phase = overlay.getRotation(degree);
+    Signal self = *this; Intrinsic overlay(modulation.getOrientation());
+    Intrinsic phase = overlay.getRotation(degree);
     return Temporal(phase, self.getOrientation(),
 		self.getMagnitude(), self.getScaling(), self.getUnit());
 }
@@ -480,7 +480,7 @@ void Temporal::setIntensityDrift(const float shift) {
     Signal::setOrientation(shift);
 }
 
-void Temporal::setIntensityDrift(const Azimuth& shift) {
+void Temporal::setIntensityDrift(const Intrinsic& shift) {
     Signal::setOrientation(shift.toRadians());
 }
 
@@ -492,30 +492,30 @@ void Temporal::setSpatialDrift(const shp::Signal& motion) {
     modulation = motion;
 }
 
-void Temporal::setSpatialDrift(const Azimuth& rate) {
+void Temporal::setSpatialDrift(const Intrinsic& rate) {
     modulation.setOrientation(rate.toRadians());
 }
 
 void Temporal::setSpatialDrift(const float distance,
-        const Azimuth& rate) {
+        const Intrinsic& rate) {
     modulation.setMagnitude(distance);
     modulation.setOrientation(rate.toRadians());
 }
 
 void Temporal::setSpatialDrift(const float distance, const short int scale,
-        const Azimuth& rate) {
+        const Intrinsic& rate) {
     modulation.setMagnitude(distance, scale);
     modulation.setOrientation(rate.toRadians());
 }
 
 void Temporal::setSpatialDrift(const float distance, const short int scale, const std::string unit,
-        const Azimuth& rate) {
+        const Intrinsic& rate) {
     modulation.setMagnitude(distance, scale, unit);
     modulation.setOrientation(rate.toRadians());
 }
 
 void Temporal::setSpatialDrift(const float distance, const short int scale, const Unit& unit,
-        const Azimuth& rate) {
+        const Intrinsic& rate) {
     modulation.setMagnitude(distance, scale, unit);
     modulation.setOrientation(rate.toRadians());
 }

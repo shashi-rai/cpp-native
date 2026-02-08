@@ -267,8 +267,8 @@ Signal Area::getVectorTotal() const {
 }
 
 Signal Area::getLengthRotation(const short int degree) const {
-    Azimuth direction(length.getOrientation());
-    Azimuth phase = direction.getRotation(degree);
+    Intrinsic direction(length.getOrientation());
+    Intrinsic phase = direction.getRotation(degree);
     return Signal(phase, length.getMagnitude(), length.getScaling(), length.getUnit());
 }
 
@@ -301,8 +301,8 @@ void Area::setLength(const float value, const short int scale, const Unit& unit)
 }
 
 Signal Area::getBreadthRotation(const short int degree) const {
-    Azimuth direction(breadth.getOrientation());
-    Azimuth phase = direction.getRotation(degree);
+    Intrinsic direction(breadth.getOrientation());
+    Intrinsic phase = direction.getRotation(degree);
     return Signal(phase, length.getMagnitude(), length.getScaling(), length.getUnit());
 }
 

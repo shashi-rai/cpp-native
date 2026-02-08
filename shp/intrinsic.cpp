@@ -18,82 +18,82 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#include "azimuth.h"
+#include "intrinsic.h"
 
 namespace shp {
 
-Azimuth::Azimuth()
+Intrinsic::Intrinsic()
         : Direction(), shifting(shp::Direction::DEFAULT_RADIANS) {
 
 }
 
-Azimuth::Azimuth(const float radians)
+Intrinsic::Intrinsic(const float radians)
         : Direction(radians), shifting(shp::Direction::DEFAULT_RADIANS) {
 
 }
 
-Azimuth::Azimuth(const std::complex<float> polar)
+Intrinsic::Intrinsic(const std::complex<float> polar)
         : Direction(polar), shifting(shp::Direction::DEFAULT_RADIANS) {
 
 }
 
-Azimuth::Azimuth(const short int degrees)
+Intrinsic::Intrinsic(const short int degrees)
         : Direction(degrees), shifting(shp::Direction::DEFAULT_RADIANS) {
 
 }
 
-Azimuth::Azimuth(const short int degrees, const short int minutes)
+Intrinsic::Intrinsic(const short int degrees, const short int minutes)
         : Direction(degrees, minutes), shifting(shp::Direction::DEFAULT_RADIANS) {
 
 }
 
-Azimuth::Azimuth(const short int degrees, const short int minutes, const short int seconds)
+Intrinsic::Intrinsic(const short int degrees, const short int minutes, const short int seconds)
         : Direction(degrees, minutes, seconds), shifting(shp::Direction::DEFAULT_RADIANS) {
 
 }
 
-Azimuth::Azimuth(const Direction& change)
+Intrinsic::Intrinsic(const Direction& change)
         : Direction(), shifting(change) {
 
 }
 
-Azimuth::Azimuth(const float radians, const Direction& change)
+Intrinsic::Intrinsic(const float radians, const Direction& change)
         : Direction(radians), shifting(change) {
 
 }
 
-Azimuth::Azimuth(const std::complex<float> polar, const Direction& change)
+Intrinsic::Intrinsic(const std::complex<float> polar, const Direction& change)
         : Direction(polar), shifting(change) {
 
 }
 
-Azimuth::Azimuth(const short int degrees, const Direction& change)
+Intrinsic::Intrinsic(const short int degrees, const Direction& change)
         : Direction(degrees), shifting(change) {
 
 }
 
-Azimuth::Azimuth(const short int degrees, const short int minutes, const Direction& change)
+Intrinsic::Intrinsic(const short int degrees, const short int minutes, const Direction& change)
         : Direction(degrees, minutes), shifting(change) {
 
 }
 
-Azimuth::Azimuth(const short int degrees, const short int minutes, const short int seconds,
+Intrinsic::Intrinsic(const short int degrees, const short int minutes, const short int seconds,
         const Direction& change)
         : Direction(degrees, minutes, seconds), shifting(change) {
 
 }
 
-Azimuth::~Azimuth() {
+Intrinsic::~Intrinsic() {
 
 }
 
-bool Azimuth::operator==(const Azimuth& peer) const {
+bool Intrinsic::operator==(const Intrinsic& peer) const {
     return (static_cast<const Direction&>(*this) == static_cast<const Direction&>(peer))
         && (shifting == peer.shifting);
 }
 
-bool Azimuth::operator<(const Azimuth& peer) const {
-    Azimuth self = *this; bool result = false;
+bool Intrinsic::operator<(const Intrinsic& peer) const {
+    Intrinsic self = *this; bool result = false;
     if (static_cast<const Direction&>(*this) < static_cast<const Direction&>(peer)) {
         result = true;
     } else if (shifting < peer.shifting) {
@@ -102,8 +102,8 @@ bool Azimuth::operator<(const Azimuth& peer) const {
     return result;
 }
 
-bool Azimuth::operator>(const Azimuth& peer) const {
-    Azimuth self = *this; bool result = false;
+bool Intrinsic::operator>(const Intrinsic& peer) const {
+    Intrinsic self = *this; bool result = false;
     if (static_cast<const Direction&>(*this) > static_cast<const Direction&>(peer)) {
         result = true;
     } else if (shifting > peer.shifting) {
@@ -112,86 +112,86 @@ bool Azimuth::operator>(const Azimuth& peer) const {
     return result;
 }
 
-bool Azimuth::operator<=(const Azimuth& peer) const {
-    Azimuth self = *this;
+bool Intrinsic::operator<=(const Intrinsic& peer) const {
+    Intrinsic self = *this;
     return (self < peer) || (self == peer);
 }
 
-bool Azimuth::operator>=(const Azimuth& peer) const {
-    Azimuth self = *this;
+bool Intrinsic::operator>=(const Intrinsic& peer) const {
+    Intrinsic self = *this;
     return (self > peer) || (self == peer);
 }
 
-Azimuth Azimuth::operator+(const Direction& peer) const {
+Intrinsic Intrinsic::operator+(const Direction& peer) const {
     Direction self = *this, other = peer;
     Direction direction = (self + other);
-    return Azimuth(direction.getDegrees(), direction.getMinutes(), direction.getSeconds(), shifting);
+    return Intrinsic(direction.getDegrees(), direction.getMinutes(), direction.getSeconds(), shifting);
 }
 
-Azimuth Azimuth::operator-(const Direction& peer) const {
+Intrinsic Intrinsic::operator-(const Direction& peer) const {
     Direction self = *this, other = peer;
     Direction direction = (self - other);
-    return Azimuth(direction.getDegrees(), direction.getMinutes(), direction.getSeconds(), shifting);
+    return Intrinsic(direction.getDegrees(), direction.getMinutes(), direction.getSeconds(), shifting);
 }
 
-Azimuth Azimuth::operator*(const Direction& peer) const {
+Intrinsic Intrinsic::operator*(const Direction& peer) const {
     Direction self = *this, other = peer;
     Direction direction = (self * other);
-    return Azimuth(direction.getDegrees(), direction.getMinutes(), direction.getSeconds(), shifting);
+    return Intrinsic(direction.getDegrees(), direction.getMinutes(), direction.getSeconds(), shifting);
 }
 
-Azimuth Azimuth::operator/(const Direction& peer) const {
+Intrinsic Intrinsic::operator/(const Direction& peer) const {
     Direction self = *this, other = peer;
     Direction direction = (self / other);
-    return Azimuth(direction.getDegrees(), direction.getMinutes(), direction.getSeconds(), shifting);
+    return Intrinsic(direction.getDegrees(), direction.getMinutes(), direction.getSeconds(), shifting);
 }
 
-Azimuth Azimuth::operator%(const Direction& peer) const {
+Intrinsic Intrinsic::operator%(const Direction& peer) const {
     Direction self = *this, other = peer;
     Direction direction = (self % other);
-    return Azimuth(direction.getDegrees(), direction.getMinutes(), direction.getSeconds(), shifting);
+    return Intrinsic(direction.getDegrees(), direction.getMinutes(), direction.getSeconds(), shifting);
 }
 
-void Azimuth::setAngleShiftRate(const float degree) {
+void Intrinsic::setAngleShiftRate(const float degree) {
     this->shifting.setRotation(degree);
 }
 
-Direction Azimuth::getCurrent() const {
+Direction Intrinsic::getCurrent() const {
     Direction result(Direction::toRadians() + shifting.toRadians());
     return result;
 }
 
-Direction Azimuth::copy() const {
+Direction Intrinsic::copy() const {
     Direction self = *this;
-    Azimuth fresh(self.getDegrees(), self.getMinutes(), self.getSeconds(), shifting);
+    Intrinsic fresh(self.getDegrees(), self.getMinutes(), self.getSeconds(), shifting);
     return fresh;
 }
 
-void Azimuth::clear() {
+void Intrinsic::clear() {
     Direction::clear();
     shifting.clear();
     return;
 }
 
-std::string Azimuth::print() const {
+std::string Intrinsic::print() const {
     std::stringstream result;
-    result << "𝜙";
+    result << "𝜑";
     result << Direction::print() << "δ";
 	result << shifting.print();
 	return result.str();
 }
 
-std::string Azimuth::printRadians() const {
+std::string Intrinsic::printRadians() const {
     std::stringstream result;
-    result << "𝜙";
+    result << "𝜑";
     result << Direction::printRadians() << "δ";
 	result << shifting.printRadians();
 	return result.str();
 }
 
-std::string Azimuth::printEuler() const {
+std::string Intrinsic::printEuler() const {
     std::stringstream result;
-    result << "𝜙";
+    result << "𝜑";
     result << Direction::printEuler() << "δ";
 	result << shifting.printEuler();
 	return result.str();

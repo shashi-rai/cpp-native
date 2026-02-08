@@ -219,27 +219,27 @@ void Coordinate::setUnitX(const Unit& object) {
 }
 
 Azimuth Coordinate::getStressFactorX() const {
-    return x.getAzimuth();
+    return x.getIntrinsic();
 }
 
 void Coordinate::setStressFactorX(const float orientation) {
-    x.setAzimuth(orientation);
+    x.setIntrinsic(orientation);
 }
 
 void Coordinate::setStressFactorX(const Azimuth& orientation) {
-    x.setAzimuth(orientation);
+    x.setIntrinsic(orientation);
 }
 
 Polar Coordinate::getDopplerShiftX() const {
-    return x.getModulation();
+    return x.getVertical();
 }
 
 void Coordinate::setDopplerShiftX(const float relativity) {
-    x.setModulation(relativity);
+    x.setVertical(relativity);
 }
 
 void Coordinate::setDopplerShiftX(const Polar& relativity) {
-    x.setModulation(relativity);
+    x.setVertical(relativity);
 }
 
 void Coordinate::setChangeXMagnitude(const float motion) {
@@ -247,7 +247,7 @@ void Coordinate::setChangeXMagnitude(const float motion) {
 }
 
 void Coordinate::setChangeXDirection(const float degree) {
-    x.setChangeDirection(degree);
+    x.setChangeIntrinsic(degree);
 }
 
 void Coordinate::setY(const float length) {
@@ -283,27 +283,27 @@ void Coordinate::setUnitY(const Unit& object) {
 }
 
 Azimuth Coordinate::getStressFactorY() const {
-    return y.getAzimuth();
+    return y.getIntrinsic();
 }
 
 void Coordinate::setStressFactorY(const float orientation) {
-    y.setAzimuth(orientation);
+    y.setIntrinsic(orientation);
 }
 
 void Coordinate::setStressFactorY(const Azimuth& orientation) {
-    y.setAzimuth(orientation);
+    y.setIntrinsic(orientation);
 }
 
 Polar Coordinate::getDopplerShiftY() const {
-    return y.getModulation();
+    return y.getVertical();
 }
 
 void Coordinate::setDopplerShiftY(const float relativity) {
-    y.setModulation(relativity);
+    y.setVertical(relativity);
 }
 
 void Coordinate::setDopplerShiftY(const Polar& relativity) {
-    y.setModulation(relativity);
+    y.setVertical(relativity);
 }
 
 void Coordinate::setChangeYMagnitude(const float motion) {
@@ -311,7 +311,7 @@ void Coordinate::setChangeYMagnitude(const float motion) {
 }
 
 void Coordinate::setChangeYDirection(const float degree) {
-    y.setChangeDirection(degree);
+    y.setChangeIntrinsic(degree);
 }
 
 void Coordinate::setZ(const float length) {
@@ -347,27 +347,27 @@ void Coordinate::setUnitZ(const Unit& object) {
 }
 
 Azimuth Coordinate::getStressFactorZ() const {
-    return z.getAzimuth();
+    return z.getIntrinsic();
 }
 
 void Coordinate::setStressFactorZ(const float orientation) {
-    z.setAzimuth(orientation);
+    z.setIntrinsic(orientation);
 }
 
 void Coordinate::setStressFactorZ(const Azimuth& orientation) {
-    z.setAzimuth(orientation);
+    z.setIntrinsic(orientation);
 }
 
 Polar Coordinate::getDopplerShiftZ() const {
-    return z.getModulation();
+    return z.getVertical();
 }
 
 void Coordinate::setDopplerShiftZ(const float relativity) {
-    z.setModulation(relativity);
+    z.setVertical(relativity);
 }
 
 void Coordinate::setDopplerShiftZ(const Polar& relativity) {
-    z.setModulation(relativity);
+    z.setVertical(relativity);
 }
 
 void Coordinate::setChangeZMagnitude(const float motion) {
@@ -375,7 +375,7 @@ void Coordinate::setChangeZMagnitude(const float motion) {
 }
 
 void Coordinate::setChangeZDirection(const float degree) {
-    z.setChangeDirection(degree);
+    z.setChangeIntrinsic(degree);
 }
 
 Signal Coordinate::getDiagonal() const {

@@ -26,212 +26,432 @@ const std::string Distance::UNIT = "m";     // System International
 
 Distance::Distance()
         : Signal(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
-        modulation(Direction::DEFAULT_RADIANS) {
+        horizontal(Direction::DEFAULT_RADIANS), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
 Distance::Distance(const std::string unit)
-        : Signal(unit), modulation(Direction::DEFAULT_RADIANS) {
+        : Signal(unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
 Distance::Distance(const Unit& unit)
-        : Signal(unit), modulation(Direction::DEFAULT_RADIANS) {
+        : Signal(unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
 Distance::Distance(const float length)
         : Signal(length, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
-        modulation(Direction::DEFAULT_RADIANS) {
+        horizontal(Direction::DEFAULT_RADIANS), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
 Distance::Distance(const float length, const std::string unit)
-        : Signal(length, unit), modulation(Direction::DEFAULT_RADIANS) {
+        : Signal(length, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
 Distance::Distance(const float length, const Unit& unit)
-        : Signal(length, unit), modulation(Direction::DEFAULT_RADIANS) {
+        : Signal(length, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
 Distance::Distance(const float length, const short int scaling)
         : Signal(length, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
-        modulation(Direction::DEFAULT_RADIANS) {
+        horizontal(Direction::DEFAULT_RADIANS), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
 Distance::Distance(const float length, const short int scaling, const std::string unit)
-        : Signal(length, scaling, unit), modulation(Direction::DEFAULT_RADIANS) {
+        : Signal(length, scaling, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
 Distance::Distance(const float length, const short int scaling, const Unit& unit)
-        : Signal(length, scaling, unit), modulation(Direction::DEFAULT_RADIANS) {
+        : Signal(length, scaling, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
-Distance::Distance(const Azimuth& orientation)
+Distance::Distance(const Intrinsic& orientation)
         : Signal(orientation, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
-        modulation(Direction::DEFAULT_RADIANS) {
+        horizontal(Direction::DEFAULT_RADIANS), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
-Distance::Distance(const Polar& modulation)
-        : Signal(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)), modulation(modulation) {
+Distance::Distance(const Azimuth& horizontal)
+        : Signal(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+        horizontal(horizontal), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
-Distance::Distance(const Polar& modulation, const Azimuth& orientation)
-        : Signal(orientation, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)), modulation(modulation) {
+Distance::Distance(const Polar& vertical)
+        : Signal(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(vertical) {
 
 }
 
-Distance::Distance(const std::string unit, const Azimuth& orientation)
-        : Signal(orientation, unit), modulation(Direction::DEFAULT_RADIANS) {
+Distance::Distance(const Intrinsic& orientation, const Azimuth& horizontal)
+        : Signal(orientation, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+        horizontal(horizontal), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
-Distance::Distance(const Unit& unit, const Azimuth& orientation)
-        : Signal(orientation, unit), modulation(Direction::DEFAULT_RADIANS) {
+Distance::Distance(const Intrinsic& orientation, const Polar& vertical)
+        : Signal(orientation, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(vertical) {
 
 }
 
-Distance::Distance(const std::string unit, const Polar& modulation)
-        : Signal(unit), modulation(modulation) {
+Distance::Distance(const Intrinsic& orientation, const Azimuth& horizontal, const Polar& vertical)
+        : Signal(orientation, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+        horizontal(horizontal), vertical(vertical) {
 
 }
 
-Distance::Distance(const Unit& unit, const Polar& modulation)
-        : Signal(unit), modulation(modulation) {
+Distance::Distance(const std::string unit, const Intrinsic& orientation)
+        : Signal(orientation, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
-Distance::Distance(const float length, const Azimuth& orientation)
+Distance::Distance(const Unit& unit, const Intrinsic& orientation)
+        : Signal(orientation, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(Direction::DEFAULT_RADIANS) {
+
+}
+
+Distance::Distance(const std::string unit, const Azimuth& horizontal)
+        : Signal(unit),
+        horizontal(horizontal), vertical(Direction::DEFAULT_RADIANS) {
+
+}
+
+Distance::Distance(const Unit& unit, const Azimuth& horizontal)
+        : Signal(unit),
+        horizontal(horizontal), vertical(Direction::DEFAULT_RADIANS) {
+
+}
+
+Distance::Distance(const std::string unit, const Polar& vertical)
+        : Signal(unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(vertical) {
+
+}
+
+Distance::Distance(const Unit& unit, const Polar& vertical)
+        : Signal(unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(vertical) {
+
+}
+
+Distance::Distance(const Unit& unit,
+        const Intrinsic& orientation, const Azimuth& horizontal)
+        : Signal(orientation, unit),
+        horizontal(horizontal), vertical(Direction::DEFAULT_RADIANS) {
+
+}
+
+Distance::Distance(const Unit& unit,
+        const Intrinsic& orientation, const Polar& vertical)
+        : Signal(orientation, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(vertical) {
+
+}
+
+Distance::Distance(const Unit& unit,
+        const Intrinsic& orientation, const Azimuth& horizontal, const Polar& vertical)
+        : Signal(orientation, unit),
+        horizontal(horizontal), vertical(vertical) {
+
+}
+
+Distance::Distance(const float length,
+        const Intrinsic& orientation)
         : Signal(orientation, length, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
-        modulation(Direction::DEFAULT_RADIANS) {
+        horizontal(Direction::DEFAULT_RADIANS), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
-Distance::Distance(const float length, const Polar& modulation)
+Distance::Distance(const float length,
+        const Azimuth& horizontal)
         : Signal(length, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
-        modulation(modulation) {
+        horizontal(horizontal), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
-Distance::Distance(const float length, const Polar& modulation, const Azimuth& orientation)
+Distance::Distance(const float length,
+        const Polar& vertical)
+        : Signal(length, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(vertical) {
+
+}
+
+Distance::Distance(const float length,
+        const Intrinsic& orientation, const Azimuth& horizontal)
         : Signal(orientation, length, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
-        modulation(modulation) {
+        horizontal(horizontal), vertical(Direction::DEFAULT_RADIANS) {
+
+}
+
+Distance::Distance(const float length,
+        const Intrinsic& orientation, const Polar& vertical)
+        : Signal(orientation, length, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(vertical) {
+
+}
+
+Distance::Distance(const float length,
+        const Intrinsic& orientation, const Azimuth& horizontal, const Polar& vertical)
+        : Signal(orientation, length, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+        horizontal(horizontal), vertical(vertical) {
 
 }
 
 Distance::Distance(const float length, const std::string unit, const float orientation)
-        : Signal(orientation, length, unit), modulation(Direction::DEFAULT_RADIANS) {
+        : Signal(orientation, length, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
-Distance::Distance(const float length, const std::string unit, const Azimuth& orientation)
-        : Signal(orientation, length, unit), modulation(Direction::DEFAULT_RADIANS) {
+Distance::Distance(const float length, const std::string unit, const Intrinsic& orientation)
+        : Signal(orientation, length, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
 Distance::Distance(const float length, const Unit& unit, const float orientation)
-        : Signal(orientation, length, unit), modulation(Direction::DEFAULT_RADIANS) {
+        : Signal(orientation, length, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
-Distance::Distance(const float length, const Unit& unit, const Azimuth& orientation)
-        : Signal(orientation, length, unit), modulation(Direction::DEFAULT_RADIANS) {
+Distance::Distance(const float length, const Unit& unit, const Intrinsic& orientation)
+        : Signal(orientation, length, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
-Distance::Distance(const float length, const std::string unit, const Polar& modulation)
-        : Signal(length, unit), modulation(modulation) {
+Distance::Distance(const float length, const std::string unit, const Azimuth& horizontal)
+        : Signal(length, unit),
+        horizontal(horizontal), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
-Distance::Distance(const float length, const Unit& unit, const Polar& modulation)
-        : Signal(length, unit), modulation(modulation) {
+Distance::Distance(const float length, const std::string unit, const Polar& vertical)
+        : Signal(length, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(vertical) {
 
 }
 
-Distance::Distance(const float length, const Unit& unit, const Polar& modulation,
-        const Azimuth& orientation)
-        : Signal(orientation, length, unit), modulation(modulation) {
+Distance::Distance(const float length, const Unit& unit, const Azimuth& horizontal)
+        : Signal(length, unit),
+        horizontal(horizontal), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
-Distance::Distance(const float length, const short int scaling, const float orientation)
+Distance::Distance(const float length, const Unit& unit, const Polar& vertical)
+        : Signal(length, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(vertical) {
+
+}
+
+Distance::Distance(const float length, const Unit& unit,
+        const Intrinsic& orientation, const Azimuth& horizontal)
+        : Signal(orientation, length, unit),
+        horizontal(horizontal), vertical(Direction::DEFAULT_RADIANS) {
+
+}
+
+Distance::Distance(const float length, const Unit& unit,
+        const Intrinsic& orientation, const Polar& vertical)
+        : Signal(orientation, length, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(vertical) {
+
+}
+
+Distance::Distance(const float length, const Unit& unit,
+        const Intrinsic& orientation, const Azimuth& horizontal, const Polar& vertical)
+        : Signal(orientation, length, unit),
+        horizontal(horizontal), vertical(vertical) {
+
+}
+
+Distance::Distance(const float length, const short int scaling,
+        const float orientation)
         : Signal(orientation, length, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
-        modulation(Direction::DEFAULT_RADIANS) {
+        horizontal(Direction::DEFAULT_RADIANS), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
-Distance::Distance(const float length, const short int scaling, const Azimuth& orientation)
+Distance::Distance(const float length, const short int scaling,
+        const Intrinsic& orientation)
         : Signal(orientation, length, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
-        modulation(Direction::DEFAULT_RADIANS) {
+        horizontal(Direction::DEFAULT_RADIANS), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
-Distance::Distance(const float length, const short int scaling, const Polar& modulation)
+Distance::Distance(const float length, const short int scaling,
+        const Azimuth& horizontal)
         : Signal(length, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
-        modulation(modulation) {
+        horizontal(horizontal), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
-Distance::Distance(const float length, const short int scaling, const Polar& modulation,
-        const Azimuth& orientation)
+Distance::Distance(const float length, const short int scaling,
+        const Polar& vertical)
+        : Signal(length, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(vertical) {
+
+}
+
+Distance::Distance(const float length, const short int scaling,
+        const Azimuth& horizontal, const Polar& vertical)
+        : Signal(length, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+        horizontal(horizontal), vertical(vertical) {
+
+}
+
+Distance::Distance(const float length, const short int scaling,
+        const Intrinsic& orientation, const Azimuth& horizontal)
         : Signal(orientation, length, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
-        modulation(modulation) {
+        horizontal(horizontal), vertical(Direction::DEFAULT_RADIANS) {
+
+}
+
+Distance::Distance(const float length, const short int scaling,
+        const Intrinsic& orientation, const Polar& vertical)
+        : Signal(orientation, length, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(vertical) {
+
+}
+
+Distance::Distance(const float length, const short int scaling,
+        const Intrinsic& orientation, const Azimuth& horizontal, const Polar& vertical)
+        : Signal(orientation, length, scaling, shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
+        horizontal(horizontal), vertical(vertical) {
 
 }
 
 Distance::Distance(const float length, const short int scaling, const std::string unit,
         const float orientation)
-        : Signal(orientation, length, scaling, unit), modulation(Direction::DEFAULT_RADIANS) {
+        : Signal(orientation, length, scaling, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
 Distance::Distance(const float length, const short int scaling, const std::string unit,
-        const Azimuth& orientation)
-        : Signal(orientation, length, scaling, unit), modulation(Direction::DEFAULT_RADIANS) {
+        const Intrinsic& orientation)
+        : Signal(orientation, length, scaling, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(Direction::DEFAULT_RADIANS) {
+
+}
+
+Distance::Distance(const float length, const short int scaling, const std::string unit,
+        const Azimuth& horizontal)
+        : Signal(length, scaling, unit),
+        horizontal(horizontal), vertical(Direction::DEFAULT_RADIANS) {
+
+}
+
+Distance::Distance(const float length, const short int scaling, const std::string unit,
+        const Polar& vertical)
+        : Signal(length, scaling, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(vertical) {
 
 }
 
 Distance::Distance(const float length, const short int scaling, const Unit& unit,
         const float orientation)
-        : Signal(orientation, length, scaling, unit), modulation(Direction::DEFAULT_RADIANS) {
+        : Signal(orientation, length, scaling, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
 Distance::Distance(const float length, const short int scaling, const Unit& unit,
-        const Azimuth& orientation)
-        : Signal(orientation, length, scaling, unit), modulation(Direction::DEFAULT_RADIANS) {
+        const Intrinsic& orientation)
+        : Signal(orientation, length, scaling, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
 Distance::Distance(const float length, const short int scaling, const Unit& unit,
-        const Polar& modulation)
-        : Signal(length, scaling, unit), modulation(modulation) {
+        const Azimuth& horizontal)
+        : Signal(length, scaling, unit),
+        horizontal(horizontal), vertical(Direction::DEFAULT_RADIANS) {
 
 }
 
 Distance::Distance(const float length, const short int scaling, const Unit& unit,
-        const float orientation, const Polar& modulation)
-        : Signal(orientation, length, scaling, unit), modulation(modulation) {
+        const Polar& vertical)
+        : Signal(length, scaling, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(vertical) {
 
 }
 
 Distance::Distance(const float length, const short int scaling, const std::string unit,
-        const float orientation, const Polar& modulation)
-        : Signal(orientation, length, scaling, unit), modulation(modulation) {
+        const float orientation, const Azimuth& horizontal)
+        : Signal(orientation, length, scaling, unit),
+        horizontal(horizontal), vertical(Direction::DEFAULT_RADIANS) {
+
+}
+
+Distance::Distance(const float length, const short int scaling, const std::string unit,
+        const float orientation, const Polar& vertical)
+        : Signal(orientation, length, scaling, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(vertical) {
+
+}
+
+Distance::Distance(const float length, const short int scaling, const std::string unit,
+        const float orientation, const Azimuth& horizontal, const Polar& vertical)
+        : Signal(orientation, length, scaling, unit), horizontal(horizontal), vertical(vertical) {
 
 }
 
 Distance::Distance(const float length, const short int scaling, const Unit& unit,
-        const Azimuth& orientation, const Polar& modulation)
-        : Signal(orientation, length, scaling, unit), modulation(modulation) {
+        const float orientation, const Azimuth& horizontal)
+        : Signal(orientation, length, scaling, unit),
+        horizontal(horizontal), vertical(Direction::DEFAULT_RADIANS) {
+
+}
+
+Distance::Distance(const float length, const short int scaling, const Unit& unit,
+        const float orientation, const Polar& vertical)
+        : Signal(orientation, length, scaling, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(vertical) {
+
+}
+
+Distance::Distance(const float length, const short int scaling, const Unit& unit,
+        const float orientation, const Azimuth& horizontal, const Polar& vertical)
+        : Signal(orientation, length, scaling, unit),
+        horizontal(horizontal), vertical(vertical) {
+
+}
+
+Distance::Distance(const float length, const short int scaling, const Unit& unit,
+        const Intrinsic& orientation, const Azimuth& horizontal)
+        : Signal(orientation, length, scaling, unit),
+        horizontal(horizontal), vertical(Direction::DEFAULT_RADIANS) {
+
+}
+
+Distance::Distance(const float length, const short int scaling, const Unit& unit,
+        const Intrinsic& orientation, const Polar& vertical)
+        : Signal(orientation, length, scaling, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(vertical) {
+
+}
+
+Distance::Distance(const float length, const short int scaling, const Unit& unit,
+        const Intrinsic& orientation, const Azimuth& horizontal, const Polar& vertical)
+        : Signal(orientation, length, scaling, unit), horizontal(horizontal), vertical(vertical) {
 
 }
 
@@ -241,14 +461,16 @@ Distance::~Distance() {
 
 bool Distance::operator==(const Distance& peer) const {
     return (static_cast<const Signal&>(*this) == static_cast<const Signal&>(peer))
-        && (modulation == peer.modulation);
+        && (this->horizontal == peer.horizontal) && (this->vertical == peer.vertical);
 }
 
 bool Distance::operator<(const Distance& peer) const {
     Distance self = *this; bool result = false;
     if (static_cast<const Signal&>(*this) < static_cast<const Signal&>(peer)) {
         result = true;
-    } else if (modulation < peer.modulation) {
+    } else if (this->horizontal < peer.horizontal) {
+        result = true;
+    } else if (this->vertical < peer.vertical) {
         result = true;
     }
     return result;
@@ -258,7 +480,9 @@ bool Distance::operator>(const Distance& peer) const {
     Distance self = *this; bool result = false;
     if (static_cast<const Signal&>(*this) > static_cast<const Signal&>(peer)) {
         result = true;
-    } else if (modulation > peer.modulation) {
+    } else if (this->horizontal > peer.horizontal) {
+        result = true;
+    } else if (this->vertical > peer.vertical) {
         result = true;
     }
     return result;
@@ -275,225 +499,279 @@ bool Distance::operator>=(const Distance& peer) const {
 }
 
 Distance Distance::operator+(const Distance& peer) const {
-    Signal self = *this, other = peer;
-    Signal distance = (self + other);
-    Polar relativity = (this->modulation + peer.modulation);
+    Signal self = *this, other = peer, distance = (self + other);
+    Azimuth azimuth = (this->horizontal + peer.horizontal);
+    Polar polar = (this->vertical + peer.vertical);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
-        distance.getOrientation(), relativity);
+        distance.getOrientation(), azimuth, polar);
 }
 
 Distance Distance::operator-(const Distance& peer) const {
-    Signal self = *this, other = peer;
-    Signal distance = (self - other);
-    Polar relativity = (this->modulation - peer.modulation);
+    Signal self = *this, other = peer, distance = (self - other);
+    Azimuth azimuth = (this->horizontal - peer.horizontal);
+    Polar polar = (this->vertical - peer.vertical);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
-        distance.getOrientation(), relativity);
+        distance.getOrientation(), azimuth, polar);
 }
 
 Distance Distance::operator*(const Distance& peer) const {
-    Signal self = *this, other = peer;
-    Signal distance = (self * other);
-    Polar relativity = (this->modulation * peer.modulation);
+    Signal self = *this, other = peer, distance = (self * other);
+    Azimuth azimuth = (this->horizontal * peer.horizontal);
+    Polar polar = (this->vertical * peer.vertical);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
-        distance.getOrientation(), relativity);
+        distance.getOrientation(), azimuth, polar);
 }
 
 Distance Distance::operator/(const Distance& peer) const {
-    Signal self = *this, other = peer;
-    Signal distance = (self / other);
-    Polar relativity = (this->modulation / peer.modulation);
+    Signal self = *this, other = peer, distance = (self / other);
+    Azimuth azimuth = (this->horizontal / peer.horizontal);
+    Polar polar = (this->vertical / peer.vertical);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
-        distance.getOrientation(), relativity);
+        distance.getOrientation(), azimuth, polar);
 }
 
 Distance Distance::operator%(const Distance& peer) const {
-    Signal self = *this, other = peer;
-    Signal distance = (self % other);
-    Polar relativity = (this->modulation % peer.modulation);
+    Signal self = *this, other = peer, distance = (self % other);
+    Azimuth azimuth = (this->horizontal % peer.horizontal);
+    Polar polar = (this->vertical % peer.vertical);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
-        distance.getOrientation(), relativity);
+        distance.getOrientation(), azimuth, polar);
 }
 
 Distance Distance::operator+(const float length) const {
     Signal self = *this, other(length, self.getScaling(), self.getUnit());
     Signal distance = (self + other);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
-        distance.getOrientation(), this->modulation);
+        distance.getOrientation(), this->horizontal, this->vertical);
 }
 
 Distance Distance::operator-(const float length) const {
     Signal self = *this, other(length, self.getScaling(), self.getUnit());
     Signal distance = (self - other);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
-        distance.getOrientation(), this->modulation);
+        distance.getOrientation(), this->horizontal, this->vertical);
 }
 
 Distance Distance::operator*(const float length) const {
     Signal self = *this, other(length, self.getScaling(), self.getUnit());
     Signal distance = (self * other);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
-        distance.getOrientation(), this->modulation);
+        distance.getOrientation(), this->horizontal, this->vertical);
 }
 
 Distance Distance::operator/(const float length) const {
     Signal self = *this, other(length, self.getScaling(), self.getUnit());
     Signal distance = (self / other);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
-        distance.getOrientation(), this->modulation);
+        distance.getOrientation(), this->horizontal, this->vertical);
 }
 
 Distance Distance::operator%(const float length) const {
     Signal self = *this, other(length, self.getScaling(), self.getUnit());
     Signal distance = (self % other);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
-        distance.getOrientation(), this->modulation);
+        distance.getOrientation(), this->horizontal, this->vertical);
 }
 
 Distance Distance::operator+(const shp::Quantity length) const {
     Signal self = *this, other(length.getMagnitude(), length.getScaling(), length.getUnit());
     Signal distance = (self + other);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
-        distance.getOrientation(), this->modulation);
+        distance.getOrientation(), this->horizontal, this->vertical);
 }
 
 Distance Distance::operator-(const shp::Quantity length) const {
     Signal self = *this, other(length.getMagnitude(), length.getScaling(), length.getUnit());
     Signal distance = (self - other);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
-        distance.getOrientation(), this->modulation);
+        distance.getOrientation(), this->horizontal, this->vertical);
 }
 
 Distance Distance::operator*(const shp::Quantity length) const {
     Signal self = *this, other(length.getMagnitude(), length.getScaling(), length.getUnit());
     Signal distance = (self * other);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
-        distance.getOrientation(), this->modulation);
+        distance.getOrientation(), this->horizontal, this->vertical);
 }
 
 Distance Distance::operator/(const shp::Quantity length) const {
     Signal self = *this, other(length.getMagnitude(), length.getScaling(), length.getUnit());
     Signal distance = (self / other);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
-        distance.getOrientation(), this->modulation);
+        distance.getOrientation(), this->horizontal, this->vertical);
 }
 
 Distance Distance::operator%(const shp::Quantity length) const {
     Signal self = *this, other(length.getMagnitude(), length.getScaling(), length.getUnit());
     Signal distance = (self % other);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
-        distance.getOrientation(), this->modulation);
+        distance.getOrientation(), this->horizontal, this->vertical);
 }
 
 Distance Distance::operator+(const shp::Signal factor) const {
     Signal self = *this, other(factor.getMagnitude(), factor.getScaling(), factor.getUnit());
     Signal distance = (self + other);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
-        distance.getOrientation(), this->modulation);
+        distance.getOrientation(), this->horizontal, this->vertical);
 }
 
 Distance Distance::operator-(const shp::Signal factor) const {
     Signal self = *this, other(factor.getMagnitude(), factor.getScaling(), factor.getUnit());
     Signal distance = (self - other);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
-        distance.getOrientation(), this->modulation);
+        distance.getOrientation(), this->horizontal, this->vertical);
 }
 
 Distance Distance::operator*(const shp::Signal factor) const {
     Signal self = *this, other(factor.getMagnitude(), factor.getScaling(), factor.getUnit());
     Signal distance = (self * other);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
-        distance.getOrientation(), this->modulation);
+        distance.getOrientation(), this->horizontal, this->vertical);
 }
 
 Distance Distance::operator/(const shp::Signal factor) const {
     Signal self = *this, other(factor.getMagnitude(), factor.getScaling(), factor.getUnit());
     Signal distance = (self / other);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
-        distance.getOrientation(), this->modulation);
+        distance.getOrientation(), this->horizontal, this->vertical);
 }
 
 Distance Distance::operator%(const shp::Signal factor) const {
     Signal self = *this, other(factor.getMagnitude(), factor.getScaling(), factor.getUnit());
     Signal distance = (self % other);
     return Distance(distance.getMagnitude(), distance.getScaling(), distance.getUnit(),
-        distance.getOrientation(), this->modulation);
+        distance.getOrientation(), this->horizontal, this->vertical);
+}
+
+Distance Distance::operator+(const Intrinsic& shifting) const {
+    Signal self = *this;
+    Intrinsic intrinsic = (self.getOrientation() + shifting.toRadians());
+    return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(),
+        intrinsic, this->horizontal, this->vertical);
+}
+
+Distance Distance::operator-(const Intrinsic& shifting) const {
+    Signal self = *this;
+    Intrinsic intrinsic = (self.getOrientation() - shifting.toRadians());
+    return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(),
+        intrinsic, this->horizontal, this->vertical);
+}
+
+Distance Distance::operator*(const Intrinsic& shifting) const {
+    Signal self = *this;
+    Intrinsic intrinsic = (self.getOrientation() * shifting.toRadians());
+    return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(),
+        intrinsic, this->horizontal, this->vertical);
+}
+
+Distance Distance::operator/(const Intrinsic& shifting) const {
+    Signal self = *this;
+    Intrinsic intrinsic = (self.getOrientation() / shifting.toRadians());
+    return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(),
+        intrinsic, this->horizontal, this->vertical);
+}
+
+Distance Distance::operator%(const Intrinsic& shifting) const {
+    Signal self = *this;
+    Intrinsic intrinsic = fmod(self.getOrientation(), shifting.toRadians());
+    return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(),
+        intrinsic, this->horizontal, this->vertical);
 }
 
 Distance Distance::operator+(const Azimuth& rotation) const {
-    Distance self = *this;
-    Azimuth orientation = (self.getOrientation() + rotation.toRadians());
+    Signal self = *this;
+    Azimuth azimuth = (this->horizontal + rotation);
     return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(),
-        orientation, self.modulation);
+        self.getOrientation(), azimuth, this->vertical);
 }
 
 Distance Distance::operator-(const Azimuth& rotation) const {
-    Distance self = *this;
-    Azimuth orientation = (self.getOrientation() - rotation.toRadians());
+    Signal self = *this;
+    Azimuth azimuth = (this->horizontal - rotation);
     return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(),
-        orientation, self.modulation);
+        self.getOrientation(), azimuth, this->vertical);
 }
 
 Distance Distance::operator*(const Azimuth& rotation) const {
-    Distance self = *this;
-    Azimuth orientation = (self.getOrientation() * rotation.toRadians());
+    Signal self = *this;
+    Azimuth azimuth = (this->horizontal * rotation);
     return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(),
-        orientation, self.modulation);
+        self.getOrientation(), azimuth, this->vertical);
 }
 
 Distance Distance::operator/(const Azimuth& rotation) const {
-    Distance self = *this;
-    Azimuth orientation = (self.getOrientation() / rotation.toRadians());
+    Signal self = *this;
+    Azimuth azimuth = (this->horizontal / rotation);
     return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(),
-        orientation, self.modulation);
+        self.getOrientation(), azimuth, this->vertical);
 }
 
 Distance Distance::operator%(const Azimuth& rotation) const {
-    Distance self = *this;
-    Azimuth orientation = fmod(self.getOrientation(), rotation.toRadians());
+    Signal self = *this;
+    Azimuth azimuth = (this->horizontal % rotation);
     return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(),
-        orientation, self.modulation);
+        self.getOrientation(), azimuth, this->vertical);
 }
 
 Distance Distance::operator+(const Polar& rotation) const {
-    Distance self = *this;
-    Polar direction = (self.modulation + rotation);
+    Signal self = *this;
+    Polar polar = (this->vertical + rotation);
     return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(),
-        self.getOrientation(), direction);
+        self.getOrientation(), this->horizontal, polar);
 }
 
 Distance Distance::operator-(const Polar& rotation) const {
-    Distance self = *this;
-    Polar direction = (self.modulation - rotation);
+    Signal self = *this;
+    Polar polar = (this->vertical - rotation);
     return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(),
-        self.getOrientation(), direction);
+        self.getOrientation(), this->horizontal, polar);
 }
 
 Distance Distance::operator*(const Polar& rotation) const {
-    Distance self = *this;
-    Polar direction = (self.modulation * rotation);
+    Signal self = *this;
+    Polar polar = (this->vertical * rotation);
     return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(),
-        self.getOrientation(), direction);
+        self.getOrientation(), this->horizontal, polar);
 }
 
 Distance Distance::operator/(const Polar& rotation) const {
-    Distance self = *this;
-    Polar direction = (self.modulation / rotation);
+    Signal self = *this;
+    Polar polar = (this->vertical / rotation);
     return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(),
-        self.getOrientation(), direction);
+        self.getOrientation(), this->horizontal, polar);
 }
 
 Distance Distance::operator%(const Polar& rotation) const {
-    Distance self = *this;
-    Polar direction = (self.modulation % rotation);
+    Signal self = *this;
+    Polar polar = (this->vertical % rotation);
     return Distance(self.getMagnitude(), self.getScaling(), self.getUnit(),
-        self.getOrientation(), direction);
+        self.getOrientation(),this->horizontal, polar);
 }
 
-Signal Distance::operator()(const Distance& peer, const Direction& elevation) const {
+Signal Distance::operator()(const Distance& peer, const Azimuth& azimuth) const {
     Distance self = *this; Direction poi(Direction::DEFAULT_RADIANS);
-    Signal radial = (self.getRadial(poi) + peer.getRadial(elevation));
+    Signal radial = (self.getRadial(poi) + peer.getRadial(azimuth));
     Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(),
-        self.getDeviation(elevation), self.getRelativity(elevation));
+        self.getHorizontalDeviation(azimuth));
+    result.adjustScaling();
+    return result;
+}
+
+Signal Distance::operator()(const Distance& peer, const Polar& polar) const {
+    Distance self = *this; Direction poi(Direction::DEFAULT_RADIANS);
+    Signal radial = (self.getRadial(poi) + peer.getRadial(polar));
+    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(),
+        self.getVerticalDeviation(polar));
+    result.adjustScaling();
+    return result;
+}
+
+Signal Distance::operator()(const Distance& peer, const Azimuth& azimuth, const Polar& polar) const {
+    Distance self = *this; Direction poi(Direction::DEFAULT_RADIANS);
+    Signal radial = (self.getRadial(poi) + peer.getRadial(azimuth, polar));
+    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(),
+        self.getHorizontalDeviation(azimuth),
+        self.getVerticalDeviation(polar));
     result.adjustScaling();
     return result;
 }
@@ -538,20 +816,24 @@ void Distance::setUnit(const Unit& object) {
     Signal::setUnit(object);
 }
 
-Azimuth Distance::getAzimuth() const {
+Intrinsic Distance::getIntrinsic() const {
     return Signal::getOrientation();
 }
 
-void Distance::setAzimuth(const float orientation) {
+void Distance::setIntrinsic(const float orientation) {
     Signal::setOrientation(orientation);
 }
 
-void Distance::setAzimuth(const Azimuth& orientation) {
+void Distance::setIntrinsic(const Intrinsic& orientation) {
     Signal::setOrientation(orientation.toRadians());
 }
 
-void Distance::setModulation(const float relativity) {
-    modulation = Polar(relativity);
+void Distance::setHorizontal(const float relativity) {
+    horizontal = Azimuth(relativity);
+}
+
+void Distance::setVertical(const float relativity) {
+    vertical = Polar(relativity);
 }
 
 void Distance::setChangeMagnitude(const float motion) {
@@ -568,36 +850,62 @@ void Distance::setChangeMagnitude(const float motion, const short int scale) {
 	}
 }
 
-void Distance::setChangeDirection(const float degree) {
+void Distance::setChangeIntrinsic(const float degree) {
     if (degree != Direction::DEFAULT_RADIANS) {
-        Signal direction = (*this + Azimuth(Direction::DEGREE_001 * degree));
+        Signal direction = (*this + Intrinsic(Direction::DEGREE_001 * degree));
         Signal::setOrientation(direction.getOrientation());
     }
 }
 
-void Distance::setChangeCurvature(const float degree) {
+void Distance::setChangeHorizontalCurvature(const float degree) {
     if (degree != Direction::DEFAULT_RADIANS) {
-        modulation.setRotation(degree);
+        horizontal.setRotation(degree);
     }
 }
 
-shp::Direction Distance::getCurvatureCurrent() const {
-    return modulation.getCurrent();
-}
-
-shp::Direction Distance::getCurvatureShiftRate() const {
-    return modulation.getShifting();
-}
-
-void Distance::setCurvatureShiftRate(const float degree) {
+void Distance::setChangeVerticalCurvature(const float degree) {
     if (degree != Direction::DEFAULT_RADIANS) {
-        modulation.setAngleShiftRate(degree);
+        vertical.setRotation(degree);
     }
 }
 
-void Distance::setCurvatureShiftRate(const shp::Direction& angular) {
+shp::Direction Distance::getHorizontalCurvatureCurrent() const {
+    return horizontal.getCurrent();
+}
+
+shp::Direction Distance::getVerticalCurvatureCurrent() const {
+    return vertical.getCurrent();
+}
+
+shp::Direction Distance::getHorizontalCurvatureShiftRate() const {
+    return horizontal.getShifting();
+}
+
+shp::Direction Distance::getVerticalCurvatureShiftRate() const {
+    return vertical.getShifting();
+}
+
+void Distance::setHorizontalCurvatureShiftRate(const float degree) {
+    if (degree != Direction::DEFAULT_RADIANS) {
+        horizontal.setAngleShiftRate(degree);
+    }
+}
+
+void Distance::setVerticalCurvatureShiftRate(const float degree) {
+    if (degree != Direction::DEFAULT_RADIANS) {
+        vertical.setAngleShiftRate(degree);
+    }
+}
+
+void Distance::setHorizontalCurvatureShiftRate(const shp::Direction& angular) {
     if (angular.checkNonZero()) {
-        modulation.setShifting(angular);
+        horizontal.setShifting(angular);
+    }
+}
+
+void Distance::setVerticalCurvatureShiftRate(const shp::Direction& angular) {
+    if (angular.checkNonZero()) {
+        vertical.setShifting(angular);
     }
 }
 
@@ -661,75 +969,79 @@ Signal Distance::getScalarSquareFraction(const float length, const short int sca
     return Signal::getDotFractionSquare(length, scale);
 }
 
-Polar Distance::getRelativity(const Direction& elevation) const {
-    return Direction::getConstructive(modulation.getPhase(), elevation.getPhase());
-}
-
-Azimuth Distance::getDeviation(const Direction& elevation) const {
-    Azimuth orientation = this->getOrientation();
+Intrinsic Distance::getIntrinsicDeviation(const Direction& elevation) const {
+    Intrinsic orientation = this->getOrientation();
     return Direction::getConstructive(orientation.getPhase(), elevation.getPhase());
 }
 
-Signal Distance::getLinear(const Distance& peer, const Direction& elevation) const {
+Azimuth Distance::getHorizontalDeviation(const Direction& elevation) const {
+    return Direction::getConstructive(horizontal.getPhase(), elevation.getPhase());
+}
+
+Polar Distance::getVerticalDeviation(const Direction& elevation) const {
+    return Direction::getConstructive(vertical.getPhase(), elevation.getPhase());
+}
+
+Signal Distance::getLinear(const Distance& peer, const Intrinsic& elevation) const {
     Distance self = *this; Signal component = self.getLinearX(peer, elevation);
     Distance result(component.getMagnitude(), component.getScaling(), self.getUnit(),
-        self.getDeviation(elevation), self.getRelativity(elevation));
+        self.getIntrinsicDeviation(elevation), self.getVerticalDeviation(elevation));
     return result;
 }
 
-Signal Distance::getLinearConvergence(const Distance& peer, const Direction& elevation) const {
+Signal Distance::getLinearConvergence(const Distance& peer, const Intrinsic& elevation) const {
     Distance self = *this; Signal component = self.getSquareX(peer, elevation);
     Distance result(component.getMagnitude(), component.getScaling(), self.getUnit(),
-        self.getDeviation(elevation), self.getRelativity(elevation));
+        self.getIntrinsicDeviation(elevation), self.getVerticalDeviation(elevation));
     return result;
 }
 
-Signal Distance::getLinearDivergence(const Distance& peer, const Direction& elevation) const {
+Signal Distance::getLinearDivergence(const Distance& peer, const Intrinsic& elevation) const {
     Distance self = *this; Signal component = self.getInverseSquareX(peer, elevation);
     Distance result(component.getMagnitude(), component.getScaling(), self.getUnit(),
-        self.getDeviation(elevation), self.getRelativity(elevation));
+        self.getIntrinsicDeviation(elevation), self.getVerticalDeviation(elevation));
     return result;
 }
 
-Signal Distance::getPlanar(const Distance& peer, const Direction& elevation) const {
+Signal Distance::getPlanar(const Distance& peer, const Azimuth& elevation) const {
     Distance self = *this; Signal component = self.getLinearY(peer, elevation);
     Distance result(component.getMagnitude(), component.getScaling(), self.getUnit(),
-        self.getDeviation(elevation), self.getRelativity(elevation));
+        self.getIntrinsicDeviation(elevation), self.getHorizontalDeviation(elevation));
     return result;
 }
 
-Signal Distance::getPlanarConvergence(const Distance& peer, const Direction& elevation) const {
+Signal Distance::getPlanarConvergence(const Distance& peer, const Azimuth& elevation) const {
     Distance self = *this; Signal component = self.getSquareY(peer, elevation);
     Distance result(component.getMagnitude(), component.getScaling(), self.getUnit(),
-        self.getDeviation(elevation), self.getRelativity(elevation));
+        self.getIntrinsicDeviation(elevation), self.getHorizontalDeviation(elevation));
     return result;
 }
 
-Signal Distance::getPlanarDivergence(const Distance& peer, const Direction& elevation) const {
+Signal Distance::getPlanarDivergence(const Distance& peer, const Azimuth& elevation) const {
     Distance self = *this; Signal component = self.getInverseSquareY(peer, elevation);
     Distance result(component.getMagnitude(), component.getScaling(), self.getUnit(),
-        self.getDeviation(elevation), self.getRelativity(elevation));
+        self.getIntrinsicDeviation(elevation), self.getHorizontalDeviation(elevation));
     return result;
 }
 
-Signal Distance::getOrthogonal(const Distance& peer, const Direction& elevation) const {
+Signal Distance::getOrthogonal(const Distance& peer, const Polar& elevation) const {
     Distance self = *this; Signal component = self.getLinearZ(peer, elevation);
     Distance result(component.getMagnitude(), component.getScaling(), self.getUnit(),
-        self.getDeviation(elevation), self.getRelativity(elevation));
+        self.getIntrinsicDeviation(elevation), self.getVerticalDeviation(elevation));
     return result;
 }
 
-Signal Distance::getOrthogonalConvergence(const Distance& peer, const Direction& elevation) const {
+Signal Distance::getOrthogonalConvergence(const Distance& peer, const Polar& elevation) const {
     Distance self = *this; Signal component = self.getSquareZ(peer, elevation);
     Distance result(component.getMagnitude(), component.getScaling(), self.getUnit(),
-        self.getDeviation(elevation), self.getRelativity(elevation));
+        self.getIntrinsicDeviation(elevation), self.getVerticalDeviation(elevation));
     return result;
 }
 
-Signal Distance::getOrthogonalDivergence(const Distance& peer, const Direction& elevation) const {
+Signal Distance::getOrthogonalDivergence(const Distance& peer, const Polar& elevation) const {
     Distance self = *this; Signal component = self.getInverseSquareZ(peer, elevation);
     Distance result(component.getMagnitude(), component.getScaling(), self.getUnit(),
-        self.getDeviation(elevation), self.getRelativity(elevation));
+        self.getIntrinsicDeviation(elevation), self.getVerticalDeviation(elevation));
     return result;
 }
 
@@ -743,88 +1055,114 @@ Signal Distance::getVectorTotal() const {
     return Signal(self.getOrientation(), self.getMagnitude(), self.getScaling(), self.getUnit());
 }
 
-Signal Distance::getAngularDrift() const {
-    Signal self = *this; Direction current = this->modulation.getCurrent();
+Signal Distance::getHorizontalDrift() const {
+    Signal self = *this; Direction current = this->horizontal.getCurrent();
     return Signal(current.toRadians(), self.getMagnitude(), self.getScaling(), self.getUnit());
 }
 
-Signal Distance::getAngularTotal() const {
-    Signal self = *this; float shift = this->modulation.getCurrent().toRadians();
+Signal Distance::getHorizontalTotal() const {
+    Signal self = *this; float shift = this->horizontal.getCurrent().toRadians();
+    Signal angular = self.getCosComponent(shift);
+    return Signal(shift, angular.getAmplitude(), angular.getScaling(), angular.getUnit());
+}
+
+Signal Distance::getVerticalDrift() const {
+    Signal self = *this; Direction current = this->vertical.getCurrent();
+    return Signal(current.toRadians(), self.getMagnitude(), self.getScaling(), self.getUnit());
+}
+
+Signal Distance::getVerticalTotal() const {
+    Signal self = *this; float shift = this->vertical.getCurrent().toRadians();
     Signal angular = self.getCosComponent(shift);
     return Signal(shift, angular.getAmplitude(), angular.getScaling(), angular.getUnit());
 }
 
 Signal Distance::getRadial(const Direction& elevation) const {
     Distance self = *this; Direction change = this->getOrientation();
-    Signal sumtotal = self.getRadialXSquare(change)
-            + self.getRadialYSquare(change)
-            + self.getRadialZSquare(elevation);
+    float radians = change.toRadians();
+    Signal sumtotal = self.getRadialXSquare(Intrinsic(radians))
+            + self.getRadialYSquare(Azimuth(radians))
+            + self.getRadialZSquare(Polar(radians));
     Signal diagonal = sumtotal.getDotProductSquareRoot();
     shp::Signal result(diagonal.getOrientation(), diagonal.getMagnitude(),
         diagonal.getScaling(), self.getUnit()); result.adjustScaling();
     return result;
 }
 
-Signal Distance::getRadialX(const Direction& elevation) const {
+Signal Distance::getRadial(const Azimuth& azimuth, const Polar& polar) const {
+    Distance self = *this; Direction change = this->getOrientation();
+    Signal sumtotal = self.getRadialXSquare(Intrinsic(change.toRadians()))
+            + self.getRadialYSquare(Azimuth(azimuth.toRadians()))
+            + self.getRadialZSquare(Polar(polar.toRadians()));
+    Signal diagonal = sumtotal.getDotProductSquareRoot();
+    shp::Signal result(diagonal.getOrientation(), diagonal.getMagnitude(),
+        diagonal.getScaling(), self.getUnit()); result.adjustScaling();
+    return result;
+}
+
+Signal Distance::getRadialX(const Intrinsic& elevation) const {
     Distance self = *this;
     shp::Quantity component = self.getLinearX(shp::Quantity::DEFAULT_VALUE, elevation);
     Distance result(component.getMagnitude(), component.getScaling(), self.getUnit(),
-        self.getDeviation(elevation), self.getRelativity(elevation));
+        self.getIntrinsicDeviation(elevation), self.getVerticalDeviation(elevation));
     return result;
 }
 
-Signal Distance::getRadialY(const Direction& elevation) const {
+Signal Distance::getRadialY(const Azimuth& elevation) const {
     Distance self = *this;
     shp::Quantity component = self.getLinearY(shp::Quantity::DEFAULT_VALUE, elevation);
     Distance result(component.getMagnitude(), component.getScaling(), self.getUnit(),
-        self.getDeviation(elevation), self.getRelativity(elevation));
+        self.getIntrinsicDeviation(elevation), self.getHorizontalDeviation(elevation));
     return result;
 }
 
-Signal Distance::getRadialZ(const Direction& elevation) const {
+Signal Distance::getRadialZ(const Polar& elevation) const {
     Distance self = *this;
     shp::Quantity component = self.getLinearZ(shp::Quantity::DEFAULT_VALUE, elevation);
     Distance result(component.getMagnitude(), component.getScaling(), self.getUnit(),
-        self.getDeviation(elevation), self.getRelativity(elevation));
+        self.getIntrinsicDeviation(elevation), self.getVerticalDeviation(elevation));
     return result;
 }
 
-Signal Distance::getRadialXSquare(const Direction& elevation) const {
+Signal Distance::getRadialXSquare(const Intrinsic& elevation) const {
     return getRadialX(elevation).getDotProductSquare();
 }
 
-Signal Distance::getRadialYSquare(const Direction& elevation) const {
+Signal Distance::getRadialYSquare(const Azimuth& elevation) const {
     return getRadialY(elevation).getDotProductSquare();
 }
 
-Signal Distance::getRadialZSquare(const Direction& elevation) const {
+Signal Distance::getRadialZSquare(const Polar& elevation) const {
     return getRadialZ(elevation).getDotProductSquare();
 }
 
 Distance Distance::copy() {
     Distance self = *this;
     Distance fresh(self.getMagnitude(), self.getScaling(), self.getUnit(),
-        self.getOrientation(), self.modulation);
+        self.getOrientation(), self.horizontal, self.vertical);
     return fresh;
 }
 
 void Distance::clear() {
     Signal::clear();
-    modulation.clear();
+    horizontal.clear();
+    vertical.clear();
     return;
 }
 
 std::string Distance::print() const {
     std::stringstream result;
     result << Signal::print() << "⌒";
-    result << modulation.print();
+    result << horizontal.print() << ",";
+    result << vertical.print();
 	return result.str();
 }
 
 std::string Distance::printRadians() const {
     std::stringstream result;
     result << Signal::print() << "⌒";
-    result << modulation.printRadians();
+    result << horizontal.printRadians() << ",";
+    result << vertical.printRadians();
 	return result.str();
 }
 
@@ -835,11 +1173,11 @@ std::string Distance::printRadians() const {
  * peer remains invariant, then z_component could still contribute its stretch.
  */
 const std::complex<float> Distance::getDiffusion(const Distance& peer, const Direction& elevation) {
-    Azimuth orientation = peer.getOrientation();
+    Intrinsic orientation = peer.getOrientation();
     return Direction::getConstructive(orientation.getPhase(), elevation.getPhase());
 }
 
-shp::Quantity Distance::getLinearX(const Distance& peer, const Direction& elevation) const {
+shp::Quantity Distance::getLinearX(const Distance& peer, const Intrinsic& elevation) const {
     shp::Signal self = *this, other = peer;
     std::complex<float> concentration = Distance::getDiffusion(peer, elevation);
     shp::Quantity diffusion(Direction::getCosine(concentration), self.getScaling(), self.getUnit());
@@ -847,19 +1185,19 @@ shp::Quantity Distance::getLinearX(const Distance& peer, const Direction& elevat
     return shp::Quantity(result.getMagnitude(), result.getScaling(), result.getUnit());
 }
 
-shp::Quantity Distance::getSquareX(const Distance& peer, const Direction& elevation) const {
+shp::Quantity Distance::getSquareX(const Distance& peer, const Intrinsic& elevation) const {
     return getLinearX(peer, elevation).getSquare();
 }
 
-shp::Quantity Distance::getInverseX(const Distance& peer, const Direction& elevation) const {
+shp::Quantity Distance::getInverseX(const Distance& peer, const Intrinsic& elevation) const {
     return getLinearX(peer, elevation).getInverse();
 }
 
-shp::Quantity Distance::getInverseSquareX(const Distance& peer, const Direction& elevation) const {
+shp::Quantity Distance::getInverseSquareX(const Distance& peer, const Intrinsic& elevation) const {
     return getInverseX(peer, elevation).getSquare();
 }
 
-shp::Quantity Distance::getLinearY(const Distance& peer, const Direction& elevation) const {
+shp::Quantity Distance::getLinearY(const Distance& peer, const Azimuth& elevation) const {
     shp::Signal self = *this, other = peer;
     std::complex<float> concentration = Distance::getDiffusion(peer, elevation);
     shp::Quantity diffusion(Direction::getCosine(concentration), peer.getScaling(), peer.getUnit());
@@ -867,19 +1205,19 @@ shp::Quantity Distance::getLinearY(const Distance& peer, const Direction& elevat
     return shp::Quantity(result.getMagnitude(), result.getScaling(), result.getUnit());
 }
 
-shp::Quantity Distance::getSquareY(const Distance& peer, const Direction& elevation) const {
+shp::Quantity Distance::getSquareY(const Distance& peer, const Azimuth& elevation) const {
     return getLinearY(peer, elevation).getSquare();
 }
 
-shp::Quantity Distance::getInverseY(const Distance& peer, const Direction& elevation) const {
+shp::Quantity Distance::getInverseY(const Distance& peer, const Azimuth& elevation) const {
     return getLinearY(peer, elevation).getInverse();
 }
 
-shp::Quantity Distance::getInverseSquareY(const Distance& peer, const Direction& elevation) const {
+shp::Quantity Distance::getInverseSquareY(const Distance& peer, const Azimuth& elevation) const {
     return getInverseY(peer, elevation).getSquare();
 }
 
-shp::Quantity Distance::getLinearZ(const Distance& peer, const Direction& elevation) const {
+shp::Quantity Distance::getLinearZ(const Distance& peer, const Polar& elevation) const {
     shp::Signal self = *this, other = peer;
     std::complex<float> concentration = Distance::getDiffusion(peer, elevation);
     shp::Quantity diffusion(Direction::getSine(concentration), peer.getScaling(), peer.getUnit());
@@ -887,15 +1225,15 @@ shp::Quantity Distance::getLinearZ(const Distance& peer, const Direction& elevat
     return shp::Quantity(result.getMagnitude(), result.getScaling(), result.getUnit());
 }
 
-shp::Quantity Distance::getSquareZ(const Distance& peer, const Direction& elevation) const {
+shp::Quantity Distance::getSquareZ(const Distance& peer, const Polar& elevation) const {
     return getLinearZ(peer, elevation).getSquare();
 }
 
-shp::Quantity Distance::getInverseZ(const Distance& peer, const Direction& elevation) const {
+shp::Quantity Distance::getInverseZ(const Distance& peer, const Polar& elevation) const {
     return getLinearZ(peer, elevation).getInverse();
 }
 
-shp::Quantity Distance::getInverseSquareZ(const Distance& peer, const Direction& elevation) const {
+shp::Quantity Distance::getInverseSquareZ(const Distance& peer, const Polar& elevation) const {
     return getInverseZ(peer, elevation).getSquare();
 }
 

@@ -34,13 +34,13 @@ Point::Point(const Unit& unit)
 
 }
 
-Point::Point(const Azimuth& gradient)
+Point::Point(const Intrinsic& gradient)
         : Shape(),
         signal(gradient, Quantity::DEFAULT_VALUE) {
 
 }
 
-Point::Point(const Unit& unit, const Azimuth& gradient)
+Point::Point(const Unit& unit, const Intrinsic& gradient)
         : Shape(),
         signal(gradient, Quantity::DEFAULT_VALUE, unit) {
 
@@ -58,7 +58,7 @@ Point::Point(const float magnitude, const float gradient)
 
 }
 
-Point::Point(const float magnitude, const Azimuth& gradient)
+Point::Point(const float magnitude, const Intrinsic& gradient)
         : Shape(),
         signal(gradient, magnitude) {
 
@@ -76,7 +76,7 @@ Point::Point(const float magnitude, const std::string unit, const float gradient
 
 }
 
-Point::Point(const float magnitude, const std::string unit, const Azimuth& gradient)
+Point::Point(const float magnitude, const std::string unit, const Intrinsic& gradient)
         : Shape(),
         signal(gradient, magnitude, unit) {
 
@@ -94,7 +94,7 @@ Point::Point(const float magnitude, const Unit& unit, const float gradient)
 
 }
 
-Point::Point(const float magnitude, const Unit& unit, const Azimuth& gradient)
+Point::Point(const float magnitude, const Unit& unit, const Intrinsic& gradient)
         : Shape(),
         signal(gradient, magnitude, unit) {
 
@@ -112,7 +112,7 @@ Point::Point(const float magnitude, const short int scaling, const float gradien
 
 }
 
-Point::Point(const float magnitude, const short int scaling, const Azimuth& gradient)
+Point::Point(const float magnitude, const short int scaling, const Intrinsic& gradient)
         : Shape(),
         signal(gradient, magnitude, scaling) {
 
@@ -132,7 +132,7 @@ Point::Point(const float magnitude, const short int scaling, const std::string u
 }
 
 Point::Point(const float magnitude, const short int scaling, const std::string unit,
-        const Azimuth& gradient)
+        const Intrinsic& gradient)
         : Shape(),
         signal(gradient, magnitude, scaling, unit) {
 
@@ -152,7 +152,7 @@ Point::Point(const float magnitude, const short int scaling, const Unit& unit,
 }
 
 Point::Point(const float magnitude, const short int scaling, const Unit& unit,
-        const Azimuth& gradient)
+        const Intrinsic& gradient)
         : Shape(),
         signal(gradient, magnitude, scaling, unit) {
 
@@ -176,13 +176,13 @@ Point::Point(const std::string name, const Unit& unit)
 
 }
 
-Point::Point(const std::string name, const Azimuth& gradient)
+Point::Point(const std::string name, const Intrinsic& gradient)
         : Shape(name),
         signal(gradient, Quantity::DEFAULT_VALUE) {
 
 }
 
-Point::Point(const std::string name, const Unit& unit, const Azimuth& gradient)
+Point::Point(const std::string name, const Unit& unit, const Intrinsic& gradient)
         : Shape(name),
         signal(gradient, Quantity::DEFAULT_VALUE, unit) {
 
@@ -200,7 +200,7 @@ Point::Point(const std::string name, const float magnitude, const float gradient
 
 }
 
-Point::Point(const std::string name, const float magnitude, const Azimuth& gradient)
+Point::Point(const std::string name, const float magnitude, const Intrinsic& gradient)
         : Shape(name),
         signal(gradient, magnitude) {
 
@@ -220,7 +220,7 @@ Point::Point(const std::string name, const float magnitude, const std::string un
 }
 
 Point::Point(const std::string name, const float magnitude, const std::string unit,
-        const Azimuth& gradient)
+        const Intrinsic& gradient)
         : Shape(name),
         signal(gradient, magnitude, unit) {
 
@@ -240,7 +240,7 @@ Point::Point(const std::string name, const float magnitude, const Unit& unit,
 }
 
 Point::Point(const std::string name, const float magnitude, const Unit& unit,
-        const Azimuth& gradient)
+        const Intrinsic& gradient)
         : Shape(name),
         signal(gradient, magnitude, unit) {
 
@@ -260,7 +260,7 @@ Point::Point(const std::string name, const float magnitude, const short int scal
 }
 
 Point::Point(const std::string name, const float magnitude, const short int scaling,
-		const Azimuth& gradient)
+		const Intrinsic& gradient)
         : Shape(name),
         signal(gradient, magnitude, scaling) {
 
@@ -281,7 +281,7 @@ Point::Point(const std::string name, const float magnitude, const short int scal
 }
 
 Point::Point(const std::string name, const float magnitude, const short int scaling,
-        const std::string unit, const Azimuth& gradient)
+        const std::string unit, const Intrinsic& gradient)
         : Shape(name),
         signal(gradient, magnitude, scaling, unit) {
 
@@ -302,7 +302,7 @@ Point::Point(const std::string name, const float magnitude, const short int scal
 }
 
 Point::Point(const std::string name, const float magnitude, const short int scaling,
-        const Unit& unit, const Azimuth& gradient)
+        const Unit& unit, const Intrinsic& gradient)
         : Shape(name),
         signal(gradient, magnitude, scaling, unit) {
 
@@ -416,15 +416,15 @@ void Point::setUnit(const Unit& unit) {
 	signal.setUnit(unit);
 }
 
-float Point::getAzimuthal() const {
+float Point::getIntrinsic() const {
     return signal.getOrientation();
 }
 
-void Point::setAzimuthal(const float radians) {
+void Point::setIntrinsic(const float radians) {
     signal.setOrientation(radians);
 }
 
-void Point::setAzimuthal(const Azimuth& orientation) {
+void Point::setIntrinsic(const Intrinsic& orientation) {
     signal.setOrientation(orientation.toRadians());
 }
 
@@ -478,17 +478,17 @@ std::string Point::printRadians() const {
 	return result.str();
 }
 
-Quantity Point::getAzimuthCosComponent(const float change) const {
+Quantity Point::getIntrinsicCosComponent(const float change) const {
     return Quantity(signal.getCosComponent(change),
         signal.getScaling(), signal.getUnit());
 }
 
-Quantity Point::getAzimuthSinComponent(const float change) const {
+Quantity Point::getIntrinsicSinComponent(const float change) const {
     return Quantity(signal.getSinComponent(change),
         signal.getScaling(), signal.getUnit());
 }
 
-std::complex<float> Point::toComplexAzimuth(const float change) {
+std::complex<float> Point::toComplexIntrinsic(const float change) {
     return std::complex<float>(
         signal.getCosComponent(change),
         signal.getSinComponent(change));

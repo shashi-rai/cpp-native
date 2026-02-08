@@ -58,6 +58,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/distance.o \
 		$(OBJFOLDR)/frame.o \
 		$(OBJFOLDR)/frequency.o \
+		$(OBJFOLDR)/intrinsic.o \
 		$(OBJFOLDR)/linear.o \
 		$(OBJFOLDR)/medium.o \
 		$(OBJFOLDR)/phase.o \
@@ -89,6 +90,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/distance.o \
 		$(OBJFOLDR)/frame.o \
 		$(OBJFOLDR)/frequency.o \
+		$(OBJFOLDR)/intrinsic.o \
 		$(OBJFOLDR)/linear.o \
 		$(OBJFOLDR)/medium.o \
 		$(OBJFOLDR)/phase.o \
@@ -145,6 +147,9 @@ $(OBJFOLDR)/frame.o: frame.cpp
 
 $(OBJFOLDR)/frequency.o: frequency.cpp
 	$(CPPTOOL) -c frequency.cpp -o $(OBJFOLDR)/frequency.o $(CXXFLAGS)
+
+$(OBJFOLDR)/intrinsic.o: intrinsic.cpp
+	$(CPPTOOL) -c intrinsic.cpp -o $(OBJFOLDR)/intrinsic.o $(CXXFLAGS)
 
 $(OBJFOLDR)/linear.o: linear.cpp
 	$(CPPTOOL) -c linear.cpp -o $(OBJFOLDR)/linear.o $(CXXFLAGS)

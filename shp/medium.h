@@ -25,80 +25,109 @@
 
 namespace shp {
 
-class Medium : protected Distance {     // spatial separation between two objects
+class Medium : protected Distance { // spatial separation between two objects
     std::string name;
-    shp::Signal intrinsic;              // intrinsic behaviour change controller
+    shp::Signal transform;          // internal behavioural change controller
 public:
     // Constructors
     Medium();
     Medium(const Unit& unit);
-    Medium(const short int scaling, const std::string unit);
-    Medium(const short int scaling, const Unit& unit);
     Medium(const float parameter);
-    Medium(const float parameter, const shp::Signal& intrinsic);
+    Medium(const float parameter, const shp::Signal& transform);
     Medium(const float parameter, const std::string unit);
     Medium(const float parameter, const Unit& unit);
-    Medium(const float parameter, const std::string unit, const shp::Signal& intrinsic);
-    Medium(const float parameter, const Unit& unit, const shp::Signal& intrinsic);
+    Medium(const float parameter, const std::string unit, const shp::Signal& transform);
+    Medium(const float parameter, const Unit& unit, const shp::Signal& transform);
     Medium(const float parameter, const short int scaling);
-    Medium(const float parameter, const short int scaling, const shp::Signal& intrinsic);
+    Medium(const float parameter, const short int scaling, const shp::Signal& transform);
     Medium(const float parameter, const short int scaling, const std::string unit);
     Medium(const float parameter, const short int scaling, const Unit& unit);
-    Medium(const float parameter, const short int scaling, const std::string unit, const shp::Signal& intrinsic);
-    Medium(const float parameter, const short int scaling, const Unit& unit, const shp::Signal& intrinsic);
+    Medium(const float parameter, const short int scaling, const std::string unit, const shp::Signal& transform);
+    Medium(const float parameter, const short int scaling, const Unit& unit, const shp::Signal& transform);
     Medium(const Distance& parameter);
-    Medium(const float parameter, const float orientation);
-    Medium(const float parameter, const std::string unit, const float orientation);
-    Medium(const float parameter, const std::string unit, const Azimuth& orientation);
-    Medium(const float parameter, const Unit& unit, const float orientation);
-    Medium(const float parameter, const Unit& unit, const Azimuth& orientation);
-    Medium(const float parameter, const short int scaling, const float orientation);
-    Medium(const float parameter, const short int scaling, const Azimuth& orientation);
-    Medium(const float parameter, const short int scaling, const std::string unit, const float orientation);
-    Medium(const float parameter, const short int scaling, const std::string unit, const Azimuth& orientation);
-    Medium(const float parameter, const short int scaling, const Unit& unit, const float orientation);
-    Medium(const float parameter, const short int scaling, const Unit& unit, const Azimuth& orientation);
+    Medium(const float parameter, const float density);
+    Medium(const float parameter, const std::string unit, const float density);
+    Medium(const float parameter, const std::string unit, const Intrinsic& density);
+    Medium(const float parameter, const Unit& unit, const float density);
+    Medium(const float parameter, const Unit& unit, const Intrinsic& density);
+    Medium(const float parameter, const short int scaling, const float density);
+    Medium(const float parameter, const short int scaling, const Intrinsic& density);
+    Medium(const float parameter, const short int scaling, const std::string unit, const float density);
+    Medium(const float parameter, const short int scaling, const std::string unit, const Intrinsic& density);
+    Medium(const float parameter, const short int scaling, const Unit& unit, const float density);
+    Medium(const float parameter, const short int scaling, const Unit& unit, const Intrinsic& density);
+    Medium(const float parameter, const short int scaling, const std::string unit, const Azimuth& current);
+    Medium(const float parameter, const short int scaling, const Unit& unit, const Azimuth& current);
     Medium(const float parameter, const short int scaling, const std::string unit, const Polar& threshold);
     Medium(const float parameter, const short int scaling, const Unit& unit, const Polar& threshold);
-    Medium(const float parameter, const Azimuth& orientation);
+    Medium(const float parameter, const short int scaling, const Unit& unit, const Intrinsic& density, const Azimuth& current);
+    Medium(const float parameter, const short int scaling, const Unit& unit, const Intrinsic& density, const Polar& threshold);
+    Medium(const float parameter, const short int scaling, const Unit& unit, const Azimuth& current, const Polar& threshold);
+    Medium(const float parameter, const short int scaling, const Unit& unit, const Intrinsic& density, const Azimuth& current, const Polar& threshold);
+    Medium(const float parameter, const Intrinsic& density);
+    Medium(const float parameter, const Azimuth& current);
     Medium(const float parameter, const Polar& threshold);
-    Medium(const float parameter, const Polar& threshold, const Azimuth& orientation);
+    Medium(const float parameter, const Intrinsic& density, const Azimuth& current);
+    Medium(const float parameter, const Intrinsic& density, const Polar& threshold);
+    Medium(const float parameter, const Intrinsic& density, const Azimuth& current, const Polar& threshold);
+    Medium(const float parameter, const std::string unit, const Azimuth& current);
+    Medium(const float parameter, const Unit& unit, const Azimuth& current);
+    Medium(const float parameter, const std::string unit, const Polar& threshold);
+    Medium(const float parameter, const Unit& unit, const Polar& threshold);
+    Medium(const float parameter, const std::string unit, const Azimuth& current, const Polar& threshold);
+    Medium(const float parameter, const Unit& unit, const Azimuth& current, const Polar& threshold);
+    Medium(const float parameter, const std::string unit, const Intrinsic& density, const Azimuth& current);
+    Medium(const float parameter, const Unit& unit, const Intrinsic& density, const Azimuth& current);
+    Medium(const float parameter, const std::string unit, const Intrinsic& density, const Polar& threshold);
+    Medium(const float parameter, const Unit& unit, const Intrinsic& density, const Polar& threshold);
+    Medium(const float parameter, const short int scaling, const Azimuth& current);
     Medium(const float parameter, const short int scaling, const Polar& threshold);
-    Medium(const float parameter, const short int scaling, const Polar& threshold, const Azimuth& orientation);
-    Medium(const float parameter, const float threshold, const float orientation);
-    Medium(const float parameter, const std::string unit, const float threshold, const float orientation);
-    Medium(const float parameter, const Unit& unit, const float threshold, const float orientation);
-    Medium(const float parameter, const Unit& unit, const Polar& threshold, const Azimuth& orientation);
-    Medium(const float parameter, const short int scaling, const float threshold, const float orientation);
+    Medium(const float parameter, const short int scaling, const Azimuth& current,
+        const Polar& threshold);
+    Medium(const float parameter, const short int scaling, const Intrinsic& density,
+        const Azimuth& current);
+    Medium(const float parameter, const short int scaling, const Intrinsic& density,
+        const Polar& threshold);
     Medium(const float parameter, const short int scaling, const std::string unit,
-        const float threshold, const float orientation);
+        const Azimuth& current, const Polar& threshold);
     Medium(const float parameter, const short int scaling, const std::string unit,
-        const Polar& threshold, const Azimuth& orientation);
+        const Intrinsic& density, const Azimuth& current);
+    Medium(const float parameter, const short int scaling, const std::string unit,
+        const Intrinsic& density, const Polar& threshold);
+    Medium(const float parameter, const short int scaling, const std::string unit,
+        const Intrinsic& density, const Azimuth& current, const Polar& threshold);
+    Medium(const float parameter, const short int scaling, const std::string unit,
+        const Intrinsic& density, const Azimuth& current, const Polar& threshold,
+        const shp::Signal& transform);
     Medium(const float parameter, const short int scaling, const Unit& unit,
-        const float threshold, const float orientation);
-    Medium(const float parameter, const short int scaling, const Unit& unit,
-        const Polar& threshold, const Azimuth& orientation);
-    Medium(const std::string name, const float parameter, const short int scaling, const Unit& unit,
-        const Polar& threshold, const Azimuth& orientation);
-    Medium(const std::string name, const float parameter, const short int scaling, const Unit& unit,
-        const Polar& threshold, const Azimuth& orientation, const shp::Signal& intrinsic);
-    Medium(const shp::Signal& intrinsic);
+        const Intrinsic& density, const Azimuth& current, const Polar& threshold,
+        const shp::Signal& transform);
+    Medium(const shp::Signal& transform);
     Medium(const std::string name);
-    Medium(const std::string name, const shp::Signal& intrinsic);
+    Medium(const std::string name, const shp::Signal& transform);
     Medium(const std::string name, const std::string unit);
     Medium(const std::string name, const Unit& unit);
-    Medium(const std::string name, const std::string unit, const shp::Signal& intrinsic);
-    Medium(const std::string name, const Unit& unit, const shp::Signal& intrinsic);
-    Medium(const std::string name, const float parameter, const shp::Signal& intrinsic);
-    Medium(const std::string name, const short int scaling, const std::string unit, const shp::Signal& intrinsic);
-    Medium(const std::string name, const short int scaling, const Unit& unit, const shp::Signal& intrinsic);
+    Medium(const std::string name, const std::string unit, const shp::Signal& transform);
+    Medium(const std::string name, const Unit& unit, const shp::Signal& transform);
+    Medium(const std::string name, const float parameter, const shp::Signal& transform);
+    Medium(const std::string name, const float parameter, const short int scaling);
+    Medium(const std::string name, const float parameter, const short int scaling,
+        const shp::Signal& transform);
     Medium(const std::string name, const float parameter, const short int scaling, const std::string unit);
     Medium(const std::string name, const float parameter, const short int scaling, const Unit& unit);
-    Medium(const std::string name, const float parameter, const short int scaling, const std::string unit, const shp::Signal& intrinsic);
-    Medium(const std::string name, const float parameter, const short int scaling, const Unit& unit, const shp::Signal& intrinsic);
-    Medium(const Azimuth& orientation);
+    Medium(const std::string name, const float parameter, const short int scaling, const std::string unit,
+        const shp::Signal& transform);
+    Medium(const std::string name, const float parameter, const short int scaling, const Unit& unit,
+        const shp::Signal& transform);
+    Medium(const std::string name, const float parameter, const short int scaling, const Unit& unit,
+        const Intrinsic& density, const Azimuth& current, const Polar& threshold,
+        const shp::Signal& transform);
+    Medium(const Intrinsic& density);
+    Medium(const Azimuth& current);
     Medium(const Polar& threshold);
-    Medium(const Polar& threshold, const Azimuth& orientation);
+    Medium(const Intrinsic& density, const Azimuth& current);
+    Medium(const Intrinsic& density, const Polar& threshold);
+    Medium(const Intrinsic& density, const Azimuth& current, const Polar& threshold);
 
     // Destructors
     ~Medium();
@@ -122,12 +151,12 @@ public:
     Medium operator/(const Distance& parameter) const;
     Medium operator%(const Distance& parameter) const;
 
-    // Concentation operator
-    Medium operator+(const Azimuth& orientation) const;
-    Medium operator-(const Azimuth& orientation) const;
-    Medium operator*(const Azimuth& orientation) const;
-    Medium operator/(const Azimuth& orientation) const;
-    Medium operator%(const Azimuth& orientation) const;
+    // Concentration operator
+    Medium operator+(const Intrinsic& phase) const;
+    Medium operator-(const Intrinsic& phase) const;
+    Medium operator*(const Intrinsic& phase) const;
+    Medium operator/(const Intrinsic& phase) const;
+    Medium operator%(const Intrinsic& phase) const;
 
     // Threshold operator
     Medium operator+(const Polar& threshold) const;
@@ -151,11 +180,11 @@ public:
 
     // Getters
     std::string getName() const { return name; }
-    shp::Signal getIntrinsic() const { return intrinsic; }
+    shp::Signal getTransform() const { return transform; }
 
     // Setters
     void setName(const std::string name) { this->name = name; }
-    void setIntrinsic(const shp::Signal& modulation) { this->intrinsic = modulation; }
+    void setTransform(const shp::Signal& modulation) { this->transform = modulation; }
 
     // Additional methods
     shp::Signal getLinearDiffusion(const Medium& peer,
@@ -202,7 +231,7 @@ public:
     void setParameter(const float value, const short int scaling, const Unit& unit);
     Direction getDiffusionCurrent() const;
     void setDiffusionFactor(const float degree);
-    void setDiffusionFactor(const Azimuth& orientation);
+    void setDiffusionFactor(const Intrinsic& phase);
     Direction getThresholdCurrent() const;
     Direction getThresholdShift() const;
     void setThresholdShift(const float degree);
@@ -214,7 +243,7 @@ public:
     float getDiffusionTimePerCycle() const;
     Direction getDiffusionShift() const;
     void setDiffusionShift(const short int degree);
-    float getDiffusionFraction(const Azimuth& peer) const;
+    float getDiffusionFraction(const Intrinsic& peer) const;
     shp::Signal getRelative(const Distance& position) const;
     shp::Signal getLinearX(const Distance& position) const;
     shp::Signal getLinearXConvergence(const Distance& position) const;

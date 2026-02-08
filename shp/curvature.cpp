@@ -27,8 +27,8 @@ Curvature::Curvature()
 
 }
 
-Curvature::Curvature(const Azimuth& azimuthal)
-        : Point(azimuthal), deformations(), polarization(Direction::DEFAULT_RADIANS) {
+Curvature::Curvature(const Intrinsic& intrinsic)
+        : Point(intrinsic), deformations(), polarization(Direction::DEFAULT_RADIANS) {
 
 }
 
@@ -37,8 +37,8 @@ Curvature::Curvature(const Polar& polarization)
 
 }
 
-Curvature::Curvature(const Polar& polarization, const Azimuth& azimuthal)
-        : Point(azimuthal), deformations(), polarization(polarization.toRadians()) {
+Curvature::Curvature(const Polar& polarization, const Intrinsic& intrinsic)
+        : Point(intrinsic), deformations(), polarization(polarization.toRadians()) {
 
 }
 
@@ -62,28 +62,28 @@ Curvature::Curvature(const float magnitude, const short int scaling, const Unit&
 
 }
 
-Curvature::Curvature(const float magnitude, const Polar& polarization, const Azimuth& azimuthal)
-        : Point(magnitude, azimuthal), deformations(), polarization(polarization.toRadians()) {
+Curvature::Curvature(const float magnitude, const Polar& polarization, const Intrinsic& intrinsic)
+        : Point(magnitude, intrinsic), deformations(), polarization(polarization.toRadians()) {
 
 }
 
 Curvature::Curvature(const float magnitude, const short int scaling,
-        const Polar& polarization, const Azimuth& azimuthal)
-        : Point(magnitude, scaling, azimuthal),
+        const Polar& polarization, const Intrinsic& intrinsic)
+        : Point(magnitude, scaling, intrinsic),
         deformations(), polarization(polarization.toRadians()) {
 
 }
 
 Curvature::Curvature(const float magnitude, const short int scaling, const std::string unit,
-        const Polar& polarization, const Azimuth& azimuthal)
-        : Point(magnitude, scaling, unit, azimuthal),
+        const Polar& polarization, const Intrinsic& intrinsic)
+        : Point(magnitude, scaling, unit, intrinsic),
         deformations(), polarization(polarization.toRadians()) {
 
 }
 
 Curvature::Curvature(const float magnitude, const short int scaling, const Unit& unit,
-        const Polar& polarization, const Azimuth& azimuthal)
-        : Point(magnitude, scaling, unit, azimuthal),
+        const Polar& polarization, const Intrinsic& intrinsic)
+        : Point(magnitude, scaling, unit, intrinsic),
         deformations(), polarization(polarization.toRadians()) {
 
 }
@@ -98,8 +98,8 @@ Curvature::Curvature(const std::string name)
 
 }
 
-Curvature::Curvature(const std::string name, const Azimuth& azimuthal)
-        : Point(name, azimuthal), deformations(), polarization(Direction::DEFAULT_RADIANS) {
+Curvature::Curvature(const std::string name, const Intrinsic& intrinsic)
+        : Point(name, intrinsic), deformations(), polarization(Direction::DEFAULT_RADIANS) {
 
 }
 
@@ -108,8 +108,8 @@ Curvature::Curvature(const std::string name, const Polar& polarization)
 
 }
 
-Curvature::Curvature(const std::string name, const Polar& polarization, const Azimuth& azimuthal)
-        : Point(name, azimuthal), deformations(), polarization(polarization.toRadians()) {
+Curvature::Curvature(const std::string name, const Polar& polarization, const Intrinsic& intrinsic)
+        : Point(name, intrinsic), deformations(), polarization(polarization.toRadians()) {
 
 }
 
@@ -137,31 +137,31 @@ Curvature::Curvature(const std::string name, const float magnitude,
 }
 
 Curvature::Curvature(const std::string name, const float magnitude,
-        const Polar& polarization, const Azimuth& azimuthal)
-        : Point(name, magnitude, azimuthal), deformations(),
+        const Polar& polarization, const Intrinsic& intrinsic)
+        : Point(name, magnitude, intrinsic), deformations(),
         polarization(polarization.toRadians()) {
 
 }
 
 Curvature::Curvature(const std::string name, const float magnitude, const short int scaling,
-        const Polar& polarization, const Azimuth& azimuthal)
-        : Point(name, magnitude, scaling, azimuthal), deformations(),
+        const Polar& polarization, const Intrinsic& intrinsic)
+        : Point(name, magnitude, scaling, intrinsic), deformations(),
         polarization(polarization.toRadians()) {
 
 }
 
 Curvature::Curvature(const std::string name, const float magnitude,
         const short int scaling, const std::string unit,
-        const Polar& polarization, const Azimuth& azimuthal)
-        : Point(name, magnitude, scaling, unit, azimuthal), deformations(),
+        const Polar& polarization, const Intrinsic& intrinsic)
+        : Point(name, magnitude, scaling, unit, intrinsic), deformations(),
         polarization(polarization.toRadians()) {
 
 }
 
 Curvature::Curvature(const std::string name, const float magnitude,
         const short int scaling, const Unit& unit,
-        const Polar& polarization, const Azimuth& azimuthal)
-        : Point(name, magnitude, scaling, unit, azimuthal), deformations(),
+        const Polar& polarization, const Intrinsic& intrinsic)
+        : Point(name, magnitude, scaling, unit, intrinsic), deformations(),
         polarization(polarization.toRadians()) {
 
 }
@@ -178,8 +178,8 @@ Curvature::Curvature(const std::string name, const PhaseArray& deformations,
 }
 
 Curvature::Curvature(const std::string name, const PhaseArray& deformations,
-        const Azimuth& azimuthal)
-        : Point(name, azimuthal), deformations(deformations), polarization(Direction::DEFAULT_RADIANS) {
+        const Intrinsic& intrinsic)
+        : Point(name, intrinsic), deformations(deformations), polarization(Direction::DEFAULT_RADIANS) {
 
 }
 
@@ -190,21 +190,21 @@ Curvature::Curvature(const std::string name, const PhaseArray& deformations,
 }
 
 Curvature::Curvature(const std::string name, const PhaseArray& deformations,
-        const float polarization, const float azimuthal)
-        : Point(name, azimuthal), deformations(deformations), polarization(polarization) {
+        const float polarization, const float intrinsic)
+        : Point(name, intrinsic), deformations(deformations), polarization(polarization) {
 
 }
 
 Curvature::Curvature(const std::string name, const PhaseArray& deformations,
-        const Polar& polarization, const Azimuth& azimuthal)
-        : Point(name, azimuthal), deformations(deformations), polarization(polarization.toRadians()) {
+        const Polar& polarization, const Intrinsic& intrinsic)
+        : Point(name, intrinsic), deformations(deformations), polarization(polarization.toRadians()) {
 
 }
 
 Curvature::Curvature(const std::string name, const PhaseArray& deformations,
         const float magnitude, const short int scaling, const Unit& unit,
-        const Polar& polarization, const Azimuth& azimuthal)
-        : Point(name, magnitude, scaling, unit, azimuthal),
+        const Polar& polarization, const Intrinsic& intrinsic)
+        : Point(name, magnitude, scaling, unit, intrinsic),
         deformations(deformations), polarization(polarization.toRadians()) {
 
 }
@@ -243,8 +243,8 @@ Curvature Curvature::operator+(const Curvature& peer) const {
     PhaseArray phases(deformations);
     phases.insert(phases.end(), peer.deformations.begin(), peer.deformations.end());
     std::complex<float>
-        ap1 = self.toComplexAzimuth(self.getGradient()),
-        ap2 = other.toComplexAzimuth(peer.getGradient());
+        ap1 = self.toComplexIntrinsic(self.getGradient()),
+        ap2 = other.toComplexIntrinsic(peer.getGradient());
     std::complex<float> a_phasor = ap1 + ap2;
     std::complex<float>
         pp1 = self.toComplexPolar(polarization),
@@ -265,8 +265,8 @@ Curvature Curvature::operator-(const Curvature& peer) const {
         }
     }
     std::complex<float>
-        ap1 = self.toComplexAzimuth(self.getGradient()),
-        ap2 = other.toComplexAzimuth(peer.getGradient());
+        ap1 = self.toComplexIntrinsic(self.getGradient()),
+        ap2 = other.toComplexIntrinsic(peer.getGradient());
     std::complex<float> a_phasor = ap1 - ap2;
     std::complex<float>
         pp1 = self.toComplexPolar(polarization),

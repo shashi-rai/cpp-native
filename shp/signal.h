@@ -21,13 +21,13 @@
 #ifndef SHP_SIGNAL_H
 #define SHP_SIGNAL_H
 
-#include "azimuth.h"
+#include "intrinsic.h"
 #include "quantity.h"
 
 namespace shp {
 
 class Signal : private Quantity {
-    float orientation;      // azimuthal change in magnitude
+    float orientation;      // intrinsic change in magnitude
 public:
     // Constructors
     Signal();
@@ -42,29 +42,29 @@ public:
     Signal(const float quantity, const short int scaling,
         const shp::Unit& unit);
     Signal(const Quantity& quantity);
-    Signal(const Azimuth& orientation);
-    Signal(const Azimuth& orientation, const Quantity& quantity);
+    Signal(const Intrinsic& orientation);
+    Signal(const Intrinsic& orientation, const Quantity& quantity);
     Signal(const float orientation, const float quantity);
     Signal(const float orientation, const float quantity,
         const std::string unit);
     Signal(const float orientation, const float quantity,
         const shp::Unit& unit);
-    Signal(const Azimuth& orientation, const float quantity);
-    Signal(const Azimuth& orientation, const float quantity,
+    Signal(const Intrinsic& orientation, const float quantity);
+    Signal(const Intrinsic& orientation, const float quantity,
         const std::string unit);
-    Signal(const Azimuth& orientation, const float quantity,
+    Signal(const Intrinsic& orientation, const float quantity,
         const Unit& unit);
     Signal(const float orientation, const float quantity,
         const short int scaling);
-    Signal(const Azimuth& orientation, const float quantity,
+    Signal(const Intrinsic& orientation, const float quantity,
         const short int scaling);
     Signal(const float orientation, const float quantity,
         const short int scaling, const std::string unit);
-    Signal(const Azimuth& orientation, const float quantity,
+    Signal(const Intrinsic& orientation, const float quantity,
         const short int scaling, const std::string unit);
     Signal(const float orientation, const float quantity,
         const short int scaling, const Unit& unit);
-    Signal(const Azimuth& orientation, const float quantity,
+    Signal(const Intrinsic& orientation, const float quantity,
         const short int scaling, const Unit& unit);
 
     // Destructors
@@ -82,26 +82,26 @@ public:
     Signal operator/(const Signal& peer) const;
     Signal operator%(const Signal& peer) const;
 
-    // Magnitude operator
+    // Magnitude scalar operator
     Signal operator+(const float coefficient) const;
     Signal operator-(const float coefficient) const;
     Signal operator*(const float coefficient) const;
     Signal operator/(const float coefficient) const;
     Signal operator%(const float coefficient) const;
 
-    // Magnitude operator
+    // Magnitude scalar operator
     Signal operator+(const Quantity& peer) const;
     Signal operator-(const Quantity& peer) const;
     Signal operator*(const Quantity& peer) const;
     Signal operator/(const Quantity& peer) const;
     Signal operator%(const Quantity& peer) const;
 
-    // Direction operator
-    Signal operator+(const Direction& peer) const;
-    Signal operator-(const Direction& peer) const;
-    Signal operator*(const Direction& peer) const;
-    Signal operator/(const Direction& peer) const;
-    Signal operator%(const Direction& peer) const;
+    // Intrinsic vector operator
+    Signal operator+(const Intrinsic& peer) const;
+    Signal operator-(const Intrinsic& peer) const;
+    Signal operator*(const Intrinsic& peer) const;
+    Signal operator/(const Intrinsic& peer) const;
+    Signal operator%(const Intrinsic& peer) const;
 
     // Multiple operator
     Signal operator()(const float scaleup) const;
@@ -140,8 +140,8 @@ public:
     void setMagnitude(const float value, const short int scale, const Unit& unit);
     float getAmplitude() const;
     float getImaginary() const;
-    Direction getPhase() const;
-    void setPhase(const Direction& direction);
+    Intrinsic getPhase() const;
+    void setPhase(const Intrinsic& direction);
     short int getScaling() const;
     void setScaling(const short int factor);
     Unit getUnit() const;

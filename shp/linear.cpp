@@ -29,7 +29,7 @@ Linear::Linear()
 
 }
 
-Linear::Linear(const Azimuth& gradient)
+Linear::Linear(const Intrinsic& gradient)
         : Point(gradient), points(), limit(DEFAULT_LIMIT) {
 
 }
@@ -54,22 +54,22 @@ Linear::Linear(const float magnitude, const short int scaling, const Unit& unit)
 
 }
 
-Linear::Linear(const float magnitude, const Azimuth& gradient)
+Linear::Linear(const float magnitude, const Intrinsic& gradient)
         : Point(magnitude, gradient), points(), limit(DEFAULT_LIMIT) {
 
 }
 
-Linear::Linear(const float magnitude, const short int scaling, const Azimuth& gradient)
+Linear::Linear(const float magnitude, const short int scaling, const Intrinsic& gradient)
         : Point(magnitude, scaling, gradient), points(), limit(DEFAULT_LIMIT) {
 
 }
 
-Linear::Linear(const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient)
+Linear::Linear(const float magnitude, const short int scaling, const std::string unit, const Intrinsic& gradient)
         : Point(magnitude, scaling, unit, gradient), points(), limit(DEFAULT_LIMIT) {
 
 }
 
-Linear::Linear(const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient)
+Linear::Linear(const float magnitude, const short int scaling, const Unit& unit, const Intrinsic& gradient)
         : Point(magnitude, scaling, unit, gradient), points(), limit(DEFAULT_LIMIT) {
 
 }
@@ -79,7 +79,7 @@ Linear::Linear(const std::string name)
 
 }
 
-Linear::Linear(const std::string name, const Azimuth& gradient)
+Linear::Linear(const std::string name, const Intrinsic& gradient)
         : Point(name, gradient), points(), limit(0) {
 
 }
@@ -104,27 +104,27 @@ Linear::Linear(const std::string name, const float magnitude, const short int sc
 
 }
 
-Linear::Linear(const std::string name, const float magnitude, const Azimuth& gradient)
+Linear::Linear(const std::string name, const float magnitude, const Intrinsic& gradient)
         : Point(name, magnitude, gradient), points(), limit(DEFAULT_LIMIT) {
 
 }
 
-Linear::Linear(const std::string name, const float magnitude, const short int scaling, const Azimuth& gradient)
+Linear::Linear(const std::string name, const float magnitude, const short int scaling, const Intrinsic& gradient)
         : Point(name, magnitude, scaling, gradient), points(), limit(DEFAULT_LIMIT) {
 
 }
 
-Linear::Linear(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient)
+Linear::Linear(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Intrinsic& gradient)
         : Point(name, magnitude, scaling, unit, gradient), points(), limit(DEFAULT_LIMIT) {
 
 }
 
-Linear::Linear(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient)
+Linear::Linear(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Intrinsic& gradient)
         : Point(name, magnitude, scaling, unit, gradient), points(), limit(DEFAULT_LIMIT) {
 
 }
 
-Linear::Linear(const std::string name, const Azimuth& gradient, const int limit)
+Linear::Linear(const std::string name, const Intrinsic& gradient, const int limit)
         : Point(name, gradient), points(), limit(limit) {
 
 }
@@ -139,7 +139,7 @@ Linear::Linear(const std::string name, const PointArray& points, const float gra
 
 }
 
-Linear::Linear(const std::string name, const PointArray& points, const Azimuth& gradient)
+Linear::Linear(const std::string name, const PointArray& points, const Intrinsic& gradient)
         : Point(name, gradient), points(points), limit(DEFAULT_LIMIT) {
 
 }
@@ -149,7 +149,7 @@ Linear::Linear(const std::string name, const PointArray& points, const float gra
 
 }
 
-Linear::Linear(const std::string name, const PointArray& points, const Azimuth& gradient, const int limit)
+Linear::Linear(const std::string name, const PointArray& points, const Intrinsic& gradient, const int limit)
         : Point(name, gradient), points(points), limit(limit) {
 
 }

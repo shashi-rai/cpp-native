@@ -31,31 +31,31 @@ class Shell : public Point {
 public:
     // Constructors
     Shell();
-    Shell(const Azimuth& gradient);
+    Shell(const Intrinsic& gradient);
     Shell(const float magnitude);
     Shell(const float magnitude, const short int scaling);
     Shell(const float magnitude, const short int scaling, const std::string unit);
     Shell(const float magnitude, const short int scaling, const Unit& unit);
-    Shell(const float magnitude, const Azimuth& gradient);
-    Shell(const float magnitude, const short int scaling, const Azimuth& gradient);
-    Shell(const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient);
-    Shell(const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient);
+    Shell(const float magnitude, const Intrinsic& gradient);
+    Shell(const float magnitude, const short int scaling, const Intrinsic& gradient);
+    Shell(const float magnitude, const short int scaling, const std::string unit, const Intrinsic& gradient);
+    Shell(const float magnitude, const short int scaling, const Unit& unit, const Intrinsic& gradient);
     Shell(const std::string name);
-    Shell(const std::string name, const Azimuth& gradient);
+    Shell(const std::string name, const Intrinsic& gradient);
     Shell(const std::string name, const float magnitude);
     Shell(const std::string name, const float magnitude, const short int scaling);
     Shell(const std::string name, const float magnitude, const short int scaling, const std::string unit);
     Shell(const std::string name, const float magnitude, const short int scaling, const Unit& unit);
-    Shell(const std::string name, const float magnitude, const Azimuth& gradient);
-    Shell(const std::string name, const float magnitude, const short int scaling, const Azimuth& gradient);
-    Shell(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient);
-    Shell(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient);
-    Shell(const std::string name, const Azimuth& gradient, const int limit);
+    Shell(const std::string name, const float magnitude, const Intrinsic& gradient);
+    Shell(const std::string name, const float magnitude, const short int scaling, const Intrinsic& gradient);
+    Shell(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Intrinsic& gradient);
+    Shell(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Intrinsic& gradient);
+    Shell(const std::string name, const Intrinsic& gradient, const int limit);
     Shell(const std::string name, const OrbitalArray& orbitals);
     Shell(const std::string name, const OrbitalArray& orbitals, const float gradient);
-    Shell(const std::string name, const OrbitalArray& orbitals, const Azimuth& gradient);
+    Shell(const std::string name, const OrbitalArray& orbitals, const Intrinsic& gradient);
     Shell(const std::string name, const OrbitalArray& orbitals, const float gradient, const int limit);
-    Shell(const std::string name, const OrbitalArray& orbitals, const Azimuth& gradient, const int limit);
+    Shell(const std::string name, const OrbitalArray& orbitals, const Intrinsic& gradient, const int limit);
 
     // Destructors
     ~Shell();

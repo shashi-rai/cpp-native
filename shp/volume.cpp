@@ -487,8 +487,8 @@ void Volume::setHeight(const Signal& height) {
 }
 
 Signal Volume::getHeightRotation(const short int degree) const {
-    Azimuth direction(depth.getOrientation());
-    Azimuth phase = direction.getRotation(degree);
+    Intrinsic direction(depth.getOrientation());
+    Intrinsic phase = direction.getRotation(degree);
     return Signal(phase, depth.getMagnitude(), depth.getScaling(), depth.getUnit());
 }
 

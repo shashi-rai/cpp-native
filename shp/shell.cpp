@@ -29,7 +29,7 @@ Shell::Shell()
 
 }
 
-Shell::Shell(const Azimuth& gradient)
+Shell::Shell(const Intrinsic& gradient)
         : Point(gradient), orbitals(), limit(DEFAULT_LIMIT) {
 
 }
@@ -54,22 +54,22 @@ Shell::Shell(const float magnitude, const short int scaling, const Unit& unit)
 
 }
 
-Shell::Shell(const float magnitude, const Azimuth& gradient)
+Shell::Shell(const float magnitude, const Intrinsic& gradient)
         : Point(magnitude, gradient), orbitals(), limit(DEFAULT_LIMIT) {
 
 }
 
-Shell::Shell(const float magnitude, const short int scaling, const Azimuth& gradient)
+Shell::Shell(const float magnitude, const short int scaling, const Intrinsic& gradient)
         : Point(magnitude, scaling, gradient), orbitals(), limit(DEFAULT_LIMIT) {
 
 }
 
-Shell::Shell(const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient)
+Shell::Shell(const float magnitude, const short int scaling, const std::string unit, const Intrinsic& gradient)
         : Point(magnitude, scaling, unit, gradient), orbitals(), limit(DEFAULT_LIMIT) {
 
 }
 
-Shell::Shell(const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient)
+Shell::Shell(const float magnitude, const short int scaling, const Unit& unit, const Intrinsic& gradient)
         : Point(magnitude, scaling, unit, gradient), orbitals(), limit(DEFAULT_LIMIT) {
 
 }
@@ -79,7 +79,7 @@ Shell::Shell(const std::string name)
 
 }
 
-Shell::Shell(const std::string name, const Azimuth& gradient)
+Shell::Shell(const std::string name, const Intrinsic& gradient)
         : Point(name, gradient), orbitals(), limit(DEFAULT_LIMIT) {
 
 }
@@ -104,27 +104,27 @@ Shell::Shell(const std::string name, const float magnitude, const short int scal
 
 }
 
-Shell::Shell(const std::string name, const float magnitude, const Azimuth& gradient)
+Shell::Shell(const std::string name, const float magnitude, const Intrinsic& gradient)
         : Point(name, magnitude, gradient), orbitals(), limit(DEFAULT_LIMIT) {
 
 }
 
-Shell::Shell(const std::string name, const float magnitude, const short int scaling, const Azimuth& gradient)
+Shell::Shell(const std::string name, const float magnitude, const short int scaling, const Intrinsic& gradient)
         : Point(name, magnitude, scaling, gradient), orbitals(), limit(DEFAULT_LIMIT) {
 
 }
 
-Shell::Shell(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient)
+Shell::Shell(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Intrinsic& gradient)
         : Point(name, magnitude, scaling, unit, gradient), orbitals(), limit(DEFAULT_LIMIT) {
 
 }
 
-Shell::Shell(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient)
+Shell::Shell(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Intrinsic& gradient)
         : Point(name, magnitude, scaling, unit, gradient), orbitals(), limit(DEFAULT_LIMIT) {
 
 }
 
-Shell::Shell(const std::string name, const Azimuth& gradient, const int limit)
+Shell::Shell(const std::string name, const Intrinsic& gradient, const int limit)
         : Point(name, gradient), orbitals(), limit(limit) {
 
 }
@@ -139,7 +139,7 @@ Shell::Shell(const std::string name, const OrbitalArray& orbitals, const float g
 
 }
 
-Shell::Shell(const std::string name, const OrbitalArray& orbitals, const Azimuth& gradient)
+Shell::Shell(const std::string name, const OrbitalArray& orbitals, const Intrinsic& gradient)
         : Point(name, gradient), orbitals(orbitals), limit(DEFAULT_LIMIT) {
 
 }
@@ -149,7 +149,7 @@ Shell::Shell(const std::string name, const OrbitalArray& orbitals, const float g
 
 }
 
-Shell::Shell(const std::string name, const OrbitalArray& orbitals, const Azimuth& gradient, const int limit)
+Shell::Shell(const std::string name, const OrbitalArray& orbitals, const Intrinsic& gradient, const int limit)
         : Point(name, gradient), orbitals(orbitals), limit(limit) {
 
 }
@@ -238,7 +238,7 @@ void Shell::setMultiPhase() {
         Direction angle = Direction::getSectorAngle(limit);
         for (int index=0; index < limit; index++) {
             std::string name = "S" + std::to_string(index+1);
-            shp::Polygon side(name, self.getMagnitude(), self.getScaling(), Azimuth(index * angle.toRadians()));
+            shp::Polygon side(name, self.getMagnitude(), self.getScaling(), Intrinsic(index * angle.toRadians()));
             this->set(index, side);
         }
     }
@@ -248,7 +248,7 @@ void Shell::setRotation(const float degree) {
     int index = 0;
     for (OrbitalArray::const_iterator it = orbitals.begin(); it != orbitals.end(); ++it, index++) {
         Polygon orbital = (*it);
-        orbital.setAzimuthal((orbital.getAzimuthal() + (Direction::DEGREE_001 * degree)));
+        orbital.setIntrinsic((orbital.getIntrinsic() + (Direction::DEGREE_001 * degree)));
         this->set(index, orbital);
     }
 }

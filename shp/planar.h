@@ -31,31 +31,31 @@ class Planar : public Point {
 public:
     // Constructors
     Planar();
-    Planar(const Azimuth& gradient);
+    Planar(const Intrinsic& gradient);
     Planar(const float magnitude);
     Planar(const float magnitude, const short int scaling);
     Planar(const float magnitude, const short int scaling, const std::string unit);
     Planar(const float magnitude, const short int scaling, const Unit& unit);
-    Planar(const float magnitude, const Azimuth& gradient);
-    Planar(const float magnitude, const short int scaling, const Azimuth& gradient);
-    Planar(const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient);
-    Planar(const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient);
+    Planar(const float magnitude, const Intrinsic& gradient);
+    Planar(const float magnitude, const short int scaling, const Intrinsic& gradient);
+    Planar(const float magnitude, const short int scaling, const std::string unit, const Intrinsic& gradient);
+    Planar(const float magnitude, const short int scaling, const Unit& unit, const Intrinsic& gradient);
     Planar(const std::string name);
-    Planar(const std::string name, const Azimuth& gradient);
+    Planar(const std::string name, const Intrinsic& gradient);
     Planar(const std::string name, const float magnitude);
     Planar(const std::string name, const float magnitude, const short int scaling);
     Planar(const std::string name, const float magnitude, const short int scaling, const std::string unit);
     Planar(const std::string name, const float magnitude, const short int scaling, const Unit& unit);
-    Planar(const std::string name, const float magnitude, const Azimuth& gradient);
-    Planar(const std::string name, const float magnitude, const short int scaling, const Azimuth& gradient);
-    Planar(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient);
-    Planar(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient);
-    Planar(const std::string name, const Azimuth& gradient, const int limit);
+    Planar(const std::string name, const float magnitude, const Intrinsic& gradient);
+    Planar(const std::string name, const float magnitude, const short int scaling, const Intrinsic& gradient);
+    Planar(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Intrinsic& gradient);
+    Planar(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Intrinsic& gradient);
+    Planar(const std::string name, const Intrinsic& gradient, const int limit);
     Planar(const std::string name, const LinearArray& lines);
     Planar(const std::string name, const LinearArray& lines, const float gradient);
-    Planar(const std::string name, const LinearArray& lines, const Azimuth& gradient);
+    Planar(const std::string name, const LinearArray& lines, const Intrinsic& gradient);
     Planar(const std::string name, const LinearArray& lines, const float gradient, const int limit);
-    Planar(const std::string name, const LinearArray& lines, const Azimuth& gradient, const int limit);
+    Planar(const std::string name, const LinearArray& lines, const Intrinsic& gradient, const int limit);
 
     // Destructors
     ~Planar();

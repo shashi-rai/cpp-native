@@ -31,31 +31,31 @@ class Linear : public Point {
 public:
     // Constructors
     Linear();
-    Linear(const Azimuth& gradient);
+    Linear(const Intrinsic& gradient);
     Linear(const float magnitude);
     Linear(const float magnitude, const short int scaling);
     Linear(const float magnitude, const short int scaling, const std::string unit);
     Linear(const float magnitude, const short int scaling, const Unit& unit);
-    Linear(const float magnitude, const Azimuth& gradient);
-    Linear(const float magnitude, const short int scaling, const Azimuth& gradient);
-    Linear(const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient);
-    Linear(const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient);
+    Linear(const float magnitude, const Intrinsic& gradient);
+    Linear(const float magnitude, const short int scaling, const Intrinsic& gradient);
+    Linear(const float magnitude, const short int scaling, const std::string unit, const Intrinsic& gradient);
+    Linear(const float magnitude, const short int scaling, const Unit& unit, const Intrinsic& gradient);
     Linear(const std::string name);
-    Linear(const std::string name, const Azimuth& gradient);
+    Linear(const std::string name, const Intrinsic& gradient);
     Linear(const std::string name, const float magnitude);
     Linear(const std::string name, const float magnitude, const short int scaling);
     Linear(const std::string name, const float magnitude, const short int scaling, const std::string unit);
     Linear(const std::string name, const float magnitude, const short int scaling, const Unit& unit);
-    Linear(const std::string name, const float magnitude, const Azimuth& gradient);
-    Linear(const std::string name, const float magnitude, const short int scaling, const Azimuth& gradient);
-    Linear(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient);
-    Linear(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient);
-    Linear(const std::string name, const Azimuth& gradient, const int limit);
+    Linear(const std::string name, const float magnitude, const Intrinsic& gradient);
+    Linear(const std::string name, const float magnitude, const short int scaling, const Intrinsic& gradient);
+    Linear(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Intrinsic& gradient);
+    Linear(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Intrinsic& gradient);
+    Linear(const std::string name, const Intrinsic& gradient, const int limit);
     Linear(const std::string name, const PointArray& points);
     Linear(const std::string name, const PointArray& points, const float gradient);
-    Linear(const std::string name, const PointArray& points, const Azimuth& gradient);
+    Linear(const std::string name, const PointArray& points, const Intrinsic& gradient);
     Linear(const std::string name, const PointArray& points, const float gradient, const int limit);
-    Linear(const std::string name, const PointArray& points, const Azimuth& gradient, const int limit);
+    Linear(const std::string name, const PointArray& points, const Intrinsic& gradient, const int limit);
 
     // Destructors
     ~Linear();

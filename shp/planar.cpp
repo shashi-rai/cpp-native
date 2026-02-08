@@ -29,7 +29,7 @@ Planar::Planar()
 
 }
 
-Planar::Planar(const Azimuth& gradient)
+Planar::Planar(const Intrinsic& gradient)
         : Point(gradient), lines(), limit(DEFAULT_LIMIT) {
 
 }
@@ -54,22 +54,22 @@ Planar::Planar(const float magnitude, const short int scaling, const Unit& unit)
 
 }
 
-Planar::Planar(const float magnitude, const Azimuth& gradient)
+Planar::Planar(const float magnitude, const Intrinsic& gradient)
         : Point(magnitude, gradient), lines(), limit(DEFAULT_LIMIT) {
 
 }
 
-Planar::Planar(const float magnitude, const short int scaling, const Azimuth& gradient)
+Planar::Planar(const float magnitude, const short int scaling, const Intrinsic& gradient)
         : Point(magnitude, scaling, gradient), lines(), limit(DEFAULT_LIMIT) {
 
 }
 
-Planar::Planar(const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient)
+Planar::Planar(const float magnitude, const short int scaling, const std::string unit, const Intrinsic& gradient)
         : Point(magnitude, scaling, unit, gradient), lines(), limit(DEFAULT_LIMIT) {
 
 }
 
-Planar::Planar(const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient)
+Planar::Planar(const float magnitude, const short int scaling, const Unit& unit, const Intrinsic& gradient)
         : Point(magnitude, scaling, unit, gradient), lines(), limit(DEFAULT_LIMIT) {
 
 }
@@ -79,7 +79,7 @@ Planar::Planar(const std::string name)
 
 }
 
-Planar::Planar(const std::string name, const Azimuth& gradient)
+Planar::Planar(const std::string name, const Intrinsic& gradient)
         : Point(name, gradient), lines(), limit(0) {
 
 }
@@ -104,27 +104,27 @@ Planar::Planar(const std::string name, const float magnitude, const short int sc
 
 }
 
-Planar::Planar(const std::string name, const float magnitude, const Azimuth& gradient)
+Planar::Planar(const std::string name, const float magnitude, const Intrinsic& gradient)
         : Point(name, magnitude, gradient), lines(), limit(DEFAULT_LIMIT) {
 
 }
 
-Planar::Planar(const std::string name, const float magnitude, const short int scaling, const Azimuth& gradient)
+Planar::Planar(const std::string name, const float magnitude, const short int scaling, const Intrinsic& gradient)
         : Point(name, magnitude, scaling, gradient), lines(), limit(DEFAULT_LIMIT) {
 
 }
 
-Planar::Planar(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Azimuth& gradient)
+Planar::Planar(const std::string name, const float magnitude, const short int scaling, const std::string unit, const Intrinsic& gradient)
         : Point(name, magnitude, scaling, unit, gradient), lines(), limit(DEFAULT_LIMIT) {
 
 }
 
-Planar::Planar(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Azimuth& gradient)
+Planar::Planar(const std::string name, const float magnitude, const short int scaling, const Unit& unit, const Intrinsic& gradient)
         : Point(name, magnitude, scaling, unit, gradient), lines(), limit(DEFAULT_LIMIT) {
 
 }
 
-Planar::Planar(const std::string name, const Azimuth& gradient, const int limit)
+Planar::Planar(const std::string name, const Intrinsic& gradient, const int limit)
         : Point(name, gradient), lines(), limit(limit) {
 
 }
@@ -139,7 +139,7 @@ Planar::Planar(const std::string name, const LinearArray& lines, const float gra
 
 }
 
-Planar::Planar(const std::string name, const LinearArray& lines, const Azimuth& gradient)
+Planar::Planar(const std::string name, const LinearArray& lines, const Intrinsic& gradient)
         : Point(name, gradient), lines(lines), limit(DEFAULT_LIMIT) {
 
 }
@@ -149,7 +149,7 @@ Planar::Planar(const std::string name, const LinearArray& lines, const float gra
 
 }
 
-Planar::Planar(const std::string name, const LinearArray& lines, const Azimuth& gradient, const int limit)
+Planar::Planar(const std::string name, const LinearArray& lines, const Intrinsic& gradient, const int limit)
         : Point(name, gradient), lines(lines), limit(limit) {
 
 }

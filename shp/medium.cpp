@@ -23,324 +23,439 @@
 namespace shp {
 
 Medium::Medium()
-        : Distance(), name(), intrinsic() {
+        : Distance(), name(), transform() {
 
 }
 
 Medium::Medium(const Unit& unit)
-        : Distance(unit), name(), intrinsic() {
-
-}
-
-Medium::Medium(const short int scaling, const std::string unit)
-        : Distance(scaling, unit), name(), intrinsic() {
-
-}
-
-Medium::Medium(const short int scaling, const Unit& unit)
-        : Distance(scaling, unit), name(), intrinsic() {
+        : Distance(unit), name(), transform() {
 
 }
 
 Medium::Medium(const float parameter)
-        : Distance(parameter), name(), intrinsic() {
+        : Distance(parameter), name(), transform() {
 
 }
 
-Medium::Medium(const float parameter, const shp::Signal& intrinsic)
-        : Distance(parameter), name(), intrinsic(intrinsic) {
+Medium::Medium(const float parameter, const shp::Signal& transform)
+        : Distance(parameter), name(), transform(transform) {
 
 }
 
 Medium::Medium(const float parameter, const std::string unit)
-        : Distance(parameter, unit), name(), intrinsic() {
+        : Distance(parameter, unit), name(), transform() {
 
 }
 
 Medium::Medium(const float parameter, const Unit& unit)
-        : Distance(parameter, unit), name(), intrinsic() {
+        : Distance(parameter, unit), name(), transform() {
 
 }
 
-Medium::Medium(const float parameter, const std::string unit, const shp::Signal& intrinsic)
-        : Distance(parameter, unit), name(), intrinsic(intrinsic) {
+Medium::Medium(const float parameter, const std::string unit, const shp::Signal& transform)
+        : Distance(parameter, unit), name(), transform(transform) {
 
 }
 
-Medium::Medium(const float parameter, const Unit& unit, const shp::Signal& intrinsic)
-        : Distance(parameter, unit), name(), intrinsic(intrinsic) {
+Medium::Medium(const float parameter, const Unit& unit, const shp::Signal& transform)
+        : Distance(parameter, unit), name(), transform(transform) {
 
 }
 
 Medium::Medium(const float parameter, const short int scaling)
-        : Distance(parameter, scaling), name(), intrinsic() {
+        : Distance(parameter, scaling), name(), transform() {
 
 }
 
-Medium::Medium(const float parameter, const short int scaling, const shp::Signal& intrinsic)
-        : Distance(parameter, scaling), name(), intrinsic(intrinsic) {
+Medium::Medium(const float parameter, const short int scaling, const shp::Signal& transform)
+        : Distance(parameter, scaling), name(), transform(transform) {
 
 }
 
 Medium::Medium(const float parameter, const short int scaling, const std::string unit)
-        : Distance(parameter, scaling, unit), name(), intrinsic() {
+        : Distance(parameter, scaling, unit), name(), transform() {
 
 }
 
 Medium::Medium(const float parameter, const short int scaling, const Unit& unit)
-        : Distance(parameter, scaling, unit), name(), intrinsic() {
+        : Distance(parameter, scaling, unit), name(), transform() {
 
 }
 
-Medium::Medium(const float parameter, const short int scaling, const std::string unit, const shp::Signal& intrinsic)
-        : Distance(parameter, scaling, unit), name(), intrinsic(intrinsic) {
+Medium::Medium(const float parameter, const short int scaling, const std::string unit, const shp::Signal& transform)
+        : Distance(parameter, scaling, unit), name(), transform(transform) {
 
 }
 
-Medium::Medium(const float parameter, const short int scaling, const Unit& unit, const shp::Signal& intrinsic)
-        : Distance(parameter, scaling, unit), name(), intrinsic(intrinsic) {
+Medium::Medium(const float parameter, const short int scaling, const Unit& unit, const shp::Signal& transform)
+        : Distance(parameter, scaling, unit), name(), transform(transform) {
 
 }
 
 Medium::Medium(const Distance& parameter)
         : Distance(parameter.getMagnitude(), parameter.getScaling(), parameter.getUnit(),
-            parameter.getModulation(), parameter.getAzimuth()), name(), intrinsic() {
+            parameter.getIntrinsic(), parameter.getHorizontal(), parameter.getVertical()),
+        name(), transform() {
 
 }
 
-Medium::Medium(const float parameter, const float orientation)
-		: Distance(parameter, Azimuth(orientation)), name(), intrinsic() {
+Medium::Medium(const float parameter, const float density)
+		: Distance(parameter, Intrinsic(density)), name(), transform() {
 
 }
 
-Medium::Medium(const float parameter, const std::string unit, const float orientation)
-		: Distance(parameter, unit, Azimuth(orientation)), name(), intrinsic() {
+Medium::Medium(const float parameter, const std::string unit, const float density)
+		: Distance(parameter, unit, Intrinsic(density)), name(), transform() {
 
 }
 
-Medium::Medium(const float parameter, const std::string unit, const Azimuth& orientation)
-		: Distance(parameter, unit, Azimuth(orientation)), name(), intrinsic() {
+Medium::Medium(const float parameter, const std::string unit, const Intrinsic& density)
+		: Distance(parameter, unit, Intrinsic(density)), name(), transform() {
 
 }
 
-Medium::Medium(const float parameter, const Unit& unit, const float orientation)
-		: Distance(parameter, unit, Azimuth(orientation)), name(), intrinsic() {
+Medium::Medium(const float parameter, const Unit& unit, const float density)
+		: Distance(parameter, unit, Intrinsic(density)), name(), transform() {
 
 }
 
-Medium::Medium(const float parameter, const Unit& unit, const Azimuth& orientation)
-		: Distance(parameter, unit, orientation), name(), intrinsic() {
+Medium::Medium(const float parameter, const Unit& unit, const Intrinsic& density)
+		: Distance(parameter, unit, density), name(), transform() {
 
 }
 
-Medium::Medium(const float parameter, const short int scaling, const float orientation)
-		: Distance(parameter, scaling, Azimuth(orientation)), name(), intrinsic() {
+Medium::Medium(const float parameter, const short int scaling, const float density)
+		: Distance(parameter, scaling, Intrinsic(density)), name(), transform() {
 
 }
 
-Medium::Medium(const float parameter, const short int scaling, const Azimuth& orientation)
-		: Distance(parameter, scaling, orientation), name(), intrinsic() {
-
-}
-
-Medium::Medium(const float parameter, const short int scaling, const std::string unit,
-        const float orientation)
-		: Distance(parameter, scaling, unit, Azimuth(orientation)), name(), intrinsic() {
+Medium::Medium(const float parameter, const short int scaling, const Intrinsic& density)
+		: Distance(parameter, scaling, density), name(), transform() {
 
 }
 
 Medium::Medium(const float parameter, const short int scaling, const std::string unit,
-        const Azimuth& orientation)
-		: Distance(parameter, scaling, unit, orientation), name(), intrinsic() {
+        const float density)
+		: Distance(parameter, scaling, unit, Intrinsic(density)), name(), transform() {
+
+}
+
+Medium::Medium(const float parameter, const short int scaling, const std::string unit,
+        const Intrinsic& density)
+		: Distance(parameter, scaling, unit, density), name(), transform() {
 
 }
 
 Medium::Medium(const float parameter, const short int scaling, const Unit& unit,
-        const float orientation)
-		: Distance(parameter, scaling, unit, Azimuth(orientation)), name(), intrinsic() {
+        const float density)
+		: Distance(parameter, scaling, unit, Intrinsic(density)), name(), transform() {
 
 }
 
 Medium::Medium(const float parameter, const short int scaling, const Unit& unit,
-        const Azimuth& orientation)
-		: Distance(parameter, scaling, unit, orientation), name(), intrinsic() {
+        const Intrinsic& density)
+		: Distance(parameter, scaling, unit, density), name(), transform() {
+
+}
+
+Medium::Medium(const float parameter, const short int scaling, const std::string unit,
+        const Azimuth& current)
+		: Distance(parameter, scaling, unit, current), name(), transform() {
+
+}
+
+Medium::Medium(const float parameter, const short int scaling, const Unit& unit,
+        const Azimuth& current)
+		: Distance(parameter, scaling, unit, current), name(), transform() {
+
+}
+
+Medium::Medium(const float parameter, const short int scaling, const std::string unit,
+        const Polar& threshold)
+		: Distance(parameter, scaling, unit, threshold), name(), transform() {
 
 }
 
 Medium::Medium(const float parameter, const short int scaling, const Unit& unit,
         const Polar& threshold)
-		: Distance(parameter, scaling, unit, threshold), name(), intrinsic() {
+		: Distance(parameter, scaling, unit, threshold), name(), transform() {
 
 }
 
-Medium::Medium(const float parameter, const Azimuth& orientation)
-		: Distance(parameter, orientation), name(), intrinsic() {
+Medium::Medium(const float parameter, const short int scaling, const Unit& unit,
+        const Intrinsic& density, const Azimuth& current)
+		: Distance(parameter, scaling, unit, density, current), name(), transform() {
+
+}
+
+Medium::Medium(const float parameter, const short int scaling, const Unit& unit,
+        const Intrinsic& density, const Polar& threshold)
+		: Distance(parameter, scaling, unit, density, threshold), name(), transform() {
+
+}
+
+Medium::Medium(const float parameter, const short int scaling, const Unit& unit,
+        const Azimuth& current, const Polar& threshold)
+		: Distance(parameter, scaling, unit, current, threshold), name(), transform() {
+
+}
+
+Medium::Medium(const float parameter, const short int scaling, const Unit& unit,
+        const Intrinsic& density, const Azimuth& current, const Polar& threshold)
+		: Distance(parameter, scaling, unit, density, current, threshold), name(), transform() {
+
+}
+
+Medium::Medium(const float parameter, const Intrinsic& density)
+		: Distance(parameter, density), name(), transform() {
+
+}
+
+Medium::Medium(const float parameter, const Azimuth& current)
+		: Distance(parameter, current), name(), transform() {
 
 }
 
 Medium::Medium(const float parameter, const Polar& threshold)
-		: Distance(parameter, threshold), name(), intrinsic() {
+		: Distance(parameter, threshold), name(), transform() {
+
+}
+
+Medium::Medium(const float parameter, const Intrinsic& density, const Azimuth& current)
+		: Distance(parameter, density, current), name(), transform() {
+
+}
+
+Medium::Medium(const float parameter, const Intrinsic& density, const Polar& threshold)
+		: Distance(parameter, density, threshold), name(), transform() {
+
+}
+
+Medium::Medium(const float parameter, const Intrinsic& density, const Azimuth& current, const Polar& threshold)
+		: Distance(parameter, density, current, threshold), name(), transform() {
+
+}
+
+
+Medium::Medium(const float parameter, const std::string unit, const Azimuth& current)
+		: Distance(parameter, unit, current), name(), transform() {
+
+}
+
+Medium::Medium(const float parameter, const Unit& unit, const Azimuth& current)
+		: Distance(parameter, unit, current), name(), transform() {
+
+}
+
+Medium::Medium(const float parameter, const std::string unit, const Polar& threshold)
+		: Distance(parameter, unit, threshold), name(), transform() {
+
+}
+
+Medium::Medium(const float parameter, const Unit& unit, const Polar& threshold)
+		: Distance(parameter, unit, threshold), name(), transform() {
+
+}
+
+Medium::Medium(const float parameter, const std::string unit, const Azimuth& current, const Polar& threshold)
+		: Distance(parameter, unit, current, threshold), name(), transform() {
+
+}
+
+Medium::Medium(const float parameter, const Unit& unit, const Azimuth& current, const Polar& threshold)
+		: Distance(parameter, unit, current, threshold), name(), transform() {
+
+}
+
+Medium::Medium(const float parameter, const std::string unit, const Intrinsic& density, const Azimuth& current)
+		: Distance(parameter, unit, density, current), name(), transform() {
+
+}
+
+Medium::Medium(const float parameter, const Unit& unit, const Intrinsic& density, const Azimuth& current)
+		: Distance(parameter, unit, density, current), name(), transform() {
+
+}
+
+Medium::Medium(const float parameter, const std::string unit, const Intrinsic& density, const Polar& threshold)
+		: Distance(parameter, unit, density, threshold), name(), transform() {
+
+}
+
+Medium::Medium(const float parameter, const Unit& unit, const Intrinsic& density, const Polar& threshold)
+		: Distance(parameter, unit, density, threshold), name(), transform() {
+
+}
+
+Medium::Medium(const float parameter, const short int scaling, const Azimuth& current)
+		: Distance(parameter, scaling, current), name(), transform() {
 
 }
 
 Medium::Medium(const float parameter, const short int scaling, const Polar& threshold)
-		: Distance(parameter, scaling, threshold), name(), intrinsic() {
-
-}
-
-Medium::Medium(const float parameter, const Polar& threshold, const Azimuth& orientation)
-		: Distance(parameter, threshold, orientation), name(), intrinsic() {
-
-}
-
-Medium::Medium(const float parameter, const short int scaling, const Polar& threshold, const Azimuth& orientation)
-		: Distance(parameter, scaling, threshold, orientation), name(), intrinsic() {
-
-}
-
-Medium::Medium(const float parameter, const float threshold, const float orientation)
-		: Distance(parameter, Polar(threshold), Azimuth(orientation)), name(), intrinsic() {
-
-}
-
-Medium::Medium(const float parameter, std::string unit, const float threshold, const float orientation)
-		: Distance(parameter, unit, Polar(threshold), Azimuth(orientation)), name(), intrinsic() {
-
-}
-
-Medium::Medium(const float parameter, const Unit& unit, const float threshold, const float orientation)
-		: Distance(parameter, unit, Polar(threshold), Azimuth(orientation)), name(), intrinsic() {
-
-}
-
-Medium::Medium(const float parameter, const Unit& unit, const Polar& threshold, const Azimuth& orientation)
-		: Distance(parameter, unit, threshold, orientation), name(), intrinsic() {
-
-}
-
-Medium::Medium(const float parameter, const short int scaling, const float threshold, const float orientation)
-		: Distance(parameter, scaling, Polar(threshold), Azimuth(orientation)), name(), intrinsic() {
+		: Distance(parameter, scaling, threshold), name(), transform() {
 
 }
 
 Medium::Medium(const float parameter, const short int scaling,
-        const std::string unit, const float threshold, const float orientation)
-		: Distance(parameter, scaling, unit, Azimuth(orientation), Polar(threshold)), name(), intrinsic() {
+        const Azimuth& current, const Polar& threshold)
+		: Distance(parameter, scaling, current, threshold), name(), transform() {
 
 }
 
 Medium::Medium(const float parameter, const short int scaling,
-        const std::string unit, const Polar& threshold, const Azimuth& orientation)
-		: Distance(parameter, scaling, unit, orientation, threshold), name(), intrinsic() {
+        const Intrinsic& density, const Azimuth& current)
+		: Distance(parameter, scaling, density, current), name(), transform() {
 
 }
 
 Medium::Medium(const float parameter, const short int scaling,
-        const Unit& unit, const float threshold, const float orientation)
-		: Distance(parameter, scaling, unit, Polar(threshold), Azimuth(orientation)), name(), intrinsic() {
+        const Intrinsic& density, const Polar& threshold)
+		: Distance(parameter, scaling, density, threshold), name(), transform() {
 
 }
 
-Medium::Medium(const float parameter, const short int scaling,
-        const Unit& unit, const Polar& threshold, const Azimuth& orientation)
-		: Distance(parameter, scaling, unit, orientation, threshold), name(), intrinsic() {
+Medium::Medium(const float parameter, const short int scaling, const std::string unit,
+        const Azimuth& current, const Polar& threshold)
+		: Distance(parameter, scaling, unit, current, threshold), name(), transform() {
 
 }
 
-Medium::Medium(const std::string name, const float parameter, const short int scaling,
-        const Unit& unit, const Polar& threshold, const Azimuth& orientation)
-		: Distance(parameter, scaling, unit, orientation, threshold), name(), intrinsic() {
+Medium::Medium(const float parameter, const short int scaling, const std::string unit,
+        const Intrinsic& density, const Azimuth& current)
+		: Distance(parameter, scaling, unit, density, current), name(), transform() {
 
 }
 
-Medium::Medium(const std::string name, const float parameter, const short int scaling,
-        const Unit& unit, const Polar& threshold, const Azimuth& orientation, const shp::Signal& intrinsic)
-		: Distance(parameter, scaling, unit, orientation, threshold), name(), intrinsic(intrinsic) {
+Medium::Medium(const float parameter, const short int scaling, const std::string unit,
+        const Intrinsic& density, const Polar& threshold)
+		: Distance(parameter, scaling, unit, density, threshold), name(), transform() {
 
 }
 
-Medium::Medium(const shp::Signal& intrinsic)
-		: Distance(), name(), intrinsic(intrinsic) {
+Medium::Medium(const float parameter, const short int scaling, const std::string unit,
+        const Intrinsic& density, const Azimuth& current, const Polar& threshold)
+		: Distance(parameter, scaling, unit, density, current, threshold), name(), transform() {
+
+}
+
+Medium::Medium(const float parameter, const short int scaling, const std::string unit,
+        const Intrinsic& density, const Azimuth& current, const Polar& threshold, const shp::Signal& transform)
+		: Distance(parameter, scaling, unit, density, current, threshold), name(), transform(transform) {
+
+}
+
+Medium::Medium(const float parameter, const short int scaling, const Unit& unit,
+        const Intrinsic& density, const Azimuth& current, const Polar& threshold, const shp::Signal& transform)
+		: Distance(parameter, scaling, unit, density, current, threshold), name(), transform(transform) {
+
+}
+
+Medium::Medium(const shp::Signal& transform)
+		: Distance(), name(), transform(transform) {
 
 }
 
 Medium::Medium(const std::string name)
-        : Distance(), name(name), intrinsic() {
+        : Distance(), name(name), transform() {
 
 }
 
-Medium::Medium(const std::string name, const shp::Signal& intrinsic)
-		: Distance(), name(name), intrinsic(intrinsic) {
+Medium::Medium(const std::string name, const shp::Signal& transform)
+		: Distance(), name(name), transform(transform) {
 
 }
 
 Medium::Medium(const std::string name, const std::string unit)
-        : Distance(unit), name(name), intrinsic() {
+        : Distance(unit), name(name), transform() {
 
 }
 
 Medium::Medium(const std::string name, const Unit& unit)
-        : Distance(unit), name(name), intrinsic() {
+        : Distance(unit), name(name), transform() {
 
 }
 
-Medium::Medium(const std::string name, const std::string unit, const shp::Signal& intrinsic)
-        : Distance(unit), name(name), intrinsic(intrinsic) {
+Medium::Medium(const std::string name, const std::string unit, const shp::Signal& transform)
+        : Distance(unit), name(name), transform(transform) {
 
 }
 
-Medium::Medium(const std::string name, const Unit& unit, const shp::Signal& intrinsic)
-        : Distance(unit), name(name), intrinsic(intrinsic) {
+Medium::Medium(const std::string name, const Unit& unit, const shp::Signal& transform)
+        : Distance(unit), name(name), transform(transform) {
 
 }
 
-Medium::Medium(const std::string name, const float parameter, const shp::Signal& intrinsic)
-        : Distance(parameter), name(name), intrinsic(intrinsic) {
+Medium::Medium(const std::string name, const float parameter, const shp::Signal& transform)
+        : Distance(parameter), name(name), transform(transform) {
 
 }
 
-Medium::Medium(const std::string name, const short int scaling, const std::string unit, const shp::Signal& intrinsic)
-        : Distance(scaling, unit), name(name), intrinsic(intrinsic) {
+Medium::Medium(const std::string name, const float parameter, const short int scaling)
+        : Distance(parameter, scaling), name(name), transform() {
 
 }
 
-Medium::Medium(const std::string name, const short int scaling, const Unit& unit, const shp::Signal& intrinsic)
-        : Distance(scaling, unit), name(name), intrinsic(intrinsic) {
+Medium::Medium(const std::string name, const float parameter, const short int scaling, const shp::Signal& transform)
+        : Distance(parameter, scaling), name(name), transform(transform) {
 
 }
 
 Medium::Medium(const std::string name, const float parameter, const short int scaling, const std::string unit)
-        : Distance(parameter, scaling, unit), name(name), intrinsic() {
+        : Distance(parameter, scaling, unit), name(name), transform() {
 
 }
 
 Medium::Medium(const std::string name, const float parameter, const short int scaling, const Unit& unit)
-        : Distance(parameter, scaling, unit), name(name), intrinsic() {
+        : Distance(parameter, scaling, unit), name(name), transform() {
 
 }
 
-Medium::Medium(const std::string name, const float parameter, const short int scaling, const std::string unit, const shp::Signal& intrinsic)
-        : Distance(parameter, scaling, unit), name(name), intrinsic(intrinsic) {
+Medium::Medium(const std::string name, const float parameter, const short int scaling, const std::string unit, const shp::Signal& transform)
+        : Distance(parameter, scaling, unit), name(name), transform(transform) {
 
 }
 
-Medium::Medium(const std::string name, const float parameter, const short int scaling, const Unit& unit, const shp::Signal& intrinsic)
-        : Distance(parameter, scaling, unit), name(name), intrinsic(intrinsic) {
+Medium::Medium(const std::string name, const float parameter, const short int scaling, const Unit& unit,
+        const shp::Signal& transform)
+        : Distance(parameter, scaling, unit), name(name), transform(transform) {
 
 }
 
-Medium::Medium(const Azimuth& orientation)
-		: Distance(orientation), name(), intrinsic() {
+Medium::Medium(const std::string name, const float parameter, const short int scaling, const Unit& unit,
+        const Intrinsic& density, const Azimuth& current, const Polar& threshold,
+        const shp::Signal& transform)
+        : Distance(parameter, scaling, unit, density, current, threshold), name(name), transform(transform) {
+
+}
+
+Medium::Medium(const Intrinsic& density)
+		: Distance(density), name(), transform() {
+
+}
+
+Medium::Medium(const Azimuth& current)
+		: Distance(current), name(), transform() {
 
 }
 
 Medium::Medium(const Polar& threshold)
-		: Distance(threshold), name(), intrinsic() {
+		: Distance(threshold), name(), transform() {
 
 }
 
-Medium::Medium(const Polar& threshold, const Azimuth& orientation)
-		: Distance(threshold, orientation), name(), intrinsic() {
+Medium::Medium(const Intrinsic& density, const Azimuth& current)
+		: Distance(density, current), name(), transform() {
+
+}
+
+Medium::Medium(const Intrinsic& density, const Polar& threshold)
+		: Distance(density, threshold), name(), transform() {
+
+}
+
+Medium::Medium(const Intrinsic& density, const Azimuth& current, const Polar& threshold)
+		: Distance(density, current, threshold), name(), transform() {
 
 }
 
@@ -381,177 +496,177 @@ bool Medium::operator>=(const Medium& peer) const {
 
 Medium Medium::operator+(const Medium& peer) const {
     Distance self = *this, other = peer, parameter = (self + other);
-    shp::Signal newIntrinsic = (this->intrinsic + peer.intrinsic);
+    shp::Signal newTransform = (this->transform + peer.transform);
     return Medium("+", parameter.getMagnitude(), parameter.getScaling(), parameter.getUnit(),
-        parameter.getModulation(), parameter.getAzimuth(), newIntrinsic);
+        parameter.getIntrinsic(), parameter.getHorizontal(), parameter.getVertical(), newTransform);
 }
 
 Medium Medium::operator-(const Medium& peer) const {
     Distance self = *this, other = peer, parameter = (self - other);
-    shp::Signal newIntrinsic = (this->intrinsic - peer.intrinsic);
+    shp::Signal newTransform = (this->transform - peer.transform);
     return Medium("-", parameter.getMagnitude(), parameter.getScaling(), parameter.getUnit(),
-        parameter.getModulation(), parameter.getAzimuth(), newIntrinsic);
+        parameter.getIntrinsic(), parameter.getHorizontal(), parameter.getVertical(), newTransform);
 }
 
 Medium Medium::operator*(const Medium& peer) const {
     Distance self = *this, other = peer, parameter = (self * other);
-    shp::Signal newIntrinsic = (this->intrinsic * peer.intrinsic);
+    shp::Signal newTransform = (this->transform * peer.transform);
     return Medium("*", parameter.getMagnitude(), parameter.getScaling(), parameter.getUnit(),
-        parameter.getModulation(), parameter.getAzimuth(), newIntrinsic);
+        parameter.getIntrinsic(), parameter.getHorizontal(), parameter.getVertical(), newTransform);
 }
 
 Medium Medium::operator/(const Medium& peer) const {
     Distance self = *this, other = peer, parameter = (self / other);
-    shp::Signal newIntrinsic = (this->intrinsic / peer.intrinsic);
+    shp::Signal newTransform = (this->transform / peer.transform);
     return Medium("/", parameter.getMagnitude(), parameter.getScaling(), parameter.getUnit(),
-        parameter.getModulation(), parameter.getAzimuth(), newIntrinsic);
+        parameter.getIntrinsic(), parameter.getHorizontal(), parameter.getVertical(), newTransform);
 }
 
 Medium Medium::operator%(const Medium& peer) const {
     Distance self = *this, other = peer, parameter = (self % other);
-    shp::Signal newIntrinsic = (this->intrinsic % peer.intrinsic);
+    shp::Signal newTransform = (this->transform % peer.transform);
     return Medium("%", parameter.getMagnitude(), parameter.getScaling(), parameter.getUnit(),
-        parameter.getModulation(), parameter.getAzimuth(), newIntrinsic);
+        parameter.getIntrinsic(), parameter.getHorizontal(), parameter.getVertical(), newTransform);
 }
 
 Medium Medium::operator+(const Distance& parameter) const {
     Medium self = *this;
     Distance newParameter = (self.getParameter() + parameter);
     return Medium("+", newParameter.getMagnitude(), newParameter.getScaling(), newParameter.getUnit(),
-        newParameter.getModulation(), newParameter.getAzimuth(), self.intrinsic);
+        newParameter.getIntrinsic(), newParameter.getHorizontal(), newParameter.getVertical(), self.transform);
 }
 
 Medium Medium::operator-(const Distance& parameter) const {
     Medium self = *this;
     Distance newParameter = (self.getParameter() - parameter);
     return Medium("-" ,newParameter.getMagnitude(), newParameter.getScaling(), newParameter.getUnit(),
-        newParameter.getModulation(), newParameter.getAzimuth(), self.intrinsic);
+        newParameter.getIntrinsic(), newParameter.getHorizontal(), newParameter.getVertical(), self.transform);
 }
 
 Medium Medium::operator*(const Distance& parameter) const {
     Medium self = *this;
     Distance newParameter = (self.getParameter() * parameter);
     return Medium("*", newParameter.getMagnitude(), newParameter.getScaling(), newParameter.getUnit(),
-        newParameter.getModulation(), newParameter.getAzimuth(), self.intrinsic);
+        newParameter.getIntrinsic(), newParameter.getHorizontal(), newParameter.getVertical(), self.transform);
 }
 
 Medium Medium::operator/(const Distance& parameter) const {
     Medium self = *this;
     Distance newParameter = (self.getParameter() / parameter);
     return Medium("/", newParameter.getMagnitude(), newParameter.getScaling(), newParameter.getUnit(),
-        newParameter.getModulation(), newParameter.getAzimuth(), self.intrinsic);
+        newParameter.getIntrinsic(), newParameter.getHorizontal(), newParameter.getVertical(), self.transform);
 }
 
 Medium Medium::operator%(const Distance& parameter) const {
     Medium self = *this;
     Distance newParameter = (self.getParameter() % parameter);
     return Medium("%", newParameter.getMagnitude(), newParameter.getScaling(), newParameter.getUnit(),
-        newParameter.getModulation(), newParameter.getAzimuth(), self.intrinsic);
+        newParameter.getIntrinsic(), newParameter.getHorizontal(), newParameter.getVertical(), self.transform);
 }
 
-Medium Medium::operator+(const Azimuth& orientation) const {
+Medium Medium::operator+(const Intrinsic& phase) const {
     Medium self = *this;
-    Azimuth newParameter = (self.getAzimuth() + orientation);
+    Intrinsic newParameter = (self.getIntrinsic() + phase);
     return Medium("+", self.getMagnitude(), self.getScaling(), self.getUnit(),
-        self.getModulation(), newParameter, self.intrinsic);
+        newParameter, self.getHorizontal(), self.getVertical(), self.transform);
 }
 
-Medium Medium::operator-(const Azimuth& orientation) const {
+Medium Medium::operator-(const Intrinsic& phase) const {
     Medium self = *this;
-    Azimuth newParameter = (self.getAzimuth() - orientation);
+    Intrinsic newParameter = (self.getIntrinsic() - phase);
     return Medium("-", self.getMagnitude(), self.getScaling(), self.getUnit(),
-        self.getModulation(), newParameter, self.intrinsic);
+        newParameter, self.getHorizontal(), self.getVertical(), self.transform);
 }
 
-Medium Medium::operator*(const Azimuth& orientation) const {
+Medium Medium::operator*(const Intrinsic& phase) const {
     Medium self = *this;
-    Azimuth newParameter = (self.getAzimuth() * orientation);
+    Intrinsic newParameter = (self.getIntrinsic() * phase);
     return Medium("*", self.getMagnitude(), self.getScaling(), self.getUnit(),
-        self.getModulation(), newParameter, self.intrinsic);
+        newParameter, self.getHorizontal(), self.getVertical(), self.transform);
 }
 
-Medium Medium::operator/(const Azimuth& orientation) const {
+Medium Medium::operator/(const Intrinsic& phase) const {
     Medium self = *this;
-    Azimuth newParameter = (self.getAzimuth() / orientation);
+    Intrinsic newParameter = (self.getIntrinsic() / phase);
     return Medium("/", self.getMagnitude(), self.getScaling(), self.getUnit(),
-        self.getModulation(), newParameter, self.intrinsic);
+        newParameter, self.getHorizontal(), self.getVertical(), self.transform);
 }
 
-Medium Medium::operator%(const Azimuth& orientation) const {
+Medium Medium::operator%(const Intrinsic& phase) const {
     Medium self = *this;
-    Azimuth newParameter = (self.getAzimuth() % orientation);
+    Intrinsic newParameter = (self.getIntrinsic() % phase);
     return Medium("%", self.getMagnitude(), self.getScaling(), self.getUnit(),
-        self.getModulation(), newParameter, self.intrinsic);
+        newParameter, self.getHorizontal(), self.getVertical(), self.transform);
 }
 
 Medium Medium::operator+(const Polar& threshold) const {
     Medium self = *this;
-    Polar newThreshold = (self.getModulation() + threshold);
+    Polar newThreshold = (self.getVertical() + threshold);
     return Medium("+", self.getMagnitude(), self.getScaling(), self.getUnit(),
-        newThreshold, self.getAzimuth(), self.intrinsic);
+        self.getIntrinsic(), self.getHorizontal(), newThreshold, self.transform);
 }
 
 Medium Medium::operator-(const Polar& threshold) const {
     Medium self = *this;
-    Polar newThreshold = (self.getModulation() - threshold);
+    Polar newThreshold = (self.getVertical() - threshold);
     return Medium("-", self.getMagnitude(), self.getScaling(), self.getUnit(),
-        newThreshold, self.getAzimuth(), self.intrinsic);
+        self.getIntrinsic(), self.getHorizontal(), newThreshold, self.transform);
 }
 
 Medium Medium::operator*(const Polar& threshold) const {
     Medium self = *this;
-    Polar newThreshold = (self.getModulation() * threshold);
+    Polar newThreshold = (self.getVertical() * threshold);
     return Medium("*", self.getMagnitude(), self.getScaling(), self.getUnit(),
-        newThreshold, self.getAzimuth(), self.intrinsic);
+        self.getIntrinsic(), self.getHorizontal(), newThreshold, self.transform);
 }
 
 Medium Medium::operator/(const Polar& threshold) const {
     Medium self = *this;
-    Polar newThreshold = (self.getModulation() / threshold);
+    Polar newThreshold = (self.getVertical() / threshold);
     return Medium("/", self.getMagnitude(), self.getScaling(), self.getUnit(),
-        newThreshold, self.getAzimuth(), self.intrinsic);
+        self.getIntrinsic(), self.getHorizontal(), newThreshold, self.transform);
 }
 
 Medium Medium::operator%(const Polar& threshold) const {
     Medium self = *this;
-    Polar newThreshold = (self.getModulation() % threshold);
+    Polar newThreshold = (self.getVertical() % threshold);
     return Medium("%", self.getMagnitude(), self.getScaling(), self.getUnit(),
-        newThreshold, self.getAzimuth(), self.intrinsic);
+        self.getIntrinsic(), self.getHorizontal(), newThreshold, self.transform);
 }
 
 Medium Medium::operator+(const shp::Signal& modulation) const {
     Medium self = *this;
-    shp::Signal newIntrinsic = (self.intrinsic + modulation);
+    shp::Signal newTransform = (self.transform + modulation);
     return Medium("+", self.getMagnitude(), self.getScaling(), self.getUnit(),
-        self.getModulation(), self.getAzimuth(), newIntrinsic);
+        self.getIntrinsic(), self.getHorizontal(), self.getVertical(), newTransform);
 }
 
 Medium Medium::operator-(const shp::Signal& modulation) const {
     Medium self = *this;
-    shp::Signal newIntrinsic = (self.intrinsic - modulation);
+    shp::Signal newTransform = (self.transform - modulation);
     return Medium("-", self.getMagnitude(), self.getScaling(), self.getUnit(),
-        self.getModulation(), self.getAzimuth(), newIntrinsic);
+        self.getIntrinsic(), self.getHorizontal(), self.getVertical(), newTransform);
 }
 
 Medium Medium::operator*(const shp::Signal& modulation) const {
     Medium self = *this;
-    shp::Signal newIntrinsic = (self.intrinsic * modulation);
+    shp::Signal newTransform = (self.transform * modulation);
     return Medium("*", self.getMagnitude(), self.getScaling(), self.getUnit(),
-        self.getModulation(), self.getAzimuth(), newIntrinsic);
+        self.getIntrinsic(), self.getHorizontal(), self.getVertical(), newTransform);
 }
 
 Medium Medium::operator/(const shp::Signal& modulation) const {
     Medium self = *this;
-    shp::Signal newIntrinsic = (self.intrinsic / modulation);
+    shp::Signal newTransform = (self.transform / modulation);
     return Medium("/", self.getMagnitude(), self.getScaling(), self.getUnit(),
-        self.getModulation(), self.getAzimuth(), newIntrinsic);
+        self.getIntrinsic(), self.getHorizontal(), self.getVertical(), newTransform);
 }
 
 Medium Medium::operator%(const shp::Signal& modulation) const {
     Medium self = *this;
-    shp::Signal newIntrinsic = (self.intrinsic % modulation);
+    shp::Signal newTransform = (self.transform % modulation);
     return Medium("+", self.getMagnitude(), self.getScaling(), self.getUnit(),
-        self.getModulation(), self.getAzimuth(), newIntrinsic);
+        self.getIntrinsic(), self.getHorizontal(), self.getVertical(), newTransform);
 }
 
 shp::Signal Medium::operator()(const Medium& peer,
@@ -728,14 +843,14 @@ shp::Signal Medium::getThresholdDivergence(const Medium& peerX, const Medium& pe
 
 Distance Medium::getParameter() const {
     return Distance(Distance::getMagnitude(), Distance::getScaling(), Distance::getUnit(),
-        Distance::getAzimuth(), Distance::getModulation());
+        Distance::getIntrinsic(), Distance::getHorizontal(), Distance::getVertical());
 }
 
 void Medium::setParameter(const Distance& value) {
     Medium self = *this;
     self.setParameter(value.getMagnitude(), value.getScaling(), value.getUnit());
-    self.setDiffusionFactor(value.getAzimuth());
-    self.setThresholdShift(value.getModulation());
+    self.setDiffusionFactor(value.getIntrinsic());
+    self.setThresholdShift(value.getVertical());
 }
 
 void Medium::setParameter(const float value) {
@@ -755,148 +870,148 @@ void Medium::setParameter(const float value, const short int scaling, const Unit
 }
 
 Direction Medium::getDiffusionCurrent() const {
-    return Distance::getAzimuth().getCurrent();
+    return Distance::getIntrinsic().getCurrent();
 }
 
 void Medium::setDiffusionFactor(const float degree) {
-    Distance::setChangeDirection(degree);
+    Distance::setChangeIntrinsic(degree);
 }
 
-void Medium::setDiffusionFactor(const Azimuth& orientation) {
-    Distance::setAzimuth(orientation);
+void Medium::setDiffusionFactor(const Intrinsic& phase) {
+    Distance::setIntrinsic(phase);
 }
 
 Direction Medium::getThresholdCurrent() const {
-    return Distance::getModulation().getCurrent();
+    return Distance::getVertical().getCurrent();
 }
 
 Direction Medium::getThresholdShift() const {
-    return Distance::getModulation().getShifting();
+    return Distance::getVertical().getShifting();
 }
 
 void Medium::setThresholdShift(const float degree) {
-    Distance::setChangeCurvature(degree);
+    Distance::setChangeVerticalCurvature(degree);
 }
 
 void Medium::setThresholdShift(const Polar& threshold) {
-    Distance::setModulation(threshold);
+    Distance::setVertical(threshold);
 }
 
 float Medium::getThresholdCyclingRate() const {
-    return Distance::getModulation().getCyclingRate();
+    return Distance::getVertical().getCyclingRate();
 }
 
 float Medium::getThresholdTimePerCycle() const {
-    return Distance::getModulation().getTimePerCycle();
+    return Distance::getVertical().getTimePerCycle();
 }
 
 float Medium::getThresholdFraction(const Polar& peer) const {
-    return Direction::getFraction(Distance::getModulation().toRadians(), peer.toRadians());
+    return Direction::getFraction(Distance::getVertical().toRadians(), peer.toRadians());
 }
 
 float Medium::getDiffusionCyclingRate() const {
-    return Distance::getAzimuth().getCyclingRate();
+    return Distance::getIntrinsic().getCyclingRate();
 }
 
 float Medium::getDiffusionTimePerCycle() const {
-    return Distance::getAzimuth().getTimePerCycle();
+    return Distance::getIntrinsic().getTimePerCycle();
 }
 
 Direction Medium::getDiffusionShift() const {
-    return Distance::getAzimuth().getShifting();
+    return Distance::getIntrinsic().getShifting();
 }
 
 void Medium::setDiffusionShift(const short int degree) {
-    Distance::setChangeDirection(degree);
+    Distance::setChangeIntrinsic(degree);
 }
 
-float Medium::getDiffusionFraction(const Azimuth& peer) const {
-    return Direction::getFraction(Distance::getAzimuth().toRadians(), peer.toRadians());
+float Medium::getDiffusionFraction(const Intrinsic& peer) const {
+    return Direction::getFraction(Distance::getIntrinsic().toRadians(), peer.toRadians());
 }
 
 shp::Signal Medium::getRelative(const Distance& position) const {
     Medium self = *this; Distance separation = self.getParameter();
-    return separation(position, Direction::DEFAULT_RADIANS);                        // radial, X, Y, Z combined;
+    return separation(position, Polar(Direction::DEFAULT_RADIANS));                 // radial, X, Y, Z combined;
 }
 
 shp::Signal Medium::getLinearX(const Distance& position) const {
     Medium self = *this; Distance separation = self.getParameter();
-    return separation.getLinear(position, Distance::getModulation());               // X component only;
+    return separation.getLinear(position, Distance::getIntrinsic());                // X component only;
 }
 
 shp::Signal Medium::getLinearXConvergence(const Distance& position) const {
     Medium self = *this; Distance separation = self.getParameter();
-    return separation.getLinearConvergence(position, Distance::getModulation());    // X component only;
+    return separation.getLinearConvergence(position, Distance::getIntrinsic());     // X component only;
 }
 
 shp::Signal Medium::getLinearXDivergence(const Distance& position) const {
     Medium self = *this; Distance separation = self.getParameter();
-    return separation.getLinearDivergence(position, Distance::getModulation());     // X component only;
+    return separation.getLinearDivergence(position, Distance::getIntrinsic());      // X component only;
 }
 
 shp::Signal Medium::getLinearY(const Distance& position) const {
     Medium self = *this; Distance separation = self.getParameter();
-    return separation.getOrthogonal(position, Distance::getAzimuth());              // Y component only;
+    return separation.getPlanar(position, Distance::getHorizontal());               // Y component only;
 }
 
 shp::Signal Medium::getLinearYConvergence(const Distance& position) const {
     Medium self = *this; Distance separation = self.getParameter();
-    return separation.getOrthogonalConvergence(position, Distance::getModulation());// Y component only;
+    return separation.getPlanarConvergence(position, Distance::getHorizontal());    // Y component only;
 }
 
 shp::Signal Medium::getLinearYDivergence(const Distance& position) const {
     Medium self = *this; Distance separation = self.getParameter();
-    return separation.getOrthogonalDivergence(position, Distance::getModulation()); // Y component only;
+    return separation.getPlanarDivergence(position, Distance::getHorizontal());     // Y component only;
 }
 
 shp::Signal Medium::getLinearZ(const Distance& position) const {
     Medium self = *this; Distance separation = self.getParameter();
-    return separation.getOrthogonal(position, Distance::getModulation());           // Z component only;
+    return separation.getOrthogonal(position, Distance::getVertical());             // Z component only;
 }
 
 shp::Signal Medium::getLinearZConvergence(const Distance& position) const {
     Medium self = *this; Distance separation = self.getParameter();
-    return separation.getOrthogonalConvergence(position, Distance::getModulation());// Z component only;
+    return separation.getOrthogonalConvergence(position, Distance::getVertical());  // Z component only;
 }
 
 shp::Signal Medium::getLinearZDivergence(const Distance& position) const {
     Medium self = *this; Distance separation = self.getParameter();
-    return separation.getOrthogonalDivergence(position, Distance::getModulation()); // Z component only;
+    return separation.getOrthogonalDivergence(position, Distance::getVertical());   // Z component only;
 }
 
 shp::Signal Medium::getScalarParameter() const {
     Distance self = *this; shp::Signal parameter = self.getScalarTotal();
-    shp::Signal result = parameter.getDotFraction(this->intrinsic.getVectorAbsolute());
+    shp::Signal result = parameter.getDotFraction(this->transform.getVectorAbsolute());
     return result;
 }
 
 shp::Signal Medium::getVectorParameter() const {
     Distance self = *this; shp::Signal parameter = self.getVectorTotal();
-    shp::Signal result = parameter.getDotFraction(this->intrinsic.getVectorAbsolute());
+    shp::Signal result = parameter.getDotFraction(this->transform.getVectorAbsolute());
     return result;
 }
 
 shp::Signal Medium::getScalarFieldDrift() const {
-    Distance self = *this; shp::Signal parameter = self.getAngularDrift();
-    shp::Signal result = parameter.getDotFraction(this->intrinsic.getVectorAbsolute());
+    Distance self = *this; shp::Signal parameter = self.getHorizontalDrift();
+    shp::Signal result = parameter.getDotFraction(this->transform.getVectorAbsolute());
     return result;
 }
 
 shp::Signal Medium::getScalarFieldTotal() const {
-    Distance self = *this; shp::Signal parameter = self.getAngularTotal();
-    shp::Signal result = parameter.getDotFraction(this->intrinsic.getVectorAbsolute());
+    Distance self = *this; shp::Signal parameter = self.getHorizontalTotal();
+    shp::Signal result = parameter.getDotFraction(this->transform.getVectorAbsolute());
     return result;
 }
 
 shp::Signal Medium::getVectorFieldDrift() const {
-    Distance self = *this; shp::Signal parameter = self.getAngularDrift();
-    shp::Signal result = parameter.getCrossFraction(this->intrinsic.getVectorAbsolute());
+    Distance self = *this; shp::Signal parameter = self.getVerticalDrift();
+    shp::Signal result = parameter.getCrossFraction(this->transform.getVectorAbsolute());
     return result;
 }
 
 shp::Signal Medium::getVectorFieldTotal() const {
-    Distance self = *this; shp::Signal parameter = self.getAngularTotal();
-    shp::Signal result = parameter.getCrossFraction(this->intrinsic.getVectorAbsolute());
+    Distance self = *this; shp::Signal parameter = self.getVerticalTotal();
+    shp::Signal result = parameter.getCrossFraction(this->transform.getVectorAbsolute());
     return result;
 }
 
@@ -907,7 +1022,7 @@ shp::Distance Medium::copy() {
 void Medium::clear() {
     Distance::clear();
     name.clear();
-    intrinsic.clear();
+    transform.clear();
     return;
 }
 
@@ -916,7 +1031,7 @@ std::string Medium::print() const {
     result << "{";
     result << name << ",";
     result << Distance::print() << ",";
-    result << intrinsic.print();
+    result << transform.print();
     result << "}";
 	return result.str();
 }
@@ -926,7 +1041,7 @@ std::string Medium::printRadians() const {
     result << "{";
     result << name << ",";
     result << Distance::printRadians() << ",";
-    result << intrinsic.printRadians();
+    result << transform.printRadians();
     result << "}";
 	return result.str();
 }

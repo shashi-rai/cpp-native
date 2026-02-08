@@ -124,32 +124,32 @@ bool Polar::operator>=(const Polar& peer) const {
 
 Polar Polar::operator+(const Direction& peer) const {
     Direction self = *this, other = peer;
-    Direction polar = (self + other);
-    return Polar(polar.getDegrees(), polar.getMinutes(), polar.getSeconds(), shifting);
+    Direction direction = (self + other);
+    return Polar(direction.getDegrees(), direction.getMinutes(), direction.getSeconds(), shifting);
 }
 
 Polar Polar::operator-(const Direction& peer) const {
     Direction self = *this, other = peer;
-    Direction polar = (self - other);
-    return Polar(polar.getDegrees(), polar.getMinutes(), polar.getSeconds(), shifting);
+    Direction direction = (self - other);
+    return Polar(direction.getDegrees(), direction.getMinutes(), direction.getSeconds(), shifting);
 }
 
 Polar Polar::operator*(const Direction& peer) const {
     Direction self = *this, other = peer;
-    Direction polar = (self * other);
-    return Polar(polar.getDegrees(), polar.getMinutes(), polar.getSeconds(), shifting);
+    Direction direction = (self * other);
+    return Polar(direction.getDegrees(), direction.getMinutes(), direction.getSeconds(), shifting);
 }
 
 Polar Polar::operator/(const Direction& peer) const {
     Direction self = *this, other = peer;
-    Direction polar = (self / other);
-    return Polar(polar.getDegrees(), polar.getMinutes(), polar.getSeconds(), shifting);
+    Direction direction = (self / other);
+    return Polar(direction.getDegrees(), direction.getMinutes(), direction.getSeconds(), shifting);
 }
 
 Polar Polar::operator%(const Direction& peer) const {
     Direction self = *this, other = peer;
-    Direction polar = (self % other);
-    return Polar(polar.getDegrees(), polar.getMinutes(), polar.getSeconds(), shifting);
+    Direction direction = (self % other);
+    return Polar(direction.getDegrees(), direction.getMinutes(), direction.getSeconds(), shifting);
 }
 
 void Polar::setAngleShiftRate(const float degree) {

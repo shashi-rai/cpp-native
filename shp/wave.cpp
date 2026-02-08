@@ -30,7 +30,7 @@ Wave::Wave()
 
 }
 
-Wave::Wave(const Azimuth& azimuthal)
+Wave::Wave(const Intrinsic& azimuthal)
         : Curvature(azimuthal), wavelets(), limit(DEFAULT_LIMIT) {
 
 }
@@ -40,7 +40,7 @@ Wave::Wave(const Polar& polarization)
 
 }
 
-Wave::Wave(const Polar& polarization, const Azimuth& azimuthal)
+Wave::Wave(const Polar& polarization, const Intrinsic& azimuthal)
         : Curvature(polarization, azimuthal), wavelets(), limit(DEFAULT_LIMIT) {
 
 }
@@ -66,25 +66,25 @@ Wave::Wave(const float magnitude, const short int scaling, const Unit& unit)
 }
 
 Wave::Wave(const float magnitude,
-        const Polar& polarization, const Azimuth& azimuthal)
+        const Polar& polarization, const Intrinsic& azimuthal)
         : Curvature(magnitude, polarization, azimuthal), wavelets(), limit(DEFAULT_LIMIT) {
 
 }
 
 Wave::Wave(const float magnitude, const short int scaling,
-        const Polar& polarization, const Azimuth& azimuthal)
+        const Polar& polarization, const Intrinsic& azimuthal)
         : Curvature(magnitude, scaling, polarization, azimuthal), wavelets(), limit(DEFAULT_LIMIT) {
 
 }
 
 Wave::Wave(const float magnitude, const short int scaling, const std::string unit,
-        const Polar& polarization, const Azimuth& azimuthal)
+        const Polar& polarization, const Intrinsic& azimuthal)
         : Curvature(magnitude, scaling, unit, polarization, azimuthal), wavelets(), limit(DEFAULT_LIMIT) {
 
 }
 
 Wave::Wave(const float magnitude, const short int scaling, const Unit& unit,
-        const Polar& polarization, const Azimuth& azimuthal)
+        const Polar& polarization, const Intrinsic& azimuthal)
         : Curvature(magnitude, scaling, unit, polarization, azimuthal), wavelets(), limit(DEFAULT_LIMIT) {
 
 }
@@ -94,7 +94,7 @@ Wave::Wave(const std::string name)
 
 }
 
-Wave::Wave(const std::string name, const Azimuth& azimuthal)
+Wave::Wave(const std::string name, const Intrinsic& azimuthal)
         : Curvature(name, azimuthal), wavelets(), limit(DEFAULT_LIMIT) {
 
 }
@@ -104,7 +104,7 @@ Wave::Wave(const std::string name, const Polar& polarization)
 
 }
 
-Wave::Wave(const std::string name, const Polar& polarization, const Azimuth& azimuthal)
+Wave::Wave(const std::string name, const Polar& polarization, const Intrinsic& azimuthal)
         : Curvature(name, polarization, azimuthal), wavelets(), limit(DEFAULT_LIMIT) {
 
 }
@@ -130,30 +130,30 @@ Wave::Wave(const std::string name, const float magnitude, const short int scalin
 }
 
 Wave::Wave(const std::string name, const float magnitude,
-        const Polar& polarization, const Azimuth& azimuthal)
+        const Polar& polarization, const Intrinsic& azimuthal)
         : Curvature(name, magnitude, polarization, azimuthal), wavelets(), limit(DEFAULT_LIMIT) {
 
 }
 
 Wave::Wave(const std::string name, const float magnitude, const short int scaling,
-        const Polar& polarization, const Azimuth& azimuthal)
+        const Polar& polarization, const Intrinsic& azimuthal)
         : Curvature(name, magnitude, scaling, polarization, azimuthal), wavelets(), limit(DEFAULT_LIMIT) {
 
 }
 
 Wave::Wave(const std::string name, const float magnitude, const short int scaling, const std::string unit,
-        const Polar& polarization, const Azimuth& azimuthal)
+        const Polar& polarization, const Intrinsic& azimuthal)
         : Curvature(name, magnitude, scaling, unit, polarization, azimuthal), wavelets(), limit(DEFAULT_LIMIT) {
 
 }
 
 Wave::Wave(const std::string name, const float magnitude, const short int scaling, const Unit& unit,
-        const Polar& polarization, const Azimuth& azimuthal)
+        const Polar& polarization, const Intrinsic& azimuthal)
         : Curvature(name, magnitude, scaling, unit, polarization, azimuthal), wavelets(), limit(DEFAULT_LIMIT) {
 
 }
 
-Wave::Wave(const std::string name, const Azimuth& gradient, const int limit)
+Wave::Wave(const std::string name, const Intrinsic& gradient, const int limit)
         : Curvature(name), wavelets(), limit(limit) {
 
 }
@@ -169,13 +169,13 @@ Wave::Wave(const std::string name, const CurvatureArray& wavelets, const int lim
 }
 
 Wave::Wave(const std::string name, const CurvatureArray& wavelets,
-        const Azimuth& azimuthal)
+        const Intrinsic& azimuthal)
         : Curvature(name, azimuthal), wavelets(wavelets), limit(DEFAULT_LIMIT) {
 
 }
 
 Wave::Wave(const std::string name, const CurvatureArray& wavelets,
-        const Azimuth& azimuthal, const int limit)
+        const Intrinsic& azimuthal, const int limit)
         : Curvature(name, azimuthal), wavelets(wavelets), limit(limit) {
 
 }
@@ -217,20 +217,20 @@ Wave::Wave(const std::string name, const CurvatureArray& wavelets,
 }
 
 Wave::Wave(const std::string name, const CurvatureArray& wavelets,
-        const Polar& polarization, const Azimuth& azimuthal)
+        const Polar& polarization, const Intrinsic& azimuthal)
         : Curvature(name, polarization, azimuthal), wavelets(wavelets), limit(DEFAULT_LIMIT) {
 
 }
 
 Wave::Wave(const std::string name, const CurvatureArray& wavelets,
-        const Polar& polarization, const Azimuth& azimuthal, const int limit)
+        const Polar& polarization, const Intrinsic& azimuthal, const int limit)
         : Curvature(name, polarization, azimuthal), wavelets(wavelets), limit(limit) {
 
 }
 
 Wave::Wave(const std::string name, const CurvatureArray& wavelets,
         const float magnitude, const short int scaling, const Unit& unit,
-        const Polar& polarization, const Azimuth& azimuthal)
+        const Polar& polarization, const Intrinsic& azimuthal)
         : Curvature(name, magnitude, scaling, unit, polarization, azimuthal),
         wavelets(wavelets), limit(DEFAULT_LIMIT) {
 
@@ -238,7 +238,7 @@ Wave::Wave(const std::string name, const CurvatureArray& wavelets,
 
 Wave::Wave(const std::string name, const CurvatureArray& wavelets,
         const float magnitude, const short int scaling, const Unit& unit,
-        const Polar& polarization, const Azimuth& azimuthal, const int limit)
+        const Polar& polarization, const Intrinsic& azimuthal, const int limit)
         : Curvature(name, magnitude, scaling, unit, polarization, azimuthal),
         wavelets(wavelets), limit(limit) {
 
@@ -278,8 +278,8 @@ Wave Wave::operator+(const Wave& peer) const {
     CurvatureArray fluctuations(wavelets);
     fluctuations.insert(fluctuations.end(), peer.wavelets.begin(), peer.wavelets.end());
     std::complex<float>
-        ap1 = self.toComplexAzimuth(self.getGradient()),
-        ap2 = other.toComplexAzimuth(peer.getGradient());
+        ap1 = self.toComplexIntrinsic(self.getGradient()),
+        ap2 = other.toComplexIntrinsic(peer.getGradient());
     std::complex<float> a_phasor = ap1 + ap2;
     std::complex<float>
         pp1 = self.toComplexPolar(self.getPolarization()),
@@ -301,8 +301,8 @@ Wave Wave::operator-(const Wave& peer) const {
         }
     }
     std::complex<float>
-        ap1 = self.toComplexAzimuth(self.getGradient()),
-        ap2 = other.toComplexAzimuth(peer.getGradient());
+        ap1 = self.toComplexIntrinsic(self.getGradient()),
+        ap2 = other.toComplexIntrinsic(peer.getGradient());
     std::complex<float> a_phasor = ap1 - ap2;
     std::complex<float>
         pp1 = self.toComplexPolar(self.getPolarization()),

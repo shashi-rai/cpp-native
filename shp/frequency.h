@@ -40,24 +40,24 @@ public:
         const std::string unit);
     Frequency(const float magnitude, const short int scaling,
         const shp::Unit& unit);
-    Frequency(const Azimuth& phase);
-    Frequency(const Azimuth& phase, const std::string unit);
-    Frequency(const Azimuth& phase, const shp::Unit& unit);
-    Frequency(const Azimuth& phase, const float magnitude);
-    Frequency(const Azimuth& phase, const float magnitude,
+    Frequency(const Intrinsic& phase);
+    Frequency(const Intrinsic& phase, const std::string unit);
+    Frequency(const Intrinsic& phase, const shp::Unit& unit);
+    Frequency(const Intrinsic& phase, const float magnitude);
+    Frequency(const Intrinsic& phase, const float magnitude,
         const std::string unit);
-    Frequency(const Azimuth& phase, const float magnitude,
+    Frequency(const Intrinsic& phase, const float magnitude,
         const shp::Unit& unit);
-    Frequency(const Azimuth& phase, const float magnitude,
+    Frequency(const Intrinsic& phase, const float magnitude,
         const short int scaling);
-    Frequency(const Azimuth& phase, const float magnitude,
+    Frequency(const Intrinsic& phase, const float magnitude,
         const short int scaling, const std::string unit);
-    Frequency(const Azimuth& phase, const float magnitude,
+    Frequency(const Intrinsic& phase, const float magnitude,
         const short int scaling, const shp::Unit& unit);
     Frequency(const Signal& modulation);
     Frequency(const Signal& modulation, const shp::Quantity& magnitude);
-    Frequency(const Signal& modulation, const Azimuth& phase);
-    Frequency(const Signal& modulation, const Azimuth& phase,
+    Frequency(const Signal& modulation, const Intrinsic& phase);
+    Frequency(const Signal& modulation, const Intrinsic& phase,
         const shp::Quantity& magnitude);
     Frequency(const float modulation, const float magnitude);
     Frequency(const float modulation, const float phase, const float magnitude);
@@ -70,10 +70,10 @@ public:
     Frequency(const float modulation, const float phase, const float magnitude,
         const shp::Unit& unit);
     Frequency(const Signal& modulation, const float magnitude);
-    Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude);
-    Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude,
+    Frequency(const Signal& modulation, const Intrinsic& phase, const float magnitude);
+    Frequency(const Signal& modulation, const Intrinsic& phase, const float magnitude,
         const std::string unit);
-    Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude,
+    Frequency(const Signal& modulation, const Intrinsic& phase, const float magnitude,
         const Unit& unit);
     Frequency(const float modulation, const float magnitude,
         const short int scaling);
@@ -83,7 +83,7 @@ public:
         const short int scaling);
     Frequency(const Signal& modulation, const float phase, const float magnitude,
         const short int scaling);
-    Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude,
+    Frequency(const Signal& modulation, const Intrinsic& phase, const float magnitude,
         const short int scaling);
     Frequency(const float modulation, const float magnitude,
         const short int scaling, const std::string unit);
@@ -93,7 +93,7 @@ public:
         const short int scaling, const std::string unit);
     Frequency(const Signal& modulation, const float phase, const float magnitude,
         const short int scaling, const std::string unit);
-    Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude,
+    Frequency(const Signal& modulation, const Intrinsic& phase, const float magnitude,
         const short int scaling, const std::string unit);
     Frequency(const float modulation, const float magnitude,
         const short int scaling, const Unit& unit);
@@ -103,7 +103,7 @@ public:
         const short int scaling, const Unit& unit);
     Frequency(const Signal& modulation, const float phase, const float magnitude,
         const short int scaling, const Unit& unit);
-    Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude,
+    Frequency(const Signal& modulation, const Intrinsic& phase, const float magnitude,
         const short int scaling, const Unit& unit);
 
     // Destructors
@@ -157,14 +157,14 @@ public:
     float getIntensity() const;
     float getIntensityDrift() const;
     void setIntensityDrift(const float shift);
-    void setIntensityDrift(const Azimuth& shift);
+    void setIntensityDrift(const Intrinsic& shift);
     float getSpatialDrift() const;
     void setSpatialDrift(const Signal& motion);
-    void setSpatialDrift(const Azimuth& rate);
-    void setSpatialDrift(const float wavelength, const Azimuth& rate);
-    void setSpatialDrift(const float wavelength, const short int scale, const Azimuth& rate);
-    void setSpatialDrift(const float wavelength, const short int scale, const std::string unit, const Azimuth& rate);
-    void setSpatialDrift(const float wavelength, const short int scale, const Unit& unit, const Azimuth& rate);
+    void setSpatialDrift(const Intrinsic& rate);
+    void setSpatialDrift(const float wavelength, const Intrinsic& rate);
+    void setSpatialDrift(const float wavelength, const short int scale, const Intrinsic& rate);
+    void setSpatialDrift(const float wavelength, const short int scale, const std::string unit, const Intrinsic& rate);
+    void setSpatialDrift(const float wavelength, const short int scale, const Unit& unit, const Intrinsic& rate);
     short int getScaling() const;
     void setScaling(const short int factor);
     Unit getUnit() const;

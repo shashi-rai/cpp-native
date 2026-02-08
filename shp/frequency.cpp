@@ -70,48 +70,48 @@ Frequency::Frequency(const float magnitude, const short int scaling, const Unit&
 
 }
 
-Frequency::Frequency(const Azimuth& phase)
+Frequency::Frequency(const Intrinsic& phase)
         : Signal(phase), modulation(shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY)) {
 
 }
 
-Frequency::Frequency(const Azimuth& phase, const std::string unit)
+Frequency::Frequency(const Intrinsic& phase, const std::string unit)
         : Signal(phase, unit), modulation(unit) {
 
 }
 
-Frequency::Frequency(const Azimuth& phase, const Unit& unit)
+Frequency::Frequency(const Intrinsic& phase, const Unit& unit)
         : Signal(phase, unit), modulation(unit) {
 
 }
 
-Frequency::Frequency(const Azimuth& phase, const float magnitude)
+Frequency::Frequency(const Intrinsic& phase, const float magnitude)
         : Signal(phase, magnitude), modulation(shp::Unit::getDerivedSymbol(shp::Unit::FREQUENCY)) {
 
 }
 
-Frequency::Frequency(const Azimuth& phase, const float magnitude, const std::string unit)
+Frequency::Frequency(const Intrinsic& phase, const float magnitude, const std::string unit)
         : Signal(phase, magnitude, unit), modulation(unit) {
 
 }
 
-Frequency::Frequency(const Azimuth& phase, const float magnitude, const Unit& unit)
+Frequency::Frequency(const Intrinsic& phase, const float magnitude, const Unit& unit)
         : Signal(phase, magnitude, unit), modulation(unit) {
 
 }
 
-Frequency::Frequency(const Azimuth& phase, const float magnitude, const short int scaling)
+Frequency::Frequency(const Intrinsic& phase, const float magnitude, const short int scaling)
         : Signal(phase, magnitude, scaling), modulation() {
 
 }
 
-Frequency::Frequency(const Azimuth& phase, const float magnitude, const short int scaling,
+Frequency::Frequency(const Intrinsic& phase, const float magnitude, const short int scaling,
         const std::string unit)
         : Signal(phase, magnitude, scaling, unit), modulation(unit) {
 
 }
 
-Frequency::Frequency(const Azimuth& phase, const float magnitude, const short int scaling,
+Frequency::Frequency(const Intrinsic& phase, const float magnitude, const short int scaling,
         const Unit& unit)
         : Signal(phase, magnitude, scaling, unit), modulation(unit) {
 
@@ -127,12 +127,12 @@ Frequency::Frequency(const Signal& modulation, const shp::Quantity& magnitude)
 
 }
 
-Frequency::Frequency(const Signal& modulation, const Azimuth& phase)
+Frequency::Frequency(const Signal& modulation, const Intrinsic& phase)
         : Signal(phase), modulation(modulation) {
 
 }
 
-Frequency::Frequency(const Signal& modulation, const Azimuth& phase, const shp::Quantity& magnitude)
+Frequency::Frequency(const Signal& modulation, const Intrinsic& phase, const shp::Quantity& magnitude)
         : Signal(phase, magnitude), modulation(modulation) {
 
 }
@@ -175,18 +175,18 @@ Frequency::Frequency(const Signal& modulation, const float magnitude)
 
 }
 
-Frequency::Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude)
+Frequency::Frequency(const Signal& modulation, const Intrinsic& phase, const float magnitude)
         : Signal(phase, magnitude, modulation.getUnit()), modulation(modulation) {
 
 }
 
-Frequency::Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude,
+Frequency::Frequency(const Signal& modulation, const Intrinsic& phase, const float magnitude,
         const std::string unit)
         : Signal(phase, magnitude, unit), modulation(modulation) {
 
 }
 
-Frequency::Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude,
+Frequency::Frequency(const Signal& modulation, const Intrinsic& phase, const float magnitude,
         const Unit& unit)
         : Signal(phase, magnitude, unit), modulation(modulation) {
 
@@ -216,7 +216,7 @@ Frequency::Frequency(const Signal& modulation, const float phase, const float ma
 
 }
 
-Frequency::Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude,
+Frequency::Frequency(const Signal& modulation, const Intrinsic& phase, const float magnitude,
         const short int scaling)
         : Signal(phase, magnitude, scaling, modulation.getUnit()), modulation(modulation) {
 
@@ -246,7 +246,7 @@ Frequency::Frequency(const Signal& modulation, const float phase, const float ma
 
 }
 
-Frequency::Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude,
+Frequency::Frequency(const Signal& modulation, const Intrinsic& phase, const float magnitude,
         const short int scaling, const std::string unit)
         : Signal(phase, magnitude, scaling, unit), modulation(modulation) {
 
@@ -276,7 +276,7 @@ Frequency::Frequency(const Signal& modulation, const float phase, const float ma
 
 }
 
-Frequency::Frequency(const Signal& modulation, const Azimuth& phase, const float magnitude,
+Frequency::Frequency(const Signal& modulation, const Intrinsic& phase, const float magnitude,
         const short int scaling, const Unit& unit)
         : Signal(phase, magnitude, scaling, unit), modulation(modulation) {
 
@@ -389,15 +389,15 @@ Frequency Frequency::getOverlayScalar(const float coefficient) const {
 }
 
 Frequency Frequency::getCarrierRotation(const short int degree) const {
-    Signal self = *this; Azimuth carrier(self.getOrientation());
-    Azimuth phase = carrier.getRotation(degree);
+    Signal self = *this; Intrinsic carrier(self.getOrientation());
+    Intrinsic phase = carrier.getRotation(degree);
     return Frequency(this->modulation, phase,
 		self.getMagnitude(), self.getScaling(), self.getUnit());
 }
 
 Frequency Frequency::getOverlayRotation(const short int degree) const {
-    Signal self = *this; Azimuth overlay(modulation.getOrientation());
-    Azimuth phase = overlay.getRotation(degree);
+    Signal self = *this; Intrinsic overlay(modulation.getOrientation());
+    Intrinsic phase = overlay.getRotation(degree);
     return Frequency(phase, self.getOrientation(),
 		self.getMagnitude(), self.getScaling(), self.getUnit());
 }
@@ -482,7 +482,7 @@ void Frequency::setIntensityDrift(const float shift) {
     Signal::setOrientation(shift);
 }
 
-void Frequency::setIntensityDrift(const Azimuth& shift) {
+void Frequency::setIntensityDrift(const Intrinsic& shift) {
     Signal::setOrientation(shift.toRadians());
 }
 
@@ -494,30 +494,30 @@ void Frequency::setSpatialDrift(const shp::Signal& motion) {
     modulation = motion;
 }
 
-void Frequency::setSpatialDrift(const Azimuth& rate) {
+void Frequency::setSpatialDrift(const Intrinsic& rate) {
     modulation.setOrientation(rate.toRadians());
 }
 
 void Frequency::setSpatialDrift(const float wavelength,
-        const Azimuth& rate) {
+        const Intrinsic& rate) {
     modulation.setMagnitude(wavelength);
     modulation.setOrientation(rate.toRadians());
 }
 
 void Frequency::setSpatialDrift(const float wavelength, const short int scale,
-        const Azimuth& rate) {
+        const Intrinsic& rate) {
     modulation.setMagnitude(wavelength, scale);
     modulation.setOrientation(rate.toRadians());
 }
 
 void Frequency::setSpatialDrift(const float wavelength, const short int scale, const std::string unit,
-        const Azimuth& rate) {
+        const Intrinsic& rate) {
     modulation.setMagnitude(wavelength, scale, unit);
     modulation.setOrientation(rate.toRadians());
 }
 
 void Frequency::setSpatialDrift(const float wavelength, const short int scale, const Unit& unit,
-        const Azimuth& rate) {
+        const Intrinsic& rate) {
     modulation.setMagnitude(wavelength, scale, unit);
     modulation.setOrientation(rate.toRadians());
 }
