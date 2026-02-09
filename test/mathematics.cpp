@@ -171,7 +171,8 @@ void Mathematics::distance_concept() {
         shp::Intrinsic elevation(shp::Direction::DEGREE_001 * 0);
         shp::Distance position(i, 1); d1.setChangeIntrinsic(1.0f);
         std::cout << "Ampl: " << d1.getAmplitude() << " D: " << d1.print() << std::endl
-            << "X1: " << d1.getRadialX(elevation).print()
+            << "R1: " << d1.getRadial().print()
+            << " X1: " << d1.getRadialX(elevation).print()
             << " Y1: " << d1.getRadialY(elevation).print()
             << " Z1: " << d1.getRadialZ(elevation).print()
             << std::endl << std::endl;

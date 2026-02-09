@@ -19,6 +19,12 @@
 // THE SOFTWARE.
 
 #include "distance.h"
+#include "azimuth.h"
+#include "direction.h"
+#include "intrinsic.h"
+#include "polar.h"
+#include "quantity.h"
+#include "signal.h"
 
 namespace shp {
 
@@ -363,6 +369,27 @@ Distance::Distance(const float length, const short int scaling, const std::strin
         const Polar& vertical)
         : Signal(length, scaling, unit),
         horizontal(Direction::DEFAULT_RADIANS), vertical(vertical) {
+
+}
+
+Distance::Distance(const float length, const short int scaling, const std::string unit,
+        const Intrinsic& orientation, const Azimuth& horizontal)
+        : Signal(orientation, length, scaling, unit),
+        horizontal(horizontal), vertical(Direction::DEFAULT_RADIANS) {
+
+}
+
+Distance::Distance(const float length, const short int scaling, const std::string unit,
+        const Intrinsic& orientation, const Polar& vertical)
+        : Signal(orientation, length, scaling, unit),
+        horizontal(Direction::DEFAULT_RADIANS), vertical(vertical) {
+
+}
+
+Distance::Distance(const float length, const short int scaling, const std::string unit,
+        const Azimuth& horizontal, const Polar& vertical)
+        : Signal(length, scaling, unit),
+        horizontal(horizontal), vertical(vertical) {
 
 }
 
@@ -748,27 +775,53 @@ Distance Distance::operator%(const Polar& rotation) const {
         self.getOrientation(),this->horizontal, polar);
 }
 
+Signal Distance::operator()(const Intrinsic& phase) const {
+    Distance self = *this; float radians = self.getIntrinsicDeviation(phase).toRadians();
+    Signal result(Direction::DEFAULT_RADIANS,
+        shp::Signal::getCosComponent(radians), self.getScaling(), self.getUnit());
+    return result;
+}
+
+Signal Distance::operator()(const Azimuth& phase) const {
+    Distance self = *this; float radians = self.getHorizontalDeviation(phase).toRadians();
+    Signal result(Direction::DEFAULT_RADIANS,
+        shp::Signal::getCosComponent(radians), self.getScaling(), self.getUnit());
+    return result;
+}
+
+Signal Distance::operator()(const Polar& phase) const {
+    Distance self = *this; float radians = self.getVerticalDeviation(phase).toRadians();
+    Signal result(Direction::DEFAULT_RADIANS,
+        shp::Signal::getCosComponent(radians), self.getScaling(), self.getUnit());
+    return result;
+}
+
+Signal Distance::operator()(const Distance& peer, const Intrinsic& intrinsic) const {
+    Distance self = *this; Signal radial = (self.getRadial() + peer.getRadialX(intrinsic));
+    Signal result(self.getIntrinsicDeviation(intrinsic).toRadians(),
+        radial.getMagnitude(), radial.getScaling(), self.getUnit());
+    result.adjustScaling();
+    return result;
+}
+
 Signal Distance::operator()(const Distance& peer, const Azimuth& azimuth) const {
-    Distance self = *this; Direction poi(Direction::DEFAULT_RADIANS);
-    Signal radial = (self.getRadial(poi) + peer.getRadial(azimuth));
-    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(),
-        self.getHorizontalDeviation(azimuth));
+    Distance self = *this; Signal radial = (self.getRadial() + peer.getRadialY(azimuth));
+    Signal result(self.getHorizontalDeviation(azimuth).toRadians(),
+        radial.getMagnitude(), radial.getScaling(), self.getUnit());
     result.adjustScaling();
     return result;
 }
 
 Signal Distance::operator()(const Distance& peer, const Polar& polar) const {
-    Distance self = *this; Direction poi(Direction::DEFAULT_RADIANS);
-    Signal radial = (self.getRadial(poi) + peer.getRadial(polar));
-    Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(),
-        self.getVerticalDeviation(polar));
+    Distance self = *this; Signal radial = (self.getRadial() + peer.getRadialZ(polar));
+    Signal result(self.getVerticalDeviation(polar).toRadians(),
+        radial.getMagnitude(), radial.getScaling(), self.getUnit());
     result.adjustScaling();
     return result;
 }
 
 Signal Distance::operator()(const Distance& peer, const Azimuth& azimuth, const Polar& polar) const {
-    Distance self = *this; Direction poi(Direction::DEFAULT_RADIANS);
-    Signal radial = (self.getRadial(poi) + peer.getRadial(azimuth, polar));
+    Distance self = *this; Signal radial = (self.getRadial() + peer.getRadial(azimuth, polar));
     Distance result(radial.getMagnitude(), radial.getScaling(), self.getUnit(),
         self.getHorizontalDeviation(azimuth),
         self.getVerticalDeviation(polar));
@@ -1077,9 +1130,9 @@ Signal Distance::getVerticalTotal() const {
     return Signal(shift, angular.getAmplitude(), angular.getScaling(), angular.getUnit());
 }
 
-Signal Distance::getRadial(const Direction& elevation) const {
-    Distance self = *this; Direction change = this->getOrientation();
-    float radians = change.toRadians();
+Signal Distance::getRadial() const {
+    Distance self = *this; Direction phase = Signal::getOrientation();
+    float radians = phase.toRadians();
     Signal sumtotal = self.getRadialXSquare(Intrinsic(radians))
             + self.getRadialYSquare(Azimuth(radians))
             + self.getRadialZSquare(Polar(radians));
@@ -1090,8 +1143,8 @@ Signal Distance::getRadial(const Direction& elevation) const {
 }
 
 Signal Distance::getRadial(const Azimuth& azimuth, const Polar& polar) const {
-    Distance self = *this; Direction change = this->getOrientation();
-    Signal sumtotal = self.getRadialXSquare(Intrinsic(change.toRadians()))
+    Distance self = *this; Direction phase = Signal::getOrientation();
+    Signal sumtotal = self.getRadialXSquare(Intrinsic(phase.toRadians()))
             + self.getRadialYSquare(Azimuth(azimuth.toRadians()))
             + self.getRadialZSquare(Polar(polar.toRadians()));
     Signal diagonal = sumtotal.getDotProductSquareRoot();
@@ -1100,40 +1153,40 @@ Signal Distance::getRadial(const Azimuth& azimuth, const Polar& polar) const {
     return result;
 }
 
-Signal Distance::getRadialX(const Intrinsic& elevation) const {
+Signal Distance::getRadialX(const Intrinsic& phase) const {
     Distance self = *this;
-    shp::Quantity component = self.getLinearX(shp::Quantity::DEFAULT_VALUE, elevation);
+    shp::Quantity component = self.getLinearX(shp::Quantity::DEFAULT_VALUE, phase);
     Distance result(component.getMagnitude(), component.getScaling(), self.getUnit(),
-        self.getIntrinsicDeviation(elevation), self.getVerticalDeviation(elevation));
+        self.getIntrinsicDeviation(phase), self.getVerticalDeviation(phase));
     return result;
 }
 
-Signal Distance::getRadialY(const Azimuth& elevation) const {
+Signal Distance::getRadialY(const Azimuth& sweep) const {
     Distance self = *this;
-    shp::Quantity component = self.getLinearY(shp::Quantity::DEFAULT_VALUE, elevation);
+    shp::Quantity component = self.getLinearY(shp::Quantity::DEFAULT_VALUE, sweep);
     Distance result(component.getMagnitude(), component.getScaling(), self.getUnit(),
-        self.getIntrinsicDeviation(elevation), self.getHorizontalDeviation(elevation));
+        self.getIntrinsicDeviation(sweep), self.getHorizontalDeviation(sweep));
     return result;
 }
 
-Signal Distance::getRadialZ(const Polar& elevation) const {
+Signal Distance::getRadialZ(const Polar& rise) const {
     Distance self = *this;
-    shp::Quantity component = self.getLinearZ(shp::Quantity::DEFAULT_VALUE, elevation);
+    shp::Quantity component = self.getLinearZ(shp::Quantity::DEFAULT_VALUE, rise);
     Distance result(component.getMagnitude(), component.getScaling(), self.getUnit(),
-        self.getIntrinsicDeviation(elevation), self.getVerticalDeviation(elevation));
+        self.getIntrinsicDeviation(rise), self.getVerticalDeviation(rise));
     return result;
 }
 
-Signal Distance::getRadialXSquare(const Intrinsic& elevation) const {
-    return getRadialX(elevation).getDotProductSquare();
+Signal Distance::getRadialXSquare(const Intrinsic& phase) const {
+    return getRadialX(phase).getDotProductSquare();
 }
 
-Signal Distance::getRadialYSquare(const Azimuth& elevation) const {
-    return getRadialY(elevation).getDotProductSquare();
+Signal Distance::getRadialYSquare(const Azimuth& sweep) const {
+    return getRadialY(sweep).getDotProductSquare();
 }
 
-Signal Distance::getRadialZSquare(const Polar& elevation) const {
-    return getRadialZ(elevation).getDotProductSquare();
+Signal Distance::getRadialZSquare(const Polar& rise) const {
+    return getRadialZ(rise).getDotProductSquare();
 }
 
 Distance Distance::copy() {

@@ -107,6 +107,12 @@ public:
         const Azimuth& horizontal);
     Distance(const float length, const short int scaling, const std::string unit,
         const Polar& vertical);
+    Distance(const float length, const short int scaling, const std::string unit,
+        const Intrinsic& intrinsic, const Azimuth& horizontal);
+    Distance(const float length, const short int scaling, const std::string unit,
+        const Intrinsic& intrinsic, const Polar& vertical);
+    Distance(const float length, const short int scaling, const std::string unit,
+        const Azimuth& horizontal, const Polar& vertical);
     Distance(const float length, const short int scaling, const Unit& unit,
         const float orientation);
     Distance(const float length, const short int scaling, const Unit& unit,
@@ -191,7 +197,13 @@ public:
     Distance operator/(const Polar& rotation) const;
     Distance operator%(const Polar& rotation) const;
 
-    // Access operator
+    // Angular Rotation Access operator
+    Signal operator()(const Intrinsic& phase) const;
+    Signal operator()(const Azimuth& phase) const;
+    Signal operator()(const Polar& phase) const;
+
+    // Linear Separation Access operator
+    Signal operator()(const Distance& peer, const Intrinsic& intrinsic) const;
     Signal operator()(const Distance& peer, const Azimuth& azimuth) const;
     Signal operator()(const Distance& peer, const Polar& polar) const;
     Signal operator()(const Distance& peer, const Azimuth& azimuth, const Polar& polar) const;
@@ -266,14 +278,14 @@ public:
     Signal getHorizontalTotal() const;
     Signal getVerticalDrift() const;
     Signal getVerticalTotal() const;
-    Signal getRadial(const Direction& elevation) const;
+    Signal getRadial() const;
     Signal getRadial(const Azimuth& azimuth, const Polar& polar) const;
-    Signal getRadialX(const Intrinsic& elevation) const;
-    Signal getRadialY(const Azimuth& elevation) const;
-    Signal getRadialZ(const Polar& elevation) const;
-    Signal getRadialXSquare(const Intrinsic& elevation) const;
-    Signal getRadialYSquare(const Azimuth& elevation) const;
-    Signal getRadialZSquare(const Polar& elevation) const;
+    Signal getRadialX(const Intrinsic& phase) const;
+    Signal getRadialY(const Azimuth& sweep) const;
+    Signal getRadialZ(const Polar& rise) const;
+    Signal getRadialXSquare(const Intrinsic& phase) const;
+    Signal getRadialYSquare(const Azimuth& sweep) const;
+    Signal getRadialZSquare(const Polar& rise) const;
     virtual Distance copy();
     virtual void clear();
     virtual std::string print() const;
