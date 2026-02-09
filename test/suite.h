@@ -30,7 +30,7 @@
 
 namespace test {
 
-class Suite : protected test::System {
+class Suite : protected cfg::System {
     Mathematics mathematics;
     Physics physics;
     Chemistry chemistry;

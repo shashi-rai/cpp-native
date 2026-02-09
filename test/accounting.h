@@ -25,7 +25,7 @@
 
 namespace test {
 
-class Accounting : protected test::System {
+class Accounting : protected cfg::System {
 
 public:
     Accounting();

@@ -25,7 +25,7 @@
 
 namespace test {
 
-class Chemistry : protected test::System {
+class Chemistry : protected cfg::System {
 
 public:
     Chemistry();

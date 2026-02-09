@@ -72,6 +72,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/shape.o \
 		$(OBJFOLDR)/shell.o \
 		$(OBJFOLDR)/signal.o \
+		$(OBJFOLDR)/system.o \
 		$(OBJFOLDR)/temporal.o \
 		$(OBJFOLDR)/unit.o \
 		$(OBJFOLDR)/volume.o \
@@ -104,6 +105,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/shape.o \
 		$(OBJFOLDR)/shell.o \
 		$(OBJFOLDR)/signal.o \
+		$(OBJFOLDR)/system.o \
 		$(OBJFOLDR)/temporal.o \
 		$(OBJFOLDR)/unit.o \
 		$(OBJFOLDR)/volume.o \
@@ -189,6 +191,9 @@ $(OBJFOLDR)/shell.o: shell.cpp
 
 $(OBJFOLDR)/signal.o: signal.cpp
 	$(CPPTOOL) -c signal.cpp -o $(OBJFOLDR)/signal.o $(CXXFLAGS)
+
+$(OBJFOLDR)/system.o: system.cpp
+	$(CPPTOOL) -c system.cpp -o $(OBJFOLDR)/system.o $(CXXFLAGS)
 
 $(OBJFOLDR)/temporal.o: temporal.cpp
 	$(CPPTOOL) -c temporal.cpp -o $(OBJFOLDR)/temporal.o $(CXXFLAGS)

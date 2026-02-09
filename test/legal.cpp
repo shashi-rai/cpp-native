@@ -25,33 +25,33 @@ namespace test {
 const std::string Legal::DEFAULT_NAME = "Legal";
 
 Legal::Legal()
-        : test::System(DEFAULT_NAME) {
+        : cfg::System(DEFAULT_NAME) {
 
 }
 
 Legal::Legal(const std::string name)
-        : test::System(name) {
+        : cfg::System(name) {
 
 }
 
 Legal::Legal(const int argc, char* argv[])
-        : test::System(DEFAULT_NAME) {
-    test::System::setParameters(argc, argv);
+        : cfg::System(DEFAULT_NAME) {
+    cfg::System::setParameters(argc, argv);
 }
 
 Legal::Legal(const std::string name, const int argc, char* argv[])
-        : test::System(name) {
-    test::System::setParameters(argc, argv);
+        : cfg::System(name) {
+    cfg::System::setParameters(argc, argv);
 }
 
 Legal::Legal(const cfg::CommandLine& object)
-        : test::System(DEFAULT_NAME) {
-    test::System::setParameters(object);
+        : cfg::System(DEFAULT_NAME) {
+    cfg::System::setParameters(object);
 }
 
 Legal::Legal(const std::string name, const cfg::CommandLine& object)
-        : test::System(name) {
-    test::System::setParameters(object);
+        : cfg::System(name) {
+    cfg::System::setParameters(object);
 }
 
 Legal::~Legal() {
@@ -59,17 +59,17 @@ Legal::~Legal() {
 }
 
 int Legal::run() {
-    return run(test::System::getParameters());
+    return run(cfg::System::getParameters());
 }
 
 int Legal::run(const int argc, char* argv[]) {
-    test::System::setParameters(argc, argv);
-    return run(test::System::getParameters());
+    cfg::System::setParameters(argc, argv);
+    return run(cfg::System::getParameters());
 }
 
 int Legal::run(const cfg::CommandLine& object) {
-    test::System::printStartedMessage();
-    test::System::printStoppedMessage();
+    cfg::System::printStartedMessage();
+    cfg::System::printStoppedMessage();
     return 0;
 }
 

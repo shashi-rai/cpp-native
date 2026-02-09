@@ -25,33 +25,33 @@ namespace test {
 const std::string Finance::DEFAULT_NAME = "Finance";
 
 Finance::Finance()
-        : test::System(DEFAULT_NAME) {
+        : cfg::System(DEFAULT_NAME) {
 
 }
 
 Finance::Finance(const std::string name)
-        : test::System(name) {
+        : cfg::System(name) {
 
 }
 
 Finance::Finance(const int argc, char* argv[])
-        : test::System(DEFAULT_NAME) {
-    test::System::setParameters(argc, argv);
+        : cfg::System(DEFAULT_NAME) {
+    cfg::System::setParameters(argc, argv);
 }
 
 Finance::Finance(const std::string name, const int argc, char* argv[])
-        : test::System(name) {
-    test::System::setParameters(argc, argv);
+        : cfg::System(name) {
+    cfg::System::setParameters(argc, argv);
 }
 
 Finance::Finance(const cfg::CommandLine& object)
-        : test::System(DEFAULT_NAME) {
-    test::System::setParameters(object);
+        : cfg::System(DEFAULT_NAME) {
+    cfg::System::setParameters(object);
 }
 
 Finance::Finance(const std::string name, const cfg::CommandLine& object)
-        : test::System(name) {
-    test::System::setParameters(object);
+        : cfg::System(name) {
+    cfg::System::setParameters(object);
 }
 
 Finance::~Finance() {
@@ -59,17 +59,17 @@ Finance::~Finance() {
 }
 
 int Finance::run() {
-    return run(test::System::getParameters());
+    return run(cfg::System::getParameters());
 }
 
 int Finance::run(const int argc, char* argv[]) {
-    test::System::setParameters(argc, argv);
-    return run(test::System::getParameters());
+    cfg::System::setParameters(argc, argv);
+    return run(cfg::System::getParameters());
 }
 
 int Finance::run(const cfg::CommandLine& object) {
-    test::System::printStartedMessage();
-    test::System::printStoppedMessage();
+    cfg::System::printStartedMessage();
+    cfg::System::printStoppedMessage();
     return 0;
 }
 

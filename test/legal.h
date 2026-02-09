@@ -25,7 +25,7 @@
 
 namespace test {
 
-class Legal : protected test::System {
+class Legal : protected cfg::System {
 
 public:
     Legal();

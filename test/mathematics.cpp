@@ -25,33 +25,33 @@ namespace test {
 const std::string Mathematics::DEFAULT_NAME = "Mathematics";
 
 Mathematics::Mathematics()
-        : test::System(DEFAULT_NAME) {
+        : cfg::System(DEFAULT_NAME) {
 
 }
 
 Mathematics::Mathematics(const std::string name)
-        : test::System(name) {
+        : cfg::System(name) {
 
 }
 
 Mathematics::Mathematics(const int argc, char* argv[])
-        : test::System(DEFAULT_NAME) {
-    test::System::setParameters(argc, argv);
+        : cfg::System(DEFAULT_NAME) {
+    cfg::System::setParameters(argc, argv);
 }
 
 Mathematics::Mathematics(const std::string name, const int argc, char* argv[])
-        : test::System(name) {
-    test::System::setParameters(argc, argv);
+        : cfg::System(name) {
+    cfg::System::setParameters(argc, argv);
 }
 
 Mathematics::Mathematics(const cfg::CommandLine& object)
-        : test::System(DEFAULT_NAME) {
-    test::System::setParameters(object);
+        : cfg::System(DEFAULT_NAME) {
+    cfg::System::setParameters(object);
 }
 
 Mathematics::Mathematics(const std::string name, const cfg::CommandLine& object)
-        : test::System(name) {
-    test::System::setParameters(object);
+        : cfg::System(name) {
+    cfg::System::setParameters(object);
 }
 
 Mathematics::~Mathematics() {
@@ -59,16 +59,16 @@ Mathematics::~Mathematics() {
 }
 
 int Mathematics::run() {
-    return run(test::System::getParameters());
+    return run(cfg::System::getParameters());
 }
 
 int Mathematics::run(const int argc, char* argv[]) {
-    test::System::setParameters(argc, argv);
-    return run(test::System::getParameters());
+    cfg::System::setParameters(argc, argv);
+    return run(cfg::System::getParameters());
 }
 
 int Mathematics::run(const cfg::CommandLine& object) {
-    test::System::printStartedMessage();
+    cfg::System::printStartedMessage();
     quantity_concept();
     direction_concept();
     angular_concept();
@@ -76,7 +76,7 @@ int Mathematics::run(const cfg::CommandLine& object) {
     distance_concept();
     area_concept();
     volume_concept();
-    test::System::printStoppedMessage();
+    cfg::System::printStoppedMessage();
     return 0;
 }
 
@@ -155,9 +155,11 @@ void Mathematics::signal_concept() {
 void Mathematics::distance_concept() {
     std::string unit = "m"; short int scale = 0;
     shp::Distance d1(5.0f, scale, unit,
+        shp::Intrinsic(shp::Direction::DEGREE_001 * 0),
         shp::Azimuth(shp::Direction::DEGREE_030),
         shp::Polar(shp::Direction::DEGREE_030));
     shp::Distance d2(3.0f, scale, unit,
+        shp::Intrinsic(shp::Direction::DEGREE_001 * 0),
         shp::Azimuth(shp::Direction::DEGREE_045),
         shp::Polar(shp::Direction::DEGREE_045));
     std::cout << "D1: " << d1.print() << std::endl << "D2: " << d2.print() << std::endl
@@ -175,6 +177,36 @@ void Mathematics::distance_concept() {
             << " X1: " << d1.getRadialX(elevation).print()
             << " Y1: " << d1.getRadialY(elevation).print()
             << " Z1: " << d1.getRadialZ(elevation).print()
+            << std::endl << std::endl;
+    }
+    std::cout << std::endl;
+
+    for (int i=0; i < 5; i++) {
+        shp::Intrinsic elevation(shp::Direction::DEGREE_001 * 0);
+        shp::Azimuth azimuth(shp::Direction::DEGREE_001 * i);
+        shp::Polar polar(shp::Direction::DEGREE_001 * i);
+        shp::Distance dA(5.0f, scale, unit,
+            shp::Intrinsic(shp::Direction::DEGREE_001 * 0),
+            shp::Azimuth(shp::Direction::DEGREE_001 * 0),
+            shp::Polar(shp::Direction::DEGREE_001 * 0));
+        shp::Distance dB(1.0f, scale, unit,
+            shp::Intrinsic(shp::Direction::DEGREE_001 * 0),
+            shp::Azimuth(shp::Direction::DEGREE_001 * 0),
+            shp::Polar(shp::Direction::DEGREE_001 * 0));    
+        std::cout
+            << "dB: " << dB.print() << " Xp: " << dA(dB, azimuth, polar).print()
+            << std::endl
+            << "xL: " << dA.getLinear(dB, elevation).print()
+            << " xD: " << dA.getLinearDivergence(dB, elevation).print()
+            << " xC: " << dA.getLinearConvergence(dB, elevation).print()
+            << std::endl
+            << "yP: " << dA.getPlanar(dB, elevation).print()
+            << " yD: " << dA.getPlanarDivergence(dB, azimuth).print()
+            << " yC: " << dA.getPlanarConvergence(dB, azimuth).print()
+            << std::endl
+            << "zO: " << dA.getOrthogonal(dB, elevation).print()
+            << " zD: " << dA.getOrthogonalDivergence(dB, polar).print()
+            << " zC: " << dA.getOrthogonalConvergence(dB, polar).print()
             << std::endl << std::endl;
     }
     std::cout << std::endl;

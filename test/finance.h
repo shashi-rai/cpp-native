@@ -25,7 +25,7 @@
 
 namespace test {
 
-class Finance : protected test::System {
+class Finance : protected cfg::System {
 
 public:
     Finance();

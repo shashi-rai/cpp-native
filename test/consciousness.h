@@ -29,7 +29,7 @@
 
 namespace test {
 
-class Consciousness : protected test::System {
+class Consciousness : protected cfg::System {
 
 public:
     Consciousness();

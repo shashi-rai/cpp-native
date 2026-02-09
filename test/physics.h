@@ -26,7 +26,7 @@
 
 namespace test {
 
-class Physics : protected test::System {
+class Physics : protected cfg::System {
 
 public:
     Physics();

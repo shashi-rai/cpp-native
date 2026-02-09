@@ -25,33 +25,33 @@ namespace test {
 const std::string Biology::DEFAULT_NAME = "Biology";
 
 Biology::Biology()
-        : test::System(DEFAULT_NAME) {
+        : cfg::System(DEFAULT_NAME) {
 
 }
 
 Biology::Biology(const std::string name)
-        : test::System(name) {
+        : cfg::System(name) {
 
 }
 
 Biology::Biology(const int argc, char* argv[])
-        : test::System(DEFAULT_NAME) {
-    test::System::setParameters(argc, argv);
+        : cfg::System(DEFAULT_NAME) {
+    cfg::System::setParameters(argc, argv);
 }
 
 Biology::Biology(const std::string name, const int argc, char* argv[])
-        : test::System(name) {
-    test::System::setParameters(argc, argv);
+        : cfg::System(name) {
+    cfg::System::setParameters(argc, argv);
 }
 
 Biology::Biology(const cfg::CommandLine& object)
-        : test::System(DEFAULT_NAME) {
-    test::System::setParameters(object);
+        : cfg::System(DEFAULT_NAME) {
+    cfg::System::setParameters(object);
 }
 
 Biology::Biology(const std::string name, const cfg::CommandLine& object)
-        : test::System(name) {
-    test::System::setParameters(object);
+        : cfg::System(name) {
+    cfg::System::setParameters(object);
 }
 
 Biology::~Biology() {
@@ -59,17 +59,17 @@ Biology::~Biology() {
 }
 
 int Biology::run() {
-    return run(test::System::getParameters());
+    return run(cfg::System::getParameters());
 }
 
 int Biology::run(const int argc, char* argv[]) {
-    test::System::setParameters(argc, argv);
-    return run(test::System::getParameters());
+    cfg::System::setParameters(argc, argv);
+    return run(cfg::System::getParameters());
 }
 
 int Biology::run(const cfg::CommandLine& object) {
-    test::System::printStartedMessage();
-    test::System::printStoppedMessage();
+    cfg::System::printStartedMessage();
+    cfg::System::printStoppedMessage();
     return 0;
 }
 

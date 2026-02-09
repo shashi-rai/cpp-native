@@ -26,7 +26,7 @@
 #include <string>
 #include "configuration.h"
 
-namespace test {
+namespace cfg {
 
 class System {
     std::string name;
@@ -55,6 +55,6 @@ public:
     std::string print() const;
 };
 
-} // namespace test
+} // namespace cfg
 
 #endif //INC_TESTING_H

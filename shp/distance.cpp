@@ -19,12 +19,6 @@
 // THE SOFTWARE.
 
 #include "distance.h"
-#include "azimuth.h"
-#include "direction.h"
-#include "intrinsic.h"
-#include "polar.h"
-#include "quantity.h"
-#include "signal.h"
 
 namespace shp {
 

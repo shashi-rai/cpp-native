@@ -28,7 +28,7 @@
 
 namespace test {
 
-class Mathematics : protected test::System {
+class Mathematics : protected cfg::System {
 
 public:
     Mathematics();

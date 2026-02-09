@@ -25,7 +25,7 @@
 
 namespace test {
 
-class Biology : protected test::System {
+class Biology : protected cfg::System {
 
 public:
     Biology();

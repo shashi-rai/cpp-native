@@ -25,7 +25,7 @@
 
 namespace test {
 
-class Economics : protected test::System {
+class Economics : protected cfg::System {
 
 public:
     Economics();
