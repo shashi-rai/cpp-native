@@ -88,38 +88,38 @@ Area::Area(const float magnitude, const short int scaling, const Unit& unit)
 
 }
 
-Area::Area(const Signal& length)
+Area::Area(const Distance& length)
     : Quantity(UNIT), length(length), breadth(length) {
 
 }
 
 Area::Area(const float magnitude, const short int scaling, std::string unit,
-        const Signal& length)
+        const Distance& length)
     : Quantity(magnitude, scaling, unit),
     length(length), breadth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
 Area::Area(const float magnitude, const short int scaling, const Unit& unit,
-        const Signal& length)
+        const Distance& length)
     : Quantity(magnitude, scaling, unit),
     length(length), breadth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
-Area::Area(const Signal& length, const Signal& breadth)
+Area::Area(const Distance& length, const Distance& breadth)
     : Quantity(UNIT), length(length), breadth(breadth) {
 
 }
 
 Area::Area(const float magnitude, const short int scaling, std::string unit,
-        const Signal& length, const Signal& breadth)
+        const Distance& length, const Distance& breadth)
     : Quantity(magnitude, scaling, unit), length(length), breadth(breadth) {
 
 }
 
 Area::Area(const float magnitude, const short int scaling, const Unit& unit,
-        const Signal& length, const Signal& breadth)
+        const Distance& length, const Distance& breadth)
     : Quantity(magnitude, scaling, unit), length(length), breadth(breadth) {
 
 }
@@ -173,115 +173,131 @@ bool Area::operator>=(const Area& peer) const {
 
 Area Area::operator+(const Area& peer) const {
     Quantity self = *this, other = peer, realpart = (self + other);
-    Signal signal = (getScalarTotal() + peer.getScalarTotal());
+    Signal signal = (this->getImaginaryScalar() + peer.getImaginaryScalar());
     std::complex<float> complexarea(signal.getMagnitude(), Quantity::DEFAULT_VALUE);
     std::complex<float> part = std::sqrt(complexarea);
     signal.setScaling(signal.getScaling() / SCALING_FACTOR);
     return Area(realpart.getMagnitude(), realpart.getScaling(), realpart.getUnit(),
-        Signal(std::abs(part), signal.getScaling(), length.getUnit()),
-        Signal(std::abs(part), signal.getScaling(), breadth.getUnit()));
+        Distance(std::abs(part), signal.getScaling(), length.getUnit()),
+        Distance(std::abs(part), signal.getScaling(), breadth.getUnit()));
 }
 
 Area Area::operator-(const Area& peer) const {
     Quantity self = *this, other = peer, realpart = (self - other);
-    Signal signal = (getScalarTotal() - peer.getScalarTotal());
+    Signal signal = (this->getImaginaryScalar() - peer.getImaginaryScalar());
     std::complex<float> complexarea(signal.getMagnitude(), Quantity::DEFAULT_VALUE);
     std::complex<float> part = std::sqrt(complexarea);
     signal.setScaling(signal.getScaling() / SCALING_FACTOR);
     return Area(realpart.getMagnitude(), realpart.getScaling(), realpart.getUnit(),
-        Signal(std::abs(part), signal.getScaling(), length.getUnit()),
-        Signal(std::abs(part), signal.getScaling(), breadth.getUnit()));
+        Distance(std::abs(part), signal.getScaling(), length.getUnit()),
+        Distance(std::abs(part), signal.getScaling(), breadth.getUnit()));
 }
 
 Area Area::operator*(const Area& peer) const {
     Quantity self = *this, other = peer, realpart = (self * other);
-    Signal signal = (getScalarTotal() * peer.getScalarTotal());
+    Signal signal = (this->getImaginaryScalar() * peer.getImaginaryScalar());
     std::complex<float> complexarea(signal.getMagnitude(), Quantity::DEFAULT_VALUE);
     std::complex<float> part = std::sqrt(complexarea);
     signal.setScaling(signal.getScaling() / SCALING_FACTOR);
     return Area(realpart.getMagnitude(), realpart.getScaling(), realpart.getUnit(),
-        Signal(std::abs(part), signal.getScaling(), length.getUnit()),
-        Signal(std::abs(part), signal.getScaling(), breadth.getUnit()));
+        Distance(std::abs(part), signal.getScaling(), length.getUnit()),
+        Distance(std::abs(part), signal.getScaling(), breadth.getUnit()));
 }
 
 Area Area::operator/(const Area& peer) const {
     Quantity self = *this, other = peer, realpart = (self / other);
-    Signal signal = (getScalarTotal() / peer.getScalarTotal());
+    Signal signal = (this->getImaginaryScalar() / peer.getImaginaryScalar());
     std::complex<float> complexarea(signal.getMagnitude(), Quantity::DEFAULT_VALUE);
     std::complex<float> part = std::sqrt(complexarea);
     signal.setScaling(signal.getScaling() / SCALING_FACTOR);
     return Area(realpart.getMagnitude(), realpart.getScaling(), realpart.getUnit(),
-        Signal(std::abs(part), signal.getScaling(), length.getUnit()),
-        Signal(std::abs(part), signal.getScaling(), breadth.getUnit()));
+        Distance(std::abs(part), signal.getScaling(), length.getUnit()),
+        Distance(std::abs(part), signal.getScaling(), breadth.getUnit()));
 }
 
 Area Area::operator%(const Area& peer) const {
     Quantity self = *this, other = peer, realpart = (self % other);
-    Signal signal = (fmod(getScalarTotal().getMagnitude(), peer.getScalarTotal().getMagnitude()));
+    Signal signal = (fmod(this->getImaginaryScalar().getMagnitude(), peer.getImaginaryScalar().getMagnitude()));
     std::complex<float> complexarea(signal.getMagnitude(), Quantity::DEFAULT_VALUE);
     std::complex<float> part = std::sqrt(complexarea);
     signal.setScaling(signal.getScaling() / SCALING_FACTOR);
     return Area(realpart.getMagnitude(), realpart.getScaling(), realpart.getUnit(),
-        Signal(std::abs(part), signal.getScaling(), length.getUnit()),
-        Signal(std::abs(part), signal.getScaling(), breadth.getUnit()));
+        Distance(std::abs(part), signal.getScaling(), length.getUnit()),
+        Distance(std::abs(part), signal.getScaling(), breadth.getUnit()));
 }
 
 Area Area::operator+(const Signal& peer) const {
     Area self = *this;
-    Signal width = (self.breadth + peer);
+    Distance width = (self.breadth + peer);
     return Area(self.length, width);
 }
 
 Area Area::operator-(const Signal& peer) const {
     Area self = *this;
-    Signal width = (self.breadth - peer);
+    Distance width = (self.breadth - peer);
     return Area(self.length, width);
 }
 
 Area Area::operator*(const Signal& peer) const {
     Area self = *this;
-    Signal width = (self.breadth * peer);
+    Distance width = (self.breadth * peer);
     return Area(self.length, width);
 }
 
 Area Area::operator/(const Signal& peer) const {
     Area self = *this;
-    Signal width = (self.breadth / peer);
+    Distance width = (self.breadth / peer);
     return Area(self.length, width);
 }
 
 Area Area::operator%(const Signal& peer) const {
     Area self = *this;
-    Signal width = (self.breadth % peer);
+    Distance width = (self.breadth % peer);
     return Area(self.length, width);
 }
 
-Signal Area::getScalarTotal() const {
-    Signal area = (length.getDotProduct(breadth));
+void Area::setMagnitude(const Signal& signal) {
+    float side = std::sqrt(signal.getMagnitude());
+    this->length = Distance(side, signal.getScaling(), length.getUnit(), signal.getOrientation());
+    this->breadth = Distance(side, signal.getScaling(), breadth.getUnit(), signal.getOrientation());
+}
+
+Signal Area::getRealScalar() const {
+    Signal area = (length.getScalarTotal() * breadth.getScalarTotal());
+    return Signal(Direction::DEFAULT_RADIANS, area.getMagnitude(), area.getScaling(), area.getUnit());
+}
+
+Signal Area::getRealVector() const {
+    Signal area = (length.getVectorTotal() * breadth.getVectorTotal());
     return Signal(area.getOrientation(), area.getMagnitude(), area.getScaling(), area.getUnit());
 }
 
-Signal Area::getVectorTotal() const {
-    Signal area = (length.getCrossProduct(breadth));
+Signal Area::getImaginaryScalar() const {
+    Signal area = (length.getVectorTotal().getDotProduct(breadth.getVectorTotal()));
+    return Signal(area.getOrientation(), area.getMagnitude(), area.getScaling(), area.getUnit());
+}
+
+Signal Area::getImaginaryVector() const {
+    Signal area = (length.getVectorTotal().getCrossProduct(breadth.getVectorTotal()));
     return Signal(area.getOrientation(), area.getMagnitude(), area.getScaling(), area.getUnit());
 }
 
 Signal Area::getLengthRotation(const short int degree) const {
-    Intrinsic direction(length.getOrientation());
+    Intrinsic direction = length.getIntrinsic();
     Intrinsic phase = direction.getRotation(degree);
     return Signal(phase, length.getMagnitude(), length.getScaling(), length.getUnit());
 }
 
-Direction Area::getLengthPhase() const {
-    return Direction(length.getOrientation());
+Intrinsic Area::getLengthPhase() const {
+    return length.getIntrinsic();
 }
 
 void Area::setLengthPhase(const float direction) {
-    length.setOrientation(direction);
+    length.setIntrinsic(direction);
 }
 
-void Area::setLengthPhase(const Direction& direction) {
-    length.setOrientation(direction.toRadians());
+void Area::setLengthPhase(const Intrinsic& intrinsic) {
+    length.setIntrinsic(intrinsic);
 }
 
 void Area::setLength(const float value) {
@@ -301,21 +317,21 @@ void Area::setLength(const float value, const short int scale, const Unit& unit)
 }
 
 Signal Area::getBreadthRotation(const short int degree) const {
-    Intrinsic direction(breadth.getOrientation());
+    Intrinsic direction = breadth.getIntrinsic();
     Intrinsic phase = direction.getRotation(degree);
     return Signal(phase, length.getMagnitude(), length.getScaling(), length.getUnit());
 }
 
-Direction Area::getBreadthPhase() const {
-    return Direction(breadth.getOrientation());
+Intrinsic Area::getBreadthPhase() const {
+    return breadth.getIntrinsic();
 }
 
 void Area::setBreadthPhase(const float direction) {
-    breadth.setOrientation(direction);
+    breadth.setIntrinsic(direction);
 }
 
-void Area::setBreadthPhase(const Direction& direction) {
-    breadth.setOrientation(direction.toRadians());
+void Area::setBreadthPhase(const Intrinsic& intrinsic) {
+    breadth.setIntrinsic(intrinsic);
 }
 
 void Area::setBreadth(const float value) {
@@ -394,13 +410,13 @@ std::string Area::printRadians() const {
 }
 
 Signal Area::getCosComponent(const float phase) const {
-    Signal area = this->getScalarTotal();
+    Signal area = this->getRealScalar();
     return Signal(area.getOrientation(), area.getCosComponent(phase),
 		area.getScaling(), area.getUnit());
 }
 
 Signal Area::getSinComponent(const float phase) const {
-    Signal area = this->getScalarTotal();
+    Signal area = this->getRealScalar();
     return Signal(area.getOrientation(), area.getSinComponent(phase),
 		area.getScaling(), area.getUnit());
 }

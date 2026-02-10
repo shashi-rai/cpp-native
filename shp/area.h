@@ -21,13 +21,13 @@
 #ifndef SHP_AREA_H
 #define SHP_AREA_H
 
-#include "signal.h"
+#include "distance.h"
 
 namespace shp {
 
 class Area : private Quantity {
-    Signal length;
-    Signal breadth;
+    Distance length;
+    Distance breadth;
 public:
     // Constructors
     Area();
@@ -39,16 +39,16 @@ public:
     Area(const float magnitude, const short int scaling);
     Area(const float magnitude, const short int scaling, const std::string unit);
     Area(const float magnitude, const short int scaling, const Unit& unit);
-    Area(const Signal& length);
+    Area(const Distance& length);
     Area(const float magnitude, const short int scaling, const std::string unit,
-        const Signal& length);
+        const Distance& length);
     Area(const float magnitude, const short int scaling, const Unit& unit,
-        const Signal& length);
-    Area(const Signal& length, const Signal& breadth);
+        const Distance& length);
+    Area(const Distance& length, const Distance& breadth);
     Area(const float magnitude, const short int scaling, const std::string unit,
-        const Signal& length, const Signal& breadth);
+        const Distance& length, const Distance& breadth);
     Area(const float magnitude, const short int scaling, const Unit& unit,
-        const Signal& length, const Signal& breadth);
+        const Distance& length, const Distance& breadth);
 
     // Destructors
     ~Area();
@@ -73,28 +73,31 @@ public:
     Area operator%(const Signal& peer) const;
 
     // Getters
-    Signal getLength() const { return length; }
-    Signal getBreadth() const { return breadth; }
+    Distance getLength() const { return length; }
+    Distance getBreadth() const { return breadth; }
 
     // Setters
-    void setLength(const Signal& length) { this->length = length; }
-    void setBreadth(const Signal& breadth) { this->breadth = breadth; }
+    void setLength(const Distance& length) { this->length = length; }
+    void setBreadth(const Distance& breadth) { this->breadth = breadth; }
 
     // Additional methods
-    Signal getScalarTotal() const;
-    Signal getVectorTotal() const;
+    void setMagnitude(const Signal& signal);
+    Signal getRealScalar() const;
+    Signal getRealVector() const;
+    Signal getImaginaryScalar() const;
+    Signal getImaginaryVector() const;
     Signal getLengthRotation(const short int degree) const;
-    Direction getLengthPhase() const;
+    Intrinsic getLengthPhase() const;
     void setLengthPhase(const float direction);
-    void setLengthPhase(const Direction& direction);
+    void setLengthPhase(const Intrinsic& intrinsic);
     void setLength(const float value);
     void setLength(const float value, const short int scale);
     void setLength(const float value, const short int scale, const std::string unit);
     void setLength(const float value, const short int scale, const Unit& unit);
     Signal getBreadthRotation(const short int degree) const;
-    Direction getBreadthPhase() const;
+    Intrinsic getBreadthPhase() const;
     void setBreadthPhase(const float direction);
-    void setBreadthPhase(const Direction& direction);
+    void setBreadthPhase(const Intrinsic& intrinsic);
     void setBreadth(const float value);
     void setBreadth(const float value, const short int scale);
     void setBreadth(const float value, const short int scale, const std::string unit);

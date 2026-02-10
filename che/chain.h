@@ -53,6 +53,9 @@ public:
     void setAtoms(const AtomArray& value) { this->atoms = value; }
 
     // Additional methods
+    shp::Direction getOmegaAngle(const Atom& x, const Atom& y) const;
+    shp::Direction getPhiAngle(const Atom& x, const Atom& y) const;
+    shp::Direction getPsiAngle(const Atom& x, const Atom& y) const;
     int getAtomCount() const;
     Atom get(const int index) const;
     void set(const int index, const Atom& object);

@@ -23,15 +23,12 @@
 
 #include "density.h"
 #include "force.h"
-#include "../shp/area.h"
 
 namespace qft {
 
-class Pressure {
-    std::string name;
-    shp::Unit unit;
+class Pressure : protected Density {
     qft::Force force;
-    shp::Area area;
+    shp::Unit unit;
 public:
     // Constructors
     Pressure();
@@ -56,23 +53,28 @@ public:
     Pressure operator%(const Pressure& peer) const;
 
     // Getters
-    std::string getName() const { return name; }
-    shp::Unit getUnit() const { return unit; }
     qft::Force getForce() const { return force; }
-    shp::Area getArea() const { return area; }
+    shp::Unit getUnit() const { return unit; }
 
     // Setters
-    void setName(const std::string& name) { this->name = name; }
-    void setUnit(const shp::Unit& value) { this->unit = value; }
     void setForce(const qft::Force& magnitude) { this->force = magnitude; }
-    void setArea(const shp::Area& amount) { this->area = amount; }
+    void setUnit(const shp::Unit& object) { this->unit = object; }
 
     // Additional methods
+    std::string getName() const;
+    void setName(const std::string name);
+    shp::Area getArea() const;
+    void setArea(const shp::Area& planar);
+    shp::Distance getHeight() const;
+    void setHeight(const shp::Distance& height);
+    shp::Volume getVolume() const;
+    void setVolume(const shp::Volume& volume);
     shp::Signal getTotal() const;
     Density getDensity(const shp::Volume& volume) const;
-    virtual Pressure copy();
+    Pressure copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printRadians() const;
     shp::Signal getCosComponent(const float phase) const;
     shp::Signal getSinComponent(const float phase) const;
 public:

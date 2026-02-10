@@ -79,8 +79,11 @@ public:
     void fromRadians(const float radians);
     bool checkNonZero() const;
     float getSine() const;
+    float getCosecant() const;
     float getCosine() const;
+    float getSecant() const;
     float getTangent() const;
+    float getCotangent() const;
     std::complex<float> getPhase() const;
     std::complex<float> getCyclic(const float coefficient) const;
     Direction getInverse() const;
@@ -125,6 +128,8 @@ public:
     static const bool checkTranslation(const Direction& x, const Direction& y);
     static const bool checkRotation(const Direction& x, const Direction& y);
     static const Direction getSectorAngle(const float divisor);
+private:
+    static const float getInverseGradient(const float value);
 public:
     static const float get90minus(const float radians);
     static const float get90plus(const float radians);
@@ -141,7 +146,11 @@ public:
     static const bool check45degree(const float radians);
     static const bool check60degree(const float radians);
     static const bool check90degree(const float radians);
+    static const bool check120degree(const float radians);
+    static const bool check135degree(const float radians);
+    static const bool check150degree(const float radians);
     static const bool check180degree(const float radians);
+    static const bool check240degree(const float radians);
     static const bool check270degree(const float radians);
     static const bool check360degree(const float radians);
     static const bool check720degree(const float radians);
@@ -163,7 +172,11 @@ public:
     static const float DEGREE_045;
     static const float DEGREE_060;
     static const float DEGREE_090;
+    static const float DEGREE_120;
+    static const float DEGREE_135;
+    static const float DEGREE_150;
     static const float DEGREE_180;
+    static const float DEGREE_240;
     static const float DEGREE_270;
     static const float DEGREE_360;
     static const float DEGREE_720;

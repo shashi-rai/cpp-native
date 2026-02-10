@@ -60,6 +60,21 @@ Chain Chain::operator-(const Chain& peer) const {
     return Chain("-", result);
 }
 
+shp::Direction Chain::getOmegaAngle(const Atom& x, const Atom& y) const {
+    shp::Direction result;  // ω - Cα − C' − N − Cα
+    return result;
+}
+
+shp::Direction Chain::getPhiAngle(const Atom& x, const Atom& y) const {
+    shp::Direction result;  // φ - C' − N − Cα − C'
+    return result;
+}
+
+shp::Direction Chain::getPsiAngle(const Atom& x, const Atom& y) const {
+    shp::Direction result;  // ψ - N − Cα − C' − N
+    return result;
+}
+
 int Chain::getAtomCount() const {
     return atoms.size();
 }

@@ -885,6 +885,10 @@ Direction Medium::getDiffusionCurrent() const {
     return Distance::getIntrinsic().getCurrent();
 }
 
+Intrinsic Medium::getDiffusionFactor() const {
+    return Distance::getIntrinsic();
+}
+
 void Medium::setDiffusionFactor(const float degree) {
     Distance::setChangeIntrinsic(degree);
 }
@@ -893,8 +897,68 @@ void Medium::setDiffusionFactor(const Intrinsic& phase) {
     Distance::setIntrinsic(phase);
 }
 
+float Medium::getDiffusionCyclingRate() const {
+    return Distance::getIntrinsic().getCyclingRate();
+}
+
+float Medium::getDiffusionTimePerCycle() const {
+    return Distance::getIntrinsic().getTimePerCycle();
+}
+
+Direction Medium::getDiffusionShift() const {
+    return Distance::getIntrinsic().getShifting();
+}
+
+void Medium::setDiffusionShift(const short int degree) {
+    Distance::setChangeIntrinsic(degree);
+}
+
+float Medium::getDiffusionFraction(const Intrinsic& peer) const {
+    return Direction::getFraction(Distance::getIntrinsic().toRadians(), peer.toRadians());
+}
+
+Direction Medium::getMobilityCurrent() const {
+    return Distance::getVertical().getCurrent();
+}
+
+Azimuth Medium::getMobilityFactor() const {
+    return Distance::getHorizontal();
+}
+
+void Medium::setMobilityFactor(const Azimuth& current) {
+    Distance::setHorizontal(current);
+}
+
+Direction Medium::getMobilityShift() const {
+    return Distance::getHorizontal().getShifting();
+}
+
+void Medium::setMobilityShift(const float degree) {
+    Distance::setChangeHorizontalCurvature(degree);
+}
+
+void Medium::setMobilityShift(const Azimuth& threshold) {
+    Distance::setHorizontal(threshold);
+}
+
+float Medium::getMobilityCyclingRate() const {
+    return Distance::getHorizontal().getCyclingRate();
+}
+
+float Medium::getMobilityTimePerCycle() const {
+    return Distance::getHorizontal().getTimePerCycle();
+}
+
+float Medium::getMobilityFraction(const Azimuth& peer) const {
+    return Direction::getFraction(Distance::getHorizontal().toRadians(), peer.toRadians());
+}
+
 Direction Medium::getThresholdCurrent() const {
     return Distance::getVertical().getCurrent();
+}
+
+Polar Medium::getThresholdFactor() const {
+    return Distance::getVertical();
 }
 
 Direction Medium::getThresholdShift() const {
@@ -919,26 +983,6 @@ float Medium::getThresholdTimePerCycle() const {
 
 float Medium::getThresholdFraction(const Polar& peer) const {
     return Direction::getFraction(Distance::getVertical().toRadians(), peer.toRadians());
-}
-
-float Medium::getDiffusionCyclingRate() const {
-    return Distance::getIntrinsic().getCyclingRate();
-}
-
-float Medium::getDiffusionTimePerCycle() const {
-    return Distance::getIntrinsic().getTimePerCycle();
-}
-
-Direction Medium::getDiffusionShift() const {
-    return Distance::getIntrinsic().getShifting();
-}
-
-void Medium::setDiffusionShift(const short int degree) {
-    Distance::setChangeIntrinsic(degree);
-}
-
-float Medium::getDiffusionFraction(const Intrinsic& peer) const {
-    return Direction::getFraction(Distance::getIntrinsic().toRadians(), peer.toRadians());
 }
 
 shp::Signal Medium::getRelative(const Distance& position) const {
@@ -1027,8 +1071,11 @@ shp::Signal Medium::getVectorFieldTotal() const {
     return result;
 }
 
-shp::Distance Medium::copy() {
-    return Distance::copy();
+shp::Medium Medium::copy() {
+    Medium self = *this;
+    return Medium(self.getMagnitude(), self.getScaling(), self.getUnit(),
+        self.getDiffusionFactor(), self.getMobilityFactor(), self.getThresholdFactor(),
+        this->transform);
 }
 
 void Medium::clear() {

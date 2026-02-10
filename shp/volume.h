@@ -22,12 +22,13 @@
 #define SHP_VOLUME_H
 
 #include "area.h"
+#include "distance.h"
 
 namespace shp {
 
 class Volume : private Quantity {
     Area surface;
-    Signal depth;
+    Distance depth;
 public:
     // Constructors
     Volume();
@@ -48,30 +49,30 @@ public:
     Volume(const float magnitude, const short int scaling, const Area& surface);
     Volume(const float magnitude, const short int scaling, const std::string unit, const Area& surface);
     Volume(const float magnitude, const short int scaling, const Unit& unit, const Area& surface);
-    Volume(const Signal& depth);
-    Volume(const std::string unit, const Signal& depth);
-    Volume(const Unit& unit, const Signal& depth);
-    Volume(const float magnitude, const Signal& depth);
-    Volume(const float magnitude, const std::string unit, const Signal& depth);
-    Volume(const float magnitude, const Unit& unit, const Signal& depth);
-    Volume(const float magnitude, const short int scaling, const Signal& depth);
-    Volume(const float magnitude, const short int scaling, const std::string unit, const Signal& depth);
-    Volume(const float magnitude, const short int scaling, const Unit& unit, const Signal& depth);
-    Volume(const Area& surface, const Signal& depth);
+    Volume(const Distance& depth);
+    Volume(const std::string unit, const Distance& depth);
+    Volume(const Unit& unit, const Distance& depth);
+    Volume(const float magnitude, const Distance& depth);
+    Volume(const float magnitude, const std::string unit, const Distance& depth);
+    Volume(const float magnitude, const Unit& unit, const Distance& depth);
+    Volume(const float magnitude, const short int scaling, const Distance& depth);
+    Volume(const float magnitude, const short int scaling, const std::string unit, const Distance& depth);
+    Volume(const float magnitude, const short int scaling, const Unit& unit, const Distance& depth);
+    Volume(const Area& surface, const Distance& depth);
     Volume(const float magnitude, const short int scaling, const std::string unit,
-        const Area& surface, const Signal& depth);
+        const Area& surface, const Distance& depth);
     Volume(const float magnitude, const short int scaling, const Unit& unit,
-        const Area& surface, const Signal& depth);
-    Volume(const Signal& length, const Signal& breadth);
+        const Area& surface, const Distance& depth);
+    Volume(const Distance& length, const Distance& breadth);
     Volume(const float magnitude, const short int scaling, const std::string unit,
-        const Signal& length, const Signal& breadth);
+        const Distance& length, const Distance& breadth);
     Volume(const float magnitude, const short int scaling, const Unit& unit,
-        const Signal& length, const Signal& breadth);
-    Volume(const Signal& length, const Signal& breadth, const Signal& height);
+        const Distance& length, const Distance& breadth);
+    Volume(const Distance& length, const Distance& breadth, const Distance& height);
     Volume(const float magnitude, const short int scaling, const std::string unit,
-        const Signal& length, const Signal& breadth, const Signal& height);
+        const Distance& length, const Distance& breadth, const Distance& height);
     Volume(const float magnitude, const short int scaling, const Unit& unit,
-        const Signal& length, const Signal& breadth, const Signal& height);
+        const Distance& length, const Distance& breadth, const Distance& height);
 
     // Destructors
     ~Volume();
@@ -89,54 +90,64 @@ public:
     Volume operator%(const Volume& peer) const;
 
     // Surface operator
-    Volume operator+(const Area& peer) const;
-    Volume operator-(const Area& peer) const;
-    Volume operator*(const Area& peer) const;
-    Volume operator/(const Area& peer) const;
-    Volume operator%(const Area& peer) const;
+    Volume operator+(const Area& planar) const;
+    Volume operator-(const Area& planar) const;
+    Volume operator*(const Area& planar) const;
+    Volume operator/(const Area& planar) const;
+    Volume operator%(const Area& planar) const;
 
     // Depth operator
-    Volume operator+(const Signal& peer) const;
-    Volume operator-(const Signal& peer) const;
-    Volume operator*(const Signal& peer) const;
-    Volume operator/(const Signal& peer) const;
-    Volume operator%(const Signal& peer) const;
+    Volume operator+(const Distance& height) const;
+    Volume operator-(const Distance& height) const;
+    Volume operator*(const Distance& height) const;
+    Volume operator/(const Distance& height) const;
+    Volume operator%(const Distance& height) const;
 
     // Getters
     Area getSurface() const { return surface; }
-    Signal getDepth() const { return depth; }
+    Distance getDepth() const { return depth; }
 
     // Setters
     void setSurface(const Area& area) { this->surface = area; }
-    void setDepth(const Quantity& depth) { this->depth = depth; }
+    void setDepth(const Distance& height) { this->depth = height; }
 
     // Additional methods
-    Signal getScalarTotal() const;
-    Signal getScalarSurfaceTotal() const;
-    Signal getVectorTotal() const;
-    Signal getVectorSurfaceTotal() const;
+    void setMagnitude(const Signal& signal);
+    Signal getRealScalar() const;
+    Signal getRealVector() const;
+    Signal getImaginaryScalar() const;
+    Signal getImaginaryVector() const;
+    Signal getSurfaceRealScalar() const;
+    Signal getSurfaceRealVector() const;
+    Signal getSurfaceImaginaryScalar() const;
+    Signal getSurfaceImaginaryVector() const;
     Signal getLengthRotation(const short int degree) const;
-    Direction getLengthPhase() const;
+    Intrinsic getLengthPhase() const;
     void setLengthPhase(const float direction);
-    void setLengthPhase(const Direction& direction);
+    void setLengthPhase(const Intrinsic& intrinsic);
     void setLength(const float value);
     void setLength(const float value, const short int scale);
     void setLength(const float value, const short int scale, const std::string unit);
     void setLength(const float value, const short int scale, const Unit& unit);
     Signal getBreadthRotation(const short int degree) const;
-    Direction getBreadthPhase() const;
+    Intrinsic getBreadthPhase() const;
     void setBreadthPhase(const float direction);
-    void setBreadthPhase(const Direction& direction);
+    void setBreadthPhase(const Intrinsic& intrinsic);
     void setBreadth(const float value);
     void setBreadth(const float value, const short int scale);
     void setBreadth(const float value, const short int scale, const std::string unit);
     void setBreadth(const float value, const short int scale, const Unit& unit);
-    Signal getHeight() const;
-    void setHeight(const Signal& height);
+    void setSurface(const Distance& length, const Distance& breadth);
+    void setSurface(const float length, const float breadth);
+    void setSurface(const float length, const float breadth, const short int scale);
+    void setSurface(const float length, const float breadth, const short int scale, const std::string unit);
+    void setSurface(const float length, const float breadth, const short int scale, const Unit& unit);
+    Distance getHeight() const;
+    void setHeight(const Distance& height);
     Signal getHeightRotation(const short int degree) const;
-    Direction getHeightPhase() const;
+    Intrinsic getHeightPhase() const;
     void setHeightPhase(const float direction);
-    void setHeightPhase(const Direction& direction);
+    void setHeightPhase(const Intrinsic& intrinsic);
     void setHeight(const float value);
     void setHeight(const float value, const short int scale);
     void setHeight(const float value, const short int scale, const std::string unit);

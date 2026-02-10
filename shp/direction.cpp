@@ -37,7 +37,11 @@ const float Direction::DEGREE_030 = 0.523598775598298873077107230546583814032861
 const float Direction::DEGREE_045 = 0.7853981633974483096156608458198757210492923498437764552437361480769541015715522496570087063355292669955370216283205766617735000000f;
 const float Direction::DEGREE_060 = 1.0471975511965977461542144610931676280657231331250352736583148641026054687620696662093449417807056893273826955044274355490000000000f;
 const float Direction::DEGREE_090 = 1.5707963267948966192313216916397514420985846996875529104874722961539082031431044993140174126710585339910740432566411533240000000000f;
+const float Direction::DEGREE_120 = 2.0943951023931954923084289221863352561314462662500705473166297282052109375241393324186898835614113786547653910088548710980625630730f;
+const float Direction::DEGREE_135 = 2.3561944901923449288469825374596271631478770495313316905919689886286597553313466081290933545796555139046647228834475476140502128795f;
+const float Direction::DEGREE_150 = 2.6179938779914943653855361527329190701643078328125881841457871602565136719051741655233623544517642233184567387610685888725782038412f;
 const float Direction::DEGREE_180 = 3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095f;
+const float Direction::DEGREE_240 = 4.1887902047863909846168578443726705122628925325001410946332594564104218750482786648373797671228227573095307820177097421961251261460f;
 const float Direction::DEGREE_270 = 4.7123889803846898576939650749192543262957540990626587314624168884617246094293134979420522380131756019732221297699234599700000000000f;
 const float Direction::DEGREE_360 = 6.2831853071795864769252867665590057683943387987502116419498891846156328125724179972560696506842341359642961730265646132942000000000f;
 const float Direction::DEGREE_720 = 12.566370614359172953850573533118011536788677597500423283899778369231265625144835994512139301368468271928592346053129226588375378440f;
@@ -231,14 +235,29 @@ float Direction::getSine() const {
     return std::sin(self.toRadians());
 }
 
+float Direction::getCosecant() const {
+    Direction self = *this;
+    return getInverseGradient(std::sin(self.toRadians()));
+}
+
 float Direction::getCosine() const {
     Direction self = *this;
     return std::cos(self.toRadians());
 }
 
+float Direction::getSecant() const {
+    Direction self = *this;
+    return getInverseGradient(std::cos(self.toRadians()));
+}
+
 float Direction::getTangent() const {
     Direction self = *this;
     return std::tan(self.toRadians());
+}
+
+float Direction::getCotangent() const {
+    Direction self = *this;
+    return getInverseGradient(std::tan(self.toRadians()));
 }
 
 std::complex<float> Direction::getPhase() const {
@@ -561,6 +580,10 @@ short int Direction::getIndexSeconds(const short int value) const {
         return (Direction::SECONDS_MAX + result);
 }
 
+const float Direction::getInverseGradient(const float value) {
+    return (1.0f / value);
+}
+
 const float Direction::get90minus(const float radians) {
     return (Direction::DEGREE_090 - radians);
 }
@@ -633,6 +656,30 @@ const bool Direction::check90degree(const float radians) {
         return (std::abs(getFullPiAngle(-radians) - Direction::DEGREE_090) < epsilon);
 }
 
+const bool Direction::check120degree(const float radians) {
+    const float epsilon = std::numeric_limits<float>::epsilon() * Direction::DEFAULT_PRECISION;
+    if (Direction::checkPositive(radians))
+        return (std::abs(getTwoPiAngle(radians) - Direction::DEGREE_120) < epsilon);
+    else
+        return (std::abs(getTwoPiAngle(-radians) - Direction::DEGREE_120) < epsilon);
+}
+
+const bool Direction::check135degree(const float radians) {
+    const float epsilon = std::numeric_limits<float>::epsilon() * Direction::DEFAULT_PRECISION;
+    if (Direction::checkPositive(radians))
+        return (std::abs(getTwoPiAngle(radians) - Direction::DEGREE_135) < epsilon);
+    else
+        return (std::abs(getTwoPiAngle(-radians) - Direction::DEGREE_135) < epsilon);
+}
+
+const bool Direction::check150degree(const float radians) {
+    const float epsilon = std::numeric_limits<float>::epsilon() * Direction::DEFAULT_PRECISION;
+    if (Direction::checkPositive(radians))
+        return (std::abs(getTwoPiAngle(radians) - Direction::DEGREE_150) < epsilon);
+    else
+        return (std::abs(getTwoPiAngle(-radians) - Direction::DEGREE_150) < epsilon);
+}
+
 const bool Direction::check180degree(const float radians) {
     const float epsilon = std::numeric_limits<float>::epsilon() * Direction::DEFAULT_PRECISION;
     if (Direction::checkPositive(radians))
@@ -641,12 +688,20 @@ const bool Direction::check180degree(const float radians) {
         return (std::abs(getTwoPiAngle(-radians) - Direction::DEGREE_180) < epsilon);
 }
 
+const bool Direction::check240degree(const float radians) {
+    const float epsilon = std::numeric_limits<float>::epsilon() * Direction::DEFAULT_PRECISION;
+    if (Direction::checkPositive(radians))
+        return (std::abs(getFourPiAngle(radians) - Direction::DEGREE_240) < epsilon);
+    else
+        return (std::abs(getFourPiAngle(-radians) - Direction::DEGREE_240) < epsilon);
+}
+
 const bool Direction::check270degree(const float radians) {
     const float epsilon = std::numeric_limits<float>::epsilon() * Direction::DEFAULT_PRECISION;
     if (Direction::checkPositive(radians))
-        return (std::abs(getTwoPiAngle(radians) - Direction::DEGREE_270) < epsilon);
+        return (std::abs(getFourPiAngle(radians) - Direction::DEGREE_270) < epsilon);
     else
-        return (std::abs(getTwoPiAngle(-radians) - Direction::DEGREE_270) < epsilon);
+        return (std::abs(getFourPiAngle(-radians) - Direction::DEGREE_270) < epsilon);
 }
 
 const bool Direction::check360degree(const float radians) {

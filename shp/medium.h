@@ -22,6 +22,7 @@
 #define SHP_MEDIUM_H
 
 #include "distance.h"
+#include "intrinsic.h"
 
 namespace shp {
 
@@ -232,20 +233,32 @@ public:
     void setParameter(const float value, const short int scaling, const std::string unit);
     void setParameter(const float value, const short int scaling, const Unit& unit);
     Direction getDiffusionCurrent() const;
+    Intrinsic getDiffusionFactor() const;
     void setDiffusionFactor(const float degree);
     void setDiffusionFactor(const Intrinsic& phase);
+    float getDiffusionCyclingRate() const;
+    float getDiffusionTimePerCycle() const;
+    Direction getDiffusionShift() const;
+    void setDiffusionShift(const short int degree);
+    float getDiffusionFraction(const Intrinsic& peer) const;
+    Direction getMobilityCurrent() const;
+    Azimuth getMobilityFactor() const;
+    void setMobilityFactor(const Azimuth& current);
+    Direction getMobilityShift() const;
+    void setMobilityShift(const float degree);
+    void setMobilityShift(const Azimuth& current);
+    float getMobilityCyclingRate() const;
+    float getMobilityTimePerCycle() const;
+    float getMobilityFraction(const Azimuth& peer) const;
     Direction getThresholdCurrent() const;
+    Polar getThresholdFactor() const;
+    void setThresholdFactor(const Polar& threshold);
     Direction getThresholdShift() const;
     void setThresholdShift(const float degree);
     void setThresholdShift(const Polar& threshold);
     float getThresholdCyclingRate() const;
     float getThresholdTimePerCycle() const;
     float getThresholdFraction(const Polar& peer) const;
-    float getDiffusionCyclingRate() const;
-    float getDiffusionTimePerCycle() const;
-    Direction getDiffusionShift() const;
-    void setDiffusionShift(const short int degree);
-    float getDiffusionFraction(const Intrinsic& peer) const;
     shp::Signal getRelative(const Distance& position) const;
     shp::Signal getLinearX(const Distance& position) const;
     shp::Signal getLinearXConvergence(const Distance& position) const;
@@ -262,7 +275,7 @@ public:
     shp::Signal getScalarFieldTotal() const;
     shp::Signal getVectorFieldDrift() const;
     shp::Signal getVectorFieldTotal() const;
-    virtual shp::Distance copy();
+    shp::Medium copy();
     virtual void clear();
     virtual std::string print() const;
     virtual std::string printRadians() const;

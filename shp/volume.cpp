@@ -133,101 +133,101 @@ Volume::Volume(const float magnitude, const short int scaling, const Unit& unit,
 
 }
 
-Volume::Volume(const Signal& depth)
+Volume::Volume(const Distance& depth)
         : Quantity(UNIT), surface(), depth(depth) {
 
 }
 
-Volume::Volume(const std::string unit, const Signal& depth)
+Volume::Volume(const std::string unit, const Distance& depth)
     : Quantity(unit), surface(), depth(depth) {
 
 }
 
-Volume::Volume(const Unit& unit, const Signal& depth)
+Volume::Volume(const Unit& unit, const Distance& depth)
     : Quantity(unit), surface(), depth(depth) {
 
 }
 
-Volume::Volume(const float magnitude, const Signal& depth)
+Volume::Volume(const float magnitude, const Distance& depth)
         : Quantity(magnitude, UNIT), surface(), depth(depth) {
 
 }
 
-Volume::Volume(const float magnitude, const std::string unit, const Signal& depth)
+Volume::Volume(const float magnitude, const std::string unit, const Distance& depth)
         : Quantity(magnitude, UNIT), surface(), depth(depth) {
 
 }
 
-Volume::Volume(const float magnitude, const Unit& unit, const Signal& depth)
+Volume::Volume(const float magnitude, const Unit& unit, const Distance& depth)
         : Quantity(magnitude, UNIT), surface(), depth(depth) {
 
 }
 
-Volume::Volume(const float magnitude, const short int scaling, const Signal& depth)
+Volume::Volume(const float magnitude, const short int scaling, const Distance& depth)
         : Quantity(magnitude, scaling, UNIT), surface(), depth(depth) {
 
 }
 
-Volume::Volume(const float magnitude, const short int scaling, const std::string unit, const Signal& depth)
+Volume::Volume(const float magnitude, const short int scaling, const std::string unit, const Distance& depth)
         : Quantity(magnitude, scaling, UNIT), surface(), depth(depth) {
 
 }
 
-Volume::Volume(const float magnitude, const short int scaling, const Unit& unit, const Signal& depth)
+Volume::Volume(const float magnitude, const short int scaling, const Unit& unit, const Distance& depth)
         : Quantity(magnitude, scaling, UNIT), surface(), depth(depth) {
 
 }
 
-Volume::Volume(const Area& surface, const Signal& depth)
+Volume::Volume(const Area& surface, const Distance& depth)
         : Quantity(UNIT), surface(surface), depth(depth) {
 
 }
 
 Volume::Volume(const float magnitude, const short int scaling, const std::string unit,
-        const Area& surface, const Signal& depth)
+        const Area& surface, const Distance& depth)
         : Quantity(magnitude, scaling, unit), surface(surface), depth(depth) {
 
 }
 
 Volume::Volume(const float magnitude, const short int scaling, const Unit& unit,
-        const Area& surface, const Signal& depth)
+        const Area& surface, const Distance& depth)
         : Quantity(magnitude, scaling, unit), surface(surface), depth(depth) {
 
 }
 
-Volume::Volume(const Signal& length, const Signal& breadth)
+Volume::Volume(const Distance& length, const Distance& breadth)
         : Quantity(UNIT), surface(length, breadth),
 		depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
 Volume::Volume(const float magnitude, const short int scaling, const std::string unit,
-        const Signal& length, const Signal& breadth)
+        const Distance& length, const Distance& breadth)
         : Quantity(magnitude, scaling, unit), surface(length, breadth),
 		depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
 Volume::Volume(const float magnitude, const short int scaling, const Unit& unit,
-        const Signal& length, const Signal& breadth)
+        const Distance& length, const Distance& breadth)
         : Quantity(magnitude, scaling, unit), surface(length, breadth),
 		depth(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)) {
 
 }
 
-Volume::Volume(const Signal& length, const Signal& breadth, const Signal& height)
+Volume::Volume(const Distance& length, const Distance& breadth, const Distance& height)
         : Quantity(UNIT), surface(length, breadth), depth(height) {
 
 }
 
 Volume::Volume(const float magnitude, const short int scaling, const std::string unit,
-        const Signal& length, const Signal& breadth, const Signal& height)
+        const Distance& length, const Distance& breadth, const Distance& height)
         : Quantity(magnitude, scaling, unit), surface(length, breadth), depth(height) {
 
 }
 
 Volume::Volume(const float magnitude, const short int scaling, const Unit& unit,
-        const Signal& length, const Signal& breadth, const Signal& height)
+        const Distance& length, const Distance& breadth, const Distance& height)
         : Quantity(magnitude, scaling, unit), surface(length, breadth), depth(height) {
 
 }
@@ -281,136 +281,164 @@ bool Volume::operator>=(const Volume& peer) const {
 
 Volume Volume::operator+(const Volume& peer) const {
     Quantity self = *this, other = peer, realpart = (self + other);
-	Signal signal = (this->getScalarTotal() + peer.getScalarTotal());
+	Signal signal = (this->getImaginaryScalar() + peer.getImaginaryScalar());
     float part = std::cbrt(signal.getMagnitude());
 	signal.setScaling(signal.getScaling() / SCALING_FACTOR);
     return Volume(realpart.getMagnitude(), realpart.getScaling(), realpart.getUnit(),
-            Signal(part, signal.getScaling(), surface.getLengthUnit()),
-			Signal(part, signal.getScaling(), surface.getBreadthUnit()),
-			Signal(part, signal.getScaling(), depth.getUnit()));
+            Distance(part, signal.getScaling(), surface.getLengthUnit()),
+			Distance(part, signal.getScaling(), surface.getBreadthUnit()),
+			Distance(part, signal.getScaling(), depth.getUnit()));
 }
 
 Volume Volume::operator-(const Volume& peer) const {
     Quantity self = *this, other = peer, realpart = (self - other);
-	Signal signal = (this->getScalarTotal() - peer.getScalarTotal());
+	Signal signal = (this->getImaginaryScalar() - peer.getImaginaryScalar());
     float part = std::cbrt(signal.getMagnitude());
 	signal.setScaling(signal.getScaling() / SCALING_FACTOR);
     return Volume(realpart.getMagnitude(), realpart.getScaling(), realpart.getUnit(),
-            Signal(part, signal.getScaling(), surface.getLengthUnit()),
-			Signal(part, signal.getScaling(), surface.getBreadthUnit()),
-			Signal(part, signal.getScaling(), depth.getUnit()));
+            Distance(part, signal.getScaling(), surface.getLengthUnit()),
+			Distance(part, signal.getScaling(), surface.getBreadthUnit()),
+			Distance(part, signal.getScaling(), depth.getUnit()));
 }
 
 Volume Volume::operator*(const Volume& peer) const {
     Quantity self = *this, other = peer, realpart = (self * other);
-	Signal signal = (this->getScalarTotal() * peer.getScalarTotal());
+	Signal signal = (this->getImaginaryScalar() * peer.getImaginaryScalar());
     float part = std::cbrt(signal.getMagnitude());
 	signal.setScaling(signal.getScaling() / SCALING_FACTOR);
     return Volume(realpart.getMagnitude(), realpart.getScaling(), realpart.getUnit(),
-            Signal(part, signal.getScaling(), surface.getLengthUnit()),
-			Signal(part, signal.getScaling(), surface.getBreadthUnit()),
-			Signal(part, signal.getScaling(), depth.getUnit()));
+            Distance(part, signal.getScaling(), surface.getLengthUnit()),
+			Distance(part, signal.getScaling(), surface.getBreadthUnit()),
+			Distance(part, signal.getScaling(), depth.getUnit()));
 }
 
 Volume Volume::operator/(const Volume& peer) const {
     Quantity self = *this, other = peer, realpart = (self / other);
-	Signal signal = (this->getScalarTotal() / peer.getScalarTotal());
+	Signal signal = (this->getImaginaryScalar() / peer.getImaginaryScalar());
     float part = std::cbrt(signal.getMagnitude());
 	signal.setScaling(signal.getScaling() / SCALING_FACTOR);
     return Volume(realpart.getMagnitude(), realpart.getScaling(), realpart.getUnit(),
-            Signal(part, signal.getScaling(), surface.getLengthUnit()),
-			Signal(part, signal.getScaling(), surface.getBreadthUnit()),
-			Signal(part, signal.getScaling(), depth.getUnit()));
+            Distance(part, signal.getScaling(), surface.getLengthUnit()),
+			Distance(part, signal.getScaling(), surface.getBreadthUnit()),
+			Distance(part, signal.getScaling(), depth.getUnit()));
 }
 
 Volume Volume::operator%(const Volume& peer) const {
     Quantity self = *this, other = peer, realpart = (self % other);
-	Signal signal = (this->getScalarTotal() % peer.getScalarTotal());
+	Signal signal = (this->getImaginaryScalar() % peer.getImaginaryScalar());
     float part = std::cbrt(signal.getMagnitude());
 	signal.setScaling(signal.getScaling() / SCALING_FACTOR);
     return Volume(realpart.getMagnitude(), realpart.getScaling(), realpart.getUnit(),
-            Signal(part, signal.getScaling(), surface.getLengthUnit()),
-			Signal(part, signal.getScaling(), surface.getBreadthUnit()),
-			Signal(part, signal.getScaling(), depth.getUnit()));
+            Distance(part, signal.getScaling(), surface.getLengthUnit()),
+			Distance(part, signal.getScaling(), surface.getBreadthUnit()),
+			Distance(part, signal.getScaling(), depth.getUnit()));
 }
 
-Volume Volume::operator+(const Area& peer) const {
+Volume Volume::operator+(const Area& planar) const {
     Volume self = *this;
-    Area area = (self.surface + peer);
-    return Volume(area, self.depth);
+    Area changed = (self.surface + planar);
+    return Volume(changed, self.depth);
 }
 
-Volume Volume::operator-(const Area& peer) const {
+Volume Volume::operator-(const Area& planar) const {
     Volume self = *this;
-    Area area = (self.surface - peer);
-    return Volume(area, self.depth);
+    Area changed = (self.surface - planar);
+    return Volume(changed, self.depth);
 }
 
-Volume Volume::operator*(const Area& peer) const {
+Volume Volume::operator*(const Area& planar) const {
     Volume self = *this;
-    Area area = (self.surface * peer);
-    return Volume(area, self.depth);
+    Area changed = (self.surface * planar);
+    return Volume(changed, self.depth);
 }
 
-Volume Volume::operator/(const Area& peer) const {
+Volume Volume::operator/(const Area& planar) const {
     Volume self = *this;
-    Area area = (self.surface / peer);
-    return Volume(area, self.depth);
+    Area changed = (self.surface / planar);
+    return Volume(changed, self.depth);
 }
 
-Volume Volume::operator%(const Area& peer) const {
+Volume Volume::operator%(const Area& planar) const {
     Volume self = *this;
-    Area area = (self.surface % peer);
-    return Volume(area, self.depth);
+    Area changed = (self.surface % planar);
+    return Volume(changed, self.depth);
 }
 
-Volume Volume::operator+(const Signal& peer) const {
+Volume Volume::operator+(const Distance& height) const {
     Volume self = *this;
-    Signal height = (self.depth + peer);
-    return Volume(self.surface, height);
+    Distance changed = (self.depth + height);
+    return Volume(self.surface, changed);
 }
 
-Volume Volume::operator-(const Signal& peer) const {
+Volume Volume::operator-(const Distance& height) const {
     Volume self = *this;
-    Signal height = (self.depth - peer);
-    return Volume(self.surface, height);
+    Distance changed = (self.depth - height);
+    return Volume(self.surface, changed);
 }
 
-Volume Volume::operator*(const Signal& peer) const {
+Volume Volume::operator*(const Distance& height) const {
     Volume self = *this;
-    Signal height = (self.depth * peer);
-    return Volume(self.surface, height);
+    Distance changed = (self.depth * height);
+    return Volume(self.surface, changed);
 }
 
-Volume Volume::operator/(const Signal& peer) const {
+Volume Volume::operator/(const Distance& height) const {
     Volume self = *this;
-    Signal height = (self.depth / peer);
-    return Volume(self.surface, height);
+    Distance changed = (self.depth / height);
+    return Volume(self.surface, changed);
 }
 
-Volume Volume::operator%(const Signal& peer) const {
+Volume Volume::operator%(const Distance& height) const {
     Volume self = *this;
-    Signal height = (self.depth % peer);
-    return Volume(self.surface, height);
+    Distance changed = (self.depth % height);
+    return Volume(self.surface, changed);
 }
 
-Signal Volume::getScalarTotal() const {
-    Signal volume = (surface.getScalarTotal().getDotProduct(depth));
+void Volume::setMagnitude(const Signal& signal) {
+    float side = std::cbrt(signal.getMagnitude());
+    Distance length = Distance(side, signal.getScaling(), signal.getUnit(), signal.getOrientation());
+    Distance breadth = Distance(side, signal.getScaling(), signal.getUnit(), signal.getOrientation());
+    Distance height = Distance(side, signal.getScaling(), signal.getUnit(), signal.getOrientation());
+    this->surface = Area(length, breadth); this->depth = height;
+}
+
+Signal Volume::getRealScalar() const {
+    Signal volume = ((surface.getRealScalar() * depth.getScalarTotal()));
     return Signal(volume.getOrientation(), volume.getMagnitude(), volume.getScaling(), volume.getUnit());
 }
 
-Signal Volume::getScalarSurfaceTotal() const {
-    Signal volume = surface.getScalarTotal();
+Signal Volume::getRealVector() const {
+    Signal volume = ((surface.getRealVector() * depth.getVectorTotal()));
     return Signal(volume.getOrientation(), volume.getMagnitude(), volume.getScaling(), volume.getUnit());
 }
 
-Signal Volume::getVectorTotal() const {
-    Signal volume = (surface.getVectorTotal().getCrossProduct(depth));
+Signal Volume::getImaginaryScalar() const {
+    Signal volume = (surface.getImaginaryScalar().getDotProduct(depth.getVectorTotal()));
     return Signal(volume.getOrientation(), volume.getMagnitude(), volume.getScaling(), volume.getUnit());
 }
 
-Signal Volume::getVectorSurfaceTotal() const {
-    Signal volume = surface.getVectorTotal();
+Signal Volume::getImaginaryVector() const {
+    Signal volume = (surface.getImaginaryVector().getCrossProduct(depth.getVectorTotal()));
+    return Signal(volume.getOrientation(), volume.getMagnitude(), volume.getScaling(), volume.getUnit());
+}
+
+Signal Volume::getSurfaceRealScalar() const {
+    Signal volume = surface.getRealScalar();
+    return Signal(volume.getOrientation(), volume.getMagnitude(), volume.getScaling(), volume.getUnit());
+}
+
+Signal Volume::getSurfaceRealVector() const {
+    Signal volume = surface.getRealVector();
+    return Signal(volume.getOrientation(), volume.getMagnitude(), volume.getScaling(), volume.getUnit());
+}
+
+Signal Volume::getSurfaceImaginaryScalar() const {
+    Signal volume = surface.getImaginaryScalar();
+    return Signal(volume.getOrientation(), volume.getMagnitude(), volume.getScaling(), volume.getUnit());
+}
+
+Signal Volume::getSurfaceImaginaryVector() const {
+    Signal volume = surface.getImaginaryVector();
     return Signal(volume.getOrientation(), volume.getMagnitude(), volume.getScaling(), volume.getUnit());
 }
 
@@ -418,7 +446,7 @@ Signal Volume::getLengthRotation(const short int degree) const {
     return surface.getLengthRotation(degree);
 }
 
-Direction Volume::getLengthPhase() const {
+Intrinsic Volume::getLengthPhase() const {
     return surface.getLengthPhase();
 }
 
@@ -426,8 +454,8 @@ void Volume::setLengthPhase(const float direction) {
     surface.setLengthPhase(direction);
 }
 
-void Volume::setLengthPhase(const Direction& direction) {
-    surface.setLengthPhase(direction);
+void Volume::setLengthPhase(const Intrinsic& intrinsic) {
+    surface.setLengthPhase(intrinsic);
 }
 
 void Volume::setLength(const float value) {
@@ -450,7 +478,7 @@ Signal Volume::getBreadthRotation(const short int degree) const {
     return surface.getBreadthRotation(degree);
 }
 
-Direction Volume::getBreadthPhase() const {
+Intrinsic Volume::getBreadthPhase() const {
     return surface.getBreadthPhase();
 }
 
@@ -458,8 +486,8 @@ void Volume::setBreadthPhase(const float direction) {
     surface.setBreadthPhase(direction);
 }
 
-void Volume::setBreadthPhase(const Direction& direction) {
-    surface.setBreadthPhase(direction);
+void Volume::setBreadthPhase(const Intrinsic& intrinsic) {
+    surface.setBreadthPhase(intrinsic);
 }
 
 void Volume::setBreadth(const float value) {
@@ -478,30 +506,55 @@ void Volume::setBreadth(const float value, const short int scale, const Unit& un
     surface.setBreadth(value, scale, unit);
 }
 
-Signal Volume::getHeight() const {
+void Volume::setSurface(const Distance& length, const Distance& breadth) {
+    this->surface.setLength(length);
+    this->surface.setBreadth(breadth);
+}
+
+void Volume::setSurface(const float length, const float breadth) {
+    this->surface.setLength(length);
+    this->surface.setBreadth(breadth);
+}
+
+void Volume::setSurface(const float length, const float breadth, const short int scale) {
+    this->surface.setLength(length, scale);
+    this->surface.setBreadth(breadth, scale);
+}
+
+void Volume::setSurface(const float length, const float breadth, const short int scale, const std::string unit) {
+    this->surface.setLength(length, scale, unit);
+    this->surface.setBreadth(breadth, scale, unit);
+}
+
+void Volume::setSurface(const float length, const float breadth, const short int scale, const Unit& unit) {
+    this->surface.setLength(length, scale, unit);
+    this->surface.setBreadth(breadth, scale, unit);
+}
+
+Distance Volume::getHeight() const {
     return depth;
 }
 
-void Volume::setHeight(const Signal& height) {
+void Volume::setHeight(const Distance& height) {
     this->depth = height;
 }
 
 Signal Volume::getHeightRotation(const short int degree) const {
-    Intrinsic direction(depth.getOrientation());
+    Intrinsic direction = depth.getIntrinsic();
     Intrinsic phase = direction.getRotation(degree);
     return Signal(phase, depth.getMagnitude(), depth.getScaling(), depth.getUnit());
 }
 
-Direction Volume::getHeightPhase() const {
-    return Direction(depth.getOrientation());
+Intrinsic Volume::getHeightPhase() const {
+    return depth.getIntrinsic();
 }
 
 void Volume::setHeightPhase(const float direction) {
-    depth.setOrientation(direction);
+    depth.setIntrinsic(direction);
 }
 
-void Volume::setHeightPhase(const Direction& direction) {
-    depth.setOrientation(direction.toRadians());
+void Volume::setHeightPhase(const Intrinsic& intrinsic) {
+    depth.setIntrinsic(intrinsic);
 }
 
 void Volume::setHeight(const float value) {
@@ -596,13 +649,13 @@ std::string Volume::printRadians() const {
 }
 
 Signal Volume::getCosComponent(const float phase) const {
-	Signal volume = this->getScalarTotal();
+	Signal volume = this->getRealScalar();
 	return Signal(volume.getOrientation(), volume.getCosComponent(phase),
         volume.getScaling(), volume.getUnit());
 }
 
 Signal Volume::getSinComponent(const float phase) const {
-	Signal volume = this->getScalarTotal();
+	Signal volume = this->getRealScalar();
 	return Signal(volume.getOrientation(), volume.getSinComponent(phase),
         volume.getScaling(), volume.getUnit());
 }

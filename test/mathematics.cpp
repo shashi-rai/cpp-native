@@ -213,30 +213,50 @@ void Mathematics::distance_concept() {
 }
 
 void Mathematics::area_concept() {
-    shp::Area a1(3.0f, 0), a2(4.0f, 0);
-    a1.setLength(11.0f); a1.setBreadth(11.0f);
-    a2.setLength(12.0f); a2.setBreadth(12.0f);
-    std::cout << a1.print() << " " << a1.getScalarTotal().print() << " " << a1.getVectorTotal().print() << std::endl;
-    std::cout << a2.print() << " " << a2.getScalarTotal().print() << " " << a2.getVectorTotal().print() << std::endl;
-    std::cout << (a1+a2).print() << " " << (a1+a2).getScalarTotal().print() << " " << (a1+a2).getVectorTotal().print() << std::endl;
-    std::cout << (a1-a2).print() << " " << (a1-a2).getScalarTotal().print() << " " << (a1-a2).getVectorTotal().print() << std::endl;
-    std::cout << (a1*a2).print() << " " << (a1*a2).getScalarTotal().print() << " " << (a1*a2).getVectorTotal().print() << std::endl;
-    std::cout << (a1/a2).print() << " " << (a1/a2).getScalarTotal().print() << " " << (a1/a2).getVectorTotal().print() << std::endl;
-    std::cout << (a1%a2).print() << " " << (a1%a2).getScalarTotal().print() << " " << (a1%a2).getVectorTotal().print() << std::endl;
+    shp::Area a1(30.0f, 0), a2(40.0f, 0);
+    a1.setLength(3.0f); a1.setLengthPhase(shp::Direction::DEGREE_000);
+    a1.setBreadth(3.0f); a1.setBreadthPhase(shp::Direction::DEGREE_000);
+    std::cout << "a1: " << a1.print() << std::endl
+        << "\t" << a1.getRealScalar().print() << " " << a1.getRealVector().print() << std::endl;
+    a2.setLength(4.0f); a2.setLengthPhase(shp::Direction::DEGREE_000);
+    a2.setBreadth(4.0f); a2.setBreadthPhase(shp::Direction::DEGREE_000);
+    std::cout << "a2: " << a2.print() << std::endl
+        << "\t" << a2.getRealScalar().print() << " " << a2.getRealVector().print() << std::endl;
+    std::cout << "a1+a2: " << (a1+a2).print() << std::endl
+        << "\t" << (a1+a2).getRealScalar().print() << " " << (a1+a2).getRealVector().print() << std::endl;
+    std::cout << "a1-a2: " << (a1-a2).print() << std::endl
+        << "\t" << (a1-a2).getRealScalar().print() << " " << (a1-a2).getRealVector().print() << std::endl;
+    std::cout << "a1*a2: " << (a1*a2).print() << std::endl
+        << "\t" << (a1*a2).getRealScalar().print() << " " << (a1*a2).getRealVector().print() << std::endl;
+    std::cout << "a1/a2: " << (a1/a2).print() << std::endl
+        << "\t" << (a1/a2).getRealScalar().print() << " " << (a1/a2).getRealVector().print() << std::endl;
+    std::cout << "a1%a2: " << (a1%a2).print() << std::endl
+        << "\t" << (a1%a2).getRealScalar().print() << " " << (a1%a2).getRealVector().print() << std::endl;
     std::cout << std::endl;
 }
 
 void Mathematics::volume_concept() {
-    shp::Volume v1(3.0f, 0), v2(4.0f, 0);
-    v1.setLength(11.0f); v1.setBreadth(11.0f); v1.setHeight(11.0f);
-    v2.setLength(12.0f); v2.setBreadth(12.0f); v2.setHeight(12.0f);
-    std::cout << v1.print() << " " << v1.getScalarTotal().print() << " " << v1.getVectorTotal().print() << std::endl;
-    std::cout << v2.print() << " " << v2.getScalarTotal().print() << " " << v2.getVectorTotal().print() << std::endl;
-    std::cout << (v1+v2).print() << " " << (v1+v2).getScalarTotal().print() << " " << (v1+v2).getVectorTotal().print() << std::endl;
-    std::cout << (v1-v2).print() << " " << (v1-v2).getScalarTotal().print() << " " << (v1-v2).getVectorTotal().print() << std::endl;
-    std::cout << (v1*v2).print() << " " << (v1*v2).getScalarTotal().print() << " " << (v1*v2).getVectorTotal().print() << std::endl;
-    std::cout << (v1/v2).print() << " " << (v1/v2).getScalarTotal().print() << " " << (v1/v2).getVectorTotal().print() << std::endl;
-    std::cout << (v1%v2).print() << " " << (v1%v2).getScalarTotal().print() << " " << (v1%v2).getVectorTotal().print() << std::endl;
+    shp::Volume v1(30.0f, 0), v2(40.0f, 0);
+    v1.setLength(3.0f); v1.setLengthPhase(shp::Direction::DEGREE_000);
+    v1.setBreadth(4.0f); v1.setBreadthPhase(shp::Direction::DEGREE_000);
+    v1.setHeight(5.0f); v1.setHeightPhase(shp::Direction::DEGREE_000);
+    v2.setLength(3.0f); v2.setLengthPhase(shp::Direction::DEGREE_000);
+    v2.setBreadth(4.0f); v2.setBreadthPhase(shp::Direction::DEGREE_000);
+    v2.setHeight(5.0f); v2.setHeightPhase(shp::Direction::DEGREE_000);
+    std::cout << v1.print() << std::endl
+        << " " << v1.getRealScalar().print() << " " << v1.getRealVector().print() << std::endl;
+    std::cout << v2.print() << std::endl
+        << " " << v2.getRealScalar().print() << " " << v2.getRealVector().print() << std::endl;
+    std::cout << "v1+v2: " << (v1+v2).print() << std::endl
+        << "\t" << (v1+v2).getRealScalar().print() << " " << (v1+v2).getRealVector().print() << std::endl;
+    std::cout << "v1-v2: " << (v1-v2).print() << std::endl
+        << "\t" << (v1-v2).getRealScalar().print() << " " << (v1-v2).getRealVector().print() << std::endl;
+    std::cout << "v1*v2: " << (v1*v2).print() << std::endl
+        << "\t" << (v1*v2).getRealScalar().print() << " " << (v1*v2).getRealVector().print() << std::endl;
+    std::cout << "v1/v2: " << (v1/v2).print() << std::endl
+        << "\t" << (v1/v2).getRealScalar().print() << " " << (v1/v2).getRealVector().print() << std::endl;
+    std::cout << "v1%v2: " << (v1%v2).print() << std::endl
+        << "\t" << (v1%v2).getRealScalar().print() << " " << (v1%v2).getRealVector().print() << std::endl;
     std::cout << std::endl;
 }
 

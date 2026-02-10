@@ -286,7 +286,7 @@ public:
     Signal getRadialXSquare(const Intrinsic& phase) const;
     Signal getRadialYSquare(const Azimuth& sweep) const;
     Signal getRadialZSquare(const Polar& rise) const;
-    virtual Distance copy();
+    Distance copy();
     virtual void clear();
     virtual std::string print() const;
     virtual std::string printRadians() const;

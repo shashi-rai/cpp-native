@@ -797,8 +797,8 @@ void Angular::clear() {
 
 std::string Angular::print() const {
     std::stringstream result;
-    result << "{";
-    result << Distance::print() << "↺";
+    result << "Ω";
+    result << Distance::print() << "↺²{";
     result << polar.print() << ",";
     result << azimuth.print() << "}";
 	return result.str();
@@ -806,8 +806,8 @@ std::string Angular::print() const {
 
 std::string Angular::printRadians() const {
     std::stringstream result;
-    result << "{";
-    result << Distance::printRadians() << "↺";
+    result << "Ω";
+    result << Distance::printRadians() << "↺²{";
     result << polar.printRadians() << ",";
     result << azimuth.printRadians() << "}";
 	return result.str();
@@ -815,8 +815,8 @@ std::string Angular::printRadians() const {
 
 std::string Angular::printEuler() const {
     std::stringstream result;
-    result << "{";
-    result << Distance::print() << "↺";
+    result << "Ω";
+    result << Distance::print() << "↺²{";
     result << polar.printEuler() << ",";
     result << azimuth.printEuler() << "}";
 	return result.str();
