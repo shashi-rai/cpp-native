@@ -224,19 +224,19 @@ void Mathematics::area_concept() {
     std::cout << "a2: " << a2.print() << std::endl
         << "\t" << a2.getScalar().print() << " " << a2.getRotation().print()
         << " " << a2.getAligned().print() << " " << a2.getNormal().print() << std::endl;
-    std::cout << "a1+a2: " << (a1+a2).print() << std::endl
+    std::cout << "a1 + a2: " << (a1+a2).print() << std::endl
         << "\t" << (a1+a2).getScalar().print() << " " << (a1+a2).getRotation().print()
         << " " << (a1+a2).getAligned().print() << " " << (a1+a2).getNormal().print() << std::endl;
-    std::cout << "a1-a2: " << (a1-a2).print() << std::endl
+    std::cout << "a1 - a2: " << (a1-a2).print() << std::endl
         << "\t" << (a1-a2).getScalar().print() << " " << (a1-a2).getRotation().print()
         << " " << (a1-a2).getAligned().print() << " " << (a1-a2).getNormal().print() << std::endl;
-    std::cout << "a1*a2: " << (a1*a2).print() << std::endl
+    std::cout << "a1 * a2: " << (a1*a2).print() << std::endl
         << "\t" << (a1*a2).getScalar().print() << " " << (a1*a2).getRotation().print()
         << " " << (a1*a2).getAligned().print() << " " << (a1*a2).getNormal().print() << std::endl;
-    std::cout << "a1/a2: " << (a1/a2).print() << std::endl
+    std::cout << "a1 / a2: " << (a1/a2).print() << std::endl
         << "\t" << (a1/a2).getScalar().print() << " " << (a1/a2).getRotation().print()
         << " " << (a1/a2).getAligned().print() << " " << (a1/a2).getNormal().print() << std::endl;
-    std::cout << "a1%a2: " << (a1%a2).print() << std::endl
+    std::cout << "a1 % a2: " << (a1%a2).print() << std::endl
         << "\t" << (a1%a2).getScalar().print() << " " << (a1%a2).getRotation().print()
         << " " << (a1%a2).getAligned().print() << " " << (a1%a2).getNormal().print() << std::endl;
     std::cout << std::endl;
@@ -247,36 +247,43 @@ void Mathematics::volume_concept() {
     v1.setLength(3.0f); v1.setLengthPhase(shp::Direction::DEGREE_000);
     v1.setBreadth(4.0f); v1.setBreadthPhase(shp::Direction::DEGREE_000);
     v1.setHeight(5.0f); v1.setHeightPhase(shp::Direction::DEGREE_000);
+    std::cout << v1.print() << std::endl
+        << "\t" << v1.getScalar().print()
+        << " " << v1.getSurfaceTension().print() << " " << v1.getSurfaceCurrent().print()
+        << " " << v1.getPhaseShift().print() << " " << v1.getFlux().print()
+        << " " << v1.getMobility().print() << " " << v1.getCurvature().print() << std::endl;
     v2.setLength(3.0f); v2.setLengthPhase(shp::Direction::DEGREE_000);
     v2.setBreadth(4.0f); v2.setBreadthPhase(shp::Direction::DEGREE_000);
     v2.setHeight(5.0f); v2.setHeightPhase(shp::Direction::DEGREE_000);
-    std::cout << v1.print() << std::endl
-        << " " << v1.getScalar().print() << " " << v1.getFlux().print()
-        << " " << v1.getSurfaceTension().print() << " " << v1.getSurfaceCurrent().print()
-        << " " << v1.getMobility().print() << " " << v1.getCurvature().print() << std::endl;
     std::cout << v2.print() << std::endl
-        << " " << v2.getScalar().print() << " " << v2.getFlux().print()
+        << "\t" << v2.getScalar().print()
         << " " << v2.getSurfaceTension().print() << " " << v2.getSurfaceCurrent().print()
+        << " " << v2.getPhaseShift().print() << " " << v2.getFlux().print()
         << " " << v2.getMobility().print() << " " << v2.getCurvature().print() << std::endl;
-    std::cout << "v1+v2: " << (v1+v2).print() << std::endl
-        << "\t" << (v1+v2).getScalar().print() << " " << (v1+v2).getFlux().print()
+    std::cout << "v1 + v2: " << (v1+v2).print() << std::endl
+        << "\t" << (v1+v2).getScalar().print()
         << " " << (v1+v2).getSurfaceTension().print() << " " << (v1+v2).getSurfaceCurrent().print()
+        << " " << (v1+v2).getPhaseShift().print() << " " << (v1+v2).getFlux().print()
         << " " << (v1+v2).getMobility().print() << " " << (v1+v2).getCurvature().print() << std::endl;
-    std::cout << "v1-v2: " << (v1-v2).print() << std::endl
-        << "\t" << (v1-v2).getScalar().print() << " " << (v1-v2).getFlux().print()
+    std::cout << "v1 - v2: " << (v1-v2).print() << std::endl
+        << "\t" << (v1-v2).getScalar().print()
         << " " << (v1-v2).getSurfaceTension().print() << " " << (v1-v2).getSurfaceCurrent().print()
+        << " " << (v1-v2).getPhaseShift().print() << " " << (v1-v2).getFlux().print()
         << " " << (v1-v2).getMobility().print() << " " << (v1-v2).getCurvature().print() << std::endl;
-    std::cout << "v1*v2: " << (v1*v2).print() << std::endl
-        << "\t" << (v1*v2).getScalar().print() << " " << (v1*v2).getFlux().print()
+    std::cout << "v1 * v2: " << (v1*v2).print() << std::endl
+        << "\t" << (v1*v2).getScalar().print()
         << " " << (v1*v2).getSurfaceTension().print() << " " << (v1*v2).getSurfaceCurrent().print()
+        << " " << (v1*v2).getPhaseShift().print() << " " << (v1*v2).getFlux().print()
         << " " << (v1*v2).getMobility().print() << " " << (v1*v2).getCurvature().print() << std::endl;
-    std::cout << "v1/v2: " << (v1/v2).print() << std::endl
-        << "\t" << (v1/v2).getScalar().print() << " " << (v1/v2).getFlux().print()
+    std::cout << "v1 / v2: " << (v1/v2).print() << std::endl
+        << "\t" << (v1/v2).getScalar().print()
         << " " << (v1/v2).getSurfaceTension().print() << " " << (v1/v2).getSurfaceCurrent().print()
+        << " " << (v1/v2).getPhaseShift().print() << " " << (v1/v2).getFlux().print()
         << " " << (v1/v2).getMobility().print() << " " << (v1/v2).getCurvature().print() << std::endl;
-    std::cout << "v1%v2: " << (v1%v2).print() << std::endl
-        << "\t" << (v1%v2).getScalar().print() << " " << (v1%v2).getFlux().print()
+    std::cout << "v1 % v2: " << (v1%v2).print() << std::endl
+        << "\t" << (v1%v2).getScalar().print()
         << " " << (v1%v2).getSurfaceTension().print() << " " << (v1%v2).getSurfaceCurrent().print()
+        << " " << (v1%v2).getPhaseShift().print() << " " << (v1%v2).getFlux().print()
         << " " << (v1%v2).getMobility().print() << " " << (v1%v2).getCurvature().print() << std::endl;
     std::cout << std::endl;
 }

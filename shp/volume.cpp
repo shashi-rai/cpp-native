@@ -410,16 +410,18 @@ Signal Volume::getScalar() const {
 
 // It returns a vector by scaling only rotational current based on depth.magnitude
 Signal Volume::getSurfaceTension() const {
-    Signal current = surface.getRotation();                 // vector quantity
-    Signal tension = (current * depth.getScalarTotal());
-    return Signal(tension.getOrientation(), tension.getMagnitude(), tension.getScaling(), tension.getUnit());
+    Signal spinor = surface.getRotation();                  // rotational vector
+    Signal depression = depth.getScalarTotal();             // field scalar
+    Signal tension = (spinor * depression);                 // moment of force
+    return Signal(depth.getIntrinsic(), tension.getMagnitude(), tension.getScaling(), tension.getUnit());
 }
 
 // It returns a vector by scaling with rotational current based on depth (i.e., magnitude & direction)
 Signal Volume::getSurfaceCurrent() const {
-    Signal current = surface.getRotation();                 // vector quantity
-    Signal content = (current * depth.getVectorTotal());
-    return Signal(content.getOrientation(), content.getMagnitude(), content.getScaling(), content.getUnit());
+    Signal torque = surface.getRotation();                  // rotaional vector
+    Signal intensity = depth.getVectorTotal();              // linear vector
+    Signal torsion = (torque * intensity);                  // twisting moment
+    return Signal(intensity.getOrientation(), torsion.getMagnitude(), torsion.getScaling(), torsion.getUnit());
 }
 
 // It returns a scalar value based on rearrangement of surface area and depth
