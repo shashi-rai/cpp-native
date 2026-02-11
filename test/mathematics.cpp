@@ -217,21 +217,28 @@ void Mathematics::area_concept() {
     a1.setLength(3.0f); a1.setLengthPhase(shp::Direction::DEGREE_000);
     a1.setBreadth(3.0f); a1.setBreadthPhase(shp::Direction::DEGREE_000);
     std::cout << "a1: " << a1.print() << std::endl
-        << "\t" << a1.getRealScalar().print() << " " << a1.getRealVector().print() << std::endl;
+        << "\t" << a1.getScalar().print() << " " << a1.getRotation().print()
+        << " " << a1.getAligned().print() << " " << a1.getNormal().print() << std::endl;
     a2.setLength(4.0f); a2.setLengthPhase(shp::Direction::DEGREE_000);
     a2.setBreadth(4.0f); a2.setBreadthPhase(shp::Direction::DEGREE_000);
     std::cout << "a2: " << a2.print() << std::endl
-        << "\t" << a2.getRealScalar().print() << " " << a2.getRealVector().print() << std::endl;
+        << "\t" << a2.getScalar().print() << " " << a2.getRotation().print()
+        << " " << a2.getAligned().print() << " " << a2.getNormal().print() << std::endl;
     std::cout << "a1+a2: " << (a1+a2).print() << std::endl
-        << "\t" << (a1+a2).getRealScalar().print() << " " << (a1+a2).getRealVector().print() << std::endl;
+        << "\t" << (a1+a2).getScalar().print() << " " << (a1+a2).getRotation().print()
+        << " " << (a1+a2).getAligned().print() << " " << (a1+a2).getNormal().print() << std::endl;
     std::cout << "a1-a2: " << (a1-a2).print() << std::endl
-        << "\t" << (a1-a2).getRealScalar().print() << " " << (a1-a2).getRealVector().print() << std::endl;
+        << "\t" << (a1-a2).getScalar().print() << " " << (a1-a2).getRotation().print()
+        << " " << (a1-a2).getAligned().print() << " " << (a1-a2).getNormal().print() << std::endl;
     std::cout << "a1*a2: " << (a1*a2).print() << std::endl
-        << "\t" << (a1*a2).getRealScalar().print() << " " << (a1*a2).getRealVector().print() << std::endl;
+        << "\t" << (a1*a2).getScalar().print() << " " << (a1*a2).getRotation().print()
+        << " " << (a1*a2).getAligned().print() << " " << (a1*a2).getNormal().print() << std::endl;
     std::cout << "a1/a2: " << (a1/a2).print() << std::endl
-        << "\t" << (a1/a2).getRealScalar().print() << " " << (a1/a2).getRealVector().print() << std::endl;
+        << "\t" << (a1/a2).getScalar().print() << " " << (a1/a2).getRotation().print()
+        << " " << (a1/a2).getAligned().print() << " " << (a1/a2).getNormal().print() << std::endl;
     std::cout << "a1%a2: " << (a1%a2).print() << std::endl
-        << "\t" << (a1%a2).getRealScalar().print() << " " << (a1%a2).getRealVector().print() << std::endl;
+        << "\t" << (a1%a2).getScalar().print() << " " << (a1%a2).getRotation().print()
+        << " " << (a1%a2).getAligned().print() << " " << (a1%a2).getNormal().print() << std::endl;
     std::cout << std::endl;
 }
 
@@ -244,19 +251,33 @@ void Mathematics::volume_concept() {
     v2.setBreadth(4.0f); v2.setBreadthPhase(shp::Direction::DEGREE_000);
     v2.setHeight(5.0f); v2.setHeightPhase(shp::Direction::DEGREE_000);
     std::cout << v1.print() << std::endl
-        << " " << v1.getRealScalar().print() << " " << v1.getRealVector().print() << std::endl;
+        << " " << v1.getScalar().print() << " " << v1.getFlux().print()
+        << " " << v1.getSurfaceTension().print() << " " << v1.getSurfaceCurrent().print()
+        << " " << v1.getMobility().print() << " " << v1.getCurvature().print() << std::endl;
     std::cout << v2.print() << std::endl
-        << " " << v2.getRealScalar().print() << " " << v2.getRealVector().print() << std::endl;
+        << " " << v2.getScalar().print() << " " << v2.getFlux().print()
+        << " " << v2.getSurfaceTension().print() << " " << v2.getSurfaceCurrent().print()
+        << " " << v2.getMobility().print() << " " << v2.getCurvature().print() << std::endl;
     std::cout << "v1+v2: " << (v1+v2).print() << std::endl
-        << "\t" << (v1+v2).getRealScalar().print() << " " << (v1+v2).getRealVector().print() << std::endl;
+        << "\t" << (v1+v2).getScalar().print() << " " << (v1+v2).getFlux().print()
+        << " " << (v1+v2).getSurfaceTension().print() << " " << (v1+v2).getSurfaceCurrent().print()
+        << " " << (v1+v2).getMobility().print() << " " << (v1+v2).getCurvature().print() << std::endl;
     std::cout << "v1-v2: " << (v1-v2).print() << std::endl
-        << "\t" << (v1-v2).getRealScalar().print() << " " << (v1-v2).getRealVector().print() << std::endl;
+        << "\t" << (v1-v2).getScalar().print() << " " << (v1-v2).getFlux().print()
+        << " " << (v1-v2).getSurfaceTension().print() << " " << (v1-v2).getSurfaceCurrent().print()
+        << " " << (v1-v2).getMobility().print() << " " << (v1-v2).getCurvature().print() << std::endl;
     std::cout << "v1*v2: " << (v1*v2).print() << std::endl
-        << "\t" << (v1*v2).getRealScalar().print() << " " << (v1*v2).getRealVector().print() << std::endl;
+        << "\t" << (v1*v2).getScalar().print() << " " << (v1*v2).getFlux().print()
+        << " " << (v1*v2).getSurfaceTension().print() << " " << (v1*v2).getSurfaceCurrent().print()
+        << " " << (v1*v2).getMobility().print() << " " << (v1*v2).getCurvature().print() << std::endl;
     std::cout << "v1/v2: " << (v1/v2).print() << std::endl
-        << "\t" << (v1/v2).getRealScalar().print() << " " << (v1/v2).getRealVector().print() << std::endl;
+        << "\t" << (v1/v2).getScalar().print() << " " << (v1/v2).getFlux().print()
+        << " " << (v1/v2).getSurfaceTension().print() << " " << (v1/v2).getSurfaceCurrent().print()
+        << " " << (v1/v2).getMobility().print() << " " << (v1/v2).getCurvature().print() << std::endl;
     std::cout << "v1%v2: " << (v1%v2).print() << std::endl
-        << "\t" << (v1%v2).getRealScalar().print() << " " << (v1%v2).getRealVector().print() << std::endl;
+        << "\t" << (v1%v2).getScalar().print() << " " << (v1%v2).getFlux().print()
+        << " " << (v1%v2).getSurfaceTension().print() << " " << (v1%v2).getSurfaceCurrent().print()
+        << " " << (v1%v2).getMobility().print() << " " << (v1%v2).getCurvature().print() << std::endl;
     std::cout << std::endl;
 }
 

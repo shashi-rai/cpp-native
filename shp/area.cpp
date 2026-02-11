@@ -173,7 +173,7 @@ bool Area::operator>=(const Area& peer) const {
 
 Area Area::operator+(const Area& peer) const {
     Quantity self = *this, other = peer, realpart = (self + other);
-    Signal signal = (this->getImaginaryScalar() + peer.getImaginaryScalar());
+    Signal signal = (this->getAligned() + peer.getAligned());
     std::complex<float> complexarea(signal.getMagnitude(), Quantity::DEFAULT_VALUE);
     std::complex<float> part = std::sqrt(complexarea);
     signal.setScaling(signal.getScaling() / SCALING_FACTOR);
@@ -184,7 +184,7 @@ Area Area::operator+(const Area& peer) const {
 
 Area Area::operator-(const Area& peer) const {
     Quantity self = *this, other = peer, realpart = (self - other);
-    Signal signal = (this->getImaginaryScalar() - peer.getImaginaryScalar());
+    Signal signal = (this->getAligned() - peer.getAligned());
     std::complex<float> complexarea(signal.getMagnitude(), Quantity::DEFAULT_VALUE);
     std::complex<float> part = std::sqrt(complexarea);
     signal.setScaling(signal.getScaling() / SCALING_FACTOR);
@@ -195,7 +195,7 @@ Area Area::operator-(const Area& peer) const {
 
 Area Area::operator*(const Area& peer) const {
     Quantity self = *this, other = peer, realpart = (self * other);
-    Signal signal = (this->getImaginaryScalar() * peer.getImaginaryScalar());
+    Signal signal = (this->getAligned() * peer.getAligned());
     std::complex<float> complexarea(signal.getMagnitude(), Quantity::DEFAULT_VALUE);
     std::complex<float> part = std::sqrt(complexarea);
     signal.setScaling(signal.getScaling() / SCALING_FACTOR);
@@ -206,7 +206,7 @@ Area Area::operator*(const Area& peer) const {
 
 Area Area::operator/(const Area& peer) const {
     Quantity self = *this, other = peer, realpart = (self / other);
-    Signal signal = (this->getImaginaryScalar() / peer.getImaginaryScalar());
+    Signal signal = (this->getAligned() / peer.getAligned());
     std::complex<float> complexarea(signal.getMagnitude(), Quantity::DEFAULT_VALUE);
     std::complex<float> part = std::sqrt(complexarea);
     signal.setScaling(signal.getScaling() / SCALING_FACTOR);
@@ -217,7 +217,7 @@ Area Area::operator/(const Area& peer) const {
 
 Area Area::operator%(const Area& peer) const {
     Quantity self = *this, other = peer, realpart = (self % other);
-    Signal signal = (fmod(this->getImaginaryScalar().getMagnitude(), peer.getImaginaryScalar().getMagnitude()));
+    Signal signal = (fmod(this->getAligned().getMagnitude(), peer.getAligned().getMagnitude()));
     std::complex<float> complexarea(signal.getMagnitude(), Quantity::DEFAULT_VALUE);
     std::complex<float> part = std::sqrt(complexarea);
     signal.setScaling(signal.getScaling() / SCALING_FACTOR);
@@ -262,24 +262,28 @@ void Area::setMagnitude(const Signal& signal) {
     this->breadth = Distance(side, signal.getScaling(), breadth.getUnit(), signal.getOrientation());
 }
 
-Signal Area::getRealScalar() const {
+// It returns a scalar product (i.e., length.magnitude * breadth.magnitude)
+Signal Area::getScalar() const {
     Signal area = (length.getScalarTotal() * breadth.getScalarTotal());
     return Signal(Direction::DEFAULT_RADIANS, area.getMagnitude(), area.getScaling(), area.getUnit());
 }
 
-Signal Area::getRealVector() const {
-    Signal area = (length.getVectorTotal() * breadth.getVectorTotal());
-    return Signal(area.getOrientation(), area.getMagnitude(), area.getScaling(), area.getUnit());
+// It returns a vector (i.e., resultant.direction = length.direction + breadth.direction)
+Signal Area::getRotation() const {
+    Signal planar = (length.getVectorTotal() * breadth.getVectorTotal());
+    return Signal(planar.getOrientation(), planar.getMagnitude(), planar.getScaling(), planar.getUnit());
 }
 
-Signal Area::getImaginaryScalar() const {
+// It returns a scalar depending on angle between two vectors (parallelism)
+Signal Area::getAligned() const {
     Signal area = (length.getVectorTotal().getDotProduct(breadth.getVectorTotal()));
-    return Signal(area.getOrientation(), area.getMagnitude(), area.getScaling(), area.getUnit());
+    return Signal(Direction::DEFAULT_RADIANS, area.getMagnitude(), area.getScaling(), area.getUnit());
 }
 
-Signal Area::getImaginaryVector() const {
-    Signal area = (length.getVectorTotal().getCrossProduct(breadth.getVectorTotal()));
-    return Signal(area.getOrientation(), area.getMagnitude(), area.getScaling(), area.getUnit());
+// It returns a vector perpendicular to its surface depending on angle between two vectors
+Signal Area::getNormal() const {
+    Signal planar = (length.getVectorTotal().getCrossProduct(breadth.getVectorTotal()));
+    return Signal(planar.getOrientation(), planar.getMagnitude(), planar.getScaling(), planar.getUnit());
 }
 
 Signal Area::getLengthRotation(const short int degree) const {
@@ -410,13 +414,13 @@ std::string Area::printRadians() const {
 }
 
 Signal Area::getCosComponent(const float phase) const {
-    Signal area = this->getRealScalar();
+    Signal area = this->getScalar();
     return Signal(area.getOrientation(), area.getCosComponent(phase),
 		area.getScaling(), area.getUnit());
 }
 
 Signal Area::getSinComponent(const float phase) const {
-    Signal area = this->getRealScalar();
+    Signal area = this->getScalar();
     return Signal(area.getOrientation(), area.getSinComponent(phase),
 		area.getScaling(), area.getUnit());
 }

@@ -141,8 +141,8 @@ void Pressure::setVolume(const shp::Volume& volume) {
 
 shp::Signal Pressure::getTotal() const {
     shp::Area area = Density::getArea();
-    float pressure = (force.getTotal().getMagnitude() / area.getRealScalar().getMagnitude());
-    short int scaling = (force.getTotal().getScaling() - area.getRealScalar().getScaling());
+    float pressure = (force.getTotal().getMagnitude() / area.getScalar().getMagnitude());
+    short int scaling = (force.getTotal().getScaling() - area.getScalar().getScaling());
     shp::Signal result(pressure, scaling, getUnit());
     return result;
 }

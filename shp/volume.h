@@ -22,7 +22,6 @@
 #define SHP_VOLUME_H
 
 #include "area.h"
-#include "distance.h"
 
 namespace shp {
 
@@ -113,14 +112,17 @@ public:
 
     // Additional methods
     void setMagnitude(const Signal& signal);
-    Signal getRealScalar() const;
-    Signal getRealVector() const;
-    Signal getImaginaryScalar() const;
-    Signal getImaginaryVector() const;
-    Signal getSurfaceRealScalar() const;
-    Signal getSurfaceRealVector() const;
-    Signal getSurfaceImaginaryScalar() const;
-    Signal getSurfaceImaginaryVector() const;
+    Signal getScalar() const;
+    Signal getSurfaceTension() const;
+    Signal getSurfaceCurrent() const;
+    Signal getPhaseShift() const;
+    Signal getFlux() const;
+    Signal getMobility() const;
+    Signal getCurvature() const;
+    Signal getSurfaceScalar() const;
+    Signal getSurfaceRotation() const;
+    Signal getSurfaceAligned() const;
+    Signal getSurfaceNormal() const;
     Signal getLengthRotation(const short int degree) const;
     Intrinsic getLengthPhase() const;
     void setLengthPhase(const float direction);

@@ -513,7 +513,7 @@ Density Density::operator+(const Density& peer) const {
     Density self = *this, other = peer; shp::Medium medium = (self + other);
     shp::Signal density = medium.getParameter().getVectorTotal();
 	shp::Signal newIntrinsic = (self.getIntrinsic() + peer.getIntrinsic());
-    shp::Signal newVolume = (volume.getRealScalar() + peer.volume.getRealScalar());
+    shp::Signal newVolume = (volume.getScalar() + peer.volume.getScalar());
 	newVolume.adjustScaling();
     return Density("+", density.getMagnitude(), density.getScaling(), density.getUnit(), 
 		newIntrinsic, newVolume);
@@ -523,7 +523,7 @@ Density Density::operator-(const Density& peer) const {
     Density self = *this, other = peer; shp::Medium medium = (self - other);
     shp::Signal density = medium.getParameter().getVectorTotal();
 	shp::Signal newIntrinsic = (self.getIntrinsic() - peer.getIntrinsic());
-    shp::Signal newVolume = (volume.getRealScalar() - peer.volume.getRealScalar());
+    shp::Signal newVolume = (volume.getScalar() - peer.volume.getScalar());
 	newVolume.adjustScaling();
     return Density("-", density.getMagnitude(), density.getScaling(), density.getUnit(),
 		newIntrinsic, newVolume);
@@ -533,7 +533,7 @@ Density Density::operator*(const Density& peer) const {
     Density self = *this, other = peer; shp::Medium medium = (self * other);
     shp::Signal density = medium.getParameter().getVectorTotal();
 	shp::Signal newIntrinsic = (self.getIntrinsic() * peer.getIntrinsic());
-    shp::Signal newVolume = (volume.getRealScalar() * peer.volume.getRealScalar());
+    shp::Signal newVolume = (volume.getScalar() * peer.volume.getScalar());
 	newVolume.adjustScaling();
     return Density("*", density.getMagnitude(), density.getScaling(), density.getUnit(),
 		newIntrinsic, newVolume);
@@ -543,7 +543,7 @@ Density Density::operator/(const Density& peer) const {
     Density self = *this, other = peer; shp::Medium medium = (self / other);
     shp::Signal density = medium.getParameter().getVectorTotal();
 	shp::Signal newIntrinsic = (self.getIntrinsic() / peer.getIntrinsic());
-    shp::Signal newVolume = (volume.getRealScalar() / peer.volume.getRealScalar());
+    shp::Signal newVolume = (volume.getScalar() / peer.volume.getScalar());
 	newVolume.adjustScaling();
     return Density("/", density.getMagnitude(), density.getScaling(), density.getUnit(),
 		newIntrinsic, newVolume);
@@ -553,7 +553,7 @@ Density Density::operator%(const Density& peer) const {
     Density self = *this, other = peer; shp::Medium medium = (self % other);
     shp::Signal density = medium.getParameter().getVectorTotal();
 	shp::Signal newIntrinsic = (self.getIntrinsic() % peer.getIntrinsic());
-    shp::Signal newVolume = (volume.getRealScalar() % peer.volume.getRealScalar());
+    shp::Signal newVolume = (volume.getScalar() % peer.volume.getScalar());
 	newVolume.adjustScaling();
     return Density("%", density.getMagnitude(), density.getScaling(), density.getUnit(),
 		newIntrinsic, newVolume);
@@ -793,12 +793,12 @@ void Density::setChangeHeightPhase(const shp::Intrinsic& orientation) {
 }
 
 shp::Signal Density::getScalarFlux() const {
-    shp::Signal density = (shp::Medium::getScalarTotal() / volume.getRealScalar());
+    shp::Signal density = (shp::Medium::getScalarTotal() / volume.getScalar());
     return shp::Signal(density.getMagnitude(), density.getScaling(), density.getUnit());
 }
 
 shp::Signal Density::getVectorFlux() const {
-    shp::Signal density = (shp::Medium::getVectorTotal() / volume.getRealVector());
+    shp::Signal density = (shp::Medium::getVectorTotal() / volume.getFlux());
     return shp::Signal(density.getMagnitude(), density.getScaling(), density.getUnit());
 }
 

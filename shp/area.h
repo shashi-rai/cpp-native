@@ -82,10 +82,10 @@ public:
 
     // Additional methods
     void setMagnitude(const Signal& signal);
-    Signal getRealScalar() const;
-    Signal getRealVector() const;
-    Signal getImaginaryScalar() const;
-    Signal getImaginaryVector() const;
+    Signal getScalar() const;
+    Signal getRotation() const;
+    Signal getAligned() const;
+    Signal getNormal() const;
     Signal getLengthRotation(const short int degree) const;
     Intrinsic getLengthPhase() const;
     void setLengthPhase(const float direction);
