@@ -934,7 +934,7 @@ Direction Medium::getMobilityShift() const {
 }
 
 void Medium::setMobilityShift(const float degree) {
-    Distance::setChangeHorizontalCurvature(degree);
+    Distance::setHorizontalCurvature(degree);
 }
 
 void Medium::setMobilityShift(const Azimuth& threshold) {
@@ -966,7 +966,7 @@ Direction Medium::getThresholdShift() const {
 }
 
 void Medium::setThresholdShift(const float degree) {
-    Distance::setChangeVerticalCurvature(degree);
+    Distance::setVerticalCurvature(degree);
 }
 
 void Medium::setThresholdShift(const Polar& threshold) {

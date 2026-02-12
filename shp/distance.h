@@ -235,8 +235,8 @@ public:
     void setChangeMagnitude(const float motion);
     void setChangeMagnitude(const float motion, const short int scale);
     void setChangeIntrinsic(const float degree);
-    void setChangeHorizontalCurvature(const float degree);
-    void setChangeVerticalCurvature(const float degree);
+    void setHorizontalCurvature(const float degree);
+    void setVerticalCurvature(const float degree);
     shp::Direction getHorizontalCurvatureCurrent() const;
     shp::Direction getVerticalCurvatureCurrent() const;
     shp::Direction getHorizontalCurvatureShiftRate() const;
@@ -272,10 +272,13 @@ public:
     Signal getOrthogonal(const Distance& peer, const Polar& elevation) const;
     Signal getOrthogonalConvergence(const Distance& peer, const Polar& elevation) const;
     Signal getOrthogonalDivergence(const Distance& peer, const Polar& elevation) const;
+    shp::Quantity getIntrinsicDecay() const;
     Signal getScalarTotal() const;
     Signal getVectorTotal() const;
+    shp::Quantity getHorizontalDecay() const;
     Signal getHorizontalDrift() const;
     Signal getHorizontalTotal() const;
+    shp::Quantity getVerticalDecay() const;
     Signal getVerticalDrift() const;
     Signal getVerticalTotal() const;
     Signal getRadial() const;
@@ -291,7 +294,8 @@ public:
     virtual std::string print() const;
     virtual std::string printRadians() const;
 private:
-    static const std::complex<float> getDiffusion(const Distance& peer, const Direction& elevation);
+    static const std::complex<float> getEnlargement(const Distance& peer, const Direction& elevation);
+    static const std::complex<float> getSuppression(const Distance& peer, const Direction& elevation);
     shp::Quantity getLinearX(const Distance& peer, const Intrinsic& elevation) const;
     shp::Quantity getSquareX(const Distance& peer, const Intrinsic& elevation) const;
     shp::Quantity getInverseX(const Distance& peer, const Intrinsic& elevation) const;
@@ -306,6 +310,7 @@ private:
     shp::Quantity getInverseSquareZ(const Distance& peer, const Polar& elevation) const;
 public:
     static const std::string UNIT;
+    static const short int SCALING_FACTOR;
 };
 
 typedef std::vector<Distance > DistanceArray;

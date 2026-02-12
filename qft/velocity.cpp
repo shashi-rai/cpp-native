@@ -737,7 +737,7 @@ void Velocity::setFieldCurvature(const shp::Polar& curvature) {
 }
 
 void Velocity::setChangeFieldCurvature(const float degree) {
-	shp::Distance::setChangeVerticalCurvature(degree);
+	shp::Distance::setVerticalCurvature(degree);
 }
 
 void Velocity::setChangeMagnitude(const float motion) {

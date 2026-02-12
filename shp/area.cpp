@@ -22,8 +22,8 @@
 
 namespace shp {
 
-const std::string Area::UNIT = "m²";        // System International
-const short int Area::SCALING_FACTOR = 2;   // Mathematical Operator
+const std::string Area::UNIT = "m²";                // System International
+const short int Area::SCALING_FACTOR = 2;           // Mathematical Operator
 
 Area::Area()
         : Quantity(UNIT),
@@ -256,10 +256,57 @@ Area Area::operator%(const Signal& peer) const {
     return Area(self.length, width);
 }
 
-void Area::setMagnitude(const Signal& signal) {
+shp::Quantity Area::getRatio() const {
+    Quantity conserved = Quantity(this->getConserved(), Quantity::getScaling(), Quantity::getUnit());
+    Signal ratio = (this->getElliptic() / conserved);
+    return shp::Quantity(ratio.getMagnitude(), ratio.getScaling(), Unit().getPercent());
+}
+
+void Area::setDynamical(const Signal& signal) {
     float side = std::sqrt(signal.getMagnitude());
     this->length = Distance(side, signal.getScaling(), length.getUnit(), signal.getOrientation());
     this->breadth = Distance(side, signal.getScaling(), breadth.getUnit(), signal.getOrientation());
+}
+
+shp::Quantity Area::getElliptic() const {
+    Signal area = (this->getScalar() * M_PI);
+    return shp::Quantity(area.getMagnitude(), area.getScaling(), Quantity::getUnit());
+}
+
+float Area::getConserved() const {
+    return Quantity::getMagnitude();
+}
+
+void Area::setConserved(const float value) {
+    Quantity::setMagnitude(value);
+}
+
+void Area::setConserved(const float value, const short int scale) {
+    Quantity::setMagnitude(value, scale);
+}
+
+void Area::setConserved(const float value, const short int scale, const std::string unit) {
+    Quantity::setMagnitude(value, scale, unit);
+}
+
+void Area::setConserved(const float value, const short int scale, const Unit& unit) {
+    Quantity::setMagnitude(value, scale, unit);
+}
+
+short int Area::getScaling() const {
+    return Quantity::getScaling();
+}
+
+void Area::setScaling(const short int factor) {
+    Quantity::setScaling(factor);
+}
+
+Unit Area::getUnit() const {
+    return Quantity::getUnit();
+}
+
+void Area::setUnit(const Unit& object) {
+    Quantity::setUnit(object);
 }
 
 // It returns a scalar product (i.e., length.magnitude * breadth.magnitude)

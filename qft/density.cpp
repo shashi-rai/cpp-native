@@ -619,10 +619,6 @@ void Density::setHeight(const float height, const short int scale, const shp::Un
 	this->volume.setHeight(height, scale, unit);
 }
 
-void Density::setVolume(const shp::Signal& signal) {
-	this->volume.setMagnitude(signal);
-}
-
 shp::Direction Density::getParameterDiffusion() const {
     return shp::Medium::getDiffusionCurrent();
 }
@@ -718,6 +714,10 @@ void Density::setVolume(const float value) {
 void Density::setVolume(const float value, const short int scale) {
     float magnitude = (value * std::pow(shp::Quantity::DECIMAL_SCALE, scale));
 	this->volume = shp::Volume(std::cbrt(magnitude));
+}
+
+void Density::setVolume(const shp::Signal& signal) {
+	this->volume.setDynamical(signal);
 }
 
 void Density::setChangeLength(const float value) {

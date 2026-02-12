@@ -111,7 +111,16 @@ public:
     void setDepth(const Distance& height) { this->depth = height; }
 
     // Additional methods
-    void setMagnitude(const Signal& signal);
+    void setDynamical(const Signal& signal);
+    float getConserved() const;
+    void setConserved(const float value);
+    void setConserved(const float value, const short int scale);
+    void setConserved(const float value, const short int scale, const std::string unit);
+    void setConserved(const float value, const short int scale, const Unit& unit);
+    short int getScaling() const;
+    void setScaling(const short int factor);
+    Unit getUnit() const;
+    void setUnit(const Unit& object);
     Signal getScalar() const;
     Signal getSurfaceTension() const;
     Signal getSurfaceCurrent() const;

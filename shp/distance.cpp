@@ -22,7 +22,8 @@
 
 namespace shp {
 
-const std::string Distance::UNIT = "m";     // System International
+const std::string Distance::UNIT = "m";             // System International
+const short int Distance::SCALING_FACTOR = 2;       // Mathematical Operator
 
 Distance::Distance()
         : Signal(shp::Unit::getBaseSymbol(shp::Unit::LENGTH)),
@@ -904,13 +905,13 @@ void Distance::setChangeIntrinsic(const float degree) {
     }
 }
 
-void Distance::setChangeHorizontalCurvature(const float degree) {
+void Distance::setHorizontalCurvature(const float degree) {
     if (degree != Direction::DEFAULT_RADIANS) {
         horizontal.setRotation(degree);
     }
 }
 
-void Distance::setChangeVerticalCurvature(const float degree) {
+void Distance::setVerticalCurvature(const float degree) {
     if (degree != Direction::DEFAULT_RADIANS) {
         vertical.setRotation(degree);
     }
@@ -1092,6 +1093,13 @@ Signal Distance::getOrthogonalDivergence(const Distance& peer, const Polar& elev
     return result;
 }
 
+shp::Quantity Distance::getIntrinsicDecay() const {
+    Signal self = *this; Direction angle = this->getIntrinsic().getCurrent();
+    float magnitude = Direction::getSectorArea(self.getMagnitude(), angle);
+    return shp::Quantity(magnitude, (self.getScaling() * Distance::SCALING_FACTOR),
+        Unit(Unit::PER_UNIT, Distance::UNIT).getSquare());
+}
+
 Signal Distance::getScalarTotal() const {
     Signal self = *this;
     return Signal(Direction::DEFAULT_RADIANS, self.getMagnitude(), self.getScaling(), self.getUnit());
@@ -1100,6 +1108,13 @@ Signal Distance::getScalarTotal() const {
 Signal Distance::getVectorTotal() const {
     Signal self = *this;
     return Signal(self.getOrientation(), self.getMagnitude(), self.getScaling(), self.getUnit());
+}
+
+shp::Quantity Distance::getHorizontalDecay() const {
+    Signal self = *this; Direction angle = this->horizontal.getCurrent();
+    float magnitude = Direction::getSectorArea(self.getAmplitude(), angle);
+    return shp::Quantity(magnitude, (self.getScaling() * Distance::SCALING_FACTOR),
+        Unit(Unit::PER_UNIT, Distance::UNIT).getSquare());
 }
 
 Signal Distance::getHorizontalDrift() const {
@@ -1111,6 +1126,13 @@ Signal Distance::getHorizontalTotal() const {
     Signal self = *this; float shift = this->horizontal.getCurrent().toRadians();
     Signal angular = self.getCosComponent(shift);
     return Signal(shift, angular.getAmplitude(), angular.getScaling(), angular.getUnit());
+}
+
+shp::Quantity Distance::getVerticalDecay() const {
+    Signal self = *this; Direction angle = this->vertical.getCurrent();
+    float magnitude = Direction::getSectorArea(self.getAmplitude(), angle);
+    return shp::Quantity(magnitude, (self.getScaling() * Distance::SCALING_FACTOR),
+        Unit(Unit::PER_UNIT, Distance::UNIT).getSquare());
 }
 
 Signal Distance::getVerticalDrift() const {
@@ -1219,14 +1241,19 @@ std::string Distance::printRadians() const {
  * Only if peer is a variant, then y_component contributes its change. Also, if
  * peer remains invariant, then z_component could still contribute its stretch.
  */
-const std::complex<float> Distance::getDiffusion(const Distance& peer, const Direction& elevation) {
+const std::complex<float> Distance::getEnlargement(const Distance& peer, const Direction& elevation) {
     Intrinsic orientation = peer.getOrientation();
     return Direction::getConstructive(orientation.getPhase(), elevation.getPhase());
 }
 
+const std::complex<float> Distance::getSuppression(const Distance& peer, const Direction& elevation) {
+    Intrinsic orientation = peer.getOrientation();
+    return Direction::getDestructive(orientation.getPhase(), elevation.getPhase());
+}
+
 shp::Quantity Distance::getLinearX(const Distance& peer, const Intrinsic& elevation) const {
     shp::Signal self = *this, other = peer;
-    std::complex<float> concentration = Distance::getDiffusion(peer, elevation);
+    std::complex<float> concentration = Distance::getEnlargement(peer, elevation);
     shp::Quantity diffusion(Direction::getCosine(concentration), self.getScaling(), self.getUnit());
     shp::Signal result = self + (other * diffusion); result.adjustScaling();
     return shp::Quantity(result.getMagnitude(), result.getScaling(), result.getUnit());
@@ -1246,7 +1273,7 @@ shp::Quantity Distance::getInverseSquareX(const Distance& peer, const Intrinsic&
 
 shp::Quantity Distance::getLinearY(const Distance& peer, const Azimuth& elevation) const {
     shp::Signal self = *this, other = peer;
-    std::complex<float> concentration = Distance::getDiffusion(peer, elevation);
+    std::complex<float> concentration = Distance::getEnlargement(peer, elevation);
     shp::Quantity diffusion(Direction::getCosine(concentration), peer.getScaling(), peer.getUnit());
     shp::Signal result = (other * diffusion); result.adjustScaling();
     return shp::Quantity(result.getMagnitude(), result.getScaling(), result.getUnit());
@@ -1266,7 +1293,7 @@ shp::Quantity Distance::getInverseSquareY(const Distance& peer, const Azimuth& e
 
 shp::Quantity Distance::getLinearZ(const Distance& peer, const Polar& elevation) const {
     shp::Signal self = *this, other = peer;
-    std::complex<float> concentration = Distance::getDiffusion(peer, elevation);
+    std::complex<float> concentration = Distance::getEnlargement(peer, elevation);
     shp::Quantity diffusion(Direction::getSine(concentration), peer.getScaling(), peer.getUnit());
     shp::Signal result = (other * diffusion); result.adjustScaling();
     return shp::Quantity(result.getMagnitude(), result.getScaling(), result.getUnit());

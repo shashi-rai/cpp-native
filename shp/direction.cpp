@@ -374,12 +374,20 @@ const float Direction::getTangent(const std::complex<float> phase) {
 
 const std::complex<float> Direction::getConstructive(const std::complex<float> phase_a,
         const std::complex<float> phase_b) {
-    return (phase_a * phase_b);
+    std::complex<float> product = (phase_a * phase_b);
+    std::complex<float> result = std::complex<float>(
+        std::real(product),             // interference amplitude
+        std::imag(product));            // interference orientation
+    return result;
 }
 
 const std::complex<float> Direction::getDestructive(const std::complex<float> phase_a,
         const std::complex<float> phase_b) {
-    return (phase_a / phase_b);
+    std::complex<float> fraction = (phase_a / phase_b);
+    std::complex<float> result = std::complex<float>(
+        std::real(fraction),            // interference amplitude
+        std::imag(fraction));           // interference orientation
+    return result;
 }
 const short int Direction::getQuadrant(const float radians) {
     return ((Direction::getPeriodic(radians) / Direction::DEGREE_090) + 1);
@@ -545,6 +553,10 @@ const Direction Direction::getSectorAngle(const float divisor) {
         return Direction(Direction::DEGREE_360 / divisor);
     else
         return Direction(Direction::DEGREE_360);
+}
+
+const float Direction::getSectorArea(const float radius, const Direction& angle) {
+    return ((angle.toRadians() / DEGREE_360) * (M_PI * radius * radius));
 }
 
 /*

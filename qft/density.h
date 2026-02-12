@@ -149,7 +149,6 @@ public:
     void setHeight(const float height, const short int scale);
     void setHeight(const float height, const short int scale, const std::string unit);
     void setHeight(const float height, const short int scale, const shp::Unit& unit);
-    void setVolume(const shp::Signal& signal);
     shp::Direction getParameterDiffusion() const;
     void setParameterDiffusion(const float factor);
     void setParameterDiffusion(const shp::Intrinsic& rate);
@@ -174,6 +173,7 @@ public:
     void setUnit(const shp::Unit& unit);
     void setVolume(const float value);
     void setVolume(const float value, const short int scale);
+    void setVolume(const shp::Signal& signal);
     void setChangeLength(const float value);
     void setChangeLength(const float value, const short int scale);
     void setChangeLength(const float value, const short int scale, const std::string unit);

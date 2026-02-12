@@ -394,12 +394,48 @@ Volume Volume::operator%(const Distance& height) const {
     return Volume(self.surface, changed);
 }
 
-void Volume::setMagnitude(const Signal& signal) {
+void Volume::setDynamical(const Signal& signal) {
     float side = std::cbrt(signal.getMagnitude());
     Distance length = Distance(side, signal.getScaling(), signal.getUnit(), signal.getOrientation());
     Distance breadth = Distance(side, signal.getScaling(), signal.getUnit(), signal.getOrientation());
     Distance height = Distance(side, signal.getScaling(), signal.getUnit(), signal.getOrientation());
     this->surface = Area(length, breadth); this->depth = height;
+}
+
+float Volume::getConserved() const {
+    return Quantity::getMagnitude();
+}
+
+void Volume::setConserved(const float value) {
+    Quantity::setMagnitude(value);
+}
+
+void Volume::setConserved(const float value, const short int scale) {
+    Quantity::setMagnitude(value, scale);
+}
+
+void Volume::setConserved(const float value, const short int scale, const std::string unit) {
+    Quantity::setMagnitude(value, scale, unit);
+}
+
+void Volume::setConserved(const float value, const short int scale, const Unit& unit) {
+    Quantity::setMagnitude(value, scale, unit);
+}
+
+short int Volume::getScaling() const {
+    return Quantity::getScaling();
+}
+
+void Volume::setScaling(const short int factor) {
+    Quantity::setScaling(factor);
+}
+
+Unit Volume::getUnit() const {
+    return Quantity::getUnit();
+}
+
+void Volume::setUnit(const Unit& object) {
+    Quantity::setUnit(object);
 }
 
 // It returns a scalar product (i.e. length.magnitude * breadth.magnitude * height.magnitude)

@@ -128,6 +128,7 @@ public:
     static const bool checkTranslation(const Direction& x, const Direction& y);
     static const bool checkRotation(const Direction& x, const Direction& y);
     static const Direction getSectorAngle(const float divisor);
+    static const float getSectorArea(const float radius, const Direction& angle);
 private:
     static const float getInverseGradient(const float value);
 public:
