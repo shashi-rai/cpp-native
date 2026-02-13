@@ -181,6 +181,8 @@ public:
     virtual std::string printRadians() const;
     float getCosComponent(const float phase) const;
     float getSinComponent(const float phase) const;
+    float getCosHyperbola(const float phase) const;
+    float getSinHyperbola(const float phase) const;
 protected:
     static const std::complex<float> getComplex(const float value, const float direction);
 };

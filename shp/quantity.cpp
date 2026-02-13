@@ -28,62 +28,62 @@ const float Quantity::DECIMAL_SCALE = 10.0f;    // 10.0f
 const short int Quantity::DEFAULT_SCALE = 0;    // 10^0
 
 Quantity::Quantity()
-        : magnitude(DEFAULT_VALUE), scaling(DEFAULT_SCALE), unit(DEFAULT_TEXT) {
+        : Bound(DEFAULT_VALUE, DEFAULT_SCALE), unit(DEFAULT_TEXT) {
 
 }
 
 Quantity::Quantity(const float magnitude)
-        : magnitude(magnitude), scaling(DEFAULT_SCALE), unit(DEFAULT_TEXT) {
+        : Bound(magnitude, DEFAULT_SCALE), unit(DEFAULT_TEXT) {
 
 }
 
 Quantity::Quantity(const short int scaling)
-        : magnitude(), scaling(scaling), unit(DEFAULT_TEXT) {
+        : Bound(DEFAULT_VALUE, scaling), unit(DEFAULT_TEXT) {
 
 }
 
 Quantity::Quantity(const std::string unit)
-        : magnitude(), scaling(DEFAULT_SCALE), unit(unit) {
+        : Bound(DEFAULT_VALUE, DEFAULT_SCALE), unit(unit) {
 
 }
 
 Quantity::Quantity(const Unit& unit)
-        : magnitude(), scaling(DEFAULT_SCALE), unit(unit) {
+        : Bound(DEFAULT_VALUE, DEFAULT_SCALE), unit(unit) {
 
 }
 
 Quantity::Quantity(const short int scaling, const std::string unit)
-        : magnitude(), scaling(scaling), unit(unit) {
+        : Bound(DEFAULT_VALUE, scaling), unit(unit) {
 
 }
 
 Quantity::Quantity(const short int scaling, const Unit& unit)
-        : magnitude(), scaling(scaling), unit(unit) {
+        : Bound(DEFAULT_VALUE, scaling), unit(unit) {
 
 }
 
 Quantity::Quantity(const float magnitude, const std::string unit)
-        : magnitude(magnitude), scaling(DEFAULT_SCALE), unit(unit) {
+        : Bound(magnitude, DEFAULT_SCALE), unit(unit) {
 
 }
 
 Quantity::Quantity(const float magnitude, const Unit& unit)
-        : magnitude(magnitude), scaling(DEFAULT_SCALE), unit(unit) {
+        : Bound(magnitude, DEFAULT_SCALE), unit(unit) {
 
 }
 
 Quantity::Quantity(const float magnitude, const short int scaling)
-        : magnitude(magnitude), scaling(scaling), unit(DEFAULT_TEXT) {
+        : Bound(magnitude, scaling), unit(DEFAULT_TEXT) {
 
 }
 
 Quantity::Quantity(const float magnitude, const short int scaling, const std::string unit)
-        : magnitude(magnitude), scaling(scaling), unit(unit) {
+        : Bound(magnitude, scaling), unit(unit) {
 
 }
 
 Quantity::Quantity(const float magnitude, const short int scaling, const Unit& unit)
-        : magnitude(magnitude), scaling(scaling), unit(unit) {
+        : Bound(magnitude, scaling), unit(unit) {
 
 }
 
@@ -93,16 +93,13 @@ Quantity::~Quantity() {
 
 bool Quantity::operator==(const Quantity& peer) const {
     Quantity self = *this;
-    return (self.magnitude == peer.magnitude)
-        && (self.scaling == peer.scaling)
+    return (static_cast<const Bound&>(*this) == static_cast<const Bound&>(peer))
         && (self.unit == peer.unit);
 }
 
 bool Quantity::operator<(const Quantity& peer) const {
     Quantity self = *this; bool result = false;
-    if (self.magnitude < peer.magnitude) {
-        result = true;
-    } else if (self.scaling < peer.scaling) {
+    if (static_cast<const Bound&>(*this) < static_cast<const Bound&>(peer)) {
         result = true;
     }
     return result;
@@ -110,9 +107,7 @@ bool Quantity::operator<(const Quantity& peer) const {
 
 bool Quantity::operator>(const Quantity& peer) const {
     Quantity self = *this; bool result = false;
-    if (self.magnitude > peer.magnitude) {
-        result = true;
-    } else if (self.scaling > peer.scaling) {
+    if (static_cast<const Bound&>(*this) > static_cast<const Bound&>(peer)) {
         result = true;
     }
     return result;
@@ -129,62 +124,58 @@ bool Quantity::operator>=(const Quantity& peer) const {
 }
 
 Quantity Quantity::operator+(const Quantity& peer) const {
-    Quantity self = *this;
-    short int exponent = (self.scaling - peer.scaling);
-    float mantissa = (self.magnitude + (peer.magnitude / std::pow(DECIMAL_SCALE, exponent)));
-    Quantity result(mantissa, self.scaling, self.getUnit());
-    return result;
+    Bound self = *this, other = peer, result = (self + other);
+    return Quantity(result.getMagnitude(), result.getScaling(), this->getUnit());
 }
 
 Quantity Quantity::operator-(const Quantity& peer) const {
-    Quantity self = *this;
-    short int exponent = (self.scaling - peer.scaling);
-    float mantissa = (self.magnitude - (peer.magnitude / std::pow(DECIMAL_SCALE, exponent)));
-    Quantity result(mantissa, self.scaling, self.getUnit());
-    return result;
+    Bound self = *this, other = peer, result = (self - other);
+    return Quantity(result.getMagnitude(), result.getScaling(), this->getUnit());
 }
 
 Quantity Quantity::operator*(const Quantity& peer) const {
-    Quantity self = *this;
-    float mantissa = (self.magnitude * peer.magnitude);
-    Quantity result(mantissa, (self.scaling + peer.scaling), self.getUnit());
-    return result;
+    Bound self = *this, other = peer, result = (self * other);
+    return Quantity(result.getMagnitude(), result.getScaling(), this->getUnit());
 }
 
 Quantity Quantity::operator/(const Quantity& peer) const {
-    Quantity self = *this; float mantissa = DEFAULT_VALUE;
-    if (peer.magnitude != DEFAULT_VALUE) {
-        mantissa = (self.magnitude / peer.magnitude);
-    }
-    Quantity result(mantissa, (self.scaling - peer.scaling), self.getUnit());
-    return result;
+    Bound self = *this, other = peer, result = (self / other);
+    return Quantity(result.getMagnitude(), result.getScaling(), this->getUnit());
 }
 
 Quantity Quantity::operator%(const Quantity& peer) const {
-    Quantity self = *this; float mantissa = DEFAULT_VALUE;
-    short int exponent = (self.scaling - peer.scaling);
-    if (peer.magnitude != DEFAULT_VALUE) {
-        mantissa = fmod(self.magnitude, (peer.magnitude / std::pow(DECIMAL_SCALE, exponent)));
-    }
-    Quantity result(mantissa, self.scaling, self.getUnit());
-    return result;
+    Bound self = *this, other = peer, result = (self % other);
+    return Quantity(result.getMagnitude(), result.getScaling(), this->getUnit());
+}
+
+float Quantity::getMagnitude() const {
+    return Bound::getMagnitude();
+}
+
+void Quantity::setMagnitude(const float value) {
+    Bound::setMagnitude(value);
 }
 
 void Quantity::setMagnitude(const float value, const short int scale) {
-    this->magnitude = value;
-    this->scaling = scale;
+    Bound::setMagnitude(value, scale);
 }
 
 void Quantity::setMagnitude(const float value, const short int scale, const std::string unit) {
-    this->magnitude = value;
-    this->scaling = scale;
+    Bound::setMagnitude(value, scale);
     this->unit.setName(unit);
 }
 
 void Quantity::setMagnitude(const float value, const short int scale, const Unit& unit) {
-    this->magnitude = value;
-    this->scaling = scale;
+    Bound::setMagnitude(value, scale);
     this->unit = unit;
+}
+
+short int Quantity::getScaling() const {
+    return Bound::getScaling();
+}
+
+void Quantity::setScaling(const short int factor) {
+    Bound::setScaling(factor);
 }
 
 void Quantity::setUnit(const std::string name) {
@@ -192,158 +183,108 @@ void Quantity::setUnit(const std::string name) {
 }
 
 double Quantity::getZeroScale() const {
-    return (magnitude * std::pow(DECIMAL_SCALE, scaling));
+    return Bound::getZeroScale();
 }
 
 Quantity Quantity::getAbsolute() const {
-    Quantity fresh(std::abs(magnitude), scaling, unit.getModulus());
-    return fresh;
+    Bound quantity = Bound::getAbsolute();
+    return Quantity(quantity.getMagnitude(), quantity.getScaling(), unit.getModulus());
 }
 
 Quantity Quantity::getNegative() const {
-    Quantity fresh(-magnitude, scaling, unit.getModulus());
-    return fresh;
+    Bound quantity = Bound::getNegative();
+    return Quantity(quantity.getMagnitude(), quantity.getScaling(), unit.getModulus());
 }
 
 Quantity Quantity::getInverse() const {
-    Quantity fresh(magnitude != DEFAULT_VALUE
-        ? (1 / magnitude) : DEFAULT_VALUE, -scaling, unit.getInverse());
-    fresh.adjustScaling();
-    return fresh;
+    Bound quantity = Bound::getInverse();
+    return Quantity(quantity.getMagnitude(), quantity.getScaling(), unit.getInverse());
 }
 
 Quantity Quantity::getPercent() const {
-    Quantity fresh(magnitude, scaling, unit.getPercent());
-    return fresh;
+    Bound quantity = Bound::getAbsolute();
+    return Quantity(quantity.getMagnitude(), quantity.getScaling(), unit.getPercent());
 }
 
 Quantity Quantity::getSquare() const {
-    double mantissa = magnitude;
-    double newMagnitude = (mantissa * mantissa);
-    Quantity fresh(static_cast<float>(newMagnitude), (scaling * 2), unit.getSquare());
-    fresh.adjustScaling();
-    return fresh;
+    Bound quantity = Bound::getSquare();
+    return Quantity(quantity.getMagnitude(), quantity.getScaling(), unit.getSquare());
 }
 
 Quantity Quantity::getSquareRoot() const {  // handle negative magnitude
-    double mantissa = (magnitude * std::pow(DECIMAL_SCALE, scaling));
-    std::complex<double> result = std::sqrt(mantissa);
-    double newMagnitude = std::real(result);
-    newMagnitude = (newMagnitude / std::pow(DECIMAL_SCALE, scaling));
-    Quantity fresh(static_cast<float>(newMagnitude), scaling, unit.getSquareRoot());
-    fresh.adjustScaling();
-    return fresh;
+    Bound quantity = Bound::getSquareRoot();
+    return Quantity(quantity.getMagnitude(), quantity.getScaling(), unit.getSquareRoot());
 }
 
 Quantity Quantity::getCube() const {
-    double mantissa = magnitude;
-    double newMagnitude = (mantissa * mantissa * mantissa);
-    Quantity fresh(static_cast<float>(newMagnitude), (scaling * 3), unit.getCube());
-    fresh.adjustScaling();
-    return fresh;
+    Bound quantity = Bound::getCube();
+    return Quantity(quantity.getMagnitude(), quantity.getScaling(), unit.getCube());
 }
 
 Quantity Quantity::getCubeRoot() const {
-    double mantissa = (magnitude * std::pow(DECIMAL_SCALE, scaling));
-    double newMagnitude = std::cbrt(mantissa);
-    newMagnitude = (newMagnitude / std::pow(DECIMAL_SCALE, scaling));
-    Quantity fresh(static_cast<float>(newMagnitude), scaling, unit.getCubeRoot());
-    fresh.adjustScaling();
-    return fresh;
+    Bound quantity = Bound::getCubeRoot();
+    return Quantity(quantity.getMagnitude(), quantity.getScaling(), unit.getCubeRoot());
 }
 
 Quantity Quantity::getMultiple(const float coefficient) const {
-    Quantity self = *this;
-    float mantissa = (self.magnitude * coefficient);
-    Quantity result(mantissa, self.scaling, self.getUnit());
-    return result;
+    Bound quantity = Bound::getMultiple(coefficient);
+    return Quantity(quantity.getMagnitude(), quantity.getScaling(), this->getUnit());
 }
 
 Quantity Quantity::getFraction(const float coefficient) const {
-    Quantity self = *this; float mantissa = Quantity::DEFAULT_VALUE;
-    if (self.magnitude != Quantity::DEFAULT_VALUE) {
-        mantissa = (coefficient / self.magnitude);
-    }
-    Quantity result(mantissa, self.scaling, self.getUnit());
-    return result;
+    Bound quantity = Bound::getFraction(coefficient);
+    return Quantity(quantity.getMagnitude(), quantity.getScaling(), this->getUnit());
 }
 
 Quantity Quantity::getDivision(const float coefficient) const {
-    Quantity self = *this; float mantissa = Quantity::DEFAULT_VALUE;
-    if (coefficient != Quantity::DEFAULT_VALUE) {
-        mantissa = (self.magnitude / coefficient);
-    }
-    Quantity result(mantissa, self.scaling, self.getUnit());
-    return result;
+    Bound quantity = Bound::getDivision(coefficient);
+    return Quantity(quantity.getMagnitude(), quantity.getScaling(), this->getUnit());
 }
 
 Quantity Quantity::getRemainder(const float coefficient) const {
-    Quantity self = *this; float mantissa = Quantity::DEFAULT_VALUE;
-    if (coefficient != Quantity::DEFAULT_VALUE) {
-        mantissa = fmod(self.magnitude, coefficient);
-    }
-    Quantity result(mantissa, self.scaling, self.getUnit());
-    return result;
+    Bound quantity = Bound::getRemainder(coefficient);
+    return Quantity(quantity.getMagnitude(), quantity.getScaling(), this->getUnit());
 }
 
 Quantity Quantity::getLeftOver(const float coefficient) const {
-    Quantity self = *this; float mantissa = Quantity::DEFAULT_VALUE;
-    if (coefficient != Quantity::DEFAULT_VALUE) {
-        mantissa = (self.magnitude - coefficient);
-    }
-    Quantity result(mantissa, self.scaling, self.getUnit());
-    return result;
+    Bound quantity = Bound::getLeftOver(coefficient);
+    return Quantity(quantity.getMagnitude(), quantity.getScaling(), this->getUnit());
 }
 
 bool Quantity::isConvergent() const {
-    return (magnitude > DEFAULT_VALUE);
+    return Bound::isConvergent();
 }
 
 bool Quantity::isDivergent() const {
-    return (magnitude < DEFAULT_VALUE);
+    return Bound::isDivergent();
 }
 
 bool Quantity::checkNonZero() const {
-    return (magnitude != DEFAULT_VALUE);
+    return Bound::checkNonZero();
 }
 
 bool Quantity::checkInfinity() const {
-    return std::isinf(magnitude);
+    return Bound::checkInfinity();
 }
 
 short int Quantity::checkScaling(const float amount) const {
-    return log10(amount);
+    return Bound::checkScaling(amount);
 }
 
 void Quantity::adjustNumeric() {
-    if (checkInfinity()) {
-        scaling = Quantity::DEFAULT_SCALE;
-    } else if (std::isnan(magnitude)) {
-        magnitude = Quantity::DEFAULT_VALUE;
-        scaling = Quantity::DEFAULT_SCALE;
-    }
+    Bound::adjustNumeric();
 }
 
 void Quantity::adjustScaling() {
-    float current = magnitude;
-    if (current == DEFAULT_VALUE) {
-        return;
-    }
-    int exponent = static_cast<int>(std::floor(std::log10(std::fabs(current))));
-    float mantissa = current / std::pow(DECIMAL_SCALE, exponent);
-    scaling += exponent;
-    magnitude = mantissa;
-    return;
+    Bound::adjustScaling();
 }
 
 Quantity Quantity::copy() const {
-    Quantity fresh(magnitude, scaling, unit);
-    return fresh;
+    return Quantity(Bound::getMagnitude(), Bound::getScaling(), unit);
 }
 
 void Quantity::clear() {
-    magnitude = DEFAULT_VALUE;
-    scaling = DEFAULT_SCALE;
+    Bound::clear();
     unit.clear();
     return;
 }
@@ -354,8 +295,7 @@ std::string Quantity::print() const {
 
 std::string Quantity::printSuffixed() const {
     std::stringstream result;
-    result << magnitude << "ₑ";
-    result << scaling;
+    result << Bound::print();
     result << unit.print();
 	return result.str();
 }
@@ -363,21 +303,28 @@ std::string Quantity::printSuffixed() const {
 std::string Quantity::printPrefixed() const {
     std::stringstream result;
     result << unit.print() << " ";
-    result << magnitude << "ₑ";
-    result << scaling;
+    result << Bound::print();
 	return result.str();
 }
 
 float Quantity::getCosComponent(const float phase) const {
-    return (magnitude * cos(phase));
+    return Bound::getCosComponent(phase);
 }
 
 float Quantity::getSinComponent(const float phase) const {
-    return (magnitude * sin(phase));
+    return Bound::getSinComponent(phase);
+}
+
+float Quantity::getCosHyperbola(const float phase) const {
+    return Bound::getCosHyperbola(phase);
+}
+
+float Quantity::getSinHyperbola(const float phase) const {
+    return Bound::getSinHyperbola(phase);
 }
 
 const std::complex<float> Quantity::getComplex(const float value, const float direction) {
-    return std::complex<float>(value, direction);
+    return Bound::getComplex(value, direction);
 }
 
 } // namespace shp

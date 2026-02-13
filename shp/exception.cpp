@@ -18,46 +18,41 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef INC_TESTING_H
-#define INC_TESTING_H
-
-#include <iostream>
-#include <sstream>
-#include <string>
-#include "configuration.h"
+#include "../inc/exception.h"
 
 namespace cfg {
 
-class System {
-    std::string name;
-    cfg::CommandLine parameters;
-public:
-    // Constructors
-    System();
-    System(const cfg::CommandLine& parameters);
-    System(const std::string name);
-    System(const std::string name, const cfg::CommandLine& parameters);
+Exception::Exception()
+        : code() {
 
-    // Destructors
-    ~System();
+}
 
-    // Getters
-    std::string getName() const;
-    cfg::CommandLine getParameters() const;
+Exception::Exception(const std::string code)
+        : code(code) {
 
-    // Setters
-    void setName(const std::string name);
-    void setParameters(const cfg::CommandLine& object);
+}
 
-public:
-    std::string getParameter(const int index) const;
-    void setParameters(const int argc, char* argv[]);
-    void clear();
-    void printStartedMessage() const;
-    void printStoppedMessage() const;
-    std::string print() const;
-};
+Exception::~Exception() {
+
+}
+
+std::string Exception::getCode() const {
+    return code;
+}
+
+void Exception::setCode(const std::string name) {
+    this->code = name;
+}
+
+
+void Exception::clear() {
+    this->code.clear();
+}
+
+std::string Exception::print() const {
+    std::stringstream result;
+    result << code;
+	return result.str();
+}
 
 } // namespace cfg
-
-#endif //INC_TESTING_H

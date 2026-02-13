@@ -18,46 +18,37 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef INC_TESTING_H
-#define INC_TESTING_H
+#ifndef INC_EXCEPTION_H
+#define INC_EXCEPTION_H
 
 #include <iostream>
 #include <sstream>
 #include <string>
-#include "configuration.h"
+#include <stdexcept>
 
 namespace cfg {
 
-class System {
-    std::string name;
-    cfg::CommandLine parameters;
+class Exception {
+    std::string code;
 public:
     // Constructors
-    System();
-    System(const cfg::CommandLine& parameters);
-    System(const std::string name);
-    System(const std::string name, const cfg::CommandLine& parameters);
+    Exception();
+    Exception(const std::string code);
 
     // Destructors
-    ~System();
+    ~Exception();
 
     // Getters
-    std::string getName() const;
-    cfg::CommandLine getParameters() const;
+    std::string getCode() const;
 
     // Setters
-    void setName(const std::string name);
-    void setParameters(const cfg::CommandLine& object);
+    void setCode(const std::string name);
 
 public:
-    std::string getParameter(const int index) const;
-    void setParameters(const int argc, char* argv[]);
     void clear();
-    void printStartedMessage() const;
-    void printStoppedMessage() const;
     std::string print() const;
 };
 
 } // namespace cfg
 
-#endif //INC_TESTING_H
+#endif //INC_EXCEPTION_H

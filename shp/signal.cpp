@@ -768,6 +768,14 @@ float Signal::getSinComponent(const float phase) const {
     return Quantity::getSinComponent(phase);
 }
 
+float Signal::getCosHyperbola(const float phase) const {
+    return Quantity::getCosHyperbola(phase);
+}
+
+float Signal::getSinHyperbola(const float phase) const {
+    return Quantity::getSinHyperbola(phase);
+}
+
 const std::complex<float> Signal::getComplex(const float value, const float direction) {
     return Quantity::getComplex(value, direction);
 }

@@ -21,15 +21,12 @@
 #ifndef SHP_QUANTITY_H
 #define SHP_QUANTITY_H
 
-#include <cmath>
-#include <complex>
+#include "bound.h"
 #include "unit.h"
 
 namespace shp {
 
-class Quantity {
-    float magnitude;
-    short int scaling;
+class Quantity : private Bound {
     Unit unit;
 public:
     // Constructors
@@ -62,19 +59,19 @@ public:
     Quantity operator%(const Quantity& peer) const;
 
     // Getters
-    float getMagnitude() const { return magnitude; }
-    short int getScaling() const { return scaling; }
     Unit getUnit() const { return unit; }
 
     // Setters
-    void setMagnitude(const float amount) { this->magnitude = amount; }
-    void setScaling(const short int factor) { this->scaling = factor; }
     void setUnit(const Unit& object) { this->unit = object; }
 
     // Additional methods
+    float getMagnitude() const;
+    void setMagnitude(const float value);
     void setMagnitude(const float value, const short int scale);
     void setMagnitude(const float value, const short int scale, const std::string unit);
     void setMagnitude(const float value, const short int scale, const Unit& unit);
+    short int getScaling() const;
+    void setScaling(const short int factor);
     void setUnit(const std::string name);
     double getZeroScale() const;            // convert value assuming scaling is zero
     Quantity getAbsolute() const;
@@ -104,6 +101,8 @@ public:
     std::string printPrefixed() const;
     float getCosComponent(const float phase) const;
     float getSinComponent(const float phase) const;
+    float getCosHyperbola(const float phase) const;
+    float getSinHyperbola(const float phase) const;
 protected:
     static const std::complex<float> getComplex(const float value, const float direction);
 public:

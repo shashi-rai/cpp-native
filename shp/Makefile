@@ -49,13 +49,16 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/area.o \
 		$(OBJFOLDR)/axis.o \
 		$(OBJFOLDR)/azimuth.o \
+		$(OBJFOLDR)/bound.o \
 		$(OBJFOLDR)/cellular.o \
 		$(OBJFOLDR)/change.o \
 		$(OBJFOLDR)/confinement.o \
+		$(OBJFOLDR)/constraint.o \
 		$(OBJFOLDR)/coordinate.o \
 		$(OBJFOLDR)/curvature.o \
 		$(OBJFOLDR)/direction.o \
 		$(OBJFOLDR)/distance.o \
+		$(OBJFOLDR)/exception.o \
 		$(OBJFOLDR)/frame.o \
 		$(OBJFOLDR)/frequency.o \
 		$(OBJFOLDR)/intrinsic.o \
@@ -82,13 +85,16 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/area.o \
 		$(OBJFOLDR)/axis.o \
 		$(OBJFOLDR)/azimuth.o \
+		$(OBJFOLDR)/bound.o \
 		$(OBJFOLDR)/cellular.o \
 		$(OBJFOLDR)/change.o \
 		$(OBJFOLDR)/confinement.o \
+		$(OBJFOLDR)/constraint.o \
 		$(OBJFOLDR)/coordinate.o \
 		$(OBJFOLDR)/curvature.o \
 		$(OBJFOLDR)/direction.o \
 		$(OBJFOLDR)/distance.o \
+		$(OBJFOLDR)/exception.o \
 		$(OBJFOLDR)/frame.o \
 		$(OBJFOLDR)/frequency.o \
 		$(OBJFOLDR)/intrinsic.o \
@@ -123,6 +129,9 @@ $(OBJFOLDR)/axis.o: axis.cpp
 $(OBJFOLDR)/azimuth.o: azimuth.cpp
 	$(CPPTOOL) -c azimuth.cpp -o $(OBJFOLDR)/azimuth.o $(CXXFLAGS)
 
+$(OBJFOLDR)/bound.o: bound.cpp
+	$(CPPTOOL) -c bound.cpp -o $(OBJFOLDR)/bound.o $(CXXFLAGS)
+
 $(OBJFOLDR)/cellular.o: cellular.cpp
 	$(CPPTOOL) -c cellular.cpp -o $(OBJFOLDR)/cellular.o $(CXXFLAGS)
 
@@ -131,6 +140,9 @@ $(OBJFOLDR)/change.o: change.cpp
 
 $(OBJFOLDR)/confinement.o: confinement.cpp
 	$(CPPTOOL) -c confinement.cpp -o $(OBJFOLDR)/confinement.o $(CXXFLAGS)
+
+$(OBJFOLDR)/constraint.o: constraint.cpp
+	$(CPPTOOL) -c constraint.cpp -o $(OBJFOLDR)/constraint.o $(CXXFLAGS)
 
 $(OBJFOLDR)/coordinate.o: coordinate.cpp
 	$(CPPTOOL) -c coordinate.cpp -o $(OBJFOLDR)/coordinate.o $(CXXFLAGS)
@@ -143,6 +155,9 @@ $(OBJFOLDR)/direction.o: direction.cpp
 
 $(OBJFOLDR)/distance.o: distance.cpp
 	$(CPPTOOL) -c distance.cpp -o $(OBJFOLDR)/distance.o $(CXXFLAGS)
+
+$(OBJFOLDR)/exception.o: exception.cpp
+	$(CPPTOOL) -c exception.cpp -o $(OBJFOLDR)/exception.o $(CXXFLAGS)
 
 $(OBJFOLDR)/frame.o: frame.cpp
 	$(CPPTOOL) -c frame.cpp -o $(OBJFOLDR)/frame.o $(CXXFLAGS)
