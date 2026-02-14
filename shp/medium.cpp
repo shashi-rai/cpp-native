@@ -477,12 +477,14 @@ Medium::~Medium() {
 
 bool Medium::operator==(const Medium& peer) const {
     return (static_cast<const Distance&>(*this) == static_cast<const Distance&>(peer))
-        && (name == peer.name);
+        && (transform == peer.transform) && (name == peer.name);
 }
 
 bool Medium::operator<(const Medium& peer) const {
     Medium self = *this; bool result = false;
     if (static_cast<const Distance&>(*this) < static_cast<const Distance&>(peer)) {
+        result = true;
+    } else if (transform < peer.transform){
         result = true;
     }
     return result;
@@ -491,6 +493,8 @@ bool Medium::operator<(const Medium& peer) const {
 bool Medium::operator>(const Medium& peer) const {
     Medium self = *this; bool result = false;
     if (static_cast<const Distance&>(*this) > static_cast<const Distance&>(peer)) {
+        result = true;
+    } else if (transform > peer.transform){
         result = true;
     }
     return result;
@@ -918,7 +922,7 @@ float Medium::getDiffusionFraction(const Intrinsic& peer) const {
 }
 
 Direction Medium::getMobilityCurrent() const {
-    return Distance::getVertical().getCurrent();
+    return Distance::getHorizontal().getCurrent();
 }
 
 Azimuth Medium::getMobilityFactor() const {
@@ -937,8 +941,8 @@ void Medium::setMobilityShift(const float degree) {
     Distance::setHorizontalCurvature(degree);
 }
 
-void Medium::setMobilityShift(const Azimuth& threshold) {
-    Distance::setHorizontal(threshold);
+void Medium::setMobilityShift(const Azimuth& current) {
+    Distance::setHorizontal(current);
 }
 
 float Medium::getMobilityCyclingRate() const {

@@ -22,15 +22,22 @@
 
 namespace grt {
 
-Asteroid::Asteroid() : Celestial(), satellites() {
+Asteroid::Asteroid()
+        : Celestial(), satellites() {
 
 }
 
-Asteroid::Asteroid(std::string name) : Celestial(name), satellites() {
+Asteroid::Asteroid(const SatelliteArray& satellites)
+        : Celestial(), satellites(satellites) {
 
 }
 
-Asteroid::Asteroid(std::string name, const SatelliteArray& satellites)
+Asteroid::Asteroid(const std::string name)
+        : Celestial(name), satellites() {
+
+}
+
+Asteroid::Asteroid(const std::string name, const SatelliteArray& satellites)
         : Celestial(name), satellites(satellites) {
 
 }
@@ -40,7 +47,8 @@ Asteroid::~Asteroid() {
 }
 
 bool Asteroid::operator==(const Asteroid& peer) const {
-    return (satellites == peer.satellites);
+    return (static_cast<const grt::Celestial&>(*this) == static_cast<const grt::Celestial&>(peer))
+        && (satellites == peer.satellites);
 }
 
 Asteroid Asteroid::operator+(const Asteroid& peer) const {
@@ -64,7 +72,7 @@ int Asteroid::getSatelliteCount() const {
     return satellites.size();
 }
 
-Satellite Asteroid::get(int index) const {
+Satellite Asteroid::get(const int index) const {
     Satellite result;
     if (index < 0) {
         return result;
@@ -75,7 +83,7 @@ Satellite Asteroid::get(int index) const {
     return satellites[index];
 }
 
-void Asteroid::set(int index, const Satellite& object) {
+void Asteroid::set(const int index, const Satellite& object) {
     if (index < 0) {
         return;
     }
@@ -92,8 +100,8 @@ void Asteroid::set(int index, const Satellite& object) {
     return;
 }
 
-Celestial Asteroid::copy() {
-    Asteroid fresh(getName(), satellites);
+Asteroid Asteroid::copy() {
+    Asteroid fresh(Celestial::getName(), this->satellites);
     return fresh;
 }
 
@@ -103,11 +111,25 @@ void Asteroid::clear() {
     return;
 }
 
-std::string Asteroid::print() {
+std::string Asteroid::print() const {
     std::stringstream result;
     result << "(A:";
-	result << Celestial::print() << ",sz:";
-	result << satellites.size() << ")";
+	result << Celestial::print();
+	result << printSatellites() << ")";
+	return result.str();
+}
+
+std::string Asteroid::printSatellites() const {
+    std::stringstream result; int size = satellites.size();
+    if (size > 0) {
+        result << ",sz:";
+	    result << satellites.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << satellites[i].print() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

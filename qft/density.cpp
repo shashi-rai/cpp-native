@@ -210,6 +210,12 @@ Density::Density(const float parameter, const short int scaling, const shp::Unit
 	this->setVolume(volume);
 }
 
+Density::Density(const float parameter, const short int scaling,
+        const shp::Unit& unit, const shp::Signal& modulation, const shp::Signal& volume)
+        : shp::Medium(parameter, scaling, unit, modulation) {
+	this->setVolume(volume);
+}
+
 Density::Density(const shp::Signal& modulation)
         : shp::Medium(modulation) {
 	this->setVolume(DEFAULT_VOLUME);

@@ -21,10 +21,7 @@
 #ifndef GRT_SATELLITE_H
 #define GRT_SATELLITE_H
 
-#include <string>
-#include <vector>
 #include "celestial.h"
-#include "../shp/shape.h"
 
 namespace grt {
 
@@ -33,12 +30,12 @@ class Satellite : public Celestial {
 public:
     // Constructors
     Satellite();
-    Satellite(std::string name);
-    Satellite(std::string name, const CelestialArray& objects);
+    Satellite(const CelestialArray& objects);
+    Satellite(const std::string name);
+    Satellite(const std::string name, const CelestialArray& objects);
 
     // Destructors
     ~Satellite();
-
 
     // Operator overloading
     bool operator==(const Satellite& peer) const;
@@ -46,8 +43,8 @@ public:
     Satellite operator-(const Satellite& peer) const;
 
     // Access operator
-    Celestial& operator()(int x) { return celestials[x]; }
-    const Celestial& operator()(int x) const { return celestials[x]; }
+    Celestial& operator()(const int x) { return celestials[x]; }
+    const Celestial& operator()(const int x) const { return celestials[x]; }
 
     // Getters
     CelestialArray getCelestials() const { return celestials; }
@@ -57,11 +54,12 @@ public:
 
     // Additional methods
     int getCelestialCount() const;
-    Celestial get(int index) const;
-    void set(int index, const Celestial& object);
-    virtual Celestial copy();
+    Celestial get(const int index) const;
+    void set(const int index, const Celestial& object);
+    Satellite copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printCelestials() const;
 public:
     static const shp::Distance getMoonRadius();
     static const qft::Mass getMoonMass();

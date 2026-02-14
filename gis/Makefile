@@ -47,23 +47,32 @@ clean-libs: clean-custom
 $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/address.o \
 		$(OBJFOLDR)/earth.o \
+		$(OBJFOLDR)/hall.o \
 		$(OBJFOLDR)/indoor.o \
 		$(OBJFOLDR)/location.o \
 		$(OBJFOLDR)/outdoor.o \
-		$(OBJFOLDR)/territory.o
+		$(OBJFOLDR)/rack.o \
+		$(OBJFOLDR)/territory.o \
+		$(OBJFOLDR)/zone.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
 		$(OBJFOLDR)/address.o \
-		$(OBJFOLDR)/indoor.o \
 		$(OBJFOLDR)/earth.o \
+		$(OBJFOLDR)/hall.o \
+		$(OBJFOLDR)/indoor.o \
 		$(OBJFOLDR)/location.o \
 		$(OBJFOLDR)/outdoor.o \
-		$(OBJFOLDR)/territory.o
+		$(OBJFOLDR)/rack.o \
+		$(OBJFOLDR)/territory.o \
+		$(OBJFOLDR)/zone.o
 
 $(OBJFOLDR)/address.o: address.cpp
 	$(CPPTOOL) -c address.cpp -o $(OBJFOLDR)/address.o $(CXXFLAGS)
 
 $(OBJFOLDR)/earth.o: earth.cpp
 	$(CPPTOOL) -c earth.cpp -o $(OBJFOLDR)/earth.o $(CXXFLAGS)
+
+$(OBJFOLDR)/hall.o: hall.cpp
+	$(CPPTOOL) -c hall.cpp -o $(OBJFOLDR)/hall.o $(CXXFLAGS)
 
 $(OBJFOLDR)/indoor.o: indoor.cpp
 	$(CPPTOOL) -c indoor.cpp -o $(OBJFOLDR)/indoor.o $(CXXFLAGS)
@@ -74,5 +83,11 @@ $(OBJFOLDR)/location.o: location.cpp
 $(OBJFOLDR)/outdoor.o: outdoor.cpp
 	$(CPPTOOL) -c outdoor.cpp -o $(OBJFOLDR)/outdoor.o $(CXXFLAGS)
 
+$(OBJFOLDR)/rack.o: rack.cpp
+	$(CPPTOOL) -c rack.cpp -o $(OBJFOLDR)/rack.o $(CXXFLAGS)
+
 $(OBJFOLDR)/territory.o: territory.cpp
 	$(CPPTOOL) -c territory.cpp -o $(OBJFOLDR)/territory.o $(CXXFLAGS)
+
+$(OBJFOLDR)/zone.o: zone.cpp
+	$(CPPTOOL) -c zone.cpp -o $(OBJFOLDR)/zone.o $(CXXFLAGS)

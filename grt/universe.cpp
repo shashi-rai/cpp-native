@@ -27,15 +27,22 @@ const float Universe::MASS = 1.0f;          // 1.0x10^53 kg
 const float Universe::DENSITY = 2.56f;      // 2.56x10^-27 kg/m^3
 const float Universe::GRAVITY = 6.6743015f; // 6.6743015x10^-11 N.m²/kg²
 
-Universe::Universe() : Celestial(), galaxies() {
+Universe::Universe()
+        : Celestial(), galaxies() {
 
 }
 
-Universe::Universe(std::string name) : Celestial(name), galaxies() {
+Universe::Universe(const GalaxyArray& galaxies)
+    : Celestial(), galaxies(galaxies) {
 
 }
 
-Universe::Universe(std::string name, const GalaxyArray& galaxies)
+Universe::Universe(const std::string name)
+        : Celestial(name), galaxies() {
+
+}
+
+Universe::Universe(const std::string name, const GalaxyArray& galaxies)
     : Celestial(name), galaxies(galaxies) {
 
 }
@@ -45,7 +52,8 @@ Universe::~Universe() {
 }
 
 bool Universe::operator==(const Universe& peer) const {
-    return (galaxies == peer.galaxies);
+    return (static_cast<const grt::Celestial&>(*this) == static_cast<const grt::Celestial&>(peer))
+        && (galaxies == peer.galaxies);
 }
 
 Universe Universe::operator+(const Universe& peer) const {
@@ -69,7 +77,7 @@ int Universe::getGalaxyCount() const {
     return galaxies.size();
 }
 
-Galaxy Universe::get(int index) const {
+Galaxy Universe::get(const int index) const {
     Galaxy result;
     if (index < 0) {
         return result;
@@ -80,7 +88,7 @@ Galaxy Universe::get(int index) const {
     return galaxies[index];
 }
 
-void Universe::set(int index, const Galaxy& object) {
+void Universe::set(const int index, const Galaxy& object) {
     if (index < 0) {
         return;
     }
@@ -120,8 +128,8 @@ const shp::Potential Universe::getGravity() {
     return shp::Potential(highGravity, lowGravity, scaling, shp::Unit("N.m²/kg²"), getRadius());
 }
 
-Celestial Universe::copy() {
-    Universe fresh(getName(), galaxies);
+Universe Universe::copy() {
+    Universe fresh(Celestial::getName(), this->galaxies);
     return fresh;
 }
 
@@ -131,11 +139,25 @@ void Universe::clear() {
     return;
 }
 
-std::string Universe::print() {
+std::string Universe::print() const {
     std::stringstream result;
     result << "(U:";
-	result << Celestial::print() << ",sz:";
-	result << galaxies.size() << ")";
+	result << Celestial::print();
+	result << printGalaxies() << ")";
+	return result.str();
+}
+
+std::string Universe::printGalaxies() const {
+    std::stringstream result; int size = galaxies.size();
+    if (size > 0) {
+        result << ",sz:";
+	    result << galaxies.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << galaxies[i].print() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

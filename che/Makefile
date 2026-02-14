@@ -48,6 +48,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/atom.o \
 		$(OBJFOLDR)/bond.o \
 		$(OBJFOLDR)/chain.o \
+		$(OBJFOLDR)/electrolyte.o \
 		$(OBJFOLDR)/molecule.o \
 		$(OBJFOLDR)/nucleus.o \
 		$(OBJFOLDR)/orbital.o \
@@ -59,6 +60,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/atom.o \
 		$(OBJFOLDR)/bond.o \
 		$(OBJFOLDR)/chain.o \
+		$(OBJFOLDR)/electrolyte.o \
 		$(OBJFOLDR)/molecule.o \
 		$(OBJFOLDR)/nucleus.o \
 		$(OBJFOLDR)/orbital.o \
@@ -75,6 +77,9 @@ $(OBJFOLDR)/bond.o: bond.cpp
 
 $(OBJFOLDR)/chain.o: chain.cpp
 	$(CPPTOOL) -c chain.cpp -o $(OBJFOLDR)/chain.o $(CXXFLAGS)
+
+$(OBJFOLDR)/electrolyte.o: electrolyte.cpp
+	$(CPPTOOL) -c electrolyte.cpp -o $(OBJFOLDR)/electrolyte.o $(CXXFLAGS)
 
 $(OBJFOLDR)/molecule.o: molecule.cpp
 	$(CPPTOOL) -c molecule.cpp -o $(OBJFOLDR)/molecule.o $(CXXFLAGS)

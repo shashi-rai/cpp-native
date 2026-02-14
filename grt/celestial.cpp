@@ -32,17 +32,17 @@ Celestial::Celestial()
     setOrbit(nullptr);
 }
 
-Celestial::Celestial(std::string name)
+Celestial::Celestial(const std::string name)
         : Shape(name), mass(), gravity() {
     setOrbit(nullptr);
 }
 
-Celestial::Celestial(std::shared_ptr<grt::Orbit> orbit)
+Celestial::Celestial(const std::shared_ptr<grt::Orbit> orbit)
         : Shape(), mass(), gravity() {
     setOrbit(orbit);
 }
 
-Celestial::Celestial(std::string name, std::shared_ptr<grt::Orbit> orbit)
+Celestial::Celestial(const std::string name, const std::shared_ptr<grt::Orbit> orbit)
         : Shape(name), mass(), gravity() {
     setOrbit(orbit);
 }
@@ -52,17 +52,17 @@ Celestial::Celestial(const qft::Mass& mass)
     setOrbit(nullptr);
 }
 
-Celestial::Celestial(const qft::Mass& mass, std::shared_ptr<grt::Orbit> orbit)
+Celestial::Celestial(const qft::Mass& mass, const std::shared_ptr<grt::Orbit> orbit)
         : Shape(), mass(mass), gravity() {
     setOrbit(orbit);
 }
 
-Celestial::Celestial(std::string name, const qft::Mass& mass)
+Celestial::Celestial(const std::string name, const qft::Mass& mass)
         : Shape(name), mass(mass), gravity() {
     setOrbit(nullptr);
 }
 
-Celestial::Celestial(std::string name, const qft::Mass& mass, std::shared_ptr<grt::Orbit> orbit)
+Celestial::Celestial(const std::string name, const qft::Mass& mass, const std::shared_ptr<grt::Orbit> orbit)
         : Shape(name), mass(mass), gravity() {
     setOrbit(orbit);
 }
@@ -72,35 +72,39 @@ Celestial::Celestial(const shp::Potential& gravity)
     setOrbit(nullptr);
 }
 
-Celestial::Celestial(const shp::Potential& gravity, std::shared_ptr<grt::Orbit> orbit)
+Celestial::Celestial(const shp::Potential& gravity, const std::shared_ptr<grt::Orbit> orbit)
         : Shape(), mass(), gravity(gravity) {
     setOrbit(orbit);
 }
 
-Celestial::Celestial(std::string name, const shp::Potential& gravity)
+Celestial::Celestial(const std::string name, const shp::Potential& gravity)
         : Shape(name), mass(), gravity(gravity) {
     setOrbit(nullptr);
 }
 
-Celestial::Celestial(std::string name, const shp::Potential& gravity,
+Celestial::Celestial(const std::string name, const shp::Potential& gravity,
         std::shared_ptr<grt::Orbit> orbit)
         : Shape(name), mass(), gravity(gravity) {
     setOrbit(orbit);
 }
 
-Celestial::Celestial(std::string name, const qft::Mass& mass, const shp::Potential& gravity)
+Celestial::Celestial(const std::string name, const qft::Mass& mass, const shp::Potential& gravity)
         : Shape(name), mass(mass), gravity(gravity) {
     setOrbit(nullptr);
 }
 
-Celestial::Celestial(std::string name, const qft::Mass& mass, const shp::Potential& gravity,
-        std::shared_ptr<grt::Orbit> orbit)
+Celestial::Celestial(const std::string name, const qft::Mass& mass, const shp::Potential& gravity,
+        const std::shared_ptr<grt::Orbit> orbit)
         : Shape(name), mass(mass), gravity(gravity) {
     setOrbit(orbit);
 }
 
 Celestial::~Celestial() {
     setOrbit(nullptr);
+}
+
+bool Celestial::isOrbited() const {
+    return (orbit != nullptr);
 }
 
 shp::Distance Celestial::getRadius() const {
@@ -112,19 +116,31 @@ void Celestial::setRadius(const shp::Distance& length) {
 }
 
 float Celestial::getRotation() const {
-    return orbit->getRotation();
+    float result;
+    if (isOrbited()) {
+        result = orbit->getRotation();
+    }
+    return result;
 }
 
 void Celestial::setRotation(const float value) {
-    orbit->setRotation(value);
+    if (isOrbited()) {
+        orbit->setRotation(value);
+    }
 }
 
 float Celestial::getRevolution() const {
-    return orbit->getRevolution();
+    float result;
+    if (isOrbited()) {
+        result = orbit->getRevolution();
+    }
+    return result;
 }
 
 void Celestial::setRevolution(const float value) {
-    orbit->setRevolution(value);
+    if (isOrbited()) {
+        orbit->setRevolution(value);
+    }
 }
 
 const shp::Distance Celestial::getLightYear() {
@@ -132,24 +148,24 @@ const shp::Distance Celestial::getLightYear() {
 }
 
 Celestial Celestial::copy() {
-    Celestial fresh(getName(), mass, gravity, orbit);
+    Celestial fresh(this->getName(), this->mass, this->gravity, this->orbit);
     return fresh;
 }
 
 void Celestial::clear() {
-	Celestial::clear();
+    shp::Shape::clear();
 	mass.clear();
     gravity.clear();
     return;
 }
 
-std::string Celestial::print() {
+std::string Celestial::print() const {
     std::stringstream result;
     result << "(C:";
 	result << Shape::print() << ",m:";
 	result << mass.print() << ",g:";
     result << gravity.print() << ",";
-    result << (orbit != nullptr ? orbit->print() : "");
+    result << (isOrbited() ? orbit->print() : "");
     result << ")";
 	return result.str();
 }

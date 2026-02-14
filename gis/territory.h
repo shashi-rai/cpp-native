@@ -22,7 +22,6 @@
 #define GIS_TERRITORY_H
 
 #include "address.h"
-#include "location.h"
 #include "../shp/point.h"
 
 namespace gis {
@@ -54,9 +53,9 @@ public:
     void setAddress(const Address& place) { address = place; }
 
     // Additional methods
-    virtual Point copy();
+    Territory copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 };
 
 typedef std::vector<Territory > TerritoryArray;

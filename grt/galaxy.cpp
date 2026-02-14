@@ -27,15 +27,22 @@ const float Galaxy::MILKYWAY_MASS = 1.5f;           // 1.0~1.5x10^12 solar mass
 const float Galaxy::MILKYWAY_DENSITY = 1.0f;        // 1.0x10^-21 kg/m^3
 const float Galaxy::MILKYWAY_GRAVITY = 3.54f;       // 3.54x10^6 m/s²
 
-Galaxy::Galaxy() : Celestial(), stars() {
+Galaxy::Galaxy()
+        : Celestial(), stars() {
 
 }
 
-Galaxy::Galaxy(std::string name) : Celestial(name), stars() {
+Galaxy::Galaxy(const StarArray& stars)
+        : Celestial(), stars(stars) {
 
 }
 
-Galaxy::Galaxy(std::string name, const StarArray& stars)
+Galaxy::Galaxy(const std::string name)
+        : Celestial(name), stars() {
+
+}
+
+Galaxy::Galaxy(const std::string name, const StarArray& stars)
         : Celestial(name), stars(stars) {
 
 }
@@ -45,7 +52,8 @@ Galaxy::~Galaxy() {
 }
 
 bool Galaxy::operator==(const Galaxy& peer) const {
-    return (stars == peer.stars);
+    return (static_cast<const grt::Celestial&>(*this) == static_cast<const grt::Celestial&>(peer))
+        && (stars == peer.stars);
 }
 
 Galaxy Galaxy::operator+(const Galaxy& peer) const {
@@ -69,7 +77,7 @@ int Galaxy::getStarCount() const {
     return stars.size();
 }
 
-Star Galaxy::get(int index) const {
+Star Galaxy::get(const int index) const {
     Star result;
     if (index < 0) {
         return result;
@@ -80,7 +88,7 @@ Star Galaxy::get(int index) const {
     return stars[index];
 }
 
-void Galaxy::set(int index, const Star& object) {
+void Galaxy::set(const int index, const Star& object) {
     if (index < 0) {
         return;
     }
@@ -123,8 +131,8 @@ const shp::Potential Galaxy::getMilkywayGravity() {
         shp::Unit(Celestial::GRAVITY_UNIT), getMilkywayRadius());
 }
 
-Celestial Galaxy::copy() {
-    Galaxy fresh(getName(), stars);
+Galaxy Galaxy::copy() {
+    Galaxy fresh(Celestial::getName(), this->stars);
     return fresh;
 }
 
@@ -134,11 +142,25 @@ void Galaxy::clear() {
     return;
 }
 
-std::string Galaxy::print() {
+std::string Galaxy::print() const {
     std::stringstream result;
     result << "(G:";
-	result << Celestial::print() << ",sz:";
-	result << stars.size() << ")";
+	result << Celestial::print();
+	result << printStars() << ")";
+	return result.str();
+}
+
+std::string Galaxy::printStars() const {
+    std::stringstream result; int size = stars.size();
+    if (size > 0) {
+        result << ",sz:";
+	    result << stars.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << stars[i].print() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

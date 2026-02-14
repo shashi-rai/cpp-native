@@ -82,7 +82,7 @@ void Outdoor::clear() {
     return;
 }
 
-std::string Outdoor::print() {
+std::string Outdoor::print() const {
     std::stringstream result;
     result << "(bldg:";
     result << building << ",pl:";

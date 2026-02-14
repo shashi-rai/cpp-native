@@ -31,6 +31,7 @@ class Earth : public grt::Planet {
 public:
     // Constructors
     Earth();
+    Earth(const TerritoryArray& objects);
     Earth(const std::string name);
     Earth(const std::string name, const TerritoryArray& objects);
 
@@ -56,9 +57,10 @@ public:
     int getTerritoryCount() const;
     Territory get(const int index) const;
     void set(const int index, const Territory& object);
-    virtual Celestial copy();
+    Earth copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printTerritories() const;
 };
 
 typedef std::vector<Earth > EarthArray;

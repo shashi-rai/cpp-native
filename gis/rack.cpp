@@ -18,49 +18,42 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef GIS_INDOOR_H
-#define GIS_INDOOR_H
-
-#include <sstream>
-#include <vector>
+#include "rack.h"
 
 namespace gis {
 
-class Indoor {
-    std::string room;
-    std::string unit;
-    std::string floor;
-public:
-    // Constructors
-    Indoor();
-    Indoor(const std::string room);
-    Indoor(const std::string room, const std::string unit);
-    Indoor(const std::string room, const std::string unit, const std::string floor);
+Rack::Rack()
+        : name() {
 
-    // Destructors
-    ~Indoor();
+}
 
-    // Operator overloading
-    bool operator==(const Indoor& peer) const;
+Rack::Rack(const std::string name)
+        : name(name) {
 
-    // Getters
-    std::string getRoom() const { return room; }
-    std::string getUnit() const { return unit; }
-    std::string getFloor() const { return floor; }
+}
 
-    // Setters
-    void setRoom(const std::string name) { this->room = name; }
-    void setUnit(const std::string name) { this->unit = name; }
-    void setFloor(const std::string name) { this->floor = name; }
+Rack::~Rack() {
 
-    // Additional methods
-    Indoor copy();
-    virtual void clear();
-    virtual std::string print() const;
-};
+}
 
-typedef std::vector<Indoor > IndoorArray;
+bool Rack::operator==(const Rack& peer) const {
+    return (name == peer.name);
+}
+
+Rack Rack::copy() {
+    Rack fresh(this->getName());
+    return fresh;
+}
+
+void Rack::clear() {
+    name.clear();
+    return;
+}
+
+std::string Rack::print() const {
+    std::stringstream result;
+    result << name;
+	return result.str();
+}
 
 } // namespace gis
-
-#endif //GIS_INDOOR_H

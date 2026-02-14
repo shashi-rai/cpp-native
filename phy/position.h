@@ -22,15 +22,16 @@
 #define PHY_POSITION_H
 
 #include <cmath>
+#include <iomanip>
 #include <sstream>
 #include <vector>
 
 namespace phy {
 
 class Position {
-    double x;
-    double y;
-    double z;
+    double x;       // Azimuthal Plane
+    double y;       // Azimuthal Plane
+    double z;       // Polar / Elevation
 public:
     // Constructors
     Position();
@@ -43,6 +44,10 @@ public:
 
     // Operator overloading
     bool operator==(const Position& peer) const;
+    bool operator<(const Position& peer) const;
+    bool operator>(const Position& peer) const;
+    bool operator<=(const Position& peer) const;
+    bool operator>=(const Position& peer) const;
     Position operator+(const Position& peer) const;
     Position operator-(const Position& peer) const;
     Position operator*(const Position& peer) const;
@@ -60,12 +65,26 @@ public:
     void setZ(const double value) { this->z = value; }
 
     // Additional methods
-    virtual Position copy();
+    double getDiagonal() const;
+    Position copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 
 public:
+    static const long double getPiValue();
+    static const long double toRadians(long double degree);
+    static const double getAzimuthAngle(const Position& a, const Position& b);
+    static const double getPolarAngle(const Position& a, const Position& b);
+    static const double getAzimuthRadians(const Position& a, const Position& b);
+    static const double getPolarRadians(const Position& a, const Position& b);
+    static const double getAzimuthDegrees(const Position& a, const Position& b);
+    static const double getPolarDegrees(const Position& a, const Position& b);
+public:
     static const double ORIGIN;
+    static const double DEGREE_QUADRANT_1;
+    static const double DEGREE_QUADRANT_2;
+    static const double DEGREE_QUADRANT_3;
+    static const double DEGREE_QUADRANT_4;
 };
 
 typedef std::vector<Position > PositionArray;

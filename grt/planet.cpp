@@ -28,15 +28,22 @@ const float Planet::EARTH_DENSITY = 5515.0f;    // 5,515 kg/m^3
 const float Planet::EARTH_GRAVITY = 9.80665f;   // 9.80665 m/s²
 const float Planet::EARTH_TO_SUN = 1.5f;        // 150 million km
 
-Planet::Planet() : Celestial(), satellites() {
+Planet::Planet()
+        : Celestial(), satellites() {
 
 }
 
-Planet::Planet(std::string name) : Celestial(name), satellites() {
+Planet::Planet( const SatelliteArray& satellites)
+        : Celestial(), satellites(satellites) {
 
 }
 
-Planet::Planet(std::string name, const SatelliteArray& satellites)
+Planet::Planet(const std::string name)
+        : Celestial(name), satellites() {
+
+}
+
+Planet::Planet(const std::string name, const SatelliteArray& satellites)
         : Celestial(name), satellites(satellites) {
 
 }
@@ -46,7 +53,8 @@ Planet::~Planet() {
 }
 
 bool Planet::operator==(const Planet& peer) const {
-    return (satellites == peer.satellites);
+    return (static_cast<const grt::Celestial&>(*this) == static_cast<const grt::Celestial&>(peer))
+        && (satellites == peer.satellites);
 }
 
 Planet Planet::operator+(const Planet& peer) const {
@@ -70,7 +78,7 @@ int Planet::getSatelliteCount() const {
     return satellites.size();
 }
 
-Satellite Planet::get(int index) const {
+Satellite Planet::get(const int index) const {
     Satellite result;
     if (index < 0) {
         return result;
@@ -81,7 +89,7 @@ Satellite Planet::get(int index) const {
     return satellites[index];
 }
 
-void Planet::set(int index, const Satellite& object) {
+void Planet::set(const int index, const Satellite& object) {
     if (index < 0) {
         return;
     }
@@ -119,8 +127,8 @@ const shp::Distance Planet::getEarthToSun() {
     return shp::Distance(Planet::EARTH_TO_SUN, 11);
 }
 
-Celestial Planet::copy() {
-    Planet fresh(getName(), satellites);
+Planet Planet::copy() {
+    Planet fresh(Celestial::getName(), this->satellites);
     return fresh;
 }
 
@@ -130,11 +138,26 @@ void Planet::clear() {
     return;
 }
 
-std::string Planet::print() {
+std::string Planet::print() const {
     std::stringstream result;
     result << "(P:";
-	result << Celestial::print() << ",sz:";
-	result << satellites.size() << ")";
+	result << Celestial::print();
+	result << printSatellites();
+    result << ")";
+	return result.str();
+}
+
+std::string Planet::printSatellites() const {
+    std::stringstream result; int size = satellites.size();
+    if (size > 0) {
+        result << ",sz:";
+	    result << satellites.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << satellites[i].print() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

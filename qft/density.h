@@ -65,6 +65,7 @@ public:
     Density(const float parameter, const short int scaling, const shp::Unit& unit, const shp::Signal& modulation, const float volume);
     Density(const float parameter, const short int scaling, const std::string unit, const shp::Signal& modulation, const shp::Volume& volume);
     Density(const float parameter, const short int scaling, const shp::Unit& unit, const shp::Signal& modulation, const shp::Volume& volume);
+    Density(const float parameter, const short int scaling, const shp::Unit& unit, const shp::Signal& modulation, const shp::Signal& volume);
     Density(const shp::Signal& modulation);
     Density(const shp::Signal& modulation, const float volume);
     Density(const shp::Signal& modulation, const shp::Volume& volume);

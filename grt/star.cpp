@@ -28,15 +28,22 @@ const float Star::SUN_DENSITY = 1410.0f;    // 1410 kg/m^3
 const float Star::SUN_GRAVITY = 274.0f;     // 274.0 m/s²
 const float Star::SUN_TO_HORIZON = 2.55f;   // 2.55x10^20 m (27,000 light years)
 
-Star::Star() : Celestial(), planets() {
+Star::Star()
+        : Celestial(), planets() {
 
 }
 
-Star::Star(std::string name) : Celestial(name), planets() {
+Star::Star(const PlanetArray& planets)
+        : Celestial(), planets(planets) {
 
 }
 
-Star::Star(std::string name, const PlanetArray& planets)
+Star::Star(const std::string name)
+        : Celestial(name), planets() {
+
+}
+
+Star::Star(const std::string name, const PlanetArray& planets)
         : Celestial(name), planets(planets) {
 
 }
@@ -46,7 +53,8 @@ Star::~Star() {
 }
 
 bool Star::operator==(const Star& peer) const {
-    return (planets == peer.planets);
+    return (static_cast<const grt::Celestial&>(*this) == static_cast<const grt::Celestial&>(peer))
+        && (planets == peer.planets);
 }
 
 Star Star::operator+(const Star& peer) const {
@@ -70,7 +78,7 @@ int Star::getPlanetCount() const {
     return planets.size();
 }
 
-Planet Star::get(int index) const {
+Planet Star::get(const int index) const {
     Planet result;
     if (index < 0) {
         return result;
@@ -81,7 +89,7 @@ Planet Star::get(int index) const {
     return planets[index];
 }
 
-void Star::set(int index, const Planet& object) {
+void Star::set(const int index, const Planet& object) {
     if (index < 0) {
         return;
     }
@@ -119,8 +127,8 @@ const shp::Distance Star::getSunToHorizon() {
     return shp::Distance(Star::SUN_TO_HORIZON, 20);
 }
 
-Celestial Star::copy() {
-    Star fresh(getName(), planets);
+Star Star::copy() {
+    Star fresh(Celestial::getName(), this->planets);
     return fresh;
 }
 
@@ -130,11 +138,25 @@ void Star::clear() {
     return;
 }
 
-std::string Star::print() {
+std::string Star::print() const {
     std::stringstream result;
     result << "(S:";
-	result << Celestial::print() << ",sz:";
-	result << planets.size() << ")";
+	result << Celestial::print();
+	result << printPlanets() << ")";
+	return result.str();
+}
+
+std::string Star::printPlanets() const {
+    std::stringstream result; int size = planets.size();
+    if (size > 0) {
+        result << ",sz:";
+	    result << planets.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << planets[i].print() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

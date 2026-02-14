@@ -74,7 +74,7 @@ bool Address::isLocated() const {
 }
 
 Address Address::copy() {
-    Address fresh(indoor, outdoor, location);
+    Address fresh(this->indoor, this->outdoor, this->location);
     return fresh;
 }
 
@@ -85,7 +85,7 @@ void Address::clear() {
     return;
 }
 
-std::string Address::print() {
+std::string Address::print() const {
     std::stringstream result;
     result << "[" << (isLocated() ? location->print() : DEFAULT_VALUE) << ",";
     result << indoor.print() << ",";

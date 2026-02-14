@@ -22,11 +22,13 @@
 
 namespace grt {
 
-Orbit::Orbit() : Shape(), major(), minor() {
+Orbit::Orbit()
+        : Shape(), major(), minor() {
 
 }
 
-Orbit::Orbit(std::string name) : Shape(name), major(), minor() {
+Orbit::Orbit(const std::string name)
+        : Shape(name), major(), minor() {
 
 }
 
@@ -40,12 +42,12 @@ Orbit::Orbit(const shp::Distance& major, const shp::Distance& minor)
 
 }
 
-Orbit::Orbit(std::string name, const shp::Distance& major)
+Orbit::Orbit(const std::string name, const shp::Distance& major)
         : Shape(name), major(major), minor() {
 
 }
 
-Orbit::Orbit(std::string name, const shp::Distance& major, const shp::Distance& minor)
+Orbit::Orbit(const std::string name, const shp::Distance& major, const shp::Distance& minor)
         : Shape(name), major(major), minor(minor) {
 
 }
@@ -75,7 +77,7 @@ void Orbit::setRevolution(const float value) {
 }
 
 Orbit Orbit::copy() {
-    Orbit fresh(getName(), major, minor);
+    Orbit fresh(Shape::getName(), this->major, this->minor);
     return fresh;
 }
 
@@ -86,7 +88,7 @@ void Orbit::clear() {
     return;
 }
 
-std::string Orbit::print() {
+std::string Orbit::print() const {
     std::stringstream result;
     result << "(O:";
 	result << Shape::print() << ",l:";

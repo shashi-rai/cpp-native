@@ -21,19 +21,21 @@
 #ifndef GIS_LOCATION_H
 #define GIS_LOCATION_H
 
-#include <sstream>
-#include <vector>
+#include "../phy/position.h"
 
 namespace gis {
 
-class Location {
-    double latitude;
-    double longitude;
-    double altitude;
+/*
+ * x = Latitude
+ * y = Longitude
+ * z = Altitude
+ */
+class Location : private phy::Position {
     long updated;       // timestamp
 public:
     // Constructors
     Location();
+    Location(const long updated);
     Location(const double latitude, const double longitude);
     Location(const double latitude, const double longitude, const long timestamp);
     Location(const double latitude, const double longitude, const double altitude, const long updated);
@@ -43,28 +45,45 @@ public:
 
     // Operator overloading
     bool operator==(const Location& peer) const;
+    bool operator<(const Location& peer) const;
+    bool operator>(const Location& peer) const;
+    bool operator<=(const Location& peer) const;
+    bool operator>=(const Location& peer) const;
     Location operator+(const Location& peer) const;
     Location operator-(const Location& peer) const;
+    Location operator*(const Location& peer) const;
+    Location operator/(const Location& peer) const;
+    Location operator%(const Location& peer) const;
 
     // Getters
-    double getLatitude() const { return latitude; }
-    double getLongitude() const { return longitude; }
-    double getAltitude() const { return altitude; }
     long getUpdated() const { return updated; }
 
     // Setters
-    void setLatitude(const double value) { this->latitude = value; }
-    void setLongitude(const double value) { this->longitude = value; }
-    void setAltitude(const double value) { this->altitude = value; }
     void setUpdated(const long timestamp) { this->updated = timestamp; }
 
     // Additional methods
-    virtual Location copy();
+    double getLatitude() const;
+    void setLatitude(const double latitude);
+    double getLongitude() const;
+    void setLongitude(const double longitude);
+    double getAltitude() const;
+    void setAltitude(const double altitude);
+    Location getOffset(const long double shiftLatitude, const long double shiftLongitude);
+    long double getDistance(const long double fromLatitude, const long double fromLongitude);
+    Location copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printCoordinate() const;
+    virtual std::string printUpdateTime() const;
 
+private:
+    static const long double getEarthEquatorialRadius();    // in Meter
+    static const long double getEarthPolarRadius();         // in Meter
+    static const long double getEarthMeanRadius();          // in Kilometer
+    static const long double getHaversine(
+        const long double latA, const long double longA,
+        const long double latB, const long double longB);
 public:
-    static const double DEFAULT_VALUE;
     static const long DEFAULT_TIME;
 };
 

@@ -21,9 +21,6 @@
 #ifndef GRT_UNIVERSE_H
 #define GRT_UNIVERSE_H
 
-#include <string>
-#include <vector>
-#include "celestial.h"
 #include "galaxy.h"
 
 namespace grt {
@@ -33,8 +30,9 @@ class Universe : public Celestial {
 public:
     // Constructors
     Universe();
-    Universe(std::string name);
-    Universe(std::string name, const GalaxyArray& objects);
+    Universe(const GalaxyArray& objects);
+    Universe(const std::string name);
+    Universe(const std::string name, const GalaxyArray& objects);
 
     // Destructors
     ~Universe();
@@ -45,8 +43,8 @@ public:
     Universe operator-(const Universe& peer) const;
 
     // Access operator
-    Galaxy& operator()(int x) { return galaxies[x]; }
-    const Galaxy& operator()(int x) const { return galaxies[x]; }
+    Galaxy& operator()(const int x) { return galaxies[x]; }
+    const Galaxy& operator()(const int x) const { return galaxies[x]; }
 
     // Getters
     GalaxyArray getGalaxies() const { return galaxies; }
@@ -56,11 +54,12 @@ public:
 
     // Additional methods
     int getGalaxyCount() const;
-    Galaxy get(int index) const;
-    void set(int index, const Galaxy& object);
-    virtual Celestial copy();
+    Galaxy get(const int index) const;
+    void set(const int index, const Galaxy& object);
+    Universe copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printGalaxies() const;
 public:
     static const shp::Distance getRadius();
     static const qft::Mass getMass();

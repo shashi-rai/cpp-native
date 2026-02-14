@@ -18,50 +18,57 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef GRT_ORBIT_H
-#define GRT_ORBIT_H
+#ifndef GIS_HALL_H
+#define GIS_HALL_H
 
-#include "../shp/distance.h"
-#include "../shp/shape.h"
+#include "indoor.h"
+#include "rack.h"
 
-namespace grt {
+namespace gis {
 
-class Orbit : public shp::Shape {
-    shp::Distance major;
-    shp::Distance minor;
+class Hall : public Indoor {
+    RackArray racks;
 public:
     // Constructors
-    Orbit();
-    Orbit(const std::string name);
-    Orbit(const shp::Distance& major);
-    Orbit(const shp::Distance& major, const shp::Distance& minor);
-    Orbit(const std::string name, const shp::Distance& major);
-    Orbit(const std::string name, const shp::Distance& major, const shp::Distance& minor);
+    Hall();
+    Hall(const RackArray& racks);
+    Hall(const std::string room);
+    Hall(const std::string room, const std::string unit);
+    Hall(const std::string room, const std::string unit, const std::string floor);
+    Hall(const std::string room, const RackArray& racks);
+    Hall(const std::string room, const std::string unit, const RackArray& racks);
+    Hall(const std::string room, const std::string unit, const std::string floor, const RackArray& racks);
 
     // Destructors
-    ~Orbit();
+    ~Hall();
+
+    // Operator overloading
+    bool operator==(const Hall& peer) const;
+    Hall operator+(const Hall& peer) const;
+    Hall operator-(const Hall& peer) const;
+
+    // Access operator
+    Rack operator()(const int x) { return racks[x]; }
+    const Rack operator()(const int x) const { return racks[x]; }
 
     // Getters
-    shp::Distance getMajor() const { return major; }
-    shp::Distance getMinor() const { return minor; }
+    RackArray getRacks() const { return racks; }
 
     // Setters
-    void setMajor(const shp::Distance& value) { major = value; }
-    void setMinor(const shp::Distance& value) { minor = value; }
+    void setRacks(const RackArray& objects) { this->racks = objects; }
 
     // Additional methods
-    float getEccentricity() const;
-    float getRotation() const;
-    void setRotation(const float value);
-    float getRevolution() const;
-    void setRevolution(const float value);
-    Orbit copy();
+    int getRackCount() const;
+    Rack get(const int index) const;
+    void set(const int index, const Rack& object);
+    Hall copy();
     virtual void clear();
     virtual std::string print() const;
+    virtual std::string printRacks() const;
 };
 
-typedef std::vector<Orbit > OrbitArray;
+typedef std::vector<Hall > HallArray;
 
-} // namespace grt
+} // namespace gis
 
-#endif //GRT_ORBIT_H
+#endif //GIS_HALL_H

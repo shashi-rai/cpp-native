@@ -22,11 +22,18 @@
 
 namespace gis {
 
-Earth::Earth() : grt::Planet(), territories() {
+Earth::Earth()
+        : grt::Planet(), territories() {
 
 }
 
-Earth::Earth(const std::string name) : grt::Planet(name), territories() {
+Earth::Earth(const TerritoryArray& territories)
+        : grt::Planet(), territories(territories) {
+
+}
+
+Earth::Earth(const std::string name)
+        : grt::Planet(name), territories() {
 
 }
 
@@ -40,7 +47,8 @@ Earth::~Earth() {
 }
 
 bool Earth::operator==(const Earth& peer) const {
-    return (territories == peer.territories);
+    return (static_cast<const grt::Planet&>(*this) == static_cast<const grt::Planet&>(peer))
+        && (territories == peer.territories);
 }
 
 Earth Earth::operator+(const Earth& peer) const {
@@ -92,8 +100,8 @@ void Earth::set(const int index, const Territory& object) {
     return;
 }
 
-grt::Celestial Earth::copy() {
-    Earth fresh(getName(), territories);
+Earth Earth::copy() {
+    Earth fresh(grt::Planet::getName(), this->territories);
     return fresh;
 }
 
@@ -103,11 +111,26 @@ void Earth::clear() {
     return;
 }
 
-std::string Earth::print() {
+std::string Earth::print() const {
     std::stringstream result;
     result << "(E:";
-	result << grt::Planet::print() << ",sz:";
-	result << territories.size() << ")";
+	result << grt::Planet::print();
+	result << printTerritories();
+    result << ")";
+	return result.str();
+}
+
+std::string Earth::printTerritories() const {
+    std::stringstream result; int size = territories.size();
+    if (size > 0) {
+        result << ",sz:";
+	    result << territories.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << territories[i].print() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

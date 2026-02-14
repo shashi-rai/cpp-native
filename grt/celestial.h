@@ -21,8 +21,6 @@
 #ifndef GRT_CELESTIAL_H
 #define GRT_CELESTIAL_H
 
-#include <string>
-#include <vector>
 #include "orbit.h"
 #include "../qft/mass.h"
 #include "../shp/potential.h"
@@ -37,19 +35,19 @@ class Celestial : public shp::Shape {
 public:
     // Constructors
     Celestial();
-    Celestial(std::string name);
-    Celestial(std::shared_ptr<grt::Orbit> orbit);
-    Celestial(std::string name, std::shared_ptr<grt::Orbit> orbit);
+    Celestial(const std::string name);
+    Celestial(const std::shared_ptr<grt::Orbit> orbit);
+    Celestial(const std::string name, const std::shared_ptr<grt::Orbit> orbit);
     Celestial(const qft::Mass& mass);
-    Celestial(const qft::Mass& mass, std::shared_ptr<grt::Orbit> orbit);
-    Celestial(std::string name, const qft::Mass& mass);
-    Celestial(std::string name, const qft::Mass& mass, std::shared_ptr<grt::Orbit> orbit);
+    Celestial(const qft::Mass& mass, const std::shared_ptr<grt::Orbit> orbit);
+    Celestial(const std::string name, const qft::Mass& mass);
+    Celestial(const std::string name, const qft::Mass& mass, const std::shared_ptr<grt::Orbit> orbit);
     Celestial(const shp::Potential& gravity);
-    Celestial(const shp::Potential& gravity, std::shared_ptr<grt::Orbit> orbit);
-    Celestial(std::string name, const shp::Potential& gravity);
-    Celestial(std::string name, const shp::Potential& gravity, std::shared_ptr<grt::Orbit> orbit);
-    Celestial(std::string name, const qft::Mass& mass, const shp::Potential& gravity);
-    Celestial(std::string name, const qft::Mass& mass, const shp::Potential& gravity, std::shared_ptr<grt::Orbit> orbit);
+    Celestial(const shp::Potential& gravity, const std::shared_ptr<grt::Orbit> orbit);
+    Celestial(const std::string name, const shp::Potential& gravity);
+    Celestial(const std::string name, const shp::Potential& gravity, const std::shared_ptr<grt::Orbit> orbit);
+    Celestial(const std::string name, const qft::Mass& mass, const shp::Potential& gravity);
+    Celestial(const std::string name, const qft::Mass& mass, const shp::Potential& gravity, const std::shared_ptr<grt::Orbit> orbit);
 
     // Destructors
     ~Celestial();
@@ -60,20 +58,21 @@ public:
     shp::Potential getGravity() const { return gravity; }
 
     // Setters
-    void setOrbit(std::shared_ptr<grt::Orbit> value) { this->orbit = value; }
+    void setOrbit(const std::shared_ptr<grt::Orbit> value) { this->orbit = value; }
     void setMass(const qft::Mass& value) { mass = value; }
     void setGravity(const shp::Potential& value) { gravity = value; }
 
     // Additional methods
+    bool isOrbited() const;
     shp::Distance getRadius() const;
     void setRadius(const shp::Distance& length);
     float getRotation() const;
     void setRotation(const float value);
     float getRevolution() const;
     void setRevolution(const float value);
-    virtual Celestial copy();
+    Celestial copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 public:
     static const shp::Distance getLightYear();
 public:

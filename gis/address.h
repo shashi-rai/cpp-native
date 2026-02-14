@@ -61,9 +61,9 @@ public:
 
     // Additional methods
     bool isLocated() const;
-    virtual Address copy();
+    Address copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 
 public:
     static const std::string DEFAULT_VALUE;

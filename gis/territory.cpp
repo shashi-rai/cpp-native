@@ -71,17 +71,18 @@ Territory Territory::operator%(const Territory& peer) const {
     return Territory("%", address);
 }
 
-shp::Point Territory::copy() {
-    Territory fresh(getName(), address);
+Territory Territory::copy() {
+    Territory fresh(Point::getName(), address);
     return fresh;
 }
 
 void Territory::clear() {
+    shp::Point::clear();
     address.clear();
     return;
 }
 
-std::string Territory::print() {
+std::string Territory::print() const {
     std::stringstream result;
     result << "[t:";
     result << Point::print() << ",a:";

@@ -21,9 +21,6 @@
 #ifndef GRT_COMET_H
 #define GRT_COMET_H
 
-#include <string>
-#include <vector>
-#include "celestial.h"
 #include "satellite.h"
 
 namespace grt {
@@ -33,8 +30,9 @@ class Comet : public Celestial {
 public:
     // Constructors
     Comet();
-    Comet(std::string name);
-    Comet(std::string name, const SatelliteArray& objects);
+    Comet(const SatelliteArray& objects);
+    Comet(const std::string name);
+    Comet(const std::string name, const SatelliteArray& objects);
 
     // Destructors
     ~Comet();
@@ -45,8 +43,8 @@ public:
     Comet operator-(const Comet& peer) const;
 
     // Access operator
-    Satellite& operator()(int x) { return satellites[x]; }
-    const Satellite& operator()(int x) const { return satellites[x]; }
+    Satellite& operator()(const int x) { return satellites[x]; }
+    const Satellite& operator()(const int x) const { return satellites[x]; }
 
     // Getters
     SatelliteArray getSatellites() const { return satellites; }
@@ -56,11 +54,12 @@ public:
 
     // Additional methods
     int getSatelliteCount() const;
-    Satellite get(int index) const;
-    void set(int index, const Satellite& object);
-    virtual Celestial copy();
+    Satellite get(const int index) const;
+    void set(const int index, const Satellite& object);
+    Comet copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printSatellites() const;
 };
 
 typedef std::vector<Comet > CometArray;

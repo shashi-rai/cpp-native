@@ -22,9 +22,23 @@
 
 namespace gis {
 
-const std::string Indoor::DEFAULT_VALUE = "";
+Indoor::Indoor()
+        : room(), unit(), floor() {
 
-Indoor::Indoor() : room(), unit(), floor() {
+}
+
+Indoor::Indoor(const std::string room)
+        : room(room), unit(), floor() {
+
+}
+
+Indoor::Indoor(const std::string room, const std::string unit)
+        : room(room), unit(unit), floor() {
+
+}
+
+Indoor::Indoor(const std::string room, const std::string unit, const std::string floor)
+        : room(room), unit(unit), floor(floor) {
 
 }
 
@@ -39,18 +53,18 @@ bool Indoor::operator==(const Indoor& peer) const {
 }
 
 Indoor Indoor::copy() {
-    Indoor fresh;
+    Indoor fresh(this->room, this->unit, this->floor);
     return fresh;
 }
 
 void Indoor::clear() {
-    setRoom(DEFAULT_VALUE);
-    setUnit(DEFAULT_VALUE);
-    setFloor(DEFAULT_VALUE);
+    room.clear();
+    unit.clear();
+    floor.clear();
     return;
 }
 
-std::string Indoor::print() {
+std::string Indoor::print() const {
     std::stringstream result;
     result << "(r:";
     result << room << ",u:";

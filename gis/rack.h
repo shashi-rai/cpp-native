@@ -18,50 +18,41 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef GRT_ORBIT_H
-#define GRT_ORBIT_H
+#ifndef GIS_RACK_H
+#define GIS_RACK_H
 
-#include "../shp/distance.h"
-#include "../shp/shape.h"
+#include <sstream>
+#include <vector>
 
-namespace grt {
+namespace gis {
 
-class Orbit : public shp::Shape {
-    shp::Distance major;
-    shp::Distance minor;
+class Rack {
+    std::string name;
 public:
     // Constructors
-    Orbit();
-    Orbit(const std::string name);
-    Orbit(const shp::Distance& major);
-    Orbit(const shp::Distance& major, const shp::Distance& minor);
-    Orbit(const std::string name, const shp::Distance& major);
-    Orbit(const std::string name, const shp::Distance& major, const shp::Distance& minor);
+    Rack();
+    Rack(const std::string name);
 
     // Destructors
-    ~Orbit();
+    ~Rack();
+
+    // Operator overloading
+    bool operator==(const Rack& peer) const;
 
     // Getters
-    shp::Distance getMajor() const { return major; }
-    shp::Distance getMinor() const { return minor; }
+    std::string getName() const { return name; }
 
     // Setters
-    void setMajor(const shp::Distance& value) { major = value; }
-    void setMinor(const shp::Distance& value) { minor = value; }
+    void setName(const std::string name) { this->name = name; }
 
     // Additional methods
-    float getEccentricity() const;
-    float getRotation() const;
-    void setRotation(const float value);
-    float getRevolution() const;
-    void setRevolution(const float value);
-    Orbit copy();
+    Rack copy();
     virtual void clear();
     virtual std::string print() const;
 };
 
-typedef std::vector<Orbit > OrbitArray;
+typedef std::vector<Rack > RackArray;
 
-} // namespace grt
+} // namespace gis
 
-#endif //GRT_ORBIT_H
+#endif //GIS_RACK_H

@@ -28,15 +28,22 @@ const float Satellite::MOON_DENSITY = 3346.0f;      // 3,346 kg/m^3
 const float Satellite::MOON_GRAVITY = 1.6205f;      // 1.6205 m/s²
 const float Satellite::MOON_TO_EARTH = 384400.0f;   // 384,400 km
 
-Satellite::Satellite() : Celestial(), celestials() {
+Satellite::Satellite()
+        : Celestial(), celestials() {
 
 }
 
-Satellite::Satellite(std::string name) : Celestial(name), celestials() {
+Satellite::Satellite(const CelestialArray& celestials)
+        : Celestial(), celestials(celestials) {
 
 }
 
-Satellite::Satellite(std::string name, const CelestialArray& celestials)
+Satellite::Satellite(const std::string name)
+        : Celestial(name), celestials() {
+
+}
+
+Satellite::Satellite(const std::string name, const CelestialArray& celestials)
         : Celestial(name), celestials(celestials) {
 
 }
@@ -46,7 +53,7 @@ Satellite::~Satellite() {
 }
 
 bool Satellite::operator==(const Satellite& peer) const {
-    return (celestials == peer.celestials);
+    return (static_cast<const grt::Celestial&>(*this) == static_cast<const grt::Celestial&>(peer));
 }
 
 Satellite Satellite::operator+(const Satellite& peer) const {
@@ -70,7 +77,7 @@ int Satellite::getCelestialCount() const {
     return celestials.size();
 }
 
-Celestial Satellite::get(int index) const {
+Celestial Satellite::get(const int index) const {
     Satellite result;
     if (index < 0) {
         return result;
@@ -81,7 +88,7 @@ Celestial Satellite::get(int index) const {
     return celestials[index];
 }
 
-void Satellite::set(int index, const Celestial& object) {
+void Satellite::set(const int index, const Celestial& object) {
     if (index < 0) {
         return;
     }
@@ -119,8 +126,8 @@ const shp::Distance Satellite::getMoonToEarth() {
     return shp::Distance(Satellite::MOON_TO_EARTH, 3);
 }
 
-Celestial Satellite::copy() {
-    Satellite fresh(getName(), celestials);
+Satellite Satellite::copy() {
+    Satellite fresh(Celestial::getName(), this->celestials);
     return fresh;
 }
 
@@ -130,11 +137,25 @@ void Satellite::clear() {
     return;
 }
 
-std::string Satellite::print() {
+std::string Satellite::print() const {
     std::stringstream result;
     result << "(S:";
 	result << Celestial::print() << ",sz:";
 	result << celestials.size() << ")";
+	return result.str();
+}
+
+std::string Satellite::printCelestials() const {
+    std::stringstream result; int size = celestials.size();
+    if (size > 0) {
+        result << ",sz:";
+	    result << celestials.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << celestials[i].print() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

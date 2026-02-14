@@ -18,50 +18,55 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef GRT_ORBIT_H
-#define GRT_ORBIT_H
+#ifndef GIS_ZONE_H
+#define GIS_ZONE_H
 
-#include "../shp/distance.h"
-#include "../shp/shape.h"
+#include "hall.h"
 
-namespace grt {
+namespace gis {
 
-class Orbit : public shp::Shape {
-    shp::Distance major;
-    shp::Distance minor;
+class Zone {
+    std::string name;
+    HallArray halls;
 public:
     // Constructors
-    Orbit();
-    Orbit(const std::string name);
-    Orbit(const shp::Distance& major);
-    Orbit(const shp::Distance& major, const shp::Distance& minor);
-    Orbit(const std::string name, const shp::Distance& major);
-    Orbit(const std::string name, const shp::Distance& major, const shp::Distance& minor);
+    Zone();
+    Zone(const HallArray& halls);
+    Zone(const std::string name);
+    Zone(const std::string name, const HallArray& halls);
 
     // Destructors
-    ~Orbit();
+    ~Zone();
+
+    // Operator overloading
+    bool operator==(const Zone& peer) const;
+    Zone operator+(const Zone& peer) const;
+    Zone operator-(const Zone& peer) const;
+
+    // Access operator
+    Hall operator()(const int x) { return halls[x]; }
+    const Hall operator()(const int x) const { return halls[x]; }
 
     // Getters
-    shp::Distance getMajor() const { return major; }
-    shp::Distance getMinor() const { return minor; }
+    std::string getName() const { return name; }
+    HallArray getHalls() const { return halls; }
 
     // Setters
-    void setMajor(const shp::Distance& value) { major = value; }
-    void setMinor(const shp::Distance& value) { minor = value; }
+    void setName(const std::string name) { this->name = name; }
+    void setHalls(const HallArray& objects) { this->halls = objects; }
 
     // Additional methods
-    float getEccentricity() const;
-    float getRotation() const;
-    void setRotation(const float value);
-    float getRevolution() const;
-    void setRevolution(const float value);
-    Orbit copy();
+    int getHallCount() const;
+    Hall get(const int index) const;
+    void set(const int index, const Hall& object);
+    Zone copy();
     virtual void clear();
     virtual std::string print() const;
+    virtual std::string printHalls() const;
 };
 
-typedef std::vector<Orbit > OrbitArray;
+typedef std::vector<Zone > ZoneArray;
 
-} // namespace grt
+} // namespace gis
 
-#endif //GRT_ORBIT_H
+#endif //GIS_ZONE_H

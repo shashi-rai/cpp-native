@@ -88,9 +88,9 @@ public:
     void setPinCode(const std::string number) { this->pincode = number; }
 
     // Additional methods
-    virtual Outdoor copy();
+    Outdoor copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 
 public:
     static const std::string DEFAULT_VALUE;

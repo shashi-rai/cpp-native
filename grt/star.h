@@ -21,9 +21,6 @@
 #ifndef GRT_STAR_H
 #define GRT_STAR_H
 
-#include <string>
-#include <vector>
-#include "celestial.h"
 #include "planet.h"
 
 namespace grt {
@@ -33,8 +30,9 @@ class Star : public Celestial {
 public:
     // Constructors
     Star();
-    Star(std::string name);
-    Star(std::string name, const PlanetArray& objects);
+    Star(const PlanetArray& objects);
+    Star(const std::string name);
+    Star(const std::string name, const PlanetArray& objects);
 
     // Destructors
     ~Star();
@@ -45,8 +43,8 @@ public:
     Star operator-(const Star& peer) const;
 
     // Access operator
-    Planet& operator()(int x) { return planets[x]; }
-    const Planet& operator()(int x) const { return planets[x]; }
+    Planet& operator()(const int x) { return planets[x]; }
+    const Planet& operator()(const int x) const { return planets[x]; }
 
     // Getters
     PlanetArray getPlanets() const { return planets; }
@@ -56,11 +54,12 @@ public:
 
     // Additional methods
     int getPlanetCount() const;
-    Planet get(int index) const;
-    void set(int index, const Planet& object);
-    virtual Celestial copy();
+    Planet get(const int index) const;
+    void set(const int index, const Planet& object);
+    Star copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printPlanets() const;
 public:
     static const shp::Distance getSunRadius();
     static const qft::Mass getSunMass();

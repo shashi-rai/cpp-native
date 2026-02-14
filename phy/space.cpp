@@ -23,37 +23,37 @@
 namespace phy {
 
 Space::Space()
-		: shp::Medium(), energy(), location() {
+		: qft::Fluid(), location() {
 
 }
 
 Space::Space(const qft::Energy& energy, const Position& location)
-        : shp::Medium(), energy(energy), location(location) {
+        : qft::Fluid(energy), location(location) {
 
 }
 
 Space::Space(const qft::Energy& energy)
-		: shp::Medium(), energy(energy), location() {
+		: qft::Fluid(energy), location() {
 
 }
 
 Space::Space(const Position& location)
-		: shp::Medium(), energy(), location(location) {
+		: qft::Fluid(), location(location) {
 
 }
 
 Space::Space(const qft::Energy& energy, const double x)
-        : shp::Medium(), energy(energy), location(x) {
+        : qft::Fluid(energy), location(x) {
 
 }
 
 Space::Space(const qft::Energy& energy, const double x, const double y)
-        : shp::Medium(), energy(energy), location(x, y) {
+        : qft::Fluid(energy), location(x, y) {
 
 }
 
 Space::Space(const qft::Energy& energy, const double x, const double y, const double z)
-        : shp::Medium(), energy(energy), location(x, y, z) {
+        : qft::Fluid(energy), location(x, y, z) {
 
 }
 
@@ -61,22 +61,53 @@ Space::~Space() {
 
 }
 
-shp::Distance Space::copy() {
-    Space fresh(energy, location);
+double Space::getX() const {
+    return location.getX();
+}
+
+double Space::getY() const {
+    return location.getY();
+}
+
+double Space::getZ() const {
+    return location.getZ();
+}
+
+void Space::setX(const double value) {
+    this->location.setX(value);
+}
+
+void Space::setY(const double value) {
+    this->location.setY(value);
+}
+
+void Space::setZ(const double value) {
+    this->location.setZ(value);
+}
+
+Space Space::copy() {
+    Space fresh(qft::Fluid::getEnergy(), this->location);
     return fresh;
 }
 
 void Space::clear() {
-    energy.clear();
+    qft::Fluid::clear();
     location.clear();
     return;
 }
 
-std::string Space::print() {
+std::string Space::print() const {
     std::stringstream result;
     result << "(s:";
-	result << shp::Medium().print() << ",";
-    result << energy.print() << "!";
+	result << qft::Fluid().print() << ",";
+    result << location.print() << ")";
+	return result.str();
+}
+
+std::string Space::printRadians() const {
+    std::stringstream result;
+    result << "(s:";
+	result << qft::Fluid().printRadians() << ",";
     result << location.print() << ")";
 	return result.str();
 }

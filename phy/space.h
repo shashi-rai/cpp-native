@@ -22,13 +22,11 @@
 #define PHY_SPACE_H
 
 #include "position.h"
-#include "../qft/energy.h"
-#include "../shp/medium.h"
+#include "../qft/fluid.h"
 
 namespace phy {
 
-class Space : protected shp::Medium {
-    qft::Energy energy;
+class Space : public qft::Fluid {
     Position location;
 public:
     // Constructors
@@ -44,23 +42,22 @@ public:
     ~Space();
 
     // Getters
-    qft::Energy getEnergy() const { return energy; }
     Position getLocation() const { return location; }
 
     // Setters
-    void setEnergy(const qft::Energy& value) { this->energy = value; }
-    void setLocation(const Position& value) { this->location = value; }
+    void setLocation(const Position& coordinates) { this->location = coordinates; }
 
     // Additional methods
-    double getX() const { return location.getX(); }
-    double getY() const { return location.getY(); }
-    double getZ() const { return location.getZ(); }
-    void setX(const double value) { this->location.setX(value); }
-    void setY(const double value) { this->location.setY(value); }
-    void setZ(const double value) { this->location.setZ(value); }
-    virtual shp::Distance copy();
+    double getX() const;
+    double getY() const;
+    double getZ() const;
+    void setX(const double value);
+    void setY(const double value);
+    void setZ(const double value);
+    Space copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printRadians() const;
 };
 
 typedef std::vector<Space > SpaceArray;

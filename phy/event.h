@@ -21,8 +21,6 @@
 #ifndef PHY_EVENT_H
 #define PHY_EVENT_H
 
-#include <string>
-#include <vector>
 #include "space.h"
 #include "../qft/energy.h"
 #include "../qft/momentum.h"

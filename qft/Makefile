@@ -57,6 +57,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/electroweak.o \
 		$(OBJFOLDR)/energy.o \
 		$(OBJFOLDR)/field.o \
+		$(OBJFOLDR)/fluid.o \
 		$(OBJFOLDR)/force.o \
 		$(OBJFOLDR)/gluon.o \
 		$(OBJFOLDR)/gravity.o \
@@ -97,6 +98,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/electroweak.o \
 		$(OBJFOLDR)/energy.o \
 		$(OBJFOLDR)/field.o \
+		$(OBJFOLDR)/fluid.o \
 		$(OBJFOLDR)/force.o \
 		$(OBJFOLDR)/gluon.o \
 		$(OBJFOLDR)/gravity.o \
@@ -160,6 +162,9 @@ $(OBJFOLDR)/energy.o: energy.cpp
 
 $(OBJFOLDR)/field.o: field.cpp
 	$(CPPTOOL) -c field.cpp -o $(OBJFOLDR)/field.o $(CXXFLAGS)
+
+$(OBJFOLDR)/fluid.o: fluid.cpp
+	$(CPPTOOL) -c fluid.cpp -o $(OBJFOLDR)/fluid.o $(CXXFLAGS)
 
 $(OBJFOLDR)/force.o: force.cpp
 	$(CPPTOOL) -c force.cpp -o $(OBJFOLDR)/force.o $(CXXFLAGS)
