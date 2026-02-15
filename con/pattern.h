@@ -22,24 +22,34 @@
 #define CON_PATTERN_H
 
 #include <map>
+#include "feedback.h"
 #include "stimulus.h"
 #include "response.h"
 
 namespace con {
 
-class Pattern : protected Behaviour {
+class Pattern : private Behaviour {
     Stimulus stimulus;
+    Feedback feedback;
     Response response;
 public:
     // Constructors
     Pattern();
     Pattern(const Stimulus& stimulus);
+    Pattern(const Feedback& feedback);
     Pattern(const Response& response);
+    Pattern(const Stimulus& stimulus, const Feedback& feedback);
     Pattern(const Stimulus& stimulus, const Response& response);
+    Pattern(const Feedback& feedback, const Response& response);
+    Pattern(const Stimulus& stimulus, const Feedback& feedback, const Response& response);
     Pattern(const std::string name);
     Pattern(const std::string name, const Stimulus& stimulus);
+    Pattern(const std::string name, const Feedback& feedback);
     Pattern(const std::string name, const Response& response);
+    Pattern(const std::string name, const Stimulus& stimulus, const Feedback& feedback);
     Pattern(const std::string name, const Stimulus& stimulus, const Response& response);
+    Pattern(const std::string name, const Feedback& feedback, const Response& response);
+    Pattern(const std::string name, const Stimulus& stimulus, const Feedback& feedback, const Response& response);
 
     // Destructors
     ~Pattern();
@@ -54,10 +64,12 @@ public:
 
     // Getters
     Stimulus getStimulus() const { return stimulus; }
+    Feedback getFeedback() const { return feedback; }
     Response getResponse() const { return response; }
 
     // Setters
     void setStimulus(const Stimulus& input) { this->stimulus = input; }
+    void setFeedback(const Feedback& modifier) { this->feedback = modifier; }
     void setResponse(const Response& output) { this->response = output; }
 
     // Additional methods
@@ -68,7 +80,8 @@ public:
     virtual std::string print() const;
 };
 
-typedef std::map<const std::string, Pattern > PatternMap;
+typedef std::map<const std::string, Pattern > StimulusMap;
+typedef std::map<const std::string, Pattern > FeedbackMap;
 
 } // namespace con
 

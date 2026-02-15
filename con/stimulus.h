@@ -26,7 +26,7 @@
 
 namespace con {
 
-class Stimulus : protected Behaviour {
+class Stimulus : private Behaviour {
     shp::Signal input;
 public:
     // Constructors

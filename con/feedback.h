@@ -18,50 +18,50 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef CON_RESPONSE_H
-#define CON_RESPONSE_H
+#ifndef CON_FEEDBACK_H
+#define CON_FEEDBACK_H
 
 #include "behaviour.h"
 #include "../shp/signal.h"
 
 namespace con {
 
-class Response : private Behaviour {
-    shp::Signal output;
+class Feedback : protected Behaviour {
+    shp::Signal modulation;
 public:
     // Constructors
-    Response();
-    Response(const shp::Signal& output);
-    Response(const std::string name);
-    Response(const std::string name, const shp::Signal& output);
+    Feedback();
+    Feedback(const shp::Signal& modulation);
+    Feedback(const std::string name);
+    Feedback(const std::string name, const shp::Signal& modulation);
 
     // Destructors
-    ~Response();
+    ~Feedback();
 
     // Operator overloading
-    bool operator==(const Response& peer) const;
-    Response operator+(const Response& peer) const;
-    Response operator-(const Response& peer) const;
-    Response operator*(const Response& peer) const;
-    Response operator/(const Response& peer) const;
-    Response operator%(const Response& peer) const;
+    bool operator==(const Feedback& peer) const;
+    Feedback operator+(const Feedback& peer) const;
+    Feedback operator-(const Feedback& peer) const;
+    Feedback operator*(const Feedback& peer) const;
+    Feedback operator/(const Feedback& peer) const;
+    Feedback operator%(const Feedback& peer) const;
 
     // Getters
-    shp::Signal getOutput() const { return output; }
+    shp::Signal getModulation() const { return modulation; }
 
     // Setters
-    void setOutput(const shp::Signal& action) { this->output = action; }
+    void setModulation(const shp::Signal& signal) { this->modulation = signal; }
 
     // Additional methods
     std::string getName() const;
     void setName(const std::string name);
-    Response copy() const;
+    Feedback copy() const;
     virtual void clear();
     virtual std::string print() const;
 };
 
-typedef std::vector<Response > ResponseArray;
+typedef std::vector<Feedback > FeedbackArray;
 
 } // namespace con
 
-#endif //CON_RESPONSE_H
+#endif //CON_FEEDBACK_H

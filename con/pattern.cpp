@@ -23,42 +23,82 @@
 namespace con {
 
 Pattern::Pattern()
-        : Behaviour(), stimulus(), response() {
+        : Behaviour(), stimulus(), feedback(), response() {
 
 }
 
 Pattern::Pattern(const Stimulus& stimulus)
-        : Behaviour(), stimulus(stimulus), response() {
+        : Behaviour(), stimulus(stimulus), feedback(), response() {
+
+}
+
+Pattern::Pattern(const Feedback& feedback)
+        : Behaviour(), stimulus(), feedback(feedback), response() {
 
 }
 
 Pattern::Pattern(const Response& response)
-        : Behaviour(), stimulus(), response(response) {
+        : Behaviour(), stimulus(), feedback(), response(response) {
+
+}
+
+Pattern::Pattern(const Stimulus& stimulus, const Feedback& feedback)
+        : Behaviour(), stimulus(stimulus), feedback(feedback), response() {
 
 }
 
 Pattern::Pattern(const Stimulus& stimulus, const Response& response)
-        : Behaviour(), stimulus(stimulus), response(response) {
+        : Behaviour(), stimulus(stimulus), feedback(), response(response) {
+
+}
+
+Pattern::Pattern(const Feedback& feedback, const Response& response)
+        : Behaviour(), stimulus(), feedback(feedback), response(response) {
+
+}
+
+Pattern::Pattern(const Stimulus& stimulus, const Feedback& feedback, const Response& response)
+        : Behaviour(), stimulus(stimulus), feedback(feedback), response(response) {
 
 }
 
 Pattern::Pattern(const std::string name)
-        : Behaviour(name), stimulus(), response() {
+        : Behaviour(name), stimulus(), feedback(), response() {
 
 }
 
 Pattern::Pattern(const std::string name, const Stimulus& stimulus)
-        : Behaviour(name), stimulus(stimulus), response() {
+        : Behaviour(name), stimulus(stimulus), feedback(), response() {
+
+}
+
+Pattern::Pattern(const std::string name, const Feedback& feedback)
+        : Behaviour(name), stimulus(), feedback(feedback), response() {
 
 }
 
 Pattern::Pattern(const std::string name, const Response& response)
-        : Behaviour(name), stimulus(), response(response) {
+        : Behaviour(name), stimulus(), feedback(), response(response) {
+
+}
+
+Pattern::Pattern(const std::string name, const Stimulus& stimulus, const Feedback& feedback)
+        : Behaviour(name), stimulus(stimulus), feedback(feedback), response() {
 
 }
 
 Pattern::Pattern(const std::string name, const Stimulus& stimulus, const Response& response)
-        : Behaviour(name), stimulus(stimulus), response(response) {
+        : Behaviour(name), stimulus(stimulus), feedback(), response(response) {
+
+}
+
+Pattern::Pattern(const std::string name, const Feedback& feedback, const Response& response)
+        : Behaviour(name), stimulus(), feedback(feedback), response(response) {
+
+}
+
+Pattern::Pattern(const std::string name, const Stimulus& stimulus, const Feedback& feedback, const Response& response)
+        : Behaviour(name), stimulus(stimulus), feedback(feedback), response(response) {
 
 }
 
@@ -68,27 +108,27 @@ Pattern::~Pattern() {
 
 bool Pattern::operator==(const Pattern& peer) const {
     return (static_cast<const Behaviour&>(*this) == static_cast<const Behaviour&>(peer))
-        && (stimulus == peer.stimulus) && (response == peer.response);
+        && (stimulus == peer.stimulus) && (feedback == peer.feedback) && (response == peer.response);
 }
 
 Pattern Pattern::operator+(const Pattern& peer) const {
-    return Pattern("+", (stimulus + peer.stimulus), (response + peer.response));
+    return Pattern("+", (stimulus + peer.stimulus), (feedback + peer.feedback), (response + peer.response));
 }
 
 Pattern Pattern::operator-(const Pattern& peer) const {
-    return Pattern("-", (stimulus - peer.stimulus), (response - peer.response));
+    return Pattern("-", (stimulus - peer.stimulus), (feedback - peer.feedback), (response - peer.response));
 }
 
 Pattern Pattern::operator*(const Pattern& peer) const {
-    return Pattern("*", (stimulus * peer.stimulus), (response * peer.response));
+    return Pattern("*", (stimulus * peer.stimulus), (feedback * peer.feedback), (response * peer.response));
 }
 
 Pattern Pattern::operator/(const Pattern& peer) const {
-    return Pattern("/", (stimulus / peer.stimulus), (response / peer.response));
+    return Pattern("/", (stimulus / peer.stimulus), (feedback / peer.feedback), (response / peer.response));
 }
 
 Pattern Pattern::operator%(const Pattern& peer) const {
-    return Pattern("%", (stimulus % peer.stimulus), (response % peer.response));
+    return Pattern("%", (stimulus % peer.stimulus), (feedback % peer.feedback), (response % peer.response));
 }
 
 std::string Pattern::getName() const {
@@ -100,13 +140,14 @@ void Pattern::setName(const std::string name) {
 }
 
 Pattern Pattern::copy() const {
-    Pattern fresh(this->getName(), this->stimulus, this->response);
+    Pattern fresh(this->getName(), this->stimulus, this->feedback, this->response);
     return fresh;
 }
 
 void Pattern::clear() {
     Behaviour::clear();
     stimulus.clear();
+    feedback.clear();
     response.clear();
     return;
 }
@@ -115,7 +156,8 @@ std::string Pattern::print() const {
     std::stringstream result;
     result << "(";
 	result << Behaviour::print() << ",";
-    result << stimulus.print();
+    result << stimulus.print() << ",";
+    result << feedback.print() << ",";
     result << response.print();
     result << ")";
 	return result.str();

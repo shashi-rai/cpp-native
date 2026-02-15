@@ -22,9 +22,6 @@
 #define TEST_CONSCIOUSNESS_H
 
 #include "../inc/testing.h"
-#include "../shp/signal.h"
-#include "../con/response.h"
-#include "../con/stimulus.h"
 #include "../con/self.h"
 
 namespace test {

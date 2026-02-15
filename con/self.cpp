@@ -42,6 +42,16 @@ Self::Self(const Stimulus& stimulus, const StimulusArray& sensors)
 
 }
 
+Self::Self(const Feedback& feedback)
+        : Memory(feedback), sensors() {
+
+}
+
+Self::Self(const Feedback& feedback, const StimulusArray& sensors)
+        : Memory(feedback), sensors(sensors) {
+
+}
+
 Self::Self(const Response& response)
         : Memory(response), sensors() {
 
@@ -59,6 +69,27 @@ Self::Self(const Stimulus& stimulus, const Response& response)
 
 Self::Self(const Stimulus& stimulus, const Response& response, const StimulusArray& sensors)
         : Memory(stimulus, response), sensors(sensors) {
+
+}
+
+Self::Self(const Feedback& feedback, const Response& response)
+        : Memory(feedback, response), sensors() {
+
+}
+
+Self::Self(const Feedback& feedback, const Response& response, const StimulusArray& sensors)
+        : Memory(feedback, response), sensors(sensors) {
+
+}
+
+Self::Self(const Stimulus& stimulus, const Feedback& feedback, const Response& response)
+        : Memory(stimulus, feedback, response), sensors() {
+
+}
+
+Self::Self(const Stimulus& stimulus, const Feedback& feedback, const Response& response,
+        const StimulusArray& sensors)
+        : Memory(stimulus, feedback, response), sensors(sensors) {
 
 }
 
@@ -82,6 +113,16 @@ Self::Self(const std::string name, const Stimulus& stimulus, const StimulusArray
 
 }
 
+Self::Self(const std::string name, const Feedback& feedback)
+        : Memory(name, feedback), sensors() {
+
+}
+
+Self::Self(const std::string name, const Feedback& feedback, const StimulusArray& sensors)
+        : Memory(name, feedback), sensors(sensors) {
+
+}
+
 Self::Self(const std::string name, const Response& response)
         : Memory(name, response), sensors() {
 
@@ -100,6 +141,28 @@ Self::Self(const std::string name, const Stimulus& stimulus, const Response& res
 Self::Self(const std::string name, const Stimulus& stimulus, const Response& response,
         const StimulusArray& sensors)
         : Memory(name, stimulus, response), sensors(sensors) {
+
+}
+
+Self::Self(const std::string name, const Feedback& feedback, const Response& response)
+        : Memory(name, feedback, response), sensors() {
+
+}
+
+Self::Self(const std::string name, const Feedback& feedback, const Response& response,
+        const StimulusArray& sensors)
+        : Memory(name, feedback, response), sensors(sensors) {
+
+}
+
+Self::Self(const std::string name, const Stimulus& stimulus, const Feedback& feedback, const Response& response)
+        : Memory(name, stimulus, feedback, response), sensors() {
+
+}
+
+Self::Self(const std::string name, const Stimulus& stimulus, const Feedback& feedback, const Response& response,
+        const StimulusArray& sensors)
+        : Memory(name, stimulus, feedback, response), sensors(sensors) {
 
 }
 
@@ -147,33 +210,49 @@ void Self::setStimulus(const Stimulus& input) {
     Memory::setStimulus(input);
 }
 
+Feedback Self::getFeedback() const {
+    return Memory::getFeedback();
+}
+
+void Self::setFeedback(const Feedback& modifier) {
+    Memory::setFeedback(modifier);
+}
+
 Response Self::getResponse() const {
     return Memory::getResponse();
-}
-
-bool Self::isAware(const Stimulus& stimulus) const {
-    return Memory::isAware(stimulus);
-}
-
-shp::Signal Self::getBehaviour(const Stimulus& stimulus) const {
-    Stimulus input = stimulus;
-    Response response = Memory::getLearning(input);
-    return response.getOutput();
-}
-
-void Self::setBehaviour(const Stimulus& stimulus, const Response& response) {
-    Memory::setLearning(stimulus, response);
 }
 
 void Self::setResponse(const Response& output) {
     Memory::setResponse(output);
 }
 
+bool Self::isAware(const std::string word) const {
+    return Memory::isAware(word);
+}
+
+shp::Signal Self::getBehaviour(const Stimulus& stimulus) const {
+    Response response = Memory::getLearning(stimulus);
+    return response.getOutput();
+}
+
+shp::Signal Self::getBehaviour(const Feedback& feedback) const {
+    Response response = Memory::getLearning(feedback);
+    return response.getOutput();
+}
+
+void Self::setBehaviour(const std::string word, const Stimulus& stimulus, const Response& response) {
+    Memory::setLearning(word, stimulus, response);
+}
+
+void Self::setBehaviour(const std::string word, const Feedback& feedback, const Response& response) {
+    Memory::setLearning(word, feedback, response);
+}
+
 int Self::getSensorCount() const {
     return sensors.size();
 }
 
-Stimulus Self::get(const int index) const {
+Stimulus Self::getSensor(const int index) const {
     Stimulus result;
     if (index < 0) {
         return result;
@@ -184,7 +263,7 @@ Stimulus Self::get(const int index) const {
     return sensors[index];
 }
 
-void Self::set(const int index, const Stimulus& object) {
+void Self::setSensor(const int index, const Stimulus& object) {
     if (index < 0) {
         return;
     }
@@ -202,7 +281,8 @@ void Self::set(const int index, const Stimulus& object) {
 }
 
 Self Self::copy() const {
-    Self fresh(this->getName(), this->getStimulus(), this->getResponse(), this->sensors);
+    Self fresh(Memory::getName(),
+        Memory::getStimulus(), Memory::getFeedback(), Memory::getResponse(), this->sensors);
     return fresh;
 }
 

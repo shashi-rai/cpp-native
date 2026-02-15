@@ -23,84 +23,130 @@
 namespace con {
 
 Memory::Memory()
-        : Pattern(), patterns() {
+        : Strategy(), activators() {
 
 }
 
-Memory::Memory(const PatternMap& objects)
-        : Pattern() {
-    setPatterns(objects);
+Memory::Memory(const StrategyMap& objects)
+        : Strategy(), activators() {
+    setActivators(objects);
 }
 
 Memory::Memory(const Stimulus& stimulus)
-        : Pattern(stimulus), patterns() {
+        : Strategy(stimulus), activators() {
 
 }
 
-Memory::Memory(const Stimulus& stimulus, const PatternMap& objects)
-        : Pattern(stimulus) {
-    setPatterns(objects);
+Memory::Memory(const Stimulus& stimulus, const StrategyMap& objects)
+        : Strategy(stimulus), activators() {
+    setActivators(objects);
+}
+
+Memory::Memory(const Feedback& feedback)
+        : Strategy(feedback), activators() {
+
+}
+
+Memory::Memory(const Feedback& feedback, const StrategyMap& objects)
+        : Strategy(feedback), activators() {
+    setActivators(objects);
 }
 
 Memory::Memory(const Response& response)
-        : Pattern(response), patterns() {
+        : Strategy(response), activators() {
 
 }
 
-Memory::Memory(const Response& response, const PatternMap& objects)
-        : Pattern(response) {
-    setPatterns(objects);
+Memory::Memory(const Response& response, const StrategyMap& objects)
+        : Strategy(response), activators() {
+    setActivators(objects);
 }
 
 Memory::Memory(const Stimulus& stimulus, const Response& response)
-        : Pattern(stimulus, response), patterns() {
+        : Strategy(stimulus, response), activators() {
 
 }
 
-Memory::Memory(const Stimulus& stimulus, const Response& response, const PatternMap& objects)
-        : Pattern(stimulus, response) {
-    setPatterns(objects);
+Memory::Memory(const Feedback& feedback, const Response& response)
+        : Strategy(feedback, response), activators() {
+
+}
+
+Memory::Memory(const Stimulus& stimulus, const Response& response, const StrategyMap& objects)
+        : Strategy(stimulus, response), activators() {
+    setActivators(objects);
+}
+
+Memory::Memory(const Stimulus& stimulus, const Feedback& feedback, const Response& response)
+        : Strategy(stimulus, feedback, response), activators() {
+
+}
+
+Memory::Memory(const Stimulus& stimulus, const Feedback& feedback, const Response& response,
+        const StrategyMap& objects)
+        : Strategy(stimulus, feedback, response), activators() {
+    setActivators(objects);
 }
 
 Memory::Memory(const std::string name)
-        : Pattern(name), patterns() {
+        : Strategy(name), activators() {
 
 }
 
-Memory::Memory(const std::string name, const PatternMap& objects)
-        : Pattern(name) {
-    setPatterns(objects);
+Memory::Memory(const std::string name, const StrategyMap& objects)
+        : Strategy(name), activators() {
+    setActivators(objects);
 }
 
 Memory::Memory(const std::string name, const Stimulus& stimulus)
-        : Pattern(name, stimulus), patterns() {
+        : Strategy(name, stimulus), activators() {
 
 }
 
-Memory::Memory(const std::string name, const Stimulus& stimulus, const PatternMap& objects)
-        : Pattern(name, stimulus) {
-    setPatterns(objects);
+Memory::Memory(const std::string name, const Stimulus& stimulus, const StrategyMap& objects)
+        : Strategy(name, stimulus), activators() {
+    setActivators(objects);
+}
+
+Memory::Memory(const std::string name, const Feedback& feedback)
+        : Strategy(name, feedback), activators() {
+
+}
+
+Memory::Memory(const std::string name, const Feedback& feedback, const StrategyMap& objects)
+        : Strategy(name, feedback), activators() {
+    setActivators(objects);
 }
 
 Memory::Memory(const std::string name, const Response& response)
-        : Pattern(name, response), patterns() {
+        : Strategy(name, response), activators() {
 
 }
 
-Memory::Memory(const std::string name, const Response& response, const PatternMap& objects)
-        : Pattern(name, response) {
-    setPatterns(objects);
+Memory::Memory(const std::string name, const Response& response, const StrategyMap& objects)
+        : Strategy(name, response), activators() {
+    setActivators(objects);
 }
 
 Memory::Memory(const std::string name, const Stimulus& stimulus, const Response& response)
-        : Pattern(name, stimulus, response), patterns() {
+        : Strategy(name, stimulus, response), activators() {
 
 }
 
-Memory::Memory(const std::string name, const Stimulus& stimulus, const Response& response,
-        const PatternMap& objects)
-        : Pattern(name, stimulus, response) {
-    setPatterns(objects);
+Memory::Memory(const std::string name, const Feedback& feedback, const Response& response)
+        : Strategy(name, feedback, response), activators() {
+
+}
+
+Memory::Memory(const std::string name, const Stimulus& stimulus, const Feedback& feedback, const Response& response)
+        : Strategy(name, stimulus, feedback, response), activators() {
+
+}
+
+Memory::Memory(const std::string name, const Stimulus& stimulus, const Feedback& feedback, const Response& response,
+        const StrategyMap& objects)
+        : Strategy(name, stimulus, feedback, response), activators() {
+    setActivators(objects);
 }
 
 Memory::~Memory() {
@@ -108,20 +154,20 @@ Memory::~Memory() {
 }
 
 bool Memory::operator==(const Memory& peer) const {
-    return (static_cast<const Pattern&>(*this) == static_cast<const Pattern&>(peer))
-        && (patterns == peer.patterns);
+    return (static_cast<const Strategy&>(*this) == static_cast<const Strategy&>(peer))
+        && (activators == peer.activators);
 }
 
 Memory Memory::operator+(const Memory& peer) const {
-    PatternMap result(patterns);
-    result.insert(peer.patterns.begin(), peer.patterns.end());
+    StrategyMap result(activators);
+    result.insert(peer.activators.begin(), peer.activators.end());
     return Memory("+", result);
 }
 
 Memory Memory::operator-(const Memory& peer) const {
-    PatternMap result(patterns);
-    for (PatternMap::const_iterator it = peer.patterns.begin(); it != peer.patterns.end(); ++it) {
-        PatternMap::iterator found = std::find(result.begin(), result.end(), *it);
+    StrategyMap result(activators);
+    for (StrategyMap::const_iterator it = peer.activators.begin(); it != peer.activators.end(); ++it) {
+        StrategyMap::iterator found = std::find(result.begin(), result.end(), *it);
         if (found != result.end()) {
             result.erase(found);
         }
@@ -129,45 +175,64 @@ Memory Memory::operator-(const Memory& peer) const {
     return Memory("-", result);
 }
 
-PatternMap Memory::getPatterns() const {
-    return patterns;
+StrategyMap Memory::getActivators() const {
+    return activators;
 }
 
-void Memory::setPatterns(const PatternMap& objects) {
-    for (PatternMap::const_iterator it = objects.begin(); it != objects.end(); ++it) {
-        this->patterns[it->first] = it->second;
+void Memory::setActivators(const StrategyMap& objects) {
+    for (StrategyMap::const_iterator it = objects.begin(); it != objects.end(); ++it) {
+        this->activators[it->first] = it->second;
     }
 }
 
 std::string Memory::getName() const {
-    return Behaviour::getName();
+    return Strategy::getName();
 }
 
 void Memory::setName(const std::string name) {
-    Behaviour::setName(name);
+    Strategy::setName(name);
 }
 
 Stimulus Memory::getStimulus() const {
-    return Pattern::getStimulus();
+    return Strategy::getStimulus();
 }
 
 void Memory::setStimulus(const Stimulus& input) {
-    Pattern::setStimulus(input);
+    Strategy::setStimulus(input);
+}
+
+Feedback Memory::getFeedback() const {
+    return Strategy::getFeedback();
+}
+
+void Memory::setFeedback(const Feedback& modifier) {
+    Strategy::setFeedback(modifier);
 }
 
 Response Memory::getResponse() const {
-    return Pattern::getResponse();
+    return Strategy::getResponse();
 }
 
 void Memory::setResponse(const Response& output) {
-    Pattern::setResponse(output);
+    Strategy::setResponse(output);
 }
 
-bool Memory::isAware(const Stimulus& stimulus) const {
+bool Memory::isAware(const std::string word) const {
     bool result = false;
-    for (PatternMap::const_iterator it = patterns.begin(); it != patterns.end(); ++it) {
-        if (it->first == stimulus.getName()) {
+    for (StrategyMap::const_iterator it = activators.begin(); it != activators.end(); ++it) {
+        if (it->first == word) {
             result = true;
+            break;
+        }
+    }
+    return result;
+}
+
+Response Memory::getLearning(const std::string word) const {
+    Response result;
+    for (StrategyMap::const_iterator it = activators.begin(); it != activators.end(); ++it) {
+        if (it->first == word) {
+            result = it->second.getResponse();
             break;
         }
     }
@@ -176,8 +241,8 @@ bool Memory::isAware(const Stimulus& stimulus) const {
 
 Response Memory::getLearning(const Stimulus& stimulus) const {
     Response result;
-    for (PatternMap::const_iterator it = patterns.begin(); it != patterns.end(); ++it) {
-        if (it->first == stimulus.getName()) {
+    for (StrategyMap::const_iterator it = activators.begin(); it != activators.end(); ++it) {
+        if (it->second.getStimulus().getName() == stimulus.getName()) {
             result = it->second.getResponse();
             break;
         }
@@ -185,47 +250,69 @@ Response Memory::getLearning(const Stimulus& stimulus) const {
     return result;
 }
 
-void Memory::setLearning(const Stimulus& stimulus, const Response& response) {
-    patterns[stimulus.getName()] = Pattern(stimulus, response);
+Response Memory::getLearning(const Feedback& feedback) const {
+    Response result;
+    for (StrategyMap::const_iterator it = activators.begin(); it != activators.end(); ++it) {
+        if (it->second.getFeedback().getName() == feedback.getName()) {
+            result = it->second.getResponse();
+            break;
+        }
+    }
+    return result;
 }
 
-int Memory::getPatternCount() const {
-    return patterns.size();
+void Memory::setLearning(const std::string word,
+        const Stimulus& stimulus, const Response& response) {
+    activators[word] = Strategy(stimulus, response);
 }
 
-Pattern Memory::get(const std::string key) const {
-    return patterns.find(key)->second;
+void Memory::setLearning(const std::string word,
+        const Feedback& feedback, const Response& response) {
+    activators[word] = Strategy(feedback, response);
 }
 
-void Memory::set(const std::string key, const Pattern& object) {
-    patterns[object.getName()] = object;
+void Memory::setLearning(const std::string word,
+        const Stimulus& stimulus, const Feedback& feedback, const Response& response) {
+    activators[word] = Strategy(stimulus, feedback, response);
+}
+
+int Memory::getActivatorCount() const {
+    return activators.size();
+}
+
+Strategy Memory::getActivator(const std::string word) const {
+    return activators.find(word)->second;
+}
+
+void Memory::setActivator(const std::string word, const Strategy& object) {
+    activators[word] = object;
 }
 
 Memory Memory::copy() const {
-    Memory fresh(this->getName(), this->patterns);
+    Memory fresh(Strategy::getName(), this->activators);
     return fresh;
 }
 
 void Memory::clear() {
-    Pattern::clear();
-    patterns.clear();
+    Strategy::clear();
+    activators.clear();
     return;
 }
 
 std::string Memory::print() const {
     std::stringstream result;
-	result << Pattern::print();
-    result << printPatterns();
+	result << Strategy::print();
+    result << printActivators();
 	return result.str();
 }
 
-std::string Memory::printPatterns() const {
-    std::stringstream result; int size = patterns.size();
+std::string Memory::printActivators() const {
+    std::stringstream result; int size = activators.size();
     if (size > 0) {
         result << ",sz:";
-	    result << patterns.size();
+	    result << activators.size();
         result << std::endl << "{";
-        for (PatternMap::const_iterator it = patterns.begin(); it != patterns.end(); ++it) {
+        for (StrategyMap::const_iterator it = activators.begin(); it != activators.end(); ++it) {
             result << "\t" << (*it).second.print() << std::endl;
         }
         result << "}";

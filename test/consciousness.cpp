@@ -76,7 +76,7 @@ int Consciousness::run(const cfg::CommandLine& object) {
 
 void Consciousness::simple_training() {
     con::Self self("M");
-    self.setBehaviour(con::Stimulus("A", 5), con::Response("B", 3));
+    self.setBehaviour("AB", con::Stimulus("A", 5), con::Response("B", 3));
     shp::Signal output = self.getBehaviour(con::Stimulus("A"));
     std::cout << output.print() << std::endl;
 }

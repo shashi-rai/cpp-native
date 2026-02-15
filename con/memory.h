@@ -21,30 +21,39 @@
 #ifndef CON_MEMORY_H
 #define CON_MEMORY_H
 
-#include "pattern.h"
+#include "strategy.h"
 
 namespace con {
 
-class Memory : private Pattern {
-    PatternMap patterns;
+class Memory : private Strategy {
+    StrategyMap activators;
 public:
     // Constructors
     Memory();
-    Memory(const PatternMap& patterns);
+    Memory(const StrategyMap& activators);
     Memory(const Stimulus& stimulus);
-    Memory(const Stimulus& stimulus, const PatternMap& patterns);
+    Memory(const Stimulus& stimulus, const StrategyMap& activators);
+    Memory(const Feedback& feedback);
+    Memory(const Feedback& feedback, const StrategyMap& activators);
     Memory(const Response& response);
-    Memory(const Response& response, const PatternMap& patterns);
+    Memory(const Response& response, const StrategyMap& activators);
     Memory(const Stimulus& stimulus, const Response& response);
-    Memory(const Stimulus& stimulus, const Response& response, const PatternMap& patterns);
+    Memory(const Feedback& feedback, const Response& response);
+    Memory(const Stimulus& stimulus, const Response& response, const StrategyMap& activators);
+    Memory(const Stimulus& stimulus, const Feedback& feedback, const Response& response);
+    Memory(const Stimulus& stimulus, const Feedback& feedback, const Response& response, const StrategyMap& activators);
     Memory(const std::string name);
-    Memory(const std::string name, const PatternMap& patterns);
+    Memory(const std::string name, const StrategyMap& activators);
     Memory(const std::string name, const Stimulus& stimulus);
-    Memory(const std::string name, const Stimulus& stimulus, const PatternMap& patterns);
+    Memory(const std::string name, const Stimulus& stimulus, const StrategyMap& activators);
+    Memory(const std::string name, const Feedback& feedback);
+    Memory(const std::string name, const Feedback& feedback, const StrategyMap& activators);
     Memory(const std::string name, const Response& response);
-    Memory(const std::string name, const Response& response, const PatternMap& patterns);
+    Memory(const std::string name, const Response& response, const StrategyMap& activators);
     Memory(const std::string name, const Stimulus& stimulus, const Response& response);
-    Memory(const std::string name, const Stimulus& stimulus, const Response& response, const PatternMap& patterns);
+    Memory(const std::string name, const Feedback& feedback, const Response& response);
+    Memory(const std::string name, const Stimulus& stimulus, const Feedback& feedback, const Response& response);
+    Memory(const std::string name, const Stimulus& stimulus, const Feedback& feedback, const Response& response, const StrategyMap& activators);
 
     // Destructors
     ~Memory();
@@ -55,31 +64,37 @@ public:
     Memory operator-(const Memory& peer) const;
 
     // Access operator
-    Pattern operator()(const std::string key) { return patterns[key]; }
+    Strategy operator()(const std::string key) { return activators[key]; }
 
     // Getters
-    PatternMap getPatterns() const;
+    StrategyMap getActivators() const;
 
     // Setters
-    void setPatterns(const PatternMap& objects);
+    void setActivators(const StrategyMap& objects);
 
     // Additional methods
     std::string getName() const;
     void setName(const std::string name);
     Stimulus getStimulus() const;
     void setStimulus(const Stimulus& input);
+    Feedback getFeedback() const;
+    void setFeedback(const Feedback& modifier);
     Response getResponse() const;
     void setResponse(const Response& output);
-    bool isAware(const Stimulus& stimulus) const;
+    bool isAware(const std::string word) const;
+    Response getLearning(const std::string word) const;
     Response getLearning(const Stimulus& stimulus) const;
-    void setLearning(const Stimulus& stimulus, const Response& response);
-    int getPatternCount() const;
-    Pattern get(const std::string key) const;
-    void set(const std::string key, const Pattern& object);
+    Response getLearning(const Feedback& feedback) const;
+    void setLearning(const std::string word, const Stimulus& stimulus, const Response& response);
+    void setLearning(const std::string word, const Feedback& feedback, const Response& response);
+    void setLearning(const std::string word, const Stimulus& stimulus, const Feedback& feedback, const Response& response);
+    int getActivatorCount() const;
+    Strategy getActivator(const std::string word) const;
+    void setActivator(const std::string word, const Strategy& object);
     Memory copy() const;
     virtual void clear();
     virtual std::string print() const;
-    virtual std::string printPatterns() const;
+    virtual std::string printActivators() const;
 };
 
 typedef std::vector<Memory > MemoryArray;

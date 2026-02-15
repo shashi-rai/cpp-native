@@ -46,21 +46,28 @@ clean-libs: clean-custom
 
 $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/behaviour.o \
+		$(OBJFOLDR)/feedback.o \
 		$(OBJFOLDR)/memory.o \
 		$(OBJFOLDR)/pattern.o \
 		$(OBJFOLDR)/response.o \
 		$(OBJFOLDR)/self.o \
-		$(OBJFOLDR)/stimulus.o
+		$(OBJFOLDR)/stimulus.o \
+		$(OBJFOLDR)/strategy.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
 		$(OBJFOLDR)/behaviour.o \
+		$(OBJFOLDR)/feedback.o \
 		$(OBJFOLDR)/memory.o \
 		$(OBJFOLDR)/pattern.o \
 		$(OBJFOLDR)/response.o \
 		$(OBJFOLDR)/self.o \
-		$(OBJFOLDR)/stimulus.o
+		$(OBJFOLDR)/stimulus.o \
+		$(OBJFOLDR)/strategy.o
 
 $(OBJFOLDR)/behaviour.o: behaviour.cpp
 	$(CPPTOOL) -c behaviour.cpp -o $(OBJFOLDR)/behaviour.o $(CXXFLAGS)
+
+$(OBJFOLDR)/feedback.o: feedback.cpp
+	$(CPPTOOL) -c feedback.cpp -o $(OBJFOLDR)/feedback.o $(CXXFLAGS)
 
 $(OBJFOLDR)/memory.o: memory.cpp
 	$(CPPTOOL) -c memory.cpp -o $(OBJFOLDR)/memory.o $(CXXFLAGS)
@@ -76,3 +83,6 @@ $(OBJFOLDR)/self.o: self.cpp
 
 $(OBJFOLDR)/stimulus.o: stimulus.cpp
 	$(CPPTOOL) -c stimulus.cpp -o $(OBJFOLDR)/stimulus.o $(CXXFLAGS)
+
+$(OBJFOLDR)/strategy.o: strategy.cpp
+	$(CPPTOOL) -c strategy.cpp -o $(OBJFOLDR)/strategy.o $(CXXFLAGS)
