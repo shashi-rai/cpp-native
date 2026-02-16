@@ -139,13 +139,27 @@ void Molecule::clear() {
     return;
 }
 
-std::string Molecule::print() {
+std::string Molecule::print() const {
     std::stringstream result;
     result << "{mo";
 	result << Shape::print() << ",f:";
     result << formulae << ",v:";
-    result << potential << ",sz:";
-	result << bonds.size() << "}";
+    result << potential << "}";
+	result << printBonds();
+	return result.str();
+}
+
+std::string Molecule::printBonds() const {
+    std::stringstream result; int size = bonds.size();
+    if (size > 0) {
+	    result << ",sz:";
+        result << bonds.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << bonds[i].print() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

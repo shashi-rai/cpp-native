@@ -21,9 +21,6 @@
 #ifndef ACT_DEPARTMENT_H
 #define ACT_DEPARTMENT_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "staff.h"
 
 namespace act {

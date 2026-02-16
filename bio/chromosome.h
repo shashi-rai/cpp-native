@@ -21,9 +21,6 @@
 #ifndef BIO_CHROMOSOME_H
 #define BIO_CHROMOSOME_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "gene.h"
 #include "../shp/shape.h"
 
@@ -34,8 +31,9 @@ class Chromosome : public shp::Shape {
 public:
     // Constructors
     Chromosome();
-    Chromosome(std::string name);
-    Chromosome(std::string name, GeneArray& objects);
+    Chromosome(const GeneArray& objects);
+    Chromosome(const std::string name);
+    Chromosome(const std::string name, const GeneArray& objects);
 
     // Destructors
     ~Chromosome();
@@ -46,8 +44,8 @@ public:
     Chromosome operator-(const Chromosome& peer) const;
 
     // Access operator
-    Gene& operator()(int x) { return genes[x]; }
-    const Gene& operator()(int x) const { return genes[x]; }
+    Gene& operator()(const int x) { return genes[x]; }
+    const Gene& operator()(const int x) const { return genes[x]; }
 
     // Getters
     GeneArray getGenes() const { return genes; }
@@ -57,11 +55,12 @@ public:
 
     // Additional methods
     int getGeneCount() const;
-    Gene get(int index) const;
-    void set(int index, const Gene& object);
-    virtual Chromosome copy();
+    Gene get(const int index) const;
+    void set(const int index, const Gene& object);
+    Chromosome copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printGenes() const;
 };
 
 typedef std::vector<Chromosome > ChromosomeArray;

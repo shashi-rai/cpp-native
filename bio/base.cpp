@@ -22,11 +22,13 @@
 
 namespace bio {
 
-Base::Base() : Molecule(), pyrimidine(), imidazole() {
+Base::Base()
+        : Molecule(), pyrimidine(), imidazole() {
 
 }
 
-Base::Base(std::string name) : Molecule(name), pyrimidine(), imidazole() {
+Base::Base(const std::string name)
+        : Molecule(name), pyrimidine(), imidazole() {
 
 }
 
@@ -35,7 +37,7 @@ Base::Base(const che::Ring& pyrimidine, const che::Ring& imidazole)
 
 }
 
-Base::Base(std::string name, const che::Ring& pyrimidine, const che::Ring& imidazole)
+Base::Base(const std::string name, const che::Ring& pyrimidine, const che::Ring& imidazole)
     : Molecule(name), pyrimidine(pyrimidine), imidazole(imidazole) {
 
 }
@@ -49,15 +51,37 @@ bool Base::operator==(const Base& peer) const {
 }
 
 Base Base::operator+(const Base& peer) const {
-    che::Ring newpyrimidine = (pyrimidine + peer.pyrimidine);
-    che::Ring newimidazole = (imidazole + peer.imidazole);
-    return Base("+", newpyrimidine, newimidazole);
+    che::Ring newPyrimidine = (this->pyrimidine + peer.pyrimidine);
+    che::Ring newImidazole = (this->imidazole + peer.imidazole);
+    return Base("+", newPyrimidine, newImidazole);
 }
 
 Base Base::operator-(const Base& peer) const {
-    che::Ring newpyrimidine = (pyrimidine - peer.pyrimidine);
-    che::Ring newimidazole = (imidazole - peer.imidazole);
-    return Base("-", pyrimidine, imidazole);
+    che::Ring newPyrimidine = (this->pyrimidine - peer.pyrimidine);
+    che::Ring newImidazole = (this->imidazole - peer.imidazole);
+    return Base("-", newPyrimidine, newImidazole);
+}
+
+Base Base::copy() {
+    Base fresh(Molecule::getName(), this->pyrimidine, this->imidazole);
+    return fresh;
+}
+
+void Base::clear() {
+	Molecule::clear();
+	pyrimidine.clear();
+    imidazole.clear();
+    return;
+}
+
+std::string Base::print() const {
+    std::stringstream result;
+    result << "(";
+	result << Molecule::print() << ",";
+	result << pyrimidine.print() << ",";
+    result << imidazole.print();
+    result << ")";
+	return result.str();
 }
 
 } // namespace bio

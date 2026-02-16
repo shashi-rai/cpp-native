@@ -21,9 +21,6 @@
 #ifndef ACT_DIVIDEND_H
 #define ACT_DIVIDEND_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "amount.h"
 
 namespace act {

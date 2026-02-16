@@ -21,9 +21,6 @@
 #ifndef BIO_BASE_H
 #define BIO_BASE_H
 
-#include <string>
-#include <vector>
-#include "../che/molecule.h"
 #include "../che/ring.h"
 
 namespace bio {
@@ -34,9 +31,9 @@ class Base : public che::Molecule {
 public:
     // Constructors
     Base();
-    Base(std::string name);
+    Base(const std::string name);
     Base(const che::Ring& pyrimidine, const che::Ring& imidazole);
-    Base(std::string name, const che::Ring& pyrimidine, const che::Ring& imidazole);
+    Base(const std::string name, const che::Ring& pyrimidine, const che::Ring& imidazole);
 
     // Operator overloading
     bool operator==(const Base& peer) const;
@@ -53,6 +50,9 @@ public:
     // Setters
     void setPyrimidine(const che::Ring& molecule) { this->pyrimidine = molecule; }
     void setImidazole(const che::Ring& molecule) { this->imidazole = molecule; }
+    Base copy();
+    virtual void clear();
+    virtual std::string print() const;
 };
 
 typedef std::vector<Base > BaseArray;

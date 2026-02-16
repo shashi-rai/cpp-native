@@ -22,11 +22,18 @@
 
 namespace che {
 
-Ring::Ring() : Molecule(), atoms() {
+Ring::Ring()
+        : Molecule(), atoms() {
 
 }
 
-Ring::Ring(const std::string name) : Molecule(name), atoms() {
+Ring::Ring( const AtomArray& atoms)
+        : Molecule(), atoms(atoms) {
+
+}
+
+Ring::Ring(const std::string name)
+        : Molecule(name), atoms() {
 
 }
 
@@ -93,7 +100,7 @@ void Ring::set(const int index, const Atom& object) {
 }
 
 Molecule Ring::copy() {
-    Ring fresh(getName(), atoms);
+    Ring fresh(Molecule::getName(), this->atoms);
     return fresh;
 }
 
@@ -103,11 +110,25 @@ void Ring::clear() {
     return;
 }
 
-std::string Ring::print() {
+std::string Ring::print() const {
     std::stringstream result;
     result << "(R:";
-	result << Molecule::print() << ",sz:";
-	result << atoms.size() << ")";
+	result << Molecule::print() << ")";
+	result << printAtoms();
+	return result.str();
+}
+
+std::string Ring::printAtoms() const {
+    std::stringstream result; int size = atoms.size();
+    if (size > 0) {
+	    result << ",sz:";
+        result << atoms.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << atoms[i].print() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

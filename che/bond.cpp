@@ -22,21 +22,23 @@
 
 namespace che {
 
-Bond::Bond() : Point(), left(), right(), energy(), length(), angle() {
+Bond::Bond()
+        : Point(), left(), right(), energy(), length(), angle() {
 
 }
 
-Bond::Bond(const float gradient) : Point(), left(), right(),
-        energy(), length(), angle() {
+Bond::Bond(const float gradient)
+		: Point(), left(), right(), energy(), length(), angle() {
 
 }
 
-Bond::Bond(const float amplitude, const float gradient) : Point(amplitude, gradient),
-		left(), right(), energy(), length(), angle() {
+Bond::Bond(const float amplitude, const float gradient)
+		: Point(amplitude, gradient), left(), right(), energy(), length(), angle() {
 
 }
 
-Bond::Bond(const std::string name) : Point(name), left(), right(), energy(), length(), angle() {
+Bond::Bond(const std::string name)
+		: Point(name), left(), right(), energy(), length(), angle() {
 
 }
 
@@ -57,22 +59,19 @@ Bond::Bond(const std::shared_ptr<che::Orbital> left, const std::shared_ptr<che::
 
 Bond::Bond(const std::shared_ptr<che::Orbital> left, const std::shared_ptr<che::Orbital> right,
         const qft::Energy& energy)
-        : Point(), left(left), right(right),
-        energy(energy), length(), angle() {
+        : Point(), left(left), right(right), energy(energy), length(), angle() {
 
 }
 
 Bond::Bond(const std::shared_ptr<che::Orbital> left, const std::shared_ptr<che::Orbital> right,
         const qft::Energy& energy, const shp::Distance& length)
-        : Point(), left(left), right(right),
-        energy(energy), length(length), angle() {
+        : Point(), left(left), right(right), energy(energy), length(length), angle() {
 
 }
 
 Bond::Bond(const std::shared_ptr<che::Orbital> left, const std::shared_ptr<che::Orbital> right,
         const qft::Energy& energy, const shp::Distance& length, const shp::Angular& angle)
-        : Point(), left(left), right(right),
-        energy(energy), length(length), angle(angle) {
+        : Point(), left(left), right(right), energy(energy), length(length), angle(angle) {
 
 }
 
@@ -85,32 +84,28 @@ Bond::Bond(const std::string name,
 Bond::Bond(const std::string name,
 		const std::shared_ptr<che::Orbital> left, const std::shared_ptr<che::Orbital> right,
         const qft::Energy& energy)
-        : Point(name), left(left), right(right),
-        energy(energy), length(), angle() {
+        : Point(name), left(left), right(right), energy(energy), length(), angle() {
 
 }
 
 Bond::Bond(const std::string name,
 		const std::shared_ptr<che::Orbital> left, const std::shared_ptr<che::Orbital> right,
         const qft::Energy& energy, const shp::Distance& length)
-        : Point(name), left(left), right(right),
-        energy(energy), length(length), angle() {
+        : Point(name), left(left), right(right), energy(energy), length(length), angle() {
 
 }
 
 Bond::Bond(const std::string name,
 		const std::shared_ptr<che::Orbital> left, const std::shared_ptr<che::Orbital> right,
         const qft::Energy& energy, const shp::Angular& angle)
-        : Point(name), left(left), right(right),
-        energy(energy), length(), angle(angle) {
+        : Point(name), left(left), right(right), energy(energy), length(), angle(angle) {
 
 }
 
 Bond::Bond(const std::string name,
 		const std::shared_ptr<che::Orbital> left, const std::shared_ptr<che::Orbital> right,
         const qft::Energy& energy, const shp::Distance& length, const shp::Angular& angle)
-        : Point(name), left(left), right(right),
-        energy(energy), length(length), angle(angle) {
+        : Point(name), left(left), right(right), energy(energy), length(length), angle(angle) {
 
 }
 
@@ -119,11 +114,12 @@ Bond::~Bond() {
 }
 
 shp::Point Bond::copy() {
-    Bond fresh(getName(), left, right, energy, length, angle);
+    Bond fresh(Point::getName(), this->left, this->right, this->energy, this->length, this->angle);
     return fresh;
 }
 
 void Bond::clear() {
+	shp::Point::clear();
     left->clear();
 	right->clear();
 	energy.clear();
@@ -132,7 +128,7 @@ void Bond::clear() {
     return;
 }
 
-std::string Bond::print() {
+std::string Bond::print() const {
     std::stringstream result;
     result << "(B:";
 	result << Point::print() << ",e:";

@@ -22,16 +22,42 @@
 
 namespace bio {
 
-Sugar::Sugar() : Molecule() {
+Sugar::Sugar()
+        : Molecule(), flavour() {
 
 }
 
-Sugar::Sugar(std::string name) : Molecule(name) {
+Sugar::Sugar(const std::string name)
+        : Molecule(name), flavour(name) {
+
+}
+
+Sugar::Sugar(const std::string name, const std::string flavour)
+        : Molecule(name), flavour(name) {
 
 }
 
 Sugar::~Sugar() {
 
+}
+
+Sugar Sugar::copy() {
+    Sugar fresh(this->getName(), this->flavour);
+    return fresh;
+}
+
+void Sugar::clear() {
+    che::Molecule::clear();
+    flavour.clear();
+    return;
+}
+
+std::string Sugar::print() const {
+    std::stringstream result;
+    result << "{ts:";
+	result << che::Molecule::print() << ",f:";
+    result << flavour << "}";
+	return result.str();
 }
 
 } // namespace bio

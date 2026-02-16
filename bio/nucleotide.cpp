@@ -22,17 +22,74 @@
 
 namespace bio {
 
-Nucleotide::Nucleotide() : Shape(), base(), sugar(), phosphate() {
+Nucleotide::Nucleotide()
+        : Shape(), base(), sugar(), phosphate() {
 
 }
 
-Nucleotide::Nucleotide(std::string name, Base& base, Sugar& sugar, Phosphate& phosphate)
+Nucleotide::Nucleotide( const Base& base)
+        : Shape(), base(base), sugar(), phosphate() {
+
+}
+
+Nucleotide::Nucleotide(const Base& base, const Sugar& sugar)
+        : Shape(), base(base), sugar(sugar), phosphate() {
+
+}
+
+Nucleotide::Nucleotide(const Base& base, const Sugar& sugar, const Phosphate& phosphate)
+        : Shape(), base(base), sugar(sugar), phosphate(phosphate) {
+
+}
+
+Nucleotide::Nucleotide(const std::string name)
+        : Shape(name), base(), sugar(), phosphate() {
+
+}
+
+Nucleotide::Nucleotide(const std::string name,
+		const Base& base)
+        : Shape(name), base(base), sugar(), phosphate() {
+
+}
+
+Nucleotide::Nucleotide(const std::string name,
+		const Base& base, const Sugar& sugar)
+        : Shape(name), base(base), sugar(sugar), phosphate() {
+
+}
+
+Nucleotide::Nucleotide(const std::string name,
+		const Base& base, const Sugar& sugar, const Phosphate& phosphate)
         : Shape(name), base(base), sugar(sugar), phosphate(phosphate) {
 
 }
 
 Nucleotide::~Nucleotide() {
 
+}
+
+Nucleotide Nucleotide::copy() {
+    Nucleotide fresh(this->getName(), this->base, this->sugar, this->phosphate);
+    return fresh;
+}
+
+void Nucleotide::clear() {
+    shp::Shape::clear();
+    base.clear();
+	sugar.clear();
+	phosphate.clear();
+    return;
+}
+
+std::string Nucleotide::print() const {
+    std::stringstream result;
+    result << "{n:";
+	result << shp::Shape::print() << ",";
+    result << base.print() << ",";
+	result << sugar.print() << ",";
+	result << phosphate.print() << "}";
+	return result.str();
 }
 
 } // namespace bio

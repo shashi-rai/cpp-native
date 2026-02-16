@@ -21,9 +21,6 @@
 #ifndef ACT_COUPON_H
 #define ACT_COUPON_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "datetime.h"
 #include "interest.h"
 

@@ -21,9 +21,6 @@
 #ifndef ACT_CHEQUE_H
 #define ACT_CHEQUE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "amount.h"
 #include "datetime.h"
 #include "party.h"

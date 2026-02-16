@@ -21,9 +21,6 @@
 #ifndef ACT_EXPENSE_H
 #define ACT_EXPENSE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "amount.h"
 #include "../doc/document.h"
 

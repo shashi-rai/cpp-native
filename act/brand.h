@@ -21,9 +21,6 @@
 #ifndef ACT_BRAND_H
 #define ACT_BRAND_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "manufacturer.h"
 
 namespace act {

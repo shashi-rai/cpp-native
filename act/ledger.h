@@ -21,9 +21,6 @@
 #ifndef ACT_LEDGER_H
 #define ACT_LEDGER_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "account.h"
 #include "batch.h"
 

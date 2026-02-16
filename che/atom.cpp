@@ -160,7 +160,7 @@ void Atom::clear() {
     return;
 }
 
-std::string Atom::print() {
+std::string Atom::print() const {
     std::stringstream result;
     result << "[";
 	result << nucleus.print() << ",";

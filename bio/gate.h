@@ -21,8 +21,6 @@
 #ifndef BIO_GATE_H
 #define BIO_GATE_H
 
-#include <string>
-#include <vector>
 #include "../shp/shape.h"
 
 namespace bio {
@@ -32,7 +30,8 @@ class Gate : public shp::Shape {
 public:
     // Constructors
     Gate();
-    Gate(std::string name);
+    Gate(const std::string name);
+    Gate(const std::string name, const bool status);
 
     // Destructors
     ~Gate();
@@ -42,6 +41,11 @@ public:
 
     // Setters
     void setStatus(const bool closed) { this->status = closed; }
+
+    // Additional methods
+    Gate copy();
+    virtual void clear();
+    virtual std::string print() const;
 };
 
 typedef std::vector<Gate > GateArray;

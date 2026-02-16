@@ -21,9 +21,6 @@
 #ifndef ACT_BRANCH_H
 #define ACT_BRANCH_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "../doc/document.h"
 #include "../gis/address.h"
 

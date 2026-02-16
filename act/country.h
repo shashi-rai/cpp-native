@@ -21,10 +21,6 @@
 #ifndef ACT_COUNTRY_H
 #define ACT_COUNTRY_H
 
-#include <sstream>
-#include <sstream>
-#include <string>
-#include <vector>
 #include "currency.h"
 
 namespace act {

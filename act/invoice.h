@@ -21,9 +21,6 @@
 #ifndef ACT_INVOICE_H
 #define ACT_INVOICE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "order.h"
 
 namespace act {

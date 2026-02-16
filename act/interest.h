@@ -22,9 +22,6 @@
 #define ACT_INTEREST_H
 
 #include <cmath>
-#include <sstream>
-#include <string>
-#include <vector>
 #include "amount.h"
 
 namespace act {

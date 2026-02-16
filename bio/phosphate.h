@@ -21,8 +21,6 @@
 #ifndef BIO_PHOSPHATE_H
 #define BIO_PHOSPHATE_H
 
-#include <string>
-#include <vector>
 #include "../che/molecule.h"
 
 namespace bio {
@@ -32,7 +30,8 @@ class Phosphate : public che::Molecule {
 public:
     // Constructors
     Phosphate();
-    Phosphate(std::string name);
+    Phosphate(const std::string name);
+    Phosphate(const std::string name, const std::string flavour);
 
     // Destructors
     ~Phosphate();
@@ -41,7 +40,12 @@ public:
     std::string getFlavour() const { return flavour; }
 
     // Setters
-    void setFlavour(const std::string& name) { this->flavour = name; }
+    void setFlavour(const std::string name) { this->flavour = name; }
+
+    // Additional methods
+    Phosphate copy();
+    virtual void clear();
+    virtual std::string print() const;
 };
 
 typedef std::vector<Phosphate > PhosphateArray;

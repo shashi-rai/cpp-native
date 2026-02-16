@@ -21,9 +21,6 @@
 #ifndef BIO_MEMBRANE_H
 #define BIO_MEMBRANE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "protein.h"
 #include "../shp/shape.h"
 
@@ -35,8 +32,9 @@ class Membrane : public shp::Shape {
 public:
     // Constructors
     Membrane();
+    Membrane(const ProteinArray& objects);
     Membrane(const float potential);
-    Membrane(const float potential, ProteinArray& objects);
+    Membrane(const float potential, const ProteinArray& objects);
 
     // Destructors
     ~Membrane();
@@ -47,8 +45,8 @@ public:
     Membrane operator-(const Membrane& peer) const;
 
     // Access operator
-    Protein& operator()(int x) { return proteins[x]; }
-    const Protein& operator()(int x) const { return proteins[x]; }
+    Protein& operator()(const int x) { return proteins[x]; }
+    const Protein& operator()(const int x) const { return proteins[x]; }
 
     // Getters
     float getPotential() const { return potential; };
@@ -60,11 +58,12 @@ public:
 
     // Additional methods
     int getProteinCount() const;
-    Protein get(int index) const;
-    void set(int index, const Protein& object);
-    virtual Membrane copy();
+    Protein get(const int index) const;
+    void set(const int index, const Protein& object);
+    Membrane copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printProteins() const;
 };
 
 typedef std::vector<Membrane > MembraneArray;

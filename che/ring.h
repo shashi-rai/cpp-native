@@ -21,7 +21,6 @@
 #ifndef CHE_RING_H
 #define CHE_RING_H
 
-#include "atom.h"
 #include "molecule.h"
 
 namespace che {
@@ -31,6 +30,7 @@ class Ring : public Molecule {
 public:
     // Constructors
     Ring();
+    Ring(const AtomArray& atoms);
     Ring(const std::string name);
     Ring(const std::string name, const AtomArray& atoms);
 
@@ -58,7 +58,8 @@ public:
     void set(const int index, const Atom& object);
     virtual Molecule copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printAtoms() const;
 };
 
 typedef std::vector<Ring > RingArray;

@@ -21,9 +21,6 @@
 #ifndef ACT_MILESTONE_H
 #define ACT_MILESTONE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "task.h"
 
 namespace act {

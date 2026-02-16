@@ -66,7 +66,7 @@ public:
     qft::Electron getElectron(const short int azimuthal, const short int magnetic) const;
     void setElectron(const short int azimuthal, const short int magnetic, const std::shared_ptr<qft::Electron> object);
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 public:
     static const int MAX_LIMIT;
     static const int ORBITAL_MAX_LIMIT;

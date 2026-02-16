@@ -22,11 +22,13 @@
 
 namespace che {
 
-Polymer::Polymer() : Point(), monomers() {
+Polymer::Polymer()
+        : Point(), monomers() {
 
 }
 
-Polymer::Polymer(const float gradient) : Point(), monomers() {
+Polymer::Polymer(const float gradient)
+        : Point(), monomers() {
 
 }
 
@@ -35,7 +37,8 @@ Polymer::Polymer(const float amplitude, const float gradient)
 
 }
 
-Polymer::Polymer(const std::string name) : Point(name), monomers() {
+Polymer::Polymer(const std::string name)
+        : Point(name), monomers() {
 
 }
 
@@ -111,7 +114,7 @@ void Polymer::set(const int index, const Molecule& object) {
     return;
 }
 
-shp::Point Polymer::copy() {
+Polymer Polymer::copy() {
     Polymer fresh(getName(), monomers);
     return fresh;
 }
@@ -122,11 +125,25 @@ void Polymer::clear() {
     return;
 }
 
-std::string Polymer::print() {
+std::string Polymer::print() const {
     std::stringstream result;
     result << "(P:";
-	result << Point::print() << ",sz:";
-	result << monomers.size() << ")";
+	result << Point::print() << ")";
+	result << printMonomers();
+	return result.str();
+}
+
+std::string Polymer::printMonomers() const {
+    std::stringstream result; int size = monomers.size();
+    if (size > 0) {
+	    result << ",sz:";
+        result << monomers.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << monomers[i].print() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

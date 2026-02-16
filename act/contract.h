@@ -21,9 +21,6 @@
 #ifndef ACT_CONTRACT_H
 #define ACT_CONTRACT_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "datetime.h"
 #include "milestone.h"
 #include "order.h"

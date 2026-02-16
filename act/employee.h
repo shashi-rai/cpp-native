@@ -21,9 +21,6 @@
 #ifndef ACT_EMPLOYEE_H
 #define ACT_EMPLOYEE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "department.h"
 #include "staff.h"
 

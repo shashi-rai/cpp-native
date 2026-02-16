@@ -21,9 +21,6 @@
 #ifndef BIO_GENE_H
 #define BIO_GENE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "nucleotide.h"
 #include "../shp/shape.h"
 
@@ -34,7 +31,9 @@ class Gene : public shp::Shape {
 public:
     // Constructors
     Gene();
-    Gene(std::string name, NucleotideArray& codon);
+    Gene(const NucleotideArray& codon);
+    Gene(const std::string name);
+    Gene(const std::string name, const NucleotideArray& codon);
 
     // Destructors
     ~Gene();
@@ -45,8 +44,8 @@ public:
     Gene operator-(const Gene& peer) const;
 
     // Access operator
-    Nucleotide& operator()(int x) { return sequence[x]; }
-    const Nucleotide& operator()(int x) const { return sequence[x]; }
+    Nucleotide& operator()(const int x) { return sequence[x]; }
+    const Nucleotide& operator()(const int x) const { return sequence[x]; }
 
     // Getters
     NucleotideArray getSequence() const { return sequence; }
@@ -58,9 +57,10 @@ public:
     int getNucleotideCount() const;
     Nucleotide get(int index) const;
     void set(int index, const Nucleotide& object);
-    virtual Gene copy();
+    Gene copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printNucleotides() const;
 };
 
 typedef std::vector<Gene > GeneArray;

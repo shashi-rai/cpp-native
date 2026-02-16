@@ -21,9 +21,6 @@
 #ifndef ACT_LOAN_H
 #define ACT_LOAN_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "coupon.h"
 #include "liability.h"
 

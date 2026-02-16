@@ -22,11 +22,23 @@
 
 namespace bio {
 
-Gene::Gene() : Shape(), sequence() {
+Gene::Gene()
+        : Shape(), sequence() {
 
 }
 
-Gene::Gene(std::string name, NucleotideArray& codon) : Shape(name), sequence(codon) {
+Gene::Gene(const NucleotideArray& codon)
+        : Shape(), sequence(codon) {
+
+}
+
+Gene::Gene(const std::string name)
+        : Shape(name), sequence() {
+
+}
+
+Gene::Gene(const std::string name, const NucleotideArray& codon)
+        : Shape(name), sequence(codon) {
 
 }
 
@@ -59,7 +71,7 @@ int Gene::getNucleotideCount() const {
     return sequence.size();
 }
 
-Nucleotide Gene::get(int index) const {
+Nucleotide Gene::get(const int index) const {
     Nucleotide result;
     if (index < 0) {
         return result;
@@ -70,7 +82,7 @@ Nucleotide Gene::get(int index) const {
     return sequence[index];
 }
 
-void Gene::set(int index, const Nucleotide& object) {
+void Gene::set(const int index, const Nucleotide& object) {
     if (index < 0) {
         return;
     }
@@ -98,11 +110,25 @@ void Gene::clear() {
     return;
 }
 
-std::string Gene::print() {
+std::string Gene::print() const {
     std::stringstream result;
     result << "{ge";
-	result << Shape::print() << ",sz:";
-	result << sequence.size() << "}";
+	result << Shape::print() << "}";
+	result << printNucleotides();
+	return result.str();
+}
+
+std::string Gene::printNucleotides() const {
+    std::stringstream result; int size = sequence.size();
+    if (size > 0) {
+	    result << ",sz:";
+        result << sequence.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << sequence[i].print() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

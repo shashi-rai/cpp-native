@@ -21,9 +21,6 @@
 #ifndef ACT_BALANCE_H
 #define ACT_BALANCE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "amount.h"
 #include "asset.h"
 #include "equity.h"

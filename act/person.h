@@ -21,9 +21,6 @@
 #ifndef ACT_PERSON_H
 #define ACT_PERSON_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "../gis/address.h"
 
 namespace act {

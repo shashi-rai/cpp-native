@@ -21,9 +21,6 @@
 #ifndef ACT_ORDER_H
 #define ACT_ORDER_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "amount.h"
 #include "item.h"
 #include "transaction.h"

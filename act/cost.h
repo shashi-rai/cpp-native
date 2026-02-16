@@ -21,9 +21,6 @@
 #ifndef ACT_COST_H
 #define ACT_COST_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "discount.h"
 #include "price.h"
 #include "tax.h"

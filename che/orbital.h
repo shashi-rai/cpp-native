@@ -65,7 +65,7 @@ public:
     qft::Electron getElectron(const int magnetic) const;
     void setElectron(const int magnetic, const std::shared_ptr<qft::Electron> object);
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 public:
     static const int ELECTRON_MAX_LIMIT;
     static const int ELECTRON_LIMIT[];

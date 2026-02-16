@@ -146,7 +146,7 @@ void Period::clear() {
     return;
 }
 
-std::string Period::print() {
+std::string Period::print() const {
     std::stringstream result;
     result << "ρ";
 	result << Shell::print();

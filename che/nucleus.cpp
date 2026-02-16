@@ -180,7 +180,7 @@ void Nucleus::clear() {
     return;
 }
 
-std::string Nucleus::print() {
+std::string Nucleus::print() const {
     std::stringstream result;
 	result << symbol << ",p:";
 	result << proton << ",n:";

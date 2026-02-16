@@ -21,9 +21,6 @@
 #ifndef ACT_TRANSPORTER_H
 #define ACT_TRANSPORTER_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "party.h"
 #include "vehicle.h"
 

@@ -22,11 +22,23 @@
 
 namespace bio {
 
-Chromosome::Chromosome() : Shape(), genes() {
+Chromosome::Chromosome()
+        : Shape(), genes() {
 
 }
 
-Chromosome::Chromosome(std::string name) : Shape(name), genes() {
+Chromosome::Chromosome(const GeneArray& objects)
+        : Shape(), genes(objects) {
+
+}
+
+Chromosome::Chromosome(const std::string name)
+        : Shape(name), genes() {
+
+}
+
+Chromosome::Chromosome(const std::string name, const GeneArray& objects)
+        : Shape(name), genes(objects) {
 
 }
 
@@ -59,7 +71,7 @@ int Chromosome::getGeneCount() const {
     return genes.size();
 }
 
-Gene Chromosome::get(int index) const {
+Gene Chromosome::get(const int index) const {
     Gene result;
     if (index < 0) {
         return result;
@@ -70,7 +82,7 @@ Gene Chromosome::get(int index) const {
     return genes[index];
 }
 
-void Chromosome::set(int index, const Gene& object) {
+void Chromosome::set(const int index, const Gene& object) {
     if (index < 0) {
         return;
     }
@@ -98,11 +110,25 @@ void Chromosome::clear() {
     return;
 }
 
-std::string Chromosome::print() {
+std::string Chromosome::print() const {
     std::stringstream result;
     result << "{ch";
-	result << Shape::print() << ",sz:";
-	result << genes.size() << "}";
+	result << Shape::print() << "}";
+	result << printGenes();
+	return result.str();
+}
+
+std::string Chromosome::printGenes() const {
+    std::stringstream result; int size = genes.size();
+    if (size > 0) {
+	    result << ",sz:";
+        result << genes.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << genes[i].print() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

@@ -80,9 +80,9 @@ public:
     void setElectric(std::shared_ptr<qft::Field> address);
     std::shared_ptr<qft::Field> getGravity() const;
     void setGravity(std::shared_ptr<qft::Field> address);
-    virtual Nucleus copy();
+    Nucleus copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 private:
     void initialize();
 public:

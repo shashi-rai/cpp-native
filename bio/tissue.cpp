@@ -22,15 +22,23 @@
 
 namespace bio {
 
-Tissue::Tissue() : Shape() {
+Tissue::Tissue()
+    : Shape(), cells() {
 
 }
 
-Tissue::Tissue(std::string name) : Shape(name) {
+Tissue::Tissue(const CellArray& objects)
+        : Shape(), cells(objects) {
 
 }
 
-Tissue::Tissue(std::string name, CellArray& objects) : cells(objects) {
+Tissue::Tissue(const std::string name)
+        : Shape(name) {
+
+}
+
+Tissue::Tissue(const std::string name,const CellArray& objects)
+        : Shape(name), cells(objects) {
 
 }
 
@@ -63,7 +71,7 @@ int Tissue::getCellCount() const {
     return cells.size();
 }
 
-Cell Tissue::get(int index) const {
+Cell Tissue::get(const int index) const {
     Cell result;
     if (index < 0) {
         return result;
@@ -74,7 +82,7 @@ Cell Tissue::get(int index) const {
     return cells[index];
 }
 
-void Tissue::set(int index, const Cell& object) {
+void Tissue::set(const int index, const Cell& object) {
     if (index < 0) {
         return;
     }
@@ -102,11 +110,25 @@ void Tissue::clear() {
     return;
 }
 
-std::string Tissue::print() {
+std::string Tissue::print() const {
     std::stringstream result;
     result << "{ts:";
-	result << Shape::print() << ",sz:";
-	result << cells.size() << "}";
+	result << Shape::print() << "}";
+	result << printCells();
+	return result.str();
+}
+
+std::string Tissue::printCells() const {
+    std::stringstream result; int size = cells.size();
+    if (size > 0) {
+	    result << ",sz:";
+        result << cells.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << cells[i].print() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

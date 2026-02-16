@@ -21,9 +21,6 @@
 #ifndef ACT_DISCOUNT_H
 #define ACT_DISCOUNT_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "amount.h"
 
 namespace act {

@@ -21,9 +21,6 @@
 #ifndef ACT_CASH_H
 #define ACT_CASH_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "account.h"
 #include "batch.h"
 

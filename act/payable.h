@@ -21,9 +21,6 @@
 #ifndef ACT_PAYABLE_H
 #define ACT_PAYABLE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "account.h"
 #include "batch.h"
 

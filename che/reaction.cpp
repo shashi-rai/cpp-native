@@ -22,11 +22,13 @@
 
 namespace che {
 
-Reaction::Reaction() : Point(), reactants(), products(), change() {
+Reaction::Reaction()
+		: Point(), reactants(), products(), change() {
 
 }
 
-Reaction::Reaction(const float gradient) : Point(), reactants(), products(), change() {
+Reaction::Reaction(const float gradient)
+		: Point(), reactants(), products(), change() {
 
 }
 
@@ -35,7 +37,8 @@ Reaction::Reaction(const float amplitude, const float gradient)
 
 }
 
-Reaction::Reaction(const std::string name) : Point(name), reactants(), products(), change() {
+Reaction::Reaction(const std::string name)
+		: Point(name), reactants(), products(), change() {
 
 }
 
@@ -67,13 +70,41 @@ void Reaction::clear() {
     return;
 }
 
-std::string Reaction::print() {
+std::string Reaction::print() const {
     std::stringstream result;
     result << "(R:";
 	result << Point::print() << ",h:";
-	result << change.print() << ",r:";
-	result << reactants.size() << ",p:";
-	result << products.size() << ")";
+	result << change.print() << "),r";
+	result << printReactants() << ",p";
+	result << printProducts();
+	return result.str();
+}
+
+std::string Reaction::printReactants() const {
+    std::stringstream result; int size = reactants.size();
+    if (size > 0) {
+	    result << ":sz:";
+        result << reactants.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << reactants[i].print() << std::endl;
+        }
+        result << "}";
+    }
+	return result.str();
+}
+
+std::string Reaction::printProducts() const {
+    std::stringstream result; int size = products.size();
+    if (size > 0) {
+	    result << ":sz:";
+        result << products.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << products[i].print() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

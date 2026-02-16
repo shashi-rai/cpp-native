@@ -21,9 +21,6 @@
 #ifndef ACT_PROJECT_H
 #define ACT_PROJECT_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "contract.h"
 #include "staff.h"
 #include "task.h"

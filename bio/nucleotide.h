@@ -21,8 +21,6 @@
 #ifndef BIO_NUCLEOTIDE_H
 #define BIO_NUCLEOTIDE_H
 
-#include <string>
-#include <vector>
 #include "base.h"
 #include "phosphate.h"
 #include "sugar.h"
@@ -37,7 +35,13 @@ class Nucleotide : public shp::Shape {
 public:
     // Constructors
     Nucleotide();
-    Nucleotide(std::string name, Base& base, Sugar& sugar, Phosphate& phosphate);
+    Nucleotide(const Base& base);
+    Nucleotide(const Base& base, const Sugar& sugar);
+    Nucleotide(const Base& base, const Sugar& sugar, const Phosphate& phosphate);
+    Nucleotide(const std::string name);
+    Nucleotide(const std::string name, const Base& base);
+    Nucleotide(const std::string name, const Base& base, const Sugar& sugar);
+    Nucleotide(const std::string name, const Base& base, const Sugar& sugar, const Phosphate& phosphate);
 
     // Destructors
     ~Nucleotide();
@@ -51,6 +55,11 @@ public:
     void setBase(const Base& molecule) { this->base = molecule; }
     void setSugar(const Sugar& molecule) { this->sugar = molecule; }
     void setPhosphate(const Phosphate& molecule) { this->phosphate = molecule; }
+
+    // Additional methods
+    Nucleotide copy();
+    virtual void clear();
+    virtual std::string print() const;
 };
 
 typedef std::vector<Nucleotide > NucleotideArray;

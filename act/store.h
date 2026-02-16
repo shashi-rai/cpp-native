@@ -21,9 +21,6 @@
 #ifndef ACT_STORE_H
 #define ACT_STORE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "warehouse.h"
 
 namespace act {

@@ -21,9 +21,6 @@
 #ifndef ACT_TAX_H
 #define ACT_TAX_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "amount.h"
 
 namespace act {

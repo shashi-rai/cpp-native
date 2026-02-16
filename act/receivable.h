@@ -21,9 +21,6 @@
 #ifndef ACT_RECEIVABLE_H
 #define ACT_RECEIVABLE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "account.h"
 #include "batch.h"
 

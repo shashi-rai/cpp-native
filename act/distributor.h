@@ -21,9 +21,6 @@
 #ifndef ACT_DISTRIBUTOR_H
 #define ACT_DISTRIBUTOR_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "party.h"
 #include "retailer.h"
 

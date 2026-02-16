@@ -21,10 +21,6 @@
 #ifndef ACT_FISCAL_H
 #define ACT_FISCAL_H
 
-#include <iomanip>
-#include <sstream>
-#include <string>
-#include <vector>
 #include "datetime.h"
 
 namespace act {

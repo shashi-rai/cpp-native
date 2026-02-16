@@ -55,9 +55,10 @@ public:
     int getMoleculeCount() const;
     Molecule get(const int index) const;
     void set(const int index, const Molecule& object);
-    virtual shp::Point copy();
+    Polymer copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printMonomers() const;
 };
 
 typedef std::vector<Polymer > PolymerArray;

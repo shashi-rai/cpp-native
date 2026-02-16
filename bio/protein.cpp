@@ -22,19 +22,23 @@
 
 namespace bio {
 
-Protein::Protein() : Molecule(), gates() {
+Protein::Protein()
+        : Molecule(), gates() {
 
 }
 
-Protein::Protein(std::string name) : Molecule(name), gates() {
+Protein::Protein(const GateArray& objects)
+        : Molecule(), gates(objects) {
 
 }
 
-Protein::Protein(GateArray& objects) : Molecule(), gates(objects) {
+Protein::Protein(const std::string name)
+        : Molecule(name), gates() {
 
 }
 
-Protein::Protein(std::string name, GateArray& objects) : Molecule(name), gates(objects) {
+Protein::Protein(const std::string name, const GateArray& objects)
+        : Molecule(name), gates(objects) {
 
 }
 
@@ -67,7 +71,7 @@ int Protein::getGateCount() const {
     return gates.size();
 }
 
-Gate Protein::get(int index) const {
+Gate Protein::get(const int index) const {
     Gate result;
     if (index < 0) {
         return result;
@@ -78,7 +82,7 @@ Gate Protein::get(int index) const {
     return gates[index];
 }
 
-void Protein::set(int index, const Gate& object) {
+void Protein::set(const int index, const Gate& object) {
     if (index < 0) {
         return;
     }
@@ -106,11 +110,25 @@ void Protein::clear() {
     return;
 }
 
-std::string Protein::print() {
+std::string Protein::print() const {
     std::stringstream result;
     result << "[pr:";
-	result << Molecule::print() << ",sz:";
-	result << gates.size() << "]";
+	result << Molecule::print() << "]";
+	result << printGates();
+	return result.str();
+}
+
+std::string Protein::printGates() const {
+    std::stringstream result; int size = gates.size();
+    if (size > 0) {
+	    result << ",sz:";
+        result << gates.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << gates[i].print() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

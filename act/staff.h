@@ -21,9 +21,6 @@
 #ifndef ACT_STAFF_H
 #define ACT_STAFF_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "amount.h"
 #include "person.h"
 

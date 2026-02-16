@@ -21,9 +21,6 @@
 #ifndef ACT_RETAILER_H
 #define ACT_RETAILER_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "party.h"
 #include "store.h"
 

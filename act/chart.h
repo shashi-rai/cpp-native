@@ -21,9 +21,6 @@
 #ifndef ACT_CHART_H
 #define ACT_CHART_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "account.h"
 #include "balance.h"
 

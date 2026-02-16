@@ -21,7 +21,6 @@
 #ifndef CHE_CHAIN_H
 #define CHE_CHAIN_H
 
-#include "atom.h"
 #include "molecule.h"
 
 namespace che {
@@ -31,6 +30,7 @@ class Chain : public Molecule {
 public:
     // Constructors
     Chain();
+    Chain(const AtomArray& atoms);
     Chain(const std::string name);
     Chain(const std::string name, const AtomArray& atoms);
 
@@ -59,9 +59,10 @@ public:
     int getAtomCount() const;
     Atom get(const int index) const;
     void set(const int index, const Atom& object);
-    virtual Molecule copy();
+    Molecule copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printAtoms() const;
 };
 
 typedef std::vector<Chain > ChainArray;

@@ -21,8 +21,6 @@
 #ifndef BIO_TISSUE_H
 #define BIO_TISSUE_H
 
-#include <string>
-#include <vector>
 #include "cell.h"
 #include "../shp/shape.h"
 
@@ -33,8 +31,9 @@ class Tissue : public shp::Shape {
 public:
     // Constructors
     Tissue();
-    Tissue(std::string name);
-    Tissue(std::string name, CellArray& objects);
+    Tissue(const CellArray& objects);
+    Tissue(const std::string name);
+    Tissue(const std::string name, const CellArray& objects);
 
     // Destructors
     ~Tissue();
@@ -45,8 +44,8 @@ public:
     Tissue operator-(const Tissue& peer) const;
 
     // Access operator
-    Cell& operator()(int x) { return cells[x]; }
-    const Cell& operator()(int x) const { return cells[x]; }
+    Cell& operator()(const int x) { return cells[x]; }
+    const Cell& operator()(const int x) const { return cells[x]; }
 
     // Getters
     CellArray getCells() const { return cells; }
@@ -56,11 +55,12 @@ public:
 
     // Additional methods
     int getCellCount() const;
-    Cell get(int index) const;
-    void set(int index, const Cell& object);
-    virtual Tissue copy();
+    Cell get(const int index) const;
+    void set(const int index, const Cell& object);
+    Tissue copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printCells() const;
 };
 
 typedef std::vector<Tissue > TissueArray;

@@ -21,9 +21,6 @@
 #ifndef ACT_BANK_H
 #define ACT_BANK_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "ledger.h"
 #include "party.h"
 

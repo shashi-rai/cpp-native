@@ -21,9 +21,6 @@
 #ifndef ACT_SALE_H
 #define ACT_SALE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "discount.h"
 #include "price.h"
 #include "tax.h"

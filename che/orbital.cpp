@@ -120,7 +120,7 @@ void Orbital::clear() {
     return;
 }
 
-std::string Orbital::print() {
+std::string Orbital::print() const {
     std::stringstream result;
     result << "(O";
 	result << Polygon::print() << ")";

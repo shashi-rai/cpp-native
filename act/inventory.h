@@ -21,9 +21,6 @@
 #ifndef ACT_INVENTORY_H
 #define ACT_INVENTORY_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "item.h"
 
 namespace act {

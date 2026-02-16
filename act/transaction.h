@@ -21,9 +21,6 @@
 #ifndef ACT_TRANSACTION_H
 #define ACT_TRANSACTION_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "amount.h"
 #include "batch.h"
 #include "customer.h"

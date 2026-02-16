@@ -21,7 +21,6 @@
 #ifndef ACT_AMOUNT_H
 #define ACT_AMOUNT_H
 
-#include <cmath>
 #include "currency.h"
 #include "datetime.h"
 

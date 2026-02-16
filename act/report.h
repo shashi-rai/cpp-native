@@ -21,9 +21,6 @@
 #ifndef ACT_REPORT_H
 #define ACT_REPORT_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "staff.h"
 #include "../doc/document.h"
 

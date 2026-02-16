@@ -21,9 +21,6 @@
 #ifndef ACT_WAREHOUSE_H
 #define ACT_WAREHOUSE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "branch.h"
 #include "inventory.h"
 

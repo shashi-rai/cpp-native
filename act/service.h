@@ -21,9 +21,6 @@
 #ifndef ACT_SERVICE_H
 #define ACT_SERVICE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "brand.h"
 #include "item.h"
 

@@ -21,9 +21,6 @@
 #ifndef ACT_SUPPLIER_H
 #define ACT_SUPPLIER_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "party.h"
 
 namespace act {

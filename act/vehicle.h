@@ -21,9 +21,6 @@
 #ifndef ACT_VEHICLE_H
 #define ACT_VEHICLE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "asset.h"
 
 namespace act {

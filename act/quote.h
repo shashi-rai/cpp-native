@@ -21,9 +21,6 @@
 #ifndef ACT_QUOTE_H
 #define ACT_QUOTE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "order.h"
 
 namespace act {

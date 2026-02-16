@@ -21,9 +21,6 @@
 #ifndef ACT_PARTY_H
 #define ACT_PARTY_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "chart.h"
 #include "../gis/address.h"
 

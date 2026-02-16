@@ -87,9 +87,9 @@ public:
     void setAngle(const shp::Angular& value) { this->angle = value; }
 
     // Additional methods
-    virtual Point copy();
+    Point copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 };
 
 typedef std::vector<Bond > BondArray;

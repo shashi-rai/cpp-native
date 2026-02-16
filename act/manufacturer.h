@@ -21,9 +21,6 @@
 #ifndef ACT_MANUFACTURER_H
 #define ACT_MANUFACTURER_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "factory.h"
 #include "party.h"
 

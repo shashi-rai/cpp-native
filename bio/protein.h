@@ -21,9 +21,6 @@
 #ifndef BIO_PROTEIN_H
 #define BIO_PROTEIN_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "gate.h"
 #include "../che/molecule.h"
 
@@ -34,9 +31,9 @@ class Protein : public che::Molecule {
 public:
     // Constructors
     Protein();
-    Protein(std::string name);
-    Protein(GateArray& objects);
-    Protein(std::string name, GateArray& objects);
+    Protein(const GateArray& objects);
+    Protein(const std::string name);
+    Protein(const std::string name, const GateArray& objects);
 
     // Destructors
     ~Protein();
@@ -47,8 +44,8 @@ public:
     Protein operator-(const Protein& peer) const;
 
     // Access operator
-    Gate& operator()(int x) { return gates[x]; }
-    const Gate& operator()(int x) const { return gates[x]; }
+    Gate& operator()(const int x) { return gates[x]; }
+    const Gate& operator()(const int x) const { return gates[x]; }
 
     // Getters
     GateArray getGates() const { return gates; }
@@ -58,11 +55,12 @@ public:
 
     // Additional methods
     int getGateCount() const;
-    Gate get(int index) const;
-    void set(int index, const Gate& object);
+    Gate get(const int index) const;
+    void set(const int index, const Gate& object);
     virtual che::Molecule copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printGates() const;
 };
 
 typedef std::vector<Protein > ProteinArray;

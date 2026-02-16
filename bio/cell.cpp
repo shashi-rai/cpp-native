@@ -22,19 +22,23 @@
 
 namespace bio {
 
-Cell::Cell() : Shape(), membranes() {
+Cell::Cell()
+        : Shape(), membranes() {
 
 }
 
-Cell::Cell(std::string name) : Shape(name), membranes() {
+Cell::Cell(const MembraneArray& objects)
+        : Shape(), membranes(objects) {
 
 }
 
-Cell::Cell(MembraneArray& objects) : Shape(), membranes(objects) {
+Cell::Cell(const std::string name)
+        : Shape(name), membranes() {
 
 }
 
-Cell::Cell(std::string name, MembraneArray& objects) : Shape(name), membranes(objects) {
+Cell::Cell(const std::string name, const MembraneArray& objects)
+        : Shape(name), membranes(objects) {
 
 }
 
@@ -67,7 +71,7 @@ int Cell::getMembraneCount() const {
     return membranes.size();
 }
 
-Membrane Cell::get(int index) const {
+Membrane Cell::get(const int index) const {
     Membrane result;
     if (index < 0) {
         return result;
@@ -78,7 +82,7 @@ Membrane Cell::get(int index) const {
     return membranes[index];
 }
 
-void Cell::set(int index, const Membrane& object) {
+void Cell::set(const int index, const Membrane& object) {
     if (index < 0) {
         return;
     }
@@ -106,11 +110,25 @@ void Cell::clear() {
     return;
 }
 
-std::string Cell::print() {
+std::string Cell::print() const {
     std::stringstream result;
     result << "{ce";
-	result << Shape::print() << ",sz:";
-	result << membranes.size() << "}";
+	result << Shape::print() << "}";
+	result << printMembranes();
+	return result.str();
+}
+
+std::string Cell::printMembranes() const {
+    std::stringstream result; int size = membranes.size();
+    if (size > 0) {
+	    result << ",sz:";
+        result << membranes.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << membranes[i].print() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

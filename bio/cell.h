@@ -21,9 +21,6 @@
 #ifndef BIO_CELL_H
 #define BIO_CELL_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "membrane.h"
 #include "../shp/shape.h"
 
@@ -34,9 +31,9 @@ class Cell : public shp::Shape {
 public:
     // Constructors
     Cell();
-    Cell(std::string name);
-    Cell(MembraneArray& objects);
-    Cell(std::string name, MembraneArray& objects);
+    Cell(const MembraneArray& objects);
+    Cell(const std::string name);
+    Cell(const std::string name, const MembraneArray& objects);
 
     // Destructors
     ~Cell();
@@ -47,8 +44,8 @@ public:
     Cell operator-(const Cell& peer) const;
 
     // Access operator
-    Membrane& operator()(int x) { return membranes[x]; }
-    const Membrane& operator()(int x) const { return membranes[x]; }
+    Membrane& operator()(const int x) { return membranes[x]; }
+    const Membrane& operator()(const int x) const { return membranes[x]; }
 
     // Getters
     MembraneArray getMembranes() const { return membranes; }
@@ -58,11 +55,12 @@ public:
 
     // Additional methods
     int getMembraneCount() const;
-    Membrane get(int index) const;
-    void set(int index, const Membrane& object);
-    virtual Cell copy();
+    Membrane get(const int index) const;
+    void set(const int index, const Membrane& object);
+    Cell copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printMembranes() const;
 };
 
 typedef std::vector<Cell > CellArray;

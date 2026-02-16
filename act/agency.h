@@ -21,9 +21,6 @@
 #ifndef ACT_AGENCY_H
 #define ACT_AGENCY_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "department.h"
 #include "party.h"
 

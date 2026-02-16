@@ -22,11 +22,18 @@
 
 namespace che {
 
-Chain::Chain() : Molecule(), atoms() {
+Chain::Chain()
+        : Molecule(), atoms() {
 
 }
 
-Chain::Chain(const std::string name) : Molecule(name), atoms() {
+Chain::Chain(const AtomArray& atoms)
+        : Molecule(), atoms(atoms) {
+
+}
+
+Chain::Chain(const std::string name)
+        : Molecule(name), atoms() {
 
 }
 
@@ -108,7 +115,7 @@ void Chain::set(const int index, const Atom& object) {
 }
 
 Molecule Chain::copy() {
-    Chain fresh(getName(), atoms);
+    Chain fresh(Molecule::getName(), this->atoms);
     return fresh;
 }
 
@@ -118,11 +125,25 @@ void Chain::clear() {
     return;
 }
 
-std::string Chain::print() {
+std::string Chain::print() const {
     std::stringstream result;
     result << "(C:";
-	result << Molecule::print() << ",sz:";
-	result << atoms.size() << ")";
+	result << Molecule::print() << ")";
+	result << printAtoms();
+	return result.str();
+}
+
+std::string Chain::printAtoms() const {
+    std::stringstream result; int size = atoms.size();
+    if (size > 0) {
+	    result << ",sz:";
+        result << atoms.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << atoms[i].print() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

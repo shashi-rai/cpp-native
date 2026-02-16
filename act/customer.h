@@ -21,9 +21,6 @@
 #ifndef ACT_CUSTOMER_H
 #define ACT_CUSTOMER_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "party.h"
 
 namespace act {

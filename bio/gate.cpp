@@ -22,16 +22,42 @@
 
 namespace bio {
 
-Gate::Gate() : Shape() {
+Gate::Gate()
+        : Shape(), status() {
 
 }
 
-Gate::Gate(std::string name) : Shape(name) {
+Gate::Gate(const std::string name)
+        : Shape(name), status() {
+
+}
+
+Gate::Gate(const std::string name, const bool status)
+        : Shape(name), status(status) {
 
 }
 
 Gate::~Gate() {
 
+}
+
+Gate Gate::copy() {
+    Gate fresh(this->getName(), this->status);
+    return fresh;
+}
+
+void Gate::clear() {
+    shp::Shape::clear();
+    status = false;
+    return;
+}
+
+std::string Gate::print() const {
+    std::stringstream result;
+    result << "{g:";
+	result << shp::Shape::print() << ",s:";
+    result << status << "}";
+	return result.str();
 }
 
 } // namespace bio

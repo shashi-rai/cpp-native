@@ -22,16 +22,42 @@
 
 namespace bio {
 
-Phosphate::Phosphate() : Molecule() {
+Phosphate::Phosphate()
+        : Molecule() {
 
 }
 
-Phosphate::Phosphate(std::string name) : Molecule(name) {
+Phosphate::Phosphate(const std::string name)
+        : Molecule(name) {
+
+}
+
+Phosphate::Phosphate(const std::string name, const std::string flavour)
+        : Molecule(name), flavour(name) {
 
 }
 
 Phosphate::~Phosphate() {
 
+}
+
+Phosphate Phosphate::copy() {
+    Phosphate fresh(this->getName(), this->flavour);
+    return fresh;
+}
+
+void Phosphate::clear() {
+    che::Molecule::clear();
+    flavour.clear();
+    return;
+}
+
+std::string Phosphate::print() const {
+    std::stringstream result;
+    result << "{ts:";
+	result << che::Molecule::print() << ",f:";
+    result << flavour << "}";
+	return result.str();
 }
 
 } // namespace bio

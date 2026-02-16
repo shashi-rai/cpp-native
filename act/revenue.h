@@ -21,9 +21,6 @@
 #ifndef ACT_REVENUE_H
 #define ACT_REVENUE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "amount.h"
 #include "../doc/document.h"
 

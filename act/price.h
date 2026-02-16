@@ -21,9 +21,6 @@
 #ifndef ACT_PRICE_H
 #define ACT_PRICE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "amount.h"
 
 namespace act {

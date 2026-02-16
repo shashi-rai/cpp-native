@@ -56,7 +56,9 @@ public:
 
     // Additional methods
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printReactants() const;
+    virtual std::string printProducts() const;
 };
 
 typedef std::vector<Reaction > ReactionArray;

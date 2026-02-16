@@ -22,7 +22,13 @@
 
 namespace bio {
 
-Membrane::Membrane() : Shape(), potential(), proteins() {
+Membrane::Membrane()
+        : Shape(), potential(), proteins() {
+
+}
+
+Membrane::Membrane(const ProteinArray& objects)
+        : Shape(), potential(), proteins(objects) {
 
 }
 
@@ -31,7 +37,7 @@ Membrane::Membrane(const float potential)
 
 }
 
-Membrane::Membrane(const float potential, ProteinArray& objects)
+Membrane::Membrane(const float potential, const ProteinArray& objects)
         : Shape(), potential(potential), proteins(objects) {
 
 }
@@ -65,7 +71,7 @@ int Membrane::getProteinCount() const {
     return proteins.size();
 }
 
-Protein Membrane::get(int index) const {
+Protein Membrane::get(const int index) const {
     Protein result;
     if (index < 0) {
         return result;
@@ -76,7 +82,7 @@ Protein Membrane::get(int index) const {
     return proteins[index];
 }
 
-void Membrane::set(int index, const Protein& object) {
+void Membrane::set(const int index, const Protein& object) {
     if (index < 0) {
         return;
     }
@@ -94,7 +100,7 @@ void Membrane::set(int index, const Protein& object) {
 }
 
 Membrane Membrane::copy() {
-    Membrane fresh(potential, this->proteins);
+    Membrane fresh(this->potential, this->proteins);
     return fresh;
 }
 
@@ -105,12 +111,26 @@ void Membrane::clear() {
     return;
 }
 
-std::string Membrane::print() {
+std::string Membrane::print() const {
     std::stringstream result;
     result << "{mem:";
     result << Shape::print() << ",p:";
-    result << potential << ",sz:";
-	result << proteins.size() << "}";
+    result << potential << "}";
+	result << printProteins();
+	return result.str();
+}
+
+std::string Membrane::printProteins() const {
+    std::stringstream result; int size = proteins.size();
+    if (size > 0) {
+	    result << ",sz:";
+        result << proteins.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << proteins[i].print() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

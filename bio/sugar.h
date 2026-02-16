@@ -21,8 +21,6 @@
 #ifndef BIO_SUGAR_H
 #define BIO_SUGAR_H
 
-#include <string>
-#include <vector>
 #include "../che/molecule.h"
 
 namespace bio {
@@ -32,7 +30,8 @@ class Sugar : public che::Molecule {
 public:
     // Constructors
     Sugar();
-    Sugar(std::string name);
+    Sugar(const std::string name);
+    Sugar(const std::string name, const std::string flavour);
 
     // Destructors
     ~Sugar();
@@ -41,7 +40,12 @@ public:
     std::string getFlavour() const { return flavour; }
 
     // Setters
-    void setFlavour(const std::string& name) { this->flavour = name; }
+    void setFlavour(const std::string name) { this->flavour = name; }
+
+    // Additional methods
+    Sugar copy();
+    virtual void clear();
+    virtual std::string print() const;
 };
 
 typedef std::vector<Sugar > SugarArray;

@@ -21,9 +21,6 @@
 #ifndef ACT_BUSINESS_H
 #define ACT_BUSINESS_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "party.h"
 
 namespace act {

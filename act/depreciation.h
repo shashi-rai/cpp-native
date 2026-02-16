@@ -21,9 +21,6 @@
 #ifndef ACT_DEPRECIATION_H
 #define ACT_DEPRECIATION_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "amount.h"
 
 namespace act {

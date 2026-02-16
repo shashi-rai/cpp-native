@@ -75,7 +75,7 @@ public:
     qft::Electron getElectron(const short int primary, const short int azimuthal, const short int magnetic) const;
     void setElectron(const short int primary, const short int azimuthal, const short int magnetic, const std::shared_ptr<qft::Electron> object);
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 public:
     static const std::string getSymbol(const short int number);
     static const std::string getName(const short int number);

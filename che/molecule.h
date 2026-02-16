@@ -68,9 +68,10 @@ public:
     int getBondCount() const;
     Bond get(const int index) const;
     void set(const int index, const Bond& object);
-    virtual Molecule copy();
+    Molecule copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
+    virtual std::string printBonds() const;
 };
 
 typedef std::vector<Molecule > MoleculeArray;

@@ -21,9 +21,6 @@
 #ifndef ACT_TASK_H
 #define ACT_TASK_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "price.h"
 #include "datetime.h"
 
