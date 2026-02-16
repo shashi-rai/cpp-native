@@ -468,8 +468,8 @@ void Strategy::setFeedback(const std::string key, const Pattern& object) {
     modulators[object.getName()] = object;
 }
 
-Strategy Strategy::copy() const {
-    Strategy fresh(this->getName(), this->stimulators);
+Strategy Strategy::copy() {
+    Strategy fresh(Pattern::getName(), this->stimulators);
     return fresh;
 }
 

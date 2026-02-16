@@ -139,8 +139,48 @@ void Pattern::setName(const std::string name) {
     Behaviour::setName(name);
 }
 
-Pattern Pattern::copy() const {
-    Pattern fresh(this->getName(), this->stimulus, this->feedback, this->response);
+void Pattern::setTemporalDelay(const shp::Temporal& time) {
+    Behaviour::setDelay(time.getMagnitude(), time.getScaling(), time.getUnit());
+}
+
+float Pattern::getTemporalDelay() const {
+    return Behaviour::getDelay();
+}
+
+void Pattern::setTemporalDelay(const float value) {
+    Behaviour::setDelay(value);
+}
+
+void Pattern::setTemporalDelay(const float value, const short int scale) {
+    Behaviour::setDelay(value, scale);
+}
+
+void Pattern::setTemporalDelay(const float value, const short int scale, const std::string unit) {
+    Behaviour::setDelay(value, scale, unit);
+}
+
+void Pattern::setTemporalDelay(const float value, const short int scale, const shp::Unit& unit) {
+    Behaviour::setDelay(value, scale, unit);
+}
+
+short int Pattern::getTemporalScaling() const {
+    return Behaviour::getScaling();
+}
+
+void Pattern::setTemporalScaling(const short int factor) {
+    Behaviour::setScaling(factor);
+}
+
+shp::Unit Pattern::getTemporalUnit() const {
+    return Behaviour::getUnit();
+}
+
+void Pattern::setTemporalUnit(const shp::Unit& object) {
+    Behaviour::setUnit(object);
+}
+
+Pattern Pattern::copy() {
+    Pattern fresh(Behaviour::getName(), this->stimulus, this->feedback, this->response);
     return fresh;
 }
 

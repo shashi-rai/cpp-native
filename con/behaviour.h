@@ -21,18 +21,31 @@
 #ifndef CON_BEHAVIOUR_H
 #define CON_BEHAVIOUR_H
 
-#include <sstream>
-#include <string>
-#include <vector>
+#include "../shp/temporal.h"
 
 namespace con {
 
-class Behaviour {
+class Behaviour : private shp::Temporal {
     std::string name;
 public:
     // Constructors
     Behaviour();
+    Behaviour(const shp::Unit& unit);
+    Behaviour(const float magnitude);
+    Behaviour(const float magnitude, const std::string unit);
+    Behaviour(const float magnitude, const shp::Unit& unit);
+    Behaviour(const float magnitude, const short int scaling);
+    Behaviour(const float magnitude, const short int scaling, const std::string unit);
+    Behaviour(const float magnitude, const short int scaling, const shp::Unit& unit);
     Behaviour(const std::string name);
+    Behaviour(const std::string name, const std::string unit);
+    Behaviour(const std::string name, const shp::Unit& unit);
+    Behaviour(const std::string name, const float magnitude);
+    Behaviour(const std::string name, const float magnitude, const std::string unit);
+    Behaviour(const std::string name, const float magnitude, const shp::Unit& unit);
+    Behaviour(const std::string name, const float magnitude, const short int scaling);
+    Behaviour(const std::string name, const float magnitude, const short int scaling, const std::string unit);
+    Behaviour(const std::string name, const float magnitude, const short int scaling, const shp::Unit& unit);
 
     // Destructors
     ~Behaviour();
@@ -52,7 +65,17 @@ public:
     void setName(const std::string name) { this->name = name; }
 
     // Additional methods
-    Behaviour copy() const;
+    void setDelay(const shp::Temporal& time);
+    float getDelay() const;
+    void setDelay(const float value);
+    void setDelay(const float value, const short int scale);
+    void setDelay(const float value, const short int scale, const std::string unit);
+    void setDelay(const float value, const short int scale, const shp::Unit& unit);
+    short int getScaling() const;
+    void setScaling(const short int factor);
+    shp::Unit getUnit() const;
+    void setUnit(const shp::Unit& object);
+    Behaviour copy();
     virtual void clear();
     virtual std::string print() const;
 };

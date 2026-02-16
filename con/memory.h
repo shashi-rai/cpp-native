@@ -91,7 +91,7 @@ public:
     int getActivatorCount() const;
     Strategy getActivator(const std::string word) const;
     void setActivator(const std::string word, const Strategy& object);
-    Memory copy() const;
+    Memory copy();
     virtual void clear();
     virtual std::string print() const;
     virtual std::string printActivators() const;

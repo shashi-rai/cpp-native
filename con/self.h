@@ -22,41 +22,42 @@
 #define CON_SELF_H
 
 #include "memory.h"
+#include "observer.h"
 
 namespace con {
 
 class Self : private Memory {
-    StimulusArray sensors;
+    ObserverArray observers;
 public:
     // Constructors
     Self();
-    Self(const StimulusArray& sensors);
+    Self(const ObserverArray& observers);
     Self(const Stimulus& stimulus);
-    Self(const Stimulus& stimulus, const StimulusArray& sensors);
+    Self(const Stimulus& stimulus, const ObserverArray& observers);
     Self(const Feedback& feedback);
-    Self(const Feedback& feedback, const StimulusArray& sensors);
+    Self(const Feedback& feedback, const ObserverArray& observers);
     Self(const Response& response);
-    Self(const Response& response, const StimulusArray& sensors);
+    Self(const Response& response, const ObserverArray& observers);
     Self(const Stimulus& stimulus, const Response& response);
-    Self(const Stimulus& stimulus, const Response& response, const StimulusArray& sensors);
+    Self(const Stimulus& stimulus, const Response& response, const ObserverArray& observers);
     Self(const Feedback& feedback, const Response& response);
-    Self(const Feedback& feedback, const Response& response, const StimulusArray& sensors);
+    Self(const Feedback& feedback, const Response& response, const ObserverArray& observers);
     Self(const Stimulus& stimulus, const Feedback& feedback, const Response& response);
-    Self(const Stimulus& stimulus, const Feedback& feedback, const Response& response, const StimulusArray& sensors);
-    Self(const std::string name, const StimulusArray& sensors);
+    Self(const Stimulus& stimulus, const Feedback& feedback, const Response& response, const ObserverArray& observers);
+    Self(const std::string name, const ObserverArray& observers);
     Self(const std::string name);
     Self(const std::string name, const Stimulus& stimulus);
-    Self(const std::string name, const Stimulus& stimulus, const StimulusArray& sensors);
+    Self(const std::string name, const Stimulus& stimulus, const ObserverArray& observers);
     Self(const std::string name, const Feedback& feedback);
-    Self(const std::string name, const Feedback& feedback, const StimulusArray& sensors);
+    Self(const std::string name, const Feedback& feedback, const ObserverArray& observers);
     Self(const std::string name, const Response& response);
-    Self(const std::string name, const Response& response, const StimulusArray& sensors);
+    Self(const std::string name, const Response& response, const ObserverArray& observers);
     Self(const std::string name, const Stimulus& stimulus, const Response& response);
-    Self(const std::string name, const Stimulus& stimulus, const Response& response, const StimulusArray& sensors);
+    Self(const std::string name, const Stimulus& stimulus, const Response& response, const ObserverArray& observers);
     Self(const std::string name, const Feedback& feedback, const Response& response);
-    Self(const std::string name, const Feedback& feedback, const Response& response, const StimulusArray& sensors);
+    Self(const std::string name, const Feedback& feedback, const Response& response, const ObserverArray& observers);
     Self(const std::string name, const Stimulus& stimulus, const Feedback& feedback, const Response& response);
-    Self(const std::string name, const Stimulus& stimulus, const Feedback& feedback, const Response& response, const StimulusArray& sensors);
+    Self(const std::string name, const Stimulus& stimulus, const Feedback& feedback, const Response& response, const ObserverArray& observers);
 
     // Destructors
     ~Self();
@@ -67,14 +68,14 @@ public:
     Self operator-(const Self& peer) const;
 
     // Access operator
-    Stimulus operator()(const int x) { return sensors[x]; }
-    const Stimulus operator()(const int x) const { return sensors[x]; }
+    Observer operator()(const int x) { return observers[x]; }
+    const Observer operator()(const int x) const { return observers[x]; }
 
     // Getters
-    StimulusArray getSensors() const { return sensors; }
+    ObserverArray getObservers() const { return observers; }
 
     // Setters
-    void setSensors(const StimulusArray& objects) { this->sensors = objects; }
+    void setObservers(const ObserverArray& objects) { this->observers = objects; }
 
     // Additional methods
     std::string getName() const;
@@ -90,13 +91,13 @@ public:
     shp::Signal getBehaviour(const Feedback& feedback) const;
     void setBehaviour(const std::string word, const Stimulus& stimulus, const Response& response);
     void setBehaviour(const std::string word, const Feedback& feedback, const Response& response);
-    int getSensorCount() const;
-    Stimulus getSensor(const int index) const;
-    void setSensor(const int index, const Stimulus& object);
-    Self copy() const;
+    int getObserverCount() const;
+    Observer getObserver(const int index) const;
+    void setObserver(const int index, const Observer& object);
+    Self copy();
     virtual void clear();
     virtual std::string print() const;
-    virtual std::string printSensors() const;
+    virtual std::string printObservers() const;
 };
 
 typedef std::vector<Self > SelfArray;

@@ -144,7 +144,7 @@ public:
     int getFeedbackCount() const;
     Pattern getFeedback(const std::string key) const;
     void setFeedback(const std::string key, const Pattern& object);
-    Strategy copy() const;
+    Strategy copy();
     virtual void clear();
     virtual std::string print() const;
     virtual std::string printSimulators() const;

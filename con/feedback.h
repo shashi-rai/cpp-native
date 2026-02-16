@@ -22,18 +22,23 @@
 #define CON_FEEDBACK_H
 
 #include "behaviour.h"
-#include "../shp/signal.h"
+#include "../shp/frequency.h"
 
 namespace con {
 
-class Feedback : protected Behaviour {
-    shp::Signal modulation;
+class Feedback : private Behaviour {
+    shp::Signal adjustment;
+    shp::Frequency threshold;
 public:
     // Constructors
     Feedback();
-    Feedback(const shp::Signal& modulation);
+    Feedback(const shp::Signal& adjustment);
+    Feedback(const shp::Frequency& threshold);
+    Feedback(const shp::Signal& adjustment, const shp::Frequency& threshold);
     Feedback(const std::string name);
-    Feedback(const std::string name, const shp::Signal& modulation);
+    Feedback(const std::string name, const shp::Signal& adjustment);
+    Feedback(const std::string name, const shp::Frequency& threshold);
+    Feedback(const std::string name, const shp::Signal& adjustment, const shp::Frequency& threshold);
 
     // Destructors
     ~Feedback();
@@ -47,15 +52,37 @@ public:
     Feedback operator%(const Feedback& peer) const;
 
     // Getters
-    shp::Signal getModulation() const { return modulation; }
+    shp::Signal getAdjustment() const { return adjustment; }
+    shp::Frequency getThreshold() const { return threshold; }
 
     // Setters
-    void setModulation(const shp::Signal& signal) { this->modulation = signal; }
+    void setAdjustment(const shp::Signal& signal) { this->adjustment = signal; }
+    void setThreshold(const shp::Frequency& object) { this->threshold = object; }
 
     // Additional methods
     std::string getName() const;
     void setName(const std::string name);
-    Feedback copy() const;
+    void setFrequencyThreshold(const shp::Frequency& repetition);
+    float getFrequencyThreshold() const;
+    void setFrequencyThreshold(const float value);
+    void setFrequencyThreshold(const float value, const short int scale);
+    void setFrequencyThreshold(const float value, const short int scale, const std::string unit);
+    void setFrequencyThreshold(const float value, const short int scale, const shp::Unit& unit);
+    short int getFrequencyScaling() const;
+    void setFrequencyScaling(const short int factor);
+    shp::Unit getFrequencyUnit() const;
+    void setFrequencyUnit(const shp::Unit& object);
+    void setTemporalDelay(const shp::Temporal& time);
+    float getTemporalDelay() const;
+    void setTemporalDelay(const float value);
+    void setTemporalDelay(const float value, const short int scale);
+    void setTemporalDelay(const float value, const short int scale, const std::string unit);
+    void setTemporalDelay(const float value, const short int scale, const shp::Unit& unit);
+    short int getTemporalScaling() const;
+    void setTemporalScaling(const short int factor);
+    shp::Unit getTemporalUnit() const;
+    void setTemporalUnit(const shp::Unit& object);
+    Feedback copy();
     virtual void clear();
     virtual std::string print() const;
 };

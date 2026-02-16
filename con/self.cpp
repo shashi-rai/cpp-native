@@ -23,146 +23,146 @@
 namespace con {
 
 Self::Self()
-        : Memory(), sensors() {
+        : Memory(), observers() {
 
 }
 
-Self::Self(const StimulusArray& sensors)
-        : Memory(), sensors(sensors) {
+Self::Self(const ObserverArray& observers)
+        : Memory(), observers(observers) {
 
 }
 
 Self::Self(const Stimulus& stimulus)
-        : Memory(stimulus), sensors() {
+        : Memory(stimulus), observers() {
 
 }
 
-Self::Self(const Stimulus& stimulus, const StimulusArray& sensors)
-        : Memory(stimulus), sensors(sensors) {
+Self::Self(const Stimulus& stimulus, const ObserverArray& observers)
+        : Memory(stimulus), observers(observers) {
 
 }
 
 Self::Self(const Feedback& feedback)
-        : Memory(feedback), sensors() {
+        : Memory(feedback), observers() {
 
 }
 
-Self::Self(const Feedback& feedback, const StimulusArray& sensors)
-        : Memory(feedback), sensors(sensors) {
+Self::Self(const Feedback& feedback, const ObserverArray& observers)
+        : Memory(feedback), observers(observers) {
 
 }
 
 Self::Self(const Response& response)
-        : Memory(response), sensors() {
+        : Memory(response), observers() {
 
 }
 
-Self::Self(const Response& response, const StimulusArray& sensors)
-        : Memory(response), sensors(sensors) {
+Self::Self(const Response& response, const ObserverArray& observers)
+        : Memory(response), observers(observers) {
 
 }
 
 Self::Self(const Stimulus& stimulus, const Response& response)
-        : Memory(stimulus, response), sensors() {
+        : Memory(stimulus, response), observers() {
 
 }
 
-Self::Self(const Stimulus& stimulus, const Response& response, const StimulusArray& sensors)
-        : Memory(stimulus, response), sensors(sensors) {
+Self::Self(const Stimulus& stimulus, const Response& response, const ObserverArray& observers)
+        : Memory(stimulus, response), observers(observers) {
 
 }
 
 Self::Self(const Feedback& feedback, const Response& response)
-        : Memory(feedback, response), sensors() {
+        : Memory(feedback, response), observers() {
 
 }
 
-Self::Self(const Feedback& feedback, const Response& response, const StimulusArray& sensors)
-        : Memory(feedback, response), sensors(sensors) {
+Self::Self(const Feedback& feedback, const Response& response, const ObserverArray& observers)
+        : Memory(feedback, response), observers(observers) {
 
 }
 
 Self::Self(const Stimulus& stimulus, const Feedback& feedback, const Response& response)
-        : Memory(stimulus, feedback, response), sensors() {
+        : Memory(stimulus, feedback, response), observers() {
 
 }
 
 Self::Self(const Stimulus& stimulus, const Feedback& feedback, const Response& response,
-        const StimulusArray& sensors)
-        : Memory(stimulus, feedback, response), sensors(sensors) {
+        const ObserverArray& observers)
+        : Memory(stimulus, feedback, response), observers(observers) {
 
 }
 
 Self::Self(const std::string name)
-        : Memory(name), sensors() {
+        : Memory(name), observers() {
 
 }
 
-Self::Self(const std::string name, const StimulusArray& sensors)
-        : Memory(name), sensors(sensors) {
+Self::Self(const std::string name, const ObserverArray& observers)
+        : Memory(name), observers(observers) {
 
 }
 
 Self::Self(const std::string name, const Stimulus& stimulus)
-        : Memory(name, stimulus), sensors() {
+        : Memory(name, stimulus), observers() {
 
 }
 
-Self::Self(const std::string name, const Stimulus& stimulus, const StimulusArray& sensors)
-        : Memory(name, stimulus), sensors(sensors) {
+Self::Self(const std::string name, const Stimulus& stimulus, const ObserverArray& observers)
+        : Memory(name, stimulus), observers(observers) {
 
 }
 
 Self::Self(const std::string name, const Feedback& feedback)
-        : Memory(name, feedback), sensors() {
+        : Memory(name, feedback), observers() {
 
 }
 
-Self::Self(const std::string name, const Feedback& feedback, const StimulusArray& sensors)
-        : Memory(name, feedback), sensors(sensors) {
+Self::Self(const std::string name, const Feedback& feedback, const ObserverArray& observers)
+        : Memory(name, feedback), observers(observers) {
 
 }
 
 Self::Self(const std::string name, const Response& response)
-        : Memory(name, response), sensors() {
+        : Memory(name, response), observers() {
 
 }
 
-Self::Self(const std::string name, const Response& response, const StimulusArray& sensors)
-        : Memory(name, response), sensors(sensors) {
+Self::Self(const std::string name, const Response& response, const ObserverArray& observers)
+        : Memory(name, response), observers(observers) {
 
 }
 
 Self::Self(const std::string name, const Stimulus& stimulus, const Response& response)
-        : Memory(name, stimulus, response), sensors() {
+        : Memory(name, stimulus, response), observers() {
 
 }
 
 Self::Self(const std::string name, const Stimulus& stimulus, const Response& response,
-        const StimulusArray& sensors)
-        : Memory(name, stimulus, response), sensors(sensors) {
+        const ObserverArray& observers)
+        : Memory(name, stimulus, response), observers(observers) {
 
 }
 
 Self::Self(const std::string name, const Feedback& feedback, const Response& response)
-        : Memory(name, feedback, response), sensors() {
+        : Memory(name, feedback, response), observers() {
 
 }
 
 Self::Self(const std::string name, const Feedback& feedback, const Response& response,
-        const StimulusArray& sensors)
-        : Memory(name, feedback, response), sensors(sensors) {
+        const ObserverArray& observers)
+        : Memory(name, feedback, response), observers(observers) {
 
 }
 
 Self::Self(const std::string name, const Stimulus& stimulus, const Feedback& feedback, const Response& response)
-        : Memory(name, stimulus, feedback, response), sensors() {
+        : Memory(name, stimulus, feedback, response), observers() {
 
 }
 
 Self::Self(const std::string name, const Stimulus& stimulus, const Feedback& feedback, const Response& response,
-        const StimulusArray& sensors)
-        : Memory(name, stimulus, feedback, response), sensors(sensors) {
+        const ObserverArray& observers)
+        : Memory(name, stimulus, feedback, response), observers(observers) {
 
 }
 
@@ -172,26 +172,26 @@ Self::~Self() {
 
 bool Self::operator==(const Self& peer) const {
     return (static_cast<const Memory&>(*this) == static_cast<const Memory&>(peer))
-        && (sensors == peer.sensors);
+        && (observers == peer.observers);
 }
 
 Self Self::operator+(const Self& peer) const {
     Memory self = *this, other = peer, memory = (self + other);
-    StimulusArray result(sensors);
-    result.insert(result.end(), peer.sensors.begin(), peer.sensors.end());
-    return Self("+", memory.getStimulus(), memory.getResponse(), result);
+    ObserverArray result(observers);
+    result.insert(result.end(), peer.observers.begin(), peer.observers.end());
+    return Self("+", memory.getStimulus(), memory.getFeedback(), memory.getResponse(), result);
 }
 
 Self Self::operator-(const Self& peer) const {
     Memory self = *this, other = peer, memory = (self - other);
-    StimulusArray result(sensors);
-    for (StimulusArray::const_iterator it = peer.sensors.begin(); it != peer.sensors.end(); ++it) {
-        StimulusArray::iterator found = std::find(result.begin(), result.end(), *it);
+    ObserverArray result(observers);
+    for (ObserverArray::const_iterator it = peer.observers.begin(); it != peer.observers.end(); ++it) {
+        ObserverArray::iterator found = std::find(result.begin(), result.end(), *it);
         if (found != result.end()) {
             result.erase(found);
         }
     }
-    return Self("-", memory.getStimulus(), memory.getResponse(), result);
+    return Self("-", memory.getStimulus(), memory.getFeedback(), memory.getResponse(), result);
 }
 
 std::string Self::getName() const {
@@ -248,65 +248,65 @@ void Self::setBehaviour(const std::string word, const Feedback& feedback, const 
     Memory::setLearning(word, feedback, response);
 }
 
-int Self::getSensorCount() const {
-    return sensors.size();
+int Self::getObserverCount() const {
+    return observers.size();
 }
 
-Stimulus Self::getSensor(const int index) const {
-    Stimulus result;
+Observer Self::getObserver(const int index) const {
+    Observer result;
     if (index < 0) {
         return result;
     }
-    if (index >= static_cast<int>(sensors.size())) {
+    if (index >= static_cast<int>(observers.size())) {
         return result;
     }
-    return sensors[index];
+    return observers[index];
 }
 
-void Self::setSensor(const int index, const Stimulus& object) {
+void Self::setObserver(const int index, const Observer& object) {
     if (index < 0) {
         return;
     }
-    if (index < static_cast<int>(sensors.size())) {
+    if (index < static_cast<int>(observers.size())) {
         // replace existing element
-        sensors[index] = object;
-    } else if (index == static_cast<int>(sensors.size())) {
+        observers[index] = object;
+    } else if (index == static_cast<int>(observers.size())) {
         // append at end
-        sensors.push_back(object);
+        observers.push_back(object);
     } else {
         // index beyond current size: append at end
-        sensors.push_back(object);
+        observers.push_back(object);
     }
     return;
 }
 
-Self Self::copy() const {
+Self Self::copy() {
     Self fresh(Memory::getName(),
-        Memory::getStimulus(), Memory::getFeedback(), Memory::getResponse(), this->sensors);
+        Memory::getStimulus(), Memory::getFeedback(), Memory::getResponse(), this->observers);
     return fresh;
 }
 
 void Self::clear() {
     Memory::clear();
-    sensors.clear();
+    observers.clear();
     return;
 }
 
 std::string Self::print() const {
     std::stringstream result;
 	result << Memory::print();
-    result << printSensors();
+    result << printObservers();
 	return result.str();
 }
 
-std::string Self::printSensors() const {
-    std::stringstream result; int size = sensors.size();
+std::string Self::printObservers() const {
+    std::stringstream result; int size = observers.size();
     if (size > 0) {
         result << ",sz:";
-	    result << sensors.size();
+	    result << observers.size();
         result << std::endl << "{";
         for (int i = 0; i < size; i++) {
-            result << "\t" << sensors[i].print() << std::endl;
+            result << "\t" << observers[i].print() << std::endl;
         }
         result << "}";
     }

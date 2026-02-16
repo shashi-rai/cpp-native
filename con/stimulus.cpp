@@ -79,8 +79,48 @@ void Stimulus::setName(const std::string name) {
     Behaviour::setName(name);
 }
 
-Stimulus Stimulus::copy() const {
-    Stimulus fresh(this->getName(), this->input);
+void Stimulus::setTemporalDelay(const shp::Temporal& time) {
+    Behaviour::setDelay(time.getMagnitude(), time.getScaling(), time.getUnit());
+}
+
+float Stimulus::getTemporalDelay() const {
+    return Behaviour::getDelay();
+}
+
+void Stimulus::setTemporalDelay(const float value) {
+    Behaviour::setDelay(value);
+}
+
+void Stimulus::setTemporalDelay(const float value, const short int scale) {
+    Behaviour::setDelay(value, scale);
+}
+
+void Stimulus::setTemporalDelay(const float value, const short int scale, const std::string unit) {
+    Behaviour::setDelay(value, scale, unit);
+}
+
+void Stimulus::setTemporalDelay(const float value, const short int scale, const shp::Unit& unit) {
+    Behaviour::setDelay(value, scale, unit);
+}
+
+short int Stimulus::getTemporalScaling() const {
+    return Behaviour::getScaling();
+}
+
+void Stimulus::setTemporalScaling(const short int factor) {
+    Behaviour::setScaling(factor);
+}
+
+shp::Unit Stimulus::getTemporalUnit() const {
+    return Behaviour::getUnit();
+}
+
+void Stimulus::setTemporalUnit(const shp::Unit& object) {
+    Behaviour::setUnit(object);
+}
+
+Stimulus Stimulus::copy() {
+    Stimulus fresh(Behaviour::getName(), this->input);
     return fresh;
 }
 

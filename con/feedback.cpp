@@ -23,22 +23,42 @@
 namespace con {
 
 Feedback::Feedback()
-        : Behaviour(), modulation() {
+        : Behaviour(), adjustment(), threshold() {
 
 }
 
-Feedback::Feedback(const shp::Signal& modulation)
-        : Behaviour(), modulation(modulation) {
+Feedback::Feedback(const shp::Signal& adjustment)
+        : Behaviour(), adjustment(adjustment), threshold() {
+
+}
+
+Feedback::Feedback(const shp::Frequency& threshold)
+        : Behaviour(), adjustment(), threshold(threshold) {
+
+}
+
+Feedback::Feedback(const shp::Signal& adjustment, const shp::Frequency& threshold)
+        : Behaviour(), adjustment(adjustment), threshold(threshold) {
 
 }
 
 Feedback::Feedback(const std::string name)
-        : Behaviour(name), modulation() {
+        : Behaviour(name), adjustment(), threshold() {
 
 }
 
-Feedback::Feedback(const std::string name, const shp::Signal& modulation)
-        : Behaviour(name), modulation(modulation) {
+Feedback::Feedback(const std::string name, const shp::Signal& adjustment)
+        : Behaviour(name), adjustment(adjustment), threshold() {
+
+}
+
+Feedback::Feedback(const std::string name, const shp::Frequency& threshold)
+        : Behaviour(name), adjustment(), threshold(threshold){
+
+}
+
+Feedback::Feedback(const std::string name, const shp::Signal& adjustment, const shp::Frequency& threshold)
+        : Behaviour(name), adjustment(adjustment), threshold(threshold) {
 
 }
 
@@ -48,27 +68,27 @@ Feedback::~Feedback() {
 
 bool Feedback::operator==(const Feedback& peer) const {
     return (static_cast<const Behaviour&>(*this) == static_cast<const Behaviour&>(peer))
-        && (modulation == peer.modulation);
+        && (adjustment == peer.adjustment) && (threshold == peer.threshold);
 }
 
 Feedback Feedback::operator+(const Feedback& peer) const {
-    return Feedback("+", (modulation + peer.modulation));
+    return Feedback("+", (adjustment + peer.adjustment), (threshold + peer.threshold));
 }
 
 Feedback Feedback::operator-(const Feedback& peer) const {
-    return Feedback("-", (modulation - peer.modulation));
+    return Feedback("-", (adjustment - peer.adjustment), (threshold - peer.threshold));
 }
 
 Feedback Feedback::operator*(const Feedback& peer) const {
-    return Feedback("*", (modulation * peer.modulation));
+    return Feedback("*", (adjustment * peer.adjustment), (threshold * peer.threshold));
 }
 
 Feedback Feedback::operator/(const Feedback& peer) const {
-    return Feedback("/", (modulation / peer.modulation));
+    return Feedback("/", (adjustment / peer.adjustment), (threshold / peer.threshold));
 }
 
 Feedback Feedback::operator%(const Feedback& peer) const {
-    return Feedback("%", (modulation % peer.modulation));
+    return Feedback("%", (adjustment % peer.adjustment), (threshold % peer.threshold));
 }
 
 std::string Feedback::getName() const {
@@ -79,14 +99,95 @@ void Feedback::setName(const std::string name) {
     Behaviour::setName(name);
 }
 
-Feedback Feedback::copy() const {
-    Feedback fresh(this->getName(), this->modulation);
+void Feedback::setFrequencyThreshold(const shp::Frequency& repetition) {
+    threshold.setMagnitude(repetition.getMagnitude(), repetition.getScaling(), repetition.getUnit());
+}
+
+float Feedback::getFrequencyThreshold() const {
+    return threshold.getMagnitude();
+}
+
+void Feedback::setFrequencyThreshold(const float value) {
+    threshold.setMagnitude(value);
+}
+
+void Feedback::setFrequencyThreshold(const float value, const short int scale) {
+    threshold.setMagnitude(value, scale);
+}
+
+void Feedback::setFrequencyThreshold(const float value, const short int scale, const std::string unit) {
+    threshold.setMagnitude(value, scale, unit);
+}
+
+void Feedback::setFrequencyThreshold(const float value, const short int scale, const shp::Unit& unit) {
+    threshold.setMagnitude(value, scale, unit);
+}
+
+short int Feedback::getFrequencyScaling() const {
+    return threshold.getScaling();
+}
+
+void Feedback::setFrequencyScaling(const short int factor) {
+    threshold.setScaling(factor);
+}
+
+shp::Unit Feedback::getFrequencyUnit() const {
+    return threshold.getUnit();
+}
+
+void Feedback::setFrequencyUnit(const shp::Unit& object) {
+    threshold.setUnit(object);
+}
+
+void Feedback::setTemporalDelay(const shp::Temporal& time) {
+    Behaviour::setDelay(time.getMagnitude(), time.getScaling(), time.getUnit());
+}
+
+float Feedback::getTemporalDelay() const {
+    return Behaviour::getDelay();
+}
+
+void Feedback::setTemporalDelay(const float value) {
+    Behaviour::setDelay(value);
+}
+
+void Feedback::setTemporalDelay(const float value, const short int scale) {
+    Behaviour::setDelay(value, scale);
+}
+
+void Feedback::setTemporalDelay(const float value, const short int scale, const std::string unit) {
+    Behaviour::setDelay(value, scale, unit);
+}
+
+void Feedback::setTemporalDelay(const float value, const short int scale, const shp::Unit& unit) {
+    Behaviour::setDelay(value, scale, unit);
+}
+
+short int Feedback::getTemporalScaling() const {
+    return Behaviour::getScaling();
+}
+
+void Feedback::setTemporalScaling(const short int factor) {
+    Behaviour::setScaling(factor);
+}
+
+shp::Unit Feedback::getTemporalUnit() const {
+    return Behaviour::getUnit();
+}
+
+void Feedback::setTemporalUnit(const shp::Unit& object) {
+    Behaviour::setUnit(object);
+}
+
+Feedback Feedback::copy() {
+    Feedback fresh(Behaviour::getName(), this->adjustment, this->threshold);
     return fresh;
 }
 
 void Feedback::clear() {
     Behaviour::clear();
-    modulation.clear();
+	threshold.clear();
+    adjustment.clear();
     return;
 }
 
@@ -94,7 +195,8 @@ std::string Feedback::print() const {
     std::stringstream result;
     result << "f:";
 	result << Behaviour::print() << ",";
-    result << modulation.print();
+	result << threshold.print() << ",";
+    result << adjustment.print() << ",";
 	return result.str();
 }
 

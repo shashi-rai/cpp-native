@@ -55,7 +55,17 @@ public:
     // Additional methods
     std::string getName() const;
     void setName(const std::string name);
-    Stimulus copy() const;
+    void setTemporalDelay(const shp::Temporal& time);
+    float getTemporalDelay() const;
+    void setTemporalDelay(const float value);
+    void setTemporalDelay(const float value, const short int scale);
+    void setTemporalDelay(const float value, const short int scale, const std::string unit);
+    void setTemporalDelay(const float value, const short int scale, const shp::Unit& unit);
+    short int getTemporalScaling() const;
+    void setTemporalScaling(const short int factor);
+    shp::Unit getTemporalUnit() const;
+    void setTemporalUnit(const shp::Unit& object);
+    Stimulus copy();
     virtual void clear();
     virtual std::string print() const;
 };

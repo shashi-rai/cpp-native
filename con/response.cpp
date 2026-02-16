@@ -79,8 +79,48 @@ void Response::setName(const std::string name) {
     Behaviour::setName(name);
 }
 
-Response Response::copy() const {
-    Response fresh(this->getName(), this->output);
+void Response::setTemporalDelay(const shp::Temporal& time) {
+    Behaviour::setDelay(time.getMagnitude(), time.getScaling(), time.getUnit());
+}
+
+float Response::getTemporalDelay() const {
+    return Behaviour::getDelay();
+}
+
+void Response::setTemporalDelay(const float value) {
+    Behaviour::setDelay(value);
+}
+
+void Response::setTemporalDelay(const float value, const short int scale) {
+    Behaviour::setDelay(value, scale);
+}
+
+void Response::setTemporalDelay(const float value, const short int scale, const std::string unit) {
+    Behaviour::setDelay(value, scale, unit);
+}
+
+void Response::setTemporalDelay(const float value, const short int scale, const shp::Unit& unit) {
+    Behaviour::setDelay(value, scale, unit);
+}
+
+short int Response::getTemporalScaling() const {
+    return Behaviour::getScaling();
+}
+
+void Response::setTemporalScaling(const short int factor) {
+    Behaviour::setScaling(factor);
+}
+
+shp::Unit Response::getTemporalUnit() const {
+    return Behaviour::getUnit();
+}
+
+void Response::setTemporalUnit(const shp::Unit& object) {
+    Behaviour::setUnit(object);
+}
+
+Response Response::copy() {
+    Response fresh(Behaviour::getName(), this->output);
     return fresh;
 }
 

@@ -288,7 +288,7 @@ void Memory::setActivator(const std::string word, const Strategy& object) {
     activators[word] = object;
 }
 
-Memory Memory::copy() const {
+Memory Memory::copy() {
     Memory fresh(Strategy::getName(), this->activators);
     return fresh;
 }

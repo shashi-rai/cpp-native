@@ -18,41 +18,44 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef CON_RESPONSE_H
-#define CON_RESPONSE_H
+#ifndef CON_OBSERVER_H
+#define CON_OBSERVER_H
 
-#include "behaviour.h"
-#include "../shp/signal.h"
+#include "stimulus.h"
 
 namespace con {
 
-class Response : private Behaviour {
-    shp::Signal output;
+class Observer : private Behaviour {
+    StimulusArray stimulations;
 public:
     // Constructors
-    Response();
-    Response(const shp::Signal& output);
-    Response(const std::string name);
-    Response(const std::string name, const shp::Signal& output);
+    Observer();
+    Observer(const StimulusArray& stimulations);
+    Observer(const std::string name);
+    Observer(const std::string name, const StimulusArray& stimulations);
 
     // Destructors
-    ~Response();
+    ~Observer();
 
     // Operator overloading
-    bool operator==(const Response& peer) const;
-    Response operator+(const Response& peer) const;
-    Response operator-(const Response& peer) const;
-    Response operator*(const Response& peer) const;
-    Response operator/(const Response& peer) const;
-    Response operator%(const Response& peer) const;
+    bool operator==(const Observer& peer) const;
+    Observer operator+(const Observer& peer) const;
+    Observer operator-(const Observer& peer) const;
+
+    // Access operator
+    Stimulus operator()(const int x) { return stimulations[x]; }
+    const Stimulus operator()(const int x) const { return stimulations[x]; }
 
     // Getters
-    shp::Signal getOutput() const { return output; }
+    StimulusArray getStimulations() const { return stimulations; }
 
     // Setters
-    void setOutput(const shp::Signal& action) { this->output = action; }
+    void setStimulations(const StimulusArray& objects) { this->stimulations = objects; }
 
     // Additional methods
+    int getStimulationCount() const;
+    Stimulus getStimulation(const int index) const;
+    void setStimulation(const int index, const Stimulus& object);
     std::string getName() const;
     void setName(const std::string name);
     void setTemporalDelay(const shp::Temporal& time);
@@ -65,13 +68,14 @@ public:
     void setTemporalScaling(const short int factor);
     shp::Unit getTemporalUnit() const;
     void setTemporalUnit(const shp::Unit& object);
-    Response copy();
+    Observer copy();
     virtual void clear();
     virtual std::string print() const;
+    virtual std::string printStimulations() const;
 };
 
-typedef std::vector<Response > ResponseArray;
+typedef std::vector<Observer > ObserverArray;
 
 } // namespace con
 
-#endif //CON_RESPONSE_H
+#endif //CON_OBSERVER_H

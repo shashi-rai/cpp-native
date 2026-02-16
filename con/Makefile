@@ -48,6 +48,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/behaviour.o \
 		$(OBJFOLDR)/feedback.o \
 		$(OBJFOLDR)/memory.o \
+		$(OBJFOLDR)/observer.o \
 		$(OBJFOLDR)/pattern.o \
 		$(OBJFOLDR)/response.o \
 		$(OBJFOLDR)/self.o \
@@ -57,6 +58,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/behaviour.o \
 		$(OBJFOLDR)/feedback.o \
 		$(OBJFOLDR)/memory.o \
+		$(OBJFOLDR)/observer.o \
 		$(OBJFOLDR)/pattern.o \
 		$(OBJFOLDR)/response.o \
 		$(OBJFOLDR)/self.o \
@@ -71,6 +73,9 @@ $(OBJFOLDR)/feedback.o: feedback.cpp
 
 $(OBJFOLDR)/memory.o: memory.cpp
 	$(CPPTOOL) -c memory.cpp -o $(OBJFOLDR)/memory.o $(CXXFLAGS)
+
+$(OBJFOLDR)/observer.o: observer.cpp
+	$(CPPTOOL) -c observer.cpp -o $(OBJFOLDR)/observer.o $(CXXFLAGS)
 
 $(OBJFOLDR)/pattern.o: pattern.cpp
 	$(CPPTOOL) -c pattern.cpp -o $(OBJFOLDR)/pattern.o $(CXXFLAGS)
