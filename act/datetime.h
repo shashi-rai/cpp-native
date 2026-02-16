@@ -67,7 +67,7 @@ public:
     const long long getNanoseconds();
     virtual DateTime copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 public:
     static const std::time_t getSystem();
     static const std::time_t getFormat(const std::string& datetime, const std::string& format);

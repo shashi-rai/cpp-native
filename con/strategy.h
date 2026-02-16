@@ -151,7 +151,7 @@ public:
     virtual std::string printModulators() const;
 };
 
-typedef std::map<const std::string, Strategy > StrategyMap;
+typedef std::map<std::string, Strategy > StrategyMap;
 
 } // namespace con
 

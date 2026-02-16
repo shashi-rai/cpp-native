@@ -22,9 +22,6 @@
 #define ACT_AMOUNT_H
 
 #include <cmath>
-#include <sstream>
-#include <string>
-#include <vector>
 #include "currency.h"
 #include "datetime.h"
 
@@ -80,7 +77,7 @@ public:
     // Additional methods
     virtual Amount copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 
 public:
     static const float DEFAULT_VALUE;

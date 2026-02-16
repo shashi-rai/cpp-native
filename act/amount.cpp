@@ -138,7 +138,7 @@ void Amount::clear() {
     return;
 }
 
-std::string Amount::print() {
+std::string Amount::print() const {
     std::stringstream result;
     result << "(";
     result << currency.print();

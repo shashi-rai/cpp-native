@@ -30,12 +30,12 @@ Currency::Currency()
 
 }
 
-Currency::Currency(std::string symbol)
+Currency::Currency(const std::string symbol)
         : symbol(symbol), name() {
 
 }
 
-Currency::Currency(std::string symbol, std::string name)
+Currency::Currency(const std::string symbol, const std::string name)
         : symbol(symbol), name(name) {
 
 }
@@ -49,7 +49,7 @@ bool Currency::operator==(const Currency& peer) const {
 }
 
 Currency Currency::copy() {
-    Currency fresh(symbol, name);
+    Currency fresh(this->symbol, this->name);
     return fresh;
 }
 
@@ -59,7 +59,7 @@ void Currency::clear() {
     return;
 }
 
-std::string Currency::print() {
+std::string Currency::print() const {
     std::stringstream result;
     result << symbol;
 	return result.str();

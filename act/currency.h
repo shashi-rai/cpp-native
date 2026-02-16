@@ -34,8 +34,8 @@ class Currency {
 public:
     // Constructors
     Currency();
-    Currency(std::string symbol);
-    Currency(std::string symbol, std::string name);
+    Currency(const std::string symbol);
+    Currency(const std::string symbol, const std::string name);
 
     // Destructors
     ~Currency();
@@ -48,13 +48,13 @@ public:
     std::string getName() const { return name; }
 
     // Setters
-    void setSymbol(const std::string& name) { this->symbol = name; }
-    void setName(const std::string& name) { this->name = name; }
+    void setSymbol(const std::string name) { this->symbol = name; }
+    void setName(const std::string name) { this->name = name; }
 
     // Additional methods
-    virtual Currency copy();
+    Currency copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 
 public:
     static const std::string DEFAULT_SYMBOL;

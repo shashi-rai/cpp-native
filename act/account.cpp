@@ -26,12 +26,12 @@ Account::Account() : name(), code(), currency(), entries() {
 
 }
 
-Account::Account(std::string name)
+Account::Account(const std::string name)
         : name(name), code(), currency(), entries() {
 
 }
 
-Account::Account(std::string name, std::string code)
+Account::Account(const std::string name, const std::string code)
         : name(name), code(code), currency(), entries() {
 
 }
@@ -41,12 +41,12 @@ Account::Account(const Currency& currency)
 
 }
 
-Account::Account(std::string name, const Currency& currency)
+Account::Account(const std::string name, const Currency& currency)
         : name(name), code(), currency(currency), entries() {
 
 }
 
-Account::Account(std::string name, const Currency& currency, std::string code)
+Account::Account(const std::string name, const Currency& currency, const std::string code)
         : name(name), code(code), currency(currency), entries() {
 
 }
@@ -61,27 +61,27 @@ Account::Account(const Currency& currency, const TradeArray& entries)
 
 }
 
-Account::Account(const Currency& currency, std::string code, const TradeArray& entries)
+Account::Account(const Currency& currency, const std::string code, const TradeArray& entries)
         : name(), code(code), currency(currency), entries(entries) {
 
 }
 
-Account::Account(std::string name, const TradeArray& entries)
+Account::Account(const std::string name, const TradeArray& entries)
         : name(name), code(), currency(), entries(entries) {
 
 }
 
-Account::Account(std::string name, std::string code, const TradeArray& entries)
+Account::Account(const std::string name, const std::string code, const TradeArray& entries)
         : name(name), code(code), currency(), entries(entries) {
 
 }
 
-Account::Account(std::string name, const Currency& currency, const TradeArray& entries)
+Account::Account(const std::string name, const Currency& currency, const TradeArray& entries)
         : name(name), code(), currency(currency), entries(entries) {
 
 }
 
-Account::Account(std::string name, const Currency& currency, std::string code, const TradeArray& entries)
+Account::Account(const std::string name, const Currency& currency, const std::string code, const TradeArray& entries)
         : name(name), code(code), currency(currency), entries(entries) {
 
 }
@@ -116,7 +116,7 @@ int Account::getEntryCount() const {
     return entries.size();
 }
 
-Trade Account::get(int index) const {
+Trade Account::get(const int index) const {
     Trade result;
     if (index < 0) {
         return result;
@@ -127,7 +127,7 @@ Trade Account::get(int index) const {
     return entries[index];
 }
 
-void Account::set(int index, const Trade& object) {
+void Account::set(const int index, const Trade& object) {
     if (index < 0) {
         return;
     }
@@ -191,13 +191,27 @@ void Account::clear() {
     return;
 }
 
-std::string Account::print() {
+std::string Account::print() const {
     std::stringstream result;
     result << "(a:";
     result << name << ",";
     result << code << ",";
-    result << currency.print() << "),sz:";
-    result << entries.size();
+    result << currency.print() << ")";
+    result << printEntries();
+	return result.str();
+}
+
+std::string Account::printEntries() const {
+    std::stringstream result; int size = entries.size();
+    if (size > 0) {
+        result << ",sz:";
+	    result << entries.size();
+        result << std::endl << "{";
+        for (int i = 0; i < size; i++) {
+            result << "\t" << entries[i].print() << std::endl;
+        }
+        result << "}";
+    }
 	return result.str();
 }
 

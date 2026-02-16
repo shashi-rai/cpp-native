@@ -75,7 +75,7 @@ void Trade::clear() {
     return;
 }
 
-std::string Trade::print() {
+std::string Trade::print() const {
     std::stringstream result;
     result << "{";
     result << incoming.print() << ",";

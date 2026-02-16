@@ -80,8 +80,8 @@ public:
     virtual std::string print() const;
 };
 
-typedef std::map<const std::string, Pattern > StimulusMap;
-typedef std::map<const std::string, Pattern > FeedbackMap;
+typedef std::map<std::string, Pattern > StimulusMap;
+typedef std::map<std::string, Pattern > FeedbackMap;
 
 } // namespace con
 

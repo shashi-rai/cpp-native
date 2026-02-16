@@ -21,9 +21,6 @@
 #ifndef ACT_TRADE_H
 #define ACT_TRADE_H
 
-#include <sstream>
-#include <string>
-#include <vector>
 #include "amount.h"
 
 namespace act {
@@ -59,7 +56,7 @@ public:
     Amount getBalance() const;
     virtual Trade copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 };
 
 typedef std::vector<Trade > TradeArray;

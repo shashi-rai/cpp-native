@@ -134,7 +134,7 @@ void DateTime::clear() {
     return;
 }
 
-std::string DateTime::print() {
+std::string DateTime::print() const {
     std::stringstream result;
     result << std::put_time(std::localtime(&value), "[%Y-%m-%d %H:%M:%S]");
 	return result.str();
