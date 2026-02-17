@@ -46,8 +46,12 @@ clean-libs: clean-custom
 
 $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/behaviour.o \
+		$(OBJFOLDR)/belief.o \
+		$(OBJFOLDR)/circumstance.o \
 		$(OBJFOLDR)/feedback.o \
+		$(OBJFOLDR)/feeling.o \
 		$(OBJFOLDR)/memory.o \
+		$(OBJFOLDR)/mood.o \
 		$(OBJFOLDR)/observer.o \
 		$(OBJFOLDR)/pattern.o \
 		$(OBJFOLDR)/response.o \
@@ -56,8 +60,12 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/strategy.o
 	$(LIBMAKR) rcs $(LIBFOLDR)/$(LIBNAME) \
 		$(OBJFOLDR)/behaviour.o \
+		$(OBJFOLDR)/belief.o \
+		$(OBJFOLDR)/circumstance.o \
 		$(OBJFOLDR)/feedback.o \
+		$(OBJFOLDR)/feeling.o \
 		$(OBJFOLDR)/memory.o \
+		$(OBJFOLDR)/mood.o \
 		$(OBJFOLDR)/observer.o \
 		$(OBJFOLDR)/pattern.o \
 		$(OBJFOLDR)/response.o \
@@ -68,11 +76,23 @@ $(LIBFOLDR)/$(LIBNAME): \
 $(OBJFOLDR)/behaviour.o: behaviour.cpp
 	$(CPPTOOL) -c behaviour.cpp -o $(OBJFOLDR)/behaviour.o $(CXXFLAGS)
 
+$(OBJFOLDR)/belief.o: belief.cpp
+	$(CPPTOOL) -c belief.cpp -o $(OBJFOLDR)/belief.o $(CXXFLAGS)
+
+$(OBJFOLDR)/circumstance.o: circumstance.cpp
+	$(CPPTOOL) -c circumstance.cpp -o $(OBJFOLDR)/circumstance.o $(CXXFLAGS)
+
 $(OBJFOLDR)/feedback.o: feedback.cpp
 	$(CPPTOOL) -c feedback.cpp -o $(OBJFOLDR)/feedback.o $(CXXFLAGS)
 
+$(OBJFOLDR)/feeling.o: feeling.cpp
+	$(CPPTOOL) -c feeling.cpp -o $(OBJFOLDR)/feeling.o $(CXXFLAGS)
+
 $(OBJFOLDR)/memory.o: memory.cpp
 	$(CPPTOOL) -c memory.cpp -o $(OBJFOLDR)/memory.o $(CXXFLAGS)
+
+$(OBJFOLDR)/mood.o: mood.cpp
+	$(CPPTOOL) -c mood.cpp -o $(OBJFOLDR)/mood.o $(CXXFLAGS)
 
 $(OBJFOLDR)/observer.o: observer.cpp
 	$(CPPTOOL) -c observer.cpp -o $(OBJFOLDR)/observer.o $(CXXFLAGS)

@@ -31,27 +31,61 @@ public:
     // Constructors
     Behaviour();
     Behaviour(const shp::Unit& unit);
-    Behaviour(const float magnitude);
-    Behaviour(const float magnitude, const std::string unit);
-    Behaviour(const float magnitude, const shp::Unit& unit);
-    Behaviour(const float magnitude, const short int scaling);
-    Behaviour(const float magnitude, const short int scaling, const std::string unit);
-    Behaviour(const float magnitude, const short int scaling, const shp::Unit& unit);
+    Behaviour(const float delay);
+    Behaviour(const float delay, const std::string unit);
+    Behaviour(const float delay, const shp::Unit& unit);
+    Behaviour(const float delay, const short int scaling);
+    Behaviour(const float delay, const short int scaling, const std::string unit);
+    Behaviour(const float delay, const short int scaling, const shp::Unit& unit);
+    Behaviour(const shp::Intrinsic& intent, const float delay, const short int scaling);
+    Behaviour(const shp::Intrinsic& intent, const float delay, const short int scaling, const std::string unit);
+    Behaviour(const shp::Intrinsic& intent, const float delay, const short int scaling, const shp::Unit& unit);
+    Behaviour(const shp::Signal& experience);
+    Behaviour(const shp::Signal& experience, const std::string unit);
+    Behaviour(const shp::Signal& experience, const shp::Unit& unit);
+    Behaviour(const shp::Signal& experience, const float delay);
+    Behaviour(const shp::Signal& experience, const float delay, const std::string unit);
+    Behaviour(const shp::Signal& experience, const float delay, const shp::Unit& unit);
+    Behaviour(const shp::Signal& experience, const float delay, const short int scaling);
+    Behaviour(const shp::Signal& experience, const float delay, const short int scaling, const std::string unit);
+    Behaviour(const shp::Signal& experience, const float delay, const short int scaling, const shp::Unit& unit);
+    Behaviour(const shp::Signal& experience, const shp::Intrinsic& intent, const float delay, const short int scaling);
+    Behaviour(const shp::Signal& experience, const shp::Intrinsic& intent, const float delay, const short int scaling, const std::string unit);
+    Behaviour(const shp::Signal& experience, const shp::Intrinsic& intent, const float delay, const short int scaling, const shp::Unit& unit);
     Behaviour(const std::string name);
     Behaviour(const std::string name, const std::string unit);
     Behaviour(const std::string name, const shp::Unit& unit);
-    Behaviour(const std::string name, const float magnitude);
-    Behaviour(const std::string name, const float magnitude, const std::string unit);
-    Behaviour(const std::string name, const float magnitude, const shp::Unit& unit);
-    Behaviour(const std::string name, const float magnitude, const short int scaling);
-    Behaviour(const std::string name, const float magnitude, const short int scaling, const std::string unit);
-    Behaviour(const std::string name, const float magnitude, const short int scaling, const shp::Unit& unit);
+    Behaviour(const std::string name, const float delay);
+    Behaviour(const std::string name, const float delay, const std::string unit);
+    Behaviour(const std::string name, const float delay, const shp::Unit& unit);
+    Behaviour(const std::string name, const float delay, const short int scaling);
+    Behaviour(const std::string name, const float delay, const short int scaling, const std::string unit);
+    Behaviour(const std::string name, const float delay, const short int scaling, const shp::Unit& unit);
+    Behaviour(const std::string name, const shp::Intrinsic& intent, const float delay, const short int scaling);
+    Behaviour(const std::string name, const shp::Intrinsic& intent, const float delay, const short int scaling, const std::string unit);
+    Behaviour(const std::string name, const shp::Intrinsic& intent, const float delay, const short int scaling, const shp::Unit& unit);
+    Behaviour(const std::string name, const shp::Signal& experience);
+    Behaviour(const std::string name, const shp::Signal& experience, const std::string unit);
+    Behaviour(const std::string name, const shp::Signal& experience, const shp::Unit& unit);
+    Behaviour(const std::string name, const shp::Signal& experience, const float delay);
+    Behaviour(const std::string name, const shp::Signal& experience, const float delay, const std::string unit);
+    Behaviour(const std::string name, const shp::Signal& experience, const float delay, const shp::Unit& unit);
+    Behaviour(const std::string name, const shp::Signal& experience, const float delay, const short int scaling);
+    Behaviour(const std::string name, const shp::Signal& experience, const float delay, const short int scaling, const std::string unit);
+    Behaviour(const std::string name, const shp::Signal& experience, const float delay, const short int scaling, const shp::Unit& unit);
+    Behaviour(const std::string name, const shp::Signal& experience, const shp::Intrinsic& intent, const float delay, const short int scaling);
+    Behaviour(const std::string name, const shp::Signal& experience, const shp::Intrinsic& intent, const float delay, const short int scaling, const std::string unit);
+    Behaviour(const std::string name, const shp::Signal& experience, const shp::Intrinsic& intent, const float delay, const short int scaling, const shp::Unit& unit);
 
     // Destructors
     ~Behaviour();
 
     // Operator overloading
     bool operator==(const Behaviour& peer) const;
+    bool operator<(const Behaviour& peer) const;
+    bool operator>(const Behaviour& peer) const;
+    bool operator<=(const Behaviour& peer) const;
+    bool operator>=(const Behaviour& peer) const;
     Behaviour operator+(const Behaviour& peer) const;
     Behaviour operator-(const Behaviour& peer) const;
     Behaviour operator*(const Behaviour& peer) const;
@@ -65,19 +99,34 @@ public:
     void setName(const std::string name) { this->name = name; }
 
     // Additional methods
-    void setDelay(const shp::Temporal& time);
+    shp::Signal getExperience() const;
+    void setExperience(const shp::Signal& knowledge);
+    void setDelay(const shp::Temporal& necessity);
     float getDelay() const;
-    void setDelay(const float value);
-    void setDelay(const float value, const short int scale);
-    void setDelay(const float value, const short int scale, const std::string unit);
-    void setDelay(const float value, const short int scale, const shp::Unit& unit);
+    void setDelay(const float necessity);
+    void setDelay(const float necessity, const short int scale);
+    void setDelay(const float necessity, const short int scale, const std::string unit);
+    void setDelay(const float necessity, const short int scale, const shp::Unit& unit);
+    float getIntention() const;
+    float getIntentionDrift() const;
+    void setIntentionDrift(const shp::Intrinsic& moderation);
+    float getExperienceShift() const;
+    void setExperienceShift(const shp::Intrinsic& moderation);
+    void setExperienceShift(const float action, const shp::Intrinsic& moderation);
+    void setExperienceShift(const float action, const short int scale, const shp::Intrinsic& moderation);
+    void setExperienceShift(const float action, const short int scale, const std::string unit, const shp::Intrinsic& moderation);
+    void setExperienceShift(const float action, const short int scale, const shp::Unit& unit, const shp::Intrinsic& moderation);
     short int getScaling() const;
     void setScaling(const short int factor);
     shp::Unit getUnit() const;
     void setUnit(const shp::Unit& object);
+    virtual shp::Quantity getDelayShift() const;
+    shp::Signal getFrequency() const;
+    shp::Signal getTotal() const;
     Behaviour copy();
     virtual void clear();
     virtual std::string print() const;
+    virtual std::string printRadians() const;
 };
 
 typedef std::vector<Behaviour > BehaviourArray;
