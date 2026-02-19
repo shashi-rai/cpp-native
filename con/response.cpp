@@ -71,6 +71,16 @@ Response Response::operator%(const Response& peer) const {
     return Response("%", (output % peer.output));
 }
 
+shp::Signal Response::operator()(const Response& feedback) const {
+    Response result;
+    if (this->getName() == feedback.getName()) {
+        result = (this->getOutput().getDotProduct(feedback.getOutput()));
+    } else {
+        result = (this->getOutput().getCrossProduct(feedback.getOutput()));
+    }
+    return result.getOutput();
+}
+
 std::string Response::getName() const {
     return Behaviour::getName();
 }

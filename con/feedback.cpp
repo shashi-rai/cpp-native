@@ -91,6 +91,16 @@ Feedback Feedback::operator%(const Feedback& peer) const {
     return Feedback("%", (adjustment % peer.adjustment), (threshold % peer.threshold));
 }
 
+shp::Signal Feedback::operator()(const Feedback& feedback) const {
+    Feedback result;
+    if (this->getName() == feedback.getName()) {
+        result = (this->getAdjustment().getDotProduct(feedback.getAdjustment()));
+    } else {
+        result = (this->getAdjustment().getCrossProduct(feedback.getAdjustment()));
+    }
+    return result.getAdjustment();
+}
+
 std::string Feedback::getName() const {
     return Behaviour::getName();
 }

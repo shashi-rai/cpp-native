@@ -46,6 +46,9 @@ public:
     Stimulus operator/(const Stimulus& peer) const;
     Stimulus operator%(const Stimulus& peer) const;
 
+    // Stimulus Mixing operator
+    shp::Signal operator()(const Stimulus& feedback) const;
+
     // Getters
     shp::Signal getInput() const { return input; }
 

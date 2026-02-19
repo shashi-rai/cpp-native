@@ -240,6 +240,10 @@ shp::Signal Self::getBehaviour(const Feedback& feedback) const {
     return response.getOutput();
 }
 
+shp::Signal Self::getBehaviour(const std::string word) const {
+    return Memory::getLearning(Stimulus(word))(Memory::getLearning(Feedback(word)));
+}
+
 void Self::setBehaviour(const std::string word, const Stimulus& stimulus, const Response& response) {
     Memory::setLearning(word, stimulus, response);
 }

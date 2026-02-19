@@ -71,6 +71,16 @@ Stimulus Stimulus::operator%(const Stimulus& peer) const {
     return Stimulus("%", (input % peer.input));
 }
 
+shp::Signal Stimulus::operator()(const Stimulus& feedback) const {
+    Stimulus result;
+    if (this->getName() == feedback.getName()) {
+        result = (this->getInput().getDotProduct(feedback.getInput()));
+    } else {
+        result = (this->getInput().getCrossProduct(feedback.getInput()));
+    }
+    return result.getInput();
+}
+
 std::string Stimulus::getName() const {
     return Behaviour::getName();
 }

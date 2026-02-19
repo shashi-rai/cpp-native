@@ -51,6 +51,9 @@ public:
     Feedback operator/(const Feedback& peer) const;
     Feedback operator%(const Feedback& peer) const;
 
+    // Feedback Mixing operator
+    shp::Signal operator()(const Feedback& feedback) const;
+
     // Getters
     shp::Signal getAdjustment() const { return adjustment; }
     shp::Frequency getThreshold() const { return threshold; }

@@ -46,6 +46,9 @@ public:
     Response operator/(const Response& peer) const;
     Response operator%(const Response& peer) const;
 
+    // Response Mixing operator
+    shp::Signal operator()(const Response& feedback) const;
+
     // Getters
     shp::Signal getOutput() const { return output; }
 

@@ -89,6 +89,7 @@ public:
     bool isAware(const std::string word) const;
     shp::Signal getBehaviour(const Stimulus& stimulus) const;
     shp::Signal getBehaviour(const Feedback& feedback) const;
+    shp::Signal getBehaviour(const std::string word) const;
     void setBehaviour(const std::string word, const Stimulus& stimulus, const Response& response);
     void setBehaviour(const std::string word, const Feedback& feedback, const Response& response);
     int getObserverCount() const;
