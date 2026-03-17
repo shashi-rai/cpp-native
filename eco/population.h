@@ -36,19 +36,19 @@ public:
     Population(const Growth& growth);
     Population(const gis::Territory& geography);
     Population(const Growth& growth, const gis::Territory& geography);
-    Population(const float quantity);
-    Population(const float quantity, const short int scaling);
-    Population(const float quantity, const shp::Unit& unit);
-    Population(const float quantity, const short int scaling, const shp::Unit& unit);
-    Population(const float quantity, const short int scaling, const shp::Unit& unit, const gis::Territory& geography);
+    Population(const float people);
+    Population(const float people, const short int scaling);
+    Population(const float people, const shp::Unit& unit);
+    Population(const float people, const short int scaling, const shp::Unit& unit);
+    Population(const float people, const short int scaling, const shp::Unit& unit, const gis::Territory& geography);
     Population(const std::string name);
-    Population(const std::string name, const float quantity);
-    Population(const std::string name, const float quantity, const short int scaling);
-    Population(const std::string name, const float quantity, const shp::Unit& unit);
-    Population(const std::string name, const float quantity, const short int scaling, const shp::Unit& unit);
+    Population(const std::string name, const float people);
+    Population(const std::string name, const float people, const short int scaling);
+    Population(const std::string name, const float people, const shp::Unit& unit);
+    Population(const std::string name, const float people, const short int scaling, const shp::Unit& unit);
     Population(const std::string name, const gis::Territory& geography);
-    Population(const std::string name, const float quantity, const short int scaling, const shp::Unit& unit, const gis::Territory& geography);
-    Population(const std::string name, const float quantity, const short int scaling, const shp::Unit& unit, const Growth& growth, const gis::Territory& geography);
+    Population(const std::string name, const float people, const short int scaling, const shp::Unit& unit, const gis::Territory& geography);
+    Population(const std::string name, const float people, const short int scaling, const shp::Unit& unit, const Growth& growth, const gis::Territory& geography);
 
     // Destructors
     ~Population();
@@ -74,7 +74,7 @@ public:
     // Additional methods
     virtual Population copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 };
 
 typedef std::vector<Population > PopulationArray;

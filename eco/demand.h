@@ -22,6 +22,7 @@
 #define ECO_DEMAND_H
 
 #include "growth.h"
+#include "population.h"
 
 namespace eco {
 
@@ -65,9 +66,10 @@ public:
     void setGrowth(const Growth& object) { this->growth = object; }
 
     // Additional methods
+    shp::Quantity getPerCapita(const Population& population);
     virtual Demand copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 };
 
 typedef std::vector<Demand > DemandArray;

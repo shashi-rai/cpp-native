@@ -113,8 +113,111 @@ bool Market::operator==(const Market& peer) const {
         && (population == peer.population);
 }
 
+Market Market::operator+(const Demand& peer) const {
+    shp::Quantity self = this->demand, other = peer, total = (self + other);
+	Demand newDemand(total.getMagnitude(), total.getScaling(), total.getUnit());
+    return Market("+", newDemand, this->supply, this->population);
+}
+
+Market Market::operator-(const Demand& peer) const {
+    shp::Quantity self = this->demand, other = peer, total = (self - other);
+	Demand newDemand(total.getMagnitude(), total.getScaling(), total.getUnit());
+    return Market("-", newDemand, this->supply, this->population);
+}
+
+Market Market::operator*(const Demand& peer) const {
+    shp::Quantity self = this->demand, other = peer, total = (self * other);
+	Demand newDemand(total.getMagnitude(), total.getScaling(), total.getUnit());
+    return Market("*", newDemand, this->supply, this->population);
+}
+
+Market Market::operator/(const Demand& peer) const {
+    shp::Quantity self = this->demand, other = peer, total = (self / other);
+	Demand newDemand(total.getMagnitude(), total.getScaling(), total.getUnit());
+    return Market("/", newDemand, this->supply, this->population);
+}
+
+Market Market::operator%(const Demand& peer) const {
+    shp::Quantity self = this->demand, other = peer, total = (self % other);
+	Demand newDemand(total.getMagnitude(), total.getScaling(), total.getUnit());
+    return Market("%", newDemand, this->supply, this->population);
+}
+
+Market Market::operator+(const Supply& peer) const {
+    shp::Quantity self = this->supply, other = peer, total = (self + other);
+	Supply newSupply(total.getMagnitude(), total.getScaling(), total.getUnit());
+    return Market("+", this->demand, newSupply, this->population);
+}
+
+Market Market::operator-(const Supply& peer) const {
+    shp::Quantity self = this->supply, other = peer, total = (self - other);
+	Supply newSupply(total.getMagnitude(), total.getScaling(), total.getUnit());
+    return Market("-", this->demand, newSupply, this->population);
+}
+
+Market Market::operator*(const Supply& peer) const {
+    shp::Quantity self = this->supply, other = peer, total = (self * other);
+	Supply newSupply(total.getMagnitude(), total.getScaling(), total.getUnit());
+    return Market("*", this->demand, newSupply, this->population);
+}
+
+Market Market::operator/(const Supply& peer) const {
+    shp::Quantity self = this->supply, other = peer, total = (self / other);
+	Supply newSupply(total.getMagnitude(), total.getScaling(), total.getUnit());
+    return Market("/", this->demand, newSupply, this->population);
+}
+
+Market Market::operator%(const Supply& peer) const {
+    shp::Quantity self = this->supply, other = peer, total = (self % other);
+	Supply newSupply(total.getMagnitude(), total.getScaling(), total.getUnit());
+    return Market("%", this->demand, newSupply, this->population);
+}
+
+Market Market::operator+(const Population& peer) const {
+    shp::Quantity self = this->population, other = peer, total = (self + other);
+	Population newPopulation(total.getMagnitude(), total.getScaling(), total.getUnit());
+    return Market("+", this->demand, this->supply, newPopulation);
+}
+
+Market Market::operator-(const Population& peer) const {
+    shp::Quantity self = this->population, other = peer, total = (self - other);
+	Population newPopulation(total.getMagnitude(), total.getScaling(), total.getUnit());
+    return Market("-", this->demand, this->supply, newPopulation);
+}
+
+Market Market::operator*(const Population& peer) const {
+    shp::Quantity self = this->population, other = peer, total = (self * other);
+	Population newPopulation(total.getMagnitude(), total.getScaling(), total.getUnit());
+    return Market("*", this->demand, this->supply, newPopulation);
+}
+
+Market Market::operator/(const Population& peer) const {
+    shp::Quantity self = this->population, other = peer, total = (self / other);
+	Population newPopulation(total.getMagnitude(), total.getScaling(), total.getUnit());
+    return Market("/", this->demand, this->supply, newPopulation);
+}
+
+Market Market::operator%(const Population& peer) const {
+    shp::Quantity self = this->population, other = peer, total = (self % other);
+	Population newPopulation(total.getMagnitude(), total.getScaling(), total.getUnit());
+    return Market("%", this->demand, this->supply, newPopulation);
+}
+
+shp::Quantity Market::getImbalance() {
+	shp::Quantity marketDemand = this->demand, marketSupply = this->supply;
+	return (marketDemand - marketSupply);
+}
+
+shp::Quantity Market::getDemandPerCapita() {
+	return this->demand.getPerCapita(this->population);
+}
+
+shp::Quantity Market::getSupplyPerCapita() {
+	return this->supply.getPerCapita(this->population);
+}
+
 Market Market::copy() {
-    Market fresh(name, demand, supply, population);
+    Market fresh(this->name, this->demand, this->supply, this->population);
     return fresh;
 }
 
@@ -126,7 +229,7 @@ void Market::clear() {
     return;
 }
 
-std::string Market::print() {
+std::string Market::print() const {
     std::stringstream result;
     result << name << ",";
     result << demand.print() << ",";

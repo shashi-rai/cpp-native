@@ -42,29 +42,29 @@ Population::Population(const Growth& growth, const gis::Territory& geography)
 
 }
 
-Population::Population(const float quantity)
-        : shp::Quantity(quantity), name(), growth(), geography() {
+Population::Population(const float people)
+        : shp::Quantity(people), name(), growth(), geography() {
 
 }
 
-Population::Population(const float quantity, const short int scaling)
-        : shp::Quantity(quantity, scaling), name(), growth(), geography() {
+Population::Population(const float people, const short int scaling)
+        : shp::Quantity(people, scaling), name(), growth(), geography() {
 
 }
 
-Population::Population(const float quantity, const shp::Unit& unit)
-        : shp::Quantity(quantity, unit), name(), growth(), geography() {
+Population::Population(const float people, const shp::Unit& unit)
+        : shp::Quantity(people, unit), name(), growth(), geography() {
 
 }
 
-Population::Population(const float quantity, const short int scaling, const shp::Unit& unit)
-        : shp::Quantity(quantity, scaling, unit), name(), growth(), geography() {
+Population::Population(const float people, const short int scaling, const shp::Unit& unit)
+        : shp::Quantity(people, scaling, unit), name(), growth(), geography() {
 
 }
 
-Population::Population(const float quantity, const short int scaling,
+Population::Population(const float people, const short int scaling,
         const shp::Unit& unit, const gis::Territory& geography)
-        : shp::Quantity(quantity, scaling, unit), name(), growth(), geography(geography) {
+        : shp::Quantity(people, scaling, unit), name(), growth(), geography(geography) {
 
 }
 
@@ -78,35 +78,35 @@ Population::Population(const std::string name, const gis::Territory& geography)
 
 }
 
-Population::Population(const std::string name,const float quantity)
-        : shp::Quantity(quantity), name(name), growth(), geography() {
+Population::Population(const std::string name,const float people)
+        : shp::Quantity(people), name(name), growth(), geography() {
 
 }
 
-Population::Population(const std::string name, const float quantity, const short int scaling)
-        : shp::Quantity(quantity, scaling), name(name), growth(), geography() {
+Population::Population(const std::string name, const float people, const short int scaling)
+        : shp::Quantity(people, scaling), name(name), growth(), geography() {
 
 }
 
-Population::Population(const std::string name, const float quantity, const shp::Unit& unit)
-        : shp::Quantity(quantity, unit), name(name), growth(), geography() {
+Population::Population(const std::string name, const float people, const shp::Unit& unit)
+        : shp::Quantity(people, unit), name(name), growth(), geography() {
 
 }
 
-Population::Population(const std::string name, const float quantity, const short int scaling, const shp::Unit& unit)
-        : shp::Quantity(quantity, scaling, unit), name(name), growth(), geography() {
+Population::Population(const std::string name, const float people, const short int scaling, const shp::Unit& unit)
+        : shp::Quantity(people, scaling, unit), name(name), growth(), geography() {
 
 }
 
-Population::Population(const std::string name, const float quantity, const short int scaling,
+Population::Population(const std::string name, const float people, const short int scaling,
         const shp::Unit& unit, const gis::Territory& geography)
-        : shp::Quantity(quantity, scaling, unit), name(name), growth(), geography(geography) {
+        : shp::Quantity(people, scaling, unit), name(name), growth(), geography(geography) {
 
 }
 
-Population::Population(const std::string name, const float quantity, const short int scaling,
+Population::Population(const std::string name, const float people, const short int scaling,
         const shp::Unit& unit, const Growth& growth, const gis::Territory& geography)
-        : shp::Quantity(quantity, scaling, unit), name(name), growth(growth), geography(geography) {
+        : shp::Quantity(people, scaling, unit), name(name), growth(growth), geography(geography) {
 
 }
 
@@ -123,39 +123,40 @@ Population Population::operator+(const Population& peer) const {
     shp::Quantity self = *this, other = peer;
     shp::Quantity population = (self + other);
     return Population("+", population.getMagnitude(), population.getScaling(), population.getUnit(),
-			(growth + peer.growth), (geography + peer.geography));
+			(this->growth + peer.growth), (this->geography + peer.geography));
 }
 
 Population Population::operator-(const Population& peer) const {
     shp::Quantity self = *this, other = peer;
     shp::Quantity population = (self - other);
     return Population("-", population.getMagnitude(), population.getScaling(), population.getUnit(),
-			(growth - peer.growth), (geography - peer.geography));
+			(this->growth - peer.growth), (this->geography - peer.geography));
 }
 
 Population Population::operator*(const Population& peer) const {
     shp::Quantity self = *this, other = peer;
     shp::Quantity population = (self * other);
     return Population("*", population.getMagnitude(), population.getScaling(), population.getUnit(),
-			(growth * peer.growth), (geography * peer.geography));
+			(this->growth * peer.growth), (this->geography * peer.geography));
 }
 
 Population Population::operator/(const Population& peer) const {
     shp::Quantity self = *this, other = peer;
     shp::Quantity population = (self / other);
     return Population("/", population.getMagnitude(), population.getScaling(), population.getUnit(),
-			(growth / peer.growth), (geography / peer.geography));
+			(this->growth / peer.growth), (this->geography / peer.geography));
 }
 
 Population Population::operator%(const Population& peer) const {
     shp::Quantity self = *this, other = peer;
     shp::Quantity population = (self % other);
     return Population("%", population.getMagnitude(), population.getScaling(), population.getUnit(), 
-			(growth % peer.growth), (geography % peer.geography));
+			(this->growth % peer.growth), (this->geography % peer.geography));
 }
 
 Population Population::copy() {
-    Population fresh(name, getMagnitude(), getScaling(), getUnit(), growth, geography);
+    Population fresh(this->name, shp::Quantity::getMagnitude(),
+		shp::Quantity::getScaling(), shp::Quantity::getUnit(), this->growth, this->geography);
     return fresh;
 }
 
@@ -167,7 +168,7 @@ void Population::clear() {
     return;
 }
 
-std::string Population::print() {
+std::string Population::print() const {
     std::stringstream result;
     result << name << ",";
     result << shp::Quantity::print() << ",";

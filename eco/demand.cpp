@@ -105,35 +105,41 @@ bool Demand::operator==(const Demand& peer) const {
 Demand Demand::operator+(const Demand& peer) const {
     shp::Quantity self = *this, other = peer;
     shp::Quantity demand = (self + other);
-    return Demand("+", demand.getMagnitude(), demand.getScaling(), demand.getUnit(), (growth + peer.growth));
+    return Demand("+", demand.getMagnitude(), demand.getScaling(), demand.getUnit(), (this->growth + peer.growth));
 }
 
 Demand Demand::operator-(const Demand& peer) const {
     shp::Quantity self = *this, other = peer;
     shp::Quantity demand = (self - other);
-    return Demand("-", demand.getMagnitude(), demand.getScaling(), demand.getUnit(), (growth - peer.growth));
+    return Demand("-", demand.getMagnitude(), demand.getScaling(), demand.getUnit(), (this->growth - peer.growth));
 }
 
 Demand Demand::operator*(const Demand& peer) const {
     shp::Quantity self = *this, other = peer;
     shp::Quantity demand = (self * other);
-    return Demand("*", demand.getMagnitude(), demand.getScaling(), demand.getUnit(), (growth * peer.growth));
+    return Demand("*", demand.getMagnitude(), demand.getScaling(), demand.getUnit(), (this->growth * peer.growth));
 }
 
 Demand Demand::operator/(const Demand& peer) const {
     shp::Quantity self = *this, other = peer;
     shp::Quantity demand = (self / other);
-    return Demand("/", demand.getMagnitude(), demand.getScaling(), demand.getUnit(), (growth / peer.growth));
+    return Demand("/", demand.getMagnitude(), demand.getScaling(), demand.getUnit(), (this->growth / peer.growth));
 }
 
 Demand Demand::operator%(const Demand& peer) const {
     shp::Quantity self = *this, other = peer;
     shp::Quantity demand = (self % other);
-    return Demand("%", demand.getMagnitude(), demand.getScaling(), demand.getUnit(), (growth % peer.growth));
+    return Demand("%", demand.getMagnitude(), demand.getScaling(), demand.getUnit(), (this->growth % peer.growth));
+}
+
+shp::Quantity Demand::getPerCapita(const Population& population) {
+	shp::Quantity demand = *this, people = population;
+	return (demand / people);
 }
 
 Demand Demand::copy() {
-    Demand fresh(name, getMagnitude(), getScaling(), getUnit(), growth);
+    Demand fresh(this->name, shp::Quantity::getMagnitude(),
+		shp::Quantity::getScaling(), shp::Quantity::getUnit(), this->growth);
     return fresh;
 }
 
@@ -144,7 +150,7 @@ void Demand::clear() {
     return;
 }
 
-std::string Demand::print() {
+std::string Demand::print() const {
     std::stringstream result;
     result << name << ",";
     result << shp::Quantity::print() << ",";

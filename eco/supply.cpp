@@ -105,35 +105,41 @@ bool Supply::operator==(const Supply& peer) const {
 Supply Supply::operator+(const Supply& peer) const {
     shp::Quantity self = *this, other = peer;
     shp::Quantity supply = (self + other);
-    return Supply("+", supply.getMagnitude(), supply.getScaling(), supply.getUnit(), (growth + peer.growth));
+    return Supply("+", supply.getMagnitude(), supply.getScaling(), supply.getUnit(), (this->growth + peer.growth));
 }
 
 Supply Supply::operator-(const Supply& peer) const {
     shp::Quantity self = *this, other = peer;
     shp::Quantity supply = (self - other);
-    return Supply("-", supply.getMagnitude(), supply.getScaling(), supply.getUnit(), (growth - peer.growth));
+    return Supply("-", supply.getMagnitude(), supply.getScaling(), supply.getUnit(), (this->growth - peer.growth));
 }
 
 Supply Supply::operator*(const Supply& peer) const {
     shp::Quantity self = *this, other = peer;
     shp::Quantity supply = (self * other);
-    return Supply("*", supply.getMagnitude(), supply.getScaling(), supply.getUnit(), (growth * peer.growth));
+    return Supply("*", supply.getMagnitude(), supply.getScaling(), supply.getUnit(), (this->growth * peer.growth));
 }
 
 Supply Supply::operator/(const Supply& peer) const {
     shp::Quantity self = *this, other = peer;
     shp::Quantity supply = (self / other);
-    return Supply("/", supply.getMagnitude(), supply.getScaling(), supply.getUnit(), (growth / peer.growth));
+    return Supply("/", supply.getMagnitude(), supply.getScaling(), supply.getUnit(), (this->growth / peer.growth));
 }
 
 Supply Supply::operator%(const Supply& peer) const {
     shp::Quantity self = *this, other = peer;
     shp::Quantity supply = (self % other);
-    return Supply("%", supply.getMagnitude(), supply.getScaling(), supply.getUnit(), (growth % peer.growth));
+    return Supply("%", supply.getMagnitude(), supply.getScaling(), supply.getUnit(), (this->growth % peer.growth));
+}
+
+shp::Quantity Supply::getPerCapita(const Population& population) {
+	shp::Quantity supply = *this, people = population;
+	return (supply / people);
 }
 
 Supply Supply::copy() {
-    Supply fresh(name, getMagnitude(), getScaling(), getUnit(), growth);
+    Supply fresh(this->name, shp::Quantity::getMagnitude(),
+		shp::Quantity::getScaling(), shp::Quantity::getUnit(), this->growth);
     return fresh;
 }
 
@@ -144,7 +150,7 @@ void Supply::clear() {
     return;
 }
 
-std::string Supply::print() {
+std::string Supply::print() const {
     std::stringstream result;
     result << name << ",";
     result << shp::Quantity::print() << ",";

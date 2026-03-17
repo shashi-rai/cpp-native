@@ -23,7 +23,6 @@
 
 #include "demand.h"
 #include "supply.h"
-#include "population.h"
 
 namespace eco {
 
@@ -57,6 +56,27 @@ public:
     // Operator overloading
     bool operator==(const Market& peer) const;
 
+    // Demand operator
+    Market operator+(const Demand& demand) const;
+    Market operator-(const Demand& demand) const;
+    Market operator*(const Demand& demand) const;
+    Market operator/(const Demand& demand) const;
+    Market operator%(const Demand& demand) const;
+
+    // Supply operator
+    Market operator+(const Supply& supply) const;
+    Market operator-(const Supply& supply) const;
+    Market operator*(const Supply& supply) const;
+    Market operator/(const Supply& supply) const;
+    Market operator%(const Supply& supply) const;
+
+    // Population operator
+    Market operator+(const Population& population) const;
+    Market operator-(const Population& population) const;
+    Market operator*(const Population& population) const;
+    Market operator/(const Population& population) const;
+    Market operator%(const Population& population) const;
+
     // Getters
     std::string getName() const { return name; }
     Demand getDemand() const { return demand; }
@@ -70,9 +90,12 @@ public:
     void setPopulation(const Population& object) { this->population = object; }
 
     // Additional methods
+    shp::Quantity getImbalance();
+    shp::Quantity getDemandPerCapita();
+    shp::Quantity getSupplyPerCapita();
     virtual Market copy();
     virtual void clear();
-    virtual std::string print();
+    virtual std::string print() const;
 };
 
 typedef std::vector<Market > MarketArray;
