@@ -50,6 +50,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/circumstance.o \
 		$(OBJFOLDR)/feedback.o \
 		$(OBJFOLDR)/feeling.o \
+		$(OBJFOLDR)/intention.o \
 		$(OBJFOLDR)/memory.o \
 		$(OBJFOLDR)/mood.o \
 		$(OBJFOLDR)/observer.o \
@@ -64,6 +65,7 @@ $(LIBFOLDR)/$(LIBNAME): \
 		$(OBJFOLDR)/circumstance.o \
 		$(OBJFOLDR)/feedback.o \
 		$(OBJFOLDR)/feeling.o \
+		$(OBJFOLDR)/intention.o \
 		$(OBJFOLDR)/memory.o \
 		$(OBJFOLDR)/mood.o \
 		$(OBJFOLDR)/observer.o \
@@ -87,6 +89,9 @@ $(OBJFOLDR)/feedback.o: feedback.cpp
 
 $(OBJFOLDR)/feeling.o: feeling.cpp
 	$(CPPTOOL) -c feeling.cpp -o $(OBJFOLDR)/feeling.o $(CXXFLAGS)
+
+$(OBJFOLDR)/intention.o: intention.cpp
+	$(CPPTOOL) -c intention.cpp -o $(OBJFOLDR)/intention.o $(CXXFLAGS)
 
 $(OBJFOLDR)/memory.o: memory.cpp
 	$(CPPTOOL) -c memory.cpp -o $(OBJFOLDR)/memory.o $(CXXFLAGS)
