@@ -27,8 +27,49 @@ Stimulus::Stimulus()
 
 }
 
+Stimulus::Stimulus(const shp::Unit& unit)
+        : Behaviour(unit), input() {
+
+}
+
+Stimulus::Stimulus(const float delay)
+        : Behaviour(delay), input() {
+
+}
+
+Stimulus::Stimulus(const float delay, const std::string unit)
+        : Behaviour(delay, unit), input() {
+
+}
+
+Stimulus::Stimulus(const float delay, const shp::Unit& unit)
+        : Behaviour(delay, unit), input() {
+
+}
+
+Stimulus::Stimulus(const float delay, const short int scaling)
+        : Behaviour(delay, scaling), input() {
+
+}
+
+Stimulus::Stimulus(const float delay, const short int scaling, const std::string unit)
+        : Behaviour(delay, scaling, unit), input() {
+
+}
+
+Stimulus::Stimulus(const float delay, const short int scaling, const shp::Unit& unit)
+        : Behaviour(delay, scaling, unit), input() {
+
+}
+
 Stimulus::Stimulus(const shp::Signal& input)
         : Behaviour(), input(input) {
+
+}
+
+Stimulus::Stimulus(const float delay, const short int scaling, const shp::Unit& unit,
+        const shp::Signal& input)
+        : Behaviour(delay, scaling, unit), input(input) {
 
 }
 
@@ -37,8 +78,49 @@ Stimulus::Stimulus(const std::string name)
 
 }
 
+Stimulus::Stimulus(const std::string name, const shp::Unit& unit)
+        : Behaviour(name, unit), input() {
+
+}
+
+Stimulus::Stimulus(const std::string name, const float delay)
+        : Behaviour(name, delay), input() {
+
+}
+
+Stimulus::Stimulus(const std::string name, const float delay, const std::string unit)
+        : Behaviour(name, delay, unit), input() {
+
+}
+
+Stimulus::Stimulus(const std::string name, const float delay, const shp::Unit& unit)
+        : Behaviour(name, delay, unit), input() {
+
+}
+
+Stimulus::Stimulus(const std::string name, const float delay, const short int scaling)
+        : Behaviour(name, delay, scaling), input() {
+
+}
+
+Stimulus::Stimulus(const std::string name, const float delay, const short int scaling, const std::string unit)
+        : Behaviour(name, delay, scaling, unit), input() {
+
+}
+
+Stimulus::Stimulus(const std::string name, const float delay, const short int scaling, const shp::Unit& unit)
+        : Behaviour(name, delay, scaling, unit), input() {
+
+}
+
 Stimulus::Stimulus(const std::string name, const shp::Signal& input)
         : Behaviour(name), input(input) {
+
+}
+
+Stimulus::Stimulus(const std::string name, const float delay, const short int scaling, const shp::Unit& unit,
+        const shp::Signal& input)
+        : Behaviour(name, delay, scaling, unit), input(input) {
 
 }
 
@@ -48,27 +130,37 @@ Stimulus::~Stimulus() {
 
 bool Stimulus::operator==(const Stimulus& peer) const {
     return (static_cast<const Behaviour&>(*this) == static_cast<const Behaviour&>(peer))
-        && (input == peer.input);
+        && (this->input == peer.input);
 }
 
 Stimulus Stimulus::operator+(const Stimulus& peer) const {
-    return Stimulus("+", (input + peer.input));
+    Behaviour self = *this, other = peer, stimulus = (self + other);
+    return Stimulus("+", stimulus.getDelay(), stimulus.getScaling(), stimulus.getUnit(),
+        (this->input + peer.input));
 }
 
 Stimulus Stimulus::operator-(const Stimulus& peer) const {
-    return Stimulus("-", (input - peer.input));
+    Behaviour self = *this, other = peer, stimulus = (self - other);
+    return Stimulus("-", stimulus.getDelay(), stimulus.getScaling(), stimulus.getUnit(),
+        (this->input - peer.input));
 }
 
 Stimulus Stimulus::operator*(const Stimulus& peer) const {
-    return Stimulus("*", (input * peer.input));
+    Behaviour self = *this, other = peer, stimulus = (self * other);
+    return Stimulus("*", stimulus.getDelay(), stimulus.getScaling(), stimulus.getUnit(),
+        (this->input * peer.input));
 }
 
 Stimulus Stimulus::operator/(const Stimulus& peer) const {
-    return Stimulus("/", (input / peer.input));
+    Behaviour self = *this, other = peer, stimulus = (self / other);
+    return Stimulus("/", stimulus.getDelay(), stimulus.getScaling(), stimulus.getUnit(),
+        (this->input / peer.input));
 }
 
 Stimulus Stimulus::operator%(const Stimulus& peer) const {
-    return Stimulus("%", (input % peer.input));
+    Behaviour self = *this, other = peer, stimulus = (self % other);
+    return Stimulus("%", stimulus.getDelay(), stimulus.getScaling(), stimulus.getUnit(),
+        (this->input % peer.input));
 }
 
 shp::Signal Stimulus::operator()(const Stimulus& feedback) const {
@@ -130,7 +222,8 @@ void Stimulus::setTemporalUnit(const shp::Unit& object) {
 }
 
 Stimulus Stimulus::copy() {
-    Stimulus fresh(Behaviour::getName(), this->input);
+    Stimulus fresh(Behaviour::getName(), Behaviour::getDelay(), Behaviour::getScaling(), Behaviour::getUnit(),
+        this->input);
     return fresh;
 }
 
@@ -145,6 +238,14 @@ std::string Stimulus::print() const {
     result << "s:";
 	result << Behaviour::print() << ",";
     result << input.print();
+	return result.str();
+}
+
+std::string Stimulus::printRadians() const {
+    std::stringstream result;
+    result << "s:";
+	result << Behaviour::printRadians() << ",";
+    result << input.printRadians();
 	return result.str();
 }
 

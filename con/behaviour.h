@@ -120,9 +120,9 @@ public:
     void setScaling(const short int factor);
     shp::Unit getUnit() const;
     void setUnit(const shp::Unit& object);
-    virtual shp::Quantity getDelayShift() const;
-    shp::Signal getFrequency() const;
-    shp::Signal getTotal() const;
+    shp::Quantity getDelayShift() const;
+    shp::Signal getRepeating() const;
+    shp::Signal getEndurance() const;
     Behaviour copy();
     virtual void clear();
     virtual std::string print() const;

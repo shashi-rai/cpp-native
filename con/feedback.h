@@ -32,13 +32,33 @@ class Feedback : private Behaviour {
 public:
     // Constructors
     Feedback();
+    Feedback(const shp::Unit& unit);
+    Feedback(const float delay);
+    Feedback(const float delay, const std::string unit);
+    Feedback(const float delay, const shp::Unit& unit);
+    Feedback(const float delay, const short int scaling);
+    Feedback(const float delay, const short int scaling, const std::string unit);
+    Feedback(const float delay, const short int scaling, const shp::Unit& unit);
     Feedback(const shp::Signal& adjustment);
     Feedback(const shp::Frequency& threshold);
     Feedback(const shp::Signal& adjustment, const shp::Frequency& threshold);
+    Feedback(const float delay, const short int scaling, const shp::Unit& unit, const shp::Signal& adjustment);
+    Feedback(const float delay, const short int scaling, const shp::Unit& unit, const shp::Frequency& threshold);
+    Feedback(const float delay, const short int scaling, const shp::Unit& unit, const shp::Signal& adjustment, const shp::Frequency& threshold);
     Feedback(const std::string name);
+    Feedback(const std::string name, const shp::Unit& unit);
+    Feedback(const std::string name, const float delay);
+    Feedback(const std::string name, const float delay, const std::string unit);
+    Feedback(const std::string name, const float delay, const shp::Unit& unit);
+    Feedback(const std::string name, const float delay, const short int scaling);
+    Feedback(const std::string name, const float delay, const short int scaling, const std::string unit);
+    Feedback(const std::string name, const float delay, const short int scaling, const shp::Unit& unit);
     Feedback(const std::string name, const shp::Signal& adjustment);
     Feedback(const std::string name, const shp::Frequency& threshold);
     Feedback(const std::string name, const shp::Signal& adjustment, const shp::Frequency& threshold);
+    Feedback(const std::string name, const float delay, const short int scaling, const shp::Unit& unit, const shp::Signal& adjustment);
+    Feedback(const std::string name, const float delay, const short int scaling, const shp::Unit& unit, const shp::Frequency& threshold);
+    Feedback(const std::string name, const float delay, const short int scaling, const shp::Unit& unit, const shp::Signal& adjustment, const shp::Frequency& threshold);
 
     // Destructors
     ~Feedback();
@@ -88,6 +108,7 @@ public:
     Feedback copy();
     virtual void clear();
     virtual std::string print() const;
+    virtual std::string printRadians() const;
 };
 
 typedef std::vector<Feedback > FeedbackArray;

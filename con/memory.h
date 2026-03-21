@@ -94,7 +94,9 @@ public:
     Memory copy();
     virtual void clear();
     virtual std::string print() const;
+    virtual std::string printRadians() const;
     virtual std::string printActivators() const;
+    
 };
 
 typedef std::vector<Memory > MemoryArray;

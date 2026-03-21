@@ -29,7 +29,7 @@ Intention::Intention()
 	setTraining(nullptr);
 }
 
-Intention::Intention(const std::shared_ptr<Behaviour> context)
+Intention::Intention(const std::shared_ptr<Pattern> context)
         : shp::Distance(UNIT), name() {
 	setTraining(context);
 }
@@ -40,7 +40,7 @@ Intention::Intention(const std::string name)
 }
 
 Intention::Intention(const std::string name,
-		const std::shared_ptr<Behaviour> context)
+		const std::shared_ptr<Pattern> context)
         : shp::Distance(UNIT), name(name) {
 	setTraining(context);
 }
@@ -51,7 +51,7 @@ Intention::Intention(const shp::Unit& unit)
 }
 
 Intention::Intention(const shp::Unit& unit,
-		const std::shared_ptr<Behaviour> context)
+		const std::shared_ptr<Pattern> context)
         : shp::Distance(unit), name() {
 	setTraining(context);
 }
@@ -62,7 +62,7 @@ Intention::Intention(const shp::Intrinsic& bias)
 }
 
 Intention::Intention(const shp::Intrinsic& bias,
-		const std::shared_ptr<Behaviour> context)
+		const std::shared_ptr<Pattern> context)
         : shp::Distance(UNIT, bias), name() {
 	setTraining(context);
 }
@@ -73,7 +73,7 @@ Intention::Intention(const float commitment)
 }
 
 Intention::Intention(const float commitment,
-		const std::shared_ptr<Behaviour> context)
+		const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, UNIT), name() {
 	setTraining(context);
 }
@@ -84,7 +84,7 @@ Intention::Intention(const float commitment, const std::string unit)
 }
 
 Intention::Intention(const float commitment, const std::string unit,
-		const std::shared_ptr<Behaviour> context)
+		const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, unit), name() {
 	setTraining(context);
 }
@@ -95,7 +95,7 @@ Intention::Intention(const float commitment, const shp::Unit& unit)
 }
 
 Intention::Intention(const float commitment, const shp::Unit& unit,
-		const std::shared_ptr<Behaviour> context)
+		const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, unit), name() {
 	setTraining(context);
 }
@@ -111,7 +111,7 @@ Intention::Intention(const float commitment, const float bias)
 }
 
 Intention::Intention(const float commitment, const float bias,
-		const std::shared_ptr<Behaviour> context)
+		const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, UNIT, bias), name() {
 	setTraining(context);
 }
@@ -122,7 +122,7 @@ Intention::Intention(const float commitment, const shp::Intrinsic& bias)
 }
 
 Intention::Intention(const float commitment, const shp::Intrinsic& bias,
-		const std::shared_ptr<Behaviour> context)
+		const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, UNIT, bias), name() {
 	setTraining(context);
 }
@@ -133,7 +133,7 @@ Intention::Intention(const float commitment, const std::string unit, const float
 }
 
 Intention::Intention(const float commitment, const std::string unit, const float bias,
-		const std::shared_ptr<Behaviour> context)
+		const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, unit, bias), name() {
 	setTraining(context);
 }
@@ -144,7 +144,7 @@ Intention::Intention(const float commitment, const std::string unit, const shp::
 }
 
 Intention::Intention(const float commitment, const std::string unit, const shp::Intrinsic& bias,
-		const std::shared_ptr<Behaviour> context)
+		const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, unit, bias), name() {
 	setTraining(context);
 }
@@ -155,7 +155,7 @@ Intention::Intention(const float commitment, const shp::Unit& unit, const shp::I
 }
 
 Intention::Intention(const float commitment, const shp::Unit& unit, const shp::Intrinsic& bias,
-		const std::shared_ptr<Behaviour> context)
+		const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, unit, bias), name() {
 	setTraining(context);
 }
@@ -166,7 +166,7 @@ Intention::Intention(const float commitment, const short int scaling, const std:
 }
 
 Intention::Intention(const float commitment, const short int scaling, const std::string unit,
-		const std::shared_ptr<Behaviour> context)
+		const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, scaling, unit), name() {
 	setTraining(context);
 }
@@ -177,7 +177,7 @@ Intention::Intention(const float commitment, const short int scaling, const shp:
 }
 
 Intention::Intention(const float commitment, const short int scaling, const shp::Unit& unit,
-		const std::shared_ptr<Behaviour> context)
+		const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, scaling, unit), name() {
 	setTraining(context);
 }
@@ -188,7 +188,7 @@ Intention::Intention(const float commitment, const short int scaling, const floa
 }
 
 Intention::Intention(const float commitment, const short int scaling, const float bias,
-		const std::shared_ptr<Behaviour> context)
+		const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, scaling, UNIT, bias), name() {
 	setTraining(context);
 }
@@ -199,7 +199,7 @@ Intention::Intention(const float commitment, const short int scaling, const shp:
 }
 
 Intention::Intention(const float commitment, const short int scaling, const shp::Intrinsic& bias,
-		const std::shared_ptr<Behaviour> context)
+		const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, scaling, UNIT, bias), name() {
 	setTraining(context);
 }
@@ -211,7 +211,7 @@ Intention::Intention(const float commitment, const short int scaling, const std:
 }
 
 Intention::Intention(const float commitment, const short int scaling, const std::string unit,
-        const float bias, const std::shared_ptr<Behaviour> context)
+        const float bias, const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, scaling, unit, bias), name() {
 	setTraining(context);
 }
@@ -223,7 +223,7 @@ Intention::Intention(const float commitment, const short int scaling, const std:
 }
 
 Intention::Intention(const float commitment, const short int scaling, const std::string unit,
-        const shp::Intrinsic& bias, const std::shared_ptr<Behaviour> context)
+        const shp::Intrinsic& bias, const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, scaling, unit, bias), name() {
 	setTraining(context);
 }
@@ -234,7 +234,7 @@ Intention::Intention(const std::string name, const std::string unit)
 }
 
 Intention::Intention(const std::string name, const std::string unit,
-		const std::shared_ptr<Behaviour> context)
+		const std::shared_ptr<Pattern> context)
         : shp::Distance(unit), name(name) {
 	setTraining(context);
 }
@@ -245,7 +245,7 @@ Intention::Intention(const std::string name, const shp::Unit& unit)
 }
 
 Intention::Intention(const std::string name, const shp::Unit& unit,
-		const std::shared_ptr<Behaviour> context)
+		const std::shared_ptr<Pattern> context)
         : shp::Distance(unit), name(name) {
 	setTraining(context);
 }
@@ -256,7 +256,7 @@ Intention::Intention(const std::string name, const shp::Intrinsic& bias)
 }
 
 Intention::Intention(const std::string name, const shp::Intrinsic& bias,
-		const std::shared_ptr<Behaviour> context)
+		const std::shared_ptr<Pattern> context)
         : shp::Distance(UNIT, bias), name(name) {
 	setTraining(context);
 }
@@ -267,7 +267,7 @@ Intention::Intention(const std::string name, const float commitment)
 }
 
 Intention::Intention(const std::string name, const float commitment,
-		const std::shared_ptr<Behaviour> context)
+		const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, UNIT), name(name) {
 	setTraining(context);
 }
@@ -278,7 +278,7 @@ Intention::Intention(const std::string name, const float commitment, const std::
 }
 
 Intention::Intention(const std::string name, const float commitment, const std::string unit,
-		const std::shared_ptr<Behaviour> context)
+		const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, unit), name(name) {
 	setTraining(context);
 }
@@ -289,7 +289,7 @@ Intention::Intention(const std::string name, const float commitment, const shp::
 }
 
 Intention::Intention(const std::string name, const float commitment, const shp::Unit& unit,
-		const std::shared_ptr<Behaviour> context)
+		const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, unit), name(name) {
 	setTraining(context);
 }
@@ -317,7 +317,7 @@ Intention::Intention(const std::string name, const float commitment, const float
 }
 
 Intention::Intention(const std::string name, const float commitment, const float bias,
-		const std::shared_ptr<Behaviour> context)
+		const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, UNIT, bias), name(name) {
 	setTraining(context);
 }
@@ -328,7 +328,7 @@ Intention::Intention(const std::string name, const float commitment, const shp::
 }
 
 Intention::Intention(const std::string name, const float commitment, const shp::Intrinsic& bias,
-		const std::shared_ptr<Behaviour> context)
+		const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, UNIT, bias), name(name) {
 	setTraining(context);
 }
@@ -340,7 +340,7 @@ Intention::Intention(const std::string name, const float commitment, const std::
 }
 
 Intention::Intention(const std::string name, const float commitment, const std::string unit,
-        const float bias, const std::shared_ptr<Behaviour> context)
+        const float bias, const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, unit), name(name) {
 	setTraining(context);
 }
@@ -352,7 +352,7 @@ Intention::Intention(const std::string name, const float commitment, const shp::
 }
 
 Intention::Intention(const std::string name, const float commitment, const shp::Unit& unit,
-        const float bias, const std::shared_ptr<Behaviour> context)
+        const float bias, const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, unit, bias), name(name) {
 	setTraining(context);
 }
@@ -364,7 +364,7 @@ Intention::Intention(const std::string name, const float commitment, const shp::
 }
 
 Intention::Intention(const std::string name, const float commitment, const shp::Unit& unit,
-        const shp::Intrinsic& bias, const std::shared_ptr<Behaviour> context)
+        const shp::Intrinsic& bias, const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, unit, bias), name(name) {
 	setTraining(context);
 }
@@ -376,7 +376,7 @@ Intention::Intention(const std::string name, const float commitment, const short
 }
 
 Intention::Intention(const std::string name, const float commitment, const short int scaling,
-        const float bias, const std::shared_ptr<Behaviour> context)
+        const float bias, const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, scaling, UNIT, bias), name(name) {
 	setTraining(context);
 }
@@ -388,7 +388,7 @@ Intention::Intention(const std::string name, const float commitment, const short
 }
 
 Intention::Intention(const std::string name, const float commitment, const short int scaling,
-        const shp::Intrinsic& bias, const std::shared_ptr<Behaviour> context)
+        const shp::Intrinsic& bias, const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, scaling, UNIT, bias), name(name) {
 	setTraining(context);
 }
@@ -400,7 +400,7 @@ Intention::Intention(const std::string name, const float commitment, const short
 }
 
 Intention::Intention(const std::string name, const float commitment, const short int scaling,
-        const std::string unit, const float bias, const std::shared_ptr<Behaviour> context)
+        const std::string unit, const float bias, const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, scaling, unit, bias), name(name) {
 	setTraining(context);
 }
@@ -412,7 +412,7 @@ Intention::Intention(const std::string name, const float commitment, const short
 }
 
 Intention::Intention(const std::string name, const float commitment, const short int scaling,
-        const shp::Unit& unit, const float bias, const std::shared_ptr<Behaviour> context)
+        const shp::Unit& unit, const float bias, const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, scaling, unit, bias), name(name) {
 	setTraining(context);
 }
@@ -424,7 +424,7 @@ Intention::Intention(const std::string name, const float commitment, const short
 }
 
 Intention::Intention(const std::string name, const float commitment, const short int scaling,
-        const shp::Unit& unit, const shp::Intrinsic& bias, const std::shared_ptr<Behaviour> context)
+        const shp::Unit& unit, const shp::Intrinsic& bias, const std::shared_ptr<Pattern> context)
         : shp::Distance(commitment, scaling, unit, bias), name(name) {
 	setTraining(context);
 }
@@ -664,16 +664,21 @@ void Intention::setCommitment(const shp::Quantity& desire, const shp::Intrinsic&
 	shp::Distance::setIntrinsic(bias);
 }
 
-void Intention::setCommitment(const shp::Quantity& desire, const shp::Polar& fatigue) {
+void Intention::setCommitment(const shp::Quantity& desire, const shp::Azimuth& clarity) {
 	shp::Distance::setMagnitude(desire.getMagnitude(), desire.getScaling(), desire.getUnit());
-	shp::Distance::setVertical(fatigue);
+	shp::Distance::setHorizontal(clarity);
 }
 
-void Intention::setCommitment(const shp::Distance& desire) {
+void Intention::setCommitment(const shp::Quantity& desire, const shp::Polar& trust) {
 	shp::Distance::setMagnitude(desire.getMagnitude(), desire.getScaling(), desire.getUnit());
-	shp::Distance::setIntrinsic(desire.getIntrinsic());
-	shp::Distance::setHorizontal(desire.getHorizontal());
-	shp::Distance::setVertical(desire.getVertical());
+	shp::Distance::setVertical(trust);
+}
+
+void Intention::setCommitment(const shp::Distance& objective) {
+	shp::Distance::setMagnitude(objective.getMagnitude(), objective.getScaling(), objective.getUnit());
+	shp::Distance::setIntrinsic(objective.getIntrinsic());		// bias by others
+	shp::Distance::setHorizontal(objective.getHorizontal());	// clarity of thought
+	shp::Distance::setVertical(objective.getVertical());		// trust in the idea
 }
 
 void Intention::setCommitment(const float desire) {
@@ -724,6 +729,26 @@ void Intention::setChangeBias(const float degree) {
 	shp::Distance::setChangeIntrinsic(degree);
 }
 
+shp::Azimuth Intention::getClarityThought() const {
+	return shp::Distance::getHorizontal();
+}
+
+void Intention::setClarityThought(const float deviation) {
+	shp::Distance::setHorizontal(deviation);
+}
+
+void Intention::setClarityThought(const shp::Azimuth& deviation) {
+	shp::Distance::setHorizontal(deviation);
+}
+
+void Intention::setChangeClarityThought(const float degree) {
+	shp::Distance::setHorizontalCurvature(degree);
+}
+
+void Intention::setChangeClarityShiftRate(const float degree) {
+	shp::Distance::setHorizontalCurvatureShiftRate(degree);
+}
+
 shp::Polar Intention::getTrustSaturation() const {
 	return shp::Distance::getVertical();
 }
@@ -740,6 +765,10 @@ void Intention::setChangeTrustSaturation(const float degree) {
 	shp::Distance::setVerticalCurvature(degree);
 }
 
+void Intention::setChangeTrustShiftRate(const float degree) {
+	shp::Distance::setVerticalCurvatureShiftRate(degree);
+}
+
 void Intention::setChangeCommitment(const float drift) {
 	shp::Distance::setChangeMagnitude(drift);
 }
@@ -749,12 +778,12 @@ void Intention::setChangeCommitment(const float drift, const short int scale) {
 }
 
 /*
- * Its impossible to calculate continuous desire without referring to a time realm
+ * Its impossible to calculate continuous desire without referring to a self
  */
 shp::Signal Intention::getAttitude() const {
 	shp::Signal commitment = shp::Distance::getVectorTotal(), interval, desire;
-	if (isTrained()) {	// timeless realm cannot have a continuous desire
-		interval = training->getTotal();
+	if (isTrained()) {	// selfless beings cannot have a continuous desire
+		interval = training->getMemorable();
 		desire = (commitment / interval);
 	}
     shp::Signal result(desire.getOrientation(),
@@ -767,13 +796,13 @@ shp::Signal Intention::getTrusted() {
 	return this->getTrusted(timeperiod);
 }
 
-shp::Signal Intention::getTrusted(const Behaviour& instant) {
-	shp::Distance self = *this; shp::Signal frequency(shp::Quantity::DEFAULT_VALUE);
+shp::Signal Intention::getTrusted(const Pattern& awareness) {
+	shp::Distance self = *this; shp::Signal familiar(shp::Quantity::DEFAULT_VALUE);
 	float desire = shp::Quantity::DEFAULT_VALUE; short int scaling = shp::Quantity::DEFAULT_SCALE;
 	if (isTrained()) {
-		frequency = training->getFrequency();
-		desire = ((self.getAmplitude() * frequency.getMagnitude()) / instant.getDelay());
-		scaling = (self.getScaling() + frequency.getScaling());
+		familiar = training->getIndicative();
+		desire = ((self.getAmplitude() * familiar.getMagnitude()) / awareness.getTemporalDelay());
+		scaling = (self.getScaling() + familiar.getScaling());
 	}
     shp::Signal result(shp::Direction::DEFAULT_RADIANS, desire, scaling, UNIT); result.adjustScaling();
     return result;
@@ -787,7 +816,7 @@ shp::Signal Intention::getInfluenced(const shp::Direction& promotion) {
 	shp::Distance self = *this; shp::Quantity convoluted;
 	shp::Intrinsic biasing = self.getIntrinsic();
 	if (isTrained()) {
-		convoluted = training->getDelayShift();
+		convoluted = training->getAgeShift();
 		biasing.setRotation(convoluted.getMagnitude() + promotion.toRadians());
 	}
 	std::string unit = convoluted.getUnit().getName() + '/' + shp::Unit::getBaseSymbol(shp::Unit::TIME);
@@ -916,15 +945,22 @@ shp::Signal Intention::getSinComponent(const float phase) const {
 	return shp::Signal(desire.getSinComponent(phase), desire.getScaling(), desire.getUnit());
 }
 
-shp::Direction Intention::getBiasMoment(const Behaviour& instant) const {
-	float rate = (shp::Distance::getIntrinsic().toRadians() / instant.getDelay());
+shp::Direction Intention::getBiasMoment(const Pattern& awareness) const {
+	float rate = (shp::Distance::getIntrinsic().toRadians() / awareness.getTemporalDelay());
 	rate = std::isinf(rate) ? 0 : rate;		// if time interval = zero
 	shp::Direction result(rate * shp::Direction::DEGREE_001);
 	return result;
 }
 
-shp::Direction Intention::getTrustMoment(const Behaviour& instant) const {
-	float rate = (shp::Distance::getVertical().toRadians() / instant.getDelay());
+shp::Direction Intention::getClarityMoment(const Pattern& awareness) const {
+	float rate = (shp::Distance::getHorizontal().toRadians() / awareness.getTemporalDelay());
+	rate = std::isinf(rate) ? 0 : rate;		// if time interval = zero
+	shp::Direction result(rate * shp::Direction::DEGREE_001);
+	return result;
+}
+
+shp::Direction Intention::getTrustMoment(const Pattern& awareness) const {
+	float rate = (shp::Distance::getVertical().toRadians() / awareness.getTemporalDelay());
 	rate = std::isinf(rate) ? 0 : rate;		// if time interval = zero
 	shp::Direction result(rate * shp::Direction::DEGREE_001);
 	return result;
@@ -932,6 +968,11 @@ shp::Direction Intention::getTrustMoment(const Behaviour& instant) const {
 
 shp::Direction Intention::getBiasShiftRate() const {
 	shp::Direction result(shp::Distance::getIntrinsic().toRadians() * shp::Direction::DEGREE_001);
+	return result;
+}
+
+shp::Direction Intention::getClarityShiftRate() const {
+	shp::Direction result(shp::Distance::getHorizontal().toRadians() * shp::Direction::DEGREE_001);
 	return result;
 }
 

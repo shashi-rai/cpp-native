@@ -938,7 +938,7 @@ std::string Circumstance::printRadians() const {
 }
 
 Circumstance Circumstance::getFluctuation(const float phase) const {
-	shp::Temporal temporary = this->getTotal();
+	shp::Temporal temporary = this->getEndurance();
     temporary.setIntensityDrift(shp::Azimuth(phase));
 	return Circumstance(Behaviour::getName(), temporary.getMagnitude(), temporary.getScaling(), temporary.getUnit());
 }

@@ -27,8 +27,49 @@ Response::Response()
 
 }
 
+Response::Response(const shp::Unit& unit)
+        : Behaviour(unit), output() {
+
+}
+
+Response::Response(const float delay)
+        : Behaviour(delay), output() {
+
+}
+
+Response::Response(const float delay, const std::string unit)
+        : Behaviour(delay, unit), output() {
+
+}
+
+Response::Response(const float delay, const shp::Unit& unit)
+        : Behaviour(delay, unit), output() {
+
+}
+
+Response::Response(const float delay, const short int scaling)
+        : Behaviour(delay, scaling), output() {
+
+}
+
+Response::Response(const float delay, const short int scaling, const std::string unit)
+        : Behaviour(delay, scaling, unit), output() {
+
+}
+
+Response::Response(const float delay, const short int scaling, const shp::Unit& unit)
+        : Behaviour(delay, scaling, unit), output() {
+
+}
+
 Response::Response(const shp::Signal& output)
         : Behaviour(), output(output) {
+
+}
+
+Response::Response(const float delay, const short int scaling, const shp::Unit& unit,
+        const shp::Signal& output)
+        : Behaviour(delay, scaling, unit), output(output) {
 
 }
 
@@ -37,8 +78,49 @@ Response::Response(const std::string name)
 
 }
 
+Response::Response(const std::string name, const shp::Unit& unit)
+        : Behaviour(name, unit), output() {
+
+}
+
+Response::Response(const std::string name, const float delay)
+        : Behaviour(name, delay), output() {
+
+}
+
+Response::Response(const std::string name, const float delay, const std::string unit)
+        : Behaviour(name, delay, unit), output() {
+
+}
+
+Response::Response(const std::string name, const float delay, const shp::Unit& unit)
+        : Behaviour(name, delay, unit), output() {
+
+}
+
+Response::Response(const std::string name, const float delay, const short int scaling)
+        : Behaviour(name, delay, scaling), output() {
+
+}
+
+Response::Response(const std::string name, const float delay, const short int scaling, const std::string unit)
+        : Behaviour(name, delay, scaling, unit), output() {
+
+}
+
+Response::Response(const std::string name, const float delay, const short int scaling, const shp::Unit& unit)
+        : Behaviour(name, delay, scaling, unit), output() {
+
+}
+
 Response::Response(const std::string name, const shp::Signal& output)
         : Behaviour(name), output(output) {
+
+}
+
+Response::Response(const std::string name, const float delay, const short int scaling, const shp::Unit& unit,
+        const shp::Signal& output)
+        : Behaviour(name, delay, scaling, unit), output(output) {
 
 }
 
@@ -48,27 +130,37 @@ Response::~Response() {
 
 bool Response::operator==(const Response& peer) const {
     return (static_cast<const Behaviour&>(*this) == static_cast<const Behaviour&>(peer))
-        && (output == peer.output);
+        && (this->output == peer.output);
 }
 
 Response Response::operator+(const Response& peer) const {
-    return Response("+", (output + peer.output));
+    Behaviour self = *this, other = peer, response = (self + other);
+    return Response("+", response.getDelay(), response.getScaling(), response.getUnit(),
+        (this->output + peer.output));
 }
 
 Response Response::operator-(const Response& peer) const {
-    return Response("-", (output - peer.output));
+    Behaviour self = *this, other = peer, response = (self - other);
+    return Response("-", response.getDelay(), response.getScaling(), response.getUnit(),
+        (this->output - peer.output));
 }
 
 Response Response::operator*(const Response& peer) const {
-    return Response("*", (output * peer.output));
+    Behaviour self = *this, other = peer, response = (self * other);
+    return Response("*", response.getDelay(), response.getScaling(), response.getUnit(),
+        (this->output * peer.output));
 }
 
 Response Response::operator/(const Response& peer) const {
-    return Response("/", (output / peer.output));
+    Behaviour self = *this, other = peer, response = (self / other);
+    return Response("/", response.getDelay(), response.getScaling(), response.getUnit(),
+        (this->output / peer.output));
 }
 
 Response Response::operator%(const Response& peer) const {
-    return Response("%", (output % peer.output));
+    Behaviour self = *this, other = peer, response = (self % other);
+    return Response("%", response.getDelay(), response.getScaling(), response.getUnit(),
+        (this->output % peer.output));
 }
 
 shp::Signal Response::operator()(const Response& feedback) const {
@@ -130,7 +222,8 @@ void Response::setTemporalUnit(const shp::Unit& object) {
 }
 
 Response Response::copy() {
-    Response fresh(Behaviour::getName(), this->output);
+    Response fresh(Behaviour::getName(), Behaviour::getDelay(), Behaviour::getScaling(), Behaviour::getUnit(),
+        this->output);
     return fresh;
 }
 
@@ -145,6 +238,14 @@ std::string Response::print() const {
     result << "r:";
 	result << Behaviour::print();
     result << output.print();
+	return result.str();
+}
+
+std::string Response::printRadians() const {
+    std::stringstream result;
+    result << "r:";
+	result << Behaviour::printRadians();
+    result << output.printRadians();
 	return result.str();
 }
 

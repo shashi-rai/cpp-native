@@ -469,19 +469,28 @@ void Strategy::setFeedback(const std::string key, const Pattern& object) {
 }
 
 Strategy Strategy::copy() {
-    Strategy fresh(Pattern::getName(), this->stimulators);
+    Strategy fresh(Pattern::getName(), this->stimulators, this->modulators);
     return fresh;
 }
 
 void Strategy::clear() {
     Pattern::clear();
     stimulators.clear();
+    modulators.clear();
     return;
 }
 
 std::string Strategy::print() const {
     std::stringstream result;
 	result << Pattern::print();
+    result << printSimulators();
+    result << printModulators();
+	return result.str();
+}
+
+std::string Strategy::printRadians() const {
+    std::stringstream result;
+	result << Pattern::printRadians();
     result << printSimulators();
     result << printModulators();
 	return result.str();
@@ -513,6 +522,12 @@ std::string Strategy::printModulators() const {
         result << "}";
     }
 	return result.str();
+}
+
+const std::shared_ptr<Pattern> Strategy::createPattern(const std::string name,
+        const float delay, const short int scaling) {
+    std::shared_ptr<Pattern> result = std::make_shared<Pattern>(name, delay, scaling);
+    return result;
 }
 
 } // namespace con

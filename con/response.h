@@ -22,7 +22,6 @@
 #define CON_RESPONSE_H
 
 #include "behaviour.h"
-#include "../shp/signal.h"
 
 namespace con {
 
@@ -31,9 +30,27 @@ class Response : private Behaviour {
 public:
     // Constructors
     Response();
+    Response(const shp::Unit& unit);
+    Response(const float delay);
+    Response(const float delay, const std::string unit);
+    Response(const float delay, const shp::Unit& unit);
+    Response(const float delay, const short int scaling);
+    Response(const float delay, const short int scaling, const std::string unit);
+    Response(const float delay, const short int scaling, const shp::Unit& unit);
     Response(const shp::Signal& output);
+    Response(const float delay, const short int scaling, const shp::Unit& unit,
+        const shp::Signal& output);
     Response(const std::string name);
+    Response(const std::string name, const shp::Unit& unit);
+    Response(const std::string name, const float delay);
+    Response(const std::string name, const float delay, const std::string unit);
+    Response(const std::string name, const float delay, const shp::Unit& unit);
+    Response(const std::string name, const float delay, const short int scaling);
+    Response(const std::string name, const float delay, const short int scaling, const std::string unit);
+    Response(const std::string name, const float delay, const short int scaling, const shp::Unit& unit);
     Response(const std::string name, const shp::Signal& output);
+    Response(const std::string name, const float delay, const short int scaling, const shp::Unit& unit,
+        const shp::Signal& output);
 
     // Destructors
     ~Response();
@@ -71,6 +88,7 @@ public:
     Response copy();
     virtual void clear();
     virtual std::string print() const;
+    virtual std::string printRadians() const;
 };
 
 typedef std::vector<Response > ResponseArray;

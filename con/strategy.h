@@ -147,8 +147,12 @@ public:
     Strategy copy();
     virtual void clear();
     virtual std::string print() const;
+    virtual std::string printRadians() const;
     virtual std::string printSimulators() const;
     virtual std::string printModulators() const;
+public:
+    static const std::shared_ptr<Pattern> createPattern(const std::string name,
+        const float delay, const short int scaling);
 };
 
 typedef std::map<std::string, Strategy > StrategyMap;

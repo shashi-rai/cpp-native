@@ -306,6 +306,13 @@ std::string Memory::print() const {
 	return result.str();
 }
 
+std::string Memory::printRadians() const {
+    std::stringstream result;
+	result << Strategy::printRadians();
+    result << printActivators();
+	return result.str();
+}
+
 std::string Memory::printActivators() const {
     std::stringstream result; int size = activators.size();
     if (size > 0) {

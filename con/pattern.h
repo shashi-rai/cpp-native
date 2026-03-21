@@ -35,6 +35,13 @@ class Pattern : private Behaviour {
 public:
     // Constructors
     Pattern();
+    Pattern(const shp::Unit& unit);
+    Pattern(const float delay);
+    Pattern(const float delay, const std::string unit);
+    Pattern(const float delay, const shp::Unit& unit);
+    Pattern(const float delay, const short int scaling);
+    Pattern(const float delay, const short int scaling, const std::string unit);
+    Pattern(const float delay, const short int scaling, const shp::Unit& unit);
     Pattern(const Stimulus& stimulus);
     Pattern(const Feedback& feedback);
     Pattern(const Response& response);
@@ -42,7 +49,16 @@ public:
     Pattern(const Stimulus& stimulus, const Response& response);
     Pattern(const Feedback& feedback, const Response& response);
     Pattern(const Stimulus& stimulus, const Feedback& feedback, const Response& response);
+    Pattern(const float delay, const short int scaling, const shp::Unit& unit,
+        const Stimulus& stimulus, const Feedback& feedback, const Response& response);
     Pattern(const std::string name);
+    Pattern(const std::string name, const shp::Unit& unit);
+    Pattern(const std::string name, const float delay);
+    Pattern(const std::string name, const float delay, const std::string unit);
+    Pattern(const std::string name, const float delay, const shp::Unit& unit);
+    Pattern(const std::string name, const float delay, const short int scaling);
+    Pattern(const std::string name, const float delay, const short int scaling, const std::string unit);
+    Pattern(const std::string name, const float delay, const short int scaling, const shp::Unit& unit);
     Pattern(const std::string name, const Stimulus& stimulus);
     Pattern(const std::string name, const Feedback& feedback);
     Pattern(const std::string name, const Response& response);
@@ -50,6 +66,8 @@ public:
     Pattern(const std::string name, const Stimulus& stimulus, const Response& response);
     Pattern(const std::string name, const Feedback& feedback, const Response& response);
     Pattern(const std::string name, const Stimulus& stimulus, const Feedback& feedback, const Response& response);
+    Pattern(const std::string name, const float delay, const short int scaling, const shp::Unit& unit,
+        const Stimulus& stimulus, const Feedback& feedback, const Response& response);
 
     // Destructors
     ~Pattern();
@@ -85,9 +103,13 @@ public:
     void setTemporalScaling(const short int factor);
     shp::Unit getTemporalUnit() const;
     void setTemporalUnit(const shp::Unit& object);
+    shp::Quantity getAgeShift() const;
+    shp::Signal getIndicative() const;
+    shp::Signal getMemorable() const;
     Pattern copy();
     virtual void clear();
     virtual std::string print() const;
+    virtual std::string printRadians() const;
 };
 
 typedef std::map<std::string, Pattern > StimulusMap;

@@ -749,12 +749,12 @@ void Feeling::setChangeEmotion(const float drift, const short int scale) {
 }
 
 /*
- * Its impossible to calculate linear feeling without referring to a time realm
+ * Its impossible to hold persistent feelings without referring to a self realm
  */
 shp::Signal Feeling::getSummary() const {
 	shp::Signal impulse = shp::Distance::getVectorTotal(), interval, feeling;
-	if (isTimeBoxed()) {	// timeless realm cannot have a linear feeling
-		interval = behaviour->getTotal();
+	if (isTimeBoxed()) {	// selfless beings cannot have a organic feelings
+		interval = behaviour->getEndurance();
 		feeling = (impulse / interval);
 	}
     shp::Signal result(feeling.getOrientation(),
@@ -771,7 +771,7 @@ shp::Signal Feeling::getStandard(const Behaviour& instant) {
 	shp::Distance self = *this; shp::Signal frequency(shp::Quantity::DEFAULT_VALUE);
 	float emotion = shp::Quantity::DEFAULT_VALUE; short int scaling = shp::Quantity::DEFAULT_SCALE;
 	if (isTimeBoxed()) {
-		frequency = behaviour->getFrequency();
+		frequency = behaviour->getRepeating();
 		emotion = ((self.getAmplitude() * frequency.getMagnitude()) / instant.getDelay());
 		scaling = (self.getScaling() + frequency.getScaling());
 	}

@@ -21,89 +21,89 @@
 #ifndef CON_INTENTION_H
 #define CON_INTENTION_H
 
-#include "behaviour.h"
+#include "pattern.h"
 #include "../shp/distance.h"
 
 namespace con {
 
 class Intention : protected shp::Distance {
-    std::shared_ptr<Behaviour> training;
+    std::shared_ptr<Pattern> training;
     std::string name;
 public:
     // Constructors
     Intention();
-    Intention(const std::shared_ptr<Behaviour> context);
+    Intention(const std::shared_ptr<Pattern> context);
     Intention(const std::string name);
-    Intention(const std::string name, const std::shared_ptr<Behaviour> context);
+    Intention(const std::string name, const std::shared_ptr<Pattern> context);
     Intention(const shp::Unit& unit);
-    Intention(const shp::Unit& unit, const std::shared_ptr<Behaviour> context);
+    Intention(const shp::Unit& unit, const std::shared_ptr<Pattern> context);
     Intention(const shp::Intrinsic& bias);
-    Intention(const shp::Intrinsic& bias, const std::shared_ptr<Behaviour> context);
+    Intention(const shp::Intrinsic& bias, const std::shared_ptr<Pattern> context);
     Intention(const float commitment);
-    Intention(const float commitment, const std::shared_ptr<Behaviour> context);
+    Intention(const float commitment, const std::shared_ptr<Pattern> context);
     Intention(const float commitment, const std::string unit);
     Intention(const float commitment, const std::string unit,
-        const std::shared_ptr<Behaviour> context);
+        const std::shared_ptr<Pattern> context);
     Intention(const float commitment, const shp::Unit& unit);
     Intention(const float commitment, const shp::Unit& unit,
-        const std::shared_ptr<Behaviour> context);
+        const std::shared_ptr<Pattern> context);
     Intention(const float commitment, const short int scaling);
     Intention(const float commitment, const float bias);
     Intention(const float commitment, const float bias,
-        const std::shared_ptr<Behaviour> context);
+        const std::shared_ptr<Pattern> context);
     Intention(const float commitment, const shp::Intrinsic& bias);
     Intention(const float commitment, const shp::Intrinsic& bias,
-        const std::shared_ptr<Behaviour> context);
+        const std::shared_ptr<Pattern> context);
     Intention(const float commitment, const std::string unit,
         const float bias);
     Intention(const float commitment, const std::string unit,
-        const float bias, const std::shared_ptr<Behaviour> context);
+        const float bias, const std::shared_ptr<Pattern> context);
     Intention(const float commitment, const std::string unit,
         const shp::Intrinsic& bias);
     Intention(const float commitment, const std::string unit,
-        const shp::Intrinsic& bias, const std::shared_ptr<Behaviour> context);
+        const shp::Intrinsic& bias, const std::shared_ptr<Pattern> context);
     Intention(const float commitment, const shp::Unit& unit,
         const shp::Intrinsic& bias);
     Intention(const float commitment, const shp::Unit& unit,
-        const shp::Intrinsic& bias, const std::shared_ptr<Behaviour> context);
+        const shp::Intrinsic& bias, const std::shared_ptr<Pattern> context);
     Intention(const float commitment, const short int scaling, const std::string unit);
     Intention(const float commitment, const short int scaling, const std::string unit,
-        const std::shared_ptr<Behaviour> context);
+        const std::shared_ptr<Pattern> context);
     Intention(const float commitment, const short int scaling, const shp::Unit& unit);
     Intention(const float commitment, const short int scaling, const shp::Unit& unit,
-        const std::shared_ptr<Behaviour> context);
+        const std::shared_ptr<Pattern> context);
     Intention(const float commitment, const short int scaling,
         const float bias);
     Intention(const float commitment, const short int scaling,
-        const float bias, const std::shared_ptr<Behaviour> context);
+        const float bias, const std::shared_ptr<Pattern> context);
     Intention(const float commitment, const short int scaling,
         const shp::Intrinsic& bias);
     Intention(const float commitment, const short int scaling,
-        const shp::Intrinsic& bias, const std::shared_ptr<Behaviour> context);
+        const shp::Intrinsic& bias, const std::shared_ptr<Pattern> context);
     Intention(const float commitment, const short int scaling, const std::string unit,
         const float bias);
     Intention(const float commitment, const short int scaling, const std::string unit,
-        const float bias, const std::shared_ptr<Behaviour> context);
+        const float bias, const std::shared_ptr<Pattern> context);
     Intention(const float commitment, const short int scaling, const std::string unit,
         const shp::Intrinsic& bias);
     Intention(const float commitment, const short int scaling, const std::string unit,
-        const shp::Intrinsic& bias, const std::shared_ptr<Behaviour> context);
+        const shp::Intrinsic& bias, const std::shared_ptr<Pattern> context);
     Intention(const std::string name, const std::string unit);
-    Intention(const std::string name, const std::string unit, const std::shared_ptr<Behaviour> context);
+    Intention(const std::string name, const std::string unit, const std::shared_ptr<Pattern> context);
     Intention(const std::string name, const shp::Unit& unit);
-    Intention(const std::string name, const shp::Unit& unit, const std::shared_ptr<Behaviour> context);
+    Intention(const std::string name, const shp::Unit& unit, const std::shared_ptr<Pattern> context);
     Intention(const std::string name, const shp::Intrinsic& bias);
     Intention(const std::string name,
-        const shp::Intrinsic& bias, const std::shared_ptr<Behaviour> context);
+        const shp::Intrinsic& bias, const std::shared_ptr<Pattern> context);
     Intention(const std::string name, const float commitment);
     Intention(const std::string name, const float commitment,
-        const std::shared_ptr<Behaviour> context);
+        const std::shared_ptr<Pattern> context);
     Intention(const std::string name, const float commitment, const std::string unit);
     Intention(const std::string name, const float commitment, const std::string unit,
-        const std::shared_ptr<Behaviour> context);
+        const std::shared_ptr<Pattern> context);
     Intention(const std::string name, const float commitment, const shp::Unit& unit);
     Intention(const std::string name, const float commitment, const shp::Unit& unit,
-        const std::shared_ptr<Behaviour> context);
+        const std::shared_ptr<Pattern> context);
     Intention(const std::string name, const float commitment, const short int scaling);
     Intention(const std::string name, const float commitment, const short int scaling,
         const std::string unit);
@@ -111,43 +111,43 @@ public:
         const shp::Unit& unit);
     Intention(const std::string name, const float commitment, const float bias);
     Intention(const std::string name, const float commitment,
-        const float bias, const std::shared_ptr<Behaviour> context);
+        const float bias, const std::shared_ptr<Pattern> context);
     Intention(const std::string name, const float commitment,
         const shp::Intrinsic& bias);
     Intention(const std::string name, const float commitment,
-        const shp::Intrinsic& bias, const std::shared_ptr<Behaviour> context);
+        const shp::Intrinsic& bias, const std::shared_ptr<Pattern> context);
     Intention(const std::string name, const float commitment, const std::string unit,
         const float bias);
     Intention(const std::string name, const float commitment, const std::string unit,
-        const float bias, const std::shared_ptr<Behaviour> context);
+        const float bias, const std::shared_ptr<Pattern> context);
     Intention(const std::string name, const float commitment, const shp::Unit& unit,
         const float bias);
     Intention(const std::string name, const float commitment, const shp::Unit& unit,
-        const float bias, const std::shared_ptr<Behaviour> context);
+        const float bias, const std::shared_ptr<Pattern> context);
     Intention(const std::string name, const float commitment, const shp::Unit& unit,
         const shp::Intrinsic& bias);
     Intention(const std::string name, const float commitment, const shp::Unit& unit,
-        const shp::Intrinsic& bias, const std::shared_ptr<Behaviour> context);
+        const shp::Intrinsic& bias, const std::shared_ptr<Pattern> context);
     Intention(const std::string name, const float commitment, const short int scaling,
         const float bias);
     Intention(const std::string name, const float commitment, const short int scaling,
-        const float bias, const std::shared_ptr<Behaviour> context);
+        const float bias, const std::shared_ptr<Pattern> context);
     Intention(const std::string name, const float commitment, const short int scaling,
         const shp::Intrinsic& bias);
     Intention(const std::string name, const float commitment, const short int scaling,
-        const shp::Intrinsic& bias, const std::shared_ptr<Behaviour> context);
+        const shp::Intrinsic& bias, const std::shared_ptr<Pattern> context);
     Intention(const std::string name, const float commitment, const short int scaling, const std::string unit,
         const float bias);
     Intention(const std::string name, const float commitment, const short int scaling, const std::string unit,
-        const float bias, const std::shared_ptr<Behaviour> context);
+        const float bias, const std::shared_ptr<Pattern> context);
     Intention(const std::string name, const float commitment, const short int scaling, const shp::Unit& unit,
         const float bias);
     Intention(const std::string name, const float commitment, const short int scaling, const shp::Unit& unit,
-        const float bias, const std::shared_ptr<Behaviour> context);
+        const float bias, const std::shared_ptr<Pattern> context);
     Intention(const std::string name, const float commitment, const short int scaling, const shp::Unit& unit,
         const shp::Intrinsic& bias);
     Intention(const std::string name, const float commitment, const short int scaling, const shp::Unit& unit,
-        const shp::Intrinsic& bias, const std::shared_ptr<Behaviour> context);
+        const shp::Intrinsic& bias, const std::shared_ptr<Pattern> context);
 
     // Destructors
     ~Intention();
@@ -200,18 +200,19 @@ public:
     Intention operator%(const shp::Polar& fatigue) const;
 
     // Getters
-    std::shared_ptr<Behaviour> getTraining() const { return training; }
+    std::shared_ptr<Pattern> getTraining() const { return training; }
     std::string getName() const { return name; }
 
     // Setters
-    void setTraining(const std::shared_ptr<Behaviour> context) { this->training = context; }
+    void setTraining(const std::shared_ptr<Pattern> context) { this->training = context; }
     void setName(const std::string name) { this->name = name; }
 
     // Additional methods
     shp::Distance getCommitment() const;
     void setCommitment(const shp::Quantity& desire, const shp::Intrinsic& bias);
-    void setCommitment(const shp::Quantity& desire, const shp::Polar& fatigue);
-    void setCommitment(const shp::Distance& desire);
+    void setCommitment(const shp::Quantity& desire, const shp::Azimuth& clarity);
+    void setCommitment(const shp::Quantity& desire, const shp::Polar& trust);
+    void setCommitment(const shp::Distance& objective);
     void setCommitment(const float desire);
     void setCommitment(const float desire, const short int scale);
     void setCommitment(const float desire, const short int scale, const std::string unit);
@@ -224,15 +225,21 @@ public:
     void setBias(const float intensity);
     void setBias(const shp::Intrinsic& intensity);
     void setChangeBias(const float degree);
+    shp::Azimuth getClarityThought() const;
+    void setClarityThought(const float deviation);
+    void setClarityThought(const shp::Azimuth& deviation);
+    void setChangeClarityThought(const float degree);
+    void setChangeClarityShiftRate(const float degree);
     shp::Polar getTrustSaturation() const;
     void setTrustSaturation(const float fatigue);
     void setTrustSaturation(const shp::Polar& fatigue);
     void setChangeTrustSaturation(const float degree);
+    void setChangeTrustShiftRate(const float degree);
     void setChangeCommitment(const float drift);
     void setChangeCommitment(const float drift, const short int scale);
     shp::Signal getAttitude() const;
     virtual shp::Signal getTrusted();
-    virtual shp::Signal getTrusted(const Behaviour& instant);
+    virtual shp::Signal getTrusted(const Pattern& awareness);
     virtual shp::Signal getInfluenced();
     virtual shp::Signal getInfluenced(const shp::Direction& promotion);
     void adjustNumeric();
@@ -259,10 +266,12 @@ public:
     virtual std::string printTrainingRadians() const;
     shp::Signal getCosComponent(const float phase) const;
     shp::Signal getSinComponent(const float phase) const;
-    shp::Direction getBiasMoment(const Behaviour& instant) const;
-    shp::Direction getTrustMoment(const Behaviour& instant) const;
+    shp::Direction getBiasMoment(const Pattern& awareness) const;
+    shp::Direction getClarityMoment(const Pattern& awareness) const;
+    shp::Direction getTrustMoment(const Pattern& awareness) const;
 protected:
     shp::Direction getBiasShiftRate() const;
+    shp::Direction getClarityShiftRate() const;
     shp::Direction getTrustShiftRate() const;
     std::complex<float> toComplex(const float coefficient, const float change);
 public:

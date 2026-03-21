@@ -1229,7 +1229,7 @@ std::string Distance::print() const {
 
 std::string Distance::printRadians() const {
     std::stringstream result;
-    result << Signal::print() << "⌒";
+    result << Signal::printRadians() << "⌒";
     result << horizontal.printRadians() << ",";
     result << vertical.printRadians();
 	return result.str();

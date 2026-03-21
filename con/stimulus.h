@@ -22,7 +22,6 @@
 #define CON_STIMULUS_H
 
 #include "behaviour.h"
-#include "../shp/signal.h"
 
 namespace con {
 
@@ -31,9 +30,27 @@ class Stimulus : private Behaviour {
 public:
     // Constructors
     Stimulus();
+    Stimulus(const shp::Unit& unit);
+    Stimulus(const float delay);
+    Stimulus(const float delay, const std::string unit);
+    Stimulus(const float delay, const shp::Unit& unit);
+    Stimulus(const float delay, const short int scaling);
+    Stimulus(const float delay, const short int scaling, const std::string unit);
+    Stimulus(const float delay, const short int scaling, const shp::Unit& unit);
     Stimulus(const shp::Signal& input);
+    Stimulus(const float delay, const short int scaling, const shp::Unit& unit,
+        const shp::Signal& input);
     Stimulus(const std::string name);
+    Stimulus(const std::string name, const shp::Unit& unit);
+    Stimulus(const std::string name, const float delay);
+    Stimulus(const std::string name, const float delay, const std::string unit);
+    Stimulus(const std::string name, const float delay, const shp::Unit& unit);
+    Stimulus(const std::string name, const float delay, const short int scaling);
+    Stimulus(const std::string name, const float delay, const short int scaling, const std::string unit);
+    Stimulus(const std::string name, const float delay, const short int scaling, const shp::Unit& unit);
     Stimulus(const std::string name, const shp::Signal& input);
+    Stimulus(const std::string name, const float delay, const short int scaling, const shp::Unit& unit,
+        const shp::Signal& input);
 
     // Destructors
     ~Stimulus();
@@ -71,6 +88,7 @@ public:
     Stimulus copy();
     virtual void clear();
     virtual std::string print() const;
+    virtual std::string printRadians() const;
 };
 
 typedef std::vector<Stimulus > StimulusArray;

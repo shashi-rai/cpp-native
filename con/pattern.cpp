@@ -27,6 +27,41 @@ Pattern::Pattern()
 
 }
 
+Pattern::Pattern(const shp::Unit& unit)
+        : Behaviour(unit), stimulus(), feedback(), response() {
+
+}
+
+Pattern::Pattern(const float delay)
+        : Behaviour(delay), stimulus(), feedback(), response() {
+
+}
+
+Pattern::Pattern(const float delay, const std::string unit)
+        : Behaviour(delay, unit), stimulus(), feedback(), response() {
+
+}
+
+Pattern::Pattern(const float delay, const shp::Unit& unit)
+        : Behaviour(delay, unit), stimulus(), feedback(), response() {
+
+}
+
+Pattern::Pattern(const float delay, const short int scaling)
+        : Behaviour(delay, scaling), stimulus(), feedback(), response() {
+
+}
+
+Pattern::Pattern(const float delay, const short int scaling, const std::string unit)
+        : Behaviour(delay, scaling, unit), stimulus(), feedback(), response() {
+
+}
+
+Pattern::Pattern(const float delay, const short int scaling, const shp::Unit& unit)
+        : Behaviour(delay, scaling, unit), stimulus(), feedback(), response() {
+
+}
+
 Pattern::Pattern(const Stimulus& stimulus)
         : Behaviour(), stimulus(stimulus), feedback(), response() {
 
@@ -62,8 +97,49 @@ Pattern::Pattern(const Stimulus& stimulus, const Feedback& feedback, const Respo
 
 }
 
+Pattern::Pattern(const float delay, const short int scaling, const shp::Unit& unit,
+        const Stimulus& stimulus, const Feedback& feedback, const Response& response)
+        : Behaviour(delay, scaling, unit), stimulus(stimulus), feedback(feedback), response(response) {
+
+}
+
 Pattern::Pattern(const std::string name)
         : Behaviour(name), stimulus(), feedback(), response() {
+
+}
+
+Pattern::Pattern(const std::string name, const shp::Unit& unit)
+        : Behaviour(name, unit), stimulus(), feedback(), response() {
+
+}
+
+Pattern::Pattern(const std::string name, const float delay)
+        : Behaviour(name, delay), stimulus(), feedback(), response() {
+
+}
+
+Pattern::Pattern(const std::string name, const float delay, const std::string unit)
+        : Behaviour(name, delay, unit), stimulus(), feedback(), response() {
+
+}
+
+Pattern::Pattern(const std::string name, const float delay, const shp::Unit& unit)
+        : Behaviour(name, delay, unit), stimulus(), feedback(), response() {
+
+}
+
+Pattern::Pattern(const std::string name, const float delay, const short int scaling)
+        : Behaviour(name, delay, scaling), stimulus(), feedback(), response() {
+
+}
+
+Pattern::Pattern(const std::string name, const float delay, const short int scaling, const std::string unit)
+        : Behaviour(name, delay, scaling, unit), stimulus(), feedback(), response() {
+
+}
+
+Pattern::Pattern(const std::string name, const float delay, const short int scaling, const shp::Unit& unit)
+        : Behaviour(name, delay, scaling, unit), stimulus(), feedback(), response() {
 
 }
 
@@ -99,6 +175,12 @@ Pattern::Pattern(const std::string name, const Feedback& feedback, const Respons
 
 Pattern::Pattern(const std::string name, const Stimulus& stimulus, const Feedback& feedback, const Response& response)
         : Behaviour(name), stimulus(stimulus), feedback(feedback), response(response) {
+
+}
+
+Pattern::Pattern(const std::string name, const float delay, const short int scaling, const shp::Unit& unit,
+        const Stimulus& stimulus, const Feedback& feedback, const Response& response)
+        : Behaviour(name, delay, scaling, unit), stimulus(stimulus), feedback(feedback), response(response) {
 
 }
 
@@ -179,8 +261,21 @@ void Pattern::setTemporalUnit(const shp::Unit& object) {
     Behaviour::setUnit(object);
 }
 
+shp::Quantity Pattern::getAgeShift() const {
+    return Behaviour::getDelayShift();
+}
+
+shp::Signal Pattern::getIndicative() const {
+    return Behaviour::getRepeating();
+}
+
+shp::Signal Pattern::getMemorable() const {
+    return Behaviour::getEndurance();
+}
+
 Pattern Pattern::copy() {
-    Pattern fresh(Behaviour::getName(), this->stimulus, this->feedback, this->response);
+    Pattern fresh(Behaviour::getName(), Behaviour::getDelay(), Behaviour::getScaling(), Behaviour::getUnit(),
+        this->stimulus, this->feedback, this->response);
     return fresh;
 }
 
@@ -199,6 +294,17 @@ std::string Pattern::print() const {
     result << stimulus.print() << ",";
     result << feedback.print() << ",";
     result << response.print();
+    result << ")";
+	return result.str();
+}
+
+std::string Pattern::printRadians() const {
+    std::stringstream result;
+    result << "(";
+	result << Behaviour::printRadians() << ",";
+    result << stimulus.printRadians() << ",";
+    result << feedback.printRadians() << ",";
+    result << response.printRadians();
     result << ")";
 	return result.str();
 }

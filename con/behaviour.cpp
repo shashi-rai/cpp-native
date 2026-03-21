@@ -393,12 +393,12 @@ shp::Quantity Behaviour::getDelayShift() const {
     return shp::Temporal::getPhaseShift();
 }
 
-shp::Signal Behaviour::getFrequency() const {
+shp::Signal Behaviour::getRepeating() const {
     shp::Signal frequency = shp::Temporal::getFrequency();
     return shp::Signal(frequency.getMagnitude(), frequency.getScaling(), frequency.getUnit());
 }
 
-shp::Signal Behaviour::getTotal() const {
+shp::Signal Behaviour::getEndurance() const {
     return shp::Temporal::getTotal();
 }
 
